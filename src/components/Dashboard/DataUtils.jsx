@@ -114,7 +114,7 @@ export const prepareSexComparisonData = (filteredSexData, years, sexes) => {
   return result;
 };
 
-export const getSummaryData = (filteredData, selectedArea) => {
+export const getSummaryData = (filteredData, selectedArea, indicatorName = 'Alcohol Drinking Rate') => {
   if (!filteredData || filteredData.length < 2) return null;
   
   const baseline = filteredData[0];
@@ -126,7 +126,7 @@ export const getSummaryData = (filteredData, selectedArea) => {
     : '0.0';
   
   return {
-    indicator: 'Alcohol Drinking Rate',
+    indicator: indicatorName,
     area: selectedArea || 'Bangkok',
     baselineYear: baseline.year,
     baselineValue: baseline.value,

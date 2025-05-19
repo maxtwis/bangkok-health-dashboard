@@ -2,7 +2,7 @@ import React from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { formatYear } from '../DataUtils';
 
-const SexComparisonChart = ({ data }) => {
+const SexComparisonChart = ({ data, indicatorName = 'Alcohol Drinking Rate' }) => {
   // Check if the data includes lgbt category
   const hasLgbt = data.some(item => 'lgbt' in item && item.lgbt !== null && item.lgbt !== undefined);
 
@@ -32,7 +32,7 @@ const SexComparisonChart = ({ data }) => {
             padding={{ top: 20 }}
           />
           <Tooltip 
-            formatter={(value) => [`${value}%`, 'Drinking Rate']}
+            formatter={(value) => [`${value}%`, indicatorName]}
             labelFormatter={(year) => `Year: ${formatYear(year)}`}
           />
           <Legend wrapperStyle={{ paddingTop: 10 }} />

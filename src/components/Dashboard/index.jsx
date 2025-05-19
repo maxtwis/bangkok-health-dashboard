@@ -23,6 +23,8 @@ const Dashboard = () => {
   const { 
     drinkRateData,
     drinkRateBySexData,
+    smokeRateData,
+    smokeRateBySexData,
     districts,
     years,
     sexes,
@@ -52,15 +54,22 @@ const Dashboard = () => {
     }
   }, [districts]);
 
+  // Determine which data to use based on selected indicator
+  const rateData = selectedIndicator === 'drink_rate' ? drinkRateData : smokeRateData;
+  const rateBySexData = selectedIndicator === 'drink_rate' ? drinkRateBySexData : smokeRateBySexData;
+  
+  // Get indicator name
+  const indicatorName = selectedIndicator === 'drink_rate' ? 'Alcohol Drinking Rate' : 'Smoking Rate';
+
   // Process data based on filters
-  const filteredData = getFilteredData(drinkRateData, selectedGeographyType, selectedArea, years);
-  const filteredSexData = getSexFilteredData(drinkRateBySexData, selectedGeographyType, selectedArea, years, sexes);
+  const filteredData = getFilteredData(rateData, selectedGeographyType, selectedArea, years);
+  const filteredSexData = getSexFilteredData(rateBySexData, selectedGeographyType, selectedArea, years, sexes);
   const sexComparisonData = prepareSexComparisonData(filteredSexData, years, sexes);
   
   // For population comparison data - using sample data until actual data is available
   const populationComparisonData = preparePopulationComparisonData([], years, populationGroups);
   
-  const summaryData = getSummaryData(filteredData, selectedArea);
+  const summaryData = getSummaryData(filteredData, selectedArea, indicatorName);
   
   const isLoading = isDataLoading || isGeoJsonLoading;
   const error = dataError || geoJsonError;
@@ -70,7 +79,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header />
+      <Header indicatorName={indicatorName} />
       
       <div className="flex flex-col md:flex-row flex-1 p-4 gap-4">
         <FilterPanel 
@@ -133,6 +142,7 @@ const Dashboard = () => {
                 filteredData={filteredData}
                 sexComparisonData={sexComparisonData}
                 selectedIndicator={selectedIndicator}
+                indicatorName={indicatorName}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
                 years={years}
@@ -141,9 +151,10 @@ const Dashboard = () => {
             
             {selectedTab === 'map' && (
               <MapTab 
-                drinkRateData={drinkRateData}
+                rateData={rateData}
                 districtGeoJson={districtGeoJson}
                 selectedIndicator={selectedIndicator}
+                indicatorName={indicatorName}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
                 years={years}
@@ -155,6 +166,7 @@ const Dashboard = () => {
                 populationComparisonData={populationComparisonData}
                 populationData={[]} // This will be replaced with actual data when available
                 selectedIndicator={selectedIndicator}
+                indicatorName={indicatorName}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
                 years={years}
@@ -167,6 +179,7 @@ const Dashboard = () => {
                 filteredSexData={filteredSexData}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
+                indicatorName={indicatorName}
               />
             )}
             
@@ -175,17 +188,20 @@ const Dashboard = () => {
                 summaryData={summaryData}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
+                indicatorName={indicatorName}
               />
             )}
             
             {selectedTab === 'definitions' && (
-              <DefinitionsTab />
+              <DefinitionsTab 
+                selectedIndicator={selectedIndicator}
+              />
             )}
           </div>
         </div>
       </div>
       
-      <Footer />
+      <Footer indicatorName={indicatorName} />
     </div>
   );
 };

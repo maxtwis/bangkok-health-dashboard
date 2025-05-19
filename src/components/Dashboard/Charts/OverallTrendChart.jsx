@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { formatYear } from '../DataUtils';
 
-const OverallTrendChart = ({ data }) => {
+const OverallTrendChart = ({ data, indicatorName = 'Alcohol Drinking Rate' }) => {
   return (
     <div className="h-64 md:h-80">
       <ResponsiveContainer width="100%" height="100%">
@@ -29,14 +30,14 @@ const OverallTrendChart = ({ data }) => {
             padding={{ top: 20 }}
           />
           <Tooltip 
-            formatter={(value) => [`${value}%`, 'Drinking Rate']}
+            formatter={(value) => [`${value}%`, indicatorName]}
             labelFormatter={(year) => `Year: ${formatYear(year)}`}
           />
           <Legend wrapperStyle={{ paddingTop: 10 }} />
           <Line 
             type="monotone" 
             dataKey="value" 
-            name="Drinking Rate" 
+            name={indicatorName} 
             stroke="#8884d8" 
             activeDot={{ r: 8 }} 
             strokeWidth={2}

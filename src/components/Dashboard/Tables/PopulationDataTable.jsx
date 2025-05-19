@@ -1,7 +1,12 @@
 import React from 'react';
 import { formatYear } from '../DataUtils';
 
-const PopulationDataTable = ({ populationData, selectedGeographyType, selectedArea }) => {
+const PopulationDataTable = ({ 
+  populationData, 
+  selectedGeographyType, 
+  selectedArea,
+  indicatorName = 'Alcohol Drinking Rate'
+}) => {
   // For now, using sample data until real data is available
   const sampleData = [
     { year: 2566, population_group: 'general', value: 16.5 },
@@ -35,14 +40,14 @@ const PopulationDataTable = ({ populationData, selectedGeographyType, selectedAr
 
   return (
     <div>
-      <h3 className="text-lg font-medium mb-2">Drinking Rate by Population Group</h3>
+      <h3 className="text-lg font-medium mb-2">{indicatorName} by Population Group</h3>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead>
             <tr className="bg-gray-100">
               <th className="py-2 px-4 border-b">Year</th>
               <th className="py-2 px-4 border-b">Population Group</th>
-              <th className="py-2 px-4 border-b">Drinking Rate (%)</th>
+              <th className="py-2 px-4 border-b">{indicatorName} (%)</th>
             </tr>
           </thead>
           <tbody>

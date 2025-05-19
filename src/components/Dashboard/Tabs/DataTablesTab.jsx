@@ -6,7 +6,7 @@ const DataTablesTab = ({
   filteredSexData, 
   selectedGeographyType, 
   selectedArea,
-  indicatorName
+  indicatorName = 'Alcohol Drinking Rate'
 }) => {
   return (
     <div>

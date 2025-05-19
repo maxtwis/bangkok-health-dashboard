@@ -1,11 +1,11 @@
-// src/components/Dashboard/Tabs/SummaryTab.jsx
 import React from 'react';
 import { formatYear } from '../DataUtils';
 
 const SummaryTab = ({ 
   summaryData, 
   selectedGeographyType, 
-  selectedArea 
+  selectedArea,
+  indicatorName = 'Alcohol Drinking Rate'
 }) => {
   return (
     <div>
@@ -49,7 +49,7 @@ const SummaryTab = ({
           <div className="mt-4 p-4 bg-white rounded shadow">
             <h4 className="font-medium mb-2">Interpretation</h4>
             <p>
-              The alcohol drinking rate in {summaryData.area} has 
+              The {indicatorName.toLowerCase()} in {summaryData.area} has 
               {summaryData.change === 0 
                 ? ' remained stable' 
                 : summaryData.change > 0 
