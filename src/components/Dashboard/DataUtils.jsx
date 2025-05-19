@@ -2,11 +2,11 @@ export const formatYear = (year) => {
   return `${year - 543}`; // Convert from Buddhist era to Christian era
 };
 
-export const getFilteredData = (drinkRateData, selectedGeographyType, selectedArea, years) => {
+export const getFilteredData = (rateData, selectedGeographyType, selectedArea, years) => {
   if (selectedGeographyType === 'bangkok') {
     // For Bangkok level, aggregate data across all districts
     const yearData = years.map(year => {
-      const yearRecords = drinkRateData.filter(row => row.year === year);
+      const yearRecords = rateData.filter(row => row.year === year);
       const avgValue = yearRecords.length > 0 
         ? yearRecords.reduce((sum, record) => sum + (record.value || 0), 0) / yearRecords.length 
         : 0;
@@ -20,7 +20,7 @@ export const getFilteredData = (drinkRateData, selectedGeographyType, selectedAr
     return yearData;
   } else if (selectedArea) {
     // For district level, filter by selected district
-    return drinkRateData
+    return rateData
       .filter(row => row.dname === selectedArea)
       .map(row => ({
         year: row.year,
@@ -32,14 +32,14 @@ export const getFilteredData = (drinkRateData, selectedGeographyType, selectedAr
   return [];
 };
 
-export const getSexFilteredData = (drinkRateBySexData, selectedGeographyType, selectedArea, years, sexes) => {
+export const getSexFilteredData = (rateBySexData, selectedGeographyType, selectedArea, years, sexes) => {
   if (selectedGeographyType === 'bangkok') {
     // Aggregate sex data for all of Bangkok
     const result = [];
     
     years.forEach(year => {
       sexes.forEach(sex => {
-        const sexYearRecords = drinkRateBySexData.filter(row => 
+        const sexYearRecords = rateBySexData.filter(row => 
           row.year === year && row.sex === sex);
         
         if (sexYearRecords.length > 0) {
@@ -69,7 +69,7 @@ export const getSexFilteredData = (drinkRateBySexData, selectedGeographyType, se
     return result;
   } else if (selectedArea) {
     // Filter sex data for selected district
-    return drinkRateBySexData
+    return rateBySexData
       .filter(row => row.dname === selectedArea)
       .map(row => ({
         year: row.year,

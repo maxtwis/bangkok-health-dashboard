@@ -1,3 +1,5 @@
+
+// Modified Dashboard component (index.jsx)
 import React, { useState, useEffect } from 'react';
 import useHealthData from '../../hooks/useHealthData';
 import useGeoJsonData from '../../hooks/useGeoJsonData';
@@ -57,7 +59,7 @@ const Dashboard = () => {
   // Determine which data to use based on selected indicator
   const rateData = selectedIndicator === 'drink_rate' ? drinkRateData : smokeRateData;
   const rateBySexData = selectedIndicator === 'drink_rate' ? drinkRateBySexData : smokeRateBySexData;
-  
+
   // Get indicator name
   const indicatorName = selectedIndicator === 'drink_rate' ? 'Alcohol Drinking Rate' : 'Smoking Rate';
 
