@@ -93,23 +93,59 @@ export const getSexFilteredData = (rateBySexData, selectedGeographyType, selecte
 export const prepareSexComparisonData = (filteredSexData, years, sexes) => {
   const result = [];
   
+  // Helper function to validate and clean value
+  const cleanValue = (value) => {
+    // Convert to number if it's not already
+    const numValue = parseFloat(value);
+    
+    // Check if it's a valid number
+    if (isNaN(numValue)) return 0;
+    
+    // Cap the value at 100% (since these are percentages)
+    if (numValue > 100) return 100;
+    
+    // Ensure non-negative values
+    if (numValue < 0) return 0;
+    
+    return numValue;
+  };
+  
   // Group by year
   const yearGroups = {};
+  
+  // First pass to collect data with validation
   filteredSexData.forEach(item => {
     if (!yearGroups[item.year]) {
       yearGroups[item.year] = {};
     }
-    yearGroups[item.year][item.sex] = item.value;
+    
+    // Check if value is not null/undefined before processing
+    if (item.value !== null && item.value !== undefined) {
+      // Clean the value - handle invalid data
+      const cleanedValue = cleanValue(item.value);
+      yearGroups[item.year][item.sex] = cleanedValue;
+    }
   });
   
-  // Convert to array format for chart
-  Object.keys(yearGroups).sort().forEach(year => {
+  // Second pass to ensure we have entries for all years in the dataset
+  years.forEach(year => {
+    if (!yearGroups[year]) {
+      yearGroups[year] = {};
+    }
+    
+    // Convert to array format for chart
     const yearData = { year: parseInt(year) };
+    
+    // Ensure all sexes are represented with default 0 if missing
     sexes.forEach(sex => {
       yearData[sex] = yearGroups[year][sex] || 0;
     });
+    
     result.push(yearData);
   });
+
+  // Sort by year
+  result.sort((a, b) => a.year - b.year);
   
   return result;
 };

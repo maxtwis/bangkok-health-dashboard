@@ -1,12 +1,15 @@
+
 import React from 'react';
 import { formatYear } from '../DataUtils';
+import NoSexDataMessage from '../NoSexDataMessage';
 
 const DataTablesTab = ({ 
   filteredData, 
   filteredSexData, 
   selectedGeographyType, 
   selectedArea,
-  indicatorName = 'Alcohol Drinking Rate'
+  indicatorName = 'Alcohol Drinking Rate',
+  hasSexData = true
 }) => {
   return (
     <div>
@@ -38,31 +41,37 @@ const DataTablesTab = ({
         </div>
       </div>
       
-      {/* Sex-specific Data Table */}
+      {/* Sex-specific Data Table or Message */}
       <div>
         <h3 className="text-lg font-medium mb-2">{indicatorName} by Sex</h3>
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="py-2 px-4 border-b">Year</th>
-                <th className="py-2 px-4 border-b">Sex</th>
-                <th className="py-2 px-4 border-b">{indicatorName} (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredSexData.map((item, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                  <td className="py-2 px-4 border-b text-center">{formatYear(item.year)}</td>
-                  <td className="py-2 px-4 border-b text-center">{item.sex}</td>
-                  <td className="py-2 px-4 border-b text-center">
-                    {item.value !== null ? item.value?.toFixed(2) : 'N/A'}
-                  </td>
+        {hasSexData ? (
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-300">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="py-2 px-4 border-b">Year</th>
+                  <th className="py-2 px-4 border-b">Sex</th>
+                  <th className="py-2 px-4 border-b">{indicatorName} (%)</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {filteredSexData.map((item, index) => (
+                  <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+                    <td className="py-2 px-4 border-b text-center">{formatYear(item.year)}</td>
+                    <td className="py-2 px-4 border-b text-center">{item.sex}</td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {item.value !== null ? item.value?.toFixed(2) : 'N/A'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="mb-8">
+            <NoSexDataMessage indicatorName={indicatorName} />
+          </div>
+        )}
       </div>
     </div>
   );

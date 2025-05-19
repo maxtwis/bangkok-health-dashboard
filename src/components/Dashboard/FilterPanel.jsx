@@ -25,6 +25,7 @@ const FilterPanel = ({
         >
           <option value="drink_rate">Alcohol Drinking Rate</option>
           <option value="smoke_rate">Smoking Rate</option>
+          <option value="traffic_death_rate">Traffic Death Rate</option>
         </select>
       </div>
       

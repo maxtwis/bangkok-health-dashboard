@@ -1,6 +1,7 @@
 import React from 'react';
 import OverallTrendChart from '../Charts/OverallTrendChart';
 import SexComparisonChart from '../Charts/SexComparisonChart';
+import NoSexDataMessage from '../NoSexDataMessage';
 
 const ChartsTab = ({ 
   filteredData, 
@@ -9,7 +10,8 @@ const ChartsTab = ({
   indicatorName,
   selectedGeographyType, 
   selectedArea, 
-  years 
+  years,
+  hasSexData = true
 }) => {
   return (
     <div>
@@ -25,10 +27,14 @@ const ChartsTab = ({
         <OverallTrendChart data={filteredData} indicatorName={indicatorName} />
       </div>
       
-      {/* Sex Comparison Chart */}
+      {/* Sex Comparison Chart or Message */}
       <div>
         <h3 className="text-lg font-medium mb-2">Comparison by Sex</h3>
-        <SexComparisonChart data={sexComparisonData} indicatorName={indicatorName} />
+        {hasSexData ? (
+          <SexComparisonChart data={sexComparisonData} indicatorName={indicatorName} />
+        ) : (
+          <NoSexDataMessage indicatorName={indicatorName} />
+        )}
       </div>
     </div>
   );

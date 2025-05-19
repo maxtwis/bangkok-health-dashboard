@@ -1,5 +1,3 @@
-
-// Modified Dashboard component (index.jsx)
 import React, { useState, useEffect } from 'react';
 import useHealthData from '../../hooks/useHealthData';
 import useGeoJsonData from '../../hooks/useGeoJsonData';
@@ -27,9 +25,11 @@ const Dashboard = () => {
     drinkRateBySexData,
     smokeRateData,
     smokeRateBySexData,
+    trafficDeathRateData,
     districts,
     years,
     sexes,
+    indicatorsWithSexData,
     isLoading: isDataLoading,
     error: dataError
   } = useHealthData();
@@ -57,16 +57,64 @@ const Dashboard = () => {
   }, [districts]);
 
   // Determine which data to use based on selected indicator
-  const rateData = selectedIndicator === 'drink_rate' ? drinkRateData : smokeRateData;
-  const rateBySexData = selectedIndicator === 'drink_rate' ? drinkRateBySexData : smokeRateBySexData;
+  const getIndicatorData = (indicator) => {
+    switch(indicator) {
+      case 'drink_rate':
+        return drinkRateData;
+      case 'smoke_rate':
+        return smokeRateData;
+      case 'traffic_death_rate':
+        return trafficDeathRateData;
+      default:
+        return drinkRateData;
+    }
+  };
+  
+  const getIndicatorSexData = (indicator) => {
+    switch(indicator) {
+      case 'drink_rate':
+        return drinkRateBySexData;
+      case 'smoke_rate':
+        return smokeRateBySexData;
+      default:
+        return null; // No sex data for other indicators
+    }
+  };
 
   // Get indicator name
-  const indicatorName = selectedIndicator === 'drink_rate' ? 'Alcohol Drinking Rate' : 'Smoking Rate';
+  const getIndicatorName = (indicator) => {
+    switch(indicator) {
+      case 'drink_rate':
+        return 'Alcohol Drinking Rate';
+      case 'smoke_rate':
+        return 'Smoking Rate';
+      case 'traffic_death_rate':
+        return 'Traffic Death Rate';
+      default:
+        return 'Health Indicator';
+    }
+  };
+  
+  // Check if the selected indicator has sex-specific data
+  const hasSexData = indicatorsWithSexData?.includes(selectedIndicator) || 
+    (selectedIndicator === 'drink_rate' || selectedIndicator === 'smoke_rate');
+  
+  // Get data for selected indicator
+  const rateData = getIndicatorData(selectedIndicator);
+  const rateBySexData = getIndicatorSexData(selectedIndicator);
+  const indicatorName = getIndicatorName(selectedIndicator);
 
   // Process data based on filters
   const filteredData = getFilteredData(rateData, selectedGeographyType, selectedArea, years);
-  const filteredSexData = getSexFilteredData(rateBySexData, selectedGeographyType, selectedArea, years, sexes);
-  const sexComparisonData = prepareSexComparisonData(filteredSexData, years, sexes);
+  
+  // Only process sex data if available for this indicator
+  let filteredSexData = [];
+  let sexComparisonData = [];
+  
+  if (hasSexData && rateBySexData) {
+    filteredSexData = getSexFilteredData(rateBySexData, selectedGeographyType, selectedArea, years, sexes);
+    sexComparisonData = prepareSexComparisonData(filteredSexData, years, sexes);
+  }
   
   // For population comparison data - using sample data until actual data is available
   const populationComparisonData = preparePopulationComparisonData([], years, populationGroups);
@@ -148,6 +196,7 @@ const Dashboard = () => {
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
                 years={years}
+                hasSexData={hasSexData}
               />
             )}
             
@@ -182,6 +231,7 @@ const Dashboard = () => {
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
                 indicatorName={indicatorName}
+                hasSexData={hasSexData}
               />
             )}
             
