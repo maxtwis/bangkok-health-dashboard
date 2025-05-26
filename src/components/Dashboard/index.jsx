@@ -1,3 +1,4 @@
+// Updated Dashboard component with indicator-specific years
 import React, { useState, useEffect } from 'react';
 import useHealthData from '../../hooks/useHealthData';
 import useGeoJsonData from '../../hooks/useGeoJsonData';
@@ -26,10 +27,13 @@ const Dashboard = () => {
     smokeRateData,
     smokeRateBySexData,
     trafficDeathRateData,
+    obeseRateData,
+    obeseRateBySexData,
     districts,
     years,
     sexes,
     indicatorsWithSexData,
+    indicatorYears,
     isLoading: isDataLoading,
     error: dataError
   } = useHealthData();
@@ -48,6 +52,7 @@ const Dashboard = () => {
   const [selectedGeographyType, setSelectedGeographyType] = useState('district');
   const [selectedArea, setSelectedArea] = useState('');
   const [selectedTab, setSelectedTab] = useState('charts');
+  const [selectedYear, setSelectedYear] = useState(null);
   
   // Set default district when data loads
   useEffect(() => {
@@ -55,6 +60,22 @@ const Dashboard = () => {
       setSelectedArea(districts[0]);
     }
   }, [districts]);
+
+  // Get available years for the current indicator
+  const availableYears = indicatorYears[selectedIndicator] || [];
+
+  // Handle indicator change - automatically select the most recent available year
+  useEffect(() => {
+    if (availableYears.length > 0) {
+      const mostRecentYear = Math.max(...availableYears);
+      
+      // If selectedYear is not in the available years for this indicator, 
+      // or if we don't have a selectedYear yet, set it to the most recent
+      if (!selectedYear || !availableYears.includes(selectedYear)) {
+        setSelectedYear(mostRecentYear);
+      }
+    }
+  }, [selectedIndicator, availableYears, selectedYear]);
 
   // Determine which data to use based on selected indicator
   const getIndicatorData = (indicator) => {
@@ -65,6 +86,8 @@ const Dashboard = () => {
         return smokeRateData;
       case 'traffic_death_rate':
         return trafficDeathRateData;
+      case 'obese_rate':
+        return obeseRateData;
       default:
         return drinkRateData;
     }
@@ -76,6 +99,8 @@ const Dashboard = () => {
         return drinkRateBySexData;
       case 'smoke_rate':
         return smokeRateBySexData;
+      case 'obese_rate':
+        return obeseRateBySexData;
       default:
         return null; // No sex data for other indicators
     }
@@ -90,6 +115,8 @@ const Dashboard = () => {
         return 'Smoking Rate';
       case 'traffic_death_rate':
         return 'Traffic Death Rate';
+      case 'obese_rate':
+        return 'Obesity Rate';
       default:
         return 'Health Indicator';
     }
@@ -97,7 +124,7 @@ const Dashboard = () => {
   
   // Check if the selected indicator has sex-specific data
   const hasSexData = indicatorsWithSexData?.includes(selectedIndicator) || 
-    (selectedIndicator === 'drink_rate' || selectedIndicator === 'smoke_rate');
+    ['drink_rate', 'smoke_rate', 'obese_rate'].includes(selectedIndicator);
   
   // Get data for selected indicator
   const rateData = getIndicatorData(selectedIndicator);
@@ -105,19 +132,19 @@ const Dashboard = () => {
   const indicatorName = getIndicatorName(selectedIndicator);
 
   // Process data based on filters
-  const filteredData = getFilteredData(rateData, selectedGeographyType, selectedArea, years);
+  const filteredData = getFilteredData(rateData, selectedGeographyType, selectedArea, availableYears);
   
   // Only process sex data if available for this indicator
   let filteredSexData = [];
   let sexComparisonData = [];
   
   if (hasSexData && rateBySexData) {
-    filteredSexData = getSexFilteredData(rateBySexData, selectedGeographyType, selectedArea, years, sexes);
-    sexComparisonData = prepareSexComparisonData(filteredSexData, years, sexes);
+    filteredSexData = getSexFilteredData(rateBySexData, selectedGeographyType, selectedArea, availableYears, sexes);
+    sexComparisonData = prepareSexComparisonData(filteredSexData, availableYears, sexes);
   }
   
   // For population comparison data - using sample data until actual data is available
-  const populationComparisonData = preparePopulationComparisonData([], years, populationGroups);
+  const populationComparisonData = preparePopulationComparisonData([], availableYears, populationGroups);
   
   const summaryData = getSummaryData(filteredData, selectedArea, indicatorName);
   
@@ -195,7 +222,7 @@ const Dashboard = () => {
                 indicatorName={indicatorName}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
-                years={years}
+                years={availableYears}
                 hasSexData={hasSexData}
               />
             )}
@@ -208,7 +235,9 @@ const Dashboard = () => {
                 indicatorName={indicatorName}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
-                years={years}
+                years={availableYears}
+                selectedYear={selectedYear}
+                setSelectedYear={setSelectedYear}
               />
             )}
             
@@ -220,7 +249,7 @@ const Dashboard = () => {
                 indicatorName={indicatorName}
                 selectedGeographyType={selectedGeographyType}
                 selectedArea={selectedArea}
-                years={years}
+                years={availableYears}
               />
             )}
             

@@ -16,17 +16,93 @@ const DistrictMap = ({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mapReady, setMapReady] = useState(false);
+  const [colorScale, setColorScale] = useState({ breaks: [], colors: [] });
 
-  // Function to get color based on value
-  const getColor = (value) => {
-    return value > 25 ? '#800026' :
-           value > 20 ? '#BD0026' :
-           value > 15 ? '#E31A1C' :
-           value > 10 ? '#FC4E2A' :
-           value > 7.5 ? '#FD8D3C' :
-           value > 5 ? '#FEB24C' :
-           value > 2.5 ? '#FED976' :
-                    '#FFEDA0';
+  // Function to calculate dynamic color scale based on data distribution
+  const calculateColorScale = (values) => {
+    if (!values || values.length === 0) {
+      return {
+        breaks: [0, 5, 10, 15, 20, 25],
+        colors: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026']
+      };
+    }
+
+    // Remove null/undefined values and sort
+    const validValues = values.filter(v => v !== null && v !== undefined && !isNaN(v)).sort((a, b) => a - b);
+    
+    if (validValues.length === 0) {
+      return {
+        breaks: [0, 5, 10, 15, 20, 25],
+        colors: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026']
+      };
+    }
+
+    const min = validValues[0];
+    const max = validValues[validValues.length - 1];
+    
+    // If all values are the same or very close, create a simple scale
+    if (max - min < 0.1) {
+      const baseValue = Math.floor(min);
+      return {
+        breaks: [baseValue, baseValue + 1, baseValue + 2, baseValue + 3, baseValue + 4, baseValue + 5],
+        colors: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026']
+      };
+    }
+
+    // Calculate percentiles for more meaningful breaks
+    const getPercentile = (arr, percentile) => {
+      const index = (percentile / 100) * (arr.length - 1);
+      const lower = Math.floor(index);
+      const upper = Math.ceil(index);
+      if (lower === upper) return arr[lower];
+      return arr[lower] * (upper - index) + arr[upper] * (index - lower);
+    };
+
+    // Create breaks based on data distribution
+    const breaks = [
+      Math.floor(min * 10) / 10, // Round down to 1 decimal
+      Math.round(getPercentile(validValues, 20) * 10) / 10,
+      Math.round(getPercentile(validValues, 40) * 10) / 10,
+      Math.round(getPercentile(validValues, 60) * 10) / 10,
+      Math.round(getPercentile(validValues, 80) * 10) / 10,
+      Math.ceil(max * 10) / 10 // Round up to 1 decimal
+    ];
+
+    // Ensure breaks are unique and increasing
+    const uniqueBreaks = [...new Set(breaks)].sort((a, b) => a - b);
+    
+    // If we have fewer than 6 unique breaks, interpolate
+    while (uniqueBreaks.length < 6) {
+      for (let i = 0; i < uniqueBreaks.length - 1; i++) {
+        const mid = (uniqueBreaks[i] + uniqueBreaks[i + 1]) / 2;
+        if (mid !== uniqueBreaks[i] && mid !== uniqueBreaks[i + 1]) {
+          uniqueBreaks.splice(i + 1, 0, Math.round(mid * 10) / 10);
+          break;
+        }
+      }
+      if (uniqueBreaks.length >= 6) break;
+      // If we can't add more breaks, just duplicate the last one
+      uniqueBreaks.push(uniqueBreaks[uniqueBreaks.length - 1] + 0.1);
+    }
+
+    return {
+      breaks: uniqueBreaks.slice(0, 6),
+      colors: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026']
+    };
+  };
+
+  // Function to get color based on value and current color scale
+  const getColor = (value, scale) => {
+    if (value === null || value === undefined || isNaN(value)) return '#ccc';
+    
+    const { breaks, colors } = scale;
+    
+    for (let i = breaks.length - 1; i >= 0; i--) {
+      if (value >= breaks[i]) {
+        return colors[i] || colors[colors.length - 1];
+      }
+    }
+    return colors[0];
   };
 
   // Initialize map only once
@@ -119,7 +195,7 @@ const DistrictMap = ({
   }, []); // Empty dependency array ensures this only runs once
 
   // Create or update the legend
-  const updateLegend = async () => {
+  const updateLegend = async (scale) => {
     if (!mapInstanceRef.current) return;
     
     try {
@@ -136,16 +212,20 @@ const DistrictMap = ({
 
       legend.onAdd = () => {
         const div = L.DomUtil.create('div', 'info legend');
-        const grades = [0, 2.5, 5, 7.5, 10, 15, 20, 25];
+        const { breaks, colors } = scale;
 
         // Add legend title based on selected indicator
-        div.innerHTML = `<h4>${indicatorName} (%)</h4>`;
+        const unit = selectedIndicator === 'traffic_death_rate' ? 'per 100,000' : '%';
+        div.innerHTML = `<h4>${indicatorName} (${unit})</h4>`;
         
         // Add colored squares for each interval
-        for (let i = 0; i < grades.length; i++) {
+        for (let i = 0; i < breaks.length; i++) {
+          const color = colors[i] || colors[colors.length - 1];
+          const nextBreak = breaks[i + 1];
+          
           div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 0.1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            '<i style="background:' + color + '"></i> ' +
+            breaks[i] + (nextBreak !== undefined ? '&ndash;' + nextBreak + '<br>' : '+');
         }
 
         return div;
@@ -183,13 +263,19 @@ const DistrictMap = ({
       
       // Create a mapping of district codes to rate values for the selected year
       const districtValues = {};
-      rateData
-        .filter(d => d.year === selectedYear)
-        .forEach(d => {
-          districtValues[d.dcode] = d.value;
-        });
+      const yearData = rateData.filter(d => d.year === selectedYear);
+      
+      yearData.forEach(d => {
+        districtValues[d.dcode] = d.value;
+      });
+
+      // Calculate dynamic color scale based on current year's data
+      const allValues = Object.values(districtValues);
+      const currentColorScale = calculateColorScale(allValues);
+      setColorScale(currentColorScale);
 
       console.log('District values for year', selectedYear, ':', districtValues);
+      console.log('Color scale:', currentColorScale);
       console.log('GeoJSON features count:', geoJsonData.features.length);
 
       // Add new GeoJSON layer
@@ -198,7 +284,7 @@ const DistrictMap = ({
           const dcode = feature.properties.dcode;
           const value = districtValues[dcode];
           return {
-            fillColor: value !== undefined ? getColor(value) : '#ccc',
+            fillColor: value !== undefined ? getColor(value, currentColorScale) : '#ccc',
             weight: 2,
             opacity: 1,
             color: 'white',
@@ -209,11 +295,12 @@ const DistrictMap = ({
         onEachFeature: (feature, layer) => {
           const dcode = feature.properties.dcode;
           const value = districtValues[dcode];
+          const unit = selectedIndicator === 'traffic_death_rate' ? ' per 100,000' : '%';
           
           // Add tooltip
           layer.bindTooltip(
             `<strong>${feature.properties.dname}</strong><br>` +
-            `${indicatorName}: ${value !== undefined ? value.toFixed(2) + '%' : 'No data'}`
+            `${indicatorName}: ${value !== undefined ? value.toFixed(2) + unit : 'No data'}`
           );
 
           // Add hover interactions
@@ -248,8 +335,8 @@ const DistrictMap = ({
         mapInstanceRef.current.fitBounds(bounds);
       }
       
-      // Update legend
-      updateLegend();
+      // Update legend with new color scale
+      updateLegend(currentColorScale);
       
     } catch (error) {
       console.error('Error updating GeoJSON layer:', error);

@@ -1,13 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { formatYear } from '../DataUtils';
 
-const SexComparisonChart = ({ data, indicatorName = 'Alcohol Drinking Rate' }) => {
+const SexComparisonChart = ({ data, indicatorName = 'Alcohol Drinking Rate', selectedIndicator }) => {
   const [processedData, setProcessedData] = useState([]);
-  const [maxValue, setMaxValue] = useState(20); // Default reasonable max for percentage
 
   // Check if the data includes lgbt category
   const hasLgbt = data.some(item => 'lgbt' in item && item.lgbt !== null && item.lgbt !== undefined);
+
+  // Calculate dynamic Y-axis configuration
+  const yAxisConfig = useMemo(() => {
+    if (!processedData || processedData.length === 0) {
+      return {
+        domain: [0, 50],
+        label: 'Percentage (%)',
+        tickFormatter: (value) => `${value}%`
+      };
+    }
+
+    // Collect all values from the processed data
+    const allValues = [];
+    processedData.forEach(item => {
+      if (typeof item.male === 'number' && !isNaN(item.male)) allValues.push(item.male);
+      if (typeof item.female === 'number' && !isNaN(item.female)) allValues.push(item.female);
+      if (hasLgbt && typeof item.lgbt === 'number' && !isNaN(item.lgbt)) allValues.push(item.lgbt);
+    });
+
+    if (allValues.length === 0) {
+      return {
+        domain: [0, 50],
+        label: 'Percentage (%)',
+        tickFormatter: (value) => `${value}%`
+      };
+    }
+
+    const min = Math.min(...allValues);
+    const max = Math.max(...allValues);
+    
+    // Determine appropriate scale based on indicator type
+    let domain, label, tickFormatter;
+    
+    if (selectedIndicator === 'traffic_death_rate') {
+      // Traffic death rate uses different units and scale
+      const padding = (max - min) * 0.2 || 1;
+      domain = [Math.max(0, Math.floor(min - padding)), Math.ceil(max + padding)];
+      label = 'Rate per 100,000 population';
+      tickFormatter = (value) => `${value}`;
+    } else {
+      // Percentage-based indicators
+      const padding = (max - min) * 0.2 || 2;
+      const minDomain = Math.max(0, Math.floor(min - padding));
+      const maxDomain = Math.min(100, Math.ceil(max + padding)); // Cap at 100% for percentages
+      domain = [minDomain, maxDomain];
+      label = 'Percentage (%)';
+      tickFormatter = (value) => `${value}%`;
+    }
+
+    return { domain, label, tickFormatter };
+  }, [processedData, hasLgbt, selectedIndicator]);
 
   useEffect(() => {
     // Clean and normalize the data
@@ -16,77 +66,31 @@ const SexComparisonChart = ({ data, indicatorName = 'Alcohol Drinking Rate' }) =
       const cleanedData = data.map(item => {
         const newItem = { ...item };
         
-        // Handle male data
-        if (typeof newItem.male === 'number') {
-          // Cap extremely high values (likely errors)
-          if (newItem.male > 100) {
-            newItem.male = Math.min(newItem.male, 100);
-          }
-          // Handle negative values
-          if (newItem.male < 0) {
-            newItem.male = 0;
-          }
-          // Fix any NaN values
-          if (isNaN(newItem.male)) {
-            newItem.male = 0;
-          }
-        } else {
-          newItem.male = 0;
-        }
+        // Helper function to clean individual values
+        const cleanValue = (value) => {
+          if (typeof value !== 'number' || isNaN(value)) return 0;
+          if (value < 0) return 0;
+          // For percentage indicators, cap at 100%, for traffic death rate, allow higher values
+          if (selectedIndicator !== 'traffic_death_rate' && value > 100) return 100;
+          return value;
+        };
         
-        // Handle female data
-        if (typeof newItem.female === 'number') {
-          if (newItem.female > 100) {
-            newItem.female = Math.min(newItem.female, 100);
-          }
-          if (newItem.female < 0) {
-            newItem.female = 0;
-          }
-          if (isNaN(newItem.female)) {
-            newItem.female = 0;
-          }
-        } else {
-          newItem.female = 0;
-        }
-        
-        // Handle LGBT data if present
+        // Clean all the values
+        newItem.male = cleanValue(newItem.male);
+        newItem.female = cleanValue(newItem.female);
         if (hasLgbt) {
-          if (typeof newItem.lgbt === 'number') {
-            if (newItem.lgbt > 100) {
-              newItem.lgbt = Math.min(newItem.lgbt, 100);
-            }
-            if (newItem.lgbt < 0) {
-              newItem.lgbt = 0;
-            }
-            if (isNaN(newItem.lgbt)) {
-              newItem.lgbt = 0;
-            }
-          } else {
-            newItem.lgbt = 0;
-          }
+          newItem.lgbt = cleanValue(newItem.lgbt);
         }
         
         return newItem;
       });
-      
-      // Find the maximum value for better scaling
-      let max = 0;
-      cleanedData.forEach(item => {
-        if (item.male > max) max = item.male;
-        if (item.female > max) max = item.female;
-        if (hasLgbt && item.lgbt > max) max = item.lgbt;
-      });
-      
-      // Set a reasonable max value with a ceiling of 100 (it's a percentage)
-      // Add 10% padding for better visualization
-      setMaxValue(Math.min(Math.ceil(max * 1.1), 100));
       
       // Set the processed data
       setProcessedData(cleanedData);
     };
     
     cleanData();
-  }, [data, hasLgbt]);
+  }, [data, hasLgbt, selectedIndicator]);
 
   // If we have no data, show a placeholder message
   if (!processedData || processedData.length === 0) {
@@ -116,19 +120,22 @@ const SexComparisonChart = ({ data, indicatorName = 'Alcohol Drinking Rate' }) =
           />
           <YAxis 
             label={{ 
-              value: 'Percentage (%)', 
+              value: yAxisConfig.label, 
               angle: -90, 
               position: 'insideLeft',
               style: { textAnchor: 'middle' },
               dx: -10
             }}
-            tickFormatter={(value) => `${value}`}
-            domain={[0, maxValue]}
+            tickFormatter={yAxisConfig.tickFormatter}
+            domain={yAxisConfig.domain}
             allowDecimals={false}
             padding={{ top: 20 }}
           />
           <Tooltip 
-            formatter={(value) => [`${typeof value === 'number' ? value.toFixed(2) : '0'}%`, indicatorName]}
+            formatter={(value) => {
+              const unit = selectedIndicator === 'traffic_death_rate' ? '' : '%';
+              return [`${typeof value === 'number' ? value.toFixed(2) : '0'}${unit}`, indicatorName];
+            }}
             labelFormatter={(year) => `Year: ${formatYear(year)}`}
           />
           <Legend wrapperStyle={{ paddingTop: 10 }} />

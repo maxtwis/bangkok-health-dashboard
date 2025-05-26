@@ -9,20 +9,21 @@ const MapTab = ({
   indicatorName,
   selectedGeographyType,
   selectedArea,
-  years
+  years,
+  selectedYear,
+  setSelectedYear
 }) => {
-  const [selectedYear, setSelectedYear] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Set default selected year to the most recent year immediately
+  // Set default selected year to the most recent year when years change
   useEffect(() => {
-    if (years && years.length > 0 && !selectedYear) {
-      const mostRecentYear = years[years.length - 1];
+    if (years && years.length > 0 && (!selectedYear || !years.includes(selectedYear))) {
+      const mostRecentYear = Math.max(...years);
       console.log('Setting initial year to most recent:', mostRecentYear);
       setSelectedYear(mostRecentYear);
     }
-  }, [years, selectedYear]);
+  }, [years, selectedYear, setSelectedYear]);
 
   // Check for required data
   useEffect(() => {
@@ -53,10 +54,25 @@ const MapTab = ({
     setSelectedYear(year);
   };
 
+  // Get the year range for display
+  const getYearRangeDisplay = () => {
+    if (!years || years.length === 0) return '';
+    const minYear = Math.min(...years);
+    const maxYear = Math.max(...years);
+    return minYear === maxYear ? 
+      `${formatYear(minYear)}` : 
+      `${formatYear(minYear)} - ${formatYear(maxYear)}`;
+  };
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">
         {indicatorName} - District Map
+        {years.length > 0 && (
+          <span className="text-base font-normal text-gray-600 ml-2">
+            ({getYearRangeDisplay()})
+          </span>
+        )}
       </h2>
 
       {/* Year selector */}
@@ -68,14 +84,18 @@ const MapTab = ({
           className="rounded border border-gray-300 p-2 w-full md:w-60"
           value={selectedYear || ''}
           onChange={handleYearChange}
+          disabled={years.length === 0}
         >
-          {selectedYear === null && <option value="">Select Year</option>}
+          {selectedYear === null && years.length > 0 && <option value="">Select Year</option>}
           {years.map(year => (
             <option key={year} value={year}>
               {formatYear(year)} (B.E. {year})
             </option>
           ))}
         </select>
+        {years.length === 0 && (
+          <p className="text-sm text-gray-500 mt-1">No data available for this indicator</p>
+        )}
       </div>
 
       {/* Map Component */}
@@ -87,7 +107,7 @@ const MapTab = ({
           </div>
         ) : (
           <>
-            {selectedYear && (
+            {selectedYear && years.includes(selectedYear) ? (
               <DistrictMap
                 geoJsonData={districtGeoJson}
                 rateData={rateData}
@@ -95,10 +115,14 @@ const MapTab = ({
                 selectedIndicator={selectedIndicator}
                 indicatorName={indicatorName}
               />
-            )}
-            {!selectedYear && (
+            ) : (
               <div className="h-96 flex justify-center items-center bg-gray-100 rounded-lg">
-                <p>Please select a year to view the map</p>
+                <p className="text-center">
+                  {years.length === 0 ? 
+                    'No data available for this indicator' : 
+                    'Please select a year to view the map'
+                  }
+                </p>
               </div>
             )}
           </>
@@ -110,7 +134,11 @@ const MapTab = ({
         <h3 className="text-lg font-medium mb-2">Map Information</h3>
         <p className="mb-3">
           This map visualizes the {indicatorName.toLowerCase()} across Bangkok's districts for the selected year.
-          Each district is colored according to the percentage, with darker colors indicating higher rates.
+          Each district is colored according to the {selectedIndicator === 'traffic_death_rate' ? 'rate per 100,000 population' : 'percentage'}, 
+          with darker colors indicating higher rates.
+        </p>
+        <p className="mb-3">
+          <span className="font-medium">Available Data:</span> This indicator has data for {years.length} year{years.length !== 1 ? 's' : ''}: {years.map(y => formatYear(y)).join(', ')}.
         </p>
         <p className="mb-3">
           <span className="font-medium">Interactions:</span>

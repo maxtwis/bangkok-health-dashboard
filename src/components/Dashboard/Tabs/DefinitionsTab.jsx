@@ -5,13 +5,15 @@ const DefinitionsTab = ({ selectedIndicator }) => {
   const getIndicatorOrder = () => {
     switch(selectedIndicator) {
       case 'drink_rate':
-        return ['drink_rate', 'smoke_rate', 'traffic_death_rate'];
+        return ['drink_rate', 'smoke_rate', 'traffic_death_rate', 'obese_rate'];
       case 'smoke_rate':
-        return ['smoke_rate', 'drink_rate', 'traffic_death_rate'];
+        return ['smoke_rate', 'drink_rate', 'traffic_death_rate', 'obese_rate'];
       case 'traffic_death_rate':
-        return ['traffic_death_rate', 'drink_rate', 'smoke_rate'];
+        return ['traffic_death_rate', 'drink_rate', 'smoke_rate', 'obese_rate'];
+      case 'obese_rate':
+        return ['obese_rate', 'drink_rate', 'smoke_rate', 'traffic_death_rate'];
       default:
-        return ['drink_rate', 'smoke_rate', 'traffic_death_rate'];
+        return ['drink_rate', 'smoke_rate', 'traffic_death_rate', 'obese_rate'];
     }
   };
   
@@ -67,6 +69,24 @@ const DefinitionsTab = ({ selectedIndicator }) => {
             </p>
           </div>
         );
+      case 'obese_rate':
+        return (
+          <div className="bg-gray-50 p-4 rounded border mb-4">
+            <h3 className="text-lg font-medium mb-2">Obesity Rate</h3>
+            <p className="mb-2">
+              <strong>Definition:</strong> The percentage of population aged 18 years and over with a Body Mass Index (BMI) of 30 kg/m² or higher.
+            </p>
+            <p className="mb-2">
+              <strong>Measurement:</strong> BMI is calculated as weight in kilograms divided by height in meters squared (kg/m²). Obesity is defined as BMI ≥ 30 kg/m².
+            </p>
+            <p className="mb-2">
+              <strong>Data Source:</strong> Survey data collected at district level in Bangkok, including physical measurements and self-reported data.
+            </p>
+            <p>
+              <strong>Time Period:</strong> Data shown for Buddhist years 2566-2568 (corresponding to 2023-2025 CE).
+            </p>
+          </div>
+        );
       default:
         return null;
     }
@@ -86,7 +106,7 @@ const DefinitionsTab = ({ selectedIndicator }) => {
           The dashboard compares health indicators across the following population groups:
         </p>
         <ul className="space-y-2">
-          <li><strong>General Population</strong> - Overall adult population (15+ years) serving as the reference group.</li>
+          <li><strong>General Population</strong> - Overall adult population serving as the reference group.</li>
           <li><strong>ผู้สูงอายุ (Elderly)</strong> - Adults aged 60 years and above, as defined by the Thai Elderly Person Act.</li>
           <li><strong>ผู้พิการ (Disabled)</strong> - Persons with disabilities as registered under the Thai Persons with Disabilities Empowerment Act.</li>
           <li><strong>LGBTQ+</strong> - Individuals who self-identify as lesbian, gay, bisexual, transgender, queer, or other sexual and gender minorities.</li>
@@ -101,17 +121,20 @@ const DefinitionsTab = ({ selectedIndicator }) => {
           The surveys use standardized questionnaires and sampling techniques to ensure data comparability
           across districts and years.
         </p>
+        <p className="mb-2">
+          <strong>BMI Measurements:</strong> For obesity rate calculations, trained surveyors collect height and weight measurements using standardized protocols and calibrated equipment.
+        </p>
       </div>
       
       <div className="bg-gray-50 p-4 rounded border">
         <h3 className="text-lg font-medium mb-2">Interpretation Guide</h3>
         <p className="mb-2">
-          <strong>Trend Analysis:</strong> Increasing trends in alcohol consumption, smoking rates, and traffic deaths 
+          <strong>Trend Analysis:</strong> Increasing trends in alcohol consumption, smoking rates, traffic deaths, and obesity 
           indicate worsening public health outcomes, while decreasing trends suggest improvements.
         </p>
         <p className="mb-2">
           <strong>Sex Differences:</strong> Significant differences between male and female rates
-          may indicate cultural or social factors affecting health behaviors and outcomes.
+          may indicate cultural, biological, or social factors affecting health behaviors and outcomes.
         </p>
         <p className="mb-2">
           <strong>Population Group Disparities:</strong> Variations in rates between different population
@@ -120,7 +143,7 @@ const DefinitionsTab = ({ selectedIndicator }) => {
         </p>
         <p>
           <strong>Geographic Variations:</strong> Variations between districts may reflect socioeconomic
-          factors, local policies, or infrastructure differences influencing health behaviors and outcomes.
+          factors, local policies, infrastructure differences, or environmental factors influencing health behaviors and outcomes.
         </p>
       </div>
     </div>
