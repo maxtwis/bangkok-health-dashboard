@@ -4,9 +4,9 @@ import useHealthData from '../../hooks/useHealthData';
 import useGeoJsonData from '../../hooks/useGeoJsonData';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
-import EnhancedDistrictSelector from './EnhancedDistrictSelector';
+import EnhancedDistrictSelector from './DistrictSelector';
 import LeftPanel from './LeftPanel';
-import EnhancedSpiderChart from './EnhancedSpiderChart';
+import EnhancedSpiderChart from './SpiderChart';
 import PopulationGroupsTab from './Tabs/PopulationGroupsTab';
 import { 
   getFilteredData, 
