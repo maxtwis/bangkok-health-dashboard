@@ -5,8 +5,8 @@ import useGeoJsonData from '../../hooks/useGeoJsonData';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
 import DistrictSelector from './DistrictSelector';
-import EnhancedLeftPanel from './EnhancedLeftPanel';
-import FlexibleSpiderChart from './SpiderChart';
+import LeftPanel from './LeftPanel';
+import SpiderChart from './SpiderChart';
 import { 
   getFilteredData, 
   getSexFilteredData, 
@@ -224,8 +224,8 @@ const Dashboard = () => {
       <Header indicatorName="Social Determinants of Health Equity" />
       
       <div className="max-w-7xl mx-auto p-4">
-        {/* Separated District Selection */}
-        <SeparatedDistrictSelector 
+        {/* District Selection */}
+        <DistrictSelector 
           districts={districts}
           selectedDistrict={selectedDistrict}
           setSelectedDistrict={setSelectedDistrict}
@@ -238,8 +238,8 @@ const Dashboard = () => {
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Enhanced Left Panel with Mode Support */}
-          <EnhancedLeftPanel 
+          {/* Left Panel with Mode Support */}
+          <LeftPanel 
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             viewMode={viewMode}
@@ -258,9 +258,9 @@ const Dashboard = () => {
             }}
           />
 
-          {/* Flexible Spider Chart */}
+          {/* Spider Chart */}
           <div className="lg:col-span-2">
-            <FlexibleSpiderChart 
+            <SpiderChart 
               spiderData={districtSpiderData}
               populationGroupSpiderData={populationGroupSpiderData}
               selectedDistrict={selectedDistrict}
