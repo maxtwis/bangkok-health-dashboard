@@ -1,13 +1,12 @@
-// Enhanced Dashboard component with Population Group features
+// Updated Dashboard component with separated district and population comparisons
 import React, { useState, useEffect } from 'react';
 import useHealthData from '../../hooks/useHealthData';
 import useGeoJsonData from '../../hooks/useGeoJsonData';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
-import EnhancedDistrictSelector from './DistrictSelector';
-import LeftPanel from './LeftPanel';
-import EnhancedSpiderChart from './SpiderChart';
-import PopulationGroupsTab from './Tabs/PopulationGroupsTab';
+import DistrictSelector from './DistrictSelector';
+import EnhancedLeftPanel from './EnhancedLeftPanel';
+import FlexibleSpiderChart from './SpiderChart';
 import { 
   getFilteredData, 
   getSexFilteredData, 
@@ -15,10 +14,12 @@ import {
   getPopulationFilteredData, 
   preparePopulationComparisonData,
   getSummaryData,
-  // New functions for population group analysis
+  // Enhanced functions
   preparePopulationGroupSpiderData,
   calculateVulnerabilityIndex,
-  getEquityInsights
+  getEquityInsights,
+  getMostSimilarDistricts,
+  generateSamplePopulationGroupData
 } from './DataUtils';
 
 const Dashboard = () => {
@@ -45,11 +46,11 @@ const Dashboard = () => {
     error: geoJsonError
   } = useGeoJsonData();
   
-  // Enhanced state for new comparison features
+  // Separated state management for both comparison modes
   const [selectedDistrict, setSelectedDistrict] = useState('');
-  const [comparisonType, setComparisonType] = useState('district'); // 'district' or 'population'
   const [comparisonDistrict, setComparisonDistrict] = useState('');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
+  const [viewMode, setViewMode] = useState('district'); // 'district', 'population', or 'both'
   const [activeTab, setActiveTab] = useState('demographics');
   
   // Set default districts when data loads
@@ -65,11 +66,10 @@ const Dashboard = () => {
     }
   }, [districts, selectedDistrict]);
 
-  // Calculate Health Behaviors domain score from your existing data
+  // Calculate Health Behaviors domain score from existing data
   const calculateHealthBehaviorsScore = (district) => {
     const currentYear = Math.max(...years);
     
-    // Get latest data for each indicator for the district
     const drinkRate = drinkRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
     const smokeRate = smokeRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
     const obeseRate = obeseRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
@@ -83,67 +83,6 @@ const Dashboard = () => {
     
     const healthBehaviorsScore = (drinkScore + smokeScore + obeseScore + trafficScore) / 4;
     return Math.max(0, Math.min(100, healthBehaviorsScore));
-  };
-
-  // Generate sample population group data (replace with actual data when available)
-  const generatePopulationGroupData = () => {
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq'];
-    const indicators = ['drink_rate', 'smoke_rate', 'obese_rate', 'traffic_death_rate'];
-    const currentYear = Math.max(...years);
-    
-    const data = [];
-    
-    districts.forEach(district => {
-      populationGroups.forEach(group => {
-        indicators.forEach(indicator => {
-          // Get baseline value for the district
-          let baseValue;
-          switch(indicator) {
-            case 'drink_rate':
-              baseValue = drinkRateData.find(d => d.dname === district && d.year === currentYear)?.value || 15;
-              break;
-            case 'smoke_rate':
-              baseValue = smokeRateData.find(d => d.dname === district && d.year === currentYear)?.value || 10;
-              break;
-            case 'obese_rate':
-              baseValue = obeseRateData.find(d => d.dname === district && d.year === currentYear)?.value || 20;
-              break;
-            case 'traffic_death_rate':
-              baseValue = trafficDeathRateData.find(d => d.dname === district && d.year === currentYear)?.value || 8;
-              break;
-            default:
-              baseValue = 15;
-          }
-          
-          // Add variation based on population group (simulating disparities)
-          let multiplier = 1;
-          switch(group) {
-            case 'informal_workers':
-              multiplier = indicator === 'drink_rate' ? 1.3 : indicator === 'smoke_rate' ? 1.5 : 1.2;
-              break;
-            case 'elderly':
-              multiplier = indicator === 'drink_rate' ? 0.7 : indicator === 'obese_rate' ? 1.4 : 1.1;
-              break;
-            case 'disabled':
-              multiplier = indicator === 'obese_rate' ? 1.3 : 1.2;
-              break;
-            case 'lgbtq':
-              multiplier = indicator === 'smoke_rate' ? 1.4 : 1.1;
-              break;
-          }
-          
-          data.push({
-            dname: district,
-            population_group: group,
-            indicator: indicator,
-            year: currentYear,
-            value: Math.max(0, baseValue * multiplier)
-          });
-        });
-      });
-    });
-    
-    return data;
   };
 
   // Get spider chart data for district comparison
@@ -195,11 +134,17 @@ const Dashboard = () => {
 
   // Get spider chart data for population group comparison
   const getPopulationGroupSpiderChartData = () => {
-    const populationGroupData = generatePopulationGroupData();
-    const overallPopulationData = []; // This would be your overall district data
+    const populationGroupData = generateSamplePopulationGroupData(districts, {
+      drinkRateData,
+      smokeRateData,
+      obeseRateData,
+      trafficDeathRateData
+    });
     
-    // Transform your existing district data to match the expected format
+    // Transform existing district data to match the expected format
     const currentYear = Math.max(...years);
+    const overallPopulationData = [];
+    
     ['drink_rate', 'smoke_rate', 'obese_rate', 'traffic_death_rate'].forEach(indicator => {
       let value;
       switch(indicator) {
@@ -250,24 +195,13 @@ const Dashboard = () => {
     };
   };
 
-  // Calculate most similar districts
-  const getMostSimilarDistricts = (district) => {
-    if (!district || districts.length === 0) return [];
-    
-    const targetScore = calculateHealthBehaviorsScore(district);
-    
-    const similarities = districts
-      .filter(d => d !== district)
-      .map(d => {
-        const score = calculateHealthBehaviorsScore(d);
-        const similarity = 100 - Math.abs(targetScore - score);
-        return { district: d, similarity: Math.max(0, similarity) };
-      })
-      .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, 3);
-    
-    return similarities;
-  };
+  // Calculate most similar districts using the enhanced function
+  const similarDistricts = selectedDistrict ? getMostSimilarDistricts(
+    selectedDistrict,
+    districts,
+    { drinkRateData, smokeRateData, obeseRateData, trafficDeathRateData },
+    3
+  ) : [];
 
   const isLoading = isDataLoading || isGeoJsonLoading;
   const error = dataError || geoJsonError;
@@ -278,35 +212,39 @@ const Dashboard = () => {
   const districtSpiderData = getDistrictSpiderChartData();
   const populationGroupSpiderData = getPopulationGroupSpiderChartData();
   const healthBehaviorsData = selectedDistrict ? getHealthBehaviorsData(selectedDistrict) : {};
-  const similarDistricts = selectedDistrict ? getMostSimilarDistricts(selectedDistrict) : [];
-  const populationGroupData = generatePopulationGroupData();
+  const populationGroupData = generateSamplePopulationGroupData(districts, {
+    drinkRateData,
+    smokeRateData,
+    obeseRateData,
+    trafficDeathRateData
+  });
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header indicatorName="Social Determinants of Health Equity" />
       
       <div className="max-w-7xl mx-auto p-4">
-        {/* Enhanced District Selection */}
-        <EnhancedDistrictSelector 
+        {/* Separated District Selection */}
+        <SeparatedDistrictSelector 
           districts={districts}
           selectedDistrict={selectedDistrict}
           setSelectedDistrict={setSelectedDistrict}
-          comparisonType={comparisonType}
-          setComparisonType={setComparisonType}
           comparisonDistrict={comparisonDistrict}
           setComparisonDistrict={setComparisonDistrict}
           selectedPopulationGroup={selectedPopulationGroup}
           setSelectedPopulationGroup={setSelectedPopulationGroup}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Enhanced Left Panel */}
-          <LeftPanel 
+          {/* Enhanced Left Panel with Mode Support */}
+          <EnhancedLeftPanel 
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            viewMode={viewMode}
             selectedDistrict={selectedDistrict}
             comparisonDistrict={comparisonDistrict}
-            comparisonType={comparisonType}
             selectedPopulationGroup={selectedPopulationGroup}
             healthBehaviorsData={healthBehaviorsData}
             similarDistricts={similarDistricts}
@@ -320,15 +258,15 @@ const Dashboard = () => {
             }}
           />
 
-          {/* Enhanced Spider Chart */}
+          {/* Flexible Spider Chart */}
           <div className="lg:col-span-2">
-            <EnhancedSpiderChart 
+            <FlexibleSpiderChart 
               spiderData={districtSpiderData}
               populationGroupSpiderData={populationGroupSpiderData}
               selectedDistrict={selectedDistrict}
               comparisonDistrict={comparisonDistrict}
-              comparisonType={comparisonType}
               selectedPopulationGroup={selectedPopulationGroup}
+              viewMode={viewMode}
             />
           </div>
         </div>
