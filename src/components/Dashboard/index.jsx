@@ -1,16 +1,12 @@
-// Updated Dashboard component with indicator-specific years
+// Updated Dashboard component with SDHE design
 import React, { useState, useEffect } from 'react';
 import useHealthData from '../../hooks/useHealthData';
 import useGeoJsonData from '../../hooks/useGeoJsonData';
-import FilterPanel from './FilterPanel';
-import ChartsTab from './Tabs/ChartsTab';
-import MapTab from './Tabs/MapTab';
-import DataTablesTab from './Tabs/DataTablesTab';
-import SummaryTab from './Tabs/SummaryTab';
-import DefinitionsTab from './Tabs/DefinitionsTab';
-import PopulationComparisonTab from './Tabs/PopulationComparisonTab';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
+import DistrictSelector from './DistrictSelector';
+import LeftPanel from './LeftPanel';
+import SpiderChart from './SpiderChart';
 import { 
   getFilteredData, 
   getSexFilteredData, 
@@ -44,245 +40,184 @@ const Dashboard = () => {
     error: geoJsonError
   } = useGeoJsonData();
   
-  // Define population groups since we don't have actual data yet
-  const populationGroups = ['general', 'elderly', 'disabled', 'lgbtq', 'informal'];
+  // State for district selection
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [comparisonDistrict, setComparisonDistrict] = useState('');
+  const [activeTab, setActiveTab] = useState('demographics');
   
-  // State for filters
-  const [selectedIndicator, setSelectedIndicator] = useState('drink_rate');
-  const [selectedGeographyType, setSelectedGeographyType] = useState('district');
-  const [selectedArea, setSelectedArea] = useState('');
-  const [selectedTab, setSelectedTab] = useState('charts');
-  const [selectedYear, setSelectedYear] = useState(null);
-  
-  // Set default district when data loads
+  // Set default districts when data loads
   useEffect(() => {
-    if (districts.length > 0 && !selectedArea) {
-      setSelectedArea(districts[0]);
-    }
-  }, [districts]);
-
-  // Get available years for the current indicator
-  const availableYears = indicatorYears[selectedIndicator] || [];
-
-  // Handle indicator change - automatically select the most recent available year
-  useEffect(() => {
-    if (availableYears.length > 0) {
-      const mostRecentYear = Math.max(...availableYears);
-      
-      // If selectedYear is not in the available years for this indicator, 
-      // or if we don't have a selectedYear yet, set it to the most recent
-      if (!selectedYear || !availableYears.includes(selectedYear)) {
-        setSelectedYear(mostRecentYear);
+    if (districts.length > 0) {
+      if (!selectedDistrict) {
+        setSelectedDistrict(districts[0]);
+      }
+      if (!comparisonDistrict) {
+        const comparison = districts.find(d => d !== selectedDistrict) || districts[1];
+        setComparisonDistrict(comparison);
       }
     }
-  }, [selectedIndicator, availableYears, selectedYear]);
+  }, [districts, selectedDistrict]);
 
-  // Determine which data to use based on selected indicator
-  const getIndicatorData = (indicator) => {
-    switch(indicator) {
-      case 'drink_rate':
-        return drinkRateData;
-      case 'smoke_rate':
-        return smokeRateData;
-      case 'traffic_death_rate':
-        return trafficDeathRateData;
-      case 'obese_rate':
-        return obeseRateData;
-      default:
-        return drinkRateData;
-    }
-  };
-  
-  const getIndicatorSexData = (indicator) => {
-    switch(indicator) {
-      case 'drink_rate':
-        return drinkRateBySexData;
-      case 'smoke_rate':
-        return smokeRateBySexData;
-      case 'obese_rate':
-        return obeseRateBySexData;
-      default:
-        return null; // No sex data for other indicators
-    }
+  // Calculate Health Behaviors domain score from your existing data
+  const calculateHealthBehaviorsScore = (district) => {
+    const currentYear = Math.max(...years);
+    
+    // Get latest data for each indicator for the district
+    const drinkRate = drinkRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    const smokeRate = smokeRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    const obeseRate = obeseRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    const trafficRate = trafficDeathRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    
+    // Convert to scores (lower rates = higher scores for health behaviors)
+    // Normalize each indicator to 0-100 scale where 100 is best health
+    const drinkScore = Math.max(0, 100 - (drinkRate * 2)); // Assuming 50% would be 0 score
+    const smokeScore = Math.max(0, 100 - (smokeRate * 3)); // Assuming 33% would be 0 score
+    const obeseScore = Math.max(0, 100 - (obeseRate * 2)); // Assuming 50% would be 0 score
+    const trafficScore = Math.max(0, 100 - (trafficRate * 5)); // Assuming 20 per 100k would be 0 score
+    
+    // Average the scores
+    const healthBehaviorsScore = (drinkScore + smokeScore + obeseScore + trafficScore) / 4;
+    
+    return Math.max(0, Math.min(100, healthBehaviorsScore)); // Ensure 0-100 range
   };
 
-  // Get indicator name
-  const getIndicatorName = (indicator) => {
-    switch(indicator) {
-      case 'drink_rate':
-        return 'Alcohol Drinking Rate';
-      case 'smoke_rate':
-        return 'Smoking Rate';
-      case 'traffic_death_rate':
-        return 'Traffic Death Rate';
-      case 'obese_rate':
-        return 'Obesity Rate';
-      default:
-        return 'Health Indicator';
-    }
+  // Get spider chart data
+  const getSpiderChartData = () => {
+    if (!selectedDistrict || !comparisonDistrict) return [];
+    
+    const selectedScore = calculateHealthBehaviorsScore(selectedDistrict);
+    const comparisonScore = calculateHealthBehaviorsScore(comparisonDistrict);
+    
+    return [
+      { 
+        domain: 'Health Behaviors', 
+        fullMark: 100, 
+        [selectedDistrict]: selectedScore,
+        [comparisonDistrict]: comparisonScore
+      },
+      { 
+        domain: 'Education', 
+        fullMark: 100, 
+        [selectedDistrict]: 0, // No data available
+        [comparisonDistrict]: 0
+      },
+      { 
+        domain: 'Economic Stability', 
+        fullMark: 100, 
+        [selectedDistrict]: 0,
+        [comparisonDistrict]: 0
+      },
+      { 
+        domain: 'Healthcare Access', 
+        fullMark: 100, 
+        [selectedDistrict]: 0,
+        [comparisonDistrict]: 0
+      },
+      { 
+        domain: 'Neighborhood Environment', 
+        fullMark: 100, 
+        [selectedDistrict]: 0,
+        [comparisonDistrict]: 0
+      },
+      { 
+        domain: 'Community Context', 
+        fullMark: 100, 
+        [selectedDistrict]: 0,
+        [comparisonDistrict]: 0
+      }
+    ];
   };
-  
-  // Check if the selected indicator has sex-specific data
-  const hasSexData = indicatorsWithSexData?.includes(selectedIndicator) || 
-    ['drink_rate', 'smoke_rate', 'obese_rate'].includes(selectedIndicator);
-  
-  // Get data for selected indicator
-  const rateData = getIndicatorData(selectedIndicator);
-  const rateBySexData = getIndicatorSexData(selectedIndicator);
-  const indicatorName = getIndicatorName(selectedIndicator);
 
-  // Process data based on filters
-  const filteredData = getFilteredData(rateData, selectedGeographyType, selectedArea, availableYears);
-  
-  // Only process sex data if available for this indicator
-  let filteredSexData = [];
-  let sexComparisonData = [];
-  
-  if (hasSexData && rateBySexData) {
-    filteredSexData = getSexFilteredData(rateBySexData, selectedGeographyType, selectedArea, availableYears, sexes);
-    sexComparisonData = prepareSexComparisonData(filteredSexData, availableYears, sexes);
-  }
-  
-  // For population comparison data - using sample data until actual data is available
-  const populationComparisonData = preparePopulationComparisonData([], availableYears, populationGroups);
-  
-  const summaryData = getSummaryData(filteredData, selectedArea, indicatorName);
-  
+  // Get health behaviors data for selected district
+  const getHealthBehaviorsData = (district) => {
+    const currentYear = Math.max(...years);
+    
+    const drinkRate = drinkRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    const smokeRate = smokeRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    const obeseRate = obeseRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    const trafficRate = trafficDeathRateData.find(d => d.dname === district && d.year === currentYear)?.value || 0;
+    
+    return {
+      'Alcohol Drinking Rate': `${drinkRate.toFixed(1)}%`,
+      'Smoking Rate': `${smokeRate.toFixed(1)}%`,
+      'Obesity Rate': `${obeseRate.toFixed(1)}%`,
+      'Traffic Death Rate': `${trafficRate.toFixed(1)} per 100k`
+    };
+  };
+
+  // Calculate most similar districts (simplified - based on health behaviors similarity)
+  const getMostSimilarDistricts = (district) => {
+    if (!district || districts.length === 0) return [];
+    
+    const targetScore = calculateHealthBehaviorsScore(district);
+    
+    const similarities = districts
+      .filter(d => d !== district)
+      .map(d => {
+        const score = calculateHealthBehaviorsScore(d);
+        const similarity = 100 - Math.abs(targetScore - score);
+        return { district: d, similarity: Math.max(0, similarity) };
+      })
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 3);
+    
+    return similarities;
+  };
+
   const isLoading = isDataLoading || isGeoJsonLoading;
   const error = dataError || geoJsonError;
 
   if (isLoading) return <div className="flex justify-center items-center h-screen">Loading data...</div>;
   if (error) return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
 
+  const spiderData = getSpiderChartData();
+  const healthBehaviorsData = selectedDistrict ? getHealthBehaviorsData(selectedDistrict) : {};
+  const similarDistricts = selectedDistrict ? getMostSimilarDistricts(selectedDistrict) : [];
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header indicatorName={indicatorName} />
+      <Header indicatorName="Social Determinants of Health Equity" />
       
-      <div className="flex flex-col md:flex-row flex-1 p-4 gap-4">
-        <FilterPanel 
-          selectedIndicator={selectedIndicator}
-          setSelectedIndicator={setSelectedIndicator}
-          selectedGeographyType={selectedGeographyType}
-          setSelectedGeographyType={setSelectedGeographyType}
-          selectedArea={selectedArea}
-          setSelectedArea={setSelectedArea}
+      <div className="max-w-7xl mx-auto p-4">
+        {/* District Selection */}
+        <DistrictSelector 
           districts={districts}
+          selectedDistrict={selectedDistrict}
+          setSelectedDistrict={setSelectedDistrict}
+          comparisonDistrict={comparisonDistrict}
+          setComparisonDistrict={setComparisonDistrict}
         />
-        
-        <div className="flex-1 bg-white rounded shadow-md p-4">
-          {/* Tabs */}
-          <div className="border-b mb-4">
-            <div className="flex flex-wrap">
-              <button 
-                className={`px-4 py-2 ${selectedTab === 'charts' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`}
-                onClick={() => setSelectedTab('charts')}
-              >
-                Charts
-              </button>
-              <button 
-                className={`px-4 py-2 ${selectedTab === 'map' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`}
-                onClick={() => setSelectedTab('map')}
-              >
-                Map
-              </button>
-              <button 
-                className={`px-4 py-2 ${selectedTab === 'population' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`}
-                onClick={() => setSelectedTab('population')}
-              >
-                Population Groups
-              </button>
-              <button 
-                className={`px-4 py-2 ${selectedTab === 'data' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`}
-                onClick={() => setSelectedTab('data')}
-              >
-                Data Tables
-              </button>
-              <button 
-                className={`px-4 py-2 ${selectedTab === 'summary' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`}
-                onClick={() => setSelectedTab('summary')}
-              >
-                Summary
-              </button>
-              <button 
-                className={`px-4 py-2 ${selectedTab === 'definitions' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`}
-                onClick={() => setSelectedTab('definitions')}
-              >
-                Definitions
-              </button>
-            </div>
-          </div>
-          
-          {/* Content based on selected tab */}
-          <div>
-            {selectedTab === 'charts' && (
-              <ChartsTab 
-                filteredData={filteredData}
-                sexComparisonData={sexComparisonData}
-                selectedIndicator={selectedIndicator}
-                indicatorName={indicatorName}
-                selectedGeographyType={selectedGeographyType}
-                selectedArea={selectedArea}
-                years={availableYears}
-                hasSexData={hasSexData}
-              />
-            )}
-            
-            {selectedTab === 'map' && (
-              <MapTab 
-                rateData={rateData}
-                districtGeoJson={districtGeoJson}
-                selectedIndicator={selectedIndicator}
-                indicatorName={indicatorName}
-                selectedGeographyType={selectedGeographyType}
-                selectedArea={selectedArea}
-                years={availableYears}
-                selectedYear={selectedYear}
-                setSelectedYear={setSelectedYear}
-              />
-            )}
-            
-            {selectedTab === 'population' && (
-              <PopulationComparisonTab
-                populationComparisonData={populationComparisonData}
-                populationData={[]} // This will be replaced with actual data when available
-                selectedIndicator={selectedIndicator}
-                indicatorName={indicatorName}
-                selectedGeographyType={selectedGeographyType}
-                selectedArea={selectedArea}
-                years={availableYears}
-              />
-            )}
-            
-            {selectedTab === 'data' && (
-              <DataTablesTab 
-                filteredData={filteredData}
-                filteredSexData={filteredSexData}
-                selectedGeographyType={selectedGeographyType}
-                selectedArea={selectedArea}
-                indicatorName={indicatorName}
-                hasSexData={hasSexData}
-              />
-            )}
-            
-            {selectedTab === 'summary' && (
-              <SummaryTab 
-                summaryData={summaryData}
-                selectedGeographyType={selectedGeographyType}
-                selectedArea={selectedArea}
-                indicatorName={indicatorName}
-              />
-            )}
-            
-            {selectedTab === 'definitions' && (
-              <DefinitionsTab 
-                selectedIndicator={selectedIndicator}
-              />
-            )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Panel */}
+          <LeftPanel 
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            selectedDistrict={selectedDistrict}
+            comparisonDistrict={comparisonDistrict}
+            healthBehaviorsData={healthBehaviorsData}
+            similarDistricts={similarDistricts}
+            districtGeoJson={districtGeoJson}
+            allRateData={{
+              drinkRateData,
+              smokeRateData,
+              obeseRateData,
+              trafficDeathRateData
+            }}
+          />
+
+          {/* Center Panel - Spider Chart */}
+          <div className="lg:col-span-2">
+            <SpiderChart 
+              spiderData={spiderData}
+              selectedDistrict={selectedDistrict}
+              comparisonDistrict={comparisonDistrict}
+            />
           </div>
         </div>
       </div>
       
-      <Footer indicatorName={indicatorName} />
+      <Footer indicatorName="Social Determinants of Health Equity" />
     </div>
   );
 };
