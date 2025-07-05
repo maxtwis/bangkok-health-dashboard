@@ -9,7 +9,7 @@ import PopulationGroupsTab from './Tabs/PopulationGroupsTab';
 const LeftPanel = ({
   activeTab,
   setActiveTab,
-  viewMode, // 'district', 'population', or 'both'
+  viewMode,
   selectedDistrict,
   comparisonDistrict,
   selectedPopulationGroup,
@@ -20,36 +20,32 @@ const LeftPanel = ({
   allRateData
 }) => {
   
-  // Define tabs based on view mode
-  const getAvailableTabs = () => {
-    const baseTabs = [
-      { key: 'demographics', label: 'Demographics', color: 'bg-teal-600' },
-      { key: 'sdhe', label: 'Social Determinants of Health', color: 'bg-teal-600' },
-      { key: 'map', label: 'District Map', color: 'bg-teal-600' },
-      { key: 'outcomes', label: 'Health Outcomes', color: 'bg-teal-600' }
+  // Simplified tab structure based on view mode
+  const getTabsForMode = () => {
+    const commonTabs = [
+      { key: 'demographics', label: 'Demographics', icon: '👥' },
+      { key: 'sdhe', label: 'Health Indicators', icon: '📊' },
+      { key: 'map', label: 'District Map', icon: '🗺️' }
     ];
 
-    if (viewMode === 'district' || viewMode === 'both') {
-      baseTabs.splice(2, 0, { key: 'similar', label: 'Most Similar Districts', color: 'bg-teal-600' });
+    if (viewMode === 'district') {
+      return [
+        ...commonTabs.slice(0, 2),
+        { key: 'similar', label: 'Similar Districts', icon: '🏘️' },
+        ...commonTabs.slice(2),
+        { key: 'outcomes', label: 'Health Outcomes', icon: '🏥' }
+      ];
+    } else {
+      return [
+        ...commonTabs.slice(0, 2),
+        { key: 'population', label: 'Population Equity', icon: '⚖️' },
+        ...commonTabs.slice(2),
+        { key: 'outcomes', label: 'Health Outcomes', icon: '🏥' }
+      ];
     }
-    
-    if (viewMode === 'population' || viewMode === 'both') {
-      baseTabs.splice(-2, 0, { key: 'population', label: 'Population Groups Equity', color: 'bg-green-600' });
-    }
-
-    return baseTabs;
   };
 
-  const tabs = getAvailableTabs();
-
-  // Auto-switch to appropriate tab when view mode changes
-  React.useEffect(() => {
-    if (viewMode === 'population' && activeTab === 'similar') {
-      setActiveTab('population');
-    } else if (viewMode === 'district' && activeTab === 'population') {
-      setActiveTab('similar');
-    }
-  }, [viewMode, activeTab, setActiveTab]);
+  const tabs = getTabsForMode();
 
   const renderTabContent = () => {
     switch(activeTab) {
@@ -74,7 +70,6 @@ const LeftPanel = ({
         );
       
       case 'similar':
-        if (viewMode === 'population') return null; // Hide in population mode
         return (
           <SimilarDistrictsTab 
             selectedDistrict={selectedDistrict}
@@ -83,12 +78,11 @@ const LeftPanel = ({
         );
       
       case 'population':
-        if (viewMode === 'district') return null; // Hide in district mode
         return (
           <PopulationGroupsTab 
             selectedDistrict={selectedDistrict}
             populationGroupData={populationGroupData}
-            overallPopulationData={[]} // Will be populated with actual data
+            overallPopulationData={[]}
             selectedPopulationGroup={selectedPopulationGroup}
             allRateData={allRateData}
           />
@@ -118,58 +112,57 @@ const LeftPanel = ({
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
-      {/* View Mode Indicator */}
-      <div className="px-4 py-2 border-b bg-gray-50">
-        <div className="flex items-center space-x-2 text-sm">
-          <div className={`w-3 h-3 rounded-full ${
-            viewMode === 'district' ? 'bg-blue-500' :
-            viewMode === 'population' ? 'bg-green-500' :
-            'bg-purple-500'
-          }`}></div>
-          <span className="font-medium text-gray-700">
-            {viewMode === 'district' && 'District Comparison'}
-            {viewMode === 'population' && 'Population Equity Analysis'}
-            {viewMode === 'both' && 'Combined Analysis'}
-          </span>
-        </div>
+      {/* Clean Header */}
+      <div className="px-4 py-3 border-b bg-gray-50">
+        <h3 className="font-medium text-gray-800">
+          {viewMode === 'district' ? 'District Analysis' : 'Population Equity Analysis'}
+        </h3>
+        <p className="text-sm text-gray-600 mt-1">
+          {viewMode === 'district' 
+            ? `${selectedDistrict} vs ${comparisonDistrict}`
+            : `${selectedDistrict} - Population Groups`
+          }
+        </p>
       </div>
 
-      {/* Tab Navigation */}
+      {/* Simplified Tab Navigation */}
       <div className="border-b">
         <div className="flex flex-wrap">
           {tabs.map(tab => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-3 py-2 text-xs font-medium transition-colors ${
+              className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium transition-colors ${
                 activeTab === tab.key 
-                  ? `${tab.color} text-white` 
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-blue-600 text-white border-b-2 border-blue-600' 
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
               }`}
-              title={tab.label}
             >
-              {tab.label}
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Tab Content */}
-      <div className="p-4 h-96 overflow-y-auto">
+      <div className="p-4 h-80 overflow-y-auto">
         {renderTabContent()}
       </div>
 
-      {/* View Mode Help */}
-      <div className="px-4 py-2 bg-gray-50 border-t text-xs text-gray-600">
-        {viewMode === 'district' && (
-          <p>💡 Switch to "Population Equity Analysis" to compare demographic groups within districts.</p>
-        )}
-        {viewMode === 'population' && (
-          <p>💡 Switch to "District Comparison" to compare overall health between different districts.</p>
-        )}
-        {viewMode === 'both' && (
-          <p>💡 Combined view shows both district comparisons and population equity analysis.</p>
-        )}
+      {/* Quick Actions Footer */}
+      <div className="px-4 py-3 bg-gray-50 border-t">
+        <div className="flex justify-between items-center text-xs text-gray-500">
+          <span>
+            {viewMode === 'district' ? 'District Comparison Mode' : 'Population Equity Mode'}
+          </span>
+          <button 
+            onClick={() => setViewMode(viewMode === 'district' ? 'population' : 'district')}
+            className="text-blue-600 hover:text-blue-800"
+          >
+            Switch to {viewMode === 'district' ? 'Equity' : 'District'} Mode
+          </button>
+        </div>
       </div>
     </div>
   );

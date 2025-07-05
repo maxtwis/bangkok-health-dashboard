@@ -2,33 +2,29 @@ import React from 'react';
 
 const DistrictSelector = ({
   districts,
-  // District comparison props
   selectedDistrict,
   setSelectedDistrict,
   comparisonDistrict,
   setComparisonDistrict,
-  // Population group comparison props
   selectedPopulationGroup,
   setSelectedPopulationGroup,
-  // View mode props
   viewMode,
-  setViewMode // 'district' or 'population' or 'both'
+  setViewMode
 }) => {
   
   const populationGroups = [
-    { value: 'overall', label: 'Overall Population', thai: 'ประชากรทั่วไป' },
-    { value: 'informal_workers', label: 'Informal Workers', thai: 'แรงงานนอกระบบ' },
-    { value: 'elderly', label: 'Elderly', thai: 'ผู้สูงอายุ' },
-    { value: 'disabled', label: 'People with Disabilities', thai: 'คนพิการ' },
-    { value: 'lgbtq', label: 'LGBTQ+', thai: 'กลุ่มเพศหลากหลาย' }
+    { value: 'informal_workers', label: 'แรงงานนอกระบบ (Informal Workers)' },
+    { value: 'elderly', label: 'ผู้สูงอายุ (Elderly)' },
+    { value: 'disabled', label: 'คนพิการ (People with Disabilities)' },
+    { value: 'lgbtq', label: 'กลุ่มเพศหลากหลาย (LGBTQ+)' }
   ];
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-      <h2 className="text-lg font-medium mb-4">Get Started</h2>
+      <h2 className="text-lg font-medium mb-6">Get Started</h2>
       
-      {/* District Selection - Always Available */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      {/* Basic Selection - Always Visible */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             1. Select my district:
@@ -36,7 +32,7 @@ const DistrictSelector = ({
           <select 
             value={selectedDistrict}
             onChange={(e) => setSelectedDistrict(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-blue-50"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {districts.map(district => (
               <option key={district} value={district}>{district}</option>
@@ -51,130 +47,97 @@ const DistrictSelector = ({
           <select 
             value={comparisonDistrict}
             onChange={(e) => setComparisonDistrict(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-blue-50"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {districts.filter(d => d !== selectedDistrict).map(district => (
               <option key={district} value={district}>{district}</option>
             ))}
           </select>
-          <p className="text-xs text-gray-500 mt-1 italic">*sorted by similarity to my district</p>
+          <p className="text-xs text-gray-500 mt-1">*sorted by similarity to my district</p>
         </div>
+      </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            3. Select population group:
+      {/* Simple Toggle for Analysis Type */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          3. What would you like to analyze?
+        </label>
+        <div className="flex gap-4">
+          <button
+            onClick={() => setViewMode('district')}
+            className={`flex-1 p-4 rounded-lg border-2 transition-all ${
+              viewMode === 'district'
+                ? 'border-blue-500 bg-blue-50 text-blue-700'
+                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+            }`}
+          >
+            <div className="text-center">
+              <div className="font-medium">Compare Districts</div>
+              <div className="text-sm mt-1">Overall health comparison between districts</div>
+            </div>
+          </button>
+          
+          <button
+            onClick={() => setViewMode('population')}
+            className={`flex-1 p-4 rounded-lg border-2 transition-all ${
+              viewMode === 'population'
+                ? 'border-green-500 bg-green-50 text-green-700'
+                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+            }`}
+          >
+            <div className="text-center">
+              <div className="font-medium">Analyze Health Equity</div>
+              <div className="text-sm mt-1">Compare population groups within a district</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Population Group Selection - Only show when needed */}
+      {viewMode === 'population' && (
+        <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
+          <label className="block text-sm font-medium text-green-800 mb-2">
+            Select population group to analyze:
           </label>
           <select 
             value={selectedPopulationGroup}
             onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-green-50"
+            className="w-full p-3 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"
           >
             {populationGroups.map(group => (
               <option key={group.value} value={group.value}>
-                {group.thai} ({group.label})
+                {group.label}
               </option>
             ))}
           </select>
-          <p className="text-xs text-gray-500 mt-1 italic">for population equity analysis</p>
+          <p className="text-xs text-green-600 mt-2">
+            Will compare this group against the overall population in {selectedDistrict}
+          </p>
         </div>
-      </div>
+      )}
 
-      {/* View Mode Selection */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-3">
-          Select analysis view:
-        </label>
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={() => setViewMode('district')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              viewMode === 'district'
-                ? 'bg-blue-600 text-white'
-                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-            }`}
-          >
-            District Comparison
-          </button>
-          <button
-            onClick={() => setViewMode('population')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              viewMode === 'population'
-                ? 'bg-green-600 text-white'
-                : 'bg-green-100 text-green-700 hover:bg-green-200'
-            }`}
-          >
-            Population Equity Analysis
-          </button>
-          <button
-            onClick={() => setViewMode('both')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              viewMode === 'both'
-                ? 'bg-purple-600 text-white'
-                : 'bg-purple-100 text-purple-700 hover:bg-purple-200'
-            }`}
-          >
-            Combined View
-          </button>
-        </div>
-      </div>
-
-      {/* Current Analysis Description */}
-      <div className="mb-4 p-4 rounded-lg border">
-        {viewMode === 'district' && (
-          <div className="bg-blue-50 border-blue-200">
-            <h4 className="font-medium text-blue-800 mb-2">District Comparison Mode</h4>
-            <p className="text-sm text-blue-700">
-              Comparing overall health equity between <strong>{selectedDistrict}</strong> and <strong>{comparisonDistrict}</strong> districts.
-            </p>
-          </div>
-        )}
-        
-        {viewMode === 'population' && (
-          <div className="bg-green-50 border-green-200">
-            <h4 className="font-medium text-green-800 mb-2">Population Equity Analysis</h4>
-            <p className="text-sm text-green-700">
-              Analyzing health equity for <strong>{populationGroups.find(g => g.value === selectedPopulationGroup)?.thai}</strong> compared to overall population in <strong>{selectedDistrict}</strong> district.
-            </p>
-          </div>
-        )}
-        
-        {viewMode === 'both' && (
-          <div className="bg-purple-50 border-purple-200">
-            <h4 className="font-medium text-purple-800 mb-2">Combined Analysis</h4>
-            <p className="text-sm text-purple-700">
-              Showing both district comparison (<strong>{selectedDistrict}</strong> vs <strong>{comparisonDistrict}</strong>) and population equity analysis for <strong>{populationGroups.find(g => g.value === selectedPopulationGroup)?.thai}</strong>.
-            </p>
-          </div>
+      {/* Current Analysis Summary */}
+      <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
+        <h4 className="font-medium text-gray-800 mb-2">Current Analysis:</h4>
+        {viewMode === 'district' ? (
+          <p className="text-sm text-gray-600">
+            Comparing overall health equity between <strong>{selectedDistrict}</strong> and <strong>{comparisonDistrict}</strong>
+          </p>
+        ) : (
+          <p className="text-sm text-gray-600">
+            Analyzing health equity for <strong>{populationGroups.find(g => g.value === selectedPopulationGroup)?.label}</strong> compared to overall population in <strong>{selectedDistrict}</strong>
+          </p>
         )}
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2">
         <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors text-sm">
           Methodology overview
         </button>
         <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors text-sm">
           Data sources
         </button>
-        <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors text-sm">
-          Health equity definitions
-        </button>
-      </div>
-
-      {/* Additional Resources */}
-      <div className="text-sm text-gray-600">
-        <p><strong>Additional Resources:</strong></p>
-        <div className="flex flex-wrap gap-4 mt-2">
-          <a href="#" className="text-blue-600 hover:text-blue-800 underline">
-            Explore public health plans
-          </a>
-          <a href="#" className="text-blue-600 hover:text-blue-800 underline">
-            Explore health behavior programs
-          </a>
-          <a href="#" className="text-blue-600 hover:text-blue-800 underline">
-            Visit the Community Connector GitHub
-          </a>
-        </div>
       </div>
     </div>
   );
