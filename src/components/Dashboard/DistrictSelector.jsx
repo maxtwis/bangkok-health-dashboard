@@ -4,12 +4,10 @@ const DistrictSelector = ({
   districts,
   selectedDistrict,
   setSelectedDistrict,
-  comparisonDistrict,
-  setComparisonDistrict,
   selectedPopulationGroup,
   setSelectedPopulationGroup,
-  viewMode,
-  setViewMode
+  analysisLevel,
+  setAnalysisLevel // 'bangkok' or 'district'
 }) => {
   
   const populationGroups = [
@@ -21,97 +19,107 @@ const DistrictSelector = ({
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-      <h2 className="text-lg font-medium mb-6">Get Started</h2>
+      <h2 className="text-lg font-medium mb-6">Bangkok Health Inequalities Dashboard</h2>
       
-      {/* Basic Selection - Always Visible */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            1. Select my district:
+      {/* Analysis Level Selection - Primary Choice */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          1. Select analysis level:
+        </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button
+            onClick={() => setAnalysisLevel('bangkok')}
+            className={`p-6 rounded-lg border-2 transition-all text-left ${
+              analysisLevel === 'bangkok'
+                ? 'border-blue-500 bg-blue-50'
+                : 'border-gray-200 bg-white hover:border-gray-300'
+            }`}
+          >
+            <div className="flex items-start space-x-3">
+              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mt-1 ${
+                analysisLevel === 'bangkok' ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
+              }`}>
+                {analysisLevel === 'bangkok' && <div className="w-2 h-2 bg-white rounded-full"></div>}
+              </div>
+              <div>
+                <div className={`font-medium ${analysisLevel === 'bangkok' ? 'text-blue-700' : 'text-gray-700'}`}>
+                  Bangkok Overview
+                </div>
+                <div className={`text-sm mt-1 ${analysisLevel === 'bangkok' ? 'text-blue-600' : 'text-gray-500'}`}>
+                  Compare population groups across all 50 districts (4,000 surveys)
+                </div>
+                <div className={`text-xs mt-2 ${analysisLevel === 'bangkok' ? 'text-blue-500' : 'text-gray-400'}`}>
+                  🎯 Main Focus: Health equity analysis
+                </div>
+              </div>
+            </div>
+          </button>
+          
+          <button
+            onClick={() => setAnalysisLevel('district')}
+            className={`p-6 rounded-lg border-2 transition-all text-left ${
+              analysisLevel === 'district'
+                ? 'border-green-500 bg-green-50'
+                : 'border-gray-200 bg-white hover:border-gray-300'
+            }`}
+          >
+            <div className="flex items-start space-x-3">
+              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mt-1 ${
+                analysisLevel === 'district' ? 'border-green-500 bg-green-500' : 'border-gray-300'
+              }`}>
+                {analysisLevel === 'district' && <div className="w-2 h-2 bg-white rounded-full"></div>}
+              </div>
+              <div>
+                <div className={`font-medium ${analysisLevel === 'district' ? 'text-green-700' : 'text-gray-700'}`}>
+                  District Deep Dive
+                </div>
+                <div className={`text-sm mt-1 ${analysisLevel === 'district' ? 'text-green-600' : 'text-gray-500'}`}>
+                  Detailed analysis of specific districts (80 surveys per district)
+                </div>
+                <div className={`text-xs mt-2 ${analysisLevel === 'district' ? 'text-green-500' : 'text-gray-400'}`}>
+                  📍 Secondary Focus: Local detailed insights
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Population Group Selection - Always Visible */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          2. Select population group to focus on:
+        </label>
+        <select 
+          value={selectedPopulationGroup}
+          onChange={(e) => setSelectedPopulationGroup(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        >
+          {populationGroups.map(group => (
+            <option key={group.value} value={group.value}>
+              {group.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* District Selection - Only for District Level */}
+      {analysisLevel === 'district' && (
+        <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
+          <label className="block text-sm font-medium text-green-800 mb-2">
+            3. Select district for detailed analysis:
           </label>
           <select 
             value={selectedDistrict}
             onChange={(e) => setSelectedDistrict(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-3 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"
           >
             {districts.map(district => (
               <option key={district} value={district}>{district}</option>
             ))}
           </select>
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            2. Select comparison district:
-          </label>
-          <select 
-            value={comparisonDistrict}
-            onChange={(e) => setComparisonDistrict(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            {districts.filter(d => d !== selectedDistrict).map(district => (
-              <option key={district} value={district}>{district}</option>
-            ))}
-          </select>
-          <p className="text-xs text-gray-500 mt-1">*sorted by similarity to my district</p>
-        </div>
-      </div>
-
-      {/* Simple Toggle for Analysis Type */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-3">
-          3. What would you like to analyze?
-        </label>
-        <div className="flex gap-4">
-          <button
-            onClick={() => setViewMode('district')}
-            className={`flex-1 p-4 rounded-lg border-2 transition-all ${
-              viewMode === 'district'
-                ? 'border-blue-500 bg-blue-50 text-blue-700'
-                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-            }`}
-          >
-            <div className="text-center">
-              <div className="font-medium">Compare Districts</div>
-              <div className="text-sm mt-1">Overall health comparison between districts</div>
-            </div>
-          </button>
-          
-          <button
-            onClick={() => setViewMode('population')}
-            className={`flex-1 p-4 rounded-lg border-2 transition-all ${
-              viewMode === 'population'
-                ? 'border-green-500 bg-green-50 text-green-700'
-                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-            }`}
-          >
-            <div className="text-center">
-              <div className="font-medium">Analyze Health Equity</div>
-              <div className="text-sm mt-1">Compare population groups within a district</div>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Population Group Selection - Only show when needed */}
-      {viewMode === 'population' && (
-        <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
-          <label className="block text-sm font-medium text-green-800 mb-2">
-            Select population group to analyze:
-          </label>
-          <select 
-            value={selectedPopulationGroup}
-            onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-            className="w-full p-3 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"
-          >
-            {populationGroups.map(group => (
-              <option key={group.value} value={group.value}>
-                {group.label}
-              </option>
-            ))}
-          </select>
           <p className="text-xs text-green-600 mt-2">
-            Will compare this group against the overall population in {selectedDistrict}
+            Deep dive into {selectedDistrict} with surveys, health outcomes, accessibility indicators
           </p>
         </div>
       )}
@@ -119,21 +127,47 @@ const DistrictSelector = ({
       {/* Current Analysis Summary */}
       <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
         <h4 className="font-medium text-gray-800 mb-2">Current Analysis:</h4>
-        {viewMode === 'district' ? (
-          <p className="text-sm text-gray-600">
-            Comparing overall health equity between <strong>{selectedDistrict}</strong> and <strong>{comparisonDistrict}</strong>
-          </p>
+        {analysisLevel === 'bangkok' ? (
+          <div>
+            <p className="text-sm text-gray-600 mb-1">
+              <strong>Bangkok-wide Health Equity Analysis</strong>
+            </p>
+            <p className="text-sm text-gray-600">
+              Analyzing <strong>{populationGroups.find(g => g.value === selectedPopulationGroup)?.label}</strong> across all 50 districts compared to overall Bangkok population
+            </p>
+            <div className="mt-2 text-xs text-blue-600 bg-blue-50 p-2 rounded">
+              📊 Data: 4,000 surveys (80 per district) | 🎯 Focus: Population group equity
+            </div>
+          </div>
         ) : (
-          <p className="text-sm text-gray-600">
-            Analyzing health equity for <strong>{populationGroups.find(g => g.value === selectedPopulationGroup)?.label}</strong> compared to overall population in <strong>{selectedDistrict}</strong>
-          </p>
+          <div>
+            <p className="text-sm text-gray-600 mb-1">
+              <strong>District-Level Detailed Analysis</strong>
+            </p>
+            <p className="text-sm text-gray-600">
+              Deep dive into <strong>{selectedDistrict}</strong> district focusing on <strong>{populationGroups.find(g => g.value === selectedPopulationGroup)?.label}</strong>
+            </p>
+            <div className="mt-2 text-xs text-green-600 bg-green-50 p-2 rounded">
+              📍 Data: District surveys + Health outcomes + Accessibility + Demographics + Map
+            </div>
+          </div>
         )}
       </div>
 
+      {/* Info about methodology */}
+      <div className="text-sm text-gray-600">
+        <p className="mb-2"><strong>How it works:</strong></p>
+        <ul className="text-xs space-y-1 text-gray-500 list-disc list-inside">
+          <li><strong>Bangkok Level:</strong> See the big picture of health inequalities across population groups</li>
+          <li><strong>District Level:</strong> Drill down into specific areas with comprehensive local data</li>
+          <li><strong>Population Groups:</strong> แรงงานนอกระบบ, ผู้สูงอายุ, คนพิการ, กลุ่มเพศหลากหลาย</li>
+        </ul>
+      </div>
+
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 mt-4">
         <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors text-sm">
-          Methodology overview
+          Survey methodology
         </button>
         <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors text-sm">
           Data sources

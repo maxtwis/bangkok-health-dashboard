@@ -1,107 +1,119 @@
 import React from 'react';
-import DemographicsTab from './Tabs/DemographicsTab';
-import SDHETab from './Tabs/SDHETab';
-import SimilarDistrictsTab from './Tabs/SimilarDistrictsTab';
+import BangkokPopulationEquityTab from './Tabs/BangkokPopulationEquityTab';
+import BangkokSDHEOverviewTab from './Tabs/BangkokSDHEOverviewTab';
+import BangkokInsightsTab from './Tabs/BangkokInsightsTab';
+import DistrictDemographicsTab from './Tabs/DistrictDemographicsTab';
+import DistrictSDHETab from './Tabs/DistrictSDHETab';
+import DistrictHealthOutcomesTab from './Tabs/DistrictHealthOutcomesTab';
+import DistrictAccessibilityTab from './Tabs/DistrictAccessibilityTab';
 import DistrictMapTab from './Tabs/DistrictMapTab';
-import HealthOutcomesTab from './Tabs/HealthOutcomesTab';
-import PopulationGroupsTab from './Tabs/PopulationGroupsTab';
 
 const LeftPanel = ({
   activeTab,
   setActiveTab,
-  viewMode,
+  analysisLevel, // 'bangkok' or 'district'
   selectedDistrict,
-  comparisonDistrict,
   selectedPopulationGroup,
   healthBehaviorsData,
-  similarDistricts,
   districtGeoJson,
   populationGroupData,
   allRateData
 }) => {
   
-  // Simplified tab structure based on view mode
-  const getTabsForMode = () => {
-    const commonTabs = [
-      { key: 'demographics', label: 'Demographics', icon: '👥' },
-      { key: 'sdhe', label: 'Health Indicators', icon: '📊' },
-      { key: 'map', label: 'District Map', icon: '🗺️' }
-    ];
+  // Different tab sets for Bangkok vs District level
+  const getBangkokTabs = () => [
+    { key: 'population-equity', label: 'Population Groups', icon: '⚖️', description: 'Compare 4 groups across Bangkok' },
+    { key: 'sdhe-overview', label: 'SDHE Overview', icon: '📊', description: 'Health determinants summary' },
+    { key: 'insights', label: 'Key Insights', icon: '💡', description: 'Automated insights & recommendations' }
+  ];
 
-    if (viewMode === 'district') {
-      return [
-        ...commonTabs.slice(0, 2),
-        { key: 'similar', label: 'Similar Districts', icon: '🏘️' },
-        ...commonTabs.slice(2),
-        { key: 'outcomes', label: 'Health Outcomes', icon: '🏥' }
-      ];
-    } else {
-      return [
-        ...commonTabs.slice(0, 2),
-        { key: 'population', label: 'Population Equity', icon: '⚖️' },
-        ...commonTabs.slice(2),
-        { key: 'outcomes', label: 'Health Outcomes', icon: '🏥' }
-      ];
+  const getDistrictTabs = () => [
+    { key: 'demographics', label: 'Demographics', icon: '👥', description: 'Population characteristics' },
+    { key: 'sdhe-detailed', label: 'SDHE Detailed', icon: '📋', description: 'All health determinants' },
+    { key: 'health-outcomes', label: 'Health Outcomes', icon: '🏥', description: 'Disease rates & mortality' },
+    { key: 'accessibility', label: 'Accessibility', icon: '🏢', description: 'Health, parks, schools access' },
+    { key: 'district-map', label: 'District Map', icon: '🗺️', description: 'Geographic visualization' }
+  ];
+
+  const tabs = analysisLevel === 'bangkok' ? getBangkokTabs() : getDistrictTabs();
+
+  // Auto-select appropriate first tab when switching levels
+  React.useEffect(() => {
+    if (analysisLevel === 'bangkok' && !['population-equity', 'sdhe-overview', 'insights'].includes(activeTab)) {
+      setActiveTab('population-equity');
+    } else if (analysisLevel === 'district' && !['demographics', 'sdhe-detailed', 'health-outcomes', 'accessibility', 'district-map'].includes(activeTab)) {
+      setActiveTab('demographics');
     }
-  };
-
-  const tabs = getTabsForMode();
+  }, [analysisLevel, activeTab, setActiveTab]);
 
   const renderTabContent = () => {
     switch(activeTab) {
-      case 'demographics':
+      // Bangkok Level Tabs
+      case 'population-equity':
         return (
-          <DemographicsTab 
-            selectedDistrict={selectedDistrict}
-            comparisonDistrict={comparisonDistrict}
-            viewMode={viewMode}
+          <BangkokPopulationEquityTab 
             selectedPopulationGroup={selectedPopulationGroup}
-          />
-        );
-      
-      case 'sdhe':
-        return (
-          <SDHETab 
-            selectedDistrict={selectedDistrict}
-            healthBehaviorsData={healthBehaviorsData}
-            viewMode={viewMode}
-            selectedPopulationGroup={selectedPopulationGroup}
-          />
-        );
-      
-      case 'similar':
-        return (
-          <SimilarDistrictsTab 
-            selectedDistrict={selectedDistrict}
-            similarDistricts={similarDistricts}
-          />
-        );
-      
-      case 'population':
-        return (
-          <PopulationGroupsTab 
-            selectedDistrict={selectedDistrict}
             populationGroupData={populationGroupData}
-            overallPopulationData={[]}
-            selectedPopulationGroup={selectedPopulationGroup}
             allRateData={allRateData}
           />
         );
       
-      case 'map':
+      case 'sdhe-overview':
+        return (
+          <BangkokSDHEOverviewTab 
+            selectedPopulationGroup={selectedPopulationGroup}
+            healthBehaviorsData={healthBehaviorsData}
+          />
+        );
+      
+      case 'insights':
+        return (
+          <BangkokInsightsTab 
+            selectedPopulationGroup={selectedPopulationGroup}
+            populationGroupData={populationGroupData}
+          />
+        );
+
+      // District Level Tabs
+      case 'demographics':
+        return (
+          <DistrictDemographicsTab 
+            selectedDistrict={selectedDistrict}
+            selectedPopulationGroup={selectedPopulationGroup}
+          />
+        );
+      
+      case 'sdhe-detailed':
+        return (
+          <DistrictSDHETab 
+            selectedDistrict={selectedDistrict}
+            selectedPopulationGroup={selectedPopulationGroup}
+            healthBehaviorsData={healthBehaviorsData}
+          />
+        );
+      
+      case 'health-outcomes':
+        return (
+          <DistrictHealthOutcomesTab 
+            selectedDistrict={selectedDistrict}
+            selectedPopulationGroup={selectedPopulationGroup}
+          />
+        );
+
+      case 'accessibility':
+        return (
+          <DistrictAccessibilityTab 
+            selectedDistrict={selectedDistrict}
+            selectedPopulationGroup={selectedPopulationGroup}
+          />
+        );
+      
+      case 'district-map':
         return (
           <DistrictMapTab 
             selectedDistrict={selectedDistrict}
             districtGeoJson={districtGeoJson}
-            viewMode={viewMode}
-          />
-        );
-      
-      case 'outcomes':
-        return (
-          <HealthOutcomesTab 
-            viewMode={viewMode}
-            selectedPopulationGroup={selectedPopulationGroup}
+            analysisLevel={analysisLevel}
           />
         );
       
@@ -110,36 +122,60 @@ const LeftPanel = ({
     }
   };
 
+  const getPopulationGroupLabel = (populationGroup) => {
+    const labels = {
+      'informal_workers': 'แรงงานนอกระบบ',
+      'elderly': 'ผู้สูงอายุ',
+      'disabled': 'คนพิการ', 
+      'lgbtq': 'กลุ่มเพศหลากหลาย'
+    };
+    return labels[populationGroup] || populationGroup;
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-sm">
-      {/* Clean Header */}
-      <div className="px-4 py-3 border-b bg-gray-50">
-        <h3 className="font-medium text-gray-800">
-          {viewMode === 'district' ? 'District Analysis' : 'Population Equity Analysis'}
-        </h3>
-        <p className="text-sm text-gray-600 mt-1">
-          {viewMode === 'district' 
-            ? `${selectedDistrict} vs ${comparisonDistrict}`
-            : `${selectedDistrict} - Population Groups`
+      {/* Header with Context */}
+      <div className="px-4 py-3 border-b">
+        <div className="flex items-center space-x-2 mb-1">
+          <div className={`w-3 h-3 rounded-full ${
+            analysisLevel === 'bangkok' ? 'bg-blue-500' : 'bg-green-500'
+          }`}></div>
+          <h3 className="font-medium text-gray-800">
+            {analysisLevel === 'bangkok' ? 'Bangkok Overview' : 'District Deep Dive'}
+          </h3>
+        </div>
+        <p className="text-sm text-gray-600">
+          {analysisLevel === 'bangkok' 
+            ? `${getPopulationGroupLabel(selectedPopulationGroup)} across 50 districts`
+            : `${selectedDistrict} - ${getPopulationGroupLabel(selectedPopulationGroup)}`
           }
         </p>
+        <div className="mt-2 text-xs text-gray-500">
+          {analysisLevel === 'bangkok' 
+            ? '📊 4,000 surveys • 🎯 Population equity focus'
+            : '📍 Local data • 🔬 Comprehensive indicators'
+          }
+        </div>
       </div>
 
-      {/* Simplified Tab Navigation */}
+      {/* Tab Navigation */}
       <div className="border-b">
         <div className="flex flex-wrap">
           {tabs.map(tab => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium transition-colors ${
+              className={`group flex-1 min-w-0 px-3 py-3 text-xs font-medium transition-colors ${
                 activeTab === tab.key 
-                  ? 'bg-blue-600 text-white border-b-2 border-blue-600' 
+                  ? `${analysisLevel === 'bangkok' ? 'bg-blue-600 text-white' : 'bg-green-600 text-white'}` 
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
               }`}
+              title={tab.description}
             >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
+              <div className="flex flex-col items-center space-y-1">
+                <span className="text-base">{tab.icon}</span>
+                <span className="text-center leading-tight">{tab.label}</span>
+              </div>
             </button>
           ))}
         </div>
@@ -150,17 +186,21 @@ const LeftPanel = ({
         {renderTabContent()}
       </div>
 
-      {/* Quick Actions Footer */}
+      {/* Footer with Level Info */}
       <div className="px-4 py-3 bg-gray-50 border-t">
-        <div className="flex justify-between items-center text-xs text-gray-500">
-          <span>
-            {viewMode === 'district' ? 'District Comparison Mode' : 'Population Equity Mode'}
+        <div className="flex justify-between items-center text-xs">
+          <span className="text-gray-500">
+            {analysisLevel === 'bangkok' ? 'Bangkok-wide Analysis' : 'District-specific Analysis'}
           </span>
           <button 
-            onClick={() => setViewMode(viewMode === 'district' ? 'population' : 'district')}
-            className="text-blue-600 hover:text-blue-800"
+            onClick={() => setAnalysisLevel(analysisLevel === 'bangkok' ? 'district' : 'bangkok')}
+            className={`px-2 py-1 rounded text-xs font-medium ${
+              analysisLevel === 'bangkok' 
+                ? 'text-green-600 hover:text-green-800 hover:bg-green-50' 
+                : 'text-blue-600 hover:text-blue-800 hover:bg-blue-50'
+            }`}
           >
-            Switch to {viewMode === 'district' ? 'Equity' : 'District'} Mode
+            Switch to {analysisLevel === 'bangkok' ? 'District Level' : 'Bangkok Level'}
           </button>
         </div>
       </div>
