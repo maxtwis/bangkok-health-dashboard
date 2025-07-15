@@ -1,28 +1,23 @@
-// Bangkok-Focused Dashboard with Population Groups as Main Focus
+// Enhanced Bangkok Health Inequalities Dashboard with SDHE Integration
 import React, { useState, useEffect } from 'react';
 import useHealthData from '../../hooks/useHealthData';
+import useSDHEData from '../../hooks/useSDHEData'; // New SDHE data hook
 import useGeoJsonData from '../../hooks/useGeoJsonData';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
 import DistrictSelector from './DistrictSelector';
 import LeftPanel from './LeftPanel';
-import SpiderChart from './SpiderChart';
+import EnhancedSDHESpiderChart from './EnhancedSDHESpiderChart'; // Enhanced spider chart
+import SDHEIndicatorsTable from './SDHEIndicatorsTable'; // New indicators table
 import { 
   getFilteredData, 
   getSexFilteredData, 
   prepareSexComparisonData,
-  getPopulationFilteredData, 
-  preparePopulationComparisonData,
-  getSummaryData,
-  // Enhanced functions for Bangkok analysis
-  preparePopulationGroupSpiderData,
-  calculateVulnerabilityIndex,
-  getEquityInsights,
-  getMostSimilarDistricts,
-  generateSamplePopulationGroupData
+  getSummaryData
 } from './DataUtils';
 
-const Dashboard = () => {
+const EnhancedDashboard = () => {
+  // Original health data (for backward compatibility)
   const { 
     drinkRateData,
     drinkRateBySexData,
@@ -36,9 +31,28 @@ const Dashboard = () => {
     sexes,
     indicatorsWithSexData,
     indicatorYears,
-    isLoading: isDataLoading,
-    error: dataError
+    isLoading: isOriginalDataLoading,
+    error: originalDataError
   } = useHealthData();
+
+  // New SDHE data processing
+  const {
+    sdheData,
+    isLoading: isSDHELoading,
+    error: sdheError,
+    processingStatus,
+    getSpiderChartData,
+    getIndicatorTableData,
+    getDomainScore,
+    getPopulationGroupStats,
+    getBangkokOverview,
+    getDistrictComparison,
+    getEquityGaps,
+    getVulnerabilityIndex,
+    getAvailableDomains,
+    getAvailableDistricts,
+    getAvailablePopulationGroups
+  } = useSDHEData();
   
   const {
     districtGeoJson,
@@ -46,11 +60,12 @@ const Dashboard = () => {
     error: geoJsonError
   } = useGeoJsonData();
   
-  // Updated state management for Bangkok-first approach
-  const [analysisLevel, setAnalysisLevel] = useState('bangkok'); // 'bangkok' or 'district'
+  // State management
+  const [analysisLevel, setAnalysisLevel] = useState('bangkok');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
-  const [activeTab, setActiveTab] = useState('population-equity'); // Start with population equity
+  const [activeTab, setActiveTab] = useState('sdhe-overview');
+  const [activeView, setActiveView] = useState('spider'); // 'spider' or 'table'
   
   // Set default district when data loads
   useEffect(() => {
@@ -59,186 +74,160 @@ const Dashboard = () => {
     }
   }, [districts, selectedDistrict]);
 
-  // Calculate Bangkok-wide SDHE scores aggregated from all districts
-  const calculateBangkokPopulationScores = () => {
-    // This would aggregate data from all 50 districts for each population group
-    // For now, using sample calculation based on existing data
-    const currentYear = Math.max(...years);
-    
-    const calculateGroupScore = (populationGroup, indicator) => {
-      // In real implementation, this would aggregate from all districts
-      // For demo, applying population-specific multipliers to overall Bangkok average
-      let bangkokAverage = 0;
-      let districtCount = 0;
-      
-      districts.forEach(district => {
-        let districtValue;
-        switch(indicator) {
-          case 'drink_rate':
-            districtValue = drinkRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-          case 'smoke_rate':
-            districtValue = smokeRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-          case 'obese_rate':
-            districtValue = obeseRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-          case 'traffic_death_rate':
-            districtValue = trafficDeathRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-        }
-        
-        if (districtValue !== undefined) {
-          bangkokAverage += districtValue;
-          districtCount++;
-        }
-      });
-      
-      if (districtCount === 0) return 0;
-      bangkokAverage = bangkokAverage / districtCount;
-      
-      // Apply population group multipliers (simulating disparities)
-      let multiplier = 1;
-      switch(populationGroup) {
-        case 'informal_workers':
-          multiplier = indicator === 'drink_rate' ? 1.4 : indicator === 'smoke_rate' ? 1.6 : 1.3;
-          break;
-        case 'elderly':
-          multiplier = indicator === 'drink_rate' ? 0.6 : indicator === 'obese_rate' ? 1.5 : 1.0;
-          break;
-        case 'disabled':
-          multiplier = indicator === 'obese_rate' ? 1.4 : indicator === 'traffic_death_rate' ? 1.2 : 1.1;
-          break;
-        case 'lgbtq':
-          multiplier = indicator === 'smoke_rate' ? 1.5 : indicator === 'drink_rate' ? 1.2 : 1.1;
-          break;
+  // Auto-switch to available district from SDHE data if original districts not available
+  useEffect(() => {
+    if (!selectedDistrict && getAvailableDistricts) {
+      const sdheDistricts = getAvailableDistricts();
+      if (sdheDistricts.length > 0) {
+        setSelectedDistrict(sdheDistricts[0]);
       }
-      
-      return bangkokAverage * multiplier;
-    };
-
-    return {
-      'informal_workers': {
-        drink_rate: calculateGroupScore('informal_workers', 'drink_rate'),
-        smoke_rate: calculateGroupScore('informal_workers', 'smoke_rate'),
-        obese_rate: calculateGroupScore('informal_workers', 'obese_rate'),
-        traffic_death_rate: calculateGroupScore('informal_workers', 'traffic_death_rate')
-      },
-      'elderly': {
-        drink_rate: calculateGroupScore('elderly', 'drink_rate'),
-        smoke_rate: calculateGroupScore('elderly', 'smoke_rate'),
-        obese_rate: calculateGroupScore('elderly', 'obese_rate'),
-        traffic_death_rate: calculateGroupScore('elderly', 'traffic_death_rate')
-      },
-      'disabled': {
-        drink_rate: calculateGroupScore('disabled', 'drink_rate'),
-        smoke_rate: calculateGroupScore('disabled', 'smoke_rate'),
-        obese_rate: calculateGroupScore('disabled', 'obese_rate'),
-        traffic_death_rate: calculateGroupScore('disabled', 'traffic_death_rate')
-      },
-      'lgbtq': {
-        drink_rate: calculateGroupScore('lgbtq', 'drink_rate'),
-        smoke_rate: calculateGroupScore('lgbtq', 'smoke_rate'),
-        obese_rate: calculateGroupScore('lgbtq', 'obese_rate'),
-        traffic_death_rate: calculateGroupScore('lgbtq', 'traffic_death_rate')
-      }
-    };
-  };
-
-  // Get Bangkok overall averages
-  const getBangkokOverallAverages = () => {
-    const currentYear = Math.max(...years);
-    const indicators = ['drink_rate', 'smoke_rate', 'obese_rate', 'traffic_death_rate'];
-    const averages = {};
-    
-    indicators.forEach(indicator => {
-      let total = 0;
-      let count = 0;
-      
-      districts.forEach(district => {
-        let value;
-        switch(indicator) {
-          case 'drink_rate':
-            value = drinkRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-          case 'smoke_rate':
-            value = smokeRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-          case 'obese_rate':
-            value = obeseRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-          case 'traffic_death_rate':
-            value = trafficDeathRateData.find(d => d.dname === district && d.year === currentYear)?.value;
-            break;
-        }
-        
-        if (value !== undefined) {
-          total += value;
-          count++;
-        }
-      });
-      
-      averages[indicator] = count > 0 ? total / count : 0;
-    });
-    
-    return averages;
-  };
-
-  // Get health behaviors data for display
-  const getHealthBehaviorsData = () => {
-    if (analysisLevel === 'bangkok') {
-      const bangkokScores = calculateBangkokPopulationScores();
-      const groupData = bangkokScores[selectedPopulationGroup];
-      
-      return {
-        'Alcohol Drinking Rate': `${groupData.drink_rate.toFixed(1)}%`,
-        'Smoking Rate': `${groupData.smoke_rate.toFixed(1)}%`,
-        'Obesity Rate': `${groupData.obese_rate.toFixed(1)}%`,
-        'Traffic Death Rate': `${groupData.traffic_death_rate.toFixed(1)} per 100k`
-      };
-    } else {
-      // District-specific data
-      const currentYear = Math.max(...years);
-      const drinkRate = drinkRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-      const smokeRate = smokeRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-      const obeseRate = obeseRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-      const trafficRate = trafficDeathRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-      
-      return {
-        'Alcohol Drinking Rate': `${drinkRate.toFixed(1)}%`,
-        'Smoking Rate': `${smokeRate.toFixed(1)}%`,
-        'Obesity Rate': `${obeseRate.toFixed(1)}%`,
-        'Traffic Death Rate': `${trafficRate.toFixed(1)} per 100k`
-      };
     }
+  }, [selectedDistrict, getAvailableDistricts]);
+
+  // Loading and error states
+  const isLoading = isOriginalDataLoading || isSDHELoading || isGeoJsonLoading;
+  const error = originalDataError || sdheError || geoJsonError;
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen bg-gray-50">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="text-lg font-medium text-gray-900">Loading Bangkok Health Data</div>
+          </div>
+          
+          <div className="space-y-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Original health indicators:</span>
+              <span className={`${isOriginalDataLoading ? 'text-yellow-600' : 'text-green-600'}`}>
+                {isOriginalDataLoading ? 'Loading...' : '✓ Loaded'}
+              </span>
+            </div>
+            
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">SDHE processing:</span>
+              <span className={`${isSDHELoading ? 'text-yellow-600' : 'text-green-600'}`}>
+                {isSDHELoading ? processingStatus || 'Processing...' : '✓ Completed'}
+              </span>
+            </div>
+            
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">District maps:</span>
+              <span className={`${isGeoJsonLoading ? 'text-yellow-600' : 'text-green-600'}`}>
+                {isGeoJsonLoading ? 'Loading...' : '✓ Loaded'}
+              </span>
+            </div>
+          </div>
+          
+          {processingStatus && (
+            <div className="mt-4 text-xs text-gray-500 bg-gray-50 p-2 rounded">
+              Status: {processingStatus.replace('_', ' ')}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-50">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
+          <div className="text-center">
+            <div className="w-12 h-12 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Data Loading Error</h3>
+            <p className="text-sm text-gray-600 mb-4">{error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+            >
+              Retry Loading
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Get basic health behaviors data for backward compatibility
+  const getHealthBehaviorsData = () => {
+    if (!years || years.length === 0) return {};
+    
+    const currentYear = Math.max(...years);
+    
+    if (analysisLevel === 'bangkok') {
+      // Use SDHE data if available, otherwise fall back to original calculation
+      if (sdheData && getDomainScore) {
+        const alcoholScore = getDomainScore('health_behaviors', selectedPopulationGroup);
+        const smokingScore = getDomainScore('health_behaviors', selectedPopulationGroup);
+        const obesityScore = getDomainScore('health_behaviors', selectedPopulationGroup);
+        
+        return {
+          'Alcohol Drinking Rate': `${(100 - alcoholScore).toFixed(1)}%`,
+          'Smoking Rate': `${(100 - smokingScore).toFixed(1)}%`,
+          'Obesity Rate': `${(100 - obesityScore).toFixed(1)}%`,
+          'Traffic Death Rate': 'See SDHE Analysis'
+        };
+      }
+    }
+    
+    // Fall back to original data calculation
+    const drinkRate = drinkRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
+    const smokeRate = smokeRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
+    const obeseRate = obeseRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
+    const trafficRate = trafficDeathRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
+    
+    return {
+      'Alcohol Drinking Rate': `${drinkRate.toFixed(1)}%`,
+      'Smoking Rate': `${smokeRate.toFixed(1)}%`,
+      'Obesity Rate': `${obeseRate.toFixed(1)}%`,
+      'Traffic Death Rate': `${trafficRate.toFixed(1)} per 100k`
+    };
   };
-
-  // Generate sample population group data for both levels
-  const populationGroupData = generateSamplePopulationGroupData(districts, {
-    drinkRateData,
-    smokeRateData,
-    obeseRateData,
-    trafficDeathRateData
-  });
-
-  const isLoading = isDataLoading || isGeoJsonLoading;
-  const error = dataError || geoJsonError;
-
-  if (isLoading) return <div className="flex justify-center items-center h-screen">Loading data...</div>;
-  if (error) return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
 
   const healthBehaviorsData = getHealthBehaviorsData();
-  const bangkokPopulationScores = calculateBangkokPopulationScores();
-  const bangkokOverallAverages = getBangkokOverallAverages();
+
+  // Render main content based on active view
+  const renderMainContent = () => {
+    if (activeView === 'table') {
+      return (
+        <SDHEIndicatorsTable
+          selectedPopulationGroup={selectedPopulationGroup}
+          selectedDistrict={selectedDistrict}
+          analysisLevel={analysisLevel}
+          getIndicatorTableData={getIndicatorTableData}
+          getAvailableDomains={getAvailableDomains}
+          sdheData={sdheData}
+        />
+      );
+    }
+
+    return (
+      <EnhancedSDHESpiderChart 
+        analysisLevel={analysisLevel}
+        selectedDistrict={selectedDistrict}
+        selectedPopulationGroup={selectedPopulationGroup}
+        sdheData={sdheData}
+        getSpiderChartData={getSpiderChartData}
+        getEquityGaps={getEquityGaps}
+        getVulnerabilityIndex={getVulnerabilityIndex}
+      />
+    );
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header indicatorName="Bangkok Health Inequalities Dashboard" />
+      <Header indicatorName="Bangkok Health Inequalities Dashboard - SDHE Analysis" />
       
       <div className="max-w-7xl mx-auto p-4">
-        {/* Bangkok-First District Selection */}
+        {/* Enhanced District Selection with SDHE Status */}
         <DistrictSelector 
-          districts={districts}
+          districts={districts.length > 0 ? districts : (getAvailableDistricts ? getAvailableDistricts() : [])}
           selectedDistrict={selectedDistrict}
           setSelectedDistrict={setSelectedDistrict}
           selectedPopulationGroup={selectedPopulationGroup}
@@ -247,8 +236,27 @@ const Dashboard = () => {
           setAnalysisLevel={setAnalysisLevel}
         />
 
+        {/* SDHE Data Status Indicator */}
+        {sdheData && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-medium text-green-800">SDHE Analysis Ready</h4>
+                <p className="text-sm text-green-700">
+                  {getPopulationGroupStats ? getPopulationGroupStats().total_responses.toLocaleString() : 0} survey responses processed across {getAvailableDomains ? getAvailableDomains().length : 0} health equity domains
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Panel with Bangkok/District Modes */}
+          {/* Enhanced Left Panel */}
           <LeftPanel 
             activeTab={activeTab}
             setActiveTab={setActiveTab}
@@ -257,37 +265,66 @@ const Dashboard = () => {
             selectedPopulationGroup={selectedPopulationGroup}
             healthBehaviorsData={healthBehaviorsData}
             districtGeoJson={districtGeoJson}
-            populationGroupData={populationGroupData}
+            populationGroupData={[]} // Legacy data
             allRateData={{
               drinkRateData,
               smokeRateData,
               obeseRateData,
               trafficDeathRateData
             }}
+            // New SDHE data props
+            sdheData={sdheData}
+            getPopulationGroupStats={getPopulationGroupStats}
+            getVulnerabilityIndex={getVulnerabilityIndex}
+            getEquityGaps={getEquityGaps}
           />
 
-          {/* Bangkok-Focused Spider Chart */}
+          {/* Main Analysis Area */}
           <div className="lg:col-span-2">
-            <SpiderChart 
-              analysisLevel={analysisLevel}
-              selectedDistrict={selectedDistrict}
-              selectedPopulationGroup={selectedPopulationGroup}
-              bangkokPopulationData={bangkokPopulationScores}
-              districtData={null} // Will be populated with district-specific data
-              allRateData={{
-                drinkRateData,
-                smokeRateData,
-                obeseRateData,
-                trafficDeathRateData
-              }}
-            />
+            {/* View Selector */}
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+                <button
+                  onClick={() => setActiveView('spider')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    activeView === 'spider'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  📊 Spider Chart
+                </button>
+                <button
+                  onClick={() => setActiveView('table')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    activeView === 'table'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  📋 Indicators Table
+                </button>
+              </div>
+
+              {/* Data Status */}
+              <div className="text-sm text-gray-600">
+                {sdheData ? (
+                  <span className="text-green-600 font-medium">✓ SDHE Data Active</span>
+                ) : (
+                  <span className="text-yellow-600">⚠ Using Legacy Data</span>
+                )}
+              </div>
+            </div>
+
+            {/* Main Content */}
+            {renderMainContent()}
           </div>
         </div>
       </div>
       
-      <Footer indicatorName="Bangkok Health Inequalities Dashboard" />
+      <Footer indicatorName="Bangkok Health Inequalities Dashboard - SDHE" />
     </div>
   );
 };
 
-export default Dashboard;
+export default EnhancedDashboard;
