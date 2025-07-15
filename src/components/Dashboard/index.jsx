@@ -1,130 +1,59 @@
-// Enhanced Bangkok Health Inequalities Dashboard with SDHE Integration
-import React, { useState, useEffect } from 'react';
-import useHealthData from '../../hooks/useHealthData';
-import useSDHEData from '../../hooks/useSDHEData'; // New SDHE data hook
-import useGeoJsonData from '../../hooks/useGeoJsonData';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
-import DistrictSelector from './DistrictSelector';
-import LeftPanel from './LeftPanel';
-import EnhancedSDHESpiderChart from './SpiderChart'; // Enhanced spider chart
-import SDHEIndicatorsTable from './SDHEIndicatorsTable'; // New indicators table
-import { 
-  getFilteredData, 
-  getSexFilteredData, 
-  prepareSexComparisonData,
-  getSummaryData
-} from './DataUtils';
+// Basic SDHE Dashboard - Clean and Simple
+import React, { useState } from 'react';
+import useBasicSDHEData from '../hooks/useBasicSDHEData';
 
-const EnhancedDashboard = () => {
-  // Original health data (for backward compatibility)
-  const { 
-    drinkRateData,
-    drinkRateBySexData,
-    smokeRateData,
-    smokeRateBySexData,
-    trafficDeathRateData,
-    obeseRateData,
-    obeseRateBySexData,
-    districts,
-    years,
-    sexes,
-    indicatorsWithSexData,
-    indicatorYears,
-    isLoading: isOriginalDataLoading,
-    error: originalDataError
-  } = useHealthData();
-
-  // New SDHE data processing
-  const {
-    sdheData,
-    isLoading: isSDHELoading,
-    error: sdheError,
-    processingStatus,
-    getSpiderChartData,
-    getIndicatorTableData,
-    getDomainScore,
-    getPopulationGroupStats,
-    getBangkokOverview,
-    getDistrictComparison,
-    getEquityGaps,
-    getVulnerabilityIndex,
-    getAvailableDomains,
-    getAvailableDistricts,
-    getAvailablePopulationGroups
-  } = useSDHEData();
+const BasicSDHEDashboard = () => {
+  const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
   
-  const {
-    districtGeoJson,
-    isLoading: isGeoJsonLoading,
-    error: geoJsonError
-  } = useGeoJsonData();
-  
-  // State management
-  const [analysisLevel, setAnalysisLevel] = useState('bangkok');
-  const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
-  const [activeTab, setActiveTab] = useState('sdhe-overview');
-  const [activeView, setActiveView] = useState('spider'); // 'spider' or 'table'
-  
-  // Set default district when data loads
-  useEffect(() => {
-    if (districts.length > 0 && !selectedDistrict) {
-      setSelectedDistrict(districts[0]);
-    }
-  }, [districts, selectedDistrict]);
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [selectedDomain, setSelectedDomain] = useState('economic_security');
 
-  // Auto-switch to available district from SDHE data if original districts not available
-  useEffect(() => {
-    if (!selectedDistrict && getAvailableDistricts) {
-      const sdheDistricts = getAvailableDistricts();
-      if (sdheDistricts.length > 0) {
-        setSelectedDistrict(sdheDistricts[0]);
+  const populationGroups = [
+    { value: 'informal_workers', label: 'แรงงานนอกระบบ (Informal Workers)' },
+    { value: 'elderly', label: 'ผู้สูงอายุ (Elderly)' },
+    { value: 'disabled', label: 'คนพิการ (People with Disabilities)' },
+    { value: 'lgbtq', label: 'กลุ่มเพศหลากหลาย (LGBTQ+)' }
+  ];
+
+  const domainLabels = {
+    'economic_security': 'Economic Security',
+    'education': 'Education', 
+    'healthcare_access': 'Healthcare Access',
+    'physical_environment': 'Physical Environment',
+    'social_context': 'Social Context',
+    'health_behaviors': 'Health Behaviors'
+  };
+
+  // Set default district when data loads
+  React.useEffect(() => {
+    if (!selectedDistrict && data) {
+      const districts = getAvailableDistricts();
+      if (districts.length > 0) {
+        setSelectedDistrict(districts[0]);
       }
     }
-  }, [selectedDistrict, getAvailableDistricts]);
+  }, [data, selectedDistrict, getAvailableDistricts]);
 
-  // Loading and error states
-  const isLoading = isOriginalDataLoading || isSDHELoading || isGeoJsonLoading;
-  const error = originalDataError || sdheError || geoJsonError;
+  // Set default domain when data loads
+  React.useEffect(() => {
+    if (data) {
+      const domains = getAvailableDomains();
+      if (domains.length > 0 && !domains.includes(selectedDomain)) {
+        setSelectedDomain(domains[0]);
+      }
+    }
+  }, [data, selectedDomain, getAvailableDomains]);
 
   if (isLoading) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen bg-gray-50">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
           <div className="flex items-center space-x-3 mb-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <div className="text-lg font-medium text-gray-900">Loading Bangkok Health Data</div>
+            <div className="text-lg font-medium">Loading SDHE Data</div>
           </div>
-          
-          <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Original health indicators:</span>
-              <span className={`${isOriginalDataLoading ? 'text-yellow-600' : 'text-green-600'}`}>
-                {isOriginalDataLoading ? 'Loading...' : '✓ Loaded'}
-              </span>
-            </div>
-            
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">SDHE processing:</span>
-              <span className={`${isSDHELoading ? 'text-yellow-600' : 'text-green-600'}`}>
-                {isSDHELoading ? processingStatus || 'Processing...' : '✓ Completed'}
-              </span>
-            </div>
-            
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">District maps:</span>
-              <span className={`${isGeoJsonLoading ? 'text-yellow-600' : 'text-green-600'}`}>
-                {isGeoJsonLoading ? 'Loading...' : '✓ Loaded'}
-              </span>
-            </div>
-          </div>
-          
-          {processingStatus && (
-            <div className="mt-4 text-xs text-gray-500 bg-gray-50 p-2 rounded">
-              Status: {processingStatus.replace('_', ' ')}
-            </div>
-          )}
+          <p className="text-gray-600">Processing survey data and calculating health equity indicators...</p>
         </div>
       </div>
     );
@@ -132,8 +61,8 @@ const EnhancedDashboard = () => {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-50">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
           <div className="text-center">
             <div className="w-12 h-12 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
               <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,9 +73,9 @@ const EnhancedDashboard = () => {
             <p className="text-sm text-gray-600 mb-4">{error}</p>
             <button 
               onClick={() => window.location.reload()} 
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
-              Retry Loading
+              Retry
             </button>
           </div>
         </div>
@@ -154,177 +83,183 @@ const EnhancedDashboard = () => {
     );
   }
 
-  // Get basic health behaviors data for backward compatibility
-  const getHealthBehaviorsData = () => {
-    if (!years || years.length === 0) return {};
-    
-    const currentYear = Math.max(...years);
-    
-    if (analysisLevel === 'bangkok') {
-      // Use SDHE data if available, otherwise fall back to original calculation
-      if (sdheData && getDomainScore) {
-        const alcoholScore = getDomainScore('health_behaviors', selectedPopulationGroup);
-        const smokingScore = getDomainScore('health_behaviors', selectedPopulationGroup);
-        const obesityScore = getDomainScore('health_behaviors', selectedPopulationGroup);
-        
-        return {
-          'Alcohol Drinking Rate': `${(100 - alcoholScore).toFixed(1)}%`,
-          'Smoking Rate': `${(100 - smokingScore).toFixed(1)}%`,
-          'Obesity Rate': `${(100 - obesityScore).toFixed(1)}%`,
-          'Traffic Death Rate': 'See SDHE Analysis'
-        };
-      }
-    }
-    
-    // Fall back to original data calculation
-    const drinkRate = drinkRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-    const smokeRate = smokeRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-    const obeseRate = obeseRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-    const trafficRate = trafficDeathRateData.find(d => d.dname === selectedDistrict && d.year === currentYear)?.value || 0;
-    
-    return {
-      'Alcohol Drinking Rate': `${drinkRate.toFixed(1)}%`,
-      'Smoking Rate': `${smokeRate.toFixed(1)}%`,
-      'Obesity Rate': `${obeseRate.toFixed(1)}%`,
-      'Traffic Death Rate': `${trafficRate.toFixed(1)} per 100k`
-    };
-  };
+  const districts = getAvailableDistricts();
+  const domains = getAvailableDomains();
+  const indicatorData = getIndicatorData(selectedDomain, selectedDistrict, selectedPopulationGroup);
 
-  const healthBehaviorsData = getHealthBehaviorsData();
-
-  // Render main content based on active view
-  const renderMainContent = () => {
-    if (activeView === 'table') {
-      return (
-        <SDHEIndicatorsTable
-          selectedPopulationGroup={selectedPopulationGroup}
-          selectedDistrict={selectedDistrict}
-          analysisLevel={analysisLevel}
-          getIndicatorTableData={getIndicatorTableData}
-          getAvailableDomains={getAvailableDomains}
-          sdheData={sdheData}
-        />
-      );
-    }
-
-    return (
-      <EnhancedSDHESpiderChart 
-        analysisLevel={analysisLevel}
-        selectedDistrict={selectedDistrict}
-        selectedPopulationGroup={selectedPopulationGroup}
-        sdheData={sdheData}
-        getSpiderChartData={getSpiderChartData}
-        getEquityGaps={getEquityGaps}
-        getVulnerabilityIndex={getVulnerabilityIndex}
-      />
-    );
+  const getScoreColor = (value) => {
+    if (value >= 80) return 'bg-green-100 text-green-800';
+    if (value >= 60) return 'bg-yellow-100 text-yellow-800';
+    if (value >= 40) return 'bg-orange-100 text-orange-800';
+    return 'bg-red-100 text-red-800';
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header indicatorName="Bangkok Health Inequalities Dashboard - SDHE Analysis" />
-      
-      <div className="max-w-7xl mx-auto p-4">
-        {/* Enhanced District Selection with SDHE Status */}
-        <DistrictSelector 
-          districts={districts.length > 0 ? districts : (getAvailableDistricts ? getAvailableDistricts() : [])}
-          selectedDistrict={selectedDistrict}
-          setSelectedDistrict={setSelectedDistrict}
-          selectedPopulationGroup={selectedPopulationGroup}
-          setSelectedPopulationGroup={setSelectedPopulationGroup}
-          analysisLevel={analysisLevel}
-          setAnalysisLevel={setAnalysisLevel}
-        />
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <h1 className="text-2xl font-bold text-gray-900">Bangkok SDHE Dashboard</h1>
+          <p className="text-gray-600 mt-1">Social Determinants of Health Equity Analysis</p>
+        </div>
+      </div>
 
-        {/* SDHE Data Status Indicator */}
-        {sdheData && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 className="font-medium text-green-800">SDHE Analysis Ready</h4>
-                <p className="text-sm text-green-700">
-                  {getPopulationGroupStats ? getPopulationGroupStats().total_responses.toLocaleString() : 0} survey responses processed across {getAvailableDomains ? getAvailableDomains().length : 0} health equity domains
-                </p>
-              </div>
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Filters */}
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Population Group Filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Population Group
+              </label>
+              <select 
+                value={selectedPopulationGroup}
+                onChange={(e) => setSelectedPopulationGroup(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                {populationGroups.map(group => (
+                  <option key={group.value} value={group.value}>
+                    {group.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* District Filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                District
+              </label>
+              <select 
+                value={selectedDistrict}
+                onChange={(e) => setSelectedDistrict(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                {districts.map(district => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-        )}
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Enhanced Left Panel */}
-          <LeftPanel 
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            analysisLevel={analysisLevel}
-            selectedDistrict={selectedDistrict}
-            selectedPopulationGroup={selectedPopulationGroup}
-            healthBehaviorsData={healthBehaviorsData}
-            districtGeoJson={districtGeoJson}
-            populationGroupData={[]} // Legacy data
-            allRateData={{
-              drinkRateData,
-              smokeRateData,
-              obeseRateData,
-              trafficDeathRateData
-            }}
-            // New SDHE data props
-            sdheData={sdheData}
-            getPopulationGroupStats={getPopulationGroupStats}
-            getVulnerabilityIndex={getVulnerabilityIndex}
-            getEquityGaps={getEquityGaps}
-          />
-
-          {/* Main Analysis Area */}
-          <div className="lg:col-span-2">
-            {/* View Selector */}
-            <div className="mb-6 flex items-center justify-between">
-              <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+        {/* Domain Tabs */}
+        <div className="bg-white rounded-lg shadow-sm mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="flex space-x-8 px-6">
+              {domains.map(domain => (
                 <button
-                  onClick={() => setActiveView('spider')}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                    activeView === 'spider'
-                      ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
+                  key={domain}
+                  onClick={() => setSelectedDomain(domain)}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                    selectedDomain === domain
+                      ? 'border-blue-500 text-blue-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}
                 >
-                  📊 Spider Chart
+                  {domainLabels[domain] || domain}
                 </button>
-                <button
-                  onClick={() => setActiveView('table')}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                    activeView === 'table'
-                      ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  📋 Indicators Table
-                </button>
-              </div>
+              ))}
+            </nav>
+          </div>
 
-              {/* Data Status */}
-              <div className="text-sm text-gray-600">
-                {sdheData ? (
-                  <span className="text-green-600 font-medium">✓ SDHE Data Active</span>
-                ) : (
-                  <span className="text-yellow-600">⚠ Using Legacy Data</span>
-                )}
-              </div>
+          {/* Indicators Table */}
+          <div className="p-6">
+            <div className="mb-4">
+              <h3 className="text-lg font-medium text-gray-900">
+                {domainLabels[selectedDomain]} Indicators
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                {selectedPopulationGroup.replace('_', ' ')} in {selectedDistrict}
+              </p>
             </div>
 
-            {/* Main Content */}
-            {renderMainContent()}
+            {indicatorData.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-200 bg-gray-50">
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">Indicator</th>
+                      <th className="text-center py-3 px-4 font-medium text-gray-700">Score</th>
+                      <th className="text-center py-3 px-4 font-medium text-gray-700">Sample Size</th>
+                      <th className="text-center py-3 px-4 font-medium text-gray-700">Performance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {indicatorData.map((item, index) => (
+                      <tr 
+                        key={item.indicator} 
+                        className={`border-b border-gray-100 ${
+                          item.isDomainScore ? 'bg-blue-50 font-medium' : 
+                          index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
+                        }`}
+                      >
+                        <td className="py-3 px-4">
+                          <div className="flex items-center space-x-2">
+                            {item.isDomainScore && (
+                              <span className="text-blue-600 font-bold">📊</span>
+                            )}
+                            <span className={item.isDomainScore ? 'font-bold text-blue-800' : ''}>
+                              {item.label}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="text-center py-3 px-4">
+                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                            getScoreColor(item.value)
+                          }`}>
+                            {item.value}%
+                          </span>
+                        </td>
+                        <td className="text-center py-3 px-4 text-gray-600">
+                          {item.sample_size.toLocaleString()}
+                        </td>
+                        <td className="text-center py-3 px-4">
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div 
+                              className={`h-2 rounded-full ${
+                                item.value >= 80 ? 'bg-green-500' :
+                                item.value >= 60 ? 'bg-yellow-500' :
+                                item.value >= 40 ? 'bg-orange-500' : 'bg-red-500'
+                              }`}
+                              style={{ width: `${Math.min(100, Math.max(0, item.value))}%` }}
+                            ></div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <p>No data available for this combination</p>
+                <p className="text-sm mt-1">Try selecting a different district or population group</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer Info */}
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h4 className="font-medium text-gray-800 mb-2">About SDHE Indicators</h4>
+          <p className="text-sm text-gray-600 mb-2">
+            Social Determinants of Health Equity (SDHE) indicators measure conditions that influence health outcomes 
+            across different population groups. Scores represent the percentage achieving positive health outcomes.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
+            <div>🟢 <strong>80-100%:</strong> Excellent</div>
+            <div>🟡 <strong>60-79%:</strong> Good</div>
+            <div>🟠 <strong>40-59%:</strong> Fair</div>
+            <div>🔴 <strong>0-39%:</strong> Poor</div>
           </div>
         </div>
       </div>
-      
-      <Footer indicatorName="Bangkok Health Inequalities Dashboard - SDHE" />
     </div>
   );
 };
 
-export default EnhancedDashboard;
+export default BasicSDHEDashboard;
