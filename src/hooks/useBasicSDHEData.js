@@ -1,4 +1,4 @@
-// Basic SDHE Data Hook
+// useBasicSDHEData Hook - src/hooks/useBasicSDHEData.js
 import { useState, useEffect, useRef } from 'react';
 import BasicSDHEProcessor from '../utils/BasicSDHEProcessor';
 

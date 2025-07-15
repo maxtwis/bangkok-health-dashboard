@@ -1,6 +1,6 @@
-// Basic SDHE Dashboard - Clean and Simple
+// Basic SDHE Dashboard - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
-import useBasicSDHEData from '../hooks/useBasicSDHEData';
+import useBasicSDHEData from '../../hooks/useBasicSDHEData';
 
 const BasicSDHEDashboard = () => {
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
