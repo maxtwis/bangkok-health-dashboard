@@ -1,6 +1,3 @@
-import React from 'react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
-
 import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 
@@ -93,28 +90,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
       }
     }
     return value;
-  };
-
-  // Custom tooltip to show original values
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-3 border border-gray-300 rounded shadow-lg">
-          <p className="font-medium text-gray-900 mb-2">{label}</p>
-          {payload.map((entry, index) => {
-            const originalValue = scaleMode === 'dynamic' 
-              ? entry.payload[`${entry.dataKey}_original`] 
-              : entry.value;
-            return (
-              <p key={index} style={{ color: entry.color }} className="text-sm">
-                {entry.name}: {originalValue?.toFixed(1)}%
-              </p>
-            );
-          })}
-        </div>
-      );
-    }
-    return null;
   };
 
   return (
