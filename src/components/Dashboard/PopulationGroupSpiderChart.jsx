@@ -185,33 +185,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
         </ResponsiveContainer>
       </div>
 
-      {/* Summary Statistics with original values */}
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {populationGroups.map(group => {
-          const groupData = chartData.map(d => d[group.value]);
-          const average = groupData.reduce((sum, val) => sum + val, 0) / groupData.length;
-          const highest = Math.max(...groupData);
-          const lowest = Math.min(...groupData);
-          
-          return (
-            <div key={group.value} className="bg-gray-50 p-3 rounded">
-              <div className="flex items-center mb-2">
-                <div 
-                  className="w-3 h-3 rounded-full mr-2" 
-                  style={{ backgroundColor: group.color }}
-                ></div>
-                <h4 className="font-medium text-sm text-gray-900">{group.label}</h4>
-              </div>
-              <div className="space-y-1 text-xs text-gray-600">
-                <div>Average: <span className="font-medium">{average.toFixed(1)}%</span></div>
-                <div>Range: <span className="font-medium">{lowest.toFixed(1)}% - {highest.toFixed(1)}%</span></div>
-                <div>Spread: <span className="font-medium">{(highest - lowest).toFixed(1)}pp</span></div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
       {/* Domain Rankings */}
       <div className="mt-6">
         <h4 className="font-medium text-gray-800 mb-3">Domain Performance Rankings</h4>
