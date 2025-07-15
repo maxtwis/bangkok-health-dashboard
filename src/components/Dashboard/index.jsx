@@ -1,6 +1,7 @@
 // Complete Updated Basic SDHE Dashboard - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
+import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 
 const BasicSDHEDashboard = () => {
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
@@ -183,6 +184,12 @@ const BasicSDHEDashboard = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Spider Chart for Population Group Comparison */}
+        <PopulationGroupSpiderChart 
+          getIndicatorData={getIndicatorData}
+          selectedDistrict={selectedDistrict}
+        />
+
         {/* Filters */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
