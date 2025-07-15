@@ -349,6 +349,32 @@ class BasicSDHEProcessor {
     const domainMapping = this.indicatorMappings[domain];
     const results = { sample_size: records.length };
 
+    // Define reverse indicators (same as in dashboard)
+    const reverseIndicators = {
+      unemployment_rate: true,
+      vulnerable_employment: true,
+      food_insecurity_moderate: true,
+      food_insecurity_severe: true,
+      work_injury_fatal: true,
+      work_injury_non_fatal: true,
+      catastrophic_health_spending_household: true,
+      health_spending_over_10_percent: true,
+      health_spending_over_25_percent: true,
+      medical_consultation_skip_cost: true,
+      medical_treatment_skip_cost: true,
+      prescribed_medicine_skip_cost: true,
+      housing_overcrowding: true,
+      disaster_experience: true,
+      violence_physical: true,
+      violence_psychological: true,
+      violence_sexual: true,
+      discrimination_experience: true,
+      community_murder: true,
+      alcohol_consumption: true,
+      tobacco_use: true,
+      obesity: true
+    };
+
     Object.keys(domainMapping).forEach(indicator => {
       const mapping = domainMapping[indicator];
       
@@ -400,11 +426,21 @@ class BasicSDHEProcessor {
       }
     });
 
-    // Calculate domain score (average of indicators)
+    // Calculate domain score with proper reverse indicator handling
     const indicators = Object.keys(domainMapping);
-    const domainScore = indicators.reduce((sum, indicator) => {
-      return sum + results[indicator].value;
-    }, 0) / indicators.length;
+    const goodnessScores = indicators.map(indicator => {
+      const rawValue = results[indicator].value;
+      
+      if (reverseIndicators[indicator]) {
+        // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
+        return 100 - rawValue;
+      } else {
+        // Normal indicator - higher is better
+        return rawValue;
+      }
+    });
+
+    const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
 
     results['_domain_score'] = {
       value: parseFloat(domainScore.toFixed(1)),
