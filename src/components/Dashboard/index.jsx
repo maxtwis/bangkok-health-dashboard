@@ -6,7 +6,7 @@ const BasicSDHEDashboard = () => {
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
   
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
-  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall'); // Set initial default
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
 
   const populationGroups = [
@@ -25,12 +25,15 @@ const BasicSDHEDashboard = () => {
     'health_behaviors': 'Health Behaviors'
   };
 
-  // Set default district to Bangkok Overall when data loads
+  // Ensure Bangkok Overall is selected by default
   React.useEffect(() => {
-    if (!selectedDistrict && data) {
-      setSelectedDistrict('Bangkok Overall'); // Default to Bangkok Overall
+    if (data && selectedDistrict !== 'Bangkok Overall') {
+      const districts = getAvailableDistricts();
+      if (districts.includes('Bangkok Overall')) {
+        setSelectedDistrict('Bangkok Overall');
+      }
     }
-  }, [data, selectedDistrict]);
+  }, [data, selectedDistrict, getAvailableDistricts]);
 
   // Set default domain when data loads
   React.useEffect(() => {
