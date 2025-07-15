@@ -25,15 +25,12 @@ const BasicSDHEDashboard = () => {
     'health_behaviors': 'Health Behaviors'
   };
 
-  // Set default district when data loads
+  // Set default district to Bangkok Overall when data loads
   React.useEffect(() => {
     if (!selectedDistrict && data) {
-      const districts = getAvailableDistricts();
-      if (districts.length > 0) {
-        setSelectedDistrict(districts[0]);
-      }
+      setSelectedDistrict('Bangkok Overall'); // Default to Bangkok Overall
     }
-  }, [data, selectedDistrict, getAvailableDistricts]);
+  }, [data, selectedDistrict]);
 
   // Set default domain when data loads
   React.useEffect(() => {
@@ -173,7 +170,7 @@ const BasicSDHEDashboard = () => {
                 {domainLabels[selectedDomain]} Indicators
               </h3>
               <p className="text-sm text-gray-600 mt-1">
-                {selectedPopulationGroup.replace('_', ' ')} in {selectedDistrict}
+                {selectedPopulationGroup.replace('_', ' ')} - {selectedDistrict}
               </p>
             </div>
 
