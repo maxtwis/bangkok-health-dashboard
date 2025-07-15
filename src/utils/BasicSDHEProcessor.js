@@ -1,4 +1,4 @@
-// Basic SDHE Data Processor - src/utils/BasicSDHEProcessor.js
+// Updated Basic SDHE Data Processor with Bangkok Overall - src/utils/BasicSDHEProcessor.js
 import Papa from 'papaparse';
 import _ from 'lodash';
 
@@ -344,15 +344,94 @@ class BasicSDHEProcessor {
     return 'general_population';
   }
 
+  // NEW: Calculate indicators for a specific set of records
+  calculateIndicatorsForRecords(records, domain) {
+    const domainMapping = this.indicatorMappings[domain];
+    const results = { sample_size: records.length };
+
+    Object.keys(domainMapping).forEach(indicator => {
+      const mapping = domainMapping[indicator];
+      
+      if (mapping.calculation) {
+        // Custom calculation function
+        const calculatedValue = mapping.calculation(records);
+        results[indicator] = {
+          value: parseFloat(calculatedValue.toFixed(2)),
+          label: mapping.label,
+          sample_size: records.length
+        };
+        
+        // Track sample size for financial indicators that filter out null income
+        if (indicator.includes('health_spending') || indicator.includes('catastrophic')) {
+          const validRecords = records.filter(r => 
+            r.income !== null && 
+            r.income !== undefined && 
+            r.income > 0 &&
+            ((indicator.includes('household') && r.hh_health_expense !== null) ||
+             (!indicator.includes('household') && r.health_expense !== null))
+          );
+          results[indicator].sample_size = validRecords.length;
+        }
+      } else if (mapping.condition) {
+        // Standard condition-based calculation
+        let filteredRecords = records;
+        
+        // Apply age filter if specified
+        if (mapping.ageFilter) {
+          filteredRecords = records.filter(r => mapping.ageFilter(r.age));
+        }
+        
+        const meetCondition = filteredRecords.filter(record => {
+          if (mapping.fields) {
+            return mapping.condition(record);
+          } else {
+            return mapping.condition(record[mapping.field]);
+          }
+        }).length;
+        
+        const rate = filteredRecords.length > 0 ? 
+          (meetCondition / filteredRecords.length) * 100 : 0;
+        
+        results[indicator] = {
+          value: parseFloat(rate.toFixed(2)),
+          label: mapping.label,
+          sample_size: mapping.ageFilter ? filteredRecords.length : records.length
+        };
+      }
+    });
+
+    // Calculate domain score (average of indicators)
+    const indicators = Object.keys(domainMapping);
+    const domainScore = indicators.reduce((sum, indicator) => {
+      return sum + results[indicator].value;
+    }, 0) / indicators.length;
+
+    results['_domain_score'] = {
+      value: parseFloat(domainScore.toFixed(1)),
+      label: `${domain.replace('_', ' ')} Score`,
+      sample_size: records.length
+    };
+
+    return results;
+  }
+
   calculateIndicators() {
     const results = {};
     const domains = Object.keys(this.indicatorMappings);
     const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq'];
     const districts = [...new Set(this.surveyData.map(r => r.district_name))];
 
-    // Initialize results structure
+    // Initialize results structure for districts
     domains.forEach(domain => {
       results[domain] = {};
+      
+      // Initialize Bangkok Overall
+      results[domain]['Bangkok Overall'] = {};
+      populationGroups.forEach(group => {
+        results[domain]['Bangkok Overall'][group] = {};
+      });
+      
+      // Initialize individual districts
       districts.forEach(district => {
         results[domain][district] = {};
         populationGroups.forEach(group => {
@@ -363,8 +442,15 @@ class BasicSDHEProcessor {
 
     // Calculate indicators for each combination
     domains.forEach(domain => {
-      const domainMapping = this.indicatorMappings[domain];
+      // Calculate Bangkok Overall first (using all data)
+      populationGroups.forEach(group => {
+        const allRecords = this.surveyData.filter(r => r.population_group === group);
+        if (allRecords.length > 0) {
+          results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(allRecords, domain);
+        }
+      });
       
+      // Calculate individual districts
       districts.forEach(district => {
         populationGroups.forEach(group => {
           const records = this.surveyData.filter(r => 
@@ -372,56 +458,7 @@ class BasicSDHEProcessor {
           );
 
           if (records.length > 0) {
-            Object.keys(domainMapping).forEach(indicator => {
-              const mapping = domainMapping[indicator];
-              
-              if (mapping.calculation) {
-                // Custom calculation function
-                const calculatedValue = mapping.calculation(records);
-                results[domain][district][group][indicator] = {
-                  value: parseFloat(calculatedValue.toFixed(2)),
-                  label: mapping.label,
-                  sample_size: records.length
-                };
-              } else if (mapping.condition) {
-                // Standard condition-based calculation
-                let filteredRecords = records;
-                
-                // Apply age filter if specified
-                if (mapping.ageFilter) {
-                  filteredRecords = records.filter(r => mapping.ageFilter(r.age));
-                }
-                
-                const meetCondition = filteredRecords.filter(record => {
-                  if (mapping.fields) {
-                    return mapping.condition(record);
-                  } else {
-                    return mapping.condition(record[mapping.field]);
-                  }
-                }).length;
-                
-                const rate = filteredRecords.length > 0 ? 
-                  (meetCondition / filteredRecords.length) * 100 : 0;
-                
-                results[domain][district][group][indicator] = {
-                  value: parseFloat(rate.toFixed(2)),
-                  label: mapping.label,
-                  sample_size: mapping.ageFilter ? filteredRecords.length : records.length
-                };
-              }
-            });
-
-            // Calculate domain score (average of indicators)
-            const indicators = Object.keys(domainMapping);
-            const domainScore = indicators.reduce((sum, indicator) => {
-              return sum + results[domain][district][group][indicator].value;
-            }, 0) / indicators.length;
-
-            results[domain][district][group]['_domain_score'] = {
-              value: parseFloat(domainScore.toFixed(1)),
-              label: `${domain.replace('_', ' ')} Score`,
-              sample_size: records.length
-            };
+            results[domain][district][group] = this.calculateIndicatorsForRecords(records, domain);
           }
         });
       });
@@ -432,7 +469,9 @@ class BasicSDHEProcessor {
   }
 
   getAvailableDistricts() {
-    return [...new Set(this.surveyData.map(r => r.district_name))].sort();
+    // Add Bangkok Overall as the first option
+    const districts = [...new Set(this.surveyData.map(r => r.district_name))].sort();
+    return ['Bangkok Overall', ...districts];
   }
 
   getAvailableDomains() {
@@ -447,9 +486,32 @@ class BasicSDHEProcessor {
     const data = this.sdheResults[domain][district][populationGroup];
     return Object.keys(data).map(indicator => ({
       indicator,
-      ...data[indicator],
+      value: data[indicator].value,
+      label: data[indicator].label,
+      sample_size: data[indicator].sample_size,
       isDomainScore: indicator === '_domain_score'
     }));
+  }
+
+  // NEW: Get summary statistics for Bangkok Overall
+  getBangkokOverallSummary() {
+    const summary = {
+      total_responses: this.surveyData.length,
+      population_groups: {},
+      districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length
+    };
+
+    // Population group breakdown for Bangkok Overall
+    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq'];
+    populationGroups.forEach(group => {
+      const groupRecords = this.surveyData.filter(r => r.population_group === group);
+      summary.population_groups[group] = {
+        count: groupRecords.length,
+        percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1)
+      };
+    });
+
+    return summary;
   }
 
   async processSurveyData(csvContent) {
@@ -457,8 +519,12 @@ class BasicSDHEProcessor {
     const results = this.calculateIndicators();
     
     console.log(`✅ Processed ${this.surveyData.length} survey responses`);
-    console.log(`📊 Districts: ${this.getAvailableDistricts().length}`);
+    console.log(`📊 Districts: ${this.getAvailableDistricts().length} (including Bangkok Overall)`);
     console.log(`🎯 Domains: ${this.getAvailableDomains().length}`);
+    
+    // Log Bangkok Overall sample sizes
+    const bangkokSummary = this.getBangkokOverallSummary();
+    console.log(`🏙️ Bangkok Overall sample sizes:`, bangkokSummary.population_groups);
     
     return {
       results,
