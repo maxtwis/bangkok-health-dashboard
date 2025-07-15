@@ -7,7 +7,7 @@ import Header from '../common/Header';
 import Footer from '../common/Footer';
 import DistrictSelector from './DistrictSelector';
 import LeftPanel from './LeftPanel';
-import EnhancedSDHESpiderChart from './EnhancedSDHESpiderChart'; // Enhanced spider chart
+import EnhancedSDHESpiderChart from './SDHESpiderChart'; // Enhanced spider chart
 import SDHEIndicatorsTable from './SDHEIndicatorsTable'; // New indicators table
 import { 
   getFilteredData, 
