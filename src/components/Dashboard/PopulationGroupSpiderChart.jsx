@@ -7,7 +7,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
   const populationGroups = [
     { value: 'informal_workers', label: 'Informal Workers', color: '#ef4444' },
     { value: 'elderly', label: 'Elderly', color: '#3b82f6' },
-    { value: 'disabled', label: 'Disabled', color: '#10b981' },
+    { value: 'disabled', label: 'People with disabilities', color: '#10b981' },
     { value: 'lgbtq', label: 'LGBTQ+', color: '#f59e0b' }
   ];
 
