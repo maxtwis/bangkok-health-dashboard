@@ -1,4 +1,4 @@
-// Basic SDHE Dashboard - src/components/Dashboard/index.jsx
+// Fixed Basic SDHE Dashboard - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
 
@@ -94,6 +94,22 @@ const BasicSDHEDashboard = () => {
     return 'bg-red-100 text-red-800';
   };
 
+  // Safe function to format sample size
+  const formatSampleSize = (sampleSize) => {
+    if (sampleSize === null || sampleSize === undefined || isNaN(sampleSize)) {
+      return 'N/A';
+    }
+    return Number(sampleSize).toLocaleString();
+  };
+
+  // Safe function to format value
+  const formatValue = (value) => {
+    if (value === null || value === undefined || isNaN(value)) {
+      return 'N/A';
+    }
+    return `${Number(value).toFixed(1)}%`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -177,7 +193,7 @@ const BasicSDHEDashboard = () => {
               </p>
             </div>
 
-            {indicatorData.length > 0 ? (
+            {indicatorData && indicatorData.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -189,48 +205,56 @@ const BasicSDHEDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {indicatorData.map((item, index) => (
-                      <tr 
-                        key={item.indicator} 
-                        className={`border-b border-gray-100 ${
-                          item.isDomainScore ? 'bg-blue-50 font-medium' : 
-                          index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
-                        }`}
-                      >
-                        <td className="py-3 px-4">
-                          <div className="flex items-center space-x-2">
-                            {item.isDomainScore && (
-                              <span className="text-blue-600 font-bold">📊</span>
-                            )}
-                            <span className={item.isDomainScore ? 'font-bold text-blue-800' : ''}>
-                              {item.label}
+                    {indicatorData.map((item, index) => {
+                      // Safety checks for item properties
+                      const value = item?.value ?? 0;
+                      const sampleSize = item?.sample_size ?? 0;
+                      const label = item?.label ?? 'Unknown Indicator';
+                      const isDomainScore = item?.isDomainScore ?? false;
+                      
+                      return (
+                        <tr 
+                          key={item?.indicator || index} 
+                          className={`border-b border-gray-100 ${
+                            isDomainScore ? 'bg-blue-50 font-medium' : 
+                            index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
+                          }`}
+                        >
+                          <td className="py-3 px-4">
+                            <div className="flex items-center space-x-2">
+                              {isDomainScore && (
+                                <span className="text-blue-600 font-bold">📊</span>
+                              )}
+                              <span className={isDomainScore ? 'font-bold text-blue-800' : ''}>
+                                {label}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                              getScoreColor(value)
+                            }`}>
+                              {formatValue(value)}
                             </span>
-                          </div>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                            getScoreColor(item.value)
-                          }`}>
-                            {item.value}%
-                          </span>
-                        </td>
-                        <td className="text-center py-3 px-4 text-gray-600">
-                          {item.sample_size.toLocaleString()}
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div 
-                              className={`h-2 rounded-full ${
-                                item.value >= 80 ? 'bg-green-500' :
-                                item.value >= 60 ? 'bg-yellow-500' :
-                                item.value >= 40 ? 'bg-orange-500' : 'bg-red-500'
-                              }`}
-                              style={{ width: `${Math.min(100, Math.max(0, item.value))}%` }}
-                            ></div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td className="text-center py-3 px-4 text-gray-600">
+                            {formatSampleSize(sampleSize)}
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div 
+                                className={`h-2 rounded-full ${
+                                  value >= 80 ? 'bg-green-500' :
+                                  value >= 60 ? 'bg-yellow-500' :
+                                  value >= 40 ? 'bg-orange-500' : 'bg-red-500'
+                                }`}
+                                style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
+                              ></div>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
