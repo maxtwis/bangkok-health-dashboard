@@ -267,7 +267,21 @@ const BasicSDHEDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {indicatorData.map((item, index) => {
+                    {indicatorData
+                      .filter(item => {
+                        // Filter out unknown indicators and invalid data
+                        const label = item?.label ?? 'Unknown Indicator';
+                        const indicator = item?.indicator;
+                        
+                        return (
+                          label !== 'Unknown Indicator' && 
+                          label !== '' && 
+                          indicator !== null && 
+                          indicator !== undefined &&
+                          indicator !== ''
+                        );
+                      })
+                      .map((item, index) => {
                       // Safety checks for item properties
                       const value = item?.value ?? 0;
                       const sampleSize = item?.sample_size ?? 0;
