@@ -1,7 +1,12 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 
+import React, { useState } from 'react';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
+
 const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
+  const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
+  
   const populationGroups = [
     { value: 'informal_workers', label: 'Informal Workers', color: '#ef4444' },
     { value: 'elderly', label: 'Elderly', color: '#3b82f6' },
@@ -43,6 +48,42 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     return dataPoint;
   });
 
+  // Calculate dynamic scale range
+  const allValues = chartData.flatMap(d => 
+    populationGroups.map(group => d[group.value])
+  );
+  const minValue = Math.min(...allValues);
+  const maxValue = Math.max(...allValues);
+  
+  // Create more dramatic scale
+  let scaleMin, scaleMax;
+  if (scaleMode === 'dynamic') {
+    // Use a tighter range around the actual data
+    const range = maxValue - minValue;
+    const padding = Math.max(range * 0.2, 5); // At least 5 point padding
+    scaleMin = Math.max(0, Math.floor(minValue - padding));
+    scaleMax = Math.min(100, Math.ceil(maxValue + padding));
+  } else {
+    // Full 0-100 scale
+    scaleMin = 0;
+    scaleMax = 100;
+  }
+
+  // Transform data for dynamic scaling
+  const transformedData = chartData.map(d => {
+    const transformed = { ...d };
+    if (scaleMode === 'dynamic') {
+      populationGroups.forEach(group => {
+        // Map the value to the 0-100 range for display
+        const originalValue = d[group.value];
+        const scaledValue = ((originalValue - scaleMin) / (scaleMax - scaleMin)) * 100;
+        transformed[group.value] = scaledValue;
+        transformed[`${group.value}_original`] = originalValue; // Keep original for tooltips
+      });
+    }
+    return transformed;
+  });
+
   // Custom tick formatter to wrap long labels
   const formatTick = (value) => {
     if (value.length > 12) {
@@ -54,20 +95,76 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     return value;
   };
 
+  // Custom tooltip to show original values
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-3 border border-gray-300 rounded shadow-lg">
+          <p className="font-medium text-gray-900 mb-2">{label}</p>
+          {payload.map((entry, index) => {
+            const originalValue = scaleMode === 'dynamic' 
+              ? entry.payload[`${entry.dataKey}_original`] 
+              : entry.value;
+            return (
+              <p key={index} style={{ color: entry.color }} className="text-sm">
+                {entry.name}: {originalValue?.toFixed(1)}%
+              </p>
+            );
+          })}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="mb-6">
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
-          SDHE Domain Comparison by Population Group
-        </h3>
-        <p className="text-sm text-gray-600">
-          Comparing domain scores across all population groups in {selectedDistrict}
-        </p>
+        <div className="flex justify-between items-start mb-2">
+          <div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              SDHE Domain Comparison by Population Group
+            </h3>
+            <p className="text-sm text-gray-600">
+              Comparing domain scores across all population groups in {selectedDistrict}
+            </p>
+          </div>
+          
+          {/* Scale Toggle */}
+          <div className="flex bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={() => setScaleMode('dynamic')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                scaleMode === 'dynamic' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Dynamic Scale
+            </button>
+            <button
+              onClick={() => setScaleMode('full')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                scaleMode === 'full' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Full Scale (0-100)
+            </button>
+          </div>
+        </div>
+        
+        {scaleMode === 'dynamic' && (
+          <div className="bg-blue-50 p-2 rounded text-xs text-blue-700">
+            <strong>Dynamic Scale:</strong> Showing range {scaleMin}% to {scaleMax}% to highlight differences
+          </div>
+        )}
       </div>
 
       <div className="h-96 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <RadarChart data={chartData} margin={{ top: 20, right: 80, bottom: 20, left: 80 }}>
+          <RadarChart data={transformedData} margin={{ top: 20, right: 80, bottom: 20, left: 80 }}>
             <PolarGrid gridType="polygon" />
             <PolarAngleAxis 
               dataKey="domain" 
@@ -81,6 +178,13 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
               className="text-xs"
               tick={{ fontSize: 10, fill: '#6b7280' }}
               tickCount={6}
+              tickFormatter={(value) => {
+                if (scaleMode === 'dynamic') {
+                  const actualValue = scaleMin + (value / 100) * (scaleMax - scaleMin);
+                  return actualValue.toFixed(0);
+                }
+                return value;
+              }}
             />
             
             {populationGroups.map(group => (
@@ -90,9 +194,9 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                 dataKey={group.value}
                 stroke={group.color}
                 fill={group.color}
-                fillOpacity={0.1}
-                strokeWidth={2}
-                dot={{ fill: group.color, strokeWidth: 1, r: 3 }}
+                fillOpacity={0.15}
+                strokeWidth={3}
+                dot={{ fill: group.color, strokeWidth: 2, r: 4 }}
               />
             ))}
             
@@ -106,7 +210,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
         </ResponsiveContainer>
       </div>
 
-      {/* Summary Statistics */}
+      {/* Summary Statistics with original values */}
       <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
         {populationGroups.map(group => {
           const groupData = chartData.map(d => d[group.value]);
@@ -125,8 +229,8 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
               </div>
               <div className="space-y-1 text-xs text-gray-600">
                 <div>Average: <span className="font-medium">{average.toFixed(1)}%</span></div>
-                <div>Highest: <span className="font-medium">{highest.toFixed(1)}%</span></div>
-                <div>Lowest: <span className="font-medium">{lowest.toFixed(1)}%</span></div>
+                <div>Range: <span className="font-medium">{lowest.toFixed(1)}% - {highest.toFixed(1)}%</span></div>
+                <div>Spread: <span className="font-medium">{(highest - lowest).toFixed(1)}pp</span></div>
               </div>
             </div>
           );
@@ -135,7 +239,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
       {/* Domain Rankings */}
       <div className="mt-6">
-        <h4 className="font-medium text-gray-800 mb-3">Best Performing Domains by Group</h4>
+        <h4 className="font-medium text-gray-800 mb-3">Domain Performance Rankings</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {populationGroups.map(group => {
             const groupScores = chartData.map(d => ({
@@ -152,14 +256,16 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                   ></div>
                   <h5 className="font-medium text-sm">{group.label}</h5>
                 </div>
-                <ol className="text-xs text-gray-600 space-y-1">
-                  {groupScores.slice(0, 3).map((item, index) => (
-                    <li key={item.domain} className="flex justify-between">
-                      <span>{index + 1}. {item.domain}</span>
+                <div className="space-y-1">
+                  {groupScores.map((item, index) => (
+                    <div key={item.domain} className="flex justify-between text-xs">
+                      <span className={index < 2 ? 'text-green-600' : index >= 4 ? 'text-red-600' : 'text-gray-600'}>
+                        {index + 1}. {item.domain}
+                      </span>
                       <span className="font-medium">{item.score.toFixed(1)}%</span>
-                    </li>
+                    </div>
                   ))}
-                </ol>
+                </div>
               </div>
             );
           })}
@@ -168,7 +274,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
       {/* Chart Legend */}
       <div className="mt-4 bg-blue-50 p-3 rounded text-xs text-gray-600">
-        <p><strong>How to read:</strong> Each line represents one population group. Points closer to the outer edge indicate better outcomes in that domain. The chart uses corrected domain scores that account for reverse indicators.</p>
+        <p><strong>How to read:</strong> Each line represents one population group. Use "Dynamic Scale" to highlight differences between groups, or "Full Scale" to see absolute performance. Hover over points to see exact values.</p>
       </div>
     </div>
   );
