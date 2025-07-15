@@ -232,7 +232,7 @@ const BasicSDHEDashboard = () => {
                           </td>
                           <td className="text-center py-3 px-4">
                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                              getScoreColor(value)
+                              getScoreColor(value, item?.indicator)
                             }`}>
                               {formatValue(value)}
                             </span>
@@ -244,9 +244,7 @@ const BasicSDHEDashboard = () => {
                             <div className="w-full bg-gray-200 rounded-full h-2">
                               <div 
                                 className={`h-2 rounded-full ${
-                                  value >= 80 ? 'bg-green-500' :
-                                  value >= 60 ? 'bg-yellow-500' :
-                                  value >= 40 ? 'bg-orange-500' : 'bg-red-500'
+                                  getPerformanceBarColor(value, item?.indicator)
                                 }`}
                                 style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
                               ></div>
@@ -275,11 +273,15 @@ const BasicSDHEDashboard = () => {
             across different population groups. Scores represent the percentage achieving positive health outcomes.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
-            <div>🟢 <strong>80-100%:</strong> Excellent</div>
-            <div>🟡 <strong>60-79%:</strong> Good</div>
-            <div>🟠 <strong>40-59%:</strong> Fair</div>
-            <div>🔴 <strong>0-39%:</strong> Poor</div>
+            <div>🟢 <strong>Excellent:</strong> Best outcomes</div>
+            <div>🟡 <strong>Good:</strong> Above average</div>
+            <div>🟠 <strong>Fair:</strong> Below average</div>
+            <div>🔴 <strong>Poor:</strong> Worst outcomes</div>
           </div>
+          <p className="text-xs text-gray-500 mt-2">
+            <strong>Note:</strong> Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence) 
+            while others are "good when high" (e.g., education, health coverage).
+          </p>
         </div>
       </div>
     </div>
