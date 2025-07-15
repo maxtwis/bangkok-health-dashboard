@@ -1,4 +1,4 @@
-// Fixed Basic SDHE Dashboard - src/components/Dashboard/index.jsx
+// Complete Updated Basic SDHE Dashboard - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
 
@@ -25,6 +25,41 @@ const BasicSDHEDashboard = () => {
     'health_behaviors': 'Health Behaviors'
   };
 
+  // Define which indicators are "reverse" (bad when high)
+  const reverseIndicators = {
+    // Economic Security - mostly reverse (bad when high)
+    unemployment_rate: true,
+    vulnerable_employment: true,
+    food_insecurity_moderate: true,
+    food_insecurity_severe: true,
+    work_injury_fatal: true,
+    work_injury_non_fatal: true,
+    catastrophic_health_spending_household: true,
+    health_spending_over_10_percent: true,
+    health_spending_over_25_percent: true,
+    
+    // Healthcare Access - mixed
+    medical_consultation_skip_cost: true,
+    medical_treatment_skip_cost: true,
+    prescribed_medicine_skip_cost: true,
+    
+    // Physical Environment - mixed
+    housing_overcrowding: true,
+    disaster_experience: true,
+    
+    // Social Context - mostly reverse
+    violence_physical: true,
+    violence_psychological: true,
+    violence_sexual: true,
+    discrimination_experience: true,
+    community_murder: true,
+    
+    // Health Behaviors - mixed
+    alcohol_consumption: true,
+    tobacco_use: true,
+    obesity: true
+  };
+
   // Ensure Bangkok Overall is selected by default
   React.useEffect(() => {
     if (data && selectedDistrict !== 'Bangkok Overall') {
@@ -44,6 +79,56 @@ const BasicSDHEDashboard = () => {
       }
     }
   }, [data, selectedDomain, getAvailableDomains]);
+
+  // Safe function to format sample size
+  const formatSampleSize = (sampleSize) => {
+    if (sampleSize === null || sampleSize === undefined || isNaN(sampleSize)) {
+      return 'N/A';
+    }
+    return Number(sampleSize).toLocaleString();
+  };
+
+  // Safe function to format value
+  const formatValue = (value) => {
+    if (value === null || value === undefined || isNaN(value)) {
+      return 'N/A';
+    }
+    return `${Number(value).toFixed(1)}%`;
+  };
+
+  const getScoreColor = (value, indicator) => {
+    const isReverse = reverseIndicators[indicator];
+    
+    // For reverse indicators (bad when high), flip the color logic
+    if (isReverse) {
+      if (value <= 20) return 'bg-green-100 text-green-800';
+      if (value <= 40) return 'bg-yellow-100 text-yellow-800';
+      if (value <= 60) return 'bg-orange-100 text-orange-800';
+      return 'bg-red-100 text-red-800';
+    } else {
+      // Normal indicators (good when high)
+      if (value >= 80) return 'bg-green-100 text-green-800';
+      if (value >= 60) return 'bg-yellow-100 text-yellow-800';
+      if (value >= 40) return 'bg-orange-100 text-orange-800';
+      return 'bg-red-100 text-red-800';
+    }
+  };
+
+  const getPerformanceBarColor = (value, indicator) => {
+    const isReverse = reverseIndicators[indicator];
+    
+    if (isReverse) {
+      if (value <= 20) return 'bg-green-500';
+      if (value <= 40) return 'bg-yellow-500';
+      if (value <= 60) return 'bg-orange-500';
+      return 'bg-red-500';
+    } else {
+      if (value >= 80) return 'bg-green-500';
+      if (value >= 60) return 'bg-yellow-500';
+      if (value >= 40) return 'bg-orange-500';
+      return 'bg-red-500';
+    }
+  };
 
   if (isLoading) {
     return (
@@ -86,29 +171,6 @@ const BasicSDHEDashboard = () => {
   const districts = getAvailableDistricts();
   const domains = getAvailableDomains();
   const indicatorData = getIndicatorData(selectedDomain, selectedDistrict, selectedPopulationGroup);
-
-  const getScoreColor = (value) => {
-    if (value >= 80) return 'bg-green-100 text-green-800';
-    if (value >= 60) return 'bg-yellow-100 text-yellow-800';
-    if (value >= 40) return 'bg-orange-100 text-orange-800';
-    return 'bg-red-100 text-red-800';
-  };
-
-  // Safe function to format sample size
-  const formatSampleSize = (sampleSize) => {
-    if (sampleSize === null || sampleSize === undefined || isNaN(sampleSize)) {
-      return 'N/A';
-    }
-    return Number(sampleSize).toLocaleString();
-  };
-
-  // Safe function to format value
-  const formatValue = (value) => {
-    if (value === null || value === undefined || isNaN(value)) {
-      return 'N/A';
-    }
-    return `${Number(value).toFixed(1)}%`;
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -211,6 +273,7 @@ const BasicSDHEDashboard = () => {
                       const sampleSize = item?.sample_size ?? 0;
                       const label = item?.label ?? 'Unknown Indicator';
                       const isDomainScore = item?.isDomainScore ?? false;
+                      const indicator = item?.indicator;
                       
                       return (
                         <tr 
@@ -232,7 +295,7 @@ const BasicSDHEDashboard = () => {
                           </td>
                           <td className="text-center py-3 px-4">
                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                              getScoreColor(value, item?.indicator)
+                              getScoreColor(value, indicator)
                             }`}>
                               {formatValue(value)}
                             </span>
@@ -244,7 +307,7 @@ const BasicSDHEDashboard = () => {
                             <div className="w-full bg-gray-200 rounded-full h-2">
                               <div 
                                 className={`h-2 rounded-full ${
-                                  getPerformanceBarColor(value, item?.indicator)
+                                  getPerformanceBarColor(value, indicator)
                                 }`}
                                 style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
                               ></div>
