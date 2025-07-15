@@ -168,7 +168,7 @@ class BasicSDHEProcessor {
       healthcare_access: {
         health_coverage: { 
           field: 'welfare', 
-          condition: (val) => val !== null,
+          condition: (val) => val === 1 || val === 2 || val === 3,
           label: 'Health Coverage'
         },
         medical_consultation_skip_cost: { 
