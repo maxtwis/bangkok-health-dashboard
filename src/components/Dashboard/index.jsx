@@ -61,15 +61,15 @@ const BasicSDHEDashboard = () => {
     obesity: true
   };
 
-  // Ensure Bangkok Overall is selected by default
+  // Set Bangkok Overall as default when data first loads
   React.useEffect(() => {
-    if (data && selectedDistrict !== 'Bangkok Overall') {
+    if (data) {
       const districts = getAvailableDistricts();
-      if (districts.includes('Bangkok Overall')) {
+      if (districts.length > 0 && districts.includes('Bangkok Overall') && !selectedDistrict) {
         setSelectedDistrict('Bangkok Overall');
       }
     }
-  }, [data, selectedDistrict, getAvailableDistricts]);
+  }, [data]); // Only depend on data loading
 
   // Set default domain when data loads
   React.useEffect(() => {
