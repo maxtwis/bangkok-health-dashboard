@@ -11,7 +11,7 @@ const IndicatorAnalysis = () => {
     { value: 'informal_workers', label: 'แรงงานนอกระบบ', color: '#ef4444' },
     { value: 'elderly', label: 'ผู้สูงอายุ', color: '#3b82f6' },
     { value: 'disabled', label: 'คนพิการ', color: '#10b981' },
-    { value: 'lgbtq', label: 'LGBTQ', color: '#f59e0b' }
+    { value: 'lgbtq', label: 'LGBT สุขภาพ', color: '#f59e0b' }
   ];
 
   // Available indicators for selection
@@ -22,7 +22,8 @@ const IndicatorAnalysis = () => {
     { value: 'obesity', label: 'ความอ้วน' },
     { value: 'unemployment_rate', label: 'อัตราการว่างงาน' },
     { value: 'violence_physical', label: 'ความรุนแรงทางร่างกาย' },
-    { value: 'discrimination_experience', label: 'การถูกเลือกปฏิบัติ' }
+    { value: 'discrimination_experience', label: 'การถูกเลือกปฏิบัติ' },
+    { value: 'dental_access', label: 'การเข้าถึงบริการทันตกรรม' }
   ];
 
   // District code mapping (same as BasicSDHEProcessor)
@@ -171,6 +172,13 @@ const IndicatorAnalysis = () => {
           ).length;
           break;
           
+        case 'dental_access':
+          // oral_health_access === 1 (has access to dental care)
+          matchCount = records.filter(r => 
+            r && r.oral_health_access === 1
+          ).length;
+          break;
+          
         default:
           return 0;
       }
@@ -262,7 +270,8 @@ const IndicatorAnalysis = () => {
       obesity: isPositive ? 'อ้วน' : 'ไม่อ้วน',
       unemployment_rate: isPositive ? 'ว่างงาน' : 'มีงาน',
       violence_physical: isPositive ? 'ถูกทำร้าย' : 'ไม่ถูกทำร้าย',
-      discrimination_experience: isPositive ? 'ถูกเลือกปฏิบัติ' : 'ไม่ถูกเลือกปฏิบัติ'
+      discrimination_experience: isPositive ? 'ถูกเลือกปฏิบัติ' : 'ไม่ถูกเลือกปฏิบัติ',
+      dental_access: isPositive ? 'มีการเข้าถึง' : 'ไม่มีการเข้าถึง'
     };
     
     return labels[indicator] || (isPositive ? 'Yes' : 'No');
