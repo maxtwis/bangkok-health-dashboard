@@ -1,9 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
-import React, { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
-
 const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getIndicatorData }) => {
   const [selectedIndicator, setSelectedIndicator] = useState('alcohol_consumption');
 
