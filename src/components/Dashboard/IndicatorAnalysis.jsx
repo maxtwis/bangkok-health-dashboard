@@ -327,17 +327,17 @@ const IndicatorAnalysis = () => {
 
             {/* Chart */}
             {groupData.chartData.length > 0 ? (
-              <div className="h-80">
+              <div className="h-80 -mb-4">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart 
                     data={groupData.chartData} 
-                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                   >
                     <XAxis 
                       dataKey="district" 
                       angle={-45}
                       textAnchor="end"
-                      height={80}
+                      height={60}
                       tick={{ fontSize: 12 }}
                       interval={0}
                     />
@@ -356,7 +356,7 @@ const IndicatorAnalysis = () => {
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-80 flex items-center justify-center text-gray-500">
+              <div className="h-80 flex items-center justify-center text-gray-500 -mb-4">
                 <p>No data available for this group</p>
               </div>
             )}
