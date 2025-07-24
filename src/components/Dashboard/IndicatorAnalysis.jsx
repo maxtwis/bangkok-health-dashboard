@@ -18,7 +18,7 @@ const IndicatorAnalysis = () => {
   const availableIndicators = [
     { value: 'alcohol_consumption', label: 'การดื่มเครื่องดื่มแอลกอฮอล์' },
     { value: 'tobacco_use', label: 'การสูบบุหรี่' },
-    { value: 'physical_activity', label: 'การออกกำลังกาย' },
+    { value: 'physical_activity', label: 'การออกกำลังกายไม่เพียงพอ' },
     { value: 'obesity', label: 'ความอ้วน' },
     { value: 'unemployment_rate', label: 'อัตราการว่างงาน' },
     { value: 'violence_physical', label: 'ความรุนแรงทางร่างกาย' },
@@ -126,9 +126,9 @@ const IndicatorAnalysis = () => {
           break;
           
         case 'physical_activity':
-          // exercise_status >= 2
+          // exercise_status 0 or 1 = insufficient physical activity (ออกกำลังกายไม่เพียงพอ)
           matchCount = records.filter(r => 
-            r && typeof r.exercise_status === 'number' && r.exercise_status >= 2
+            r && typeof r.exercise_status === 'number' && (r.exercise_status === 0 || r.exercise_status === 1)
           ).length;
           break;
           
