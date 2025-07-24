@@ -101,58 +101,104 @@ const IndicatorAnalysis = () => {
     let matchCount = 0;
     let totalCount = records.length;
 
-    switch (indicator) {
-      case 'alcohol_consumption':
-        // Simple: drink_status 1 OR 2
-        matchCount = records.filter(r => r.drink_status === 1 || r.drink_status === 2).length;
-        break;
-        
-      case 'tobacco_use':
-        // Age 15+ who smoke (smoke_status 2 or 3)
-        const smokingRecords = records.filter(r => r.age >= 15);
-        totalCount = smokingRecords.length;
-        matchCount = smokingRecords.filter(r => r.smoke_status === 2 || r.smoke_status === 3).length;
-        break;
-        
-      case 'physical_activity':
-        // exercise_status >= 2
-        matchCount = records.filter(r => r.exercise_status >= 2).length;
-        break;
-        
-      case 'obesity':
-        // BMI >= 30
-        const validBMI = records.filter(r => r.height > 0 && r.weight > 0);
-        totalCount = validBMI.length;
-        matchCount = validBMI.filter(r => {
-          const bmi = r.weight / Math.pow(r.height / 100, 2);
-          return bmi >= 30;
-        }).length;
-        break;
-        
-      case 'unemployment_rate':
-        // occupation_status === 0
-        matchCount = records.filter(r => r.occupation_status === 0).length;
-        break;
-        
-      case 'violence_physical':
-        // physical_violence === 1
-        matchCount = records.filter(r => r.physical_violence === 1).length;
-        break;
-        
-      case 'discrimination_experience':
-        // Any discrimination/1 to discrimination/5 === 1
-        matchCount = records.filter(r => 
-          r['discrimination/1'] === 1 || r['discrimination/2'] === 1 || 
-          r['discrimination/3'] === 1 || r['discrimination/4'] === 1 || 
-          r['discrimination/5'] === 1
-        ).length;
-        break;
-        
-      default:
-        return 0;
+    // Validate records array
+    if (!Array.isArray(records)) {
+      console.error('Records is not an array:', records);
+      return 0;
     }
 
-    return totalCount > 0 ? (matchCount / totalCount) * 100 : 0;
+    try {
+      switch (indicator) {
+        case 'alcohol_consumption':
+          // Simple: drink_status 1 OR 2
+          matchCount = records.filter(r => 
+            r && (r.drink_status === 1 || r.drink_status === 2)
+          ).length;
+          break;
+          
+        case 'tobacco_use':
+          // Age 15+ who smoke (smoke_status 2 or 3)
+          const smokingRecords = records.filter(r => r && typeof r.age === 'number' && r.age >= 15);
+          totalCount = smokingRecords.length;
+          matchCount = smokingRecords.filter(r => 
+            r && (r.smoke_status === 2 || r.smoke_status === 3)
+          ).length;
+          break;
+          
+        case 'physical_activity':
+          // exercise_status >= 2
+          matchCount = records.filter(r => 
+            r && typeof r.exercise_status === 'number' && r.exercise_status >= 2
+          ).length;
+          break;
+          
+        case 'obesity':
+          // BMI >= 30
+          const validBMI = records.filter(r => 
+            r && typeof r.height === 'number' && typeof r.weight === 'number' && 
+            r.height > 0 && r.weight > 0
+          );
+          totalCount = validBMI.length;
+          
+          if (totalCount === 0) return 0;
+          
+          matchCount = validBMI.filter(r => {
+            const bmi = r.weight / Math.pow(r.height / 100, 2);
+            return !isNaN(bmi) && isFinite(bmi) && bmi >= 30;
+          }).length;
+          break;
+          
+        case 'unemployment_rate':
+          // occupation_status === 0
+          matchCount = records.filter(r => 
+            r && r.occupation_status === 0
+          ).length;
+          break;
+          
+        case 'violence_physical':
+          // physical_violence === 1
+          matchCount = records.filter(r => 
+            r && r.physical_violence === 1
+          ).length;
+          break;
+          
+        case 'discrimination_experience':
+          // Any discrimination/1 to discrimination/5 === 1
+          matchCount = records.filter(r => 
+            r && (r['discrimination/1'] === 1 || r['discrimination/2'] === 1 || 
+                  r['discrimination/3'] === 1 || r['discrimination/4'] === 1 || 
+                  r['discrimination/5'] === 1)
+          ).length;
+          break;
+          
+        default:
+          return 0;
+      }
+
+      // Safety checks
+      if (totalCount === 0) return 0;
+      if (matchCount < 0) matchCount = 0;
+      if (matchCount > totalCount) matchCount = totalCount;
+
+      const percentage = (matchCount / totalCount) * 100;
+      
+      // Final validation
+      if (isNaN(percentage) || !isFinite(percentage) || percentage < 0) {
+        console.warn(`Invalid percentage calculated for ${indicator}:`, {
+          matchCount,
+          totalCount,
+          percentage,
+          sampleRecord: records[0]
+        });
+        return 0;
+      }
+
+      return Math.min(100, percentage); // Cap at 100%
+      
+    } catch (error) {
+      console.error(`Error calculating percentage for ${indicator}:`, error);
+      return 0;
+    }
   };
 
   // Generate chart data
