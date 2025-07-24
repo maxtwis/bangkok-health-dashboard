@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Legend } from 'recharts';
 import Papa from 'papaparse';
 
 const IndicatorAnalysis = () => {
@@ -94,9 +94,9 @@ const IndicatorAnalysis = () => {
     loadData();
   }, []);
 
-  // Calculate percentage for specific indicator
-  const calculatePercentage = (records, indicator) => {
-    if (!records || records.length === 0) return 0;
+  // Calculate both positive and negative percentages for stacked chart
+  const calculateStackedPercentages = (records, indicator) => {
+    if (!records || records.length === 0) return { positive: 0, negative: 0 };
 
     let matchCount = 0;
     let totalCount = records.length;
@@ -104,20 +104,20 @@ const IndicatorAnalysis = () => {
     // Validate records array
     if (!Array.isArray(records)) {
       console.error('Records is not an array:', records);
-      return 0;
+      return { positive: 0, negative: 0 };
     }
 
     try {
       switch (indicator) {
         case 'alcohol_consumption':
-          // Simple: drink_status 1 OR 2
+          // drink_status 1 OR 2 = drinks, others = doesn't drink
           matchCount = records.filter(r => 
             r && (r.drink_status === 1 || r.drink_status === 2)
           ).length;
           break;
           
         case 'tobacco_use':
-          // Age 15+ who smoke (smoke_status 2 or 3)
+          // Age 15+ who smoke vs don't smoke
           const smokingRecords = records.filter(r => r && typeof r.age === 'number' && r.age >= 15);
           totalCount = smokingRecords.length;
           matchCount = smokingRecords.filter(r => 
@@ -126,21 +126,21 @@ const IndicatorAnalysis = () => {
           break;
           
         case 'physical_activity':
-          // exercise_status >= 2
+          // exercise_status >= 2 vs < 2
           matchCount = records.filter(r => 
             r && typeof r.exercise_status === 'number' && r.exercise_status >= 2
           ).length;
           break;
           
         case 'obesity':
-          // BMI >= 30
+          // BMI >= 30 vs < 30
           const validBMI = records.filter(r => 
             r && typeof r.height === 'number' && typeof r.weight === 'number' && 
             r.height > 0 && r.weight > 0
           );
           totalCount = validBMI.length;
           
-          if (totalCount === 0) return 0;
+          if (totalCount === 0) return { positive: 0, negative: 0 };
           
           matchCount = validBMI.filter(r => {
             const bmi = r.weight / Math.pow(r.height / 100, 2);
@@ -149,21 +149,21 @@ const IndicatorAnalysis = () => {
           break;
           
         case 'unemployment_rate':
-          // occupation_status === 0
+          // unemployed vs employed
           matchCount = records.filter(r => 
             r && r.occupation_status === 0
           ).length;
           break;
           
         case 'violence_physical':
-          // physical_violence === 1
+          // experienced violence vs not
           matchCount = records.filter(r => 
             r && r.physical_violence === 1
           ).length;
           break;
           
         case 'discrimination_experience':
-          // Any discrimination/1 to discrimination/5 === 1
+          // experienced discrimination vs not
           matchCount = records.filter(r => 
             r && (r['discrimination/1'] === 1 || r['discrimination/2'] === 1 || 
                   r['discrimination/3'] === 1 || r['discrimination/4'] === 1 || 
@@ -172,32 +172,36 @@ const IndicatorAnalysis = () => {
           break;
           
         default:
-          return 0;
+          return { positive: 0, negative: 0 };
       }
 
       // Safety checks
-      if (totalCount === 0) return 0;
+      if (totalCount === 0) return { positive: 0, negative: 0 };
       if (matchCount < 0) matchCount = 0;
       if (matchCount > totalCount) matchCount = totalCount;
 
-      const percentage = (matchCount / totalCount) * 100;
+      const positivePercentage = (matchCount / totalCount) * 100;
+      const negativePercentage = ((totalCount - matchCount) / totalCount) * 100;
       
       // Final validation
-      if (isNaN(percentage) || !isFinite(percentage) || percentage < 0) {
+      if (isNaN(positivePercentage) || !isFinite(positivePercentage) || positivePercentage < 0) {
         console.warn(`Invalid percentage calculated for ${indicator}:`, {
           matchCount,
           totalCount,
-          percentage,
+          positivePercentage,
           sampleRecord: records[0]
         });
-        return 0;
+        return { positive: 0, negative: 0 };
       }
 
-      return Math.min(100, percentage); // Cap at 100%
+      return {
+        positive: Math.min(100, positivePercentage),
+        negative: Math.min(100, negativePercentage)
+      };
       
     } catch (error) {
       console.error(`Error calculating percentage for ${indicator}:`, error);
-      return 0;
+      return { positive: 0, negative: 0 };
     }
   };
 
@@ -217,17 +221,32 @@ const IndicatorAnalysis = () => {
         );
         
         if (records.length >= 5) { // Minimum sample size
-          const percentage = calculatePercentage(records, selectedIndicator);
+          const percentages = calculateStackedPercentages(records, selectedIndicator);
+          
+          // Debug logging for problematic values
+          if (percentages.positive > 100 || isNaN(percentages.positive) || !isFinite(percentages.positive)) {
+            console.error('Invalid percentage detected:', {
+              district,
+              group: group.value,
+              indicator: selectedIndicator,
+              percentages,
+              recordCount: records.length,
+              sampleRecord: records[0]
+            });
+            return; // Skip this district
+          }
+          
           districtValues.push({
             district: district,
-            value: percentage,
+            positive: Math.min(100, Math.max(0, percentages.positive)),
+            negative: Math.min(100, Math.max(0, percentages.negative)),
             sampleSize: records.length
           });
         }
       });
 
-      // Sort by highest values (worst for problematic indicators)
-      const sortedDistricts = districtValues.sort((a, b) => b.value - a.value);
+      // Sort by highest positive values (most problematic)
+      const sortedDistricts = districtValues.sort((a, b) => b.positive - a.positive);
       
       return {
         group: group.value,
@@ -238,6 +257,21 @@ const IndicatorAnalysis = () => {
       };
     });
   }, [surveyData, selectedIndicator]);
+
+  // Get bar labels for stacked chart
+  const getBarLabel = (indicator, isPositive) => {
+    const labels = {
+      alcohol_consumption: isPositive ? 'ดื่ม' : 'ไม่ดื่ม',
+      tobacco_use: isPositive ? 'สูบบุหรี่' : 'ไม่สูบ',
+      physical_activity: isPositive ? 'ออกกำลังกาย' : 'ไม่ออกกำลังกาย',
+      obesity: isPositive ? 'อ้วน' : 'ไม่อ้วน',
+      unemployment_rate: isPositive ? 'ว่างงาน' : 'มีงาน',
+      violence_physical: isPositive ? 'ถูกทำร้าย' : 'ไม่ถูกทำร้าย',
+      discrimination_experience: isPositive ? 'ถูกเลือกปฏิบัติ' : 'ไม่ถูกเลือกปฏิบัติ'
+    };
+    
+    return labels[indicator] || (isPositive ? 'Yes' : 'No');
+  };
 
   if (loading) {
     return (
@@ -277,20 +311,20 @@ const IndicatorAnalysis = () => {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {chartData.map((groupData) => (
-          <div key={groupData.group} className="bg-white rounded-lg shadow-sm p-6">
-            <div className="flex items-center mb-4">
+          <div key={groupData.group} className="bg-white rounded-lg shadow-lg p-8">
+            <div className="flex items-center mb-6">
               <div 
-                className="w-4 h-4 rounded-full mr-3" 
+                className="w-5 h-5 rounded-full mr-4" 
                 style={{ backgroundColor: groupData.color }}
               ></div>
-              <h3 className="text-lg font-medium text-gray-900">
+              <h3 className="text-xl font-semibold text-gray-900">
                 {selectedIndicatorObj?.label} - {groupData.groupLabel}
               </h3>
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <div className="text-sm text-gray-600">
                 Top 5 Districts (out of {groupData.totalDistricts})
               </div>
@@ -298,55 +332,71 @@ const IndicatorAnalysis = () => {
 
             {/* Chart */}
             {groupData.chartData.length > 0 ? (
-              <div className="h-64">
+              <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart 
                     data={groupData.chartData} 
-                    margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                   >
                     <XAxis 
                       dataKey="district" 
                       angle={-45}
                       textAnchor="end"
-                      height={60}
-                      tick={{ fontSize: 10 }}
+                      height={80}
+                      tick={{ fontSize: 12 }}
                       interval={0}
                     />
                     <YAxis 
                       domain={[0, 100]} 
-                      tick={{ fontSize: 10 }}
+                      tick={{ fontSize: 12 }}
                       tickFormatter={(value) => `${value}%`}
                     />
+                    <Legend 
+                      wrapperStyle={{ fontSize: '14px' }}
+                      iconType="rect"
+                    />
+                    
+                    {/* Positive values (main indicator) */}
                     <Bar 
-                      dataKey="value" 
+                      dataKey="positive" 
+                      stackId="stack"
+                      name={getBarLabel(selectedIndicator, true)}
+                      fill="#fb7185"
+                      radius={[0, 0, 0, 0]}
+                    />
+                    
+                    {/* Negative values (opposite) */}
+                    <Bar 
+                      dataKey="negative" 
+                      stackId="stack"
+                      name={getBarLabel(selectedIndicator, false)}
+                      fill="#60a5fa"
                       radius={[4, 4, 0, 0]}
-                    >
-                      {groupData.chartData.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={groupData.color}
-                        />
-                      ))}
-                    </Bar>
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-64 flex items-center justify-center text-gray-500">
+              <div className="h-80 flex items-center justify-center text-gray-500">
                 <p>No data available for this group</p>
               </div>
             )}
 
             {/* Rankings */}
-            <div className="mt-4 space-y-2">
+            <div className="mt-6 space-y-3">
               {groupData.chartData.map((district, index) => (
-                <div key={district.district} className="flex justify-between text-xs">
-                  <span className={`${index === 0 ? 'font-bold' : ''}`}>
+                <div key={district.district} className="flex justify-between items-center text-sm border-b border-gray-100 pb-2">
+                  <span className={`${index === 0 ? 'font-bold text-red-600' : index === 1 ? 'font-semibold text-orange-600' : 'text-gray-700'}`}>
                     #{index + 1}. {district.district}
                   </span>
-                  <span className="font-medium">
-                    {district.value.toFixed(1)}% ({district.sampleSize})
-                  </span>
+                  <div className="text-right">
+                    <span className="font-medium text-red-600">
+                      {district.positive.toFixed(1)}%
+                    </span>
+                    <span className="text-gray-400 text-xs ml-2">
+                      ({district.sampleSize} people)
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
