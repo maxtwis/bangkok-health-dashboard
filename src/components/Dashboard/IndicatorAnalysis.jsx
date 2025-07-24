@@ -24,7 +24,7 @@ const IndicatorAnalysis = () => {
     { value: 'unemployment_rate', label: 'อัตราการว่างงาน' },
     { value: 'violence_physical', label: 'ความรุนแรงทางร่างกาย' },
     { value: 'discrimination_experience', label: 'การถูกเลือกปฏิบัติ' },
-    { value: 'dental_access', label: 'การเข้าถึงบริการทันตกรรมไม่ได้' }
+    { value: 'dental_access', label: 'การไม่ได้รับบริการทันตกรรม' }
   ];
 
   // District code mapping (same as BasicSDHEProcessor)
