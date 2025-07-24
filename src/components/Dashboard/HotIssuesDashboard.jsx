@@ -74,7 +74,7 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
         if (indicatorItem && indicatorItem.value !== null && indicatorItem.value !== undefined) {
           districtValues.push({
             district: district,
-            value: indicatorItem.value,
+            value: Number(indicatorItem.value) || 0, // Ensure it's a number
             sampleSize: indicatorItem.sample_size || 0
           });
         }
@@ -157,6 +157,11 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
               <div className="text-sm text-gray-600 mb-2">
                 Top 5 {isReverse ? 'Worst' : 'Lowest'} Districts (out of {groupData.totalDistricts})
               </div>
+              {/* Debug info - remove this later */}
+              <div className="text-xs text-gray-400 mb-2">
+                Data points: {groupData.chartData.length} | 
+                Sample data: {groupData.chartData[0] ? `${groupData.chartData[0].district}: ${groupData.chartData[0].value}%` : 'No data'}
+              </div>
             </div>
 
             {/* Chart */}
@@ -170,8 +175,9 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
                   >
                     <XAxis 
                       type="number" 
-                      domain={[0, 100]} 
+                      domain={[0, 'dataMax + 10']} 
                       tick={{ fontSize: 10 }}
+                      tickFormatter={(value) => `${value}%`}
                     />
                     <YAxis 
                       type="category" 
@@ -179,10 +185,17 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
                       width={110}
                       tick={{ fontSize: 10 }}
                     />
-                    <Bar dataKey="value" name="Percentage">
-                      {groupData.chartData.map((entry, index) => (
+                    <Bar 
+                      dataKey="value" 
+                      fill="#dc2626"
+                      stroke="#b91c1c"
+                      strokeWidth={1}
+                      radius={[0, 4, 4, 0]}
+                      minPointSize={5}
+                    >
+                      {groupData.chartData.map((entry, cellIndex) => (
                         <Cell 
-                          key={`cell-${index}`} 
+                          key={`cell-${cellIndex}`} 
                           fill={isReverse ? 
                             (entry.value > 75 ? '#dc2626' : 
                              entry.value > 50 ? '#ea580c' : 
