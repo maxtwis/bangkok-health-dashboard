@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, LabelList } fro
 import Papa from 'papaparse';
 
 const IndicatorAnalysis = () => {
-  const [selectedIndicator, setSelectedIndicator] = useState('alcohol_consumption');
+  const [selectedIndicator, setSelectedIndicator] = useState('population_distribution');
   const [surveyData, setSurveyData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -16,6 +16,7 @@ const IndicatorAnalysis = () => {
 
   // Available indicators for selection
   const availableIndicators = [
+    { value: 'population_distribution', label: 'การกระจายประชากรตามกลุ่ม' },
     { value: 'alcohol_consumption', label: 'การดื่มเครื่องดื่มแอลกอฮอล์' },
     { value: 'tobacco_use', label: 'การสูบบุหรี่' },
     { value: 'physical_activity', label: 'การออกกำลังกายไม่เพียงพอ' },
@@ -213,6 +214,46 @@ const IndicatorAnalysis = () => {
   const chartData = useMemo(() => {
     if (!surveyData) return [];
 
+    // Special handling for population distribution
+    if (selectedIndicator === 'population_distribution') {
+      return populationGroups.map(group => {
+        const districtValues = [];
+        
+        // Get unique districts
+        const districts = [...new Set(surveyData.map(r => r.district_name))];
+        
+        districts.forEach(district => {
+          const allRecordsInDistrict = surveyData.filter(r => r.district_name === district);
+          const groupRecordsInDistrict = surveyData.filter(r => 
+            r.district_name === district && r.population_group === group.value
+          );
+          
+          if (allRecordsInDistrict.length >= 5) { // Minimum sample size for district
+            const percentage = (groupRecordsInDistrict.length / allRecordsInDistrict.length) * 100;
+            
+            districtValues.push({
+              district: district,
+              value: Math.min(100, Math.max(0, percentage)),
+              sampleSize: groupRecordsInDistrict.length,
+              totalInDistrict: allRecordsInDistrict.length
+            });
+          }
+        });
+
+        // Sort by highest values
+        const sortedDistricts = districtValues.sort((a, b) => b.value - a.value);
+        
+        return {
+          group: group.value,
+          groupLabel: group.label,
+          color: group.color,
+          chartData: sortedDistricts.slice(0, 5), // Top 5
+          totalDistricts: districtValues.length
+        };
+      });
+    }
+
+    // Regular indicator handling
     return populationGroups.map(group => {
       const districtValues = [];
       
@@ -330,7 +371,10 @@ const IndicatorAnalysis = () => {
 
             <div className="mb-4">
               <div className="text-sm text-gray-600">
-                5 เขตที่มีปัญหามากที่สุด (จากทั้งหมด {groupData.totalDistricts} เขต)
+                {selectedIndicator === 'population_distribution' 
+                  ? `5 เขตที่มีสัดส่วน${groupData.groupLabel}สูงที่สุด (จากทั้งหมด ${groupData.totalDistricts} เขต)`
+                  : `5 เขตที่มีปัญหามากที่สุด (จากทั้งหมด ${groupData.totalDistricts} เขต)`
+                }
               </div>
             </div>
 
@@ -396,7 +440,10 @@ const IndicatorAnalysis = () => {
                       {district.value.toFixed(1)}%
                     </span>
                     <span className="text-gray-400 text-xs ml-2">
-                      ({district.sampleSize} คน)
+                      {selectedIndicator === 'population_distribution' 
+                        ? `(${district.sampleSize}/${district.totalInDistrict} คน)`
+                        : `(${district.sampleSize} คน)`
+                      }
                     </span>
                   </div>
                 </div>
