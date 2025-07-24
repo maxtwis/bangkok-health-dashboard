@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
 import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
+import HotIssuesDashboard from './HotIssuesDashboard';
 
 const BasicSDHEDashboard = () => {
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
