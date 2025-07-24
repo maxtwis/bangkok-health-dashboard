@@ -7,8 +7,9 @@ import HotIssuesDashboard from './HotIssuesDashboard';
 const BasicSDHEDashboard = () => {
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
   
+  const [activeTab, setActiveTab] = useState('analysis'); // 'analysis' or 'hotissues'
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
-  const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall'); // Set initial default
+  const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall');
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
 
   const populationGroups = [
@@ -181,194 +182,232 @@ const BasicSDHEDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <h1 className="text-2xl font-bold text-gray-900">Bangkok SDHE Dashboard</h1>
           <p className="text-gray-600 mt-1">Social Determinants of Health Equity Analysis</p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Spider Chart for Population Group Comparison */}
-        <PopulationGroupSpiderChart 
-          getIndicatorData={getIndicatorData}
-          selectedDistrict={selectedDistrict}
-        />
-
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Population Group Filter */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Population Group
-              </label>
-              <select 
-                value={selectedPopulationGroup}
-                onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          
+          {/* Tab Navigation */}
+          <div className="mt-4 border-b border-gray-200">
+            <nav className="flex space-x-8">
+              <button
+                onClick={() => setActiveTab('analysis')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === 'analysis'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
               >
-                {populationGroups.map(group => (
-                  <option key={group.value} value={group.value}>
-                    {group.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* District Filter */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                District
-              </label>
-              <select 
-                value={selectedDistrict}
-                onChange={(e) => setSelectedDistrict(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                📊 SDHE Analysis
+              </button>
+              <button
+                onClick={() => setActiveTab('hotissues')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === 'hotissues'
+                    ? 'border-red-500 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
               >
-                {districts.map(district => (
-                  <option key={district} value={district}>
-                    {district}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Domain Tabs */}
-        <div className="bg-white rounded-lg shadow-sm mb-6">
-          <div className="border-b border-gray-200">
-            <nav className="flex space-x-8 px-6">
-              {domains.map(domain => (
-                <button
-                  key={domain}
-                  onClick={() => setSelectedDomain(domain)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                    selectedDomain === domain
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  {domainLabels[domain] || domain}
-                </button>
-              ))}
+                🔥 Hot Issues
+              </button>
             </nav>
           </div>
-
-          {/* Indicators Table */}
-          <div className="p-6">
-            <div className="mb-4">
-              <h3 className="text-lg font-medium text-gray-900">
-                {domainLabels[selectedDomain]} Indicators
-              </h3>
-              <p className="text-sm text-gray-600 mt-1">
-                {selectedPopulationGroup.replace('_', ' ')} - {selectedDistrict}
-              </p>
-            </div>
-
-            {indicatorData && indicatorData.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-200 bg-gray-50">
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Indicator</th>
-                      <th className="text-center py-3 px-4 font-medium text-gray-700">Score</th>
-                      <th className="text-center py-3 px-4 font-medium text-gray-700">Sample Size</th>
-                      <th className="text-center py-3 px-4 font-medium text-gray-700">Performance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {indicatorData
-                      .filter(item => {
-                        // Filter out unknown indicators and invalid data
-                        const label = item?.label ?? 'Unknown Indicator';
-                        const indicator = item?.indicator;
-                        
-                        return (
-                          label !== 'Unknown Indicator' && 
-                          label !== '' && 
-                          indicator !== null && 
-                          indicator !== undefined &&
-                          indicator !== ''
-                        );
-                      })
-                      .map((item, index) => {
-                      // Safety checks for item properties
-                      const value = item?.value ?? 0;
-                      const sampleSize = item?.sample_size ?? 0;
-                      const label = item?.label ?? 'Unknown Indicator';
-                      const isDomainScore = item?.isDomainScore ?? false;
-                      const indicator = item?.indicator;
-                      
-                      return (
-                        <tr 
-                          key={item?.indicator || index} 
-                          className={`border-b border-gray-100 ${
-                            isDomainScore ? 'bg-blue-50 font-medium' : 
-                            index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
-                          }`}
-                        >
-                          <td className="py-3 px-4">
-                            <div className="flex items-center space-x-2">
-                              {isDomainScore && (
-                                <span className="text-blue-600 font-bold">📊</span>
-                              )}
-                              <span className={isDomainScore ? 'font-bold text-blue-800' : ''}>
-                                {label}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="text-center py-3 px-4">
-                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                              getScoreColor(value, indicator)
-                            }`}>
-                              {formatValue(value)}
-                            </span>
-                          </td>
-                          <td className="text-center py-3 px-4 text-gray-600">
-                            {formatSampleSize(sampleSize)}
-                          </td>
-                          <td className="text-center py-3 px-4">
-                            <div className="w-full bg-gray-200 rounded-full h-2">
-                              <div 
-                                className={`h-2 rounded-full ${
-                                  getPerformanceBarColor(value, indicator)
-                                }`}
-                                style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
-                              ></div>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <p>No data available for this combination</p>
-                <p className="text-sm mt-1">Try selecting a different district or population group</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Footer Info */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h4 className="font-medium text-gray-800 mb-2">About SDHE Indicators</h4>
-          <p className="text-sm text-gray-600 mb-2">
-            Social Determinants of Health Equity (SDHE) indicators measure conditions that influence health outcomes 
-            across different population groups. Scores represent the percentage achieving positive health outcomes.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
-            <div>🟢 <strong>Excellent:</strong> Best outcomes</div>
-            <div>🟡 <strong>Good:</strong> Above average</div>
-            <div>🟠 <strong>Fair:</strong> Below average</div>
-            <div>🔴 <strong>Poor:</strong> Worst outcomes</div>
-          </div>
-          <p className="text-xs text-gray-500 mt-2">
-            <strong>Note:</strong> Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence) 
-            while others are "good when high" (e.g., education, health coverage).
-          </p>
         </div>
       </div>
+
+      {/* Tab Content */}
+      {activeTab === 'analysis' && (
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          {/* Spider Chart for Population Group Comparison */}
+          <PopulationGroupSpiderChart 
+            getIndicatorData={getIndicatorData}
+            selectedDistrict={selectedDistrict}
+          />
+
+          {/* Filters */}
+          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Population Group Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Population Group
+                </label>
+                <select 
+                  value={selectedPopulationGroup}
+                  onChange={(e) => setSelectedPopulationGroup(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {populationGroups.map(group => (
+                    <option key={group.value} value={group.value}>
+                      {group.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* District Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  District
+                </label>
+                <select 
+                  value={selectedDistrict}
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {districts.map(district => (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Domain Tabs */}
+          <div className="bg-white rounded-lg shadow-sm mb-6">
+            <div className="border-b border-gray-200">
+              <nav className="flex space-x-8 px-6">
+                {domains.map(domain => (
+                  <button
+                    key={domain}
+                    onClick={() => setSelectedDomain(domain)}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                      selectedDomain === domain
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }`}
+                  >
+                    {domainLabels[domain] || domain}
+                  </button>
+                ))}
+              </nav>
+            </div>
+
+            {/* Indicators Table */}
+            <div className="p-6">
+              <div className="mb-4">
+                <h3 className="text-lg font-medium text-gray-900">
+                  {domainLabels[selectedDomain]} Indicators
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  {selectedPopulationGroup.replace('_', ' ')} - {selectedDistrict}
+                </p>
+              </div>
+
+              {indicatorData && indicatorData.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-gray-200 bg-gray-50">
+                        <th className="text-left py-3 px-4 font-medium text-gray-700">Indicator</th>
+                        <th className="text-center py-3 px-4 font-medium text-gray-700">Score</th>
+                        <th className="text-center py-3 px-4 font-medium text-gray-700">Sample Size</th>
+                        <th className="text-center py-3 px-4 font-medium text-gray-700">Performance</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {indicatorData
+                        .filter(item => {
+                          // Filter out unknown indicators and invalid data
+                          const label = item?.label ?? 'Unknown Indicator';
+                          const indicator = item?.indicator;
+                          
+                          return (
+                            label !== 'Unknown Indicator' && 
+                            label !== '' && 
+                            indicator !== null && 
+                            indicator !== undefined &&
+                            indicator !== ''
+                          );
+                        })
+                        .map((item, index) => {
+                          // Safety checks for item properties
+                          const value = item?.value ?? 0;
+                          const sampleSize = item?.sample_size ?? 0;
+                          const label = item?.label ?? 'Unknown Indicator';
+                          const isDomainScore = item?.isDomainScore ?? false;
+                          const indicator = item?.indicator;
+                          
+                          return (
+                            <tr 
+                              key={item?.indicator || index} 
+                              className={`border-b border-gray-100 ${
+                                isDomainScore ? 'bg-blue-50 font-medium' : 
+                                index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
+                              }`}
+                            >
+                              <td className="py-3 px-4">
+                                <div className="flex items-center space-x-2">
+                                  {isDomainScore && (
+                                    <span className="text-blue-600 font-bold">📊</span>
+                                  )}
+                                  <span className={isDomainScore ? 'font-bold text-blue-800' : ''}>
+                                    {label}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="text-center py-3 px-4">
+                                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                  getScoreColor(value, indicator)
+                                }`}>
+                                  {formatValue(value)}
+                                </span>
+                              </td>
+                              <td className="text-center py-3 px-4 text-gray-600">
+                                {formatSampleSize(sampleSize)}
+                              </td>
+                              <td className="text-center py-3 px-4">
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                  <div 
+                                    className={`h-2 rounded-full ${
+                                      getPerformanceBarColor(value, indicator)
+                                    }`}
+                                    style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
+                                  ></div>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  <p>No data available for this combination</p>
+                  <p className="text-sm mt-1">Try selecting a different district or population group</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Footer Info */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h4 className="font-medium text-gray-800 mb-2">About SDHE Indicators</h4>
+            <p className="text-sm text-gray-600 mb-2">
+              Social Determinants of Health Equity (SDHE) indicators measure conditions that influence health outcomes 
+              across different population groups. Scores represent the percentage achieving positive health outcomes.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
+              <div>🟢 <strong>Excellent:</strong> Best outcomes</div>
+              <div>🟡 <strong>Good:</strong> Above average</div>
+              <div>🟠 <strong>Fair:</strong> Below average</div>
+              <div>🔴 <strong>Poor:</strong> Worst outcomes</div>
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              <strong>Note:</strong> Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence) 
+              while others are "good when high" (e.g., education, health coverage).
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Hot Issues Tab Content */}
+      {activeTab === 'hotissues' && (
+        <HotIssuesDashboard 
+          getAvailableDistricts={getAvailableDistricts}
+          getAvailableDomains={getAvailableDomains}
+          getIndicatorData={getIndicatorData}
+        />
+      )}
     </div>
   );
 };
