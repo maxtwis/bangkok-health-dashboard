@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 import Papa from 'papaparse';
 
 const IndicatorAnalysis = () => {
@@ -94,9 +94,9 @@ const IndicatorAnalysis = () => {
     loadData();
   }, []);
 
-  // Calculate both positive and negative percentages for stacked chart
-  const calculateStackedPercentages = (records, indicator) => {
-    if (!records || records.length === 0) return { positive: 0, negative: 0 };
+  // Calculate percentage for specific indicator
+  const calculatePercentage = (records, indicator) => {
+    if (!records || records.length === 0) return 0;
 
     let matchCount = 0;
     let totalCount = records.length;
@@ -104,20 +104,20 @@ const IndicatorAnalysis = () => {
     // Validate records array
     if (!Array.isArray(records)) {
       console.error('Records is not an array:', records);
-      return { positive: 0, negative: 0 };
+      return 0;
     }
 
     try {
       switch (indicator) {
         case 'alcohol_consumption':
-          // drink_status 1 OR 2 = drinks, others = doesn't drink
+          // drink_status 1 OR 2
           matchCount = records.filter(r => 
             r && (r.drink_status === 1 || r.drink_status === 2)
           ).length;
           break;
           
         case 'tobacco_use':
-          // Age 15+ who smoke vs don't smoke
+          // Age 15+ who smoke (smoke_status 2 or 3)
           const smokingRecords = records.filter(r => r && typeof r.age === 'number' && r.age >= 15);
           totalCount = smokingRecords.length;
           matchCount = smokingRecords.filter(r => 
@@ -126,21 +126,21 @@ const IndicatorAnalysis = () => {
           break;
           
         case 'physical_activity':
-          // exercise_status >= 2 vs < 2
+          // exercise_status >= 2
           matchCount = records.filter(r => 
             r && typeof r.exercise_status === 'number' && r.exercise_status >= 2
           ).length;
           break;
           
         case 'obesity':
-          // BMI >= 30 vs < 30
+          // BMI >= 30
           const validBMI = records.filter(r => 
             r && typeof r.height === 'number' && typeof r.weight === 'number' && 
             r.height > 0 && r.weight > 0
           );
           totalCount = validBMI.length;
           
-          if (totalCount === 0) return { positive: 0, negative: 0 };
+          if (totalCount === 0) return 0;
           
           matchCount = validBMI.filter(r => {
             const bmi = r.weight / Math.pow(r.height / 100, 2);
@@ -149,21 +149,21 @@ const IndicatorAnalysis = () => {
           break;
           
         case 'unemployment_rate':
-          // unemployed vs employed
+          // occupation_status === 0
           matchCount = records.filter(r => 
             r && r.occupation_status === 0
           ).length;
           break;
           
         case 'violence_physical':
-          // experienced violence vs not
+          // physical_violence === 1
           matchCount = records.filter(r => 
             r && r.physical_violence === 1
           ).length;
           break;
           
         case 'discrimination_experience':
-          // experienced discrimination vs not
+          // Any discrimination/1 to discrimination/5 === 1
           matchCount = records.filter(r => 
             r && (r['discrimination/1'] === 1 || r['discrimination/2'] === 1 || 
                   r['discrimination/3'] === 1 || r['discrimination/4'] === 1 || 
@@ -172,36 +172,32 @@ const IndicatorAnalysis = () => {
           break;
           
         default:
-          return { positive: 0, negative: 0 };
+          return 0;
       }
 
       // Safety checks
-      if (totalCount === 0) return { positive: 0, negative: 0 };
+      if (totalCount === 0) return 0;
       if (matchCount < 0) matchCount = 0;
       if (matchCount > totalCount) matchCount = totalCount;
 
-      const positivePercentage = (matchCount / totalCount) * 100;
-      const negativePercentage = ((totalCount - matchCount) / totalCount) * 100;
+      const percentage = (matchCount / totalCount) * 100;
       
       // Final validation
-      if (isNaN(positivePercentage) || !isFinite(positivePercentage) || positivePercentage < 0) {
+      if (isNaN(percentage) || !isFinite(percentage) || percentage < 0) {
         console.warn(`Invalid percentage calculated for ${indicator}:`, {
           matchCount,
           totalCount,
-          positivePercentage,
+          percentage,
           sampleRecord: records[0]
         });
-        return { positive: 0, negative: 0 };
+        return 0;
       }
 
-      return {
-        positive: Math.min(100, positivePercentage),
-        negative: Math.min(100, negativePercentage)
-      };
+      return Math.min(100, percentage); // Cap at 100%
       
     } catch (error) {
       console.error(`Error calculating percentage for ${indicator}:`, error);
-      return { positive: 0, negative: 0 };
+      return 0;
     }
   };
 
@@ -221,15 +217,15 @@ const IndicatorAnalysis = () => {
         );
         
         if (records.length >= 5) { // Minimum sample size
-          const percentages = calculateStackedPercentages(records, selectedIndicator);
+          const percentage = calculatePercentage(records, selectedIndicator);
           
           // Debug logging for problematic values
-          if (percentages.positive > 100 || isNaN(percentages.positive) || !isFinite(percentages.positive)) {
+          if (percentage > 100 || isNaN(percentage) || !isFinite(percentage)) {
             console.error('Invalid percentage detected:', {
               district,
               group: group.value,
               indicator: selectedIndicator,
-              percentages,
+              percentage,
               recordCount: records.length,
               sampleRecord: records[0]
             });
@@ -238,15 +234,14 @@ const IndicatorAnalysis = () => {
           
           districtValues.push({
             district: district,
-            positive: Math.min(100, Math.max(0, percentages.positive)),
-            negative: Math.min(100, Math.max(0, percentages.negative)),
+            value: Math.min(100, Math.max(0, percentage)),
             sampleSize: records.length
           });
         }
       });
 
-      // Sort by highest positive values (most problematic)
-      const sortedDistricts = districtValues.sort((a, b) => b.positive - a.positive);
+      // Sort by highest values
+      const sortedDistricts = districtValues.sort((a, b) => b.value - a.value);
       
       return {
         group: group.value,
@@ -351,26 +346,10 @@ const IndicatorAnalysis = () => {
                       tick={{ fontSize: 12 }}
                       tickFormatter={(value) => `${value}%`}
                     />
-                    <Legend 
-                      wrapperStyle={{ fontSize: '14px' }}
-                      iconType="rect"
-                    />
-                    
-                    {/* Positive values (main indicator) */}
+                    {/* Single bar */}
                     <Bar 
-                      dataKey="positive" 
-                      stackId="stack"
-                      name={getBarLabel(selectedIndicator, true)}
-                      fill="#fb7185"
-                      radius={[0, 0, 0, 0]}
-                    />
-                    
-                    {/* Negative values (opposite) */}
-                    <Bar 
-                      dataKey="negative" 
-                      stackId="stack"
-                      name={getBarLabel(selectedIndicator, false)}
-                      fill="#60a5fa"
+                      dataKey="value" 
+                      fill={groupData.color}
                       radius={[4, 4, 0, 0]}
                     />
                   </BarChart>
@@ -391,7 +370,7 @@ const IndicatorAnalysis = () => {
                   </span>
                   <div className="text-right">
                     <span className="font-medium text-red-600">
-                      {district.positive.toFixed(1)}%
+                      {district.value.toFixed(1)}%
                     </span>
                     <span className="text-gray-400 text-xs ml-2">
                       ({district.sampleSize} people)
