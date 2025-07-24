@@ -104,14 +104,14 @@ const IndicatorAnalysis = () => {
     switch (indicator) {
       case 'alcohol_consumption':
         // Simple: drink_status 1 OR 2
-        matchCount = records.filter(r => r.drink_status === 1 && r.drink_status === 2).length;
+        matchCount = records.filter(r => r.drink_status === 1 || r.drink_status === 2).length;
         break;
         
       case 'tobacco_use':
         // Age 15+ who smoke (smoke_status 2 or 3)
         const smokingRecords = records.filter(r => r.age >= 15);
         totalCount = smokingRecords.length;
-        matchCount = smokingRecords.filter(r => r.smoke_status === 2 && r.smoke_status === 3).length;
+        matchCount = smokingRecords.filter(r => r.smoke_status === 2 || r.smoke_status === 3).length;
         break;
         
       case 'physical_activity':
