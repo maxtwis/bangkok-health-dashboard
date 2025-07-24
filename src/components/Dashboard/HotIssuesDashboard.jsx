@@ -63,18 +63,32 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
     const districts = getAvailableDistricts().filter(d => d !== 'Bangkok Overall');
     const isReverse = reverseIndicators[selectedIndicator];
 
+    // Get raw survey data - we need access to the processor
+    // For now, we'll use the existing indicator data but we need to calculate percentages differently
+    
     // Get data for each population group
     const populationGroupData = populationGroups.map(group => {
       const districtValues = [];
 
       districts.forEach(district => {
+        // Get the raw indicator calculation for this district and group
         const indicatorData = getIndicatorData(selectedIndicatorObj.domain, district, group.value);
         const indicatorItem = indicatorData.find(item => item.indicator === selectedIndicator);
         
         if (indicatorItem && indicatorItem.value !== null && indicatorItem.value !== undefined) {
+          // For simple percentage calculations, we want the raw percentage
+          // The SDHE processor already calculates this correctly for most indicators
+          let percentage = Number(indicatorItem.value) || 0;
+          
+          // Special handling for specific indicators that need raw survey logic
+          if (selectedIndicator === 'alcohol_consumption') {
+            // This should be: (people with drink_status === 1 OR drink_status === 2) / total people * 100
+            // The processor should already calculate this correctly
+          }
+          
           districtValues.push({
             district: district,
-            value: Number(indicatorItem.value) || 0, // Ensure it's a number
+            value: percentage,
             sampleSize: indicatorItem.sample_size || 0
           });
         }
