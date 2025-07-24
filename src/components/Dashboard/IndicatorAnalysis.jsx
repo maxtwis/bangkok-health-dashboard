@@ -313,7 +313,7 @@ const IndicatorAnalysis = () => {
                       interval={0}
                     />
                     <YAxis 
-                      domain={[0, 'dataMax + 10']} 
+                      domain={[0, 100]} 
                       tick={{ fontSize: 10 }}
                       tickFormatter={(value) => `${value}%`}
                     />
