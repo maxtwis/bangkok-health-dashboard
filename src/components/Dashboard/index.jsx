@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
 import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
-import HotIssuesDashboard from './HotIssuesDashboard';
+import IndicatorAnalysis from './IndicatorAnalysis';
 
 const BasicSDHEDashboard = () => {
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
@@ -402,11 +402,7 @@ const BasicSDHEDashboard = () => {
 
       {/* Hot Issues Tab Content */}
       {activeTab === 'hotissues' && (
-        <HotIssuesDashboard 
-          getAvailableDistricts={getAvailableDistricts}
-          getAvailableDomains={getAvailableDomains}
-          getIndicatorData={getIndicatorData}
-        />
+        <IndicatorAnalysis />
       )}
     </div>
   );
