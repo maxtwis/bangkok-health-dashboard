@@ -170,27 +170,27 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart 
                     data={groupData.chartData} 
-                    layout="horizontal"
-                    margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                   >
                     <XAxis 
-                      type="number" 
+                      dataKey="district" 
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
+                      tick={{ fontSize: 10 }}
+                      interval={0}
+                    />
+                    <YAxis 
                       domain={[0, 'dataMax + 10']} 
                       tick={{ fontSize: 10 }}
                       tickFormatter={(value) => `${value}%`}
-                    />
-                    <YAxis 
-                      type="category" 
-                      dataKey="district" 
-                      width={110}
-                      tick={{ fontSize: 10 }}
                     />
                     <Bar 
                       dataKey="value" 
                       fill="#dc2626"
                       stroke="#b91c1c"
                       strokeWidth={1}
-                      radius={[0, 4, 4, 0]}
+                      radius={[4, 4, 0, 0]}
                       minPointSize={5}
                     >
                       {groupData.chartData.map((entry, cellIndex) => (
