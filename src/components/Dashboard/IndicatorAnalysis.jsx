@@ -16,13 +16,13 @@ const IndicatorAnalysis = () => {
 
   // Available indicators for selection
   const availableIndicators = [
-    { value: 'alcohol_consumption', label: 'Alcohol Consumption' },
-    { value: 'tobacco_use', label: 'Tobacco Use' },
-    { value: 'physical_activity', label: 'Physical Activity' },
-    { value: 'obesity', label: 'Obesity' },
-    { value: 'unemployment_rate', label: 'Unemployment Rate' },
-    { value: 'violence_physical', label: 'Physical Violence' },
-    { value: 'discrimination_experience', label: 'Discrimination Experience' }
+    { value: 'alcohol_consumption', label: 'การดื่มเครื่องดื่มแอลกอฮอล์' },
+    { value: 'tobacco_use', label: 'การสูบบุหรี่' },
+    { value: 'physical_activity', label: 'การออกกำลังกาย' },
+    { value: 'obesity', label: 'ความอ้วน' },
+    { value: 'unemployment_rate', label: 'อัตราการว่างงาน' },
+    { value: 'violence_physical', label: 'ความรุนแรงทางร่างกาย' },
+    { value: 'discrimination_experience', label: 'การถูกเลือกปฏิบัติ' }
   ];
 
   // District code mapping (same as BasicSDHEProcessor)
@@ -273,7 +273,7 @@ const IndicatorAnalysis = () => {
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p>Loading survey data...</p>
+          <p>กำลังโหลดข้อมูลแบบสำรวจ...</p>
         </div>
       </div>
     );
@@ -285,11 +285,11 @@ const IndicatorAnalysis = () => {
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">📊 Indicator Analysis by District</h2>
+        <h2 className="text-lg font-medium text-gray-900 mb-4">📊 การวิเคราะห์ตัวชี้วัดตามเขต</h2>
         
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Select Indicator to Analyze
+            เลือกตัวชี้วัดที่ต้องการวิเคราะห์
           </label>
           <select 
             value={selectedIndicator}
@@ -321,7 +321,7 @@ const IndicatorAnalysis = () => {
 
             <div className="mb-4">
               <div className="text-sm text-gray-600">
-                Top 5 Districts (out of {groupData.totalDistricts})
+                5 เขตอันดับสูงสุด (จากทั้งหมด {groupData.totalDistricts} เขต)
               </div>
             </div>
 
@@ -371,7 +371,7 @@ const IndicatorAnalysis = () => {
               </div>
             ) : (
               <div className="h-80 flex items-center justify-center text-gray-500 -mb-4">
-                <p>No data available for this group</p>
+                <p>ไม่มีข้อมูลสำหรับกลุ่มนี้</p>
               </div>
             )}
 
@@ -387,7 +387,7 @@ const IndicatorAnalysis = () => {
                       {district.value.toFixed(1)}%
                     </span>
                     <span className="text-gray-400 text-xs ml-2">
-                      ({district.sampleSize} people)
+                      ({district.sampleSize} คน)
                     </span>
                   </div>
                 </div>
