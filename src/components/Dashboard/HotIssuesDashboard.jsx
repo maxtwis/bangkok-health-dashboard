@@ -75,16 +75,12 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
         const indicatorData = getIndicatorData(selectedIndicatorObj.domain, district, group.value);
         const indicatorItem = indicatorData.find(item => item.indicator === selectedIndicator);
         
-        if (indicatorItem && indicatorItem.value !== null && indicatorItem.value !== undefined) {
-          // For simple percentage calculations, we want the raw percentage
-          // The SDHE processor already calculates this correctly for most indicators
-          let percentage = Number(indicatorItem.value) || 0;
+        if (indicatorItem && 
+            indicatorItem.value !== null && 
+            indicatorItem.value !== undefined &&
+            indicatorItem.sample_size >= 5) { // Only include districts with at least 5 people
           
-          // Special handling for specific indicators that need raw survey logic
-          if (selectedIndicator === 'alcohol_consumption') {
-            // This should be: (people with drink_status === 1 OR drink_status === 2) / total people * 100
-            // The processor should already calculate this correctly
-          }
+          let percentage = Number(indicatorItem.value) || 0;
           
           districtValues.push({
             district: district,
@@ -150,6 +146,16 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
           Showing top 5 {isReverse ? 'worst performing' : 'lowest performing'} districts for{' '}
           <span className="font-medium text-red-600">{selectedIndicatorObj?.label}</span> across all population groups.
           {isReverse ? ' Higher percentages indicate worse outcomes.' : ' Lower percentages indicate worse outcomes.'}
+          <br />
+          <span className="text-xs mt-1 block">
+            <strong>Current calculation:</strong> {
+              selectedIndicator === 'alcohol_consumption' ? 
+              'People who drink (drink_status=1) AND drink frequently (drink_rate=1 or 2)' :
+              selectedIndicator === 'tobacco_use' ?
+              'People who currently smoke (smoke_status=2 or 3) and age ≥15' :
+              'Standard SDHE indicator calculation'
+            }
+          </span>
         </p>
       </div>
 
@@ -171,10 +177,18 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
               <div className="text-sm text-gray-600 mb-2">
                 Top 5 {isReverse ? 'Worst' : 'Lowest'} Districts (out of {groupData.totalDistricts})
               </div>
-              {/* Debug info - remove this later */}
-              <div className="text-xs text-gray-400 mb-2">
-                Data points: {groupData.chartData.length} | 
-                Sample data: {groupData.chartData[0] ? `${groupData.chartData[0].district}: ${groupData.chartData[0].value}%` : 'No data'}
+              {/* Enhanced debug info */}
+              <div className="text-xs text-gray-400 mb-2 bg-gray-100 p-2 rounded">
+                <strong>Debug Info:</strong><br/>
+                Data points: {groupData.chartData.length}<br/>
+                {groupData.chartData.slice(0, 2).map((item, i) => (
+                  <div key={i}>
+                    {item.district}: {item.value}% ({item.sampleSize} people)
+                  </div>
+                ))}
+                <div className="mt-2 text-red-600">
+                  <strong>⚠️ Warning:</strong> Sample sizes &lt; 10 may be unreliable
+                </div>
               </div>
             </div>
 
