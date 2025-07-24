@@ -11,7 +11,7 @@ const IndicatorAnalysis = () => {
     { value: 'informal_workers', label: 'แรงงานนอกระบบ', color: '#ef4444' },
     { value: 'elderly', label: 'ผู้สูงอายุ', color: '#3b82f6' },
     { value: 'disabled', label: 'คนพิการ', color: '#10b981' },
-    { value: 'lgbtq', label: 'LGBTQ', color: '#f59e0b' }
+    { value: 'lgbtq', label: 'LGBT สุขภาพ', color: '#f59e0b' }
   ];
 
   // Available indicators for selection
@@ -20,11 +20,11 @@ const IndicatorAnalysis = () => {
     { value: 'alcohol_consumption', label: 'การดื่มเครื่องดื่มแอลกอฮอล์' },
     { value: 'tobacco_use', label: 'การสูบบุหรี่' },
     { value: 'physical_activity', label: 'การออกกำลังกายไม่เพียงพอ' },
-    { value: 'obesity', label: 'ภาวะอ้วน' },
+    { value: 'obesity', label: 'ความอ้วน' },
     { value: 'unemployment_rate', label: 'อัตราการว่างงาน' },
     { value: 'violence_physical', label: 'ความรุนแรงทางร่างกาย' },
     { value: 'discrimination_experience', label: 'การถูกเลือกปฏิบัติ' },
-    { value: 'dental_access', label: 'การเข้าถึงบริการทันตกรรม' }
+    { value: 'dental_access', label: 'การเข้าถึงบริการทันตกรรมไม่ได้' }
   ];
 
   // District code mapping (same as BasicSDHEProcessor)
@@ -174,9 +174,9 @@ const IndicatorAnalysis = () => {
           break;
           
         case 'dental_access':
-          // oral_health_access === 1 (has access to dental care)
+          // oral_health_access === 0 (no access to dental care - the problem)
           matchCount = records.filter(r => 
-            r && r.oral_health_access === 1
+            r && r.oral_health_access === 0
           ).length;
           break;
           
@@ -312,7 +312,7 @@ const IndicatorAnalysis = () => {
       unemployment_rate: isPositive ? 'ว่างงาน' : 'มีงาน',
       violence_physical: isPositive ? 'ถูกทำร้าย' : 'ไม่ถูกทำร้าย',
       discrimination_experience: isPositive ? 'ถูกเลือกปฏิบัติ' : 'ไม่ถูกเลือกปฏิบัติ',
-      dental_access: isPositive ? 'มีการเข้าถึง' : 'ไม่มีการเข้าถึง'
+      dental_access: isPositive ? 'ไม่ได้รักษา' : 'ได้รักษา'
     };
     
     return labels[indicator] || (isPositive ? 'Yes' : 'No');
