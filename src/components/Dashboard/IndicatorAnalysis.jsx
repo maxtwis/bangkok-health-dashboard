@@ -39,7 +39,7 @@ const IndicatorAnalysis = () => {
     1037: "ราชเทวี", 1038: "ลาดพร้าว", 1039: "วัฒนา", 1040: "บางแค",
     1041: "หลักสี่", 1042: "สายไหม", 1043: "คันนายาว", 1044: "สะพานสูง",
     1045: "วังทองหลาง", 1046: "คลองสามวา", 1047: "บางนา", 1048: "ทวีวัฒนา",
-    1049: "ทุ่งครุ่", 1050: "บางบอน"
+    1049: "ทุ่งครุ", 1050: "บางบอน"
   };
 
   // Classify population groups (EXACT same logic as BasicSDHEProcessor)
@@ -319,7 +319,7 @@ const IndicatorAnalysis = () => {
               </h3>
             </div>
 
-            <div className="mb-6">
+            <div className="mb-4">
               <div className="text-sm text-gray-600">
                 Top 5 Districts (out of {groupData.totalDistricts})
               </div>
@@ -361,8 +361,8 @@ const IndicatorAnalysis = () => {
               </div>
             )}
 
-            {/* Rankings */}
-            <div className="mt-6 space-y-3">
+            {/* Rankings - Removed the mt-6 margin */}
+            <div className="space-y-3">
               {groupData.chartData.map((district, index) => (
                 <div key={district.district} className="flex justify-between items-center text-sm border-b border-gray-100 pb-2">
                   <span className={`${index === 0 ? 'font-bold text-red-600' : index === 1 ? 'font-semibold text-orange-600' : 'text-gray-700'}`}>
