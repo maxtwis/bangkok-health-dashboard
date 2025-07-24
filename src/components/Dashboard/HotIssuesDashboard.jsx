@@ -1,9 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Legend, Cell } from 'recharts';
-import useBasicSDHEData from '../../hooks/useBasicSDHEData';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
-const HotIssuesDashboard = () => {
-  const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
+const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getIndicatorData }) => {
   const [selectedView, setSelectedView] = useState('population'); // 'population' or 'district'
 
   const populationGroups = [
@@ -41,7 +39,7 @@ const HotIssuesDashboard = () => {
 
   // Get hot issues (red status indicators)
   const getHotIssues = useMemo(() => {
-    if (!data) return { byPopulation: [], byDistrict: [] };
+    if (!getIndicatorData) return { byPopulation: [], byDistrict: [] };
 
     const domains = getAvailableDomains();
     const districts = getAvailableDistricts().filter(d => d !== 'Bangkok Overall');
@@ -157,235 +155,187 @@ const HotIssuesDashboard = () => {
       .slice(0, 5);
 
     return { byPopulation, byDistrict };
-  }, [data, getAvailableDomains, getAvailableDistricts, getIndicatorData]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
-            <div className="text-lg font-medium">Loading Hot Issues Analysis</div>
-          </div>
-          <p className="text-gray-600">Identifying critical health equity issues...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Data Loading Error</h3>
-            <p className="text-sm text-gray-600 mb-4">{error}</p>
-            <button 
-              onClick={() => window.location.reload()} 
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Retry
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  }, [getAvailableDomains, getAvailableDistricts, getIndicatorData]);
 
   const hotIssuesData = getHotIssues;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-red-600 text-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold">🔥 Hot Issues Dashboard</h1>
-          <p className="mt-1">Critical Health Equity Issues Requiring Immediate Attention</p>
+    <div className="max-w-7xl mx-auto px-4 py-6">
+      {/* View Toggle */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-medium text-gray-900">🔥 Hot Issues Analysis</h2>
+          <div className="flex bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={() => setSelectedView('population')}
+              className={`px-4 py-2 text-sm rounded-md transition-colors ${
+                selectedView === 'population' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              By Population Group
+            </button>
+            <button
+              onClick={() => setSelectedView('district')}
+              className={`px-4 py-2 text-sm rounded-md transition-colors ${
+                selectedView === 'district' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Top 5 Districts
+            </button>
+          </div>
         </div>
+        
+        <p className="text-sm text-gray-600">
+          Hot issues are indicators with poor performance that require immediate intervention. 
+          Red status indicates values that pose significant health equity concerns.
+        </p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* View Toggle */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-medium text-gray-900">Hot Issues Analysis</h2>
-            <div className="flex bg-gray-100 rounded-lg p-1">
-              <button
-                onClick={() => setSelectedView('population')}
-                className={`px-4 py-2 text-sm rounded-md transition-colors ${
-                  selectedView === 'population' 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                By Population Group
-              </button>
-              <button
-                onClick={() => setSelectedView('district')}
-                className={`px-4 py-2 text-sm rounded-md transition-colors ${
-                  selectedView === 'district' 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Top 5 Districts
-              </button>
-            </div>
-          </div>
-          
-          <p className="text-sm text-gray-600">
-            Hot issues are indicators with poor performance that require immediate intervention. 
-            Red status indicates values that pose significant health equity concerns.
-          </p>
-        </div>
+      {/* Population Group View */}
+      {selectedView === 'population' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {hotIssuesData.byPopulation.map((groupData, index) => (
+            <div key={groupData.group} className="bg-white rounded-lg shadow-sm p-6">
+              <div className="flex items-center mb-4">
+                <div 
+                  className="w-4 h-4 rounded-full mr-3" 
+                  style={{ backgroundColor: groupData.color }}
+                ></div>
+                <h3 className="text-lg font-medium text-gray-900">
+                  กลุ่ม{groupData.groupLabel}
+                </h3>
+              </div>
 
-        {/* Population Group View */}
-        {selectedView === 'population' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {hotIssuesData.byPopulation.map((groupData, index) => (
-              <div key={groupData.group} className="bg-white rounded-lg shadow-sm p-6">
-                <div className="flex items-center mb-4">
-                  <div 
-                    className="w-4 h-4 rounded-full mr-3" 
-                    style={{ backgroundColor: groupData.color }}
-                  ></div>
-                  <h3 className="text-lg font-medium text-gray-900">
-                    เยอคที่มีอัตราการดื่มแอลกอฮอล์ในกลุ่ม{groupData.groupLabel}สูงสุด
-                  </h3>
-                </div>
-
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 mb-2">
-                    Total Hot Issues: <span className="font-medium text-red-600">{groupData.totalHotIssues}</span>
-                  </div>
-                </div>
-
-                {/* Top 5 Issues Chart */}
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart 
-                      data={groupData.issues} 
-                      layout="horizontal"
-                      margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
-                    >
-                      <XAxis type="number" domain={[0, 100]} />
-                      <YAxis 
-                        type="category" 
-                        dataKey="label" 
-                        width={90}
-                        tick={{ fontSize: 10 }}
-                      />
-                      <Bar dataKey="value" name="Issue Severity">
-                        {groupData.issues.map((entry, index) => (
-                          <Cell 
-                            key={`cell-${index}`} 
-                            fill={entry.isReverse ? '#dc2626' : '#dc2626'} 
-                          />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-
-                {/* Issue Details */}
-                <div className="mt-4 space-y-2">
-                  {groupData.issues.slice(0, 3).map((issue, index) => (
-                    <div key={issue.indicator} className="flex justify-between text-xs">
-                      <span className="text-gray-600">{index + 1}. {issue.label}</span>
-                      <span className="font-medium text-red-600">{issue.value.toFixed(1)}%</span>
-                    </div>
-                  ))}
+              <div className="mb-4">
+                <div className="text-sm text-gray-600 mb-2">
+                  Total Hot Issues: <span className="font-medium text-red-600">{groupData.totalHotIssues}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
 
-        {/* District View */}
-        {selectedView === 'district' && (
-          <div className="space-y-6">
-            {hotIssuesData.byDistrict.map((districtData, index) => (
-              <div key={districtData.district} className="bg-white rounded-lg shadow-sm p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900">
-                      {districtData.district}
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      Rank #{index + 1} • {districtData.totalHotIssues} Critical Issues
-                    </p>
+              {/* Top 5 Issues Chart */}
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart 
+                    data={groupData.issues} 
+                    layout="horizontal"
+                    margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
+                  >
+                    <XAxis type="number" domain={[0, 100]} />
+                    <YAxis 
+                      type="category" 
+                      dataKey="label" 
+                      width={90}
+                      tick={{ fontSize: 10 }}
+                    />
+                    <Bar dataKey="value" name="Issue Severity">
+                      {groupData.issues.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={'#dc2626'} 
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+
+              {/* Issue Details */}
+              <div className="mt-4 space-y-2">
+                {groupData.issues.slice(0, 3).map((issue, index) => (
+                  <div key={issue.indicator} className="flex justify-between text-xs">
+                    <span className="text-gray-600">{index + 1}. {issue.label}</span>
+                    <span className="font-medium text-red-600">{issue.value.toFixed(1)}%</span>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-red-600">
-                      {districtData.totalHotIssues}
-                    </div>
-                    <div className="text-xs text-gray-500">Hot Issues</div>
-                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* District View */}
+      {selectedView === 'district' && (
+        <div className="space-y-6">
+          {hotIssuesData.byDistrict.map((districtData, index) => (
+            <div key={districtData.district} className="bg-white rounded-lg shadow-sm p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900">
+                    {districtData.district}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Rank #{index + 1} • {districtData.totalHotIssues} Critical Issues
+                  </p>
                 </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-red-600">
+                    {districtData.totalHotIssues}
+                  </div>
+                  <div className="text-xs text-gray-500">Hot Issues</div>
+                </div>
+              </div>
 
-                {/* Issues by Population Group in this District */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  {populationGroups.map(group => {
-                    const groupIssues = districtData.issues.filter(issue => issue.group === group.value);
-                    const issueCount = groupIssues.length;
-                    const totalIssues = districtData.totalHotIssues;
-                    const percentage = totalIssues > 0 ? (issueCount / totalIssues) * 100 : 0;
+              {/* Issues by Population Group in this District */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {populationGroups.map(group => {
+                  const groupIssues = districtData.issues.filter(issue => issue.group === group.value);
+                  const issueCount = groupIssues.length;
+                  const totalIssues = districtData.totalHotIssues;
+                  const percentage = totalIssues > 0 ? (issueCount / totalIssues) * 100 : 0;
 
-                    return (
-                      <div key={group.value} className="text-center">
-                        <div className="relative w-16 h-16 mx-auto mb-2">
-                          <svg className="w-16 h-16 transform -rotate-90">
-                            <circle
-                              cx="32"
-                              cy="32"
-                              r="28"
-                              stroke="#e5e7eb"
-                              strokeWidth="4"
-                              fill="none"
-                            />
-                            <circle
-                              cx="32"
-                              cy="32"
-                              r="28"
-                              stroke={group.color}
-                              strokeWidth="4"
-                              fill="none"
-                              strokeDasharray={`${(percentage / 100) * 175.93} 175.93`}
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-sm font-bold" style={{ color: group.color }}>
-                              {issueCount}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-xs text-gray-600">{group.label}</div>
-                        <div className="text-xs font-medium" style={{ color: group.color }}>
-                          {percentage.toFixed(1)}%
+                  return (
+                    <div key={group.value} className="text-center">
+                      <div className="relative w-16 h-16 mx-auto mb-2">
+                        <svg className="w-16 h-16 transform -rotate-90">
+                          <circle
+                            cx="32"
+                            cy="32"
+                            r="28"
+                            stroke="#e5e7eb"
+                            strokeWidth="4"
+                            fill="none"
+                          />
+                          <circle
+                            cx="32"
+                            cy="32"
+                            r="28"
+                            stroke={group.color}
+                            strokeWidth="4"
+                            fill="none"
+                            strokeDasharray={`${(percentage / 100) * 175.93} 175.93`}
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-sm font-bold" style={{ color: group.color }}>
+                            {issueCount}
+                          </span>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
+                      <div className="text-xs text-gray-600">{group.label}</div>
+                      <div className="text-xs font-medium" style={{ color: group.color }}>
+                        {percentage.toFixed(1)}%
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Summary */}
-        <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-6">
-          <h3 className="font-medium text-red-800 mb-2">🚨 Action Required</h3>
-          <p className="text-sm text-red-700">
-            These hot issues represent critical health equity gaps that require immediate policy intervention 
-            and resource allocation. Focus on the highest-impact indicators for maximum improvement in population health outcomes.
-          </p>
+            </div>
+          ))}
         </div>
+      )}
+
+      {/* Summary */}
+      <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-6">
+        <h3 className="font-medium text-red-800 mb-2">🚨 Action Required</h3>
+        <p className="text-sm text-red-700">
+          These hot issues represent critical health equity gaps that require immediate policy intervention 
+          and resource allocation. Focus on the highest-impact indicators for maximum improvement in population health outcomes.
+        </p>
       </div>
     </div>
   );
