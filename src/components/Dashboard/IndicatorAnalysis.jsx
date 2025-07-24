@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import Papa from 'papaparse';
 
 const IndicatorAnalysis = () => {
@@ -11,7 +11,7 @@ const IndicatorAnalysis = () => {
     { value: 'informal_workers', label: 'แรงงานนอกระบบ', color: '#ef4444' },
     { value: 'elderly', label: 'ผู้สูงอายุ', color: '#3b82f6' },
     { value: 'disabled', label: 'คนพิการ', color: '#10b981' },
-    { value: 'lgbtq', label: 'LGBTQ', color: '#f59e0b' }
+    { value: 'lgbtq', label: 'LGBT สุขภาพ', color: '#f59e0b' }
   ];
 
   // Available indicators for selection
@@ -351,7 +351,21 @@ const IndicatorAnalysis = () => {
                       dataKey="value" 
                       fill={groupData.color}
                       radius={[4, 4, 0, 0]}
-                    />
+                    >
+                      <LabelList 
+                        dataKey="value" 
+                        position="center"
+                        style={{ 
+                          fill: 'white', 
+                          fontWeight: 'bold', 
+                          fontSize: '14px' 
+                        }}
+                        formatter={(value) => `${value.toFixed(1)}%`}
+                      />
+                      {groupData.chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={groupData.color} />
+                      ))}
+                    </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
