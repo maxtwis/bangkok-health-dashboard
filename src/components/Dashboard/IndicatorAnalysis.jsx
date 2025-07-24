@@ -211,92 +211,32 @@ const IndicatorAnalysis = () => {
       // Get unique districts
       const districts = [...new Set(surveyData.map(r => r.district_name))];
       
-      // Get total count for this population group across all districts (for relative percentage)
-      const totalGroupRecords = surveyData.filter(r => r.population_group === group.value);
-      const totalGroupCount = totalGroupRecords.length;
-      
       districts.forEach(district => {
         const records = surveyData.filter(r => 
           r.district_name === district && r.population_group === group.value
         );
         
         if (records.length >= 5) { // Minimum sample size
-          // Calculate how many match the indicator criteria in this district
-          let matchCount = 0;
+          const percentage = calculatePercentage(records, selectedIndicator);
           
-          try {
-            switch (selectedIndicator) {
-              case 'alcohol_consumption':
-                matchCount = records.filter(r => 
-                  r && (r.drink_status === 1 || r.drink_status === 2)
-                ).length;
-                break;
-                
-              case 'tobacco_use':
-                const smokingRecords = records.filter(r => r && typeof r.age === 'number' && r.age >= 15);
-                matchCount = smokingRecords.filter(r => 
-                  r && (r.smoke_status === 2 || r.smoke_status === 3)
-                ).length;
-                break;
-                
-              case 'physical_activity':
-                matchCount = records.filter(r => 
-                  r && typeof r.exercise_status === 'number' && (r.exercise_status === 0 || r.exercise_status === 1)
-                ).length;
-                break;
-                
-              case 'obesity':
-                const validBMI = records.filter(r => 
-                  r && typeof r.height === 'number' && typeof r.weight === 'number' && 
-                  r.height > 0 && r.weight > 0
-                );
-                
-                matchCount = validBMI.filter(r => {
-                  const bmi = r.weight / Math.pow(r.height / 100, 2);
-                  return !isNaN(bmi) && isFinite(bmi) && bmi >= 30;
-                }).length;
-                break;
-                
-              case 'unemployment_rate':
-                matchCount = records.filter(r => 
-                  r && r.occupation_status === 0
-                ).length;
-                break;
-                
-              case 'violence_physical':
-                matchCount = records.filter(r => 
-                  r && r.physical_violence === 1
-                ).length;
-                break;
-                
-              case 'discrimination_experience':
-                matchCount = records.filter(r => 
-                  r && (r['discrimination/1'] === 1 || r['discrimination/2'] === 1 || 
-                        r['discrimination/3'] === 1 || r['discrimination/4'] === 1 || 
-                        r['discrimination/5'] === 1)
-                ).length;
-                break;
-                
-              default:
-                matchCount = 0;
-            }
-          } catch (error) {
-            console.error(`Error calculating for ${selectedIndicator}:`, error);
-            matchCount = 0;
-          }
-          
-          // Calculate percentage relative to total group population (not just this district)
-          const relativePercentage = totalGroupCount > 0 ? (matchCount / totalGroupCount) * 100 : 0;
-          
-          // Validate the result
-          if (!isNaN(relativePercentage) && isFinite(relativePercentage) && relativePercentage >= 0) {
-            districtValues.push({
-              district: district,
-              value: Math.min(100, Math.max(0, relativePercentage)),
-              sampleSize: records.length,
-              actualMatches: matchCount
+          // Debug logging for problematic values
+          if (percentage > 100 || isNaN(percentage) || !isFinite(percentage)) {
+            console.error('Invalid percentage detected:', {
+              district,
+              group: group.value,
+              indicator: selectedIndicator,
+              percentage,
+              recordCount: records.length,
+              sampleRecord: records[0]
             });
+            return; // Skip this district
           }
+          
+          districtValues.push({
+            district: district,
+            value: Math.min(100, Math.max(0, percentage)),
+            sampleSize: records.length
+          });
         }
       });
 
@@ -381,7 +321,7 @@ const IndicatorAnalysis = () => {
 
             <div className="mb-4">
               <div className="text-sm text-gray-600">
-                5 เขตอันดับสูงสุด (จากทั้งหมด {groupData.totalDistricts} เขต)
+                5 เขตที่มีปัญหามากที่สุด (จากทั้งหมด {groupData.totalDistricts} เขต)
               </div>
             </div>
 
@@ -447,7 +387,7 @@ const IndicatorAnalysis = () => {
                       {district.value.toFixed(1)}%
                     </span>
                     <span className="text-gray-400 text-xs ml-2">
-                      ({district.actualMatches}/{district.sampleSize} คน)
+                      ({district.sampleSize} คน)
                     </span>
                   </div>
                 </div>
