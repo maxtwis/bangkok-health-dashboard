@@ -11,7 +11,7 @@ const IndicatorAnalysis = () => {
     { value: 'informal_workers', label: 'แรงงานนอกระบบ', color: '#ef4444' },
     { value: 'elderly', label: 'ผู้สูงอายุ', color: '#3b82f6' },
     { value: 'disabled', label: 'คนพิการ', color: '#10b981' },
-    { value: 'lgbtq', label: 'LGBT สุขภาพ', color: '#f59e0b' }
+    { value: 'lgbtq', label: 'LGBTQ', color: '#f59e0b' }
   ];
 
   // Available indicators for selection
