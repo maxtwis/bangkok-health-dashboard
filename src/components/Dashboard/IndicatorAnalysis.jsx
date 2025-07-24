@@ -20,7 +20,7 @@ const IndicatorAnalysis = () => {
     { value: 'alcohol_consumption', label: 'การดื่มเครื่องดื่มแอลกอฮอล์' },
     { value: 'tobacco_use', label: 'การสูบบุหรี่' },
     { value: 'physical_activity', label: 'การออกกำลังกายไม่เพียงพอ' },
-    { value: 'obesity', label: 'ความอ้วน' },
+    { value: 'obesity', label: 'ภาวะอ้วน' },
     { value: 'unemployment_rate', label: 'อัตราการว่างงาน' },
     { value: 'violence_physical', label: 'ความรุนแรงทางร่างกาย' },
     { value: 'discrimination_experience', label: 'การถูกเลือกปฏิบัติ' },
