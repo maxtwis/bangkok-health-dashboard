@@ -141,22 +141,6 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
             ))}
           </select>
         </div>
-        
-        <p className="text-sm text-gray-600">
-          Showing top 5 {isReverse ? 'worst performing' : 'lowest performing'} districts for{' '}
-          <span className="font-medium text-red-600">{selectedIndicatorObj?.label}</span> across all population groups.
-          {isReverse ? ' Higher percentages indicate worse outcomes.' : ' Lower percentages indicate worse outcomes.'}
-          <br />
-          <span className="text-xs mt-1 block">
-            <strong>Current calculation:</strong> {
-              selectedIndicator === 'alcohol_consumption' ? 
-              'People who drink (drink_status=1) AND drink frequently (drink_rate=1 or 2)' :
-              selectedIndicator === 'tobacco_use' ?
-              'People who currently smoke (smoke_status=2 or 3) and age ≥15' :
-              'Standard SDHE indicator calculation'
-            }
-          </span>
-        </p>
       </div>
 
       {/* Charts for Each Population Group */}
@@ -176,19 +160,6 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
             <div className="mb-4">
               <div className="text-sm text-gray-600 mb-2">
                 Top 5 {isReverse ? 'Worst' : 'Lowest'} Districts (out of {groupData.totalDistricts})
-              </div>
-              {/* Enhanced debug info */}
-              <div className="text-xs text-gray-400 mb-2 bg-gray-100 p-2 rounded">
-                <strong>Debug Info:</strong><br/>
-                Data points: {groupData.chartData.length}<br/>
-                {groupData.chartData.slice(0, 2).map((item, i) => (
-                  <div key={i}>
-                    {item.district}: {item.value}% ({item.sampleSize} people)
-                  </div>
-                ))}
-                <div className="mt-2 text-red-600">
-                  <strong>⚠️ Warning:</strong> Sample sizes &lt; 10 may be unreliable
-                </div>
               </div>
             </div>
 
@@ -267,19 +238,6 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Summary */}
-      <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-6">
-        <h3 className="font-medium text-red-800 mb-2">📊 Analysis Summary</h3>
-        <p className="text-sm text-red-700">
-          This analysis shows the top 5 {isReverse ? 'worst performing' : 'lowest performing'} districts for{' '}
-          <strong>{selectedIndicatorObj?.label}</strong> across all population groups. Districts with{' '}
-          {isReverse ? 'higher percentages' : 'lower percentages'} require immediate attention and targeted interventions.
-        </p>
-        <div className="mt-3 text-xs text-red-600">
-          <strong>Sample sizes shown in parentheses.</strong> Colors indicate severity levels from yellow (less severe) to dark red (most severe).
-        </div>
       </div>
     </div>
   );
