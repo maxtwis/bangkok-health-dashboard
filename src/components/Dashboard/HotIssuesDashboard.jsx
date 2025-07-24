@@ -1,8 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
+import React, { useState, useMemo } from 'react';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
+
 const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getIndicatorData }) => {
-  const [selectedView, setSelectedView] = useState('population'); // 'population' or 'district'
+  const [selectedIndicator, setSelectedIndicator] = useState('alcohol_consumption');
 
   const populationGroups = [
     { value: 'informal_workers', label: 'แรงงานนอกระบบ', color: '#ef4444' },
@@ -11,7 +14,23 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
     { value: 'lgbtq', label: 'LGBT สุขภาพ', color: '#f59e0b' }
   ];
 
-  // Define reverse indicators (red when high)
+  // Available indicators for selection
+  const availableIndicators = [
+    { value: 'alcohol_consumption', label: 'Alcohol Consumption', domain: 'health_behaviors' },
+    { value: 'tobacco_use', label: 'Tobacco Use', domain: 'health_behaviors' },
+    { value: 'physical_activity', label: 'Physical Activity', domain: 'health_behaviors' },
+    { value: 'obesity', label: 'Obesity', domain: 'health_behaviors' },
+    { value: 'unemployment_rate', label: 'Unemployment Rate', domain: 'economic_security' },
+    { value: 'vulnerable_employment', label: 'Vulnerable Employment', domain: 'economic_security' },
+    { value: 'food_insecurity_moderate', label: 'Food Insecurity (Moderate)', domain: 'economic_security' },
+    { value: 'violence_physical', label: 'Physical Violence', domain: 'social_context' },
+    { value: 'violence_psychological', label: 'Psychological Violence', domain: 'social_context' },
+    { value: 'discrimination_experience', label: 'Discrimination Experience', domain: 'social_context' },
+    { value: 'medical_consultation_skip_cost', label: 'Skipped Medical Care (Cost)', domain: 'healthcare_access' },
+    { value: 'housing_overcrowding', label: 'Housing Overcrowding', domain: 'physical_environment' }
+  ];
+
+  // Define reverse indicators (where high values are bad)
   const reverseIndicators = {
     unemployment_rate: true,
     vulnerable_employment: true,
@@ -37,308 +56,331 @@ const HotIssuesDashboard = ({ getAvailableDistricts, getAvailableDomains, getInd
     obesity: true
   };
 
-  // Get hot issues (red status indicators)
-  const getHotIssues = useMemo(() => {
-    if (!getIndicatorData) return { byPopulation: [], byDistrict: [] };
+  // Get data for selected indicator across all districts and population groups
+  const getIndicatorChartData = useMemo(() => {
+    if (!getIndicatorData || !selectedIndicator) return [];
 
-    const domains = getAvailableDomains();
+    const selectedIndicatorObj = availableIndicators.find(ind => ind.value === selectedIndicator);
+    if (!selectedIndicatorObj) return [];
+
     const districts = getAvailableDistricts().filter(d => d !== 'Bangkok Overall');
-    const hotIssues = [];
+    const isReverse = reverseIndicators[selectedIndicator];
 
-    // Collect all indicators with their performance across groups/districts
-    domains.forEach(domain => {
-      populationGroups.forEach(group => {
-        const bangkokData = getIndicatorData(domain, 'Bangkok Overall', group.value);
+    // Get data for each population group
+    const populationGroupData = populationGroups.map(group => {
+      const districtValues = [];
+
+      districts.forEach(district => {
+        const indicatorData = getIndicatorData(selectedIndicatorObj.domain, district, group.value);
+        const indicatorItem = indicatorData.find(item => item.indicator === selectedIndicator);
         
-        bangkokData.forEach(item => {
-          if (!item.isDomainScore && item.indicator) {
-            const isReverse = reverseIndicators[item.indicator];
-            const value = item.value || 0;
-            
-            // Determine if it's a "hot issue" (red status)
-            let isHotIssue = false;
-            if (isReverse) {
-              isHotIssue = value > 60; // High values are bad for reverse indicators
-            } else {
-              isHotIssue = value < 40; // Low values are bad for normal indicators
-            }
-
-            if (isHotIssue) {
-              hotIssues.push({
-                indicator: item.indicator,
-                label: item.label,
-                domain,
-                group: group.value,
-                groupLabel: group.label,
-                value: value,
-                isReverse: isReverse
-              });
-            }
-          }
-        });
+        if (indicatorItem && indicatorItem.value !== null && indicatorItem.value !== undefined) {
+          districtValues.push({
+            district: district,
+            value: indicatorItem.value,
+            sampleSize: indicatorItem.sample_size || 0
+          });
+        }
       });
-    });
 
-    // Group by population
-    const byPopulation = populationGroups.map(group => {
-      const groupIssues = hotIssues.filter(issue => issue.group === group.value);
-      const topIssues = groupIssues
-        .sort((a, b) => {
-          // Sort by severity (reverse indicators: higher is worse, normal: lower is worse)
-          if (a.isReverse && b.isReverse) return b.value - a.value;
-          if (!a.isReverse && !b.isReverse) return a.value - b.value;
-          return 0;
-        })
-        .slice(0, 5);
+      // Sort districts by worst performance (highest for reverse indicators, lowest for normal)
+      const sortedDistricts = districtValues.sort((a, b) => {
+        if (isReverse) {
+          return b.value - a.value; // Higher is worse for reverse indicators
+        } else {
+          return a.value - b.value; // Lower is worse for normal indicators
+        }
+      });
+
+      // Get top 5 worst districts
+      const top5Worst = sortedDistricts.slice(0, 5);
 
       return {
         group: group.value,
         groupLabel: group.label,
         color: group.color,
-        issues: topIssues,
-        totalHotIssues: groupIssues.length
+        chartData: top5Worst,
+        totalDistricts: districtValues.length
       };
-    }).filter(item => item.issues.length > 0);
-
-    // Group by district (top 5 worst districts)
-    const districtHotIssues = {};
-    
-    districts.forEach(district => {
-      const districtIssues = [];
-      
-      domains.forEach(domain => {
-        populationGroups.forEach(group => {
-          const districtData = getIndicatorData(domain, district, group.value);
-          
-          districtData.forEach(item => {
-            if (!item.isDomainScore && item.indicator) {
-              const isReverse = reverseIndicators[item.indicator];
-              const value = item.value || 0;
-              
-              let isHotIssue = false;
-              if (isReverse) {
-                isHotIssue = value > 60;
-              } else {
-                isHotIssue = value < 40;
-              }
-
-              if (isHotIssue) {
-                districtIssues.push({
-                  indicator: item.indicator,
-                  label: item.label,
-                  domain,
-                  group: group.value,
-                  groupLabel: group.label,
-                  value: value,
-                  isReverse: isReverse
-                });
-              }
-            }
-          });
-        });
-      });
-
-      if (districtIssues.length > 0) {
-        districtHotIssues[district] = {
-          district,
-          issues: districtIssues,
-          totalHotIssues: districtIssues.length,
-          averageSeverity: districtIssues.reduce((sum, issue) => {
-            return sum + (issue.isReverse ? issue.value : (100 - issue.value));
-          }, 0) / districtIssues.length
-        };
-      }
     });
 
-    const byDistrict = Object.values(districtHotIssues)
-      .sort((a, b) => b.totalHotIssues - a.totalHotIssues)
-      .slice(0, 5);
+    return populationGroupData;
+  }, [selectedIndicator, getIndicatorData, getAvailableDistricts]);
 
-    return { byPopulation, byDistrict };
-  }, [getAvailableDomains, getAvailableDistricts, getIndicatorData]);
-
-  const hotIssuesData = getHotIssues;
+  const selectedIndicatorObj = availableIndicators.find(ind => ind.value === selectedIndicator);
+  const isReverse = reverseIndicators[selectedIndicator];
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* View Toggle */}
+      {/* Indicator Selection */}
       <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-medium text-gray-900">🔥 Hot Issues Analysis</h2>
-          <div className="flex bg-gray-100 rounded-lg p-1">
-            <button
-              onClick={() => setSelectedView('population')}
-              className={`px-4 py-2 text-sm rounded-md transition-colors ${
-                selectedView === 'population' 
-                  ? 'bg-white text-gray-900 shadow-sm' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              By Population Group
-            </button>
-            <button
-              onClick={() => setSelectedView('district')}
-              className={`px-4 py-2 text-sm rounded-md transition-colors ${
-                selectedView === 'district' 
-                  ? 'bg-white text-gray-900 shadow-sm' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Top 5 Districts
-            </button>
-          </div>
+          <h2 className="text-lg font-medium text-gray-900">🔥 Hot Issues by Indicator</h2>
+        </div>
+        
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Select Indicator to Analyze
+          </label>
+          <select 
+            value={selectedIndicator}
+            onChange={(e) => setSelectedIndicator(e.target.value)}
+            className="w-full max-w-md p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
+          >
+            {availableIndicators.map(indicator => (
+              <option key={indicator.value} value={indicator.value}>
+                {indicator.label}
+              </option>
+            ))}
+          </select>
         </div>
         
         <p className="text-sm text-gray-600">
-          Hot issues are indicators with poor performance that require immediate intervention. 
-          Red status indicates values that pose significant health equity concerns.
+          Showing top 5 {isReverse ? 'worst performing' : 'lowest performing'} districts for{' '}
+          <span className="font-medium text-red-600">{selectedIndicatorObj?.label}</span> across all population groups.
+          {isReverse ? ' Higher percentages indicate worse outcomes.' : ' Lower percentages indicate worse outcomes.'}
         </p>
       </div>
 
-      {/* Population Group View */}
-      {selectedView === 'population' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {hotIssuesData.byPopulation.map((groupData, index) => (
-            <div key={groupData.group} className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center mb-4">
-                <div 
-                  className="w-4 h-4 rounded-full mr-3" 
-                  style={{ backgroundColor: groupData.color }}
-                ></div>
-                <h3 className="text-lg font-medium text-gray-900">
-                  กลุ่ม{groupData.groupLabel}
-                </h3>
-              </div>
+      {/* Charts for Each Population Group */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {getIndicatorChartData.map((groupData, index) => (
+          <div key={groupData.group} className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center mb-4">
+              <div 
+                className="w-4 h-4 rounded-full mr-3" 
+                style={{ backgroundColor: groupData.color }}
+              ></div>
+              <h3 className="text-lg font-medium text-gray-900">
+                {selectedIndicatorObj?.label} - {groupData.groupLabel}
+              </h3>
+            </div>
 
-              <div className="mb-4">
-                <div className="text-sm text-gray-600 mb-2">
-                  Total Hot Issues: <span className="font-medium text-red-600">{groupData.totalHotIssues}</span>
-                </div>
+            <div className="mb-4">
+              <div className="text-sm text-gray-600 mb-2">
+                Top 5 {isReverse ? 'Worst' : 'Lowest'} Districts (out of {groupData.totalDistricts})
               </div>
+            </div>
 
-              {/* Top 5 Issues Chart */}
+            {/* Chart */}
+            {groupData.chartData.length > 0 ? (
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart 
-                    data={groupData.issues} 
+                    data={groupData.chartData} 
                     layout="horizontal"
-                    margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
+                    margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
                   >
-                    <XAxis type="number" domain={[0, 100]} />
-                    <YAxis 
-                      type="category" 
-                      dataKey="label" 
-                      width={90}
+                    <XAxis 
+                      type="number" 
+                      domain={[0, 100]} 
                       tick={{ fontSize: 10 }}
                     />
-                    <Bar dataKey="value" name="Issue Severity">
-                      {groupData.issues.map((entry, index) => (
+                    <YAxis 
+                      type="category" 
+                      dataKey="district" 
+                      width={110}
+                      tick={{ fontSize: 10 }}
+                    />
+                    <Bar dataKey="value" name="Percentage">
+                      {groupData.chartData.map((entry, index) => (
                         <Cell 
                           key={`cell-${index}`} 
-                          fill={'#dc2626'} 
+                          fill={isReverse ? 
+                            (entry.value > 75 ? '#dc2626' : 
+                             entry.value > 50 ? '#ea580c' : 
+                             entry.value > 25 ? '#d97706' : '#ca8a04') :
+                            (entry.value < 25 ? '#dc2626' : 
+                             entry.value < 50 ? '#ea580c' : 
+                             entry.value < 75 ? '#d97706' : '#ca8a04')
+                          } 
                         />
                       ))}
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-
-              {/* Issue Details */}
-              <div className="mt-4 space-y-2">
-                {groupData.issues.slice(0, 3).map((issue, index) => (
-                  <div key={issue.indicator} className="flex justify-between text-xs">
-                    <span className="text-gray-600">{index + 1}. {issue.label}</span>
-                    <span className="font-medium text-red-600">{issue.value.toFixed(1)}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* District View */}
-      {selectedView === 'district' && (
-        <div className="space-y-6">
-          {hotIssuesData.byDistrict.map((districtData, index) => (
-            <div key={districtData.district} className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">
-                    {districtData.district}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Rank #{index + 1} • {districtData.totalHotIssues} Critical Issues
-                  </p>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-red-600">
-                    {districtData.totalHotIssues}
-                  </div>
-                  <div className="text-xs text-gray-500">Hot Issues</div>
+            ) : (
+              <div className="h-64 flex items-center justify-center text-gray-500">
+                <div className="text-center">
+                  <p>No data available</p>
+                  <p className="text-sm mt-1">for this population group</p>
                 </div>
               </div>
+            )}
 
-              {/* Issues by Population Group in this District */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                {populationGroups.map(group => {
-                  const groupIssues = districtData.issues.filter(issue => issue.group === group.value);
-                  const issueCount = groupIssues.length;
-                  const totalIssues = districtData.totalHotIssues;
-                  const percentage = totalIssues > 0 ? (issueCount / totalIssues) * 100 : 0;
-
-                  return (
-                    <div key={group.value} className="text-center">
-                      <div className="relative w-16 h-16 mx-auto mb-2">
-                        <svg className="w-16 h-16 transform -rotate-90">
-                          <circle
-                            cx="32"
-                            cy="32"
-                            r="28"
-                            stroke="#e5e7eb"
-                            strokeWidth="4"
-                            fill="none"
-                          />
-                          <circle
-                            cx="32"
-                            cy="32"
-                            r="28"
-                            stroke={group.color}
-                            strokeWidth="4"
-                            fill="none"
-                            strokeDasharray={`${(percentage / 100) * 175.93} 175.93`}
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-sm font-bold" style={{ color: group.color }}>
-                            {issueCount}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="text-xs text-gray-600">{group.label}</div>
-                      <div className="text-xs font-medium" style={{ color: group.color }}>
-                        {percentage.toFixed(1)}%
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            {/* District Rankings */}
+            <div className="mt-4 space-y-2">
+              {groupData.chartData.slice(0, 5).map((district, index) => (
+                <div key={district.district} className="flex justify-between text-xs">
+                  <span className={`${
+                    index === 0 ? 'text-red-600 font-bold' : 
+                    index === 1 ? 'text-red-500' : 
+                    'text-gray-600'
+                  }`}>
+                    #{index + 1}. {district.district}
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <span className="font-medium text-red-600">{district.value.toFixed(1)}%</span>
+                    <span className="text-gray-400">({district.sampleSize})</span>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
 
       {/* Summary */}
       <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-6">
-        <h3 className="font-medium text-red-800 mb-2">🚨 Action Required</h3>
+        <h3 className="font-medium text-red-800 mb-2">📊 Analysis Summary</h3>
         <p className="text-sm text-red-700">
-          These hot issues represent critical health equity gaps that require immediate policy intervention 
-          and resource allocation. Focus on the highest-impact indicators for maximum improvement in population health outcomes.
+          This analysis shows the top 5 {isReverse ? 'worst performing' : 'lowest performing'} districts for{' '}
+          <strong>{selectedIndicatorObj?.label}</strong> across all population groups. Districts with{' '}
+          {isReverse ? 'higher percentages' : 'lower percentages'} require immediate attention and targeted interventions.
         </p>
+        <div className="mt-3 text-xs text-red-600">
+          <strong>Sample sizes shown in parentheses.</strong> Colors indicate severity levels from yellow (less severe) to dark red (most severe).
+        </div>
       </div>
     </div>
   );
 };
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-6">
+      {/* Indicator Selection */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-medium text-gray-900">🔥 Hot Issues by Indicator</h2>
+        </div>
+        
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Select Indicator to Analyze
+          </label>
+          <select 
+            value={selectedIndicator}
+            onChange={(e) => setSelectedIndicator(e.target.value)}
+            className="w-full max-w-md p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
+          >
+            {availableIndicators.map(indicator => (
+              <option key={indicator.value} value={indicator.value}>
+                {indicator.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <p className="text-sm text-gray-600">
+          Showing top 5 {isReverse ? 'worst performing' : 'lowest performing'} districts for{' '}
+          <span className="font-medium text-red-600">{selectedIndicatorObj?.label}</span> across all population groups.
+          {isReverse ? ' Higher percentages indicate worse outcomes.' : ' Lower percentages indicate worse outcomes.'}
+        </p>
+      </div>
+
+      {/* Charts for Each Population Group */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {getIndicatorChartData.map((groupData, index) => (
+          <div key={groupData.group} className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center mb-4">
+              <div 
+                className="w-4 h-4 rounded-full mr-3" 
+                style={{ backgroundColor: groupData.color }}
+              ></div>
+              <h3 className="text-lg font-medium text-gray-900">
+                {selectedIndicatorObj?.label} - {groupData.groupLabel}
+              </h3>
+            </div>
+
+            <div className="mb-4">
+              <div className="text-sm text-gray-600 mb-2">
+                Top 5 {isReverse ? 'Worst' : 'Lowest'} Districts (out of {groupData.totalDistricts})
+              </div>
+            </div>
+
+            {/* Chart */}
+            {groupData.chartData.length > 0 ? (
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart 
+                    data={groupData.chartData} 
+                    layout="horizontal"
+                    margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
+                  >
+                    <XAxis 
+                      type="number" 
+                      domain={[0, 100]} 
+                      tick={{ fontSize: 10 }}
+                    />
+                    <YAxis 
+                      type="category" 
+                      dataKey="district" 
+                      width={110}
+                      tick={{ fontSize: 10 }}
+                    />
+                    <Bar dataKey="value" name="Percentage">
+                      {groupData.chartData.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={isReverse ? 
+                            (entry.value > 75 ? '#dc2626' : 
+                             entry.value > 50 ? '#ea580c' : 
+                             entry.value > 25 ? '#d97706' : '#ca8a04') :
+                            (entry.value < 25 ? '#dc2626' : 
+                             entry.value < 50 ? '#ea580c' : 
+                             entry.value < 75 ? '#d97706' : '#ca8a04')
+                          } 
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="h-64 flex items-center justify-center text-gray-500">
+                <div className="text-center">
+                  <p>No data available</p>
+                  <p className="text-sm mt-1">for this population group</p>
+                </div>
+              </div>
+            )}
+
+            {/* District Rankings */}
+            <div className="mt-4 space-y-2">
+              {groupData.chartData.slice(0, 5).map((district, index) => (
+                <div key={district.district} className="flex justify-between text-xs">
+                  <span className={`${
+                    index === 0 ? 'text-red-600 font-bold' : 
+                    index === 1 ? 'text-red-500' : 
+                    'text-gray-600'
+                  }`}>
+                    #{index + 1}. {district.district}
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <span className="font-medium text-red-600">{district.value.toFixed(1)}%</span>
+                    <span className="text-gray-400">({district.sampleSize})</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Summary */}
+      <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-6">
+        <h3 className="font-medium text-red-800 mb-2">📊 Analysis Summary</h3>
+        <p className="text-sm text-red-700">
+          This analysis shows the top 5 {isReverse ? 'worst performing' : 'lowest performing'} districts for{' '}
+          <strong>{selectedIndicatorObj?.label}</strong> across all population groups. Districts with{' '}
+          {isReverse ? 'higher percentages' : 'lower percentages'} require immediate attention and targeted interventions.
+        </p>
+        <div className="mt-3 text-xs text-red-600">
+          <strong>Sample sizes shown in parentheses.</strong> Colors indicate severity levels from yellow (less severe) to dark red (most severe).
+        </div>
+      </div>
+    </div>
+  );
 
 export default HotIssuesDashboard;
