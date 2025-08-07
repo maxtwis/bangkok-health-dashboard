@@ -1,4 +1,4 @@
-// Complete Updated Basic SDHE Dashboard - src/components/Dashboard/index.jsx
+// Complete Updated Basic SDHE Dashboard with Health Outcomes - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
 import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
@@ -25,7 +25,8 @@ const BasicSDHEDashboard = () => {
     'healthcare_access': 'Healthcare Access',
     'physical_environment': 'Physical Environment',
     'social_context': 'Social Context',
-    'health_behaviors': 'Health Behaviors'
+    'health_behaviors': 'Health Behaviors',
+    'health_outcomes': 'Health Outcomes' // NEW DOMAIN
   };
 
   // Define which indicators are "reverse" (bad when high)
@@ -60,7 +61,34 @@ const BasicSDHEDashboard = () => {
     // Health Behaviors - mixed
     alcohol_consumption: true,
     tobacco_use: true,
-    obesity: true
+    obesity: true,
+
+    // Health Outcomes - ALL REVERSE (diseases are bad when high)
+    any_chronic_disease: true,
+    diabetes: true,
+    hypertension: true,
+    gout: true,
+    chronic_kidney_disease: true,
+    cancer: true,
+    high_cholesterol: true,
+    ischemic_heart_disease: true,
+    liver_disease: true,
+    stroke: true,
+    hiv: true,
+    mental_health: true,
+    allergies: true,
+    bone_joint_disease: true,
+    respiratory_disease: true,
+    emphysema: true,
+    anemia: true,
+    stomach_ulcer: true,
+    epilepsy: true,
+    intestinal_disease: true,
+    paralysis: true,
+    dementia: true,
+    cardiovascular_diseases: true,
+    metabolic_diseases: true,
+    multiple_chronic_conditions: true
   };
 
   // Set Bangkok Overall as default when data first loads
@@ -131,6 +159,20 @@ const BasicSDHEDashboard = () => {
       if (value >= 40) return 'bg-orange-500';
       return 'bg-red-500';
     }
+  };
+
+  // Helper function to get domain icon
+  const getDomainIcon = (domain) => {
+    const icons = {
+      'economic_security': '💰',
+      'education': '📚',
+      'healthcare_access': '🏥',
+      'physical_environment': '🏠',
+      'social_context': '👥',
+      'health_behaviors': '🏃‍♀️',
+      'health_outcomes': '🩺' // NEW ICON FOR HEALTH OUTCOMES
+    };
+    return icons[domain] || '📊';
   };
 
   if (isLoading) {
@@ -264,18 +306,19 @@ const BasicSDHEDashboard = () => {
           {/* Domain Tabs */}
           <div className="bg-white rounded-lg shadow-sm mb-6">
             <div className="border-b border-gray-200">
-              <nav className="flex space-x-8 px-6">
+              <nav className="flex space-x-4 px-6 overflow-x-auto">
                 {domains.map(domain => (
                   <button
                     key={domain}
                     onClick={() => setSelectedDomain(domain)}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                    className={`py-4 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap flex items-center space-x-2 ${
                       selectedDomain === domain
                         ? 'border-blue-500 text-blue-600'
                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                     }`}
                   >
-                    {domainLabels[domain] || domain}
+                    <span>{getDomainIcon(domain)}</span>
+                    <span>{domainLabels[domain] || domain}</span>
                   </button>
                 ))}
               </nav>
@@ -284,12 +327,31 @@ const BasicSDHEDashboard = () => {
             {/* Indicators Table */}
             <div className="p-6">
               <div className="mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  {domainLabels[selectedDomain]} Indicators
+                <h3 className="text-lg font-medium text-gray-900 flex items-center space-x-2">
+                  <span>{getDomainIcon(selectedDomain)}</span>
+                  <span>{domainLabels[selectedDomain]} Indicators</span>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
                   {selectedPopulationGroup.replace('_', ' ')} - {selectedDistrict}
                 </p>
+                
+                {/* Health Outcomes Domain Description */}
+                {selectedDomain === 'health_outcomes' && (
+                  <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-start space-x-2">
+                      <div className="text-blue-600 mt-0.5">ℹ️</div>
+                      <div>
+                        <h4 className="text-sm font-medium text-blue-900 mb-1">
+                          Health Outcomes Domain
+                        </h4>
+                        <p className="text-xs text-blue-800">
+                          This domain tracks chronic disease prevalence and health conditions among different population groups. 
+                          Lower percentages indicate better health outcomes (fewer people with diseases).
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {indicatorData && indicatorData.length > 0 ? (
@@ -298,9 +360,13 @@ const BasicSDHEDashboard = () => {
                     <thead>
                       <tr className="border-b border-gray-200 bg-gray-50">
                         <th className="text-left py-3 px-4 font-medium text-gray-700">Indicator</th>
-                        <th className="text-center py-3 px-4 font-medium text-gray-700">Score</th>
+                        <th className="text-center py-3 px-4 font-medium text-gray-700">
+                          {selectedDomain === 'health_outcomes' ? 'Prevalence' : 'Score'}
+                        </th>
                         <th className="text-center py-3 px-4 font-medium text-gray-700">Sample Size</th>
-                        <th className="text-center py-3 px-4 font-medium text-gray-700">Performance</th>
+                        <th className="text-center py-3 px-4 font-medium text-gray-700">
+                          {selectedDomain === 'health_outcomes' ? 'Disease Burden' : 'Performance'}
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -342,6 +408,12 @@ const BasicSDHEDashboard = () => {
                                   <span className={isDomainScore ? 'font-bold text-blue-800' : ''}>
                                     {label}
                                   </span>
+                                  {/* Special highlighting for severe diseases in health outcomes */}
+                                  {selectedDomain === 'health_outcomes' && !isDomainScore && (
+                                    ['cancer', 'hiv', 'stroke', 'ischemic_heart_disease', 'chronic_kidney_disease'].includes(indicator) && (
+                                      <span className="text-red-500 text-xs">⚠️</span>
+                                    )
+                                  )}
                                 </div>
                               </td>
                               <td className="text-center py-3 px-4">
@@ -386,6 +458,17 @@ const BasicSDHEDashboard = () => {
               Social Determinants of Health Equity (SDHE) indicators measure conditions that influence health outcomes 
               across different population groups. Scores represent the percentage achieving positive health outcomes.
             </p>
+            
+            {/* Special note for Health Outcomes */}
+            {selectedDomain === 'health_outcomes' && (
+              <div className="bg-orange-50 border border-orange-200 rounded p-3 mb-4">
+                <p className="text-sm text-orange-800">
+                  <strong>Health Outcomes Note:</strong> These indicators show disease prevalence rates. 
+                  Lower percentages are better (fewer people with the condition). The domain score represents overall health status.
+                </p>
+              </div>
+            )}
+            
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
               <div>🟢 <strong>Excellent:</strong> Best outcomes</div>
               <div>🟡 <strong>Good:</strong> Above average</div>
@@ -393,7 +476,7 @@ const BasicSDHEDashboard = () => {
               <div>🔴 <strong>Poor:</strong> Worst outcomes</div>
             </div>
             <p className="text-xs text-gray-500 mt-2">
-              <strong>Note:</strong> Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence) 
+              <strong>Note:</strong> Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence, diseases) 
               while others are "good when high" (e.g., education, health coverage).
             </p>
           </div>
