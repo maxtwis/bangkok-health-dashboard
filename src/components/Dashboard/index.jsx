@@ -161,18 +161,9 @@ const BasicSDHEDashboard = () => {
     }
   };
 
-  // Helper function to get domain icon
+  // Helper function to get domain icon - removed emojis
   const getDomainIcon = (domain) => {
-    const icons = {
-      'economic_security': '💰',
-      'education': '📚',
-      'healthcare_access': '🏥',
-      'physical_environment': '🏠',
-      'social_context': '👥',
-      'health_behaviors': '🏃‍♀️',
-      'health_outcomes': '🩺' // NEW ICON FOR HEALTH OUTCOMES
-    };
-    return icons[domain] || '📊';
+    return ''; // No icons
   };
 
   if (isLoading) {
@@ -236,7 +227,7 @@ const BasicSDHEDashboard = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                📊 SDHE Analysis
+                SDHE Analysis
               </button>
               <button
                 onClick={() => setActiveTab('hotissues')}
@@ -246,7 +237,7 @@ const BasicSDHEDashboard = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                🔥 Hot Issues
+                Hot Issues
               </button>
             </nav>
           </div>
@@ -311,13 +302,12 @@ const BasicSDHEDashboard = () => {
                   <button
                     key={domain}
                     onClick={() => setSelectedDomain(domain)}
-                    className={`py-4 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap flex items-center space-x-2 ${
+                    className={`py-4 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${
                       selectedDomain === domain
                         ? 'border-blue-500 text-blue-600'
                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                     }`}
                   >
-                    <span>{getDomainIcon(domain)}</span>
                     <span>{domainLabels[domain] || domain}</span>
                   </button>
                 ))}
@@ -327,8 +317,7 @@ const BasicSDHEDashboard = () => {
             {/* Indicators Table */}
             <div className="p-6">
               <div className="mb-4">
-                <h3 className="text-lg font-medium text-gray-900 flex items-center space-x-2">
-                  <span>{getDomainIcon(selectedDomain)}</span>
+                <h3 className="text-lg font-medium text-gray-900">
                   <span>{domainLabels[selectedDomain]} Indicators</span>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
@@ -339,7 +328,7 @@ const BasicSDHEDashboard = () => {
                 {selectedDomain === 'health_outcomes' && (
                   <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <div className="flex items-start space-x-2">
-                      <div className="text-blue-600 mt-0.5">ℹ️</div>
+                      <div className="text-blue-600 mt-0.5">ℹ</div>
                       <div>
                         <h4 className="text-sm font-medium text-blue-900 mb-1">
                           Health Outcomes Domain
@@ -403,7 +392,7 @@ const BasicSDHEDashboard = () => {
                               <td className="py-3 px-4">
                                 <div className="flex items-center space-x-2">
                                   {isDomainScore && (
-                                    <span className="text-blue-600 font-bold">📊</span>
+                                    <span className="text-blue-600 font-bold">■</span>
                                   )}
                                   <span className={isDomainScore ? 'font-bold text-blue-800' : ''}>
                                     {label}
@@ -411,7 +400,7 @@ const BasicSDHEDashboard = () => {
                                   {/* Special highlighting for severe diseases in health outcomes */}
                                   {selectedDomain === 'health_outcomes' && !isDomainScore && (
                                     ['cancer', 'hiv', 'stroke', 'ischemic_heart_disease', 'chronic_kidney_disease'].includes(indicator) && (
-                                      <span className="text-red-500 text-xs">⚠️</span>
+                                      <span className="text-red-500 text-xs">!</span>
                                     )
                                   )}
                                 </div>
@@ -470,10 +459,10 @@ const BasicSDHEDashboard = () => {
             )}
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
-              <div>🟢 <strong>Excellent:</strong> Best outcomes</div>
-              <div>🟡 <strong>Good:</strong> Above average</div>
-              <div>🟠 <strong>Fair:</strong> Below average</div>
-              <div>🔴 <strong>Poor:</strong> Worst outcomes</div>
+              <div><span className="inline-block w-3 h-3 bg-green-500 rounded mr-1"></span><strong>Excellent:</strong> Best outcomes</div>
+              <div><span className="inline-block w-3 h-3 bg-yellow-500 rounded mr-1"></span><strong>Good:</strong> Above average</div>
+              <div><span className="inline-block w-3 h-3 bg-orange-500 rounded mr-1"></span><strong>Fair:</strong> Below average</div>
+              <div><span className="inline-block w-3 h-3 bg-red-500 rounded mr-1"></span><strong>Poor:</strong> Worst outcomes</div>
             </div>
             <p className="text-xs text-gray-500 mt-2">
               <strong>Note:</strong> Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence, diseases) 
