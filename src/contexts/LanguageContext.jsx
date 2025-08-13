@@ -85,7 +85,7 @@ const translations = {
       violence_sexual: 'Sexual Violence',
       discrimination_experience: 'Discrimination Experience',
       social_support: 'Social Support',
-      community_murder: 'Community Murder',
+      community_murder: 'Community Violence',
       
       // Health Behaviors
       alcohol_consumption: 'Alcohol Consumption',
@@ -248,7 +248,7 @@ const translations = {
       violence_sexual: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางเพศ',
       discrimination_experience: 'อัตราส่วนประชากรที่รายงานว่าเคยถูกเลือกปฏิบัติ',
       social_support: 'อัตราส่วนประชากรที่รายงานว่ามีบุคคลที่สามารถพึ่งพาได้ในยามฉุกเฉิน',
-      community_murder: 'จำนวนเหยื่อจากการฆาตกรรมโดยเจตนา',
+      community_murder: 'เหตุความรุนแรงในชุมชน',
       
       // Health Behaviors - From CSV
       alcohol_consumption: 'อัตราการบริโภคแอลกอฮอล์',
