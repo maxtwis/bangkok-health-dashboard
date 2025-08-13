@@ -1,4 +1,4 @@
-// useIndicatorDetails Hook - src/hooks/useIndicatorDetails.js
+// src/hooks/useIndicatorDetails.js
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 
@@ -13,7 +13,7 @@ const useIndicatorDetails = () => {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('/data/SDHE Indicator with details.csv');
+        const response = await fetch('/data/indicator_detail.csv');
         if (!response.ok) {
           throw new Error('Could not load indicator details CSV');
         }
