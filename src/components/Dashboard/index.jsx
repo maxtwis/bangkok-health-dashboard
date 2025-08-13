@@ -282,7 +282,10 @@ const BasicSDHEDashboard = () => {
                 >
                   {districts.map(district => (
                     <option key={district} value={district}>
-                      {district}
+                      {district === 'Bangkok Overall' && language === 'th' 
+                        ? t('ui.bangkokOverall')
+                        : district
+                      }
                     </option>
                   ))}
                 </select>
@@ -322,7 +325,11 @@ const BasicSDHEDashboard = () => {
                   </span>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
-                  {t(`populationGroups.${selectedPopulationGroup}`)} - {selectedDistrict}
+                  {t(`populationGroups.${selectedPopulationGroup}`)} - {
+                    selectedDistrict === 'Bangkok Overall' && language === 'th' 
+                      ? t('ui.bangkokOverall')
+                      : selectedDistrict
+                  }
                 </p>
                 
                 {/* Health Outcomes Domain Description */}

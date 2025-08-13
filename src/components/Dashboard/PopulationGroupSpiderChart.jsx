@@ -4,7 +4,7 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 import { useLanguage } from '../../contexts/LanguageContext';
 
 const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
   
   const populationGroups = [
@@ -95,7 +95,11 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
               {t('ui.spiderChartTitle')}
             </h3>
             <p className="text-sm text-gray-600">
-              {t('ui.spiderChartDescription')} {selectedDistrict}
+              {t('ui.spiderChartDescription')} {
+                selectedDistrict === 'Bangkok Overall' && language === 'th'
+                  ? t('ui.bangkokOverall') 
+                  : selectedDistrict
+              }
             </p>
           </div>
           
