@@ -1,4 +1,3 @@
-// Updated Dashboard with Clickable Indicators - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
@@ -6,9 +5,10 @@ import useIndicatorDetails from '../../hooks/useIndicatorDetails';
 import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 import IndicatorAnalysis from './IndicatorAnalysis';
 import IndicatorDetailPage from './IndicatorDetailPage';
+import BangkokMap from './BangkokMap';
 import Papa from 'papaparse';
 
-const BasicSDHEDashboard = () => {
+const Dashboard = () => {
   const { language, toggleLanguage, t } = useLanguage();
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
   const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicatorDetails();
@@ -17,8 +17,9 @@ const BasicSDHEDashboard = () => {
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
   const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall');
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
+  const [viewMode, setViewMode] = useState('overview'); // 'overview', 'indicators', 'details'
   
-  // New states for indicator detail page
+  // States for indicator detail page
   const [showDetailPage, setShowDetailPage] = useState(false);
   const [selectedIndicator, setSelectedIndicator] = useState(null);
   const [surveyData, setSurveyData] = useState(null);
@@ -139,25 +140,10 @@ const BasicSDHEDashboard = () => {
     loadSurveyData();
   }, []);
 
-  // Set Bangkok Overall as default when data first loads
-  React.useEffect(() => {
-    if (data) {
-      const districts = getAvailableDistricts();
-      if (districts.length > 0 && districts.includes('Bangkok Overall') && !selectedDistrict) {
-        setSelectedDistrict('Bangkok Overall');
-      }
-    }
-  }, [data]);
-
-  // Set default domain when data loads
-  React.useEffect(() => {
-    if (data) {
-      const domains = getAvailableDomains();
-      if (domains.length > 0 && !domains.includes(selectedDomain)) {
-        setSelectedDomain(domains[0]);
-      }
-    }
-  }, [data, selectedDomain, getAvailableDomains]);
+  // Handle map district click
+  const handleMapDistrictClick = (districtName) => {
+    setSelectedDistrict(districtName);
+  };
 
   // Handle indicator click
   const handleIndicatorClick = (indicator) => {
@@ -277,7 +263,6 @@ const BasicSDHEDashboard = () => {
     );
   }
 
-  const districts = getAvailableDistricts();
   const domains = getAvailableDomains();
   const indicatorData = getIndicatorData(selectedDomain, selectedDistrict, selectedPopulationGroup);
 
@@ -285,7 +270,7 @@ const BasicSDHEDashboard = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="max-w-[1600px] mx-auto px-4 py-6">
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">{t('appTitle')}</h1>
@@ -338,16 +323,11 @@ const BasicSDHEDashboard = () => {
 
       {/* Tab Content */}
       {activeTab === 'analysis' && (
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          {/* Spider Chart for Population Group Comparison */}
-          <PopulationGroupSpiderChart 
-            getIndicatorData={getIndicatorData}
-            selectedDistrict={selectedDistrict}
-          />
-
-          {/* Filters */}
+        <div className="max-w-[1600px] mx-auto px-4 py-6">
+          
+          {/* Control Panel */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Population Group Filter */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -365,215 +345,272 @@ const BasicSDHEDashboard = () => {
                 </select>
               </div>
 
-              {/* District Filter */}
+              {/* Domain Filter */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('ui.district')}
+                  {language === 'th' ? 'ประเด็นตัวชี้วัด' : 'Domain'}
                 </label>
                 <select 
-                  value={selectedDistrict}
-                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  value={selectedDomain}
+                  onChange={(e) => setSelectedDomain(e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  {districts.map(district => (
-                    <option key={district} value={district}>
-                      {district === 'Bangkok Overall' && language === 'th' 
-                        ? t('ui.bangkokOverall')
-                        : district
-                      }
+                  {domains.map(domain => (
+                    <option key={domain} value={domain}>
+                      {t(`domains.${domain}`)}
                     </option>
                   ))}
                 </select>
               </div>
-            </div>
-          </div>
 
-          {/* Domain Tabs */}
-          <div className="bg-white rounded-lg shadow-sm mb-6">
-            <div className="border-b border-gray-200">
-              <nav className="flex space-x-4 px-6 overflow-x-auto">
-                {domains.map(domain => (
+              {/* View Mode Toggle */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {language === 'th' ? 'มุมมอง' : 'View Mode'}
+                </label>
+                <div className="flex bg-gray-100 rounded-lg p-1">
                   <button
-                    key={domain}
-                    onClick={() => setSelectedDomain(domain)}
-                    className={`py-4 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${
-                      selectedDomain === domain
-                        ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    onClick={() => setViewMode('overview')}
+                    className={`flex-1 px-3 py-2 text-sm rounded-md transition-colors ${
+                      viewMode === 'overview' 
+                        ? 'bg-white text-gray-900 shadow-sm' 
+                        : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
-                    <span>{t(`domains.${domain}`)}</span>
+                    {language === 'th' ? 'ภาพรวม' : 'Overview'}
                   </button>
-                ))}
-              </nav>
-            </div>
-
-            {/* Indicators Table */}
-            <div className="p-6">
-              <div className="mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  <span>
-                    {language === 'th' 
-                      ? `ตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
-                      : `${t(`domains.${selectedDomain}`)} Indicators`
-                    }
-                  </span>
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {t(`populationGroups.${selectedPopulationGroup}`)} - {
-                    selectedDistrict === 'Bangkok Overall' && language === 'th' 
-                      ? t('ui.bangkokOverall')
-                      : selectedDistrict
-                  }
-                </p>
-                
-                {/* Health Outcomes Domain Description */}
-                {selectedDomain === 'health_outcomes' && (
-                  <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <div className="flex items-start space-x-2">
-                      <div className="text-blue-600 mt-0.5">ℹ</div>
-                      <div>
-                        <h4 className="text-sm font-medium text-blue-900 mb-1">
-                          {t('domains.health_outcomes')}
-                        </h4>
-                        <p className="text-xs text-blue-800">
-                          {t('ui.healthOutcomesDescription')}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Clickable Instructions */}
-                <div className="mt-3 bg-green-50 border border-green-200 rounded-lg p-3">
-                  <p className="text-sm text-green-800">
-                    💡 <strong>{language === 'th' ? 'เคล็ดลับ:' : 'Tip:'}</strong> {
-                      language === 'th' 
-                        ? 'คลิกที่ชื่อตัวชี้วัดเพื่อดูข้อมูลรายละเอียดและการแยกย่อยข้อมูลตามอายุและเพศ'
-                        : 'Click on indicator names to view detailed information and disaggregation by age and sex'
-                    }
-                  </p>
+                  <button
+                    onClick={() => setViewMode('indicators')}
+                    className={`flex-1 px-3 py-2 text-sm rounded-md transition-colors ${
+                      viewMode === 'indicators' 
+                        ? 'bg-white text-gray-900 shadow-sm' 
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    {language === 'th' ? 'ตัวชี้วัด' : 'Indicators'}
+                  </button>
                 </div>
               </div>
-
-              {indicatorData && indicatorData.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-200 bg-gray-50">
-                        <th className="text-left py-3 px-4 font-medium text-gray-700">{t('ui.indicator')}</th>
-                        <th className="text-center py-3 px-4 font-medium text-gray-700">
-                          {selectedDomain === 'health_outcomes' ? t('ui.prevalence') : t('ui.score')}
-                        </th>
-                        <th className="text-center py-3 px-4 font-medium text-gray-700">{t('ui.sampleSize')}</th>
-                        <th className="text-center py-3 px-4 font-medium text-gray-700">
-                          {selectedDomain === 'health_outcomes' ? t('ui.diseaseBurden') : t('ui.performance')}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {indicatorData
-                        .filter(item => {
-                          const label = item?.label ?? 'Unknown Indicator';
-                          const indicator = item?.indicator;
-                          
-                          return (
-                            label !== 'Unknown Indicator' && 
-                            label !== '' && 
-                            indicator !== null && 
-                            indicator !== undefined &&
-                            indicator !== ''
-                          );
-                        })
-                        .map((item, index) => {
-                          const value = item?.value ?? 0;
-                          const sampleSize = item?.sample_size ?? 0;
-                          const isDomainScore = item?.isDomainScore ?? false;
-                          const indicator = item?.indicator;
-                          
-                          // Get translated label using CSV data
-                          const translatedLabel = isDomainScore 
-                            ? (language === 'th' 
-                                ? `คะแนนรวมตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
-                                : `${t(`domains.${selectedDomain}`)} Score`)
-                            : getIndicatorName(indicator, language) || 
-                              (t(`indicators.${indicator}`) !== `indicators.${indicator}` 
-                                ? t(`indicators.${indicator}`)
-                                : item?.label ?? 'Unknown Indicator');
-                          
-                          return (
-                            <tr 
-                              key={item?.indicator || index} 
-                              className={`border-b border-gray-100 ${
-                                isDomainScore ? 'bg-blue-50 font-medium' : 
-                                index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
-                              } ${!isDomainScore ? 'hover:bg-blue-50 transition-colors' : ''}`}
-                            >
-                              <td className="py-3 px-4">
-                                <div className="flex items-center space-x-2">
-                                  {isDomainScore && (
-                                    <span className="text-blue-600 font-bold">▊</span>
-                                  )}
-                                  {/* Make indicator name clickable */}
-                                  {!isDomainScore ? (
-                                    <button
-                                      onClick={() => handleIndicatorClick(indicator)}
-                                      className={`text-left hover:text-blue-600 hover:underline focus:outline-none focus:text-blue-600 ${
-                                        isDomainScore ? 'font-bold text-blue-800 cursor-default' : 'cursor-pointer'
-                                      }`}
-                                    >
-                                      {translatedLabel}
-                                    </button>
-                                  ) : (
-                                    <span className="font-bold text-blue-800">
-                                      {translatedLabel}
-                                    </span>
-                                  )}
-                                  {/* Special highlighting for severe diseases in health outcomes */}
-                                  {selectedDomain === 'health_outcomes' && !isDomainScore && (
-                                    ['cancer', 'hiv', 'stroke', 'ischemic_heart_disease', 'chronic_kidney_disease'].includes(indicator) && (
-                                      <span className="text-red-500 text-xs">!</span>
-                                    )
-                                  )}
-                                </div>
-                              </td>
-                              <td className="text-center py-3 px-4">
-                                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                                  getScoreColor(value, indicator)
-                                }`}>
-                                  {formatValue(value)}
-                                </span>
-                              </td>
-                              <td className="text-center py-3 px-4 text-gray-600">
-                                {formatSampleSize(sampleSize)}
-                              </td>
-                              <td className="text-center py-3 px-4">
-                                <div className="w-full bg-gray-200 rounded-full h-2">
-                                  <div 
-                                    className={`h-2 rounded-full ${
-                                      getPerformanceBarColor(value, indicator)
-                                    }`}
-                                    style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
-                                  ></div>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <p>{t('ui.noData')}</p>
-                  <p className="text-sm mt-1">{t('ui.tryDifferent')}</p>
-                </div>
-              )}
+            </div>
+            
+            {/* Selected District Info */}
+            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+              <div className="text-sm text-blue-800">
+                <span className="font-medium">{language === 'th' ? 'เขตที่เลือก:' : 'Selected District:'}</span> {
+                  selectedDistrict === 'Bangkok Overall' && language === 'th' 
+                    ? t('ui.bangkokOverall')
+                    : selectedDistrict
+                } • <span className="font-medium">{t(`populationGroups.${selectedPopulationGroup}`)}</span>
+              </div>
             </div>
           </div>
 
+          {viewMode === 'overview' && (
+            /* Overview Layout: Spider Chart + Map */
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+              {/* Left: Spider Chart */}
+              <div className="bg-white rounded-lg shadow-sm">
+                <PopulationGroupSpiderChart 
+                  getIndicatorData={getIndicatorData}
+                  selectedDistrict={selectedDistrict}
+                />
+              </div>
+
+              {/* Right: Map */}
+              <div className="bg-white rounded-lg shadow-sm" style={{ height: '600px' }}>
+                <BangkokMap
+                  selectedDomain={selectedDomain}
+                  selectedPopulationGroup={selectedPopulationGroup}
+                  selectedDistrict={selectedDistrict}
+                  onDistrictClick={handleMapDistrictClick}
+                  getIndicatorData={getIndicatorData}
+                />
+              </div>
+            </div>
+          )}
+
+          {viewMode === 'indicators' && (
+            /* Indicators View: Detailed Table */
+            <div className="bg-white rounded-lg shadow-sm mb-6">
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">
+                    <span>
+                      {language === 'th' 
+                        ? `ตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
+                        : `${t(`domains.${selectedDomain}`)} Indicators`
+                      }
+                    </span>
+                  </h3>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {t(`populationGroups.${selectedPopulationGroup}`)} - {
+                      selectedDistrict === 'Bangkok Overall' && language === 'th' 
+                        ? t('ui.bangkokOverall')
+                        : selectedDistrict
+                    }
+                  </p>
+                  
+                  {/* Health Outcomes Domain Description */}
+                  {selectedDomain === 'health_outcomes' && (
+                    <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="flex items-start space-x-2">
+                        <div className="text-blue-600 mt-0.5">ℹ</div>
+                        <div>
+                          <h4 className="text-sm font-medium text-blue-900 mb-1">
+                            {t('domains.health_outcomes')}
+                          </h4>
+                          <p className="text-xs text-blue-800">
+                            {t('ui.healthOutcomesDescription')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Clickable Instructions */}
+                  <div className="mt-3 bg-green-50 border border-green-200 rounded-lg p-3">
+                    <p className="text-sm text-green-800">
+                      💡 <strong>{language === 'th' ? 'เคล็ดลับ:' : 'Tip:'}</strong> {
+                        language === 'th' 
+                          ? 'คลิกที่ชื่อตัวชี้วัดเพื่อดูข้อมูลรายละเอียดและการแยกย่อยข้อมูลตามอายุและเพศ'
+                          : 'Click on indicator names to view detailed information and disaggregation by age and sex'
+                      }
+                    </p>
+                  </div>
+                </div>
+
+                {indicatorData && indicatorData.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200 bg-gray-50">
+                          <th className="text-left py-3 px-4 font-medium text-gray-700">{t('ui.indicator')}</th>
+                          <th className="text-center py-3 px-4 font-medium text-gray-700">
+                            {selectedDomain === 'health_outcomes' ? t('ui.prevalence') : t('ui.score')}
+                          </th>
+                          <th className="text-center py-3 px-4 font-medium text-gray-700">{t('ui.sampleSize')}</th>
+                          <th className="text-center py-3 px-4 font-medium text-gray-700">
+                            {selectedDomain === 'health_outcomes' ? t('ui.diseaseBurden') : t('ui.performance')}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {indicatorData
+                          .filter(item => {
+                            const label = item?.label ?? 'Unknown Indicator';
+                            const indicator = item?.indicator;
+                            
+                            return (
+                              label !== 'Unknown Indicator' && 
+                              label !== '' && 
+                              indicator !== null && 
+                              indicator !== undefined &&
+                              indicator !== ''
+                            );
+                          })
+                          .map((item, index) => {
+                            const value = item?.value ?? 0;
+                            const sampleSize = item?.sample_size ?? 0;
+                            const isDomainScore = item?.isDomainScore ?? false;
+                            const indicator = item?.indicator;
+                            
+                            // Get translated label using CSV data
+                            const translatedLabel = isDomainScore 
+                              ? (language === 'th' 
+                                  ? `คะแนนรวมตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
+                                  : `${t(`domains.${selectedDomain}`)} Score`)
+                              : getIndicatorName(indicator, language) || 
+                                (t(`indicators.${indicator}`) !== `indicators.${indicator}` 
+                                  ? t(`indicators.${indicator}`)
+                                  : item?.label ?? 'Unknown Indicator');
+                            
+                            return (
+                              <tr 
+                                key={item?.indicator || index} 
+                                className={`border-b border-gray-100 ${
+                                  isDomainScore ? 'bg-blue-50 font-medium' : 
+                                  index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
+                                } ${!isDomainScore ? 'hover:bg-blue-50 transition-colors' : ''}`}
+                              >
+                                <td className="py-3 px-4">
+                                  <div className="flex items-center space-x-2">
+                                    {isDomainScore && (
+                                      <span className="text-blue-600 font-bold">▊</span>
+                                    )}
+                                    {/* Make indicator name clickable */}
+                                    {!isDomainScore ? (
+                                      <button
+                                        onClick={() => handleIndicatorClick(indicator)}
+                                        className={`text-left hover:text-blue-600 hover:underline focus:outline-none focus:text-blue-600 ${
+                                          isDomainScore ? 'font-bold text-blue-800 cursor-default' : 'cursor-pointer'
+                                        }`}
+                                      >
+                                        {translatedLabel}
+                                      </button>
+                                    ) : (
+                                      <span className="font-bold text-blue-800">
+                                        {translatedLabel}
+                                      </span>
+                                    )}
+                                    {/* Special highlighting for severe diseases in health outcomes */}
+                                    {selectedDomain === 'health_outcomes' && !isDomainScore && (
+                                      ['cancer', 'hiv', 'stroke', 'ischemic_heart_disease', 'chronic_kidney_disease'].includes(indicator) && (
+                                        <span className="text-red-500 text-xs">!</span>
+                                      )
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="text-center py-3 px-4">
+                                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                    getScoreColor(value, indicator)
+                                  }`}>
+                                    {formatValue(value)}
+                                  </span>
+                                </td>
+                                <td className="text-center py-3 px-4 text-gray-600">
+                                  {formatSampleSize(sampleSize)}
+                                </td>
+                                <td className="text-center py-3 px-4">
+                                  <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div 
+                                      className={`h-2 rounded-full ${
+                                        getPerformanceBarColor(value, indicator)
+                                      }`}
+                                      style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
+                                    ></div>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <p>{t('ui.noData')}</p>
+                    <p className="text-sm mt-1">{t('ui.tryDifferent')}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Full-width Map for indicators view */}
+          {viewMode === 'indicators' && (
+            <div className="bg-white rounded-lg shadow-sm" style={{ height: '500px' }}>
+              <BangkokMap
+                selectedDomain={selectedDomain}
+                selectedPopulationGroup={selectedPopulationGroup}
+                selectedDistrict={selectedDistrict}
+                onDistrictClick={handleMapDistrictClick}
+                getIndicatorData={getIndicatorData}
+              />
+            </div>
+          )}
+
           {/* Footer Info */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
             <h4 className="font-medium text-gray-800 mb-2">{t('ui.aboutSDHE')}</h4>
             <p className="text-sm text-gray-600 mb-2">
               {t('ui.aboutDescription')}
@@ -606,4 +643,4 @@ const BasicSDHEDashboard = () => {
   );
 };
 
-export default BasicSDHEDashboard;
+export default Dashboard;
