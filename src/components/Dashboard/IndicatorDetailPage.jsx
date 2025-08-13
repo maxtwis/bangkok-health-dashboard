@@ -1,9 +1,29 @@
-// IndicatorDetailPage.jsx - src/components/Dashboard/IndicatorDetailPage.jsx
-import React, { useState, useMemo, useEffect } from 'react';
+// IndicatorDetailPage.jsx - Fixed version
+import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import Papa from 'papaparse';
+
+// Simple fallback hook if useIndicatorDetails doesn't load
+const useFallbackIndicatorDetails = () => {
+  return {
+    getIndicatorInfo: (indicator, language) => ({
+      name: indicator,
+      description: language === 'th' ? 'ไม่มีคำอธิบาย' : 'No description available',
+      calculation: language === 'th' ? 'ไม่ระบุวิธีการคำนวณ' : 'Calculation method not specified'
+    }),
+    loading: false
+  };
+};
+
+// Try to import the hook, but provide fallback if it fails
+let useIndicatorDetailsHook;
+try {
+  useIndicatorDetailsHook = require('../../hooks/useIndicatorDetails').default;
+} catch (error) {
+  console.warn('useIndicatorDetails hook not found, using fallback');
+  useIndicatorDetailsHook = useFallbackIndicatorDetails;
+}
 
 const IndicatorDetailPage = ({ 
   indicator, 
@@ -15,7 +35,7 @@ const IndicatorDetailPage = ({
   getIndicatorData 
 }) => {
   const { t, language } = useLanguage();
-  const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicatorDetails();
+  const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicatorDetailsHook();
   const [activeTab, setActiveTab] = useState('overview');
 
   // Get indicator metadata from CSV via hook
@@ -74,10 +94,10 @@ const IndicatorDetailPage = ({
       'hypertension': '< 25%',
       'obesity': '< 15%',
       'physical_activity': '< 30%',
-      // Add more targets as needed
     };
     return targets[indicatorKey] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
   }
+
   const indicatorData = getIndicatorData(domain, district, populationGroup);
   const currentIndicator = indicatorData.find(item => item.indicator === indicator);
 
@@ -202,7 +222,6 @@ const IndicatorDetailPage = ({
           ).length;
           return groupRecords.length > 0 ? (discrimination / groupRecords.length) * 100 : 0;
           
-        // Add more indicator calculations as needed
         default:
           return 0;
       }
@@ -310,7 +329,6 @@ const IndicatorDetailPage = ({
               {[
                 { id: 'overview', icon: Eye, label: language === 'th' ? 'ภาพรวม' : 'Overview' },
                 { id: 'disaggregation', icon: Users, label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Disaggregation' },
-                { id: 'trends', icon: TrendingUp, label: language === 'th' ? 'แนวโน้ม' : 'Trends' },
                 { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวณ' : 'Methodology' }
               ].map(tab => (
                 <button
@@ -643,24 +661,6 @@ const IndicatorDetailPage = ({
                   </ul>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* Trends Tab - Placeholder */}
-        {activeTab === 'trends' && (
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
-              {language === 'th' ? 'แนวโน้มข้อมูล' : 'Data Trends'}
-            </h3>
-            <div className="text-center py-12 text-gray-500">
-              <TrendingUp className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>
-                {language === 'th' 
-                  ? 'ข้อมูลแนวโน้มจะพร้อมใช้งานเมื่อมีข้อมูลหลายช่วงเวลา'
-                  : 'Trend data will be available when multi-temporal data is collected'
-                }
-              </p>
             </div>
           </div>
         )}
