@@ -1,4 +1,4 @@
-// Updated PopulationGroupSpiderChart with Language Support
+// Updated PopulationGroupSpiderChart with Language Support - FIXED duplication
 import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -128,9 +128,10 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
           </div>
         </div>
         
+        {/* FIXED: Removed duplicate text issue */}
         {scaleMode === 'dynamic' && (
           <div className="bg-blue-50 p-2 rounded text-xs text-blue-700">
-            <strong>{t('ui.dynamicScaleNote')}:</strong> {t('ui.dynamicScaleNote')} {scaleMin}% {t('ui.to')} {scaleMax}% {t('ui.toHighlightDifferences')}
+            <strong>{t('ui.dynamicScaleNote')} {scaleMin}% {t('ui.to')} {scaleMax}% {t('ui.toHighlightDifferences')}</strong>
           </div>
         )}
       </div>
