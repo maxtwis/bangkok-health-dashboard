@@ -1,4 +1,4 @@
-// src/contexts/LanguageContext.jsx
+// src/contexts/LanguageContext.jsx - Fresh New Code
 import React, { createContext, useContext, useState } from 'react';
 
 const LanguageContext = createContext();
@@ -11,7 +11,7 @@ export const useLanguage = () => {
   return context;
 };
 
-// Translation object
+// Fresh new translation object
 const translations = {
   en: {
     // App Title
@@ -41,84 +41,84 @@ const translations = {
       health_outcomes: 'Health Outcomes'
     },
     
-    // Indicators - Economic Security (Using Academic Thai Translations from CSV)
+    // Indicators - English Names
     indicators: {
       // Economic Security
-      unemployment_rate: 'อัตราการว่างงาน',
-      employment_rate: 'อัตราการจ้างงานต่อประชากร',
-      vulnerable_employment: 'อัตราการจ้างงานที่ไม่มั่นคงต่อการจ้างงานทั้งหมด',
-      food_insecurity_moderate: 'ความชุกของภาวะขาดสารอาหารระดับปานกลาง',
-      food_insecurity_severe: 'ความชุกของภาวะขาดสารอาหารระดับรุนแรง',
-      work_injury_fatal: 'อัตราความถี่ของการบาดเจ็บร้ายแรงจากการทำงาน',
-      work_injury_non_fatal: 'อัตราความถี่ของการบาดเจ็บไม่ร้ายแรงจากการทำงาน',
-      catastrophic_health_spending_household: 'ร้อยละของครัวเรือนที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 40 ของความสามารถในการจ่าย',
-      health_spending_over_10_percent: 'ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 10 ของรายได้',
-      health_spending_over_25_percent: 'ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 25 ของรายได้',
+      unemployment_rate: 'Unemployment Rate',
+      employment_rate: 'Employment Rate',
+      vulnerable_employment: 'Vulnerable Employment',
+      food_insecurity_moderate: 'Food Insecurity (Moderate)',
+      food_insecurity_severe: 'Food Insecurity (Severe)',
+      work_injury_fatal: 'Work Injury (Fatal/Serious)',
+      work_injury_non_fatal: 'Work Injury (Non-Fatal)',
+      catastrophic_health_spending_household: 'Catastrophic Health Spending (Household)',
+      health_spending_over_10_percent: 'Health Spending >10% Income',
+      health_spending_over_25_percent: 'Health Spending >25% Income',
       
       // Education
-      functional_literacy: 'อัตราส่วนประชากรที่มีความสามารถในด้าน (ก) การรู้หนังสือและ (ข) การคำนวณ',
-      primary_completion: 'อัตราการสำเร็จการศึกษาระดับประถมศึกษา',
-      secondary_completion: 'อัตราการสำเร็จการศึกษาระดับมัธยมศึกษา',
-      tertiary_completion: 'อัตราการสำเร็จการศึกษาระดับอุดมศึกษา',
-      training_participation: 'อัตราการมีส่วนร่วมของเยาวชนและผู้ใหญ่ในการศึกษาและการฝึกอบรมทั้งในระบบและนอกระบบ',
+      functional_literacy: 'Functional Literacy',
+      primary_completion: 'Primary Education Completion',
+      secondary_completion: 'Secondary Education Completion',
+      tertiary_completion: 'Tertiary Education Completion',
+      training_participation: 'Training Participation',
       
       // Healthcare Access
-      health_coverage: 'ความคุ้มครองด้านสุขภาพ',
-      medical_consultation_skip_cost: 'ร้อยละของประชากรที่ต้องงดการปรึกษาแพทย์เนื่องจากค่าใช้จ่าย',
-      medical_treatment_skip_cost: 'ร้อยละของประชากรที่ต้องงดการตรวจทางการแพทย์ การรักษา หรือการติดตามผลเนื่องจากค่าใช้จ่าย',
-      prescribed_medicine_skip_cost: 'ร้อยละของประชากรที่ต้องงดการรับยาตามใบสั่งแพทย์เนื่องจากค่าใช้จ่าย',
-      dental_access: 'การเข้าถึงบริการทันตกรรม',
+      health_coverage: 'Health Coverage',
+      medical_consultation_skip_cost: 'Skipped Medical Consultation (Cost)',
+      medical_treatment_skip_cost: 'Skipped Medical Treatment (Cost)',
+      prescribed_medicine_skip_cost: 'Skipped Medicine Purchase (Cost)',
+      dental_access: 'Dental Access',
       
       // Physical Environment
-      electricity_access: 'อัตราส่วนประชากรที่เข้าถึงไฟฟ้า',
-      clean_water_access: 'อัตราส่วนประชากรที่ใช้บริการน้ำดื่มที่ได้รับการจัดการอย่างปลอดภัย',
-      sanitation_facilities: 'อัตราส่วนประชากรที่เข้าถึงบริการสุขาภิบาลขั้นพื้นฐาน',
-      waste_management: 'ร้อยละของขยะมูลฝอยชุมชนที่ได้รับการจัดเก็บและจัดการ',
-      housing_overcrowding: 'อัตราส่วนครัวเรือนที่อาศัยอยู่ในที่พักอาศัยที่แออัด',
-      home_ownership: 'อัตราส่วนครัวเรือนที่มีที่อยู่อาศัยเป็นของตนเอง',
-      disaster_experience: 'ร้อยละของประชากรที่ประสบภัยแล้ง น้ำท่วม และอุณหภูมิสูงสุด-ต่ำสุด',
+      electricity_access: 'Electricity Access',
+      clean_water_access: 'Clean Water Access',
+      sanitation_facilities: 'Sanitation Facilities',
+      waste_management: 'Waste Management',
+      housing_overcrowding: 'Housing Overcrowding',
+      home_ownership: 'Home Ownership',
+      disaster_experience: 'Disaster Experience',
       
       // Social Context
-      community_safety: 'อัตราส่วนประชากรที่รู้สึกปลอดภัยเมื่อเดินคนเดียวในเวลากลางคืน',
-      violence_physical: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางร่างกาย',
-      violence_psychological: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางจิตใจ',
-      violence_sexual: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางเพศ',
-      discrimination_experience: 'อัตราส่วนประชากรที่รายงานว่าเคยถูกเลือกปฏิบัติ',
-      social_support: 'อัตราส่วนประชากรที่รายงานว่ามีบุคคลที่สามารถพึ่งพาได้ในยามฉุกเฉิน',
-      community_murder: 'จำนวนเหยื่อจากการฆาตกรรมโดยเจตนา',
+      community_safety: 'Community Safety',
+      violence_physical: 'Physical Violence',
+      violence_psychological: 'Psychological Violence',
+      violence_sexual: 'Sexual Violence',
+      discrimination_experience: 'Discrimination Experience',
+      social_support: 'Social Support',
+      community_murder: 'Community Murder',
       
       // Health Behaviors
-      alcohol_consumption: 'การบริโภคแอลกอฮอล์ต่อหัวประชากร',
-      tobacco_use: 'อัตราการใช้ยาสูบในประชากรอายุ 15 ขึ้นไป',
-      physical_activity: 'อัตราส่วนประชากรที่มีกิจกรรมทางกายไม่เพียงพอ',
-      obesity: 'ร้อยละของผู้ใหญ่ที่มีภาวะน้ำหนักเกิน',
+      alcohol_consumption: 'Alcohol Consumption',
+      tobacco_use: 'Tobacco Use',
+      physical_activity: 'Physical Activity',
+      obesity: 'Obesity',
       
-      // Health Outcomes - Disease names in Thai
-      any_chronic_disease: 'โรคเรื้อรังใดๆ',
-      diabetes: 'เบาหวาน',
-      hypertension: 'ความดันโลหิตสูง',
-      gout: 'โรคเกาต์',
-      chronic_kidney_disease: 'ไตวายเรื้อรัง',
-      cancer: 'มะเร็ง',
-      high_cholesterol: 'ไขมันในเลือดสูง',
-      ischemic_heart_disease: 'กล้ามเนื้อหัวใจขาดเลือด',
-      liver_disease: 'โรคตับ',
-      stroke: 'หลอดเลือดสมอง',
-      hiv: 'เอชไอวี',
-      mental_health: 'โรคทางจิตเวช',
-      allergies: 'ภูมิแพ้',
-      bone_joint_disease: 'โรคกระดูกและข้อ',
-      respiratory_disease: 'โรคระบบทางเดินหายใจ',
-      emphysema: 'ถุงลมโป่งพอง',
-      anemia: 'โลหิตจาง',
-      stomach_ulcer: 'กระเพาะอาหาร',
-      epilepsy: 'ลมชัก',
-      intestinal_disease: 'ลำไส้',
-      paralysis: 'อัมพาต',
-      dementia: 'อัมพฤกษ์',
-      cardiovascular_diseases: 'ภาระโรคหัวใจและหลอดเลือด',
-      metabolic_diseases: 'ภาระโรคเมแทบอลิก',
-      multiple_chronic_conditions: 'โรคเรื้อรังหลายโรค (2+ โรค)'
+      // Health Outcomes
+      any_chronic_disease: 'Any Chronic Disease',
+      diabetes: 'Diabetes',
+      hypertension: 'Hypertension',
+      gout: 'Gout',
+      chronic_kidney_disease: 'Chronic Kidney Disease',
+      cancer: 'Cancer',
+      high_cholesterol: 'High Cholesterol',
+      ischemic_heart_disease: 'Ischemic Heart Disease',
+      liver_disease: 'Liver Disease',
+      stroke: 'Stroke',
+      hiv: 'HIV',
+      mental_health: 'Mental Health Disorders',
+      allergies: 'Allergies',
+      bone_joint_disease: 'Bone and Joint Disease',
+      respiratory_disease: 'Respiratory Disease',
+      emphysema: 'Emphysema',
+      anemia: 'Anemia',
+      stomach_ulcer: 'Stomach Ulcer',
+      epilepsy: 'Epilepsy',
+      intestinal_disease: 'Intestinal Disease',
+      paralysis: 'Paralysis',
+      dementia: 'Dementia',
+      cardiovascular_diseases: 'Cardiovascular Disease Burden',
+      metabolic_diseases: 'Metabolic Disease Burden',
+      multiple_chronic_conditions: 'Multiple Chronic Conditions (2+)'
     },
     
     // UI Text
@@ -204,59 +204,60 @@ const translations = {
       health_outcomes: 'ผลลัพธ์ด้านสุขภาพ'
     },
     
-    // Indicators - Economic Security
+    // Indicators - Using EXACT CSV translations
     indicators: {
+      // Economic Security - From CSV
       unemployment_rate: 'อัตราการว่างงาน',
-      employment_rate: 'อัตราการจ้างงาน',
-      vulnerable_employment: 'การจ้างงานที่เปราะบาง',
-      food_insecurity_moderate: 'ความไม่มั่นคงด้านอาหาร (ปานกลาง)',
-      food_insecurity_severe: 'ความไม่มั่นคงด้านอาหาร (รุนแรง)',
-      work_injury_fatal: 'การบาดเจ็บจากงาน (ร้ายแรง/เสียชีวิต)',
-      work_injury_non_fatal: 'การบาดเจ็บจากงาน (ไม่ร้ายแรง)',
-      catastrophic_health_spending_household: 'ค่าใช้จ่ายสุขภาพสูงเกินไป (ครัวเรือน)',
-      health_spending_over_10_percent: 'ค่าใช้จ่ายสุขภาพ >10% ของรายได้',
-      health_spending_over_25_percent: 'ค่าใช้จ่ายสุขภาพ >25% ของรายได้',
+      employment_rate: 'อัตราการจ้างงานต่อประชากร',
+      vulnerable_employment: 'อัตราการจ้างงานที่ไม่มั่นคงต่อการจ้างงานทั้งหมด',
+      food_insecurity_moderate: 'ความชุกของภาวะขาดสารอาหารระดับปานกลาง',
+      food_insecurity_severe: 'ความชุกของภาวะขาดสารอาหารระดับรุนแรง',
+      work_injury_fatal: 'อัตราความถี่ของการบาดเจ็บร้ายแรงจากการทำงาน',
+      work_injury_non_fatal: 'อัตราความถี่ของการบาดเจ็บไม่ร้ายแรงจากการทำงาน',
+      catastrophic_health_spending_household: 'ร้อยละของครัวเรือนที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 40 ของความสามารถในการจ่าย',
+      health_spending_over_10_percent: 'ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 10 ของรายได้',
+      health_spending_over_25_percent: 'ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 25 ของรายได้',
       
-      // Education
-      functional_literacy: 'การรู้หนังสือเชิงหน้าที่',
-      primary_completion: 'การจบการศึกษาระดับประถม',
-      secondary_completion: 'การจบการศึกษาระดับมัธยม',
-      tertiary_completion: 'การจบการศึกษาระดับอุดมศึกษา',
-      training_participation: 'การเข้าร่วมการฝึกอบรม',
+      // Education - From CSV
+      functional_literacy: 'อัตราส่วนประชากรที่มีทักษะในด้านการรู้หนังสือ (ฟัง พูด อ่าน เขียน) และการคำนวณ',
+      primary_completion: 'อัตราการสำเร็จการศึกษาระดับประถมศึกษา',
+      secondary_completion: 'อัตราการสำเร็จการศึกษาระดับมัธยมศึกษา',
+      tertiary_completion: 'อัตราการสำเร็จการศึกษาระดับอุดมศึกษา',
+      training_participation: 'อัตราการมีส่วนร่วมในการศึกษาและการฝึกอบรมทั้งในระบบและนอกระบบ',
       
-      // Healthcare Access
-      health_coverage: 'ความคุ้มครองด้านสุขภาพ',
-      medical_consultation_skip_cost: 'การข้ามการปรึกษาแพทย์ (ค่าใช้จ่าย)',
-      medical_treatment_skip_cost: 'การข้ามการรักษา (ค่าใช้จ่าย)',
-      prescribed_medicine_skip_cost: 'การข้ามการซื้อยา (ค่าใช้จ่าย)',
+      // Healthcare Access - From CSV
+      health_coverage: 'การเข้าถึงความคุ้มครองด้านสุขภาพ',
+      medical_consultation_skip_cost: 'ร้อยละของประชากรที่ต้องงดการปรึกษาแพทย์เนื่องจากค่าใช้จ่าย',
+      medical_treatment_skip_cost: 'ร้อยละของประชากรที่ต้องงดการตรวจทางการแพทย์ การรักษา หรือการติดตามผลเนื่องจากค่าใช้จ่าย',
+      prescribed_medicine_skip_cost: 'ร้อยละของประชากรที่ต้องงดการรับยาตามใบสั่งแพทย์เนื่องจากค่าใช้จ่าย',
       dental_access: 'การเข้าถึงบริการทันตกรรม',
       
-      // Physical Environment
-      electricity_access: 'การเข้าถึงไฟฟ้า',
-      clean_water_access: 'การเข้าถึงน้ำสะอาด',
-      sanitation_facilities: 'สิ่งอำนวยความสะดวกด้านสุขาภิบาล',
-      waste_management: 'การจัดการขยะ',
-      housing_overcrowding: 'ที่อยู่อาศัยแออัด',
-      home_ownership: 'การเป็นเจ้าของบ้าน',
-      disaster_experience: 'ประสบการณ์ภาวะภัยพิบัติ',
+      // Physical Environment - From CSV
+      electricity_access: 'อัตราส่วนประชากรที่เข้าถึงไฟฟ้า',
+      clean_water_access: 'อัตราส่วนประชากรที่ใช้บริการน้ำดื่มที่ได้รับการจัดการอย่างปลอดภัย',
+      sanitation_facilities: 'อัตราส่วนประชากรที่เข้าถึงบริการสุขาภิบาลขั้นพื้นฐาน',
+      waste_management: 'ร้อยละของขยะมูลฝอยชุมชนที่ได้รับการจัดเก็บและจัดการ',
+      housing_overcrowding: 'อัตราส่วนครัวเรือนที่อาศัยอยู่ในที่พักอาศัยที่แออัด',
+      home_ownership: 'อัตราส่วนครัวเรือนที่มีที่อยู่อาศัยเป็นของตนเอง',
+      disaster_experience: 'ร้อยละของประชากรที่ได้ผลกระทบจากภัยพิบัติ',
       
-      // Social Context
-      community_safety: 'ความปลอดภัยในชุมชน',
-      violence_physical: 'ความรุนแรงทางร่างกาย',
-      violence_psychological: 'ความรุนแรงทางจิตใจ',
-      violence_sexual: 'ความรุนแรงทางเพศ',
-      discrimination_experience: 'การถูกเลือกปฏิบัติ',
-      social_support: 'การสนับสนุนทางสังคม',
-      community_murder: 'การฆาตกรรมในชุมชน',
+      // Social Context - From CSV
+      community_safety: 'อัตราส่วนประชากรที่รู้สึกปลอดภัยเมื่อเดินคนเดียวในเวลากลางคืน',
+      violence_physical: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางร่างกาย',
+      violence_psychological: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางจิตใจ',
+      violence_sexual: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางเพศ',
+      discrimination_experience: 'อัตราส่วนประชากรที่รายงานว่าเคยถูกเลือกปฏิบัติ',
+      social_support: 'อัตราส่วนประชากรที่รายงานว่ามีบุคคลที่สามารถพึ่งพาได้ในยามฉุกเฉิน',
+      community_murder: 'จำนวนเหยื่อจากการฆาตกรรมโดยเจตนา',
       
-      // Health Behaviors
-      alcohol_consumption: 'การดื่มเครื่องดื่มแอลกอฮอล์',
-      tobacco_use: 'การสูบบุหรี่',
-      physical_activity: 'การออกกำลังกาย',
-      obesity: 'ความอ้วน',
+      // Health Behaviors - From CSV
+      alcohol_consumption: 'อัตราการบริโภคแอลกอฮอล์',
+      tobacco_use: 'อัตราการใช้บุหรี่และบุหรี่ไฟ้า',
+      physical_activity: 'อัตราส่วนประชากรที่มีกิจกรรมทางกายไม่เพียงพอ',
+      obesity: 'อัตราส่วนประชากรที่มีภาวะน้ำหนักเกิน',
       
-      // Health Outcomes
-      any_chronic_disease: 'โรคเรื้อรังใดๆ',
+      // Health Outcomes - Thai medical terms
+      any_chronic_disease: 'อัตราส่วนผู้ป่วยโรคไม่ติดต่อเรื้อรัง',
       diabetes: 'เบาหวาน',
       hypertension: 'ความดันโลหิตสูง',
       gout: 'โรคเกาต์',
@@ -280,7 +281,7 @@ const translations = {
       dementia: 'อัมพฤกษ์',
       cardiovascular_diseases: 'ภาระโรคหัวใจและหลอดเลือด',
       metabolic_diseases: 'ภาระโรคเมแทบอลิก',
-      multiple_chronic_conditions: 'โรคเรื้อรังหลายโรค (2+ โรค)'
+      multiple_chronic_conditions: 'อัตราส่วนผู้ป่วยที่มีโรคไม่ติตต่อเรื้อรังหลายโรค (มีโรค 2 ชนิดขึ้นไป)'
     },
     
     // UI Text
