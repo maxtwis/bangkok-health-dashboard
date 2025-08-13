@@ -726,11 +726,6 @@ const IndicatorDetailPage = ({
                         ))}
                       </tbody>
                     </table>
-                    <div className="mt-2 text-xs text-gray-500">
-                      <p><strong>{language === 'th' ? 'สัดส่วน' : 'Proportion'}:</strong> {language === 'th' ? 'เปอร์เซ็นต์ของประชากรกลุ่มนี้' : 'Percentage of this population group'}</p>
-                      <p><strong>{language === 'th' ? 'ค่าตัวชี้วัด' : 'Indicator'}:</strong> {language === 'th' ? 'ค่าตัวชี้วัดในกลุ่มอายุนี้' : 'Indicator value within this age group'}</p>
-                      <p><strong>{language === 'th' ? 'จำนวน' : 'Count'}:</strong> {language === 'th' ? 'จำนวนผู้ที่มีลักษณะนี้' : 'Number of people with this characteristic'}</p>
-                    </div>
                   </div>
                 </div>
 
