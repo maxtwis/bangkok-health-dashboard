@@ -1,5 +1,6 @@
-// src/contexts/LanguageContext.jsx - Fixed Thai translation duplication
+// src/contexts/LanguageContext.jsx - Updated with CSV integration
 import React, { createContext, useContext, useState } from 'react';
+import useIndicatorDetails from '../hooks/useIndicatorDetails';
 
 const LanguageContext = createContext();
 
@@ -11,8 +12,8 @@ export const useLanguage = () => {
   return context;
 };
 
-// Fixed translation object - removed duplication in Thai dynamicScaleNote
-const translations = {
+// Base translations for UI elements (not indicators)
+const baseTranslations = {
   en: {
     // App Title
     appTitle: 'Bangkok Health Inequalities Dashboard',
@@ -39,86 +40,6 @@ const translations = {
       social_context: 'Social Context',
       health_behaviors: 'Health Behaviors',
       health_outcomes: 'Health Outcomes'
-    },
-    
-    // Indicators - English Names
-    indicators: {
-      // Economic Security
-      unemployment_rate: 'Unemployment Rate',
-      employment_rate: 'Employment Rate',
-      vulnerable_employment: 'Vulnerable Employment',
-      food_insecurity_moderate: 'Food Insecurity (Moderate)',
-      food_insecurity_severe: 'Food Insecurity (Severe)',
-      work_injury_fatal: 'Work Injury (Fatal/Serious)',
-      work_injury_non_fatal: 'Work Injury (Non-Fatal)',
-      catastrophic_health_spending_household: 'Catastrophic Health Spending (Household)',
-      health_spending_over_10_percent: 'Health Spending >10% Income',
-      health_spending_over_25_percent: 'Health Spending >25% Income',
-      
-      // Education
-      functional_literacy: 'Functional Literacy',
-      primary_completion: 'Primary Education Completion',
-      secondary_completion: 'Secondary Education Completion',
-      tertiary_completion: 'Tertiary Education Completion',
-      training_participation: 'Training Participation',
-      
-      // Healthcare Access
-      health_coverage: 'Health Coverage',
-      medical_consultation_skip_cost: 'Skipped Medical Consultation (Cost)',
-      medical_treatment_skip_cost: 'Skipped Medical Treatment (Cost)',
-      prescribed_medicine_skip_cost: 'Skipped Medicine Purchase (Cost)',
-      dental_access: 'Dental Access',
-      
-      // Physical Environment
-      electricity_access: 'Electricity Access',
-      clean_water_access: 'Clean Water Access',
-      sanitation_facilities: 'Sanitation Facilities',
-      waste_management: 'Waste Management',
-      housing_overcrowding: 'Housing Overcrowding',
-      home_ownership: 'Home Ownership',
-      disaster_experience: 'Disaster Experience',
-      
-      // Social Context
-      community_safety: 'Community Safety',
-      violence_physical: 'Physical Violence',
-      violence_psychological: 'Psychological Violence',
-      violence_sexual: 'Sexual Violence',
-      discrimination_experience: 'Discrimination Experience',
-      social_support: 'Social Support',
-      community_murder: 'Community Violence',
-      
-      // Health Behaviors
-      alcohol_consumption: 'Alcohol Consumption',
-      tobacco_use: 'Tobacco Use',
-      physical_activity: 'Physical Activity',
-      obesity: 'Obesity',
-      
-      // Health Outcomes
-      any_chronic_disease: 'Any Chronic Disease',
-      diabetes: 'Diabetes',
-      hypertension: 'Hypertension',
-      gout: 'Gout',
-      chronic_kidney_disease: 'Chronic Kidney Disease',
-      cancer: 'Cancer',
-      high_cholesterol: 'High Cholesterol',
-      ischemic_heart_disease: 'Ischemic Heart Disease',
-      liver_disease: 'Liver Disease',
-      stroke: 'Stroke',
-      hiv: 'HIV',
-      mental_health: 'Mental Health Disorders',
-      allergies: 'Allergies',
-      bone_joint_disease: 'Bone and Joint Disease',
-      respiratory_disease: 'Respiratory Disease',
-      emphysema: 'Emphysema',
-      anemia: 'Anemia',
-      stomach_ulcer: 'Stomach Ulcer',
-      epilepsy: 'Epilepsy',
-      intestinal_disease: 'Intestinal Disease',
-      paralysis: 'Paralysis',
-      dementia: 'Dementia',
-      cardiovascular_diseases: 'Cardiovascular Disease Burden',
-      metabolic_diseases: 'Metabolic Disease Burden',
-      multiple_chronic_conditions: 'Multiple Chronic Conditions (2+)'
     },
     
     // UI Text
@@ -150,6 +71,7 @@ const translations = {
       belowAverage: 'Below average',
       worstOutcomes: 'Worst outcomes',
       colorNote: 'Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence, diseases) while others are "good when high" (e.g., education, health coverage).',
+      bangkokOverall: 'Bangkok Overall (50 Districts)',
       
       // Spider Chart
       spiderChartTitle: 'SDHE Domain Comparison by Population Group',
@@ -204,90 +126,10 @@ const translations = {
       health_outcomes: 'ผลลัพธ์ด้านสุขภาพ'
     },
     
-    // Indicators - Using EXACT CSV translations
-    indicators: {
-      // Economic Security - From CSV
-      unemployment_rate: 'อัตราการว่างงาน',
-      employment_rate: 'อัตราการจ้างงานต่อประชากร',
-      vulnerable_employment: 'อัตราการจ้างงานที่ไม่มั่นคงต่อการจ้างงานทั้งหมด',
-      food_insecurity_moderate: 'ความชุกของ ภาวะขาดสารอาหารระดับปานกลาง',
-      food_insecurity_severe: 'ความชุกของ ภาวะขาดสารอาหารระดับรุนแรง',
-      work_injury_fatal: 'อัตราความถี่ของการบาดเจ็บร้ายแรงจากการทำงาน',
-      work_injury_non_fatal: 'อัตราความถี่ของการบาดเจ็บไม่ร้ายแรงจากการทำงาน',
-      catastrophic_health_spending_household: 'ร้อยละของครัวเรือนที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 40 ของความสามารถในการจ่าย',
-      health_spending_over_10_percent: 'ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 10 ของรายได้',
-      health_spending_over_25_percent: 'ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 25 ของรายได้',
-      
-      // Education - From CSV
-      functional_literacy: 'อัตราส่วนประชากรที่มีทักษะในด้านการรู้หนังสือ (ฟัง พูด อ่าน เขียน) และการคำนวด',
-      primary_completion: 'อัตราการสำเร็จการศึกษาระดับประถมศึกษา',
-      secondary_completion: 'อัตราการสำเร็จการศึกษาระดับมัธยมศึกษา',
-      tertiary_completion: 'อัตราการสำเร็จการศึกษาระดับอุดมศึกษา',
-      training_participation: 'อัตราการมีส่วนร่วมในการศึกษาและการฝึกอบรมทั้งในระบบและนอกระบบ',
-      
-      // Healthcare Access - From CSV
-      health_coverage: 'การเข้าถึงความคุ้มครองด้านสุขภาพ',
-      medical_consultation_skip_cost: 'ร้อยละของประชากรที่ต้องงดการปรึกษาแพทย์เนื่องจากค่าใช้จ่าย',
-      medical_treatment_skip_cost: 'ร้อยละของประชากรที่ต้องงดการตรวจทางการแพทย์ การรักษา หรือการติดตามผลเนื่องจากค่าใช้จ่าย',
-      prescribed_medicine_skip_cost: 'ร้อยละของประชากรที่ต้องงดการรับยาตามใบสั่งแพทย์เนื่องจากค่าใช้จ่าย',
-      dental_access: 'การเข้าถึงบริการทันตกรรม',
-      
-      // Physical Environment - From CSV
-      electricity_access: 'อัตราส่วนประชากรที่เข้าถึงไฟฟ้า',
-      clean_water_access: 'อัตราส่วนประชากรที่ใช้บริการน้ำดื่มที่ได้รับการจัดการอย่างปลอดภัย',
-      sanitation_facilities: 'อัตราส่วนประชากรที่เข้าถึงบริการสุขาภิบาลขั้นพื้นฐาน',
-      waste_management: 'ร้อยละของขยะมูลฝอยชุมชนที่ได้รับการจัดเก็บและจัดการ',
-      housing_overcrowding: 'อัตราส่วนครัวเรือนที่อาศัยอยู่ในที่พักอาศัยที่แออัด',
-      home_ownership: 'อัตราส่วนครัวเรือนที่มีที่อยู่อาศัยเป็นของตนเอง',
-      disaster_experience: 'ร้อยละของประชากรที่ได้ผลกระทบจากภัยพิบัติ',
-      
-      // Social Context - From CSV
-      community_safety: 'อัตราส่วนประชากรที่รู้สึกปลอดภัยเมื่อเดินคนเดียวในเวลากลางคืน',
-      violence_physical: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางร่างกาย',
-      violence_psychological: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางจิตใจ',
-      violence_sexual: 'อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางเพศ',
-      discrimination_experience: 'อัตราส่วนประชากรที่รายงานว่าเคยถูกเลือกปฏิบัติ',
-      social_support: 'อัตราส่วนประชากรที่รายงานว่ามีบุคคลที่สามารถพึ่งพาได้ในยามฉุกเฉิน',
-      community_murder: 'เหตุความรุนแรงในชุมชน',
-      
-      // Health Behaviors - From CSV
-      alcohol_consumption: 'อัตราการบริโภคแอลกอฮอล์',
-      tobacco_use: 'อัตราการใช้บุหรี่และบุหรี่ไฟฟ้า',
-      physical_activity: 'อัตราส่วนประชากรที่มีกิจกรรมทางกายไม่เพียงพอ',
-      obesity: 'อัตราส่วนประชากรที่มีภาวะน้ำหนักเกิน',
-      
-      // Health Outcomes - Thai medical terms
-      any_chronic_disease: 'อัตราส่วนผู้ป่วยโรคไม่ติดต่อเรื้อรัง',
-      diabetes: 'เบาหวาน',
-      hypertension: 'ความดันโลหิตสูง',
-      gout: 'โรคเกาต์',
-      chronic_kidney_disease: 'ไตวายเรื้อรัง',
-      cancer: 'มะเร็ง',
-      high_cholesterol: 'ไขมันในเลือดสูง',
-      ischemic_heart_disease: 'กล้ามเนื้อหัวใจขาดเลือด',
-      liver_disease: 'โรคตับ',
-      stroke: 'หลอดเลือดสมอง',
-      hiv: 'เอชไอวี',
-      mental_health: 'โรคทางจิตเวช',
-      allergies: 'ภูมิแพ้',
-      bone_joint_disease: 'โรคกระดูกและข้อ',
-      respiratory_disease: 'โรคระบบทางเดินหายใจ',
-      emphysema: 'ถุงลมโป่งพอง',
-      anemia: 'โลหิตจาง',
-      stomach_ulcer: 'กระเพาะอาหาร',
-      epilepsy: 'ลมชัก',
-      intestinal_disease: 'ลำไส้',
-      paralysis: 'อัมพาต',
-      dementia: 'อัมพฤกษ์',
-      cardiovascular_diseases: 'ภาระโรคหัวใจและหลอดเลือด',
-      metabolic_diseases: 'ภาระโรคเมแทบอลิก',
-      multiple_chronic_conditions: 'อัตราส่วนผู้ป่วยที่มีโรคไม่ติตต่อเรื้อรังหลายโรค (มีโรค 2 ชนิดขึ้นไป)'
-    },
-    
     // UI Text
     ui: {
       loading: 'กำลังโหลดข้อมูล SDHE',
-      loadingDescription: 'กำลังประมวลผลข้อมูลการสำรวจและคำนวดตัวชี้วัดความเท่าเทียมด้านสุขภาพ...',
+      loadingDescription: 'กำลังประมวลผลข้อมูลการสำรวจและคำนวณตัวชี้วัดความเท่าเทียมด้านสุขภาพ...',
       error: 'ข้อผิดพลาดในการโหลดข้อมูล',
       retry: 'ลองอีกครั้ง',
       populationGroup: 'กลุ่มประชากร',
@@ -336,13 +178,16 @@ const translations = {
       noDataForGroup: 'ไม่มีข้อมูลสำหรับกลุ่มนี้',
       
       // Footer
-      footerSource: 'ข้อมูลจากโครงการการพัฒนาตัวชี้วัดและระบบกลไกเก็บข้อมูล เพื่อลดความเหลื่อมล้ำทางสุขภาวะในเขตเมือง พื้นที่กรุงเทพมหานคร'
+      footerSource: 'ข้อมูลจากโครงการการพัฒนาตัวชี้วัดและระบบกลไกเก็บข้อมูล เพื่อลดความเหลื่อมล้ำทางสุขภาวะในเขตเมือง พื้นที่กรุงเทพมหานคร กรมการแพทย์ กรุงเทพมหานคร'
     }
   }
 };
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState('en');
+  
+  // Use the CSV indicator details hook
+  const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicatorDetails();
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'th' : 'en');
@@ -350,7 +195,28 @@ export const LanguageProvider = ({ children }) => {
 
   const t = (key) => {
     const keys = key.split('.');
-    let value = translations[language];
+    
+    // Special handling for indicator translations from CSV
+    if (keys[0] === 'indicators' && keys[1]) {
+      const indicatorKey = keys[1];
+      
+      // If CSV is still loading, use fallback
+      if (indicatorDetailsLoading) {
+        return `Loading ${indicatorKey}...`;
+      }
+      
+      // Get indicator name from CSV
+      const csvName = getIndicatorName(indicatorKey, language);
+      if (csvName && csvName !== indicatorKey) {
+        return csvName;
+      }
+      
+      // Fallback to key if not found in CSV
+      return indicatorKey;
+    }
+    
+    // Regular translation lookup for non-indicator keys
+    let value = baseTranslations[language];
     
     for (const k of keys) {
       if (value && typeof value === 'object') {
@@ -363,8 +229,24 @@ export const LanguageProvider = ({ children }) => {
     return value || key;
   };
 
+  // Helper function to get indicator translation directly
+  const getIndicatorTranslation = (indicatorKey) => {
+    if (indicatorDetailsLoading) {
+      return `Loading ${indicatorKey}...`;
+    }
+    
+    const csvName = getIndicatorName(indicatorKey, language);
+    return csvName || indicatorKey;
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ 
+      language, 
+      toggleLanguage, 
+      t, 
+      getIndicatorTranslation,
+      indicatorDetailsLoading 
+    }}>
       {children}
     </LanguageContext.Provider>
   );
