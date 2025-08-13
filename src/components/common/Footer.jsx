@@ -1,12 +1,15 @@
+// Updated Footer with Language Support
 import React from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const Footer = ({ indicatorName = '' }) => {
-  const displayName = indicatorName || 'Health Indicators';
+  const { t } = useLanguage();
+  const displayName = indicatorName || t('appTitle');
   
   return (
     <footer className="bg-gray-800 text-white p-4 text-center">
-      <p>Bangkok Health Inequalities Dashboard - {displayName}</p>
-      <p className="text-sm mt-1">ข้อมูลจากโครงการตรวจสุขภาพล้านคน สำนักการแพทย์ กรุงเทพมหานคร</p>
+      <p>{t('appTitle')} - {displayName}</p>
+      <p className="text-sm mt-1">{t('ui.footerSource')}</p>
     </footer>
   );
 };

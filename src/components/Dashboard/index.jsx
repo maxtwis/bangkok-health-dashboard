@@ -1,33 +1,18 @@
-// Complete Updated Basic SDHE Dashboard with Health Outcomes - src/components/Dashboard/index.jsx
+// Updated Dashboard with Language Support - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
 import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 import IndicatorAnalysis from './IndicatorAnalysis';
 
 const BasicSDHEDashboard = () => {
+  const { language, toggleLanguage, t } = useLanguage();
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
   
-  const [activeTab, setActiveTab] = useState('analysis'); // 'analysis' or 'hotissues'
+  const [activeTab, setActiveTab] = useState('analysis');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
   const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall');
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
-
-  const populationGroups = [
-    { value: 'informal_workers', label: 'แรงงานนอกระบบ (Informal Workers)' },
-    { value: 'elderly', label: 'ผู้สูงอายุ (Elderly)' },
-    { value: 'disabled', label: 'คนพิการ (People with Disabilities)' },
-    { value: 'lgbtq', label: 'กลุ่มเพศหลากหลาย (LGBTQ+)' }
-  ];
-
-  const domainLabels = {
-    'economic_security': 'Economic Security',
-    'education': 'Education', 
-    'healthcare_access': 'Healthcare Access',
-    'physical_environment': 'Physical Environment',
-    'social_context': 'Social Context',
-    'health_behaviors': 'Health Behaviors',
-    'health_outcomes': 'Health Outcomes' // NEW DOMAIN
-  };
 
   // Define which indicators are "reverse" (bad when high)
   const reverseIndicators = {
@@ -99,7 +84,7 @@ const BasicSDHEDashboard = () => {
         setSelectedDistrict('Bangkok Overall');
       }
     }
-  }, [data]); // Only depend on data loading
+  }, [data]);
 
   // Set default domain when data loads
   React.useEffect(() => {
@@ -130,14 +115,12 @@ const BasicSDHEDashboard = () => {
   const getScoreColor = (value, indicator) => {
     const isReverse = reverseIndicators[indicator];
     
-    // For reverse indicators (bad when high), flip the color logic
     if (isReverse) {
       if (value <= 20) return 'bg-green-100 text-green-800';
       if (value <= 40) return 'bg-yellow-100 text-yellow-800';
       if (value <= 60) return 'bg-orange-100 text-orange-800';
       return 'bg-red-100 text-red-800';
     } else {
-      // Normal indicators (good when high)
       if (value >= 80) return 'bg-green-100 text-green-800';
       if (value >= 60) return 'bg-yellow-100 text-yellow-800';
       if (value >= 40) return 'bg-orange-100 text-orange-800';
@@ -161,20 +144,15 @@ const BasicSDHEDashboard = () => {
     }
   };
 
-  // Helper function to get domain icon - removed emojis
-  const getDomainIcon = (domain) => {
-    return ''; // No icons
-  };
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
           <div className="flex items-center space-x-3 mb-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <div className="text-lg font-medium">Loading SDHE Data</div>
+            <div className="text-lg font-medium">{t('ui.loading')}</div>
           </div>
-          <p className="text-gray-600">Processing survey data and calculating health equity indicators...</p>
+          <p className="text-gray-600">{t('ui.loadingDescription')}</p>
         </div>
       </div>
     );
@@ -190,13 +168,13 @@ const BasicSDHEDashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Data Loading Error</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">{t('ui.error')}</h3>
             <p className="text-sm text-gray-600 mb-4">{error}</p>
             <button 
               onClick={() => window.location.reload()} 
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
-              Retry
+              {t('ui.retry')}
             </button>
           </div>
         </div>
@@ -213,8 +191,27 @@ const BasicSDHEDashboard = () => {
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-gray-900">Bangkok SDHE Dashboard</h1>
-          <p className="text-gray-600 mt-1">Social Determinants of Health Equity Analysis</p>
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">{t('appTitle')}</h1>
+              <p className="text-gray-600 mt-1">{t('appSubtitle')}</p>
+            </div>
+            
+            {/* Language Toggle */}
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                <span className="text-sm font-medium">
+                  {language === 'en' ? 'ไทย' : 'English'}
+                </span>
+              </button>
+            </div>
+          </div>
           
           {/* Tab Navigation */}
           <div className="mt-4 border-b border-gray-200">
@@ -227,7 +224,7 @@ const BasicSDHEDashboard = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                SDHE Analysis
+                {t('sdheAnalysis')}
               </button>
               <button
                 onClick={() => setActiveTab('hotissues')}
@@ -237,7 +234,7 @@ const BasicSDHEDashboard = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Hot Issues
+                {t('hotIssues')}
               </button>
             </nav>
           </div>
@@ -259,25 +256,24 @@ const BasicSDHEDashboard = () => {
               {/* Population Group Filter */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Population Group
+                  {t('ui.populationGroup')}
                 </label>
                 <select 
                   value={selectedPopulationGroup}
                   onChange={(e) => setSelectedPopulationGroup(e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  {populationGroups.map(group => (
-                    <option key={group.value} value={group.value}>
-                      {group.label}
-                    </option>
-                  ))}
+                  <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
+                  <option value="elderly">{t('populationGroups.elderly')}</option>
+                  <option value="disabled">{t('populationGroups.disabled')}</option>
+                  <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
                 </select>
               </div>
 
               {/* District Filter */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  District
+                  {t('ui.district')}
                 </label>
                 <select 
                   value={selectedDistrict}
@@ -308,7 +304,7 @@ const BasicSDHEDashboard = () => {
                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                     }`}
                   >
-                    <span>{domainLabels[domain] || domain}</span>
+                    <span>{t(`domains.${domain}`)}</span>
                   </button>
                 ))}
               </nav>
@@ -318,10 +314,10 @@ const BasicSDHEDashboard = () => {
             <div className="p-6">
               <div className="mb-4">
                 <h3 className="text-lg font-medium text-gray-900">
-                  <span>{domainLabels[selectedDomain]} Indicators</span>
+                  <span>{t(`domains.${selectedDomain}`)} {t('ui.indicator')}s</span>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
-                  {selectedPopulationGroup.replace('_', ' ')} - {selectedDistrict}
+                  {t(`populationGroups.${selectedPopulationGroup}`)} - {selectedDistrict}
                 </p>
                 
                 {/* Health Outcomes Domain Description */}
@@ -331,11 +327,10 @@ const BasicSDHEDashboard = () => {
                       <div className="text-blue-600 mt-0.5">ℹ</div>
                       <div>
                         <h4 className="text-sm font-medium text-blue-900 mb-1">
-                          Health Outcomes Domain
+                          {t('domains.health_outcomes')}
                         </h4>
                         <p className="text-xs text-blue-800">
-                          This domain tracks chronic disease prevalence and health conditions among different population groups. 
-                          Lower percentages indicate better health outcomes (fewer people with diseases).
+                          {t('ui.healthOutcomesDescription')}
                         </p>
                       </div>
                     </div>
@@ -348,20 +343,19 @@ const BasicSDHEDashboard = () => {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-gray-200 bg-gray-50">
-                        <th className="text-left py-3 px-4 font-medium text-gray-700">Indicator</th>
+                        <th className="text-left py-3 px-4 font-medium text-gray-700">{t('ui.indicator')}</th>
                         <th className="text-center py-3 px-4 font-medium text-gray-700">
-                          {selectedDomain === 'health_outcomes' ? 'Prevalence' : 'Score'}
+                          {selectedDomain === 'health_outcomes' ? t('ui.prevalence') : t('ui.score')}
                         </th>
-                        <th className="text-center py-3 px-4 font-medium text-gray-700">Sample Size</th>
+                        <th className="text-center py-3 px-4 font-medium text-gray-700">{t('ui.sampleSize')}</th>
                         <th className="text-center py-3 px-4 font-medium text-gray-700">
-                          {selectedDomain === 'health_outcomes' ? 'Disease Burden' : 'Performance'}
+                          {selectedDomain === 'health_outcomes' ? t('ui.diseaseBurden') : t('ui.performance')}
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {indicatorData
                         .filter(item => {
-                          // Filter out unknown indicators and invalid data
                           const label = item?.label ?? 'Unknown Indicator';
                           const indicator = item?.indicator;
                           
@@ -374,12 +368,17 @@ const BasicSDHEDashboard = () => {
                           );
                         })
                         .map((item, index) => {
-                          // Safety checks for item properties
                           const value = item?.value ?? 0;
                           const sampleSize = item?.sample_size ?? 0;
-                          const label = item?.label ?? 'Unknown Indicator';
                           const isDomainScore = item?.isDomainScore ?? false;
                           const indicator = item?.indicator;
+                          
+                          // Get translated label
+                          const translatedLabel = isDomainScore 
+                            ? `${t(`domains.${selectedDomain}`)} ${t('ui.score')}`
+                            : t(`indicators.${indicator}`) !== `indicators.${indicator}` 
+                              ? t(`indicators.${indicator}`)
+                              : item?.label ?? 'Unknown Indicator';
                           
                           return (
                             <tr 
@@ -395,7 +394,7 @@ const BasicSDHEDashboard = () => {
                                     <span className="text-blue-600 font-bold">■</span>
                                   )}
                                   <span className={isDomainScore ? 'font-bold text-blue-800' : ''}>
-                                    {label}
+                                    {translatedLabel}
                                   </span>
                                   {/* Special highlighting for severe diseases in health outcomes */}
                                   {selectedDomain === 'health_outcomes' && !isDomainScore && (
@@ -433,8 +432,8 @@ const BasicSDHEDashboard = () => {
                 </div>
               ) : (
                 <div className="text-center py-8 text-gray-500">
-                  <p>No data available for this combination</p>
-                  <p className="text-sm mt-1">Try selecting a different district or population group</p>
+                  <p>{t('ui.noData')}</p>
+                  <p className="text-sm mt-1">{t('ui.tryDifferent')}</p>
                 </div>
               )}
             </div>
@@ -442,31 +441,28 @@ const BasicSDHEDashboard = () => {
 
           {/* Footer Info */}
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h4 className="font-medium text-gray-800 mb-2">About SDHE Indicators</h4>
+            <h4 className="font-medium text-gray-800 mb-2">{t('ui.aboutSDHE')}</h4>
             <p className="text-sm text-gray-600 mb-2">
-              Social Determinants of Health Equity (SDHE) indicators measure conditions that influence health outcomes 
-              across different population groups. Scores represent the percentage achieving positive health outcomes.
+              {t('ui.aboutDescription')}
             </p>
             
             {/* Special note for Health Outcomes */}
             {selectedDomain === 'health_outcomes' && (
               <div className="bg-orange-50 border border-orange-200 rounded p-3 mb-4">
                 <p className="text-sm text-orange-800">
-                  <strong>Health Outcomes Note:</strong> These indicators show disease prevalence rates. 
-                  Lower percentages are better (fewer people with the condition). The domain score represents overall health status.
+                  <strong>{t('ui.healthOutcomesNote')}</strong> {t('ui.healthOutcomesDescription')}
                 </p>
               </div>
             )}
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
-              <div><span className="inline-block w-3 h-3 bg-green-500 rounded mr-1"></span><strong>Excellent:</strong> Best outcomes</div>
-              <div><span className="inline-block w-3 h-3 bg-yellow-500 rounded mr-1"></span><strong>Good:</strong> Above average</div>
-              <div><span className="inline-block w-3 h-3 bg-orange-500 rounded mr-1"></span><strong>Fair:</strong> Below average</div>
-              <div><span className="inline-block w-3 h-3 bg-red-500 rounded mr-1"></span><strong>Poor:</strong> Worst outcomes</div>
+              <div><span className="inline-block w-3 h-3 bg-green-500 rounded mr-1"></span><strong>{t('ui.excellent')}:</strong> {t('ui.bestOutcomes')}</div>
+              <div><span className="inline-block w-3 h-3 bg-yellow-500 rounded mr-1"></span><strong>{t('ui.good')}:</strong> {t('ui.aboveAverage')}</div>
+              <div><span className="inline-block w-3 h-3 bg-orange-500 rounded mr-1"></span><strong>{t('ui.fair')}:</strong> {t('ui.belowAverage')}</div>
+              <div><span className="inline-block w-3 h-3 bg-red-500 rounded mr-1"></span><strong>{t('ui.poor')}:</strong> {t('ui.worstOutcomes')}</div>
             </div>
             <p className="text-xs text-gray-500 mt-2">
-              <strong>Note:</strong> Color coding automatically adjusts - some indicators are "good when low" (e.g., unemployment, violence, diseases) 
-              while others are "good when high" (e.g., education, health coverage).
+              <strong>{t('ui.colorNote')}</strong>
             </p>
           </div>
         </div>

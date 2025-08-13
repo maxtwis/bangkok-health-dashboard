@@ -1,14 +1,17 @@
+// Updated PopulationGroupSpiderChart with Language Support
 import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
+  const { t } = useLanguage();
   const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
   
   const populationGroups = [
-    { value: 'informal_workers', label: 'Informal Workers', color: '#ef4444' },
-    { value: 'elderly', label: 'Elderly', color: '#3b82f6' },
-    { value: 'disabled', label: 'People with disabilities', color: '#10b981' },
-    { value: 'lgbtq', label: 'LGBTQ+', color: '#f59e0b' }
+    { value: 'informal_workers', color: '#ef4444' },
+    { value: 'elderly', color: '#3b82f6' },
+    { value: 'disabled', color: '#10b981' },
+    { value: 'lgbtq', color: '#f59e0b' }
   ];
 
   const domains = [
@@ -20,19 +23,10 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     'health_behaviors'
   ];
 
-  const domainLabels = {
-    'economic_security': 'Economic Security',
-    'education': 'Education', 
-    'healthcare_access': 'Healthcare Access',
-    'physical_environment': 'Physical Environment',
-    'social_context': 'Social Context',
-    'health_behaviors': 'Health Behaviors'
-  };
-
   // Prepare data for the spider chart
   const chartData = domains.map(domain => {
     const dataPoint = {
-      domain: domainLabels[domain],
+      domain: t(`domains.${domain}`),
       fullDomain: domain
     };
 
@@ -98,10 +92,10 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
         <div className="flex justify-between items-start mb-2">
           <div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              SDHE Domain Comparison by Population Group
+              {t('ui.spiderChartTitle')}
             </h3>
             <p className="text-sm text-gray-600">
-              Comparing domain scores across all population groups in {selectedDistrict}
+              {t('ui.spiderChartDescription')} {selectedDistrict}
             </p>
           </div>
           
@@ -115,7 +109,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              Dynamic Scale
+              {t('ui.dynamicScale')}
             </button>
             <button
               onClick={() => setScaleMode('full')}
@@ -125,14 +119,14 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              Full Scale (0-100)
+              {t('ui.fullScale')}
             </button>
           </div>
         </div>
         
         {scaleMode === 'dynamic' && (
           <div className="bg-blue-50 p-2 rounded text-xs text-blue-700">
-            <strong>Dynamic Scale:</strong> Showing range {scaleMin}% to {scaleMax}% to highlight differences
+            <strong>{t('ui.dynamicScaleNote')}:</strong> {t('ui.dynamicScaleNote')} {scaleMin}% {t('ui.to')} {scaleMax}% {t('ui.toHighlightDifferences')}
           </div>
         )}
       </div>
@@ -165,7 +159,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             {populationGroups.map(group => (
               <Radar
                 key={group.value}
-                name={group.label}
+                name={t(`populationGroups.${group.value}`)}
                 dataKey={group.value}
                 stroke={group.color}
                 fill={group.color}
@@ -187,7 +181,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
       {/* Domain Rankings */}
       <div className="mt-6">
-        <h4 className="font-medium text-gray-800 mb-3">Domain Performance Rankings</h4>
+        <h4 className="font-medium text-gray-800 mb-3">{t('ui.domainPerformanceRankings')}</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {populationGroups.map(group => {
             const groupScores = chartData.map(d => ({
@@ -202,7 +196,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                     className="w-3 h-3 rounded-full mr-2" 
                     style={{ backgroundColor: group.color }}
                   ></div>
-                  <h5 className="font-medium text-sm">{group.label}</h5>
+                  <h5 className="font-medium text-sm">{t(`populationGroups.${group.value}`)}</h5>
                 </div>
                 <div className="space-y-1">
                   {groupScores.map((item, index) => (
@@ -222,7 +216,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
       {/* Chart Legend */}
       <div className="mt-4 bg-blue-50 p-3 rounded text-xs text-gray-600">
-        <p><strong>How to read:</strong> Each line represents one population group. Use "Dynamic Scale" to highlight differences between groups, or "Full Scale" to see absolute performance. Hover over points to see exact values.</p>
+        <p><strong>{t('ui.howToRead')}:</strong> {t('ui.spiderChartInstructions')}</p>
       </div>
     </div>
   );

@@ -1,31 +1,60 @@
+// Updated IndicatorAnalysis with Language Support
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, LabelList } from 'recharts';
+import { useLanguage } from '../../contexts/LanguageContext';
 import Papa from 'papaparse';
 
 const IndicatorAnalysis = () => {
+  const { t } = useLanguage();
   const [selectedIndicator, setSelectedIndicator] = useState('population_distribution');
   const [surveyData, setSurveyData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const populationGroups = [
-    { value: 'informal_workers', label: 'แรงงานนอกระบบ', color: '#ef4444' },
-    { value: 'elderly', label: 'ผู้สูงอายุ', color: '#3b82f6' },
-    { value: 'disabled', label: 'คนพิการ', color: '#10b981' },
-    { value: 'lgbtq', label: 'LGBT สุขภาพ', color: '#f59e0b' }
+    { value: 'informal_workers', color: '#ef4444' },
+    { value: 'elderly', color: '#3b82f6' },
+    { value: 'disabled', color: '#10b981' },
+    { value: 'lgbtq', color: '#f59e0b' }
   ];
 
   // Available indicators for selection
   const availableIndicators = [
-    { value: 'population_distribution', label: 'การกระจายประชากรตามกลุ่ม' },
-    { value: 'alcohol_consumption', label: 'การดื่มเครื่องดื่มแอลกอฮอล์' },
-    { value: 'tobacco_use', label: 'การสูบบุหรี่' },
-    { value: 'physical_activity', label: 'การออกกำลังกายไม่เพียงพอ' },
-    { value: 'obesity', label: 'ความอ้วน' },
-    { value: 'unemployment_rate', label: 'อัตราการว่างงาน' },
-    { value: 'violence_physical', label: 'ความรุนแรงทางร่างกาย' },
-    { value: 'discrimination_experience', label: 'การถูกเลือกปฏิบัติ' },
-    { value: 'dental_access', label: 'การไม่ได้รับบริการทันตกรรม' }
+    { value: 'population_distribution', labelKey: 'populationDistribution' },
+    { value: 'alcohol_consumption', labelKey: 'alcoholConsumption' },
+    { value: 'tobacco_use', labelKey: 'tobaccoUse' },
+    { value: 'physical_activity', labelKey: 'physicalActivity' },
+    { value: 'obesity', labelKey: 'obesity' },
+    { value: 'unemployment_rate', labelKey: 'unemploymentRate' },
+    { value: 'violence_physical', labelKey: 'physicalViolence' },
+    { value: 'discrimination_experience', labelKey: 'discriminationExperience' },
+    { value: 'dental_access', labelKey: 'dentalAccess' }
   ];
+
+  // Thai translations for hot issues indicators
+  const hotIssuesTranslations = {
+    en: {
+      populationDistribution: 'Population Distribution by Group',
+      alcoholConsumption: 'Alcohol Consumption',
+      tobaccoUse: 'Tobacco Use',
+      physicalActivity: 'Insufficient Physical Activity',
+      obesity: 'Obesity',
+      unemploymentRate: 'Unemployment Rate',
+      physicalViolence: 'Physical Violence',
+      discriminationExperience: 'Discrimination Experience',
+      dentalAccess: 'No Access to Dental Care'
+    },
+    th: {
+      populationDistribution: 'การกระจายประชากรตามกลุ่ม',
+      alcoholConsumption: 'การดื่มเครื่องดื่มแอลกอฮอล์',
+      tobaccoUse: 'การสูบบุหรี่',
+      physicalActivity: 'การออกกำลังกายไม่เพียงพอ',
+      obesity: 'ความอ้วน',
+      unemploymentRate: 'อัตราการว่างงาน',
+      physicalViolence: 'ความรุนแรงทางร่างกาย',
+      discriminationExperience: 'การถูกเลือกปฏิบัติ',
+      dentalAccess: 'ไม่ได้รับบริการทันตกรรม'
+    }
+  };
 
   // District code mapping (same as BasicSDHEProcessor)
   const districtCodeMap = {
@@ -128,7 +157,7 @@ const IndicatorAnalysis = () => {
           break;
           
         case 'physical_activity':
-          // exercise_status 0 or 1 = insufficient physical activity (ออกกำลังกายไม่เพียงพอ)
+          // exercise_status 0 or 1 = insufficient physical activity
           matchCount = records.filter(r => 
             r && typeof r.exercise_status === 'number' && (r.exercise_status === 0 || r.exercise_status === 1)
           ).length;
@@ -245,7 +274,7 @@ const IndicatorAnalysis = () => {
         
         return {
           group: group.value,
-          groupLabel: group.label,
+          groupLabel: t(`populationGroups.${group.value}`),
           color: group.color,
           chartData: sortedDistricts.slice(0, 5), // Top 5
           totalDistricts: districtValues.length
@@ -294,52 +323,42 @@ const IndicatorAnalysis = () => {
       
       return {
         group: group.value,
-        groupLabel: group.label,
+        groupLabel: t(`populationGroups.${group.value}`),
         color: group.color,
         chartData: sortedDistricts.slice(0, 5), // Top 5
         totalDistricts: districtValues.length
       };
     });
-  }, [surveyData, selectedIndicator]);
-
-  // Get bar labels for stacked chart
-  const getBarLabel = (indicator, isPositive) => {
-    const labels = {
-      alcohol_consumption: isPositive ? 'ดื่ม' : 'ไม่ดื่ม',
-      tobacco_use: isPositive ? 'สูบบุหรี่' : 'ไม่สูบ',
-      physical_activity: isPositive ? 'ออกกำลังกาย' : 'ไม่ออกกำลังกาย',
-      obesity: isPositive ? 'อ้วน' : 'ไม่อ้วน',
-      unemployment_rate: isPositive ? 'ว่างงาน' : 'มีงาน',
-      violence_physical: isPositive ? 'ถูกทำร้าย' : 'ไม่ถูกทำร้าย',
-      discrimination_experience: isPositive ? 'ถูกเลือกปฏิบัติ' : 'ไม่ถูกเลือกปฏิบัติ',
-      dental_access: isPositive ? 'ไม่ได้รักษา' : 'ได้รักษา'
-    };
-    
-    return labels[indicator] || (isPositive ? 'Yes' : 'No');
-  };
+  }, [surveyData, selectedIndicator, t]);
 
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p>กำลังโหลดข้อมูลแบบสำรวจ...</p>
+          <p>{t('ui.loading')}</p>
         </div>
       </div>
     );
   }
 
-  const selectedIndicatorObj = availableIndicators.find(ind => ind.value === selectedIndicator);
+  const getIndicatorLabel = (indicator) => {
+    const indicatorObj = availableIndicators.find(ind => ind.value === indicator);
+    if (indicatorObj) {
+      return hotIssuesTranslations[t('').split('.')[0] || 'en'][indicatorObj.labelKey] || indicator;
+    }
+    return indicator;
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">📊 การวิเคราะห์ตัวชี้วัดตามเขต</h2>
+        <h2 className="text-lg font-medium text-gray-900 mb-4">📊 {t('ui.hotIssuesTitle')}</h2>
         
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            เลือกตัวชี้วัดที่ต้องการวิเคราะห์
+            {t('ui.selectIndicator')}
           </label>
           <select 
             value={selectedIndicator}
@@ -348,7 +367,7 @@ const IndicatorAnalysis = () => {
           >
             {availableIndicators.map(indicator => (
               <option key={indicator.value} value={indicator.value}>
-                {indicator.label}
+                {getIndicatorLabel(indicator.value)}
               </option>
             ))}
           </select>
@@ -365,15 +384,15 @@ const IndicatorAnalysis = () => {
                 style={{ backgroundColor: groupData.color }}
               ></div>
               <h3 className="text-xl font-semibold text-gray-900">
-                {selectedIndicatorObj?.label} - {groupData.groupLabel}
+                {getIndicatorLabel(selectedIndicator)} - {groupData.groupLabel}
               </h3>
             </div>
 
             <div className="mb-4">
               <div className="text-sm text-gray-600">
                 {selectedIndicator === 'population_distribution' 
-                  ? `5 เขตที่มีสัดส่วน${groupData.groupLabel}สูงที่สุด (จากทั้งหมด ${groupData.totalDistricts} เขต)`
-                  : `5 เขตที่มีปัญหามากที่สุด (จากทั้งหมด ${groupData.totalDistricts} เขต)`
+                  ? `${t('ui.top5Districts')} ${groupData.groupLabel} (${t('ui.from')} ${groupData.totalDistricts} ${t('ui.totalDistricts')})`
+                  : `${t('ui.top5Districts')} (${t('ui.from')} ${groupData.totalDistricts} ${t('ui.totalDistricts')})`
                 }
               </div>
             </div>
@@ -424,11 +443,11 @@ const IndicatorAnalysis = () => {
               </div>
             ) : (
               <div className="h-80 flex items-center justify-center text-gray-500 -mb-4">
-                <p>ไม่มีข้อมูลสำหรับกลุ่มนี้</p>
+                <p>{t('ui.noDataForGroup')}</p>
               </div>
             )}
 
-            {/* Rankings - Removed the mt-6 margin */}
+            {/* Rankings */}
             <div className="space-y-3">
               {groupData.chartData.map((district, index) => (
                 <div key={district.district} className="flex justify-between items-center text-sm border-b border-gray-100 pb-2">

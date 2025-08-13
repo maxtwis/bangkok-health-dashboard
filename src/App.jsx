@@ -1,12 +1,15 @@
-// src/App.jsx
+// src/App.jsx - Updated with Language Provider
 import React from 'react';
-import Dashboard from '../src/components/Dashboard/index';
+import { LanguageProvider } from './contexts/LanguageContext';
+import Dashboard from './components/Dashboard/index';
 
 function App() {
   return (
-    <div className="App">
-      <Dashboard />
-    </div>
+    <LanguageProvider>
+      <div className="App">
+        <Dashboard />
+      </div>
+    </LanguageProvider>
   );
 }
 

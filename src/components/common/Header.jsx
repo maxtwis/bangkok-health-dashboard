@@ -1,12 +1,16 @@
+// Updated Header with Language Support
 import React from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const Header = ({ indicatorName = 'Social Determinants of Health Equity' }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="bg-white shadow-sm border-b">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-gray-900">Bangkok Health Inequalities Dashboard</h1>
+            <h1 className="text-xl font-semibold text-gray-900">{t('appTitle')}</h1>
             <p className="text-sm text-gray-600">{indicatorName} Scores</p>
           </div>
           <div className="flex items-center space-x-4">
