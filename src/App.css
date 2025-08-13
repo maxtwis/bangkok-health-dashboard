@@ -40,15 +40,21 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Critical CSS for Leaflet maps */
 .leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
   font-family: inherit;
 }
 
-.leaflet-popup-content {
-  margin: 8px 12px;
+.leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
 }
 
-.leaflet-popup-content-wrapper {
-  border-radius: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+/* Ensure map parent has fixed height */
+.dashboard-map-section {
+  height: 600px !important;
+  min-height: 600px !important;
 }

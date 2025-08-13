@@ -3,7 +3,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-// Fix for default markers in Leaflet
+// Fix for default markers in Leaflet with bundlers
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -25,6 +25,7 @@ const BangkokMap = ({
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [mapReady, setMapReady] = useState(false);
 
   // District code mapping
   const districtCodeMap = {
@@ -56,6 +57,12 @@ const BangkokMap = ({
         
         const data = await response.json();
         console.log('✅ GeoJSON loaded:', data.features?.length, 'features');
+        
+        // Validate GeoJSON
+        if (!data.features || data.features.length === 0) {
+          throw new Error('GeoJSON contains no features');
+        }
+        
         setGeoJsonData(data);
         
       } catch (err) {
@@ -69,31 +76,102 @@ const BangkokMap = ({
     loadGeoJSON();
   }, []);
 
-  // Initialize map
+  // Initialize map with proper timing
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
+    // Wait for DOM to be ready
+    const initializeMap = () => {
+      if (!mapRef.current || mapInstanceRef.current) return;
 
-    console.log('🗺️ Initializing map...');
-    
-    try {
-      const map = L.map(mapRef.current).setView([13.7563, 100.5018], 10);
+      console.log('🗺️ Initializing map...');
+      console.log('Map container dimensions:', {
+        width: mapRef.current.offsetWidth,
+        height: mapRef.current.offsetHeight,
+        clientWidth: mapRef.current.clientWidth,
+        clientHeight: mapRef.current.clientHeight
+      });
       
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
+      try {
+        // Create map with explicit size validation
+        if (mapRef.current.offsetHeight === 0 || mapRef.current.offsetWidth === 0) {
+          console.warn('⚠️ Map container has zero dimensions!');
+          setError('Map container has zero dimensions. Check CSS height/width.');
+          return;
+        }
 
-      mapInstanceRef.current = map;
-      console.log('✅ Map initialized');
-      
-    } catch (err) {
-      console.error('❌ Map initialization error:', err);
-      setError(`Map failed to initialize: ${err.message}`);
-    }
+        const map = L.map(mapRef.current, {
+          center: [13.7563, 100.5018], // Bangkok center
+          zoom: 10,
+          zoomControl: true,
+          attributionControl: true,
+          scrollWheelZoom: true,
+          doubleClickZoom: true,
+          dragging: true,
+          touchZoom: true,
+          boxZoom: true,
+          keyboard: true
+        });
+        
+        // Add tile layer with error handling
+        const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors',
+          maxZoom: 18,
+          errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOHB4IiBmaWxsPSIjOTk5Ij5ObyBUaWxlPC90ZXh0Pjwvc3ZnPg=='
+        });
+
+        tileLayer.addTo(map);
+        
+        // Event listeners for debugging
+        map.on('load', () => {
+          console.log('✅ Map load event fired');
+          setMapReady(true);
+        });
+
+        map.on('ready', () => {
+          console.log('✅ Map ready event fired');
+          setMapReady(true);
+        });
+
+        tileLayer.on('loading', () => {
+          console.log('🔄 Tiles loading...');
+        });
+
+        tileLayer.on('load', () => {
+          console.log('✅ Tiles loaded');
+          setMapReady(true);
+        });
+
+        tileLayer.on('tileerror', (e) => {
+          console.warn('⚠️ Tile load error:', e);
+        });
+
+        mapInstanceRef.current = map;
+        console.log('✅ Map initialized successfully');
+        
+        // Force invalidate size after a short delay
+        setTimeout(() => {
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.invalidateSize();
+            console.log('🔄 Map size invalidated');
+            setMapReady(true);
+          }
+        }, 100);
+        
+      } catch (err) {
+        console.error('❌ Map initialization error:', err);
+        setError(`Map failed to initialize: ${err.message}`);
+      }
+    };
+
+    // Use timeout to ensure DOM is ready
+    const timer = setTimeout(initializeMap, 50);
 
     return () => {
+      clearTimeout(timer);
       if (mapInstanceRef.current) {
+        console.log('🧹 Cleaning up map');
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
+        setMapReady(false);
       }
     };
   }, []);
@@ -114,7 +192,7 @@ const BangkokMap = ({
 
       const score = domainScore.value;
       
-      // Color based on score (simplified)
+      // Color based on score 
       if (score >= 80) return '#10b981'; // Green
       if (score >= 60) return '#f59e0b'; // Yellow
       if (score >= 40) return '#f97316'; // Orange
@@ -128,7 +206,14 @@ const BangkokMap = ({
 
   // Update map when data changes
   useEffect(() => {
-    if (!mapInstanceRef.current || !geoJsonData) return;
+    if (!mapInstanceRef.current || !geoJsonData || !mapReady) {
+      console.log('⏳ Waiting for map to be ready...', {
+        hasMap: !!mapInstanceRef.current,
+        hasData: !!geoJsonData,
+        mapReady
+      });
+      return;
+    }
 
     console.log('🗺️ Updating map layer...');
 
@@ -136,6 +221,7 @@ const BangkokMap = ({
       // Remove old layer
       if (geoJsonLayerRef.current) {
         mapInstanceRef.current.removeLayer(geoJsonLayerRef.current);
+        console.log('🗑️ Removed old layer');
       }
 
       // Add new layer
@@ -159,7 +245,7 @@ const BangkokMap = ({
           if (districtName) {
             // Add popup
             layer.bindPopup(`
-              <div style="font-size: 14px;">
+              <div style="font-size: 14px; padding: 4px;">
                 <strong>${districtName}</strong><br/>
                 <small>Click to select this district</small>
               </div>
@@ -172,6 +258,21 @@ const BangkokMap = ({
                 onDistrictClick(districtName);
               }
             });
+
+            // Add hover effects
+            layer.on('mouseover', function() {
+              this.setStyle({
+                weight: 3,
+                fillOpacity: 0.9
+              });
+            });
+
+            layer.on('mouseout', function() {
+              this.setStyle({
+                weight: selectedDistrict === districtName ? 3 : 1,
+                fillOpacity: 0.7
+              });
+            });
           }
         }
       });
@@ -179,17 +280,21 @@ const BangkokMap = ({
       layer.addTo(mapInstanceRef.current);
       geoJsonLayerRef.current = layer;
       
-      // Fit to bounds
-      mapInstanceRef.current.fitBounds(layer.getBounds());
+      // Fit to bounds with padding
+      const bounds = layer.getBounds();
+      if (bounds.isValid()) {
+        mapInstanceRef.current.fitBounds(bounds, { padding: [20, 20] });
+        console.log('✅ Map fitted to bounds');
+      }
       
-      console.log('✅ Map layer updated');
+      console.log('✅ Map layer updated with', geoJsonData.features.length, 'districts');
       
     } catch (err) {
       console.error('❌ Layer update error:', err);
       setError(`Failed to update map: ${err.message}`);
     }
 
-  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick]);
+  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, mapReady]);
 
   if (loading) {
     return (
@@ -213,11 +318,12 @@ const BangkokMap = ({
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Map Error</h3>
           <p className="text-red-600 text-sm mb-4">{error}</p>
-          <div className="text-xs text-left bg-gray-100 p-3 rounded">
-            <p><strong>Check:</strong></p>
-            <p>• File exists: /public/data/district.geojson</p>
-            <p>• Browser console for errors</p>
-            <p>• Network tab in DevTools</p>
+          <div className="text-xs text-left bg-gray-100 p-3 rounded max-w-sm">
+            <p><strong>Common fixes:</strong></p>
+            <p>• Check parent container has fixed height</p>
+            <p>• Ensure CSS is properly loaded</p>
+            <p>• Try refreshing the page</p>
+            <p>• Check browser console for errors</p>
           </div>
         </div>
       </div>
@@ -225,12 +331,30 @@ const BangkokMap = ({
   }
 
   return (
-    <div className="relative h-full bg-white rounded-lg shadow-sm overflow-hidden">
-      {/* Map container */}
-      <div ref={mapRef} className="h-full w-full" />
+    <div className="relative w-full h-full bg-white rounded-lg shadow-sm overflow-hidden">
+      {/* Map container with explicit sizing */}
+      <div 
+        ref={mapRef} 
+        className="absolute inset-0"
+        style={{ 
+          width: '100%', 
+          height: '100%',
+          minHeight: '400px'
+        }}
+      />
       
-      {/* Simple legend */}
-      <div className="absolute bottom-4 left-4 bg-white bg-opacity-90 rounded-lg shadow-lg p-3 text-xs">
+      {/* Loading overlay */}
+      {!mapReady && (
+        <div className="absolute inset-0 bg-gray-100 bg-opacity-75 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
+            <p className="text-sm text-gray-600">Initializing map...</p>
+          </div>
+        </div>
+      )}
+      
+      {/* Legend */}
+      <div className="absolute bottom-4 left-4 bg-white bg-opacity-95 backdrop-blur rounded-lg shadow-lg p-3 text-xs z-[1000]">
         <div className="font-medium mb-2">{t(`domains.${selectedDomain}`)}</div>
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
@@ -253,11 +377,20 @@ const BangkokMap = ({
       </div>
       
       {/* Selection info */}
-      <div className="absolute top-4 right-4 bg-white bg-opacity-90 rounded-lg shadow-lg p-3 text-xs">
+      <div className="absolute top-4 right-4 bg-white bg-opacity-95 backdrop-blur rounded-lg shadow-lg p-3 text-xs z-[1000]">
         <div className="font-medium mb-1">Current Selection</div>
         <div>District: {selectedDistrict === 'Bangkok Overall' && language === 'th' ? 'ภาพรวม 50 เขต' : selectedDistrict}</div>
         <div>Group: {t(`populationGroups.${selectedPopulationGroup}`)}</div>
       </div>
+
+      {/* Debug info (only in development) */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="absolute bottom-4 right-4 bg-yellow-50 border border-yellow-200 rounded p-2 text-xs z-[1000]">
+          <div>Map Ready: {mapReady ? '✅' : '⏳'}</div>
+          <div>Data: {geoJsonData ? `✅ ${geoJsonData.features?.length} districts` : '⏳'}</div>
+          <div>Container: {mapRef.current ? `${mapRef.current.offsetWidth}x${mapRef.current.offsetHeight}` : 'Not found'}</div>
+        </div>
+      )}
     </div>
   );
 };

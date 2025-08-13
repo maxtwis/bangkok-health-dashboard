@@ -1,3 +1,21 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* Critical CSS for Leaflet maps */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  font-family: inherit;
+}
+
+.leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+/* Ensure map parent has fixed height */
+.dashboard-map-section {
+  height: 600px !important;
+  min-height: 600px !important;
+}
