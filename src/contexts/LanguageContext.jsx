@@ -100,7 +100,7 @@ const baseTranslations = {
   
   th: {
     // App Title
-    appTitle: 'แดชบอร์ดความไม่เท่าเทียมด้านสุขภาพกรุงเทพฯ',
+    appTitle: 'Bangkok Health Inequalities Dashboard',
     appSubtitle: 'การวิเคราะห์ปัจจัยสำคัญทางสังคมที่ส่งผลต่อความเท่าเทียมด้านสุขภาพ',
     
     // Navigation
