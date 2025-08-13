@@ -131,14 +131,28 @@ const IndicatorDetailPage = ({
       sexGroups[sexGroup].push(record);
     });
 
-    // Calculate indicator for each group
-    const calculateIndicatorValue = (groupRecords, totalRecords = records) => {
-      // Special handling for population_distribution - show percentage of total population
-      if (indicatorKey === 'population_distribution') {
-        return (groupRecords.length / totalRecords.length) * 100;
-      }
+    // For disaggregation analysis, we want to show TWO things:
+    // 1. Demographic composition (what % of the group is each age/sex)
+    // 2. Indicator prevalence within each demographic subgroup
 
-      // Regular indicator calculations for all other indicators
+    // Calculate both demographic distribution AND indicator prevalence for each group
+    const calculateGroupData = (groupRecords, totalRecords) => {
+      // Demographic percentage (what % of total population this group represents)
+      const demographicPercent = (groupRecords.length / totalRecords.length) * 100;
+      
+      // Indicator prevalence within this specific demographic group
+      const indicatorValue = calculateIndicatorValueForGroup(groupRecords, indicatorKey);
+      
+      return {
+        demographicPercent,
+        indicatorValue,
+        count: groupRecords.length
+      };
+    };
+
+    // Calculate indicator for each group
+    const calculateIndicatorValueForGroup = (groupRecords, indicatorKey) => {
+      // Regular indicator calculations
       switch (indicatorKey) {
         case 'unemployment_rate':
           const unemployed = groupRecords.filter(r => r.occupation_status === 0).length;
@@ -434,30 +448,38 @@ const IndicatorDetailPage = ({
       }
     };
 
-    // Process age groups
-    const ageData = Object.keys(ageGroups).map(ageGroup => ({
-      group: ageGroup,
-      value: calculateIndicatorValue(ageGroups[ageGroup], records), // Pass total records for population distribution
-      count: ageGroups[ageGroup].length,
-      type: 'age'
-    })).sort((a, b) => {
+    // Process age groups - Show demographic composition
+    const ageData = Object.keys(ageGroups).map(ageGroup => {
+      const groupData = calculateGroupData(ageGroups[ageGroup], records);
+      return {
+        group: ageGroup,
+        value: groupData.demographicPercent, // Show what % of population this age group represents
+        indicatorValue: groupData.indicatorValue, // Also track indicator value for this group
+        count: groupData.count,
+        type: 'age'
+      };
+    }).sort((a, b) => {
       const ageOrder = ['< 18', '18-29', '30-44', '45-59', '60+'];
       return ageOrder.indexOf(a.group) - ageOrder.indexOf(b.group);
     });
 
-    // Process sex groups
-    const sexData = Object.keys(sexGroups).map(sexGroup => ({
-      group: sexGroup,
-      value: calculateIndicatorValue(sexGroups[sexGroup], records), // Pass total records for population distribution
-      count: sexGroups[sexGroup].length,
-      type: 'sex'
-    }));
+    // Process sex groups - Show demographic composition
+    const sexData = Object.keys(sexGroups).map(sexGroup => {
+      const groupData = calculateGroupData(sexGroups[sexGroup], records);
+      return {
+        group: sexGroup,
+        value: groupData.demographicPercent, // Show what % of population this sex group represents
+        indicatorValue: groupData.indicatorValue, // Also track indicator value for this group
+        count: groupData.count,
+        type: 'sex'
+      };
+    });
 
     return {
       age: ageData,
       sex: sexData,
       total: {
-        value: calculateIndicatorValue(records, records), // For consistency
+        value: calculateIndicatorValueForGroup(records, indicatorKey),
         count: records.length
       }
     };
@@ -684,7 +706,8 @@ const IndicatorDetailPage = ({
                       <thead>
                         <tr className="border-b">
                           <th className="text-left py-2">{language === 'th' ? 'กลุ่มอายุ' : 'Age Group'}</th>
-                          <th className="text-right py-2">{language === 'th' ? 'อัตรา (%)' : 'Rate (%)'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
                           <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
                         </tr>
                       </thead>
@@ -699,11 +722,16 @@ const IndicatorDetailPage = ({
                               {item.group}
                             </td>
                             <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
+                            <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
                             <td className="text-right py-2 text-gray-600">{item.count}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
+                    <div className="mt-2 text-xs text-gray-500">
+                      <p><strong>{language === 'th' ? 'สัดส่วน' : 'Proportion'}:</strong> {language === 'th' ? 'เปอร์เซ็นต์ของประชากรกลุ่มนี้' : 'Percentage of this population group'}</p>
+                      <p><strong>{language === 'th' ? 'ค่าตัวชี้วัด' : 'Indicator'}:</strong> {language === 'th' ? 'ค่าตัวชี้วัดในกลุ่มอายุนี้' : 'Indicator value within this age group'}</p>
+                    </div>
                   </div>
                 </div>
 
@@ -738,7 +766,8 @@ const IndicatorDetailPage = ({
                       <thead>
                         <tr className="border-b">
                           <th className="text-left py-2">{language === 'th' ? 'เพศ' : 'Sex'}</th>
-                          <th className="text-right py-2">{language === 'th' ? 'อัตรา (%)' : 'Rate (%)'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
                           <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
                         </tr>
                       </thead>
@@ -753,11 +782,16 @@ const IndicatorDetailPage = ({
                               {item.group}
                             </td>
                             <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
+                            <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
                             <td className="text-right py-2 text-gray-600">{item.count}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
+                    <div className="mt-2 text-xs text-gray-500">
+                      <p><strong>{language === 'th' ? 'สัดส่วน' : 'Proportion'}:</strong> {language === 'th' ? 'เปอร์เซ็นต์ของประชากรกลุ่มนี้' : 'Percentage of this population group'}</p>
+                      <p><strong>{language === 'th' ? 'ค่าตัวชี้วัด' : 'Indicator'}:</strong> {language === 'th' ? 'ค่าตัวชี้วัดในกลุ่มเพศนี้' : 'Indicator value within this sex group'}</p>
+                    </div>
                   </div>
                 </div>
               </div>
