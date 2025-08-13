@@ -314,7 +314,12 @@ const BasicSDHEDashboard = () => {
             <div className="p-6">
               <div className="mb-4">
                 <h3 className="text-lg font-medium text-gray-900">
-                  <span>{t(`domains.${selectedDomain}`)} {t('ui.indicator')}s</span>
+                  <span>
+                    {language === 'th' 
+                      ? `ตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
+                      : `${t(`domains.${selectedDomain}`)} Indicators`
+                    }
+                  </span>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
                   {t(`populationGroups.${selectedPopulationGroup}`)} - {selectedDistrict}
@@ -375,7 +380,9 @@ const BasicSDHEDashboard = () => {
                           
                           // Get translated label
                           const translatedLabel = isDomainScore 
-                            ? `${t(`domains.${selectedDomain}`)} ${t('ui.score')}`
+                            ? (language === 'th' 
+                                ? `คะแนนรวมตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
+                                : `${t(`domains.${selectedDomain}`)} Score`)
                             : t(`indicators.${indicator}`) !== `indicators.${indicator}` 
                               ? t(`indicators.${indicator}`)
                               : item?.label ?? 'Unknown Indicator';
