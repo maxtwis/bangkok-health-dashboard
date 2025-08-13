@@ -1,29 +1,9 @@
-// IndicatorDetailPage.jsx - Fixed version
+// IndicatorDetailPage.jsx - Fixed with proper import
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
-
-// Simple fallback hook if useIndicatorDetails doesn't load
-const useFallbackIndicatorDetails = () => {
-  return {
-    getIndicatorInfo: (indicator, language) => ({
-      name: indicator,
-      description: language === 'th' ? 'ไม่มีคำอธิบาย' : 'No description available',
-      calculation: language === 'th' ? 'ไม่ระบุวิธีการคำนวณ' : 'Calculation method not specified'
-    }),
-    loading: false
-  };
-};
-
-// Try to import the hook, but provide fallback if it fails
-let useIndicatorDetailsHook;
-try {
-  useIndicatorDetailsHook = require('../../hooks/useIndicatorDetails').default;
-} catch (error) {
-  console.warn('useIndicatorDetails hook not found, using fallback');
-  useIndicatorDetailsHook = useFallbackIndicatorDetails;
-}
+import useIndicatorDetails from '../../hooks/useIndicatorDetails';
 
 const IndicatorDetailPage = ({ 
   indicator, 
@@ -35,7 +15,7 @@ const IndicatorDetailPage = ({
   getIndicatorData 
 }) => {
   const { t, language } = useLanguage();
-  const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicatorDetailsHook();
+  const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicatorDetails();
   const [activeTab, setActiveTab] = useState('overview');
 
   // Get indicator metadata from CSV via hook
@@ -206,6 +186,60 @@ const IndicatorDetailPage = ({
           ).length;
           return groupRecords.length > 0 ? (hypertensive / groupRecords.length) * 100 : 0;
 
+        case 'gout':
+          const goutCases = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/3'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (goutCases / groupRecords.length) * 100 : 0;
+
+        case 'chronic_kidney_disease':
+          const kidneyDisease = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/4'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (kidneyDisease / groupRecords.length) * 100 : 0;
+
+        case 'cancer':
+          const cancerCases = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/5'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (cancerCases / groupRecords.length) * 100 : 0;
+
+        case 'high_cholesterol':
+          const highCholesterol = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/6'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (highCholesterol / groupRecords.length) * 100 : 0;
+
+        case 'ischemic_heart_disease':
+          const heartDisease = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/7'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (heartDisease / groupRecords.length) * 100 : 0;
+
+        case 'liver_disease':
+          const liverDisease = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/8'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (liverDisease / groupRecords.length) * 100 : 0;
+
+        case 'stroke':
+          const strokeCases = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/9'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (strokeCases / groupRecords.length) * 100 : 0;
+
+        case 'hiv':
+          const hivCases = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/10'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (hivCases / groupRecords.length) * 100 : 0;
+
+        case 'mental_health':
+          const mentalHealth = groupRecords.filter(r => 
+            r.diseases_status === 1 && r['diseases_type/11'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (mentalHealth / groupRecords.length) * 100 : 0;
+
         case 'any_chronic_disease':
           const chronicDisease = groupRecords.filter(r => r.diseases_status === 1).length;
           return groupRecords.length > 0 ? (chronicDisease / groupRecords.length) * 100 : 0;
@@ -221,6 +255,50 @@ const IndicatorDetailPage = ({
             r['discrimination/5'] === 1
           ).length;
           return groupRecords.length > 0 ? (discrimination / groupRecords.length) * 100 : 0;
+
+        case 'food_insecurity_moderate':
+          const moderateFoodInsecurity = groupRecords.filter(r => r.food_insecurity_1 === 1).length;
+          return groupRecords.length > 0 ? (moderateFoodInsecurity / groupRecords.length) * 100 : 0;
+
+        case 'food_insecurity_severe':
+          const severeFoodInsecurity = groupRecords.filter(r => r.food_insecurity_2 === 1).length;
+          return groupRecords.length > 0 ? (severeFoodInsecurity / groupRecords.length) * 100 : 0;
+
+        case 'work_injury_fatal':
+          const fatalInjury = groupRecords.filter(r => r.occupation_injury === 1).length;
+          return groupRecords.length > 0 ? (fatalInjury / groupRecords.length) * 100 : 0;
+
+        case 'work_injury_non_fatal':
+          const nonFatalInjury = groupRecords.filter(r => r.occupation_small_injury === 1).length;
+          return groupRecords.length > 0 ? (nonFatalInjury / groupRecords.length) * 100 : 0;
+
+        case 'medical_consultation_skip_cost':
+          const skipConsultation = groupRecords.filter(r => r.medical_skip_1 === 1).length;
+          return groupRecords.length > 0 ? (skipConsultation / groupRecords.length) * 100 : 0;
+
+        case 'medical_treatment_skip_cost':
+          const skipTreatment = groupRecords.filter(r => r.medical_skip_2 === 1).length;
+          return groupRecords.length > 0 ? (skipTreatment / groupRecords.length) * 100 : 0;
+
+        case 'prescribed_medicine_skip_cost':
+          const skipMedicine = groupRecords.filter(r => r.medical_skip_3 === 1).length;
+          return groupRecords.length > 0 ? (skipMedicine / groupRecords.length) * 100 : 0;
+
+        case 'dental_access':
+          const dentalAccess = groupRecords.filter(r => r.oral_health_access === 1).length;
+          return groupRecords.length > 0 ? (dentalAccess / groupRecords.length) * 100 : 0;
+
+        case 'functional_literacy':
+          const literate = groupRecords.filter(r => 
+            r.speak === 1 && r.read === 1 && r.write === 1 && r.math === 1
+          ).length;
+          return groupRecords.length > 0 ? (literate / groupRecords.length) * 100 : 0;
+
+        case 'health_coverage':
+          const healthCoverage = groupRecords.filter(r => 
+            r.welfare !== null && r.welfare !== undefined && r.welfare !== 'other' && r.welfare !== 'Other'
+          ).length;
+          return groupRecords.length > 0 ? (healthCoverage / groupRecords.length) * 100 : 0;
           
         default:
           return 0;
