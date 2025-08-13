@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+.leaflet-container {
+  font-family: inherit;
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
