@@ -132,7 +132,13 @@ const IndicatorDetailPage = ({
     });
 
     // Calculate indicator for each group
-    const calculateIndicatorValue = (groupRecords) => {
+    const calculateIndicatorValue = (groupRecords, totalRecords = records) => {
+      // Special handling for population_distribution - show percentage of total population
+      if (indicatorKey === 'population_distribution') {
+        return (groupRecords.length / totalRecords.length) * 100;
+      }
+
+      // Regular indicator calculations for all other indicators
       switch (indicatorKey) {
         case 'unemployment_rate':
           const unemployed = groupRecords.filter(r => r.occupation_status === 0).length;
@@ -431,7 +437,7 @@ const IndicatorDetailPage = ({
     // Process age groups
     const ageData = Object.keys(ageGroups).map(ageGroup => ({
       group: ageGroup,
-      value: calculateIndicatorValue(ageGroups[ageGroup]),
+      value: calculateIndicatorValue(ageGroups[ageGroup], records), // Pass total records for population distribution
       count: ageGroups[ageGroup].length,
       type: 'age'
     })).sort((a, b) => {
@@ -442,7 +448,7 @@ const IndicatorDetailPage = ({
     // Process sex groups
     const sexData = Object.keys(sexGroups).map(sexGroup => ({
       group: sexGroup,
-      value: calculateIndicatorValue(sexGroups[sexGroup]),
+      value: calculateIndicatorValue(sexGroups[sexGroup], records), // Pass total records for population distribution
       count: sexGroups[sexGroup].length,
       type: 'sex'
     }));
@@ -451,7 +457,7 @@ const IndicatorDetailPage = ({
       age: ageData,
       sex: sexData,
       total: {
-        value: calculateIndicatorValue(records),
+        value: calculateIndicatorValue(records, records), // For consistency
         count: records.length
       }
     };
