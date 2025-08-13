@@ -354,7 +354,7 @@ const BangkokMap = ({
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-red-500 rounded"></div>
-              <span>Very Poor (40%)</span>
+              <span>Very Poor (&lt;40%)</span>
             </div>
           </div>
         </div>
@@ -369,12 +369,7 @@ const BangkokMap = ({
         </div>
       )}
 
-      {/* Debug status */}
-      <div className="absolute top-4 left-4 bg-yellow-50 border border-yellow-200 rounded p-2 text-xs z-[1000]">
-        <div>Status: {initStatus}</div>
-        <div>Data: {geoJsonData ? '✅' : '⏳'}</div>
-        <div>Map: {mapInstanceRef.current ? '✅' : '⏳'}</div>
-      </div>
+
     </div>
   );
 };
