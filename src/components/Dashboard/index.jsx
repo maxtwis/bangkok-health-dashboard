@@ -1,18 +1,27 @@
-// Updated Dashboard with Language Support - src/components/Dashboard/index.jsx
+// Updated Dashboard with Clickable Indicators - src/components/Dashboard/index.jsx
 import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useBasicSDHEData from '../../hooks/useBasicSDHEData';
+import useIndicatorDetails from '../../hooks/useIndicatorDetails';
 import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 import IndicatorAnalysis from './IndicatorAnalysis';
+import IndicatorDetailPage from './IndicatorDetailPage';
+import Papa from 'papaparse';
 
 const BasicSDHEDashboard = () => {
   const { language, toggleLanguage, t } = useLanguage();
   const { isLoading, error, data, getAvailableDistricts, getAvailableDomains, getIndicatorData } = useBasicSDHEData();
+  const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicatorDetails();
   
   const [activeTab, setActiveTab] = useState('analysis');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
   const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall');
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
+  
+  // New states for indicator detail page
+  const [showDetailPage, setShowDetailPage] = useState(false);
+  const [selectedIndicator, setSelectedIndicator] = useState(null);
+  const [surveyData, setSurveyData] = useState(null);
 
   // Define which indicators are "reverse" (bad when high)
   const reverseIndicators = {
@@ -76,6 +85,60 @@ const BasicSDHEDashboard = () => {
     multiple_chronic_conditions: true
   };
 
+  // Load survey data when component mounts
+  React.useEffect(() => {
+    const loadSurveyData = async () => {
+      try {
+        const response = await fetch('/data/survey_sampling.csv');
+        if (!response.ok) return;
+        
+        const csvContent = await response.text();
+        const parsed = Papa.parse(csvContent, {
+          header: true,
+          dynamicTyping: true,
+          skipEmptyLines: true
+        });
+
+        // Process the data with same classification logic
+        const districtCodeMap = {
+          1001: "พระนคร", 1002: "ดุสิต", 1003: "หนองจอก", 1004: "บางรัก",
+          1005: "บางเขน", 1006: "บางกะปิ", 1007: "ปทุมวัน", 1008: "ป้อมปราบศัตรูพ่าย",
+          1009: "พระโขนง", 1010: "มีนบุรี", 1011: "ลาดกระบัง", 1012: "ยานนาวา",
+          1013: "สัมพันธวงศ์", 1014: "พญาไท", 1015: "ธนบุรี", 1016: "บางกอกใหญ่",
+          1017: "ห้วยขวาง", 1018: "คลองสาน", 1019: "ตลิ่งชัน", 1020: "บางกอกน้อย",
+          1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฏร์บูรณะ",
+          1025: "บางพลัด", 1026: "ดินแดง", 1027: "บึงกุ่ม", 1028: "สาทร",
+          1029: "บางซื่อ", 1030: "จตุจักร", 1031: "บางคอแหลม", 1032: "ประเวศ",
+          1033: "คลองเตย", 1034: "สวนหลวง", 1035: "จอมทอง", 1036: "ดอนเมือง",
+          1037: "ราชเทวี", 1038: "ลาดพร้าว", 1039: "วัฒนา", 1040: "บางแค",
+          1041: "หลักสี่", 1042: "สายไหม", 1043: "คันนายาว", 1044: "สะพานสูง",
+          1045: "วังทองหลาง", 1046: "คลองสามวา", 1047: "บางนา", 1048: "ทวีวัฒนา",
+          1049: "ทุ่งครุ", 1050: "บางบอน"
+        };
+
+        const classifyPopulationGroup = (record) => {
+          if (record.sex === 'lgbt') return 'lgbtq';
+          if (record.age >= 60) return 'elderly';  
+          if (record.disable_status === 1) return 'disabled';
+          if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
+          return 'general_population';
+        };
+
+        const processedData = parsed.data.map(record => ({
+          ...record,
+          district_name: districtCodeMap[record.dname] || `District_${record.dname}`,
+          population_group: classifyPopulationGroup(record)
+        }));
+
+        setSurveyData(processedData);
+      } catch (error) {
+        console.error('Error loading survey data:', error);
+      }
+    };
+
+    loadSurveyData();
+  }, []);
+
   // Set Bangkok Overall as default when data first loads
   React.useEffect(() => {
     if (data) {
@@ -95,6 +158,18 @@ const BasicSDHEDashboard = () => {
       }
     }
   }, [data, selectedDomain, getAvailableDomains]);
+
+  // Handle indicator click
+  const handleIndicatorClick = (indicator) => {
+    setSelectedIndicator(indicator);
+    setShowDetailPage(true);
+  };
+
+  // Handle back from detail page
+  const handleBackFromDetail = () => {
+    setShowDetailPage(false);
+    setSelectedIndicator(null);
+  };
 
   // Safe function to format sample size
   const formatSampleSize = (sampleSize) => {
@@ -144,7 +219,22 @@ const BasicSDHEDashboard = () => {
     }
   };
 
-  if (isLoading) {
+  // Show detail page if indicator is selected
+  if (showDetailPage && selectedIndicator) {
+    return (
+      <IndicatorDetailPage
+        indicator={selectedIndicator}
+        domain={selectedDomain}
+        district={selectedDistrict}
+        populationGroup={selectedPopulationGroup}
+        onBack={handleBackFromDetail}
+        surveyData={surveyData}
+        getIndicatorData={getIndicatorData}
+      />
+    );
+  }
+
+  if (isLoading || indicatorDetailsLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
@@ -152,7 +242,12 @@ const BasicSDHEDashboard = () => {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             <div className="text-lg font-medium">{t('ui.loading')}</div>
           </div>
-          <p className="text-gray-600">{t('ui.loadingDescription')}</p>
+          <p className="text-gray-600">
+            {indicatorDetailsLoading 
+              ? (language === 'th' ? 'กำลังโหลดรายละเอียดตัวชี้วัด...' : 'Loading indicator details...')
+              : t('ui.loadingDescription')
+            }
+          </p>
         </div>
       </div>
     );
@@ -348,6 +443,17 @@ const BasicSDHEDashboard = () => {
                     </div>
                   </div>
                 )}
+
+                {/* Clickable Instructions */}
+                <div className="mt-3 bg-green-50 border border-green-200 rounded-lg p-3">
+                  <p className="text-sm text-green-800">
+                    💡 <strong>{language === 'th' ? 'เคล็ดลับ:' : 'Tip:'}</strong> {
+                      language === 'th' 
+                        ? 'คลิกที่ชื่อตัวชี้วัดเพื่อดูข้อมูลรายละเอียดและการแยกย่อยข้อมูลตามอายุและเพศ'
+                        : 'Click on indicator names to view detailed information and disaggregation by age and sex'
+                    }
+                  </p>
+                </div>
               </div>
 
               {indicatorData && indicatorData.length > 0 ? (
@@ -385,14 +491,15 @@ const BasicSDHEDashboard = () => {
                           const isDomainScore = item?.isDomainScore ?? false;
                           const indicator = item?.indicator;
                           
-                          // Get translated label
+                          // Get translated label using CSV data
                           const translatedLabel = isDomainScore 
                             ? (language === 'th' 
                                 ? `คะแนนรวมตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
                                 : `${t(`domains.${selectedDomain}`)} Score`)
-                            : t(`indicators.${indicator}`) !== `indicators.${indicator}` 
-                              ? t(`indicators.${indicator}`)
-                              : item?.label ?? 'Unknown Indicator';
+                            : getIndicatorName(indicator, language) || 
+                              (t(`indicators.${indicator}`) !== `indicators.${indicator}` 
+                                ? t(`indicators.${indicator}`)
+                                : item?.label ?? 'Unknown Indicator');
                           
                           return (
                             <tr 
@@ -400,16 +507,28 @@ const BasicSDHEDashboard = () => {
                               className={`border-b border-gray-100 ${
                                 isDomainScore ? 'bg-blue-50 font-medium' : 
                                 index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
-                              }`}
+                              } ${!isDomainScore ? 'hover:bg-blue-50 transition-colors' : ''}`}
                             >
                               <td className="py-3 px-4">
                                 <div className="flex items-center space-x-2">
                                   {isDomainScore && (
-                                    <span className="text-blue-600 font-bold">■</span>
+                                    <span className="text-blue-600 font-bold">▊</span>
                                   )}
-                                  <span className={isDomainScore ? 'font-bold text-blue-800' : ''}>
-                                    {translatedLabel}
-                                  </span>
+                                  {/* Make indicator name clickable */}
+                                  {!isDomainScore ? (
+                                    <button
+                                      onClick={() => handleIndicatorClick(indicator)}
+                                      className={`text-left hover:text-blue-600 hover:underline focus:outline-none focus:text-blue-600 ${
+                                        isDomainScore ? 'font-bold text-blue-800 cursor-default' : 'cursor-pointer'
+                                      }`}
+                                    >
+                                      {translatedLabel}
+                                    </button>
+                                  ) : (
+                                    <span className="font-bold text-blue-800">
+                                      {translatedLabel}
+                                    </span>
+                                  )}
                                   {/* Special highlighting for severe diseases in health outcomes */}
                                   {selectedDomain === 'health_outcomes' && !isDomainScore && (
                                     ['cancer', 'hiv', 'stroke', 'ischemic_heart_disease', 'chronic_kidney_disease'].includes(indicator) && (
@@ -470,9 +589,6 @@ const BasicSDHEDashboard = () => {
             )}
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
-              <div><span className="inline-block w-3 h-3 bg-green-500 rounded mr-1"></span><strong>{t('ui.excellent')}:</strong> {t('ui.bestOutcomes')}</div>
-              <div><span className="inline-block w-3 h-3 bg-yellow-500 rounded mr-1"></span><strong>{t('ui.good')}:</strong> {t('ui.aboveAverage')}</div>
-              <div><span className="inline-block w-3 h-3 bg-orange-500 rounded mr-1"></span><strong>{t('ui.fair')}:</strong> {t('ui.belowAverage')}</div>
               <div><span className="inline-block w-3 h-3 bg-red-500 rounded mr-1"></span><strong>{t('ui.poor')}:</strong> {t('ui.worstOutcomes')}</div>
             </div>
             <p className="text-xs text-gray-500 mt-2">
