@@ -1,4 +1,4 @@
-// IndicatorDetailPage.jsx - Fixed with proper import
+// IndicatorDetailPage.jsx - Fixed with Cases/Sample display
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
@@ -130,10 +130,6 @@ const IndicatorDetailPage = ({
       ageGroups[ageGroup].push(record);
       sexGroups[sexGroup].push(record);
     });
-
-    // For disaggregation analysis, we want to show TWO things:
-    // 1. Demographic composition (what % of the group is each age/sex)
-    // 2. Indicator prevalence within each demographic subgroup
 
     // Calculate both demographic distribution AND indicator prevalence for each group
     const calculateGroupData = (groupRecords, totalRecords) => {
@@ -558,7 +554,7 @@ const IndicatorDetailPage = ({
               {[
                 { id: 'overview', icon: Eye, label: language === 'th' ? 'ภาพรวม' : 'Overview' },
                 { id: 'disaggregation', icon: Users, label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Disaggregation' },
-                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวณ' : 'Methodology' }
+                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวด' : 'Methodology' }
               ].map(tab => (
                 <button
                   key={tab.id}
@@ -708,7 +704,7 @@ const IndicatorDetailPage = ({
                           <th className="text-left py-2">{language === 'th' ? 'กลุ่มอายุ' : 'Age Group'}</th>
                           <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
                           <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
-                          <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'ผู้ป่วย/ตัวอย่าง' : 'Cases/Sample'}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -723,7 +719,12 @@ const IndicatorDetailPage = ({
                             </td>
                             <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
                             <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
-                            <td className="text-right py-2 text-gray-600">{item.count}</td>
+                            <td className="text-right py-2 text-gray-600">
+                              {(() => {
+                                const casesCount = Math.round((item.indicatorValue || 0) * item.count / 100);
+                                return `${casesCount}/${item.count}`;
+                              })()}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -731,6 +732,7 @@ const IndicatorDetailPage = ({
                     <div className="mt-2 text-xs text-gray-500">
                       <p><strong>{language === 'th' ? 'สัดส่วน' : 'Proportion'}:</strong> {language === 'th' ? 'เปอร์เซ็นต์ของประชากรกลุ่มนี้' : 'Percentage of this population group'}</p>
                       <p><strong>{language === 'th' ? 'ค่าตัวชี้วัด' : 'Indicator'}:</strong> {language === 'th' ? 'ค่าตัวชี้วัดในกลุ่มอายุนี้' : 'Indicator value within this age group'}</p>
+                      <p><strong>{language === 'th' ? 'ผู้ป่วย/ตัวอย่าง' : 'Cases/Sample'}:</strong> {language === 'th' ? 'จำนวนผู้ที่มีภาวะนี้/จำนวนทั้งหมดในกลุ่ม' : 'Number with condition/Total in group'}</p>
                     </div>
                   </div>
                 </div>
@@ -768,7 +770,7 @@ const IndicatorDetailPage = ({
                           <th className="text-left py-2">{language === 'th' ? 'เพศ' : 'Sex'}</th>
                           <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
                           <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
-                          <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'ผู้ป่วย/ตัวอย่าง' : 'Cases/Sample'}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -783,7 +785,12 @@ const IndicatorDetailPage = ({
                             </td>
                             <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
                             <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
-                            <td className="text-right py-2 text-gray-600">{item.count}</td>
+                            <td className="text-right py-2 text-gray-600">
+                              {(() => {
+                                const casesCount = Math.round((item.indicatorValue || 0) * item.count / 100);
+                                return `${casesCount}/${item.count}`;
+                              })()}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -791,6 +798,7 @@ const IndicatorDetailPage = ({
                     <div className="mt-2 text-xs text-gray-500">
                       <p><strong>{language === 'th' ? 'สัดส่วน' : 'Proportion'}:</strong> {language === 'th' ? 'เปอร์เซ็นต์ของประชากรกลุ่มนี้' : 'Percentage of this population group'}</p>
                       <p><strong>{language === 'th' ? 'ค่าตัวชี้วัด' : 'Indicator'}:</strong> {language === 'th' ? 'ค่าตัวชี้วัดในกลุ่มเพศนี้' : 'Indicator value within this sex group'}</p>
+                      <p><strong>{language === 'th' ? 'ผู้ป่วย/ตัวอย่าง' : 'Cases/Sample'}:</strong> {language === 'th' ? 'จำนวนผู้ที่มีภาวะนี้/จำนวนทั้งหมดในกลุ่ม' : 'Number with condition/Total in group'}</p>
                     </div>
                   </div>
                 </div>
@@ -851,13 +859,13 @@ const IndicatorDetailPage = ({
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'วิธีการคำนวณและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
+                {language === 'th' ? 'วิธีการคำนวดและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
               </h3>
               
               <div className="space-y-6">
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'สูตรการคำนวณ' : 'Calculation Formula'}
+                    {language === 'th' ? 'สูตรการคำนวด' : 'Calculation Formula'}
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm">
                     {indicatorInfo.calculation}
