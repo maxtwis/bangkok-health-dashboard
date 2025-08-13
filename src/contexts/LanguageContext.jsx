@@ -1,4 +1,4 @@
-// src/contexts/LanguageContext.jsx - Fresh New Code
+// src/contexts/LanguageContext.jsx - Fixed Thai translation duplication
 import React, { createContext, useContext, useState } from 'react';
 
 const LanguageContext = createContext();
@@ -11,7 +11,7 @@ export const useLanguage = () => {
   return context;
 };
 
-// Fresh new translation object
+// Fixed translation object - removed duplication in Thai dynamicScaleNote
 const translations = {
   en: {
     // App Title
@@ -210,8 +210,8 @@ const translations = {
       unemployment_rate: 'อัตราการว่างงาน',
       employment_rate: 'อัตราการจ้างงานต่อประชากร',
       vulnerable_employment: 'อัตราการจ้างงานที่ไม่มั่นคงต่อการจ้างงานทั้งหมด',
-      food_insecurity_moderate: 'ความชุกของภาวะขาดสารอาหารระดับปานกลาง',
-      food_insecurity_severe: 'ความชุกของภาวะขาดสารอาหารระดับรุนแรง',
+      food_insecurity_moderate: 'ความชุกของ ภาวะขาดสารอาหารระดับปานกลาง',
+      food_insecurity_severe: 'ความชุกของ ภาวะขาดสารอาหารระดับรุนแรง',
       work_injury_fatal: 'อัตราความถี่ของการบาดเจ็บร้ายแรงจากการทำงาน',
       work_injury_non_fatal: 'อัตราความถี่ของการบาดเจ็บไม่ร้ายแรงจากการทำงาน',
       catastrophic_health_spending_household: 'ร้อยละของครัวเรือนที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 40 ของความสามารถในการจ่าย',
@@ -219,7 +219,7 @@ const translations = {
       health_spending_over_25_percent: 'ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 25 ของรายได้',
       
       // Education - From CSV
-      functional_literacy: 'อัตราส่วนประชากรที่มีทักษะในด้านการรู้หนังสือ (ฟัง พูด อ่าน เขียน) และการคำนวณ',
+      functional_literacy: 'อัตราส่วนประชากรที่มีทักษะในด้านการรู้หนังสือ (ฟัง พูด อ่าน เขียน) และการคำนวด',
       primary_completion: 'อัตราการสำเร็จการศึกษาระดับประถมศึกษา',
       secondary_completion: 'อัตราการสำเร็จการศึกษาระดับมัธยมศึกษา',
       tertiary_completion: 'อัตราการสำเร็จการศึกษาระดับอุดมศึกษา',
@@ -252,7 +252,7 @@ const translations = {
       
       // Health Behaviors - From CSV
       alcohol_consumption: 'อัตราการบริโภคแอลกอฮอล์',
-      tobacco_use: 'อัตราการใช้บุหรี่และบุหรี่ไฟ้า',
+      tobacco_use: 'อัตราการใช้บุหรี่และบุหรี่ไฟฟ้า',
       physical_activity: 'อัตราส่วนประชากรที่มีกิจกรรมทางกายไม่เพียงพอ',
       obesity: 'อัตราส่วนประชากรที่มีภาวะน้ำหนักเกิน',
       
@@ -287,7 +287,7 @@ const translations = {
     // UI Text
     ui: {
       loading: 'กำลังโหลดข้อมูล SDHE',
-      loadingDescription: 'กำลังประมวลผลข้อมูลการสำรวจและคำนวณตัวชี้วัดความเท่าเทียมด้านสุขภาพ...',
+      loadingDescription: 'กำลังประมวลผลข้อมูลการสำรวจและคำนวดตัวชี้วัดความเท่าเทียมด้านสุขภาพ...',
       error: 'ข้อผิดพลาดในการโหลดข้อมูล',
       retry: 'ลองอีกครั้ง',
       populationGroup: 'กลุ่มประชากร',
@@ -324,8 +324,8 @@ const translations = {
       to: 'ถึง',
       toHighlightDifferences: 'เพื่อเน้นความแตกต่าง',
       domainPerformanceRankings: 'อันดับคะแนนตามประเด็นตัวชี้วัด',
-      howToRead: 'วิธีอ่าน:',
-      spiderChartInstructions: 'แต่ละเส้นแสดงกลุ่มประชากรหนึ่งกลุ่ม ใช้ "มาตราส่วนแบบไดนามิก" เพื่อเน้นความแตกต่างระหว่างกลุ่ม หรือ "มาตราส่วนเต็ม" เพื่อดูประสิทธิภาพสัมบูรณ์ เลื่อนเมาส์ไปที่จุดต่างๆ เพื่อดูค่าที่แน่นอน',
+      howToRead: 'วิธีอ่าน',
+      spiderChartInstructions: 'แต่ละเส้นแสดงกลุ่มประชากรหนึ่งกลุ่ม ใช้ "มาตราส่วนแบบไดนามิก เพื่อเน้นความแตกต่างระหว่างกลุ่ม หรือ "มาตราส่วนเต็ม" เพื่อดูประสิทธิภาพสัมบูรณ์ เลื่อนเมาส์ไปที่จุดต่างๆ เพื่อดูค่าที่แน่นอน',
       
       // Hot Issues
       hotIssuesTitle: 'การวิเคราะห์ตัวชี้วัดตามเขต',
