@@ -299,6 +299,129 @@ const IndicatorDetailPage = ({
             r.welfare !== null && r.welfare !== undefined && r.welfare !== 'other' && r.welfare !== 'Other'
           ).length;
           return groupRecords.length > 0 ? (healthCoverage / groupRecords.length) * 100 : 0;
+
+        // EDUCATION INDICATORS - MISSING CASES ADDED
+        case 'primary_completion':
+          const primaryCompletion = groupRecords.filter(r => r.education >= 2).length;
+          return groupRecords.length > 0 ? (primaryCompletion / groupRecords.length) * 100 : 0;
+
+        case 'secondary_completion':
+          const secondaryCompletion = groupRecords.filter(r => r.education >= 4).length;
+          return groupRecords.length > 0 ? (secondaryCompletion / groupRecords.length) * 100 : 0;
+
+        case 'tertiary_completion':
+          const tertiaryCompletion = groupRecords.filter(r => r.education >= 7).length;
+          return groupRecords.length > 0 ? (tertiaryCompletion / groupRecords.length) * 100 : 0;
+
+        case 'training_participation':
+          const trainingParticipation = groupRecords.filter(r => r.training === 1).length;
+          return groupRecords.length > 0 ? (trainingParticipation / groupRecords.length) * 100 : 0;
+
+        // ECONOMIC SECURITY INDICATORS - ADD MISSING ONES  
+        case 'catastrophic_health_spending_household':
+          const validHouseholdRecords = groupRecords.filter(r => 
+            r.hh_health_expense !== null && r.hh_health_expense !== undefined && 
+            r.income !== null && r.income !== undefined && r.income > 0
+          );
+          if (validHouseholdRecords.length === 0) return 0;
+          
+          const catastrophicHouseholds = validHouseholdRecords.filter(r => {
+            const monthlyIncome = r.income_type === 1 ? r.income * 30 : r.income;
+            const healthSpendingRatio = (r.hh_health_expense / monthlyIncome) * 100;
+            return healthSpendingRatio > 40;
+          });
+          return (catastrophicHouseholds.length / validHouseholdRecords.length) * 100;
+
+        case 'health_spending_over_10_percent':
+          const validPersonalRecords = groupRecords.filter(r => 
+            r.health_expense !== null && r.health_expense !== undefined && 
+            r.income !== null && r.income !== undefined && r.income > 0
+          );
+          if (validPersonalRecords.length === 0) return 0;
+          
+          const highSpenders = validPersonalRecords.filter(r => {
+            const monthlyIncome = r.income_type === 1 ? r.income * 30 : r.income;
+            const healthSpendingRatio = (r.health_expense / monthlyIncome) * 100;
+            return healthSpendingRatio > 10;
+          });
+          return (highSpenders.length / validPersonalRecords.length) * 100;
+
+        case 'health_spending_over_25_percent':
+          const validPersonalRecords25 = groupRecords.filter(r => 
+            r.health_expense !== null && r.health_expense !== undefined && 
+            r.income !== null && r.income !== undefined && r.income > 0
+          );
+          if (validPersonalRecords25.length === 0) return 0;
+          
+          const veryHighSpenders = validPersonalRecords25.filter(r => {
+            const monthlyIncome = r.income_type === 1 ? r.income * 30 : r.income;
+            const healthSpendingRatio = (r.health_expense / monthlyIncome) * 100;
+            return healthSpendingRatio > 25;
+          });
+          return (veryHighSpenders.length / validPersonalRecords25.length) * 100;
+
+        // PHYSICAL ENVIRONMENT INDICATORS
+        case 'electricity_access':
+          const electricityAccess = groupRecords.filter(r => r['community_environment/4'] !== 1).length;
+          return groupRecords.length > 0 ? (electricityAccess / groupRecords.length) * 100 : 0;
+
+        case 'clean_water_access':
+          const cleanWaterAccess = groupRecords.filter(r => r['community_environment/3'] !== 1).length;
+          return groupRecords.length > 0 ? (cleanWaterAccess / groupRecords.length) * 100 : 0;
+
+        case 'sanitation_facilities':
+          const sanitationAccess = groupRecords.filter(r => r.house_sink === 1).length;
+          return groupRecords.length > 0 ? (sanitationAccess / groupRecords.length) * 100 : 0;
+
+        case 'waste_management':
+          const wasteManagement = groupRecords.filter(r => r['community_environment/5'] !== 1).length;
+          return groupRecords.length > 0 ? (wasteManagement / groupRecords.length) * 100 : 0;
+
+        case 'housing_overcrowding':
+          const overcrowding = groupRecords.filter(r => 
+            r['community_environment/1'] === 1 || r['community_environment/2'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (overcrowding / groupRecords.length) * 100 : 0;
+
+        case 'home_ownership':
+          const homeOwnership = groupRecords.filter(r => r.house_status === 1).length;
+          return groupRecords.length > 0 ? (homeOwnership / groupRecords.length) * 100 : 0;
+
+        case 'disaster_experience':
+          const disasterExperience = groupRecords.filter(r => 
+            r['community_disaster/1'] === 1 || r['community_disaster/2'] === 1 || 
+            r['community_disaster/3'] === 1 || r['community_disaster/4'] === 1
+          ).length;
+          return groupRecords.length > 0 ? (disasterExperience / groupRecords.length) * 100 : 0;
+
+        // SOCIAL CONTEXT INDICATORS
+        case 'community_safety':
+          const safetyResponses = groupRecords.filter(r => r.community_safety);
+          if (safetyResponses.length === 0) return 0;
+          
+          return safetyResponses.reduce((sum, r) => {
+            if (r.community_safety === '4_1') return sum + 100;
+            if (r.community_safety === '3_1') return sum + 75;
+            if (r.community_safety === '2') return sum + 50;
+            if (r.community_safety === '1') return sum + 25;
+            return sum;
+          }, 0) / safetyResponses.length;
+
+        case 'violence_psychological':
+          const psychologicalViolence = groupRecords.filter(r => r.psychological_violence === 1).length;
+          return groupRecords.length > 0 ? (psychologicalViolence / groupRecords.length) * 100 : 0;
+
+        case 'violence_sexual':
+          const sexualViolence = groupRecords.filter(r => r.sexual_violence === 1).length;
+          return groupRecords.length > 0 ? (sexualViolence / groupRecords.length) * 100 : 0;
+
+        case 'social_support':
+          const socialSupport = groupRecords.filter(r => r.helper === 1).length;
+          return groupRecords.length > 0 ? (socialSupport / groupRecords.length) * 100 : 0;
+
+        case 'community_murder':
+          const communityMurder = groupRecords.filter(r => r.community_murder === 1).length;
+          return groupRecords.length > 0 ? (communityMurder / groupRecords.length) * 100 : 0;
           
         default:
           return 0;
