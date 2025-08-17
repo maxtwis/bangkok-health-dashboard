@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -22,10 +22,12 @@ const BangkokMap = ({
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const geoJsonLayerRef = useRef(null);
+  const initializationTimeoutRef = useRef(null);
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mapReady, setMapReady] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   // District code mapping
   const districtCodeMap = {
@@ -70,76 +72,156 @@ const BangkokMap = ({
     loadGeoJSON();
   }, []);
 
-  // Initialize map - Simplified and more robust approach
-  useEffect(() => {
+  // Retry mechanism for map initialization
+  const retryInitialization = useCallback(() => {
+    if (retryCount < 3) {
+      console.log(`🔄 Retrying map initialization (attempt ${retryCount + 1}/3)`);
+      setRetryCount(prev => prev + 1);
+      setError(null);
+      setMapReady(false);
+    } else {
+      setError('Failed to initialize map after multiple attempts');
+    }
+  }, [retryCount]);
+
+  // Initialize map with better error handling and container checking
+  const initializeMap = useCallback(() => {
     if (!mapRef.current || mapInstanceRef.current || loading || error) {
       return;
     }
 
-    console.log('🚀 Initializing map...');
+    const container = mapRef.current;
+    
+    // Wait for container to have proper dimensions
+    const checkContainerReady = () => {
+      const rect = container.getBoundingClientRect();
+      console.log('📏 Container dimensions:', rect);
+      
+      // Check if container has proper dimensions
+      if (rect.width === 0 || rect.height === 0) {
+        console.log('⏳ Container not ready, waiting...');
+        return false;
+      }
+      
+      // Check if container is visible in viewport
+      if (rect.top < -window.innerHeight || rect.top > window.innerHeight * 2) {
+        console.log('👁️ Container not visible, waiting...');
+        return false;
+      }
+      
+      return true;
+    };
 
-    // Use a simple timeout to ensure DOM is ready
-    const initializeMap = () => {
-      try {
-        // Check if container exists and has dimensions
-        const container = mapRef.current;
-        if (!container) {
-          console.error('❌ Map container not found');
-          setError('Map container not available');
-          return;
+    if (!checkContainerReady()) {
+      // Wait longer and try again
+      initializationTimeoutRef.current = setTimeout(() => {
+        if (checkContainerReady()) {
+          initializeMap();
+        } else {
+          retryInitialization();
         }
+      }, 100);
+      return;
+    }
 
-        // Force container to have dimensions
-        container.style.height = '100%';
-        container.style.width = '100%';
-        container.style.minHeight = '400px';
+    try {
+      console.log('🚀 Creating Leaflet map...');
+      
+      // Clear any existing map first
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
 
-        // Create map with proper error handling
-        const map = L.map(container, {
-          center: [13.7563, 100.5018],
-          zoom: 10,
-          zoomControl: true,
-          attributionControl: true,
-          preferCanvas: false // Use SVG instead of Canvas for better compatibility
-        });
+      // Ensure container has explicit dimensions
+      container.style.height = '100%';
+      container.style.width = '100%';
+      container.style.position = 'relative';
 
-        // Add tile layer with error handling
-        const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors',
-          maxZoom: 18,
-          subdomains: ['a', 'b', 'c']
-        });
+      // Create map with error handling
+      const map = L.map(container, {
+        center: [13.7563, 100.5018],
+        zoom: 10,
+        zoomControl: true,
+        attributionControl: true,
+        preferCanvas: false,
+        renderer: L.svg() // Force SVG renderer
+      });
 
-        tileLayer.on('tileerror', (e) => {
-          console.warn('Tile loading error:', e);
-        });
+      // Add error handler for the map
+      map.on('error', (e) => {
+        console.error('Map error:', e);
+        retryInitialization();
+      });
 
-        tileLayer.addTo(map);
+      // Add tile layer with comprehensive error handling
+      const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18,
+        subdomains: ['a', 'b', 'c'],
+        errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSI+VGlsZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+'
+      });
+
+      let tileLoadTimeout = setTimeout(() => {
+        console.warn('Tiles taking too long to load, proceeding anyway...');
+        proceedWithMapSetup();
+      }, 5000);
+
+      const proceedWithMapSetup = () => {
+        clearTimeout(tileLoadTimeout);
         
         // Store map reference
         mapInstanceRef.current = map;
         console.log('✅ Map created successfully');
         
-        // Wait a moment for tiles to load, then invalidate size
+        // Invalidate size to ensure proper rendering
         setTimeout(() => {
           if (mapInstanceRef.current) {
             mapInstanceRef.current.invalidateSize(true);
             setMapReady(true);
-            console.log('✅ Map ready');
+            setRetryCount(0); // Reset retry count on success
+            console.log('✅ Map ready and sized correctly');
           }
-        }, 100);
+        }, 50);
+      };
 
-      } catch (err) {
-        console.error('❌ Map initialization error:', err);
-        setError(`Map initialization failed: ${err.message}`);
-      }
-    };
+      tileLayer.on('load', () => {
+        console.log('✅ Tiles loaded');
+        proceedWithMapSetup();
+      });
 
-    // Initialize after a short delay to ensure DOM readiness
-    const timer = setTimeout(initializeMap, 50);
+      tileLayer.on('tileerror', (e) => {
+        console.warn('Some tiles failed to load:', e);
+        // Don't fail completely, just continue
+      });
 
+      tileLayer.addTo(map);
+
+      // Fallback: proceed even if tiles don't load completely
+      setTimeout(proceedWithMapSetup, 2000);
+
+    } catch (err) {
+      console.error('❌ Map initialization error:', err);
+      retryInitialization();
+    }
+  }, [loading, error, retryInitialization, retryCount]);
+
+  // Initialize map when data is ready
+  useEffect(() => {
+    if (!loading && !error && geoJsonData) {
+      // Use requestAnimationFrame to ensure DOM is fully rendered
+      requestAnimationFrame(() => {
+        setTimeout(initializeMap, 100);
+      });
+    }
+  }, [loading, error, geoJsonData, initializeMap]);
+
+  // Cleanup on unmount
+  useEffect(() => {
     return () => {
-      clearTimeout(timer);
+      if (initializationTimeoutRef.current) {
+        clearTimeout(initializationTimeoutRef.current);
+      }
       if (mapInstanceRef.current) {
         console.log('🧹 Cleaning up map');
         try {
@@ -148,10 +230,9 @@ const BangkokMap = ({
           console.warn('Error during map cleanup:', e);
         }
         mapInstanceRef.current = null;
-        setMapReady(false);
       }
     };
-  }, [loading, error]);
+  }, []);
 
   // Get color based on score
   const getDistrictColor = (districtName) => {
@@ -182,15 +263,10 @@ const BangkokMap = ({
   // Update map layers when data changes
   useEffect(() => {
     if (!mapInstanceRef.current || !geoJsonData || !mapReady) {
-      console.log('⏳ Waiting for map to be ready...', {
-        hasMap: !!mapInstanceRef.current,
-        hasData: !!geoJsonData,
-        mapReady
-      });
       return;
     }
 
-    console.log('🗺️ Adding districts to map...');
+    console.log('🗺️ Updating district layers...');
 
     try {
       // Remove old layer
@@ -242,10 +318,10 @@ const BangkokMap = ({
         console.warn('Error fitting bounds:', boundsError);
       }
       
-      console.log('✅ Districts added to map');
+      console.log('✅ District layers updated');
       
     } catch (err) {
-      console.error('❌ Layer error:', err);
+      console.error('❌ Layer update error:', err);
     }
   }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, mapReady]);
 
@@ -261,7 +337,7 @@ const BangkokMap = ({
     );
   }
 
-  // Show error state
+  // Show error state with retry option
   if (error) {
     return (
       <div className="h-full flex items-center justify-center bg-gray-50 rounded-lg p-6">
@@ -273,12 +349,21 @@ const BangkokMap = ({
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Map Error</h3>
           <p className="text-red-600 text-sm mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            Reload Page
-          </button>
+          <div className="space-x-2">
+            <button 
+              onClick={retryInitialization}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              disabled={retryCount >= 3}
+            >
+              {retryCount >= 3 ? 'Max Retries Reached' : 'Retry'}
+            </button>
+            <button 
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+            >
+              Reload Page
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -286,22 +371,26 @@ const BangkokMap = ({
 
   return (
     <div className="relative w-full h-full bg-white rounded-lg shadow-sm overflow-hidden">
-      {/* Map container with explicit sizing */}
+      {/* Map container with explicit sizing and better positioning */}
       <div 
         ref={mapRef} 
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full z-0"
         style={{ 
           minHeight: '400px',
-          minWidth: '300px'
+          minWidth: '300px',
+          backgroundColor: '#f3f4f6' // Background color while loading
         }}
       />
       
       {/* Loading overlay while map initializes */}
-      {!mapReady && (
+      {!mapReady && !error && (
         <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-[2000]">
           <div className="text-center p-6">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Initializing map...</p>
+            <p className="text-gray-600">
+              Initializing map...
+              {retryCount > 0 && ` (Attempt ${retryCount + 1})`}
+            </p>
           </div>
         </div>
       )}
