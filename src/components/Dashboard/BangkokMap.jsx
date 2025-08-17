@@ -25,7 +25,7 @@ const BangkokMap = ({
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [initStatus, setInitStatus] = useState('pending');
+  const [mapReady, setMapReady] = useState(false);
 
   // District code mapping
   const districtCodeMap = {
@@ -34,7 +34,7 @@ const BangkokMap = ({
     1009: "พระโขนง", 1010: "มีนบุรี", 1011: "ลาดกระบัง", 1012: "ยานนาวา",
     1013: "สัมพันธวงศ์", 1014: "พญาไท", 1015: "ธนบุรี", 1016: "บางกอกใหญ่",
     1017: "ห้วยขวาง", 1018: "คลองสาน", 1019: "ตลิ่งชัน", 1020: "บางกอกน้อย",
-    1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฏร์บูรณะ",
+    1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฎร์บูรณะ",
     1025: "บางพลัด", 1026: "ดินแดง", 1027: "บึงกุ่ม", 1028: "สาทร",
     1029: "บางซื่อ", 1030: "จตุจักร", 1031: "บางคอแหลม", 1032: "ประเวศ",
     1033: "คลองเตย", 1034: "สวนหลวง", 1035: "จอมทอง", 1036: "ดอนเมือง",
@@ -70,94 +70,88 @@ const BangkokMap = ({
     loadGeoJSON();
   }, []);
 
-  // Force initialize map immediately after component mounts
+  // Initialize map - Simplified and more robust approach
   useEffect(() => {
-    const forceInitMap = () => {
-      if (!mapRef.current || mapInstanceRef.current) return;
+    if (!mapRef.current || mapInstanceRef.current || loading || error) {
+      return;
+    }
 
-      console.log('🚀 FORCE initializing map...');
-      setInitStatus('initializing');
-      
+    console.log('🚀 Initializing map...');
+
+    // Use a simple timeout to ensure DOM is ready
+    const initializeMap = () => {
       try {
-        // Check container dimensions
-        const rect = mapRef.current.getBoundingClientRect();
-        console.log('📏 Container rect:', rect);
-        
-        if (rect.width === 0 || rect.height === 0) {
-          console.warn('⚠️ Container has zero dimensions, but proceeding anyway...');
+        // Check if container exists and has dimensions
+        const container = mapRef.current;
+        if (!container) {
+          console.error('❌ Map container not found');
+          setError('Map container not available');
+          return;
         }
 
-        // Create map with basic settings
-        const map = L.map(mapRef.current, {
+        // Force container to have dimensions
+        container.style.height = '100%';
+        container.style.width = '100%';
+        container.style.minHeight = '400px';
+
+        // Create map with proper error handling
+        const map = L.map(container, {
           center: [13.7563, 100.5018],
           zoom: 10,
           zoomControl: true,
-          attributionControl: true
+          attributionControl: true,
+          preferCanvas: false // Use SVG instead of Canvas for better compatibility
         });
-        
-        console.log('📍 Map object created');
 
-        // Add tiles immediately
+        // Add tile layer with error handling
         const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '© OpenStreetMap contributors',
-          maxZoom: 18
+          maxZoom: 18,
+          subdomains: ['a', 'b', 'c']
+        });
+
+        tileLayer.on('tileerror', (e) => {
+          console.warn('Tile loading error:', e);
         });
 
         tileLayer.addTo(map);
-        console.log('🔲 Tile layer added');
-
+        
         // Store map reference
         mapInstanceRef.current = map;
+        console.log('✅ Map created successfully');
         
-        // Force size calculations
+        // Wait a moment for tiles to load, then invalidate size
         setTimeout(() => {
           if (mapInstanceRef.current) {
             mapInstanceRef.current.invalidateSize(true);
-            console.log('🔄 Map size invalidated');
-            setInitStatus('ready');
+            setMapReady(true);
+            console.log('✅ Map ready');
           }
         }, 100);
 
-        console.log('✅ Map force-initialized successfully');
-        
       } catch (err) {
-        console.error('❌ Force init error:', err);
+        console.error('❌ Map initialization error:', err);
         setError(`Map initialization failed: ${err.message}`);
-        setInitStatus('failed');
       }
     };
 
-    // Multiple attempts to initialize
-    let attempts = 0;
-    const maxAttempts = 3;
-    
-    const tryInit = () => {
-      attempts++;
-      console.log(`🔄 Init attempt ${attempts}/${maxAttempts}`);
-      
-      if (mapRef.current && !mapInstanceRef.current) {
-        forceInitMap();
-      } else if (attempts < maxAttempts) {
-        setTimeout(tryInit, 200);
-      } else {
-        console.error('❌ Max init attempts reached');
-        setInitStatus('failed');
-        setError('Failed to initialize map after multiple attempts');
-      }
-    };
-
-    // Start initialization attempts
-    setTimeout(tryInit, 100);
+    // Initialize after a short delay to ensure DOM readiness
+    const timer = setTimeout(initializeMap, 50);
 
     return () => {
+      clearTimeout(timer);
       if (mapInstanceRef.current) {
         console.log('🧹 Cleaning up map');
-        mapInstanceRef.current.remove();
+        try {
+          mapInstanceRef.current.remove();
+        } catch (e) {
+          console.warn('Error during map cleanup:', e);
+        }
         mapInstanceRef.current = null;
-        setInitStatus('pending');
+        setMapReady(false);
       }
     };
-  }, []);
+  }, [loading, error]);
 
   // Get color based on score
   const getDistrictColor = (districtName) => {
@@ -185,13 +179,13 @@ const BangkokMap = ({
     }
   };
 
-  // Update map layers (simplified)
+  // Update map layers when data changes
   useEffect(() => {
-    if (!mapInstanceRef.current || !geoJsonData || initStatus !== 'ready') {
-      console.log('⏳ Waiting for:', {
+    if (!mapInstanceRef.current || !geoJsonData || !mapReady) {
+      console.log('⏳ Waiting for map to be ready...', {
         hasMap: !!mapInstanceRef.current,
         hasData: !!geoJsonData,
-        initStatus
+        mapReady
       });
       return;
     }
@@ -238,10 +232,14 @@ const BangkokMap = ({
       layer.addTo(mapInstanceRef.current);
       geoJsonLayerRef.current = layer;
       
-      // Fit bounds
-      const bounds = layer.getBounds();
-      if (bounds.isValid()) {
-        mapInstanceRef.current.fitBounds(bounds, { padding: [20, 20] });
+      // Fit bounds with error handling
+      try {
+        const bounds = layer.getBounds();
+        if (bounds.isValid()) {
+          mapInstanceRef.current.fitBounds(bounds, { padding: [20, 20] });
+        }
+      } catch (boundsError) {
+        console.warn('Error fitting bounds:', boundsError);
       }
       
       console.log('✅ Districts added to map');
@@ -249,8 +247,7 @@ const BangkokMap = ({
     } catch (err) {
       console.error('❌ Layer error:', err);
     }
-
-  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, initStatus]);
+  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, mapReady]);
 
   // Show loading state
   if (loading) {
@@ -258,7 +255,7 @@ const BangkokMap = ({
       <div className="h-full flex items-center justify-center bg-gray-50 rounded-lg">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading data...</p>
+          <p className="text-gray-600">Loading map data...</p>
         </div>
       </div>
     );
@@ -299,44 +296,18 @@ const BangkokMap = ({
         }}
       />
       
-      {/* Status overlay */}
-      {initStatus !== 'ready' && (
+      {/* Loading overlay while map initializes */}
+      {!mapReady && (
         <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-[2000]">
           <div className="text-center p-6">
-            {initStatus === 'initializing' && (
-              <>
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                <p className="text-gray-600">Initializing map...</p>
-              </>
-            )}
-            {initStatus === 'failed' && (
-              <>
-                <div className="w-12 h-12 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <p className="text-red-600">Map failed to initialize</p>
-                <button 
-                  onClick={() => window.location.reload()}
-                  className="mt-2 px-3 py-1 bg-blue-600 text-white text-sm rounded"
-                >
-                  Retry
-                </button>
-              </>
-            )}
-            {initStatus === 'pending' && (
-              <>
-                <div className="animate-pulse w-8 h-8 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                <p className="text-gray-600">Preparing map...</p>
-              </>
-            )}
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Initializing map...</p>
           </div>
         </div>
       )}
       
       {/* Legend (only show when ready) */}
-      {initStatus === 'ready' && (
+      {mapReady && (
         <div className="absolute bottom-4 left-4 bg-white bg-opacity-95 backdrop-blur rounded-lg shadow-lg p-3 text-xs z-[1000]">
           <div className="font-medium mb-2">{t(`domains.${selectedDomain}`)}</div>
           <div className="space-y-1">
@@ -361,15 +332,13 @@ const BangkokMap = ({
       )}
       
       {/* Selection info (only show when ready) */}
-      {initStatus === 'ready' && (
+      {mapReady && (
         <div className="absolute top-4 right-4 bg-white bg-opacity-95 backdrop-blur rounded-lg shadow-lg p-3 text-xs z-[1000]">
           <div className="font-medium mb-1">Current Selection</div>
           <div>District: {selectedDistrict === 'Bangkok Overall' && language === 'th' ? 'ภาพรวม 50 เขต' : selectedDistrict}</div>
           <div>Group: {t(`populationGroups.${selectedPopulationGroup}`)}</div>
         </div>
       )}
-
-
     </div>
   );
 };
