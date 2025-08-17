@@ -155,12 +155,41 @@ const BangkokMap = ({
       });
 
       // Add tile layer with comprehensive error handling
-      const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 18,
-        subdomains: ['a', 'b', 'c'],
+      // Option 1: CartoDB Light (Gray) - Clean and minimal
+      const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap contributors © CARTO',
+        maxZoom: 19,
+        subdomains: 'abcd',
         errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSI+VGlsZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+'
       });
+
+      // Alternative gray base map options (uncomment to use):
+      
+      // Option 2: CartoDB Light No Labels (Very clean gray)
+      // const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+      //   attribution: '© OpenStreetMap contributors © CARTO',
+      //   maxZoom: 19,
+      //   subdomains: 'abcd'
+      // });
+
+      // Option 3: Stamen Toner Lite (High contrast gray)
+      // const tileLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
+      //   attribution: 'Map tiles by Stamen Design, CC BY 3.0 — Map data © OpenStreetMap contributors',
+      //   maxZoom: 20,
+      //   subdomains: 'abcd'
+      // });
+
+      // Option 4: ESRI Gray Canvas
+      // const tileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      //   attribution: 'Tiles © Esri — Esri, DeLorme, NAVTEQ',
+      //   maxZoom: 16
+      // });
+
+      // Option 5: OpenStreetMap Grayscale (Custom styled)
+      // const tileLayer = L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+      //   attribution: '© OpenStreetMap contributors',
+      //   maxZoom: 18
+      // });
 
       let tileLoadTimeout = setTimeout(() => {
         console.warn('Tiles taking too long to load, proceeding anyway...');
