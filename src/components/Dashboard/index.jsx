@@ -564,7 +564,16 @@ const Dashboard = () => {
                                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                                     getScoreColor(value, indicator)
                                   }`}>
-                                    {formatValue(value)}
+                                    {(() => {
+                                      const isSupplyIndicator = ['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 'community_healthworker_per_population'].includes(indicator);
+                                      
+                                      if (isSupplyIndicator) {
+                                        const unit = indicator === 'healthworker_per_population' ? '10,000' : '1,000';
+                                        return `${value.toFixed(1)} per ${unit}`;
+                                      } else {
+                                        return formatValue(value);
+                                      }
+                                    })()}
                                   </span>
                                 </td>
                                 <td className="text-center py-3 px-4 text-gray-600">
