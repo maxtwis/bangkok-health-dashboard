@@ -1,10 +1,14 @@
-// Updated Basic SDHE Data Processor with Health Outcomes Domain - src/utils/BasicSDHEProcessor.js
+// Updated Basic SDHE Data Processor with Healthcare Supply Indicators - src/utils/BasicSDHEProcessor.js
 import Papa from 'papaparse';
 import _ from 'lodash';
 
 class BasicSDHEProcessor {
   constructor() {
     this.surveyData = [];
+    this.healthSupplyData = [];
+    this.districtPopulationData = [];
+    this.communityHealthWorkerData = [];
+    this.communityPopulationData = [];
     this.sdheResults = {};
     this.districtCodeMap = this.createDistrictCodeMap();
     this.indicatorMappings = this.createIndicatorMappings();
@@ -26,6 +30,167 @@ class BasicSDHEProcessor {
       1045: "วังทองหลาง", 1046: "คลองสามวา", 1047: "บางนา", 1048: "ทวีวัฒนา",
       1049: "ทุ่งครุ", 1050: "บางบอน"
     };
+  }
+
+  // Load additional healthcare supply data files
+  async loadHealthcareSupplyData() {
+    try {
+      console.log('🏥 Loading healthcare supply data...');
+      
+      // Load health supply data
+      const healthSupplyResponse = await fetch('/data/health_supply.csv');
+      if (!healthSupplyResponse.ok) {
+        throw new Error('Could not load health_supply.csv');
+      }
+      const healthSupplyCsv = await healthSupplyResponse.text();
+      const healthSupplyParsed = Papa.parse(healthSupplyCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.healthSupplyData = healthSupplyParsed.data;
+      console.log(`✅ Loaded ${this.healthSupplyData.length} health facilities`);
+
+      // Load district population data
+      const districtPopResponse = await fetch('/data/district_population.csv');
+      if (!districtPopResponse.ok) {
+        throw new Error('Could not load district_population.csv');
+      }
+      const districtPopCsv = await districtPopResponse.text();
+      const districtPopParsed = Papa.parse(districtPopCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.districtPopulationData = districtPopParsed.data;
+      console.log(`✅ Loaded ${this.districtPopulationData.length} population records`);
+
+      // Load community health worker data
+      const chwResponse = await fetch('/data/community_health_worker.csv');
+      if (!chwResponse.ok) {
+        throw new Error('Could not load community_health_worker.csv');
+      }
+      const chwCsv = await chwResponse.text();
+      const chwParsed = Papa.parse(chwCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.communityHealthWorkerData = chwParsed.data;
+      console.log(`✅ Loaded ${this.communityHealthWorkerData.length} CHW records`);
+
+      // Load community population data
+      const commPopResponse = await fetch('/data/community_population.csv');
+      if (!commPopResponse.ok) {
+        throw new Error('Could not load community_population.csv');
+      }
+      const commPopCsv = await commPopResponse.text();
+      const commPopParsed = Papa.parse(commPopCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.communityPopulationData = commPopParsed.data;
+      console.log(`✅ Loaded ${this.communityPopulationData.length} community population records`);
+
+    } catch (error) {
+      console.error('❌ Error loading healthcare supply data:', error);
+      throw error;
+    }
+  }
+
+  // Calculate healthcare supply indicators for a district
+  calculateHealthcareSupplyIndicators(districtCode, districtName) {
+    const results = {};
+
+    try {
+      // Get total population for the district
+      const districtPopulation = this.districtPopulationData
+        .filter(record => record.dcode === districtCode)
+        .reduce((sum, record) => sum + (record.population || 0), 0);
+
+      if (districtPopulation === 0) {
+        console.warn(`⚠️ No population data found for district ${districtName} (${districtCode})`);
+        return {
+          doctor_per_population: { value: 0, sample_size: 0 },
+          nurse_per_population: { value: 0, sample_size: 0 },
+          healthworker_per_population: { value: 0, sample_size: 0 },
+          community_healthworker_per_population: { value: 0, sample_size: 0 }
+        };
+      }
+
+      // Get health facilities in the district
+      const districtHealthFacilities = this.healthSupplyData.filter(facility => 
+        facility.dcode === districtCode
+      );
+
+      // Calculate totals from health facilities
+      const totalDoctors = districtHealthFacilities.reduce((sum, facility) => 
+        sum + (facility.doctor_count || 0), 0);
+      const totalNurses = districtHealthFacilities.reduce((sum, facility) => 
+        sum + (facility.nurse_count || 0), 0);
+      const totalHealthWorkers = districtHealthFacilities.reduce((sum, facility) => 
+        sum + (facility.healthworker_count || 0), 0);
+
+      // Calculate per 1,000 population for doctors and nurses
+      results.doctor_per_population = {
+        value: parseFloat(((totalDoctors / districtPopulation) * 1000).toFixed(2)),
+        sample_size: districtHealthFacilities.length,
+        population: districtPopulation,
+        absolute_count: totalDoctors
+      };
+
+      results.nurse_per_population = {
+        value: parseFloat(((totalNurses / districtPopulation) * 1000).toFixed(2)),
+        sample_size: districtHealthFacilities.length,
+        population: districtPopulation,
+        absolute_count: totalNurses
+      };
+
+      // Calculate per 10,000 population for health workers
+      results.healthworker_per_population = {
+        value: parseFloat(((totalHealthWorkers / districtPopulation) * 10000).toFixed(2)),
+        sample_size: districtHealthFacilities.length,
+        population: districtPopulation,
+        absolute_count: totalHealthWorkers
+      };
+
+      // Calculate community health workers per 1,000 community population
+      const districtCHW = this.communityHealthWorkerData.find(record => 
+        record.dcode === districtCode
+      );
+      
+      const communityPopulation = this.communityPopulationData
+        .filter(record => record.dcode === districtCode)
+        .reduce((sum, record) => sum + (record.community_population_count || 0), 0);
+
+      if (districtCHW && communityPopulation > 0) {
+        results.community_healthworker_per_population = {
+          value: parseFloat(((districtCHW.community_health_worker_count / communityPopulation) * 1000).toFixed(2)),
+          sample_size: 1,
+          population: communityPopulation,
+          absolute_count: districtCHW.community_health_worker_count
+        };
+      } else {
+        results.community_healthworker_per_population = {
+          value: 0,
+          sample_size: 0,
+          population: communityPopulation,
+          absolute_count: 0
+        };
+      }
+
+    } catch (error) {
+      console.error(`❌ Error calculating healthcare supply for ${districtName}:`, error);
+      return {
+        doctor_per_population: { value: 0, sample_size: 0 },
+        nurse_per_population: { value: 0, sample_size: 0 },
+        healthworker_per_population: { value: 0, sample_size: 0 },
+        community_healthworker_per_population: { value: 0, sample_size: 0 }
+      };
+    }
+
+    return results;
   }
 
   createIndicatorMappings() {
@@ -164,7 +329,7 @@ class BasicSDHEProcessor {
         }
       },
 
-      // Healthcare Access Domain - Complete set
+      // Healthcare Access Domain - UPDATED with new indicators
       healthcare_access: {
         health_coverage: { 
           field: 'welfare', 
@@ -190,6 +355,23 @@ class BasicSDHEProcessor {
           field: 'oral_health_access', 
           condition: (val) => val === 1,
           label: 'Dental Access'
+        },
+        // NEW HEALTHCARE SUPPLY INDICATORS
+        doctor_per_population: {
+          isSupplyIndicator: true,
+          label: 'Doctors per 1,000 Population'
+        },
+        nurse_per_population: {
+          isSupplyIndicator: true,
+          label: 'Nurses per 1,000 Population'
+        },
+        healthworker_per_population: {
+          isSupplyIndicator: true,
+          label: 'Health Workers per 10,000 Population'
+        },
+        community_healthworker_per_population: {
+          isSupplyIndicator: true,
+          label: 'Community Health Workers per 1,000 Community Population'
         }
       },
 
@@ -318,7 +500,7 @@ class BasicSDHEProcessor {
         }
       },
 
-      // NEW: Health Outcomes Domain - Chronic Disease Prevalence
+      // Health Outcomes Domain - Complete set (diseases)
       health_outcomes: {
         // Overall chronic disease burden
         any_chronic_disease: {
@@ -515,11 +697,11 @@ class BasicSDHEProcessor {
   }
 
   // Calculate indicators for a specific set of records
-  calculateIndicatorsForRecords(records, domain) {
+  calculateIndicatorsForRecords(records, domain, districtName = null) {
     const domainMapping = this.indicatorMappings[domain];
     const results = { sample_size: records.length };
 
-    // Define reverse indicators (diseases are bad when high)
+    // Define reverse indicators (diseases and problems are bad when high)
     const reverseIndicators = {
       unemployment_rate: true,
       vulnerable_employment: true,
@@ -569,12 +751,84 @@ class BasicSDHEProcessor {
       cardiovascular_diseases: true,
       metabolic_diseases: true,
       multiple_chronic_conditions: true
+      // Healthcare supply indicators are NOT reverse (higher is better)
     };
 
     Object.keys(domainMapping).forEach(indicator => {
       const mapping = domainMapping[indicator];
       
-      if (mapping.calculation) {
+      // Handle healthcare supply indicators
+      if (mapping.isSupplyIndicator && districtName) {
+        // Get district code from district name
+        const districtCode = Object.keys(this.districtCodeMap).find(
+          code => this.districtCodeMap[code] === districtName
+        );
+        
+        if (districtCode) {
+          const supplyData = this.calculateHealthcareSupplyIndicators(
+            parseInt(districtCode), 
+            districtName
+          );
+          
+          if (supplyData[indicator]) {
+            results[indicator] = {
+              value: supplyData[indicator].value,
+              label: mapping.label,
+              sample_size: supplyData[indicator].sample_size,
+              population: supplyData[indicator].population,
+              absolute_count: supplyData[indicator].absolute_count
+            };
+          }
+        } else {
+          // For Bangkok Overall, calculate average across all districts
+          if (districtName === 'Bangkok Overall') {
+            const allDistrictCodes = Object.keys(this.districtCodeMap).map(code => parseInt(code));
+            let totalValue = 0;
+            let validDistricts = 0;
+            let totalPopulation = 0;
+            let totalAbsoluteCount = 0;
+            
+            allDistrictCodes.forEach(dcode => {
+              const dname = this.districtCodeMap[dcode];
+              const supplyData = this.calculateHealthcareSupplyIndicators(dcode, dname);
+              
+              if (supplyData[indicator] && supplyData[indicator].population > 0) {
+                // For Bangkok Overall, we want population-weighted averages
+                totalPopulation += supplyData[indicator].population;
+                totalAbsoluteCount += supplyData[indicator].absolute_count;
+                validDistricts++;
+              }
+            });
+            
+            if (totalPopulation > 0) {
+              // Calculate overall rate for Bangkok
+              let overallRate = 0;
+              if (indicator === 'healthworker_per_population') {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
+              } else {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
+              }
+              
+              results[indicator] = {
+                value: parseFloat(overallRate.toFixed(2)),
+                label: mapping.label,
+                sample_size: validDistricts,
+                population: totalPopulation,
+                absolute_count: totalAbsoluteCount
+              };
+            } else {
+              results[indicator] = {
+                value: 0,
+                label: mapping.label,
+                sample_size: 0,
+                population: 0,
+                absolute_count: 0
+              };
+            }
+          }
+        }
+      }
+      else if (mapping.calculation) {
         // Custom calculation function
         const calculatedValue = mapping.calculation(records);
         results[indicator] = {
@@ -678,7 +932,11 @@ class BasicSDHEProcessor {
       populationGroups.forEach(group => {
         const allRecords = this.surveyData.filter(r => r.population_group === group);
         if (allRecords.length > 0) {
-          results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(allRecords, domain);
+          results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
+            allRecords, 
+            domain, 
+            'Bangkok Overall'
+          );
         }
       });
       
@@ -690,7 +948,11 @@ class BasicSDHEProcessor {
           );
 
           if (records.length > 0) {
-            results[domain][district][group] = this.calculateIndicatorsForRecords(records, domain);
+            results[domain][district][group] = this.calculateIndicatorsForRecords(
+              records, 
+              domain, 
+              district
+            );
           }
         });
       });
@@ -721,6 +983,8 @@ class BasicSDHEProcessor {
       value: data[indicator].value,
       label: data[indicator].label,
       sample_size: data[indicator].sample_size,
+      population: data[indicator].population || null,
+      absolute_count: data[indicator].absolute_count || null,
       isDomainScore: indicator === '_domain_score'
     }));
   }
@@ -747,21 +1011,39 @@ class BasicSDHEProcessor {
   }
 
   async processSurveyData(csvContent) {
-    await this.loadSurveyData(csvContent);
-    const results = this.calculateIndicators();
-    
-    console.log(`✅ Processed ${this.surveyData.length} survey responses`);
-    console.log(`📊 Districts: ${this.getAvailableDistricts().length} (including Bangkok Overall)`);
-    console.log(`🎯 Domains: ${this.getAvailableDomains().length} (including Health Outcomes)`);
-    
-    // Log Bangkok Overall sample sizes
-    const bangkokSummary = this.getBangkokOverallSummary();
-    console.log(`🏙️ Bangkok Overall sample sizes:`, bangkokSummary.population_groups);
-    
-    return {
-      results,
-      processor: this
-    };
+    try {
+      // Load survey data first
+      await this.loadSurveyData(csvContent);
+      console.log(`✅ Processed ${this.surveyData.length} survey responses`);
+      
+      // Load healthcare supply data
+      await this.loadHealthcareSupplyData();
+      
+      // Calculate all indicators
+      const results = this.calculateIndicators();
+      
+      console.log(`📊 Districts: ${this.getAvailableDistricts().length} (including Bangkok Overall)`);
+      console.log(`🎯 Domains: ${this.getAvailableDomains().length} (including Health Outcomes + Healthcare Supply)`);
+      
+      // Log Bangkok Overall sample sizes
+      const bangkokSummary = this.getBangkokOverallSummary();
+      console.log(`🏙️ Bangkok Overall sample sizes:`, bangkokSummary.population_groups);
+      
+      // Log healthcare supply data availability
+      console.log(`🏥 Healthcare supply data loaded: ${this.healthSupplyData.length} facilities`);
+      console.log(`👥 Population data loaded: ${this.districtPopulationData.length} records`);
+      console.log(`🏥 Community health workers: ${this.communityHealthWorkerData.length} districts`);
+      console.log(`🏘️ Community population: ${this.communityPopulationData.length} communities`);
+      
+      return {
+        results,
+        processor: this
+      };
+      
+    } catch (error) {
+      console.error('❌ Error processing survey data:', error);
+      throw error;
+    }
   }
 }
 
