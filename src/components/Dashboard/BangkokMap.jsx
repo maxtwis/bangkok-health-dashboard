@@ -322,15 +322,33 @@ const BangkokMap = ({
           const districtName = districtCodeMap[dcode];
           
           if (districtName) {
-            layer.bindPopup(`<strong>${districtName}</strong><br/><small>Click to select</small>`);
+            layer.bindPopup(`<strong>${districtName}</strong><br/><small>Click to select/deselect</small>`);
             
-            layer.on('click', () => {
+            layer.on('click', (e) => {
               console.log('🖱️ Clicked:', districtName);
+              
+              // Prevent event from bubbling to map
+              L.DomEvent.stopPropagation(e);
+              
               if (onDistrictClick) {
-                onDistrictClick(districtName);
+                // If clicking on the already selected district, deselect it
+                if (selectedDistrict === districtName) {
+                  onDistrictClick('Bangkok Overall');
+                } else {
+                  onDistrictClick(districtName);
+                }
               }
             });
           }
+        }
+      });
+
+      // Add click handler to map background (for deselection when clicking outside districts)
+      mapInstanceRef.current.on('click', (e) => {
+        // Only trigger if we're not clicking on Bangkok Overall already
+        if (selectedDistrict !== 'Bangkok Overall' && onDistrictClick) {
+          console.log('🗺️ Clicked outside districts - returning to Bangkok Overall');
+          onDistrictClick('Bangkok Overall');
         }
       });
 
