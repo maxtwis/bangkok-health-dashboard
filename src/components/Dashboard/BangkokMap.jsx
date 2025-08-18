@@ -3,260 +3,6 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-// Debug Tool Component - Remove this after debugging
-const DistrictDebugTool = () => {
-  const [surveyData, setSurveyData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [analysis, setAnalysis] = useState(null);
-
-  // District code mapping
-  const districtCodeMap = {
-    1001: "พระนคร", 1002: "ดุสิต", 1003: "หนองจอก", 1004: "บางรัก",
-    1005: "บางเขน", 1006: "บางกะปิ", 1007: "ปทุมวัน", 1008: "ป้อมปราบศัตรูพ่าย",
-    1009: "พระโขนง", 1010: "มีนบุรี", 1011: "ลาดกระบัง", 1012: "ยานนาวา",
-    1013: "สัมพันธวงศ์", 1014: "พญาไท", 1015: "ธนบุรี", 1016: "บางกอกใหญ่",
-    1017: "ห้วยขวาง", 1018: "คลองสาน", 1019: "ตลิ่งชัน", 1020: "บางกอกน้อย",
-    1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฎร์บูรณะ",
-    1025: "บางพลัด", 1026: "ดินแดง", 1027: "บึงกุ่ม", 1028: "สาทร",
-    1029: "บางซื่อ", 1030: "จตุจักร", 1031: "บางคอแหลม", 1032: "ประเวศ",
-    1033: "คลองเตย", 1034: "สวนหลวง", 1035: "จอมทอง", 1036: "ดอนเมือง",
-    1037: "ราชเทวี", 1038: "ลาดพร้าว", 1039: "วัฒนา", 1040: "บางแค",
-    1041: "หลักสี่", 1042: "สายไหม", 1043: "คันนายาว", 1044: "สะพานสูง",
-    1045: "วังทองหลาง", 1046: "คลองสามวา", 1047: "บางนา", 1048: "ทวีวัฒนา",
-    1049: "ทุ่งครุ", 1050: "บางบอน"
-  };
-
-  // Population group classification (same as BasicSDHEProcessor)
-  const classifyPopulationGroup = (record) => {
-    if (record.sex === 'lgbt') return 'lgbtq';
-    if (record.age >= 60) return 'elderly';  
-    if (record.disable_status === 1) return 'disabled';
-    if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
-    return 'general_population';
-  };
-
-  useEffect(() => {
-    const loadAndAnalyzeData = async () => {
-      try {
-        setLoading(true);
-        
-        // Import Papa here since it's used in the debug tool
-        const Papa = await import('papaparse');
-        
-        // Load survey data
-        const response = await fetch('/data/survey_sampling.csv');
-        if (!response.ok) {
-          throw new Error('Could not load survey data');
-        }
-        
-        const csvContent = await response.text();
-        const parsed = Papa.default.parse(csvContent, {
-          header: true,
-          dynamicTyping: true,
-          skipEmptyLines: true
-        });
-
-        // Process the data
-        const processedData = parsed.data.map(record => ({
-          ...record,
-          district_name: districtCodeMap[record.dname] || `District_${record.dname}`,
-          population_group: classifyPopulationGroup(record)
-        }));
-
-        setSurveyData(processedData);
-        
-        // Analyze district 1024 specifically
-        const analysis = analyzeDistrict1024(processedData);
-        setAnalysis(analysis);
-        
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadAndAnalyzeData();
-  }, []);
-
-  const analyzeDistrict1024 = (data) => {
-    console.log('🔍 Analyzing District 1024 (ราษฎร์บูรณะ)...');
-    
-    // Check raw data for dcode 1024
-    const rawRecords1024 = data.filter(r => r.dname === 1024);
-    console.log('Raw records with dcode 1024:', rawRecords1024.length);
-    
-    // Check all unique dname values
-    const uniqueDnames = [...new Set(data.map(r => r.dname))].sort((a, b) => a - b);
-    console.log('All unique dname values:', uniqueDnames);
-    
-    // Check if 1024 exists in the data
-    const has1024 = uniqueDnames.includes(1024);
-    console.log('Does data contain dcode 1024?', has1024);
-    
-    // Check for similar codes
-    const similarCodes = uniqueDnames.filter(code => 
-      code.toString().includes('1024') || 
-      Math.abs(code - 1024) <= 5
-    );
-    console.log('Similar dcode values:', similarCodes);
-    
-    // Check district name mapping
-    const district1024Records = data.filter(r => r.district_name === 'ราษฎร์บูรณะ');
-    console.log('Records with district name "ราษฎร์บูรณะ":', district1024Records.length);
-    
-    // Population group breakdown for 1024
-    const populationGroups = {};
-    rawRecords1024.forEach(record => {
-      const group = record.population_group;
-      populationGroups[group] = (populationGroups[group] || 0) + 1;
-    });
-    
-    return {
-      totalRecords: data.length,
-      rawRecords1024: rawRecords1024.length,
-      uniqueDnames,
-      has1024,
-      similarCodes,
-      districtNameRecords: district1024Records.length,
-      populationGroups,
-      sampleRecords: rawRecords1024.slice(0, 5) // First 5 records for inspection
-    };
-  };
-
-  if (loading) {
-    return (
-      <div className="p-6 bg-white rounded-lg shadow-sm">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-center">Loading and analyzing data...</p>
-      </div>
-    );
-  }
-
-  if (!analysis) {
-    return (
-      <div className="p-6 bg-white rounded-lg shadow-sm">
-        <p className="text-red-600">Failed to analyze data</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="p-6 bg-white rounded-lg shadow-sm space-y-6">
-      <h2 className="text-xl font-bold text-gray-900">
-        🔍 District 1024 (เขตราษฎร์บูรณะ) Debug Analysis
-      </h2>
-      
-      {/* Summary */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-blue-900">Total Records</h3>
-          <p className="text-2xl font-bold text-blue-600">{analysis.totalRecords.toLocaleString()}</p>
-        </div>
-        <div className="bg-green-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-green-900">District 1024 Records</h3>
-          <p className="text-2xl font-bold text-green-600">{analysis.rawRecords1024}</p>
-        </div>
-        <div className="bg-purple-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-purple-900">Has District 1024?</h3>
-          <p className="text-2xl font-bold text-purple-600">
-            {analysis.has1024 ? '✅ Yes' : '❌ No'}
-          </p>
-        </div>
-      </div>
-
-      {/* District Code Analysis */}
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-3">District Codes Analysis</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <h4 className="font-medium text-gray-700 mb-2">All Unique District Codes (dname)</h4>
-            <div className="max-h-40 overflow-y-auto bg-white p-2 rounded border text-sm">
-              {analysis.uniqueDnames.join(', ')}
-            </div>
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-700 mb-2">Similar/Close Codes to 1024</h4>
-            <div className="bg-white p-2 rounded border text-sm">
-              {analysis.similarCodes.length > 0 ? analysis.similarCodes.join(', ') : 'None found'}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Population Groups for District 1024 */}
-      {analysis.rawRecords1024 > 0 && (
-        <div className="bg-green-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-green-900 mb-3">
-            Population Groups in District 1024 ({analysis.rawRecords1024} total records)
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            {Object.entries(analysis.populationGroups).map(([group, count]) => (
-              <div key={group} className="bg-white p-2 rounded border">
-                <div className="text-xs text-gray-600">{group}</div>
-                <div className="font-bold text-green-600">{count} records</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Sample Records */}
-      {analysis.sampleRecords.length > 0 && (
-        <div className="bg-yellow-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-yellow-900 mb-3">Sample Records from District 1024</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs bg-white rounded border">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="border px-2 py-1">dname</th>
-                  <th className="border px-2 py-1">age</th>
-                  <th className="border px-2 py-1">sex</th>
-                  <th className="border px-2 py-1">occupation_status</th>
-                  <th className="border px-2 py-1">population_group</th>
-                </tr>
-              </thead>
-              <tbody>
-                {analysis.sampleRecords.map((record, index) => (
-                  <tr key={index}>
-                    <td className="border px-2 py-1">{record.dname}</td>
-                    <td className="border px-2 py-1">{record.age}</td>
-                    <td className="border px-2 py-1">{record.sex}</td>
-                    <td className="border px-2 py-1">{record.occupation_status}</td>
-                    <td className="border px-2 py-1">{record.population_group}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* Diagnosis */}
-      <div className="bg-red-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-red-900 mb-3">🩺 Diagnosis</h3>
-        <div className="space-y-2 text-sm">
-          {analysis.rawRecords1024 === 0 && (
-            <p className="text-red-600">
-              ❌ <strong>Problem Found:</strong> No records exist for district code 1024 in the survey data.
-            </p>
-          )}
-          {!analysis.has1024 && (
-            <p className="text-red-600">
-              ❌ <strong>Missing District:</strong> District code 1024 is not present in the dataset.
-            </p>
-          )}
-          {analysis.rawRecords1024 > 0 && (
-            <p className="text-green-600">
-              ✅ <strong>Data Found:</strong> District 1024 has {analysis.rawRecords1024} records in the survey data.
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // Fix for default markers in Leaflet with bundlers
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -527,11 +273,29 @@ const BangkokMap = ({
       const indicatorData = getIndicatorData(selectedDomain, districtName, selectedPopulationGroup);
       const domainScore = indicatorData.find(item => item.isDomainScore);
       
+      // Add debugging for district 1024
+      if (districtName === 'ราษฎร์บูรณะ') {
+        console.log('🔍 Debug District ราษฎร์บูรณะ:');
+        console.log('- District Name:', districtName);
+        console.log('- Selected Domain:', selectedDomain);
+        console.log('- Selected Population Group:', selectedPopulationGroup);
+        console.log('- Indicator Data:', indicatorData);
+        console.log('- Domain Score:', domainScore);
+        console.log('- Sample Size:', domainScore?.sample_size);
+      }
+      
       if (!domainScore || domainScore.sample_size < 5) {
+        if (districtName === 'ราษฎร์บูรณะ') {
+          console.log('❌ No domain score or sample size < 5 for ราษฎร์บูรณะ');
+        }
         return '#e2e8f0';
       }
 
       const score = domainScore.value;
+      
+      if (districtName === 'ราษฎร์บูรณะ') {
+        console.log('✅ Domain Score for ราษฎร์บูรณะ:', score);
+      }
       
       if (score >= 80) return '#10b981'; 
       if (score >= 60) return '#f59e0b'; 
@@ -539,6 +303,9 @@ const BangkokMap = ({
       return '#ef4444'; 
       
     } catch (err) {
+      if (districtName === 'ราษฎร์บูรณะ') {
+        console.error('❌ Error getting color for ราษฎร์บูรณะ:', err);
+      }
       return '#94a3b8';
     }
   };
@@ -576,6 +343,14 @@ const BangkokMap = ({
           const districtName = districtCodeMap[dcode];
           
           if (districtName) {
+            // Add debugging for district 1024
+            if (dcode === 1024) {
+              console.log('🗺️ GeoJSON Feature for District 1024:');
+              console.log('- dcode:', dcode);
+              console.log('- districtName:', districtName);
+              console.log('- feature properties:', feature.properties);
+            }
+            
             layer.bindPopup(`<strong>${districtName}</strong><br/><small>Click to select</small>`);
             
             layer.on('click', () => {
@@ -654,11 +429,6 @@ const BangkokMap = ({
 
   return (
     <div className="relative w-full h-full bg-white rounded-lg shadow-sm overflow-hidden">
-      {/* TEMPORARY DEBUG TOOL - Remove after debugging */}
-      <div className="absolute top-0 left-0 w-full h-full z-[3000] bg-white overflow-auto">
-        <DistrictDebugTool />
-      </div>
-      
       {/* Map container with explicit sizing and better positioning */}
       <div 
         ref={mapRef} 
