@@ -6,6 +6,7 @@ import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 import IndicatorAnalysis from './IndicatorAnalysis';
 import IndicatorDetailPage from './IndicatorDetailPage';
 import BangkokMap from './BangkokMap';
+import DataFlowDebugger from './DataFlowDebugger';
 import Papa from 'papaparse';
 
 const Dashboard = () => {
