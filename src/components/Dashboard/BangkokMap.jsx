@@ -273,29 +273,11 @@ const BangkokMap = ({
       const indicatorData = getIndicatorData(selectedDomain, districtName, selectedPopulationGroup);
       const domainScore = indicatorData.find(item => item.isDomainScore);
       
-      // Add debugging for district 1024
-      if (districtName === 'ราษฎร์บูรณะ') {
-        console.log('🔍 Debug District ราษฎร์บูรณะ:');
-        console.log('- District Name:', districtName);
-        console.log('- Selected Domain:', selectedDomain);
-        console.log('- Selected Population Group:', selectedPopulationGroup);
-        console.log('- Indicator Data:', indicatorData);
-        console.log('- Domain Score:', domainScore);
-        console.log('- Sample Size:', domainScore?.sample_size);
-      }
-      
       if (!domainScore || domainScore.sample_size < 5) {
-        if (districtName === 'ราษฎร์บูรณะ') {
-          console.log('❌ No domain score or sample size < 5 for ราษฎร์บูรณะ');
-        }
         return '#e2e8f0';
       }
 
       const score = domainScore.value;
-      
-      if (districtName === 'ราษฎร์บูรณะ') {
-        console.log('✅ Domain Score for ราษฎร์บูรณะ:', score);
-      }
       
       if (score >= 80) return '#10b981'; 
       if (score >= 60) return '#f59e0b'; 
@@ -303,9 +285,6 @@ const BangkokMap = ({
       return '#ef4444'; 
       
     } catch (err) {
-      if (districtName === 'ราษฎร์บูรณะ') {
-        console.error('❌ Error getting color for ราษฎร์บูรณะ:', err);
-      }
       return '#94a3b8';
     }
   };
@@ -343,14 +322,6 @@ const BangkokMap = ({
           const districtName = districtCodeMap[dcode];
           
           if (districtName) {
-            // Add debugging for district 1024
-            if (dcode === 1024) {
-              console.log('🗺️ GeoJSON Feature for District 1024:');
-              console.log('- dcode:', dcode);
-              console.log('- districtName:', districtName);
-              console.log('- feature properties:', feature.properties);
-            }
-            
             layer.bindPopup(`<strong>${districtName}</strong><br/><small>Click to select</small>`);
             
             layer.on('click', () => {
