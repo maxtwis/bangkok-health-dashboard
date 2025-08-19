@@ -605,7 +605,7 @@ const IndicatorDetailPage = ({
               {[
                 { id: 'overview', icon: Eye, label: language === 'th' ? 'ภาพรวม' : 'Overview' },
                 { id: 'disaggregation', icon: Users, label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Disaggregation' },
-                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวด' : 'Methodology' }
+                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวณ' : 'Methodology' }
               ].map(tab => (
                 <button
                   key={tab.id}
@@ -1015,120 +1015,18 @@ const IndicatorDetailPage = ({
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'วิธีการคำนวดและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
+                {language === 'th' ? 'วิธีการคำนวณและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
               </h3>
               
               <div className="space-y-6">
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'สูตรการคำนวด' : 'Calculation Formula'}
+                    {language === 'th' ? 'สูตรการคำนวณ' : 'Calculation Formula'}
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm">
                     {indicatorInfo.calculation}
                   </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'แหล่งข้อมูล' : 'Data Source'}
-                  </h4>
-                  <p className="text-gray-700">
-                    {language === 'th' 
-                      ? 'ข้อมูลจากโครงการการพัฒนาตัวชี้วัดและระบบกลไกเก็บข้อมูล เพื่อลดความเหลื่อมล้ำทางสุขภาวะในเขตเมือง พื้นที่กรุงเทพมหานคร กรมการแพทย์ กรุงเทพมหานคร'
-                      : 'Data from Million Health Check Project, Medical Department, Bangkok Metropolitan Administration'
-                    }
-                  </p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'การแยกย่อยข้อมูล' : 'Data Disaggregation'}
-                  </h4>
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <p className="text-blue-800 text-sm mb-2">
-                      {language === 'th' 
-                        ? 'ข้อมูลถูกแยกย่อยตามมิติต่าง ๆ เพื่อวิเคราะห์ความเท่าเทียม:'
-                        : 'Data is disaggregated across multiple dimensions for equity analysis:'
-                      }
-                    </p>
-                    <ul className="list-disc list-inside text-blue-700 text-sm space-y-1">
-                      <li><strong>{language === 'th' ? 'อายุ' : 'Age'}:</strong> {language === 'th' ? 'กลุ่มอายุ 5 กลุ่ม (< 18, 18-29, 30-44, 45-59, 60+)' : '5 age groups (< 18, 18-29, 30-44, 45-59, 60+)'}</li>
-                      <li><strong>{language === 'th' ? 'เพศ' : 'Sex'}:</strong> {language === 'th' ? 'ชาย หญิง LGBTQ+ และไม่ระบุ' : 'Male, Female, LGBTQ+, and Not specified'}</li>
-                      <li><strong>{language === 'th' ? 'สถานะการทำงาน' : 'Employment Status'}:</strong> {language === 'th' ? 'แยกตามสถานะการทำงาน (ได้ประกอบอาชีพ/ไม่ได้ประกอบอาชีพ) และประเภทอาชีพ (รับราชการ รัฐวิสาหกิจ พนักงานบริษัท ธุรกิจส่วนตัว อาชีพอิสระ และอื่น ๆ)' : 'By employment status (Working/Not Working) and occupation type (Government, State Enterprise, Company Employee, Private Business, Freelance, Other)'}</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'การปรับปรุงการแยกย่อยข้อมูลสถานะการทำงาน' : 'Enhanced Employment Status Disaggregation'}
-                  </h4>
-                  <div className="bg-amber-50 p-4 rounded-lg">
-                    <p className="text-amber-800 text-sm mb-2">
-                      {language === 'th' 
-                        ? 'การแยกย่อยข้อมูลสถานะการทำงานได้รับการปรับปรุงให้ครอบคลุมมากขึ้น:'
-                        : 'Employment status disaggregation has been enhanced for better coverage:'
-                      }
-                    </p>
-                    <ul className="list-disc list-inside text-amber-700 text-sm space-y-1">
-                      <li><strong>{language === 'th' ? 'รวมผู้ไม่ได้ประกอบอาชีพ' : 'Includes Non-Working Population'}:</strong> {language === 'th' ? 'แสดงข้อมูลของผู้ที่ไม่ได้ประกอบอาชีพ (occupation_status = 0) เป็นกลุ่มแยกต่างหาก' : 'Shows data for those not working (occupation_status = 0) as a separate category'}</li>
-                      <li><strong>{language === 'th' ? 'จำแนกประเภทอาชีพ' : 'Occupation Type Classification'}:</strong> {language === 'th' ? 'สำหรับผู้ที่ได้ประกอบอาชีพ จำแนกตามประเภทอาชีพ (occupation_type) รวม 6 ประเภท' : 'For working population, classified by occupation type (occupation_type) into 6 categories'}</li>
-                      <li><strong>{language === 'th' ? 'การวิเคราะห์ความเท่าเทียม' : 'Equity Analysis'}:</strong> {language === 'th' ? 'เปรียบเทียบค่าตัวชี้วัดระหว่างกลุ่มผู้ทำงานและไม่ทำงาน รวมถึงระหว่างประเภทอาชีพต่าง ๆ' : 'Compares indicator values between working and non-working groups, as well as across different occupation types'}</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'ข้อจำกัด' : 'Limitations'}
-                  </h4>
-                  <ul className="list-disc list-inside text-gray-700 space-y-1">
-                    <li>
-                      {language === 'th' 
-                        ? 'ข้อมูลจากการสำรวจในช่วงเวลาหนึ่ง อาจไม่สะท้อนการเปลี่ยนแปลงตามเวลา'
-                        : 'Cross-sectional data may not reflect changes over time'
-                      }
-                    </li>
-                    <li>
-                      {language === 'th' 
-                        ? 'การจำแนกกลุ่มประชากรอาจมีข้อจำกัดในการครอบคลุมความหลากหลาย'
-                        : 'Population group classifications may have limitations in capturing diversity'
-                      }
-                    </li>
-                    <li>
-                      {language === 'th' 
-                        ? 'ขนาดกลุ่มตัวอย่างในบางเขตอาจมีจำนวนจำกัด'
-                        : 'Sample sizes in some districts may be limited'
-                      }
-                    </li>
-                    <li>
-                      {language === 'th' 
-                        ? 'ข้อมูลสถานะการทำงานและประเภทอาชีพอาจมีความไม่สมบูรณ์ในบางกรณี'
-                        : 'Employment status and occupation type data may be incomplete in some cases'
-                      }
-                    </li>
-                    <li>
-                      {language === 'th' 
-                        ? 'การแยกย่อยข้อมูลแบบรวมอาจทำให้ขนาดกลุ่มย่อยเล็กลง ส่งผลต่อความน่าเชื่อถือของสถิติ'
-                        : 'Multiple disaggregation may result in smaller subgroup sizes, affecting statistical reliability'
-                      }
-                    </li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'คำแนะนำในการตีความผล' : 'Interpretation Guidelines'}
-                  </h4>
-                  <div className="bg-purple-50 p-4 rounded-lg">
-                    <ul className="list-disc list-inside text-purple-700 text-sm space-y-1">
-                      <li>{language === 'th' ? 'ควรพิจารณาขนาดกลุ่มตัวอย่างในการตีความผล กลุ่มที่มีขนาดเล็ก (< 30 คน) ควรตีความด้วยความระมัดระวัง' : 'Consider sample sizes when interpreting results. Small groups (< 30 people) should be interpreted with caution'}</li>
-                      <li>{language === 'th' ? 'ความแตกต่างที่พบอาจสะท้อนปัจจัยทางสังคม เศรษฐกิจ และการเข้าถึงบริการสาธารณสุข' : 'Observed differences may reflect social, economic, and healthcare access factors'}</li>
-                      <li>{language === 'th' ? 'การเปรียบเทียบระหว่างกลุ่มควรคำนึงถึงบริบทและปัจจัยแวดล้อมของแต่ละกลุ่ม' : 'Comparisons between groups should consider context and environmental factors of each group'}</li>
-                      <li>{language === 'th' ? 'ผลลัพธ์ที่ได้สามารถนำไปใช้เป็นข้อมูลพื้นฐานสำหรับการวางแผนนโยบายและการแทรกแซงเพื่อลดความเหลื่อมล้ำ' : 'Results can be used as baseline data for policy planning and interventions to reduce inequalities'}</li>
-                    </ul>
-                  </div>
-                </div>
+                </div>     
               </div>
             </div>
           </div>
