@@ -492,8 +492,8 @@ class BasicSDHEProcessor {
             if (safetyResponses.length === 0) return 0;
             
             return safetyResponses.reduce((sum, r) => {
-              if (r.community_safety === '4_1') return sum + 100;
-              if (r.community_safety === '3_1') return sum + 75;
+              if (r.community_safety === '4') return sum + 100;  
+              if (r.community_safety === '3') return sum + 75;   
               if (r.community_safety === '2') return sum + 50;
               if (r.community_safety === '1') return sum + 25;
               return sum;
