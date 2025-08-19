@@ -820,13 +820,13 @@ if (mapping.isSupplyIndicator && districtName) {
   if (districtCode) {
     let supplyData;
     
-    // Handle the new health service access indicator
+     // Handle NEW health service access indicator (uses health_facilities.csv)
     if (indicator === 'health_service_access') {
       supplyData = { 
         [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
       };
-    } else {
-      // Handle existing indicators
+    } 
+      else {
       supplyData = this.calculateHealthcareSupplyIndicators(
         parseInt(districtCode), 
         districtName
