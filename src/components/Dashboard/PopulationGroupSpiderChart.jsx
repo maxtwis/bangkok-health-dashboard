@@ -1,4 +1,4 @@
-// Updated PopulationGroupSpiderChart with Language Support - FIXED duplication
+// Updated PopulationGroupSpiderChart with Language Support and Normal Population - FIXED
 import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -7,12 +7,13 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
   const { t, language } = useLanguage();
   const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
   
+  // Updated to include normal_population with purple color
   const populationGroups = [
     { value: 'informal_workers', color: '#ef4444' },
     { value: 'elderly', color: '#3b82f6' },
     { value: 'disabled', color: '#10b981' },
     { value: 'lgbtq', color: '#f59e0b' },
-    { value: 'normal_population', color: '#8b5cf6' }
+    { value: 'normal_population', color: '#8b5cf6' } // Added normal population
   ];
 
   const domains = [
@@ -32,9 +33,32 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     };
 
     populationGroups.forEach(group => {
-      const indicatorData = getIndicatorData(domain, selectedDistrict, group.value);
-      const domainScore = indicatorData.find(item => item.isDomainScore);
-      dataPoint[group.value] = domainScore ? domainScore.value : 0;
+      try {
+        const indicatorData = getIndicatorData(domain, selectedDistrict, group.value);
+        
+        // Find domain score, handle both old and new data structures
+        const domainScore = indicatorData.find(item => 
+          item.isDomainScore || 
+          item.indicator === '_domain_score' || 
+          item.label?.toLowerCase().includes('score')
+        );
+        
+        // Set the value, ensuring it's a valid number
+        let scoreValue = 0;
+        if (domainScore && domainScore.value !== null && domainScore.value !== undefined) {
+          scoreValue = parseFloat(domainScore.value);
+          // Ensure it's a valid number
+          if (isNaN(scoreValue) || !isFinite(scoreValue)) {
+            scoreValue = 0;
+          }
+        }
+        
+        dataPoint[group.value] = scoreValue;
+        
+      } catch (error) {
+        console.warn(`Error getting data for ${domain}, ${group.value}:`, error);
+        dataPoint[group.value] = 0;
+      }
     });
 
     return dataPoint;
@@ -42,19 +66,27 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
   // Calculate dynamic scale range
   const allValues = chartData.flatMap(d => 
-    populationGroups.map(group => d[group.value])
-  );
-  const minValue = Math.min(...allValues);
-  const maxValue = Math.max(...allValues);
+    populationGroups.map(group => d[group.value] || 0)
+  ).filter(val => !isNaN(val) && isFinite(val));
+  
+  const minValue = allValues.length > 0 ? Math.min(...allValues) : 0;
+  const maxValue = allValues.length > 0 ? Math.max(...allValues) : 100;
   
   // Create more dramatic scale
   let scaleMin, scaleMax;
-  if (scaleMode === 'dynamic') {
+  if (scaleMode === 'dynamic' && allValues.length > 0) {
     // Use a tighter range around the actual data
     const range = maxValue - minValue;
     const padding = Math.max(range * 0.2, 5); // At least 5 point padding
     scaleMin = Math.max(0, Math.floor(minValue - padding));
     scaleMax = Math.min(100, Math.ceil(maxValue + padding));
+    
+    // Ensure minimum range for visibility
+    if (scaleMax - scaleMin < 20) {
+      const center = (scaleMax + scaleMin) / 2;
+      scaleMin = Math.max(0, center - 10);
+      scaleMax = Math.min(100, center + 10);
+    }
   } else {
     // Full 0-100 scale
     scaleMin = 0;
@@ -67,10 +99,16 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     if (scaleMode === 'dynamic') {
       populationGroups.forEach(group => {
         // Map the value to the 0-100 range for display
-        const originalValue = d[group.value];
-        const scaledValue = ((originalValue - scaleMin) / (scaleMax - scaleMin)) * 100;
-        transformed[group.value] = scaledValue;
+        const originalValue = d[group.value] || 0;
+        const scaledValue = scaleMax > scaleMin ? 
+          ((originalValue - scaleMin) / (scaleMax - scaleMin)) * 100 : 0;
+        transformed[group.value] = Math.max(0, Math.min(100, scaledValue));
         transformed[`${group.value}_original`] = originalValue; // Keep original for tooltips
+      });
+    } else {
+      populationGroups.forEach(group => {
+        transformed[group.value] = d[group.value] || 0;
+        transformed[`${group.value}_original`] = d[group.value] || 0;
       });
     }
     return transformed;
@@ -78,6 +116,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
   // Custom tick formatter to wrap long labels
   const formatTick = (value) => {
+    if (typeof value !== 'string') return value;
     if (value.length > 12) {
       const words = value.split(' ');
       if (words.length > 1) {
@@ -85,6 +124,26 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
       }
     }
     return value;
+  };
+
+  // Custom tooltip to show original values
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
+          <p className="font-medium mb-2">{label}</p>
+          {payload.map((entry, index) => {
+            const originalValue = transformedData.find(d => d.domain === label)?.[`${entry.dataKey}_original`] || 0;
+            return (
+              <p key={index} style={{ color: entry.color }} className="text-sm">
+                {t(`populationGroups.${entry.dataKey}`)}: {originalValue.toFixed(1)}%
+              </p>
+            );
+          })}
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -129,70 +188,86 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
           </div>
         </div>
         
-        {/* FIXED: Removed duplicate text issue */}
-        {scaleMode === 'dynamic' && (
+        {/* Scale information */}
+        {scaleMode === 'dynamic' && allValues.length > 0 && (
           <div className="bg-blue-50 p-2 rounded text-xs text-blue-700">
-            <strong>{t('ui.dynamicScaleNote')} {scaleMin}% {t('ui.to')} {scaleMax}% {t('ui.toHighlightDifferences')}</strong>
+            <strong>
+              {t('ui.dynamicScaleNote')} {scaleMin.toFixed(1)}% {t('ui.to')} {scaleMax.toFixed(1)}% {t('ui.toHighlightDifferences')}
+            </strong>
           </div>
         )}
       </div>
 
-      <div className="h-96 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <RadarChart data={transformedData} margin={{ top: 20, right: 80, bottom: 20, left: 80 }}>
-            <PolarGrid gridType="polygon" />
-            <PolarAngleAxis 
-              dataKey="domain" 
-              className="text-xs"
-              tick={{ fontSize: 11, fill: '#374151' }}
-              tickFormatter={formatTick}
-            />
-            <PolarRadiusAxis 
-              angle={90} 
-              domain={[0, 100]} 
-              className="text-xs"
-              tick={{ fontSize: 10, fill: '#6b7280' }}
-              tickCount={6}
-              tickFormatter={(value) => {
-                if (scaleMode === 'dynamic') {
-                  const actualValue = scaleMin + (value / 100) * (scaleMax - scaleMin);
-                  return actualValue.toFixed(0);
-                }
-                return value;
-              }}
-            />
-            
-            {populationGroups.map(group => (
-              <Radar
-                key={group.value}
-                name={t(`populationGroups.${group.value}`)}
-                dataKey={group.value}
-                stroke={group.color}
-                fill={group.color}
-                fillOpacity={0.15}
-                strokeWidth={3}
-                dot={{ fill: group.color, strokeWidth: 2, r: 4 }}
+      {/* Check if we have valid data */}
+      {allValues.length === 0 || allValues.every(val => val === 0) ? (
+        <div className="h-96 flex items-center justify-center text-gray-500">
+          <div className="text-center">
+            <p className="text-lg mb-2">
+              {language === 'th' ? 'ไม่มีข้อมูลสำหรับการแสดงผล' : 'No data available for visualization'}
+            </p>
+            <p className="text-sm">
+              {language === 'th' ? 'กรุณาเลือกเขตหรือกลุ่มประชากรอื่น' : 'Please select a different district or population group'}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="h-96 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <RadarChart data={transformedData} margin={{ top: 20, right: 80, bottom: 20, left: 80 }}>
+              <PolarGrid gridType="polygon" />
+              <PolarAngleAxis 
+                dataKey="domain" 
+                className="text-xs"
+                tick={{ fontSize: 11, fill: '#374151' }}
+                tickFormatter={formatTick}
               />
-            ))}
-            
-            <Legend 
-              wrapperStyle={{
-                paddingTop: '20px',
-                fontSize: '12px'
-              }}
-            />
-          </RadarChart>
-        </ResponsiveContainer>
-      </div>
+              <PolarRadiusAxis 
+                angle={90} 
+                domain={[0, 100]} 
+                className="text-xs"
+                tick={{ fontSize: 10, fill: '#6b7280' }}
+                tickCount={6}
+                tickFormatter={(value) => {
+                  if (scaleMode === 'dynamic' && scaleMax > scaleMin) {
+                    const actualValue = scaleMin + (value / 100) * (scaleMax - scaleMin);
+                    return actualValue.toFixed(0);
+                  }
+                  return value;
+                }}
+              />
+              
+              {populationGroups.map(group => (
+                <Radar
+                  key={group.value}
+                  name={t(`populationGroups.${group.value}`)}
+                  dataKey={group.value}
+                  stroke={group.color}
+                  fill={group.color}
+                  fillOpacity={0.15}
+                  strokeWidth={3}
+                  dot={{ fill: group.color, strokeWidth: 2, r: 4 }}
+                />
+              ))}
+              
+              <Legend 
+                wrapperStyle={{
+                  paddingTop: '20px',
+                  fontSize: '12px'
+                }}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {/* Domain Rankings */}
       <div className="mt-6">
         <h4 className="font-medium text-gray-800 mb-3">{t('ui.domainPerformanceRankings')}</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {populationGroups.map(group => {
             const groupScores = chartData.map(d => ({
               domain: d.domain,
-              score: d[group.value]
+              score: d[group.value] || 0
             })).sort((a, b) => b.score - a.score);
 
             return (
