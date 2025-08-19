@@ -86,24 +86,25 @@ const Dashboard = () => {
     multiple_chronic_conditions: true
   };
 
+  // WHO Benchmarks for Healthcare Supply Indicators
   const getHealthcareSupplyColor = (value, indicator) => {
-  const benchmarks = {
-    doctor_per_population: { good: 2.5, fair: 1.0, poor: 0.5 },
-    nurse_per_population: { good: 8.0, fair: 3.0, poor: 1.5 },
-    healthworker_per_population: { good: 40, fair: 20, poor: 10 },
-    community_healthworker_per_population: { good: 5.0, fair: 2.0, poor: 1.0 },
-    health_service_access: { good: 50, fair: 20, poor: 10 },
-    bed_per_population: { good: 30, fair: 15, poor: 10 }
+    const benchmarks = {
+      doctor_per_population: { good: 2.5, fair: 1.0, poor: 0.5 },
+      nurse_per_population: { good: 8.0, fair: 3.0, poor: 1.5 },
+      healthworker_per_population: { good: 40, fair: 20, poor: 10 },
+      community_healthworker_per_population: { good: 5.0, fair: 2.0, poor: 1.0 },
+      health_service_access: { good: 50, fair: 20, poor: 10 },
+      bed_per_population: { good: 30, fair: 15, poor: 10 }
+    };
+    
+    const benchmark = benchmarks[indicator];
+    if (!benchmark) return 'bg-gray-100 text-gray-600';
+    
+    if (value >= benchmark.good) return 'bg-green-100 text-green-800';
+    if (value >= benchmark.fair) return 'bg-yellow-100 text-yellow-800';  
+    if (value >= benchmark.poor) return 'bg-orange-100 text-orange-800';
+    return 'bg-red-100 text-red-800';
   };
-  
-  const benchmark = benchmarks[indicator];
-  if (!benchmark) return 'bg-gray-100 text-gray-600';
-  
-  if (value >= benchmark.good) return 'bg-green-100 text-green-800';
-  if (value >= benchmark.fair) return 'bg-yellow-100 text-yellow-800';  
-  if (value >= benchmark.poor) return 'bg-orange-100 text-orange-800';
-  return 'bg-red-100 text-red-800';
-};
 
   // Load survey data when component mounts
   React.useEffect(() => {
@@ -126,7 +127,7 @@ const Dashboard = () => {
           1009: "พระโขนง", 1010: "มีนบุรี", 1011: "ลาดกระบัง", 1012: "ยานนาวา",
           1013: "สัมพันธวงศ์", 1014: "พญาไท", 1015: "ธนบุรี", 1016: "บางกอกใหญ่",
           1017: "ห้วยขวาง", 1018: "คลองสาน", 1019: "ตลิ่งชัน", 1020: "บางกอกน้อย",
-          1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฏร์บูรณะ",
+          1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฎร์บูรณะ",
           1025: "บางพลัด", 1026: "ดินแดง", 1027: "บึงกุ่ม", 1028: "สาทร",
           1029: "บางซื่อ", 1030: "จตุจักร", 1031: "บางคอแหลม", 1032: "ประเวศ",
           1033: "คลองเตย", 1034: "สวนหลวง", 1035: "จอมทอง", 1036: "ดอนเมือง",
@@ -141,7 +142,7 @@ const Dashboard = () => {
           if (record.age >= 60) return 'elderly';  
           if (record.disable_status === 1) return 'disabled';
           if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
-          return 'general_population';
+          return 'normal_population'; // Changed from 'general_population'
         };
 
         const processedData = parsed.data.map(record => ({
@@ -192,70 +193,71 @@ const Dashboard = () => {
     return `${Number(value).toFixed(1)}%`;
   };
 
- const getScoreColor = (value, indicator) => {
-  // Handle healthcare supply indicators with WHO benchmarks
-  const healthcareSupplyIndicators = [
-    'doctor_per_population', 
-    'nurse_per_population', 
-    'healthworker_per_population', 
-    'community_healthworker_per_population',
-    'health_service_access',
-    'bed_per_population'
-  ];
-  
-  if (healthcareSupplyIndicators.includes(indicator)) {
-    return getHealthcareSupplyColor(value, indicator);
-  }
-  
-  // Original logic for other indicators
-  const isReverse = reverseIndicators[indicator];
-  
-  if (isReverse) {
-    if (value <= 20) return 'bg-green-100 text-green-800';
-    if (value <= 40) return 'bg-yellow-100 text-yellow-800';
-    if (value <= 60) return 'bg-orange-100 text-orange-800';
-    return 'bg-red-100 text-red-800';
-  } else {
-    if (value >= 80) return 'bg-green-100 text-green-800';
-    if (value >= 60) return 'bg-yellow-100 text-yellow-800';
-    if (value >= 40) return 'bg-orange-100 text-orange-800';
-    return 'bg-red-100 text-red-800';
-  }
-};
+  const getScoreColor = (value, indicator) => {
+    // Handle healthcare supply indicators with WHO benchmarks
+    const healthcareSupplyIndicators = [
+      'doctor_per_population', 
+      'nurse_per_population', 
+      'healthworker_per_population', 
+      'community_healthworker_per_population',
+      'health_service_access',
+      'bed_per_population'
+    ];
+    
+    if (healthcareSupplyIndicators.includes(indicator)) {
+      return getHealthcareSupplyColor(value, indicator);
+    }
+    
+    // Original logic for other indicators
+    const isReverse = reverseIndicators[indicator];
+    
+    if (isReverse) {
+      if (value <= 20) return 'bg-green-100 text-green-800';
+      if (value <= 40) return 'bg-yellow-100 text-yellow-800';
+      if (value <= 60) return 'bg-orange-100 text-orange-800';
+      return 'bg-red-100 text-red-800';
+    } else {
+      if (value >= 80) return 'bg-green-100 text-green-800';
+      if (value >= 60) return 'bg-yellow-100 text-yellow-800';
+      if (value >= 40) return 'bg-orange-100 text-orange-800';
+      return 'bg-red-100 text-red-800';
+    }
+  };
 
- const getPerformanceBarColor = (value, indicator) => {
-  // Handle healthcare supply indicators with WHO benchmarks
-  const healthcareSupplyIndicators = [
-    'doctor_per_population', 
-    'nurse_per_population', 
-    'healthworker_per_population', 
-    'community_healthworker_per_population',
-    'health_service_access'
-  ];
-  
-  if (healthcareSupplyIndicators.includes(indicator)) {
-    const colorClass = getHealthcareSupplyColor(value, indicator);
-    if (colorClass.includes('green')) return 'bg-green-500';
-    if (colorClass.includes('yellow')) return 'bg-yellow-500';
-    if (colorClass.includes('orange')) return 'bg-orange-500';
-    return 'bg-red-500';
-  }
-  
-  // Original logic for other indicators
-  const isReverse = reverseIndicators[indicator];
-  
-  if (isReverse) {
-    if (value <= 20) return 'bg-green-500';
-    if (value <= 40) return 'bg-yellow-500';
-    if (value <= 60) return 'bg-orange-500';
-    return 'bg-red-500';
-  } else {
-    if (value >= 80) return 'bg-green-500';
-    if (value >= 60) return 'bg-yellow-500';
-    if (value >= 40) return 'bg-orange-500';
-    return 'bg-red-500';
-  }
-};
+  const getPerformanceBarColor = (value, indicator) => {
+    // Handle healthcare supply indicators with WHO benchmarks
+    const healthcareSupplyIndicators = [
+      'doctor_per_population', 
+      'nurse_per_population', 
+      'healthworker_per_population', 
+      'community_healthworker_per_population',
+      'health_service_access',
+      'bed_per_population'
+    ];
+    
+    if (healthcareSupplyIndicators.includes(indicator)) {
+      const colorClass = getHealthcareSupplyColor(value, indicator);
+      if (colorClass.includes('green')) return 'bg-green-500';
+      if (colorClass.includes('yellow')) return 'bg-yellow-500';
+      if (colorClass.includes('orange')) return 'bg-orange-500';
+      return 'bg-red-500';
+    }
+    
+    // Original logic for other indicators
+    const isReverse = reverseIndicators[indicator];
+    
+    if (isReverse) {
+      if (value <= 20) return 'bg-green-500';
+      if (value <= 40) return 'bg-yellow-500';
+      if (value <= 60) return 'bg-orange-500';
+      return 'bg-red-500';
+    } else {
+      if (value >= 80) return 'bg-green-500';
+      if (value >= 60) return 'bg-yellow-500';
+      if (value >= 40) return 'bg-orange-500';
+      return 'bg-red-500';
+    }
+  };
 
   // Show detail page if indicator is selected
   if (showDetailPage && selectedIndicator) {
@@ -385,17 +387,17 @@ const Dashboard = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('ui.populationGroup')}
                 </label>
-                  <select 
-                    value={selectedPopulationGroup}
-                    onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
-                    <option value="elderly">{t('populationGroups.elderly')}</option>
-                    <option value="disabled">{t('populationGroups.disabled')}</option>
-                    <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
-                    <option value="normal_population">{t('populationGroups.normal_population')}</option> 
-                  </select>
+                <select 
+                  value={selectedPopulationGroup}
+                  onChange={(e) => setSelectedPopulationGroup(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
+                  <option value="elderly">{t('populationGroups.elderly')}</option>
+                  <option value="disabled">{t('populationGroups.disabled')}</option>
+                  <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
+                  <option value="normal_population">{t('populationGroups.normal_population')}</option>
+                </select>
               </div>
 
               {/* Domain Filter */}
@@ -456,6 +458,19 @@ const Dashboard = () => {
                 } • <span className="font-medium">{t(`populationGroups.${selectedPopulationGroup}`)}</span>
               </div>
             </div>
+
+            {/* Normal Population Note */}
+            {selectedPopulationGroup === 'normal_population' && (
+              <div className="mt-3 bg-purple-50 border border-purple-200 rounded-lg p-3">
+                <p className="text-sm text-purple-800">
+                  ℹ️ <strong>{language === 'th' ? 'หมายเหตุ:' : 'Note:'}</strong> {
+                    language === 'th' 
+                      ? 'ข้อมูลประชากรทั่วไปรวมข้อมูลจากแหล่งที่มา 2 แหล่ง: ข้อมูลสำรวจระดับเขต และข้อมูลที่คำนวณแล้วระดับกรุงเทพฯ (*)'
+                      : 'General population data combines 2 sources: district-level survey data and pre-calculated Bangkok-wide data (*)'
+                  }
+                </p>
+              </div>
+            )}
           </div>
 
           {viewMode === 'overview' && (
@@ -640,8 +655,8 @@ const Dashboard = () => {
                                             
                                             if (isSupplyIndicator) {
                                               const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                                          indicator === 'health_service_access' ? '10,000' :
-                                                          indicator === 'bed_per_population' ? '10,000' : '1,000';
+                                                           indicator === 'health_service_access' ? '10,000' :
+                                                           indicator === 'bed_per_population' ? '10,000' : '1,000';
                                               return `${value.toFixed(1)} per ${unit}`;
                                             } else {
                                               return formatValue(value);
@@ -652,7 +667,7 @@ const Dashboard = () => {
                                       );
                                     }
                                     
-                                    // Regular indicators (your existing logic)
+                                    // Regular indicators
                                     return (
                                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}>
                                         {(() => {
@@ -667,8 +682,8 @@ const Dashboard = () => {
                                           
                                           if (isSupplyIndicator) {
                                             const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                                        indicator === 'health_service_access' ? '10,000' :
-                                                        indicator === 'bed_per_population' ? '10,000' : '1,000';
+                                                         indicator === 'health_service_access' ? '10,000' :
+                                                         indicator === 'bed_per_population' ? '10,000' : '1,000';
                                             return `${value.toFixed(1)} per ${unit}`;
                                           } else {
                                             return formatValue(value);
@@ -694,14 +709,18 @@ const Dashboard = () => {
                                   })()}
                                 </td>
                                 <td className="text-center py-3 px-4">
-                                  <div className="w-full bg-gray-200 rounded-full h-2">
-                                    <div 
-                                      className={`h-2 rounded-full ${
-                                        getPerformanceBarColor(value, indicator)
-                                      }`}
-                                      style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
-                                    ></div>
-                                  </div>
+                                  {item.noData || value === null ? (
+                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                      <div className="h-2 rounded-full bg-gray-300" style={{ width: '0%' }}></div>
+                                    </div>
+                                  ) : (
+                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                      <div 
+                                        className={`h-2 rounded-full ${getPerformanceBarColor(value, indicator)}`}
+                                        style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
+                                      ></div>
+                                    </div>
+                                  )}
                                 </td>
                               </tr>
                             );
@@ -749,6 +768,9 @@ const Dashboard = () => {
             )}
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-500 mt-4">
+              <div><span className="inline-block w-3 h-3 bg-green-500 rounded mr-1"></span><strong>{t('ui.excellent')}:</strong> {t('ui.bestOutcomes')}</div>
+              <div><span className="inline-block w-3 h-3 bg-yellow-500 rounded mr-1"></span><strong>{t('ui.good')}:</strong> {t('ui.aboveAverage')}</div>
+              <div><span className="inline-block w-3 h-3 bg-orange-500 rounded mr-1"></span><strong>{t('ui.fair')}:</strong> {t('ui.belowAverage')}</div>
               <div><span className="inline-block w-3 h-3 bg-red-500 rounded mr-1"></span><strong>{t('ui.poor')}:</strong> {t('ui.worstOutcomes')}</div>
             </div>
             <p className="text-xs text-gray-500 mt-2">
