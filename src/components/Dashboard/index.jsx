@@ -615,10 +615,17 @@ const Dashboard = () => {
                                     getScoreColor(value, indicator)
                                   }`}>
                                     {(() => {
-                                      const isSupplyIndicator = ['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 'community_healthworker_per_population'].includes(indicator);
+                                      const isSupplyIndicator = 
+                                      ['doctor_per_population', 
+                                        'nurse_per_population', 
+                                        'healthworker_per_population', 
+                                        'community_healthworker_per_population',
+                                        'health_service_access'
+                                      ].includes(indicator);
                                       
                                       if (isSupplyIndicator) {
-                                        const unit = indicator === 'healthworker_per_population' ? '10,000' : '1,000';
+                                        const unit = indicator === 'healthworker_per_population' ? '10,000' : 
+                                        indicator === 'health_service_access' ? '10,000' : '1,000';
                                         return `${value.toFixed(1)} per ${unit}`;
                                       } else {
                                         return formatValue(value);

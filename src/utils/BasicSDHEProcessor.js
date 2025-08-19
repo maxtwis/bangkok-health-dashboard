@@ -947,27 +947,66 @@ if (mapping.isSupplyIndicator && districtName) {
       }
     });
 
-    // Calculate domain score with proper reverse indicator handling
-    const indicators = Object.keys(domainMapping);
-    const goodnessScores = indicators.map(indicator => {
-      const rawValue = results[indicator].value;
-      
-      if (reverseIndicators[indicator]) {
-        // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
-        return 100 - rawValue;
-      } else {
-        // Normal indicator - higher is better
-        return rawValue;
-      }
-    });
+      const indicators = Object.keys(domainMapping);
+      const goodnessScores = indicators.map(indicator => {
+        const rawValue = results[indicator].value;
+        
+        // Handle healthcare supply indicators with normalized scoring
+        const healthcareSupplyIndicators = [
+          'doctor_per_population', 
+          'nurse_per_population', 
+          'healthworker_per_population', 
+          'community_healthworker_per_population',
+          'health_service_access'
+        ];
+        
+        if (healthcareSupplyIndicators.includes(indicator)) {
+          // Convert healthcare supply indicators to 0-100 scale using WHO benchmarks
+          const benchmarks = {
+            doctor_per_population: { excellent: 2.5, good: 1.0, poor: 0.5 },
+            nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
+            healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
+            community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
+            health_service_access: { excellent: 50, good: 20, poor: 10 }
+          };
+          
+          const benchmark = benchmarks[indicator];
+          if (!benchmark) return 50; // Default middle score
+          
+          // Convert to 0-100 scale
+          if (rawValue >= benchmark.excellent) return 100;
+          if (rawValue >= benchmark.good) {
+            // Linear interpolation between good and excellent
+            const ratio = (rawValue - benchmark.good) / (benchmark.excellent - benchmark.good);
+            return 75 + (25 * ratio);
+          }
+          if (rawValue >= benchmark.poor) {
+            // Linear interpolation between poor and good
+            const ratio = (rawValue - benchmark.poor) / (benchmark.good - benchmark.poor);
+            return 25 + (50 * ratio);
+          }
+          // Below poor threshold
+          const ratio = Math.min(1, rawValue / benchmark.poor);
+          return 25 * ratio;
+        }
+        
+        // Handle regular indicators
+        if (reverseIndicators[indicator]) {
+          // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
+          return 100 - rawValue;
+        } else {
+          // Normal indicator - higher is better
+          return rawValue;
+        }
+      });
 
-    const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
+      const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
 
-    results['_domain_score'] = {
-      value: parseFloat(domainScore.toFixed(1)),
-      label: `${domain.replace('_', ' ')} Score`,
-      sample_size: records.length
-    };
+      results['_domain_score'] = {
+        value: parseFloat(domainScore.toFixed(1)),
+        label: `${domain.replace('_', ' ')} Score`,
+        sample_size: records.length
+      };
 
     return results;
   }
