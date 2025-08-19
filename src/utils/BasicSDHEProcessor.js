@@ -488,10 +488,6 @@ class BasicSDHEProcessor {
         community_safety: { 
           field: 'community_safety', 
           calculation: (records) => {
-            console.log('🔍 Community Safety Debug:');
-            console.log('Total records:', records.length);
-            
-            // Filter for valid community safety responses (1, 2, 3, 4)
             const safetyResponses = records.filter(r => 
               r.community_safety !== null && 
               r.community_safety !== undefined && 
@@ -499,11 +495,6 @@ class BasicSDHEProcessor {
               (r.community_safety === 1 || r.community_safety === 2 || 
               r.community_safety === 3 || r.community_safety === 4)
             );
-            
-            console.log('Records with valid safety data:', safetyResponses.length);
-            if (safetyResponses.length > 0) {
-              console.log('Sample safety values:', safetyResponses.slice(0, 5).map(r => r.community_safety));
-            }
             
             if (safetyResponses.length === 0) return 0;
             
@@ -515,13 +506,10 @@ class BasicSDHEProcessor {
               if (safetyValue === 2) return sum + 50;   // Somewhat Safe
               if (safetyValue === 1) return sum + 25;   // Unsafe
               
-              console.log('⚠️ Unexpected safety value:', safetyValue, typeof safetyValue);
               return sum;
             }, 0);
             
             const averageScore = totalScore / safetyResponses.length;
-            console.log('Average safety score:', averageScore);
-            
             return averageScore;
           },
           label: 'Community Safety'
