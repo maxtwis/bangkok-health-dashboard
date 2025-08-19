@@ -153,7 +153,7 @@ const Dashboard = () => {
 
         setSurveyData(processedData);
       } catch (error) {
-        console.error('Error loading survey data:', error);
+        // Error loading survey data
       }
     };
 
@@ -838,26 +838,6 @@ const Dashboard = () => {
                   <div className="text-center py-8 text-gray-500">
                     <p>{t('ui.noData')}</p>
                     <p className="text-sm mt-1">{t('ui.tryDifferent')}</p>
-                  </div>
-                )}
-
-                {/* Enhanced normal population note with combination details */}
-                {selectedPopulationGroup === 'normal_population' && (
-                  <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-3">
-                    <p className="text-sm text-purple-800 mb-2">
-                      ℹ️ <strong>{language === 'th' ? 'ระบบข้อมูลผสมอัจฉริยะ:' : 'Smart Data Combination System:'}</strong>
-                    </p>
-                    <div className="text-xs text-purple-700 space-y-1">
-                      <div><strong>(*)</strong> {language === 'th' ? 'ข้อมูลกรุงเทพฯเท่านั้น' : 'Bangkok-wide data only'}</div>
-                      <div><strong>(⚬)</strong> {language === 'th' ? 'ข้อมูลผสมอัจฉริยะ:' : 'Smart combined data:'}</div>
-                      <div className="ml-4 space-y-0.5">
-                        <div>• <span className="text-green-600">{language === 'th' ? 'ส.+BKK' : 'Survey+BKK'}</span>: {language === 'th' ? 'ปกติ 70%:30%' : 'Normal 70%:30%'}</div>
-                        <div>• <span className="text-orange-600">{language === 'th' ? 'ตย.น้อย→BKK' : 'Small→BKK'}</span>: {language === 'th' ? 'ตัวอย่างน้อยค่าต่ำ 30%:70%' : 'Small sample, low value 30%:70%'}</div>
-                        <div>• <span className="text-yellow-600">{language === 'th' ? 'ตย.น้อย+BKK' : 'Small+BKK'}</span>: {language === 'th' ? 'ตัวอย่างน้อย 40%:60%' : 'Small sample 40%:60%'}</div>
-                        <div>• <span className="text-purple-600">{language === 'th' ? 'ส.แตกต่าง' : 'High Var'}</span>: {language === 'th' ? 'ค่าแตกต่างสูง 60%:40%' : 'High variance 60%:40%'}</div>
-                      </div>
-                      <div><strong>{language === 'th' ? 'ไม่มีสัญลักษณ์' : 'No symbol'}</strong>: {language === 'th' ? 'ข้อมูลสำรวจเท่านั้น' : 'Survey data only'}</div>
-                    </div>
                   </div>
                 )}
               </div>
