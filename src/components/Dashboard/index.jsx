@@ -92,7 +92,8 @@ const Dashboard = () => {
     nurse_per_population: { good: 8.0, fair: 3.0, poor: 1.5 },
     healthworker_per_population: { good: 40, fair: 20, poor: 10 },
     community_healthworker_per_population: { good: 5.0, fair: 2.0, poor: 1.0 },
-    health_service_access: { good: 50, fair: 20, poor: 10 }
+    health_service_access: { good: 50, fair: 20, poor: 10 },
+    bed_per_population: { good: 30, fair: 15, poor: 10 }
   };
   
   const benchmark = benchmarks[indicator];
@@ -198,7 +199,8 @@ const Dashboard = () => {
     'nurse_per_population', 
     'healthworker_per_population', 
     'community_healthworker_per_population',
-    'health_service_access'
+    'health_service_access',
+    'bed_per_population'
   ];
   
   if (healthcareSupplyIndicators.includes(indicator)) {
@@ -620,12 +622,14 @@ const Dashboard = () => {
                                         'nurse_per_population', 
                                         'healthworker_per_population', 
                                         'community_healthworker_per_population',
-                                        'health_service_access'
+                                        'health_service_access',
+                                        'bed_per_population'
                                       ].includes(indicator);
                                       
                                       if (isSupplyIndicator) {
-                                        const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                        indicator === 'health_service_access' ? '10,000' : '1,000';
+                                          const unit = indicator === 'healthworker_per_population' ? '10,000' : 
+                                          indicator === 'health_service_access' ? '10,000' :
+                                          indicator === 'bed_per_population' ? '10,000' : '1,000';
                                         return `${value.toFixed(1)} per ${unit}`;
                                       } else {
                                         return formatValue(value);

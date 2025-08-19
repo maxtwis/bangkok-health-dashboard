@@ -130,7 +130,8 @@ class BasicSDHEProcessor {
           doctor_per_population: { value: 0, sample_size: 0 },
           nurse_per_population: { value: 0, sample_size: 0 },
           healthworker_per_population: { value: 0, sample_size: 0 },
-          community_healthworker_per_population: { value: 0, sample_size: 0 }
+          community_healthworker_per_population: { value: 0, sample_size: 0 },
+          bed_per_population: { value: 0, sample_size: 0 }
         };
       }
 
@@ -146,6 +147,8 @@ class BasicSDHEProcessor {
         sum + (facility.nurse_count || 0), 0);
       const totalHealthWorkers = districtHealthFacilities.reduce((sum, facility) => 
         sum + (facility.healthworker_count || 0), 0);
+      const totalBeds = districtHealthFacilities.reduce((sum, facility) => 
+      sum + (facility.bed_count || 0), 0);
 
       // Calculate per 1,000 population for doctors and nurses
       results.doctor_per_population = {
@@ -169,6 +172,13 @@ class BasicSDHEProcessor {
         population: districtPopulation,
         absolute_count: totalHealthWorkers
       };
+      // Calculate per 10,000 population for bed
+      results.bed_per_population = {
+      value: parseFloat(((totalBeds / districtPopulation) * 10000).toFixed(2)),
+      sample_size: districtHealthFacilities.length,
+      population: districtPopulation,
+      absolute_count: totalBeds
+    };
 
       // Calculate community health workers per 1,000 community population
       const districtCHW = this.communityHealthWorkerData.find(record => 
@@ -201,7 +211,8 @@ class BasicSDHEProcessor {
         doctor_per_population: { value: 0, sample_size: 0 },
         nurse_per_population: { value: 0, sample_size: 0 },
         healthworker_per_population: { value: 0, sample_size: 0 },
-        community_healthworker_per_population: { value: 0, sample_size: 0 }
+        community_healthworker_per_population: { value: 0, sample_size: 0 },
+        bed_per_population: { value: 0, sample_size: 0 }
       };
     }
 
@@ -425,6 +436,10 @@ class BasicSDHEProcessor {
         health_service_access: {
         isSupplyIndicator: true,
         label: 'Health Facilities per 10,000 Population'
+        },
+        bed_per_population: {
+        isSupplyIndicator: true,
+        label: 'Hospital Beds per 10,000 Population'
         }
       },
 
@@ -957,7 +972,8 @@ if (mapping.isSupplyIndicator && districtName) {
           'nurse_per_population', 
           'healthworker_per_population', 
           'community_healthworker_per_population',
-          'health_service_access'
+          'health_service_access',
+          'bed_per_population'
         ];
         
         if (healthcareSupplyIndicators.includes(indicator)) {
@@ -967,7 +983,8 @@ if (mapping.isSupplyIndicator && districtName) {
             nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
             healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
             community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
-            health_service_access: { excellent: 50, good: 20, poor: 10 }
+            health_service_access: { excellent: 50, good: 20, poor: 10 },
+            bed_per_population: { excellent: 30, good: 15, poor: 10 }
           };
           
           const benchmark = benchmarks[indicator];
