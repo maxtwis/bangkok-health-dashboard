@@ -461,9 +461,9 @@ const Dashboard = () => {
 
             {/* Normal Population Note */}
             {selectedPopulationGroup === 'normal_population' && (
-              <div className="mt-3 bg-purple-50 border border-purple-200 rounded-lg p-3">
-                <p className="text-sm text-purple-800">
-                  ℹ️ <strong>{language === 'th' ? 'หมายเหตุ:' : 'Note:'}</strong> {
+              <div className="mt-3">
+                <p className="text-xs text-gray-500">
+                  <strong>{language === 'th' ? 'หมายเหตุ:' : 'Note:'}</strong> {
                     language === 'th' 
                       ? 'ข้อมูลประชากรทั่วไปรวมข้อมูลจาก 2 แหล่งที่มา: ข้อมูลสำรวจระดับเขต และข้อมูลที่คำนวดแล้วระดับกรุงเทพฯ (*)'
                       : 'General population data combines 2 sources: district-level survey data and pre-calculated Bangkok-wide data (*)'
@@ -517,34 +517,6 @@ const Dashboard = () => {
                         : selectedDistrict
                     }
                   </p>
-                  
-                  {/* Health Outcomes Domain Description */}
-                  {selectedDomain === 'health_outcomes' && (
-                    <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                      <div className="flex items-start space-x-2">
-                        <div className="text-blue-600 mt-0.5">ℹ</div>
-                        <div>
-                          <h4 className="text-sm font-medium text-blue-900 mb-1">
-                            {t('domains.health_outcomes')}
-                          </h4>
-                          <p className="text-xs text-blue-800">
-                            {t('ui.healthOutcomesDescription')}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Clickable Instructions */}
-                  <div className="mt-3 bg-green-50 border border-green-200 rounded-lg p-3">
-                    <p className="text-sm text-green-800">
-                      💡 <strong>{language === 'th' ? 'เคล็ดลับ:' : 'Tip:'}</strong> {
-                        language === 'th' 
-                          ? 'คลิกที่ชื่อตัวชี้วัดเพื่อดูข้อมูลรายละเอียดและการแยกย่อยข้อมูลตามอายุและเพศ'
-                          : 'Click on indicator names to view detailed information and disaggregation by age and sex'
-                      }
-                    </p>
-                  </div>
                 </div>
 
                 {indicatorData && indicatorData.length > 0 ? (
