@@ -50,7 +50,6 @@ const BangkokMap = ({
   useEffect(() => {
     const loadGeoJSON = async () => {
       try {
-        console.log('🗺️ Loading GeoJSON...');
         const response = await fetch('/data/district.geojson');
         
         if (!response.ok) {
@@ -58,11 +57,9 @@ const BangkokMap = ({
         }
         
         const data = await response.json();
-        console.log('✅ GeoJSON loaded:', data.features?.length, 'features');
         setGeoJsonData(data);
         
       } catch (err) {
-        console.error('❌ GeoJSON Error:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -75,7 +72,6 @@ const BangkokMap = ({
   // Retry mechanism for map initialization
   const retryInitialization = useCallback(() => {
     if (retryCount < 3) {
-      console.log(`🔄 Retrying map initialization (attempt ${retryCount + 1}/3)`);
       setRetryCount(prev => prev + 1);
       setError(null);
       setMapReady(false);
@@ -95,17 +91,14 @@ const BangkokMap = ({
     // Wait for container to have proper dimensions
     const checkContainerReady = () => {
       const rect = container.getBoundingClientRect();
-      console.log('📏 Container dimensions:', rect);
       
       // Check if container has proper dimensions
       if (rect.width === 0 || rect.height === 0) {
-        console.log('⏳ Container not ready, waiting...');
         return false;
       }
       
       // Check if container is visible in viewport
       if (rect.top < -window.innerHeight || rect.top > window.innerHeight * 2) {
-        console.log('👁️ Container not visible, waiting...');
         return false;
       }
       
@@ -125,8 +118,6 @@ const BangkokMap = ({
     }
 
     try {
-      console.log('🚀 Creating Leaflet map...');
-      
       // Clear any existing map first
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
@@ -150,12 +141,10 @@ const BangkokMap = ({
 
       // Add error handler for the map
       map.on('error', (e) => {
-        console.error('Map error:', e);
         retryInitialization();
       });
 
       // Add tile layer with comprehensive error handling
-      // Option 1: CartoDB Light (Gray) - Clean and minimal
       const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap contributors © CARTO',
         maxZoom: 19,
@@ -163,36 +152,7 @@ const BangkokMap = ({
         errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSI+VGlsZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+'
       });
 
-      // Alternative gray base map options (uncomment to use):
-      
-      // Option 2: CartoDB Light No Labels (Very clean gray)
-      // const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-      //   attribution: '© OpenStreetMap contributors © CARTO',
-      //   maxZoom: 19,
-      //   subdomains: 'abcd'
-      // });
-
-      // Option 3: Stamen Toner Lite (High contrast gray)
-      // const tileLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
-      //   attribution: 'Map tiles by Stamen Design, CC BY 3.0 — Map data © OpenStreetMap contributors',
-      //   maxZoom: 20,
-      //   subdomains: 'abcd'
-      // });
-
-      // Option 4: ESRI Gray Canvas
-      // const tileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      //   attribution: 'Tiles © Esri — Esri, DeLorme, NAVTEQ',
-      //   maxZoom: 16
-      // });
-
-      // Option 5: OpenStreetMap Grayscale (Custom styled)
-      // const tileLayer = L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-      //   attribution: '© OpenStreetMap contributors',
-      //   maxZoom: 18
-      // });
-
       let tileLoadTimeout = setTimeout(() => {
-        console.warn('Tiles taking too long to load, proceeding anyway...');
         proceedWithMapSetup();
       }, 5000);
 
@@ -201,7 +161,6 @@ const BangkokMap = ({
         
         // Store map reference
         mapInstanceRef.current = map;
-        console.log('✅ Map created successfully');
         
         // Invalidate size to ensure proper rendering
         setTimeout(() => {
@@ -209,18 +168,15 @@ const BangkokMap = ({
             mapInstanceRef.current.invalidateSize(true);
             setMapReady(true);
             setRetryCount(0); // Reset retry count on success
-            console.log('✅ Map ready and sized correctly');
           }
         }, 50);
       };
 
       tileLayer.on('load', () => {
-        console.log('✅ Tiles loaded');
         proceedWithMapSetup();
       });
 
       tileLayer.on('tileerror', (e) => {
-        console.warn('Some tiles failed to load:', e);
         // Don't fail completely, just continue
       });
 
@@ -230,7 +186,6 @@ const BangkokMap = ({
       setTimeout(proceedWithMapSetup, 2000);
 
     } catch (err) {
-      console.error('❌ Map initialization error:', err);
       retryInitialization();
     }
   }, [loading, error, retryInitialization, retryCount]);
@@ -252,18 +207,17 @@ const BangkokMap = ({
         clearTimeout(initializationTimeoutRef.current);
       }
       if (mapInstanceRef.current) {
-        console.log('🧹 Cleaning up map');
         try {
           mapInstanceRef.current.remove();
         } catch (e) {
-          console.warn('Error during map cleanup:', e);
+          // Ignore cleanup errors
         }
         mapInstanceRef.current = null;
       }
     };
   }, []);
 
-  // Get color based on score
+  // FIXED: Get color based on score with proper handling of combined data
   const getDistrictColor = (districtName) => {
     if (!getIndicatorData || districtName === 'Bangkok Overall') {
       return '#94a3b8';
@@ -273,19 +227,51 @@ const BangkokMap = ({
       const indicatorData = getIndicatorData(selectedDomain, districtName, selectedPopulationGroup);
       const domainScore = indicatorData.find(item => item.isDomainScore);
       
-      if (!domainScore || domainScore.sample_size < 5) {
-        return '#e2e8f0';
+      // FIXED: Check for valid domain score with more lenient conditions
+      if (!domainScore) {
+        return '#e2e8f0'; // Light grey for no domain score
       }
 
+      // FIXED: Handle all types of data including combined and pre-calculated
       const score = domainScore.value;
+      const sampleSize = domainScore.sample_size;
       
-      if (score >= 80) return '#10b981'; 
-      if (score >= 60) return '#f59e0b'; 
-      if (score >= 40) return '#f97316'; 
-      return '#ef4444'; 
+      // FIXED: Accept data if we have a valid score, regardless of sample size type
+      if (score === null || score === undefined || isNaN(score)) {
+        return '#e2e8f0'; // Light grey for no valid score
+      }
+
+      // FIXED: For normal population, accept combined data and pre-calculated data
+      if (selectedPopulationGroup === 'normal_population') {
+        // Accept any valid score for normal population (survey + combined + pre-calculated)
+        if (score >= 0) {
+          if (score >= 80) return '#10b981'; // Green
+          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 40) return '#f97316'; // Orange
+          return '#ef4444'; // Red
+        }
+      } else {
+        // FIXED: For other population groups, be more lenient with sample size
+        // Accept data if we have at least 1 person (was 5 before)
+        if (typeof sampleSize === 'number' && sampleSize >= 1) {
+          if (score >= 80) return '#10b981'; // Green
+          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 40) return '#f97316'; // Orange
+          return '#ef4444'; // Red
+        }
+        // Also handle string sample sizes (like "Bangkok-wide")
+        else if (typeof sampleSize === 'string' && sampleSize !== 'N/A') {
+          if (score >= 80) return '#10b981'; // Green
+          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 40) return '#f97316'; // Orange
+          return '#ef4444'; // Red
+        }
+      }
+
+      return '#e2e8f0'; // Default light grey
       
     } catch (err) {
-      return '#94a3b8';
+      return '#94a3b8'; // Medium grey for errors
     }
   };
 
@@ -294,8 +280,6 @@ const BangkokMap = ({
     if (!mapInstanceRef.current || !geoJsonData || !mapReady) {
       return;
     }
-
-    console.log('🗺️ Updating district layers...');
 
     try {
       // Remove old layer
@@ -322,11 +306,53 @@ const BangkokMap = ({
           const districtName = districtCodeMap[dcode];
           
           if (districtName) {
-            layer.bindPopup(`<strong>${districtName}</strong><br/><small>Click to select/deselect</small>`);
+            // FIXED: Show more informative popup with data details
+            const indicatorData = getIndicatorData ? getIndicatorData(selectedDomain, districtName, selectedPopulationGroup) : [];
+            const domainScore = indicatorData.find(item => item.isDomainScore);
+            
+            let popupContent = `<strong>${districtName}</strong><br/>`;
+            
+            if (domainScore && domainScore.value !== null && domainScore.value !== undefined) {
+              popupContent += `${t(`domains.${selectedDomain}`)}: ${domainScore.value.toFixed(1)}%<br/>`;
+              
+              // Show sample size info
+              if (typeof domainScore.sample_size === 'string') {
+                popupContent += `Sample: ${domainScore.sample_size}<br/>`;
+              } else if (typeof domainScore.sample_size === 'number') {
+                popupContent += `Sample: ${domainScore.sample_size} people<br/>`;
+              }
+              
+              // Show combination method for normal population
+              if (selectedPopulationGroup === 'normal_population' && domainScore.isCombined) {
+                const method = domainScore.combinationMethod;
+                let methodText = '';
+                switch (method) {
+                  case 'small_sample_fallback':
+                    methodText = language === 'th' ? 'ตย.น้อย→BKK' : 'Small→BKK';
+                    break;
+                  case 'small_sample_balanced':
+                    methodText = language === 'th' ? 'ตย.น้อย+BKK' : 'Small+BKK';
+                    break;
+                  case 'high_variance':
+                    methodText = language === 'th' ? 'ส.แตกต่าง' : 'High Var';
+                    break;
+                  case 'normal_combination':
+                    methodText = language === 'th' ? 'ส.+BKK' : 'Survey+BKK';
+                    break;
+                }
+                if (methodText) {
+                  popupContent += `Method: ${methodText}<br/>`;
+                }
+              }
+            } else {
+              popupContent += `${language === 'th' ? 'ไม่มีข้อมูล' : 'No data'}<br/>`;
+            }
+            
+            popupContent += `<small>Click to select/deselect</small>`;
+            
+            layer.bindPopup(popupContent);
             
             layer.on('click', (e) => {
-              console.log('🖱️ Clicked:', districtName);
-              
               // Prevent event from bubbling to map
               L.DomEvent.stopPropagation(e);
               
@@ -347,7 +373,6 @@ const BangkokMap = ({
       mapInstanceRef.current.on('click', (e) => {
         // Only trigger if we're not clicking on Bangkok Overall already
         if (selectedDistrict !== 'Bangkok Overall' && onDistrictClick) {
-          console.log('🗺️ Clicked outside districts - returning to Bangkok Overall');
           onDistrictClick('Bangkok Overall');
         }
       });
@@ -362,15 +387,13 @@ const BangkokMap = ({
           mapInstanceRef.current.fitBounds(bounds, { padding: [20, 20] });
         }
       } catch (boundsError) {
-        console.warn('Error fitting bounds:', boundsError);
+        // Ignore bounds errors
       }
       
-      console.log('✅ District layers updated');
-      
     } catch (err) {
-      console.error('❌ Layer update error:', err);
+      // Ignore layer update errors
     }
-  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, mapReady]);
+  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, mapReady, t, language]);
 
   // Show loading state
   if (loading) {
