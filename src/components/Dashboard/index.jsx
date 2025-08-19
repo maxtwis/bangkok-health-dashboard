@@ -465,7 +465,7 @@ const Dashboard = () => {
                 <p className="text-xs text-gray-500">
                   <strong>{language === 'th' ? 'หมายเหตุ:' : 'Note:'}</strong> {
                     language === 'th' 
-                      ? 'ข้อมูลประชากรทั่วไปรวมข้อมูลจาก 2 แหล่งที่มา: ข้อมูลสำรวจระดับเขต และข้อมูลที่คำนวดแล้วระดับกรุงเทพฯ (*)'
+                      ? 'ข้อมูลประชากรทั่วไปรวมข้อมูลจาก 2 แหล่งที่มา: ข้อมูลสำรวจระดับเขต และข้อมูลที่คำนวณแล้วระดับกรุงเทพฯ (*)'
                       : 'General population data combines 2 sources: district-level survey data and pre-calculated Bangkok-wide data (*)'
                   }
                 </p>
@@ -678,7 +678,7 @@ const Dashboard = () => {
                                       return (
                                         <span 
                                           className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}
-                                          title={language === 'th' ? 'ข้อมูลจากการคำนวดระดับกรุงเทพฯ' : 'Bangkok-wide pre-calculated data'}
+                                          title={language === 'th' ? 'ข้อมูลจากการคำนวณระดับกรุงเทพฯ' : 'Bangkok-wide pre-calculated data'}
                                         >
                                           {(() => {
                                             const isSupplyIndicator = [
