@@ -56,7 +56,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
         dataPoint[group.value] = scoreValue;
         
       } catch (error) {
-        console.warn(`Error getting data for ${domain}, ${group.value}:`, error);
         dataPoint[group.value] = 0;
       }
     });
@@ -187,15 +186,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </button>
           </div>
         </div>
-        
-        {/* Scale information */}
-        {scaleMode === 'dynamic' && allValues.length > 0 && (
-          <div className="bg-blue-50 p-2 rounded text-xs text-blue-700">
-            <strong>
-              {t('ui.dynamicScaleNote')} {scaleMin.toFixed(1)}% {t('ui.to')} {scaleMax.toFixed(1)}% {t('ui.toHighlightDifferences')}
-            </strong>
-          </div>
-        )}
       </div>
 
       {/* Check if we have valid data */}
