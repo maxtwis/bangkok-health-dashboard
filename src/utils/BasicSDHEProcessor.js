@@ -10,7 +10,8 @@ class BasicSDHEProcessor {
     this.districtPopulationData = [];
     this.communityHealthWorkerData = [];
     this.communityPopulationData = [];
-     this.normalPopulationData = [];
+    this.normalPopulationData = [];
+    this.normalPopulationDistrictData = []; // NEW: District-specific data
     this.sdheResults = {};
     this.districtCodeMap = this.createDistrictCodeMap();
     this.indicatorMappings = this.createIndicatorMappings();
@@ -34,47 +35,77 @@ class BasicSDHEProcessor {
     };
   }
 
-  async loadNormalPopulationData() {
-  try {
-    console.log('👥 Loading normal population data...');
-    
-    const normalPopResponse = await fetch('/data/normal_population_indicator.csv');
-    if (!normalPopResponse.ok) {
-      throw new Error('Could not load normal_population_indicator.csv');
-    }
-    
-    const normalPopCsv = await normalPopResponse.text();
-    const normalPopParsed = Papa.parse(normalPopCsv, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true
-    });
-    
-    this.normalPopulationData = normalPopParsed.data;
-    console.log(`✅ Loaded ${this.normalPopulationData.length} normal population indicators`);
-    
-    // Create lookup for quick access
-    this.normalPopulationLookup = {};
-    this.normalPopulationData.forEach(row => {
-      if (row.indicator) {
-        this.normalPopulationLookup[row.indicator] = row.score;
+  // NEW: Load district-specific normal population data
+  async loadNormalPopulationDistrictData() {
+    try {
+      const normalPopDistrictResponse = await fetch('/data/normal_population_indicator_district.csv');
+      if (!normalPopDistrictResponse.ok) {
+        throw new Error('Could not load normal_population_indicator_district.csv');
       }
-    });
-    
-    console.log('Available normal population indicators:', Object.keys(this.normalPopulationLookup));
-    
-  } catch (error) {
-    console.error('❌ Error loading normal population data:', error);
-    // Don't throw - continue without normal population data
-    this.normalPopulationData = [];
-    this.normalPopulationLookup = {};
+      
+      const normalPopDistrictCsv = await normalPopDistrictResponse.text();
+      const normalPopDistrictParsed = Papa.parse(normalPopDistrictCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      
+      this.normalPopulationDistrictData = normalPopDistrictParsed.data;
+      
+      // Create lookup for quick access by district and indicator
+      this.normalPopulationDistrictLookup = {};
+      this.normalPopulationDistrictData.forEach(row => {
+        if (row.indicator && row.dcode) {
+          const key = `${row.dcode}_${row.indicator}`;
+          this.normalPopulationDistrictLookup[key] = row.score;
+        }
+      });
+      
+    } catch (error) {
+      // Don't throw - continue without district-specific data
+      this.normalPopulationDistrictData = [];
+      this.normalPopulationDistrictLookup = {};
+    }
   }
-}
+
+  async loadNormalPopulationData() {
+    try {
+      
+      const normalPopResponse = await fetch('/data/normal_population_indicator.csv');
+      if (!normalPopResponse.ok) {
+        throw new Error('Could not load normal_population_indicator.csv');
+      }
+      
+      const normalPopCsv = await normalPopResponse.text();
+      const normalPopParsed = Papa.parse(normalPopCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      
+      this.normalPopulationData = normalPopParsed.data;
+      
+      // Create lookup for quick access
+      this.normalPopulationLookup = {};
+      this.normalPopulationData.forEach(row => {
+        if (row.indicator) {
+          this.normalPopulationLookup[row.indicator] = row.score;
+        }
+      });
+      
+      // Load district-specific data
+      await this.loadNormalPopulationDistrictData();
+      
+    } catch (error) {
+      // Don't throw - continue without normal population data
+      this.normalPopulationData = [];
+      this.normalPopulationLookup = {};
+    }
+  }
 
   // Load additional healthcare supply data files
   async loadHealthcareSupplyData() {
     try {
-      console.log('🏥 Loading healthcare supply data...');
       
       // Load health supply data
       const healthSupplyResponse = await fetch('/data/health_supply.csv');
@@ -88,7 +119,6 @@ class BasicSDHEProcessor {
         skipEmptyLines: true
       });
       this.healthSupplyData = healthSupplyParsed.data;
-      console.log(`✅ Loaded ${this.healthSupplyData.length} health facilities`);
 
       // Load health facilities data 
       const healthFacilitiesResponse = await fetch('/data/health_facilities.csv');
@@ -102,7 +132,6 @@ class BasicSDHEProcessor {
       skipEmptyLines: true
     });
     this.healthFacilitiesData = healthFacilitiesParsed.data;
-    console.log(`✅ Loaded ${this.healthFacilitiesData.length} health facility records`);
 
       // Load district population data
       const districtPopResponse = await fetch('/data/district_population.csv');
@@ -116,7 +145,6 @@ class BasicSDHEProcessor {
         skipEmptyLines: true
       });
       this.districtPopulationData = districtPopParsed.data;
-      console.log(`✅ Loaded ${this.districtPopulationData.length} population records`);
 
       // Load community health worker data
       const chwResponse = await fetch('/data/community_health_worker.csv');
@@ -130,7 +158,6 @@ class BasicSDHEProcessor {
         skipEmptyLines: true
       });
       this.communityHealthWorkerData = chwParsed.data;
-      console.log(`✅ Loaded ${this.communityHealthWorkerData.length} CHW records`);
 
       // Load community population data
       const commPopResponse = await fetch('/data/community_population.csv');
@@ -144,12 +171,10 @@ class BasicSDHEProcessor {
         skipEmptyLines: true
       });
       this.communityPopulationData = commPopParsed.data;
-      console.log(`✅ Loaded ${this.communityPopulationData.length} community population records`);
 
       await this.loadNormalPopulationData();
 
     } catch (error) {
-      console.error('❌ Error loading healthcare supply data:', error);
       throw error;
     }
   }
@@ -165,7 +190,6 @@ class BasicSDHEProcessor {
         .reduce((sum, record) => sum + (record.population || 0), 0);
 
       if (districtPopulation === 0) {
-        console.warn(`⚠️ No population data found for district ${districtName} (${districtCode})`);
         return {
           doctor_per_population: { value: 0, sample_size: 0 },
           nurse_per_population: { value: 0, sample_size: 0 },
@@ -246,7 +270,6 @@ class BasicSDHEProcessor {
       }
 
     } catch (error) {
-      console.error(`❌ Error calculating healthcare supply for ${districtName}:`, error);
       return {
         doctor_per_population: { value: 0, sample_size: 0 },
         nurse_per_population: { value: 0, sample_size: 0 },
@@ -267,7 +290,6 @@ class BasicSDHEProcessor {
       .reduce((sum, record) => sum + (record.population || 0), 0);
 
     if (districtPopulation === 0) {
-      console.warn(`⚠️ No population data found for district ${districtName} (${districtCode})`);
       return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
     }
 
@@ -287,11 +309,30 @@ class BasicSDHEProcessor {
     };
 
   } catch (error) {
-    console.error(`❌ Error calculating health service access for ${districtName}:`, error);
     return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
   }
 }
 
+  // NEW: Get district-specific pre-calculated value for health behaviors indicators
+  getDistrictSpecificPreCalculatedValue(indicator, districtName) {
+    const healthBehaviorsIndicators = ['alcohol_consumption', 'tobacco_use', 'physical_activity', 'obesity'];
+    
+    if (!healthBehaviorsIndicators.includes(indicator)) {
+      return null; // Not a health behaviors indicator, use Bangkok-wide data
+    }
+
+    // Find district code
+    const districtCode = Object.keys(this.districtCodeMap).find(
+      code => this.districtCodeMap[code] === districtName
+    );
+
+    if (!districtCode || !this.normalPopulationDistrictLookup) {
+      return null;
+    }
+
+    const key = `${districtCode}_${indicator}`;
+    return this.normalPopulationDistrictLookup[key] || null;
+  }
 
   createIndicatorMappings() {
     return {
@@ -817,466 +858,499 @@ class BasicSDHEProcessor {
     return 'normal_population';
   }
 
-  // Calculate indicators for a specific set of records
+  // UPDATED: Calculate indicators for a specific set of records with district-specific health behaviors
   calculateIndicatorsForRecords(records, domain, districtName = null, populationGroup = null) {
-  const domainMapping = this.indicatorMappings[domain];
-  const results = { sample_size: records.length };
+    const domainMapping = this.indicatorMappings[domain];
+    const results = { sample_size: records.length };
 
-  // Define reverse indicators (diseases and problems are bad when high)
-  const reverseIndicators = {
-    unemployment_rate: true,
-    vulnerable_employment: true,
-    food_insecurity_moderate: true,
-    food_insecurity_severe: true,
-    work_injury_fatal: true,
-    work_injury_non_fatal: true,
-    catastrophic_health_spending_household: true,
-    health_spending_over_10_percent: true,
-    health_spending_over_25_percent: true,
-    medical_consultation_skip_cost: true,
-    medical_treatment_skip_cost: true,
-    prescribed_medicine_skip_cost: true,
-    housing_overcrowding: true,
-    disaster_experience: true,
-    violence_physical: true,
-    violence_psychological: true,
-    violence_sexual: true,
-    discrimination_experience: true,
-    community_murder: true,
-    alcohol_consumption: true,
-    tobacco_use: true,
-    obesity: true,
-    // All health outcomes are reverse (diseases are bad)
-    any_chronic_disease: true,
-    diabetes: true,
-    hypertension: true,
-    gout: true,
-    chronic_kidney_disease: true,
-    cancer: true,
-    high_cholesterol: true,
-    ischemic_heart_disease: true,
-    liver_disease: true,
-    stroke: true,
-    hiv: true,
-    mental_health: true,
-    allergies: true,
-    bone_joint_disease: true,
-    respiratory_disease: true,
-    emphysema: true,
-    anemia: true,
-    stomach_ulcer: true,
-    epilepsy: true,
-    intestinal_disease: true,
-    paralysis: true,
-    dementia: true,
-    cardiovascular_diseases: true,
-    metabolic_diseases: true,
-    multiple_chronic_conditions: true
-    // Healthcare supply indicators are NOT reverse (higher is better)
-  };
+    // Define reverse indicators (diseases and problems are bad when high)
+    const reverseIndicators = {
+      unemployment_rate: true,
+      vulnerable_employment: true,
+      food_insecurity_moderate: true,
+      food_insecurity_severe: true,
+      work_injury_fatal: true,
+      work_injury_non_fatal: true,
+      catastrophic_health_spending_household: true,
+      health_spending_over_10_percent: true,
+      health_spending_over_25_percent: true,
+      medical_consultation_skip_cost: true,
+      medical_treatment_skip_cost: true,
+      prescribed_medicine_skip_cost: true,
+      housing_overcrowding: true,
+      disaster_experience: true,
+      violence_physical: true,
+      violence_psychological: true,
+      violence_sexual: true,
+      discrimination_experience: true,
+      community_murder: true,
+      alcohol_consumption: true,
+      tobacco_use: true,
+      obesity: true,
+      // All health outcomes are reverse (diseases are bad)
+      any_chronic_disease: true,
+      diabetes: true,
+      hypertension: true,
+      gout: true,
+      chronic_kidney_disease: true,
+      cancer: true,
+      high_cholesterol: true,
+      ischemic_heart_disease: true,
+      liver_disease: true,
+      stroke: true,
+      hiv: true,
+      mental_health: true,
+      allergies: true,
+      bone_joint_disease: true,
+      respiratory_disease: true,
+      emphysema: true,
+      anemia: true,
+      stomach_ulcer: true,
+      epilepsy: true,
+      intestinal_disease: true,
+      paralysis: true,
+      dementia: true,
+      cardiovascular_diseases: true,
+      metabolic_diseases: true,
+      multiple_chronic_conditions: true
+      // Healthcare supply indicators are NOT reverse (higher is better)
+    };
 
-  Object.keys(domainMapping).forEach(indicator => {
-    const mapping = domainMapping[indicator];
-    
-    // Handle healthcare supply indicators (these work the same for all population groups)
-    if (mapping.isSupplyIndicator && districtName) {
-      // Get district code from district name
-      const districtCode = Object.keys(this.districtCodeMap).find(
-        code => this.districtCodeMap[code] === districtName
-      );
+    Object.keys(domainMapping).forEach(indicator => {
+      const mapping = domainMapping[indicator];
       
-      if (districtCode) {
-        let supplyData;
+      // Handle healthcare supply indicators (these work the same for all population groups)
+      if (mapping.isSupplyIndicator && districtName) {
+        // Get district code from district name
+        const districtCode = Object.keys(this.districtCodeMap).find(
+          code => this.districtCodeMap[code] === districtName
+        );
         
-        // Handle health service access indicator (uses health_facilities.csv)
-        if (indicator === 'health_service_access') {
-          supplyData = { 
-            [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
-          };
-        } 
-        // Handle healthcare worker indicators (uses health_supply.csv)
-        else {
-          supplyData = this.calculateHealthcareSupplyIndicators(
-            parseInt(districtCode), 
-            districtName
-          );
-        }
-        
-        if (supplyData[indicator]) {
-          results[indicator] = {
-            value: supplyData[indicator].value,
-            label: mapping.label,
-            sample_size: supplyData[indicator].sample_size,
-            population: supplyData[indicator].population,
-            absolute_count: supplyData[indicator].absolute_count
-          };
-        }
-      } else {
-        // For Bangkok Overall, calculate average across all districts
-        if (districtName === 'Bangkok Overall') {
-          const allDistrictCodes = Object.keys(this.districtCodeMap).map(code => parseInt(code));
-          let totalPopulation = 0;
-          let totalAbsoluteCount = 0;
-          let validDistricts = 0;
+        if (districtCode) {
+          let supplyData;
           
-          allDistrictCodes.forEach(dcode => {
-            const dname = this.districtCodeMap[dcode];
-            let supplyData;
+          // Handle health service access indicator (uses health_facilities.csv)
+          if (indicator === 'health_service_access') {
+            supplyData = { 
+              [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
+            };
+          } 
+          // Handle healthcare worker indicators (uses health_supply.csv)
+          else {
+            supplyData = this.calculateHealthcareSupplyIndicators(
+              parseInt(districtCode), 
+              districtName
+            );
+          }
+          
+          if (supplyData[indicator]) {
+            results[indicator] = {
+              value: supplyData[indicator].value,
+              label: mapping.label,
+              sample_size: supplyData[indicator].sample_size,
+              population: supplyData[indicator].population,
+              absolute_count: supplyData[indicator].absolute_count
+            };
+          }
+        } else {
+          // For Bangkok Overall, calculate average across all districts
+          if (districtName === 'Bangkok Overall') {
+            const allDistrictCodes = Object.keys(this.districtCodeMap).map(code => parseInt(code));
+            let totalPopulation = 0;
+            let totalAbsoluteCount = 0;
+            let validDistricts = 0;
             
-            if (indicator === 'health_service_access') {
-              supplyData = { 
-                [indicator]: this.calculateHealthServiceAccess(dcode, dname) 
+            allDistrictCodes.forEach(dcode => {
+              const dname = this.districtCodeMap[dcode];
+              let supplyData;
+              
+              if (indicator === 'health_service_access') {
+                supplyData = { 
+                  [indicator]: this.calculateHealthServiceAccess(dcode, dname) 
+                };
+              } else {
+                supplyData = this.calculateHealthcareSupplyIndicators(dcode, dname);
+              }
+              
+              if (supplyData[indicator] && supplyData[indicator].population > 0) {
+                totalPopulation += supplyData[indicator].population;
+                totalAbsoluteCount += supplyData[indicator].absolute_count;
+                validDistricts++;
+              }
+            });
+            
+            if (totalPopulation > 0) {
+              // Calculate overall rate for Bangkok
+              let overallRate = 0;
+              if (indicator === 'healthworker_per_population') {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
+              } else if (indicator === 'health_service_access') {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
+              } else if (indicator === 'bed_per_population') {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
+              } else {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
+              }
+              
+              results[indicator] = {
+                value: parseFloat(overallRate.toFixed(2)),
+                label: mapping.label,
+                sample_size: validDistricts,
+                population: totalPopulation,
+                absolute_count: totalAbsoluteCount
               };
             } else {
-              supplyData = this.calculateHealthcareSupplyIndicators(dcode, dname);
+              results[indicator] = {
+                value: 0,
+                label: mapping.label,
+                sample_size: 0,
+                population: 0,
+                absolute_count: 0
+              };
             }
-            
-            if (supplyData[indicator] && supplyData[indicator].population > 0) {
-              totalPopulation += supplyData[indicator].population;
-              totalAbsoluteCount += supplyData[indicator].absolute_count;
-              validDistricts++;
-            }
-          });
-          
-          if (totalPopulation > 0) {
-            // Calculate overall rate for Bangkok
-            let overallRate = 0;
-            if (indicator === 'healthworker_per_population') {
-              overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
-            } else if (indicator === 'health_service_access') {
-              overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
-            } else if (indicator === 'bed_per_population') {
-              overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
-            } else {
-              overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
-            }
-            
-            results[indicator] = {
-              value: parseFloat(overallRate.toFixed(2)),
-              label: mapping.label,
-              sample_size: validDistricts,
-              population: totalPopulation,
-              absolute_count: totalAbsoluteCount
-            };
-          } else {
-            results[indicator] = {
-              value: 0,
-              label: mapping.label,
-              sample_size: 0,
-              population: 0,
-              absolute_count: 0
-            };
           }
         }
       }
-    }
-    // ENHANCED COMBINED CALCULATION FOR NORMAL POPULATION (ALL DISTRICTS)
-    else if (populationGroup === 'normal_population') {
-      let finalValue = null;
-      let finalSampleSize = records.length;
-      let isPreCalculated = false;
-      let isCombined = false;
-      let combinationMethod = '';
-      
-      const hasSurveyData = records.length > 0;
-      const hasPreCalculatedData = this.normalPopulationLookup && 
-                                  this.normalPopulationLookup[indicator] !== undefined;
+      // ENHANCED COMBINED CALCULATION FOR NORMAL POPULATION (ALL DISTRICTS)
+      else if (populationGroup === 'normal_population') {
+        let finalValue = null;
+        let finalSampleSize = records.length;
+        let isPreCalculated = false;
+        let isCombined = false;
+        let combinationMethod = '';
+        
+        const hasSurveyData = records.length > 0;
+        
+        // NEW: Check for district-specific pre-calculated data for health behaviors
+        const districtSpecificValue = this.getDistrictSpecificPreCalculatedValue(indicator, districtName);
+        const hasDistrictSpecificData = districtSpecificValue !== null && districtSpecificValue !== undefined;
+        
+        // Check for Bangkok-wide pre-calculated data
+        const bangkokWideValue = this.normalPopulationLookup && 
+                                this.normalPopulationLookup[indicator] !== undefined ?
+                                parseFloat(this.normalPopulationLookup[indicator]) : null;
+        const hasBangkokWideData = bangkokWideValue !== null && !isNaN(bangkokWideValue);
 
-      // Calculate survey-based value if we have survey data
-      let surveyValue = null;
-      let surveySampleSize = 0;
-      
-      if (hasSurveyData) {
-        if (mapping.calculation) {
-          surveyValue = mapping.calculation(records);
-          surveySampleSize = records.length;
-        } else if (mapping.condition) {
-          let filteredRecords = records;
-          if (mapping.ageFilter) {
-            filteredRecords = records.filter(r => mapping.ageFilter(r.age));
+        // Calculate survey-based value if we have survey data
+        let surveyValue = null;
+        let surveySampleSize = 0;
+        
+        if (hasSurveyData) {
+          if (mapping.calculation) {
+            surveyValue = mapping.calculation(records);
+            surveySampleSize = records.length;
+          } else if (mapping.condition) {
+            let filteredRecords = records;
+            if (mapping.ageFilter) {
+              filteredRecords = records.filter(r => mapping.ageFilter(r.age));
+            }
+            
+            const meetCondition = filteredRecords.filter(record => {
+              if (mapping.fields) {
+                return mapping.condition(record);
+              } else {
+                return mapping.condition(record[mapping.field]);
+              }
+            }).length;
+            
+            surveyValue = filteredRecords.length > 0 ? 
+              (meetCondition / filteredRecords.length) * 100 : null;
+            surveySampleSize = filteredRecords.length;
+          }
+        }
+        
+        // UPDATED COMBINATION LOGIC: Prioritize district-specific data for health behaviors
+        if (hasDistrictSpecificData) {
+          // Use district-specific data for health behaviors indicators
+          if (surveyValue !== null && !isNaN(surveyValue)) {
+            // Both survey and district-specific data available - combine them
+            const isSmallSample = surveySampleSize < 20;
+            const isLowSurveyValue = surveyValue < 10;
+            const isHighVariance = Math.abs(surveyValue - districtSpecificValue) > 20;
+            
+            if (isSmallSample && isLowSurveyValue) {
+              finalValue = (surveyValue * 0.3) + (districtSpecificValue * 0.7);
+              combinationMethod = 'small_sample_fallback';
+            } else if (isSmallSample) {
+              finalValue = (surveyValue * 0.4) + (districtSpecificValue * 0.6);
+              combinationMethod = 'small_sample_balanced';
+            } else if (isHighVariance) {
+              finalValue = (surveyValue * 0.6) + (districtSpecificValue * 0.4);
+              combinationMethod = 'high_variance';
+            } else {
+              finalValue = (surveyValue * 0.7) + (districtSpecificValue * 0.3);
+              combinationMethod = 'normal_combination';
+            }
+            
+            isCombined = true;
+            finalSampleSize = `${surveySampleSize} + District`;
+          } else {
+            // Only district-specific data available
+            finalValue = districtSpecificValue;
+            isPreCalculated = true;
+            finalSampleSize = 'District-wide';
+            combinationMethod = 'district_only';
+          }
+        } else if (surveyValue !== null && !isNaN(surveyValue) && 
+                   hasBangkokWideData) {
+          // Fall back to Bangkok-wide combination if no district-specific data
+          const isSmallSample = surveySampleSize < 20;
+          const isLowSurveyValue = surveyValue < 10;
+          const isHighVariance = Math.abs(surveyValue - bangkokWideValue) > 20;
+          
+          if (isSmallSample && isLowSurveyValue) {
+            finalValue = (surveyValue * 0.3) + (bangkokWideValue * 0.7);
+            combinationMethod = 'small_sample_fallback';
+          } else if (isSmallSample) {
+            finalValue = (surveyValue * 0.4) + (bangkokWideValue * 0.6);
+            combinationMethod = 'small_sample_balanced';
+          } else if (isHighVariance) {
+            finalValue = (surveyValue * 0.6) + (bangkokWideValue * 0.4);
+            combinationMethod = 'high_variance';
+          } else {
+            finalValue = (surveyValue * 0.7) + (bangkokWideValue * 0.3);
+            combinationMethod = 'normal_combination';
           }
           
-          const meetCondition = filteredRecords.filter(record => {
-            if (mapping.fields) {
-              return mapping.condition(record);
-            } else {
-              return mapping.condition(record[mapping.field]);
-            }
-          }).length;
+          isCombined = true;
+          finalSampleSize = `${surveySampleSize} + Bangkok-wide`;
           
-          surveyValue = filteredRecords.length > 0 ? 
-            (meetCondition / filteredRecords.length) * 100 : null;
-          surveySampleSize = filteredRecords.length;
-        }
-      }
-      
-      // Get pre-calculated value
-      const preCalculatedValue = hasPreCalculatedData ? 
-        parseFloat(this.normalPopulationLookup[indicator]) : null;
-      
-      // SMART COMBINATION LOGIC
-      if (surveyValue !== null && !isNaN(surveyValue) && 
-          preCalculatedValue !== null && !isNaN(preCalculatedValue)) {
-        
-        // Both sources available - use smart combination
-        const isSmallSample = surveySampleSize < 20; // Small sample threshold
-        const isLowSurveyValue = surveyValue < 10; // Low value threshold (might be due to small sample)
-        const isHighVariance = Math.abs(surveyValue - preCalculatedValue) > 20; // High difference threshold
-        
-        if (isSmallSample && isLowSurveyValue) {
-          // Small sample with low value - favor pre-calculated data
-          finalValue = (surveyValue * 0.3) + (preCalculatedValue * 0.7);
-          combinationMethod = 'small_sample_fallback';
-          console.log(`${indicator} in ${districtName}: Small sample (${surveySampleSize}) with low value (${surveyValue.toFixed(1)}%) - using 30% survey + 70% Bangkok`);
+        } else if (surveyValue !== null && !isNaN(surveyValue)) {
+          // Only survey data available
+          finalValue = surveyValue;
+          finalSampleSize = surveySampleSize;
+          combinationMethod = 'survey_only';
           
-        } else if (isSmallSample) {
-          // Small sample but reasonable value - balanced combination
-          finalValue = (surveyValue * 0.4) + (preCalculatedValue * 0.6);
-          combinationMethod = 'small_sample_balanced';
+        } else if (hasDistrictSpecificData) {
+          // Only district-specific pre-calculated data available
+          finalValue = districtSpecificValue;
+          isPreCalculated = true;
+          finalSampleSize = 'District-wide';
+          combinationMethod = 'district_only';
           
-        } else if (isHighVariance) {
-          // High variance between sources - favor survey data but moderate with Bangkok
-          finalValue = (surveyValue * 0.6) + (preCalculatedValue * 0.4);
-          combinationMethod = 'high_variance';
+        } else if (hasBangkokWideData) {
+          // Only Bangkok-wide pre-calculated data available
+          finalValue = bangkokWideValue;
+          isPreCalculated = true;
+          finalSampleSize = 'Bangkok-wide';
+          combinationMethod = 'bangkok_only';
           
         } else {
-          // Normal case - favor survey data
-          finalValue = (surveyValue * 0.7) + (preCalculatedValue * 0.3);
-          combinationMethod = 'normal_combination';
+          // No data available
+          results[indicator] = {
+            value: null,
+            label: mapping.label,
+            sample_size: 0,
+            noData: true
+          };
+          return; // Skip to next indicator
         }
         
-        isCombined = true;
-        finalSampleSize = `${surveySampleSize} + Bangkok-wide`;
-        
-      } else if (surveyValue !== null && !isNaN(surveyValue)) {
-        // Only survey data available
-        finalValue = surveyValue;
-        finalSampleSize = surveySampleSize;
-        combinationMethod = 'survey_only';
-        
-      } else if (preCalculatedValue !== null && !isNaN(preCalculatedValue)) {
-        // Only pre-calculated data available
-        finalValue = preCalculatedValue;
-        isPreCalculated = true;
-        finalSampleSize = 'Bangkok-wide';
-        combinationMethod = 'precalculated_only';
-        
-      } else {
-        // No data available
+        // Store the result with metadata
         results[indicator] = {
-          value: null,
+          value: parseFloat(finalValue.toFixed(2)),
           label: mapping.label,
-          sample_size: 0,
-          noData: true
+          sample_size: finalSampleSize,
+          isPreCalculated: isPreCalculated,
+          isCombined: isCombined,
+          combinationMethod: combinationMethod,
+          surveyValue: surveyValue,
+          preCalculatedValue: hasDistrictSpecificData ? districtSpecificValue : bangkokWideValue,
+          surveySampleSize: surveySampleSize
         };
-        return; // Skip to next indicator
+        
+        return; // Skip normal calculation, we have our result
       }
       
-      // Store the result with metadata
-      results[indicator] = {
-        value: parseFloat(finalValue.toFixed(2)),
-        label: mapping.label,
-        sample_size: finalSampleSize,
-        isPreCalculated: isPreCalculated,
-        isCombined: isCombined,
-        combinationMethod: combinationMethod,
-        surveyValue: surveyValue,
-        preCalculatedValue: preCalculatedValue,
-        surveySampleSize: surveySampleSize
-      };
+      // NORMAL CALCULATION (for all other cases)
+      else if (mapping.calculation) {
+        // Custom calculation function
+        const calculatedValue = mapping.calculation(records);
+        results[indicator] = {
+          value: parseFloat(calculatedValue.toFixed(2)),
+          label: mapping.label,
+          sample_size: records.length
+        };
+        
+        // Track sample size for financial indicators that filter out null income
+        if (indicator.includes('health_spending') || indicator.includes('catastrophic')) {
+          const validRecords = records.filter(r => 
+            r.income !== null && 
+            r.income !== undefined && 
+            r.income > 0 &&
+            ((indicator.includes('household') && r.hh_health_expense !== null) ||
+             (!indicator.includes('household') && r.health_expense !== null))
+          );
+          results[indicator].sample_size = validRecords.length;
+        }
+      } else if (mapping.condition) {
+        // Standard condition-based calculation
+        let filteredRecords = records;
+        
+        // Apply age filter if specified
+        if (mapping.ageFilter) {
+          filteredRecords = records.filter(r => mapping.ageFilter(r.age));
+        }
+        
+        const meetCondition = filteredRecords.filter(record => {
+          if (mapping.fields) {
+            return mapping.condition(record);
+          } else {
+            return mapping.condition(record[mapping.field]);
+          }
+        }).length;
+        
+        const rate = filteredRecords.length > 0 ? 
+          (meetCondition / filteredRecords.length) * 100 : 0;
+        
+        results[indicator] = {
+          value: parseFloat(rate.toFixed(2)),
+          label: mapping.label,
+          sample_size: mapping.ageFilter ? filteredRecords.length : records.length
+        };
+      }
+    });
+
+    // Calculate domain score with proper reverse indicator handling
+    const indicators = Object.keys(domainMapping);
+    const goodnessScores = indicators.filter(indicator => {
+      // Exclude indicators with no data from domain score calculation
+      return results[indicator] && results[indicator].value !== null && !results[indicator].noData;
+    }).map(indicator => {
+      const rawValue = results[indicator].value;
       
-      return; // Skip normal calculation, we have our result
-    }
-    
-    // NORMAL CALCULATION (for all other cases)
-    else if (mapping.calculation) {
-      // Custom calculation function
-      const calculatedValue = mapping.calculation(records);
-      results[indicator] = {
-        value: parseFloat(calculatedValue.toFixed(2)),
-        label: mapping.label,
+      // Handle healthcare supply indicators with normalized scoring
+      const healthcareSupplyIndicators = [
+        'doctor_per_population', 
+        'nurse_per_population', 
+        'healthworker_per_population', 
+        'community_healthworker_per_population',
+        'health_service_access',
+        'bed_per_population'
+      ];
+      
+      if (healthcareSupplyIndicators.includes(indicator)) {
+        // Convert healthcare supply indicators to 0-100 scale using WHO benchmarks
+        const benchmarks = {
+          doctor_per_population: { excellent: 2.5, good: 1.0, poor: 0.5 },
+          nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
+          healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
+          community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
+          health_service_access: { excellent: 50, good: 20, poor: 10 },
+          bed_per_population: { excellent: 30, good: 15, poor: 10 }
+        };
+        
+        const benchmark = benchmarks[indicator];
+        if (!benchmark) return 50; // Default middle score
+        
+        // Convert to 0-100 scale
+        if (rawValue >= benchmark.excellent) return 100;
+        if (rawValue >= benchmark.good) {
+          // Linear interpolation between good and excellent
+          const ratio = (rawValue - benchmark.good) / (benchmark.excellent - benchmark.good);
+          return 75 + (25 * ratio);
+        }
+        if (rawValue >= benchmark.poor) {
+          // Linear interpolation between poor and good
+          const ratio = (rawValue - benchmark.poor) / (benchmark.good - benchmark.poor);
+          return 25 + (50 * ratio);
+        }
+        // Below poor threshold
+        const ratio = Math.min(1, rawValue / benchmark.poor);
+        return 25 * ratio;
+      }
+      
+      // Handle regular indicators
+      if (reverseIndicators[indicator]) {
+        // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
+        return 100 - rawValue;
+      } else {
+        // Normal indicator - higher is better
+        return rawValue;
+      }
+    });
+
+    if (goodnessScores.length > 0) {
+      const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
+      results['_domain_score'] = {
+        value: parseFloat(domainScore.toFixed(1)),
+        label: `${domain.replace('_', ' ')} Score`,
         sample_size: records.length
       };
-      
-      // Track sample size for financial indicators that filter out null income
-      if (indicator.includes('health_spending') || indicator.includes('catastrophic')) {
-        const validRecords = records.filter(r => 
-          r.income !== null && 
-          r.income !== undefined && 
-          r.income > 0 &&
-          ((indicator.includes('household') && r.hh_health_expense !== null) ||
-           (!indicator.includes('household') && r.health_expense !== null))
-        );
-        results[indicator].sample_size = validRecords.length;
-      }
-    } else if (mapping.condition) {
-      // Standard condition-based calculation
-      let filteredRecords = records;
-      
-      // Apply age filter if specified
-      if (mapping.ageFilter) {
-        filteredRecords = records.filter(r => mapping.ageFilter(r.age));
-      }
-      
-      const meetCondition = filteredRecords.filter(record => {
-        if (mapping.fields) {
-          return mapping.condition(record);
-        } else {
-          return mapping.condition(record[mapping.field]);
-        }
-      }).length;
-      
-      const rate = filteredRecords.length > 0 ? 
-        (meetCondition / filteredRecords.length) * 100 : 0;
-      
-      results[indicator] = {
-        value: parseFloat(rate.toFixed(2)),
-        label: mapping.label,
-        sample_size: mapping.ageFilter ? filteredRecords.length : records.length
-      };
-    }
-  });
-
-  // Calculate domain score with proper reverse indicator handling
-  const indicators = Object.keys(domainMapping);
-  const goodnessScores = indicators.filter(indicator => {
-    // Exclude indicators with no data from domain score calculation
-    return results[indicator] && results[indicator].value !== null && !results[indicator].noData;
-  }).map(indicator => {
-    const rawValue = results[indicator].value;
-    
-    // Handle healthcare supply indicators with normalized scoring
-    const healthcareSupplyIndicators = [
-      'doctor_per_population', 
-      'nurse_per_population', 
-      'healthworker_per_population', 
-      'community_healthworker_per_population',
-      'health_service_access',
-      'bed_per_population'
-    ];
-    
-    if (healthcareSupplyIndicators.includes(indicator)) {
-      // Convert healthcare supply indicators to 0-100 scale using WHO benchmarks
-      const benchmarks = {
-        doctor_per_population: { excellent: 2.5, good: 1.0, poor: 0.5 },
-        nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
-        healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
-        community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
-        health_service_access: { excellent: 50, good: 20, poor: 10 },
-        bed_per_population: { excellent: 30, good: 15, poor: 10 }
-      };
-      
-      const benchmark = benchmarks[indicator];
-      if (!benchmark) return 50; // Default middle score
-      
-      // Convert to 0-100 scale
-      if (rawValue >= benchmark.excellent) return 100;
-      if (rawValue >= benchmark.good) {
-        // Linear interpolation between good and excellent
-        const ratio = (rawValue - benchmark.good) / (benchmark.excellent - benchmark.good);
-        return 75 + (25 * ratio);
-      }
-      if (rawValue >= benchmark.poor) {
-        // Linear interpolation between poor and good
-        const ratio = (rawValue - benchmark.poor) / (benchmark.good - benchmark.poor);
-        return 25 + (50 * ratio);
-      }
-      // Below poor threshold
-      const ratio = Math.min(1, rawValue / benchmark.poor);
-      return 25 * ratio;
-    }
-    
-    // Handle regular indicators
-    if (reverseIndicators[indicator]) {
-      // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
-      return 100 - rawValue;
     } else {
-      // Normal indicator - higher is better
-      return rawValue;
+      results['_domain_score'] = {
+        value: null,
+        label: `${domain.replace('_', ' ')} Score`,
+        sample_size: 0,
+        noData: true
+      };
     }
-  });
 
-  if (goodnessScores.length > 0) {
-    const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
-    results['_domain_score'] = {
-      value: parseFloat(domainScore.toFixed(1)),
-      label: `${domain.replace('_', ' ')} Score`,
-      sample_size: records.length
-    };
-  } else {
-    results['_domain_score'] = {
-      value: null,
-      label: `${domain.replace('_', ' ')} Score`,
-      sample_size: 0,
-      noData: true
-    };
+    return results;
   }
 
-  return results;
-}
-
   calculateIndicators() {
-  const results = {};
-  const domains = Object.keys(this.indicatorMappings);
-  const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
-  const districts = [...new Set(this.surveyData.map(r => r.district_name))];
+    const results = {};
+    const domains = Object.keys(this.indicatorMappings);
+    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
+    const districts = [...new Set(this.surveyData.map(r => r.district_name))];
 
-  // Initialize results structure for districts
-  domains.forEach(domain => {
-    results[domain] = {};
-    
-    // Initialize Bangkok Overall
-    results[domain]['Bangkok Overall'] = {};
-    populationGroups.forEach(group => {
-      results[domain]['Bangkok Overall'][group] = {};
-    });
-    
-    // Initialize individual districts
-    districts.forEach(district => {
-      results[domain][district] = {};
+    // Initialize results structure for districts
+    domains.forEach(domain => {
+      results[domain] = {};
+      
+      // Initialize Bangkok Overall
+      results[domain]['Bangkok Overall'] = {};
       populationGroups.forEach(group => {
-        results[domain][district][group] = {};
+        results[domain]['Bangkok Overall'][group] = {};
+      });
+      
+      // Initialize individual districts
+      districts.forEach(district => {
+        results[domain][district] = {};
+        populationGroups.forEach(group => {
+          results[domain][district][group] = {};
+        });
       });
     });
-  });
 
-  // Calculate indicators for each combination
-  domains.forEach(domain => {
-    // Calculate Bangkok Overall first (using all data)
-    populationGroups.forEach(group => {
-      const allRecords = this.surveyData.filter(r => r.population_group === group);
-      if (allRecords.length > 0 || group === 'normal_population') {
-        results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
-          allRecords, 
-          domain, 
-          'Bangkok Overall',
-          group  // MAKE SURE THIS IS PASSED
-        );
-      }
-    });
-    
-    // Calculate individual districts
-    districts.forEach(district => {
+    // Calculate indicators for each combination
+    domains.forEach(domain => {
+      // Calculate Bangkok Overall first (using all data)
       populationGroups.forEach(group => {
-        const records = this.surveyData.filter(r => 
-          r.district_name === district && r.population_group === group
-        );
-
-        if (records.length > 0 || (group === 'normal_population' && district !== 'Bangkok Overall')) {
-          results[domain][district][group] = this.calculateIndicatorsForRecords(
-            records, 
+        const allRecords = this.surveyData.filter(r => r.population_group === group);
+        if (allRecords.length > 0 || group === 'normal_population') {
+          results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
+            allRecords, 
             domain, 
-            district,
-            group  // MAKE SURE THIS IS PASSED
+            'Bangkok Overall',
+            group
           );
         }
       });
-    });
-  });
+      
+      // Calculate individual districts
+      districts.forEach(district => {
+        populationGroups.forEach(group => {
+          const records = this.surveyData.filter(r => 
+            r.district_name === district && r.population_group === group
+          );
 
-  this.sdheResults = results;
-  return results;
-}
+          if (records.length > 0 || (group === 'normal_population' && district !== 'Bangkok Overall')) {
+            results[domain][district][group] = this.calculateIndicatorsForRecords(
+              records, 
+              domain, 
+              district,
+              group
+            );
+          }
+        });
+      });
+    });
+
+    this.sdheResults = results;
+    return results;
+  }
 
   getAvailableDistricts() {
     // Add Bangkok Overall as the first option
@@ -1306,31 +1380,30 @@ class BasicSDHEProcessor {
   }
 
   // Get summary statistics for Bangkok Overall
-getBangkokOverallSummary() {
-  const summary = {
-    total_responses: this.surveyData.length,
-    population_groups: {},
-    districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length
-  };
+  getBangkokOverallSummary() {
+    const summary = {
+      total_responses: this.surveyData.length,
+      population_groups: {},
+      districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length
+    };
 
     // Population group breakdown for Bangkok Overall
-  const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population']; // ADD normal_population
-  populationGroups.forEach(group => {
-    const groupRecords = this.surveyData.filter(r => r.population_group === group);
-    summary.population_groups[group] = {
-      count: groupRecords.length,
-      percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1)
-    };
-  });
+    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
+    populationGroups.forEach(group => {
+      const groupRecords = this.surveyData.filter(r => r.population_group === group);
+      summary.population_groups[group] = {
+        count: groupRecords.length,
+        percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1)
+      };
+    });
 
-  return summary;
-}
+    return summary;
+  }
 
   async processSurveyData(csvContent) {
     try {
       // Load survey data first
       await this.loadSurveyData(csvContent);
-      console.log(`✅ Processed ${this.surveyData.length} survey responses`);
       
       // Load healthcare supply data
       await this.loadHealthcareSupplyData();
@@ -1338,26 +1411,12 @@ getBangkokOverallSummary() {
       // Calculate all indicators
       const results = this.calculateIndicators();
       
-      console.log(`📊 Districts: ${this.getAvailableDistricts().length} (including Bangkok Overall)`);
-      console.log(`🎯 Domains: ${this.getAvailableDomains().length} (including Health Outcomes + Healthcare Supply)`);
-      
-      // Log Bangkok Overall sample sizes
-      const bangkokSummary = this.getBangkokOverallSummary();
-      console.log(`🏙️ Bangkok Overall sample sizes:`, bangkokSummary.population_groups);
-      
-      // Log healthcare supply data availability
-      console.log(`🏥 Healthcare supply data loaded: ${this.healthSupplyData.length} facilities`);
-      console.log(`👥 Population data loaded: ${this.districtPopulationData.length} records`);
-      console.log(`🏥 Community health workers: ${this.communityHealthWorkerData.length} districts`);
-      console.log(`🏘️ Community population: ${this.communityPopulationData.length} communities`);
-      
       return {
         results,
         processor: this
       };
       
     } catch (error) {
-      console.error('❌ Error processing survey data:', error);
       throw error;
     }
   }
