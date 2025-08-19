@@ -17,7 +17,7 @@ const Dashboard = () => {
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
   const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall');
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
-  const [viewMode, setViewMode] = useState('overview'); // 'overview', 'indicators', 'details'
+  const [viewMode, setViewMode] = useState('overview');
   
   // States for indicator detail page
   const [showDetailPage, setShowDetailPage] = useState(false);
@@ -142,7 +142,7 @@ const Dashboard = () => {
           if (record.age >= 60) return 'elderly';  
           if (record.disable_status === 1) return 'disabled';
           if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
-          return 'normal_population'; // Changed from 'general_population'
+          return 'normal_population';
         };
 
         const processedData = parsed.data.map(record => ({
@@ -565,15 +565,270 @@ const Dashboard = () => {
                       <tbody>
                         {indicatorData
                           .filter(item => {
-                            const label = item?.label ?? 'Unknown Indicator';
-                            const indicator = item?.indicator;
+                            // Safety check for valid items
+                            if (!item || typeof item !== 'object') return false;
+                            
+                            const label = item.label;
+                            const indicator = item.indicator;
                             
                             return (
-                              label !== 'Unknown Indicator' && 
+                              label && label !== 'Unknown Indicator' && 
                               label !== '' && 
                               indicator !== null && 
                               indicator !== undefined &&
                               indicator !== ''
+                            );
+                          })
+                          .map((item, index) => {
+                            // Safety checks for all values
+                            const value = typeof item.value === 'number' ? item.value : null;
+                            const sampleSize = item.sample_size;
+                            const isDomainScore = Boolean(item.isDomainScore);
+                            const indicator = item.indicator;
+                            
+                            // Get translated label
+                            const translatedLabel = isDomainScore 
+                              ? (language === 'th' 
+                                  ? `คะแนนรวมตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
+                                  : `${t(`domains.${selectedDomain}`)} Score`)
+                              : getIndicatorName(indicator, language) || item.label || 'Unknown Indicator';
+                            
+                            return (
+                              <tr 
+                                key={`${indicator}-${index}`} 
+                                className={`border-b border-gray-100 ${
+                                  isDomainScore ? 'bg-blue-50 font-medium' : 
+                                  index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
+                                } ${!isDomainScore ? 'hover:bg-blue-50 transition-colors' : ''}`}
+                              >
+                                {/* Indicator Name Column */}
+                                <td className="py-3 px-4">
+                                  <div className="flex items-center space-x-2">
+                                    {isDomainScore && (
+                                      <span className="text-blue-600 font-bold">▊</span>
+                                    )}
+                                    {!isDomainScore ? (
+                                      <button
+                                        onClick={() => handleIndicatorClick(indicator)}
+                                        className="text-left hover:text-blue-600 hover:underline focus:outline-none focus:text-blue-600 cursor-pointer"
+                                      >
+                                        {translatedLabel}
+                                      </button>
+                                    ) : (
+                                      <span className="font-bold text-blue-800">
+                                        {translatedLabel}
+                                      </span>
+                                    )}
+                                    {/* Special highlighting for severe diseases in health outcomes */}
+                                    {selectedDomain === 'health_outcomes' && !isDomainScore && (
+                                      ['cancer', 'hiv', 'stroke', 'ischemic_heart_disease', 'chronic_kidney_disease'].includes(indicator) && (
+                                        <span className="text-red-500 text-xs">!</span>
+                                      )
+                                    )}
+                                  </div>
+                                </td>
+
+                                {/* Score/Value Column */}
+                                <td className="text-center py-3 px-4">
+                                  {(() => {
+                                    // Handle no data case
+                                    if (item.noData || value === null || value === undefined) {
+                                      return (
+                                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
+                                          {language === 'th' ? 'ไม่มีข้อมูล' : 'No data'}
+                                        </span>
+                                      );
+                                    }
+                                    
+                                    // Handle combined indicators with detailed tooltip
+                                    if (item.isCombined) {
+                                      const surveyVal = typeof item.surveyValue === 'number' ? item.surveyValue : null;
+                                      const bangkokVal = typeof item.preCalculatedValue === 'number' ? item.preCalculatedValue : null;
+                                      const sampleSz = item.surveySampleSize || 0;
+                                      
+                                      const tooltipText = (() => {
+                                        const survey = surveyVal ? surveyVal.toFixed(1) : 'N/A';
+                                        const bangkok = bangkokVal ? bangkokVal.toFixed(1) : 'N/A';
+                                        
+                                        switch (item.combinationMethod) {
+                                          case 'small_sample_fallback':
+                                            return language === 'th' 
+                                              ? `ตัวอย่างน้อย (${sampleSz}): สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 30%:70%`
+                                              : `Small sample (${sampleSz}): Survey ${survey}% + BKK ${bangkok}% → 30%:70% weight`;
+                                          case 'small_sample_balanced':
+                                            return language === 'th'
+                                              ? `ตัวอย่างน้อย (${sampleSz}): สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 40%:60%`
+                                              : `Small sample (${sampleSz}): Survey ${survey}% + BKK ${bangkok}% → 40%:60% weight`;
+                                          case 'high_variance':
+                                            return language === 'th'
+                                              ? `ส่วนต่างสูง: สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 60%:40%`
+                                              : `High variance: Survey ${survey}% + BKK ${bangkok}% → 60%:40% weight`;
+                                          case 'normal_combination':
+                                            return language === 'th'
+                                              ? `ปกติ: สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 70%:30%`
+                                              : `Normal: Survey ${survey}% + BKK ${bangkok}% → 70%:30% weight`;
+                                          default:
+                                            return language === 'th' ? 'ข้อมูลผสม' : 'Combined data';
+                                        }
+                                      })();
+                                      
+                                      return (
+                                        <span 
+                                          className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)} cursor-help`}
+                                          title={tooltipText}
+                                        >
+                                          {(() => {
+                                            const isSupplyIndicator = [
+                                              'doctor_per_population', 
+                                              'nurse_per_population', 
+                                              'healthworker_per_population', 
+                                              'community_healthworker_per_population',
+                                              'health_service_access',
+                                              'bed_per_population'
+                                            ].includes(indicator);
+                                            
+                                            if (isSupplyIndicator) {
+                                              const unit = indicator === 'healthworker_per_population' ? '10,000' : 
+                                                          indicator === 'health_service_access' ? '10,000' :
+                                                          indicator === 'bed_per_population' ? '10,000' : '1,000';
+                                              return `${parseFloat(value || 0).toFixed(1)} per ${unit}`;
+                                            } else {
+                                              return formatValue(value);
+                                            }
+                                          })()}
+                                          <span className="ml-1 text-xs opacity-75">⚬</span>
+                                        </span>
+                                      );
+                                    }
+                                    
+                                    // Handle pre-calculated indicators
+                                    if (item.isPreCalculated) {
+                                      return (
+                                        <span 
+                                          className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}
+                                          title={language === 'th' ? 'ข้อมูลจากการคำนวดระดับกรุงเทพฯ' : 'Bangkok-wide pre-calculated data'}
+                                        >
+                                          {(() => {
+                                            const isSupplyIndicator = [
+                                              'doctor_per_population', 
+                                              'nurse_per_population', 
+                                              'healthworker_per_population', 
+                                              'community_healthworker_per_population',
+                                              'health_service_access',
+                                              'bed_per_population'
+                                            ].includes(indicator);
+                                            
+                                            if (isSupplyIndicator) {
+                                              const unit = indicator === 'healthworker_per_population' ? '10,000' : 
+                                                          indicator === 'health_service_access' ? '10,000' :
+                                                          indicator === 'bed_per_population' ? '10,000' : '1,000';
+                                              return `${parseFloat(value || 0).toFixed(1)} per ${unit}`;
+                                            } else {
+                                              return formatValue(value);
+                                            }
+                                          })()}
+                                          <span className="ml-1 text-xs opacity-75">*</span>
+                                        </span>
+                                      );
+                                    }
+                                    
+                                    // Regular indicators
+                                    return (
+                                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}>
+                                        {(() => {
+                                          const isSupplyIndicator = [
+                                            'doctor_per_population', 
+                                            'nurse_per_population', 
+                                            'healthworker_per_population', 
+                                            'community_healthworker_per_population',
+                                            'health_service_access',
+                                            'bed_per_population'
+                                          ].includes(indicator);
+                                          
+                                          if (isSupplyIndicator) {
+                                            const unit = indicator === 'healthworker_per_population' ? '10,000' : 
+                                                        indicator === 'health_service_access' ? '10,000' :
+                                                        indicator === 'bed_per_population' ? '10,000' : '1,000';
+                                            return `${parseFloat(value || 0).toFixed(1)} per ${unit}`;
+                                          } else {
+                                            return formatValue(value);
+                                          }
+                                        })()}
+                                      </span>
+                                    );
+                                  })()}
+                                </td>
+
+                                {/* Sample Size Column */}
+                                <td className="text-center py-3 px-4 text-gray-600">
+                                  {(() => {
+                                    // Check combination method for detailed display
+                                    if (item.isCombined && item.combinationMethod) {
+                                      const method = item.combinationMethod;
+                                      let description = '';
+                                      let color = 'text-blue-600';
+                                      
+                                      switch (method) {
+                                        case 'small_sample_fallback':
+                                          description = language === 'th' ? 'ตย.น้อย→BKK' : 'Small→BKK';
+                                          color = 'text-orange-600';
+                                          break;
+                                        case 'small_sample_balanced':
+                                          description = language === 'th' ? 'ตย.น้อย+BKK' : 'Small+BKK';
+                                          color = 'text-yellow-600';
+                                          break;
+                                        case 'high_variance':
+                                          description = language === 'th' ? 'ส.แตกต่าง' : 'High Var';
+                                          color = 'text-purple-600';
+                                          break;
+                                        case 'normal_combination':
+                                          description = language === 'th' ? 'ส.+BKK' : 'Survey+BKK';
+                                          color = 'text-green-600';
+                                          break;
+                                        default:
+                                          description = language === 'th' ? 'ข้อมูลรวม' : 'Combined';
+                                      }
+                                      
+                                      return (
+                                        <span className="text-xs">
+                                          <span className={`font-medium ${color}`}>{description}</span>
+                                          <span className="block text-gray-500 text-xs">
+                                            {typeof item.sample_size === 'string' ? item.sample_size : formatSampleSize(item.sample_size)}
+                                          </span>
+                                        </span>
+                                      );
+                                    }
+                                    
+                                    // Check if this is a pre-calculated indicator for normal population
+                                    if (item.sample_size === 'Bangkok-wide' || item.isPreCalculated) {
+                                      return language === 'th' ? 'ข้อมูลกรุงเทพฯ' : 'Bangkok-wide';
+                                    }
+                                    
+                                    // Check if no data available
+                                    if (item.noData) {
+                                      return language === 'th' ? 'ไม่มีข้อมูล' : 'No data';
+                                    }
+                                    
+                                    return formatSampleSize(item.sample_size);
+                                  })()}
+                                </td>
+
+                                {/* Performance Bar Column */}
+                                <td className="text-center py-3 px-4">
+                                  {item.noData || value === null || value === undefined ? (
+                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                      <div className="h-2 rounded-full bg-gray-300" style={{ width: '0%' }}></div>
+                                    </div>
+                                  ) : (
+                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                      <div 
+                                        className={`h-2 rounded-full ${getPerformanceBarColor(value, indicator)}`}
+                                        style={{ width: `${Math.min(100, Math.max(0, parseFloat(value) || 0))}%` }}
+                                      ></div>
+                                    </div>
+                                  )}
+                                </td>
+                              </tr>
                             );
                           })}
                       </tbody>
