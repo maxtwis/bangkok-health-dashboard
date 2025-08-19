@@ -1,4 +1,4 @@
-// IndicatorDetailPage.jsx - Enhanced with Occupation Disaggregation
+// IndicatorDetailPage.jsx - Enhanced with Combined Occupation Status and Type Disaggregation
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
@@ -81,7 +81,7 @@ const IndicatorDetailPage = ({
   const indicatorData = getIndicatorData(domain, district, populationGroup);
   const currentIndicator = indicatorData.find(item => item.indicator === indicator);
 
-  // Calculate disaggregation data - ENHANCED with occupation
+  // Calculate disaggregation data - ENHANCED with combined occupation status and type
   const disaggregationData = useMemo(() => {
     if (!surveyData || !indicator) return null;
 
@@ -95,7 +95,7 @@ const IndicatorDetailPage = ({
     return calculateDisaggregation(filteredData, indicator);
   }, [surveyData, indicator, district, populationGroup]);
 
-  // ENHANCED: Calculate disaggregation by age, sex, and occupation
+  // ENHANCED: Calculate disaggregation by age, sex, and combined occupation
   function calculateDisaggregation(records, indicatorKey) {
     if (!records || records.length === 0) return null;
 
@@ -116,21 +116,32 @@ const IndicatorDetailPage = ({
       return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
     };
 
-    // NEW: Occupation type classification
-    const getOccupationGroup = (occupationType) => {
-      const occupationMap = {
-        1: language === 'th' ? 'รับราชการ' : 'Government',
-        2: language === 'th' ? 'รัฐวิสาหกิจ' : 'State Enterprise',
-        3: language === 'th' ? 'พนักงานบริษัท/ลูกจ้าง' : 'Company Employee',
-        5: language === 'th' ? 'ธุรกิจส่วนตัว' : 'Private Business',
-        6: language === 'th' ? 'อาชีพอิสระ' : 'Freelance/Independent',
-        'other': language === 'th' ? 'อื่น ๆ' : 'Other'
-      };
+    // ENHANCED: Combined occupation status and type classification
+    const getOccupationGroup = (occupationStatus, occupationType) => {
+      // First check occupation status
+      if (occupationStatus === 0) {
+        return language === 'th' ? 'ไม่ได้ประกอบอาชีพ' : 'Not Working';
+      }
       
-      return occupationMap[occupationType] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+      // If working (occupation_status === 1), then categorize by type
+      if (occupationStatus === 1) {
+        const occupationMap = {
+          1: language === 'th' ? 'รับราชการ' : 'Government',
+          2: language === 'th' ? 'รัฐวิสาหกิจ' : 'State Enterprise',
+          3: language === 'th' ? 'พนักงานบริษัท/ลูกจ้าง' : 'Company Employee',
+          5: language === 'th' ? 'ธุรกิจส่วนตัว' : 'Private Business',
+          6: language === 'th' ? 'อาชีพอิสระ' : 'Freelance/Independent',
+          'other': language === 'th' ? 'อื่น ๆ' : 'Other'
+        };
+        
+        return occupationMap[occupationType] || (language === 'th' ? 'ทำงานแต่ไม่ระบุประเภท' : 'Working (Type Unspecified)');
+      }
+      
+      // Fallback for unclear cases
+      return language === 'th' ? 'ไม่ระบุสถานะ' : 'Status Unclear';
     };
 
-    // Group by age, sex, and occupation
+    // Group by age, sex, and enhanced occupation
     const ageGroups = {};
     const sexGroups = {};
     const occupationGroups = {};
@@ -138,7 +149,7 @@ const IndicatorDetailPage = ({
     records.forEach(record => {
       const ageGroup = getAgeGroup(record.age);
       const sexGroup = getSexGroup(record.sex);
-      const occupationGroup = getOccupationGroup(record.occupation_type);
+      const occupationGroup = getOccupationGroup(record.occupation_status, record.occupation_type);
 
       if (!ageGroups[ageGroup]) ageGroups[ageGroup] = [];
       if (!sexGroups[sexGroup]) sexGroups[sexGroup] = [];
@@ -147,10 +158,8 @@ const IndicatorDetailPage = ({
       ageGroups[ageGroup].push(record);
       sexGroups[sexGroup].push(record);
       
-      // Only add to occupation groups if person has employment status
-      if (record.occupation_status === 1 && record.occupation_type) {
-        occupationGroups[occupationGroup].push(record);
-      }
+      // Add to occupation groups for all people (not just employed)
+      occupationGroups[occupationGroup].push(record);
     });
 
     // Calculate both demographic distribution AND indicator prevalence for each group
@@ -493,7 +502,7 @@ const IndicatorDetailPage = ({
       };
     });
 
-    // NEW: Process occupation groups - Show demographic composition
+    // ENHANCED: Process combined occupation groups - Show both working and non-working
     const occupationData = Object.keys(occupationGroups).map(occupationGroup => {
       const groupData = calculateGroupData(occupationGroups[occupationGroup], records);
       return {
@@ -503,12 +512,18 @@ const IndicatorDetailPage = ({
         count: groupData.count,
         type: 'occupation'
       };
-    }).filter(item => item.count > 0); // Only show occupation groups with data
+    }).filter(item => item.count > 0) // Only show occupation groups with data
+    .sort((a, b) => {
+      // Custom sort: Not Working first, then by count (largest first)
+      if (a.group.includes('ไม่ได้ประกอบอาชีพ') || a.group.includes('Not Working')) return -1;
+      if (b.group.includes('ไม่ได้ประกอบอาชีพ') || b.group.includes('Not Working')) return 1;
+      return b.count - a.count;
+    });
 
     return {
       age: ageData,
       sex: sexData,
-      occupation: occupationData, // NEW
+      occupation: occupationData, // Enhanced with combined status and type
       total: {
         value: calculateIndicatorValueForGroup(records, indicatorKey),
         count: records.length
@@ -519,7 +534,7 @@ const IndicatorDetailPage = ({
   // Color schemes
   const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
-  const occupationColors = ['#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16']; // NEW
+  const occupationColors = ['#dc2626', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16']; // Red for "Not Working"
 
   if (indicatorDetailsLoading) {
     return (
@@ -699,12 +714,12 @@ const IndicatorDetailPage = ({
           </div>
         )}
 
-        {/* Disaggregation Tab - ENHANCED with occupation */}
+        {/* Disaggregation Tab - ENHANCED with combined occupation status and type */}
         {activeTab === 'disaggregation' && disaggregationData && (
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ และอาชีพ' : 'Disaggregation by Age, Sex and Occupation'}
+                {language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ และสถานะการทำงาน' : 'Disaggregation by Age, Sex and Employment Status'}
               </h3>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -823,10 +838,10 @@ const IndicatorDetailPage = ({
                   </div>
                 </div>
 
-                {/* NEW: Occupation Groups */}
+                {/* ENHANCED: Combined Employment Status and Occupation Type */}
                 <div>
                   <h4 className="font-medium text-gray-800 mb-4">
-                    {language === 'th' ? 'ตามประเภทอาชีพ' : 'By Occupation Type'}
+                    {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
                   </h4>
                   
                   {disaggregationData.occupation.length > 0 ? (
@@ -839,14 +854,14 @@ const IndicatorDetailPage = ({
                               dataKey="group" 
                               angle={-45}
                               textAnchor="end"
-                              height={80}
-                              tick={{ fontSize: 10 }}
+                              height={100}
+                              tick={{ fontSize: 9 }}
                               interval={0}
                             />
                             <YAxis tickFormatter={(value) => `${value}%`} />
                             <Tooltip 
                               formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
-                              labelFormatter={(label) => `${language === 'th' ? 'ประเภทอาชีพ' : 'Occupation'}: ${label}`}
+                              labelFormatter={(label) => `${language === 'th' ? 'สถานะการทำงาน' : 'Employment Status'}: ${label}`}
                             />
                             <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]}>
                               {disaggregationData.occupation.map((entry, index) => (
@@ -857,12 +872,12 @@ const IndicatorDetailPage = ({
                         </ResponsiveContainer>
                       </div>
                       
-                      {/* Occupation Group Table */}
+                      {/* Enhanced Occupation Group Table */}
                       <div className="mt-4">
                         <table className="w-full text-sm">
                           <thead>
                             <tr className="border-b">
-                              <th className="text-left py-2">{language === 'th' ? 'ประเภทอาชีพ' : 'Occupation'}</th>
+                              <th className="text-left py-2">{language === 'th' ? 'สถานะ/ประเภทการทำงาน' : 'Employment Status/Type'}</th>
                               <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
                               <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
                               <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
@@ -888,19 +903,67 @@ const IndicatorDetailPage = ({
                           </tbody>
                         </table>
                       </div>
+
+                      {/* Enhanced Employment Status Summary */}
+                      <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                        <h5 className="font-medium text-gray-800 mb-2">
+                          {language === 'th' ? 'สรุปสถานะการทำงาน' : 'Employment Status Summary'}
+                        </h5>
+                        <div className="text-xs text-gray-600 space-y-1">
+                          {(() => {
+                            const notWorkingGroup = disaggregationData.occupation.find(item => 
+                              item.group.includes('ไม่ได้ประกอบอาชีพ') || item.group.includes('Not Working')
+                            );
+                            const workingGroups = disaggregationData.occupation.filter(item => 
+                              !item.group.includes('ไม่ได้ประกอบอาชีพ') && !item.group.includes('Not Working')
+                            );
+                            const totalWorking = workingGroups.reduce((sum, item) => sum + item.value, 0);
+                            
+                            return (
+                              <>
+                                {notWorkingGroup && (
+                                  <div className="flex justify-between">
+                                    <span>{language === 'th' ? '• ไม่ได้ประกอบอาชีพ:' : '• Not Working:'}</span>
+                                    <span className="font-medium text-red-600">
+                                      {notWorkingGroup.value.toFixed(1)}% ({notWorkingGroup.count} {language === 'th' ? 'คน' : 'people'})
+                                    </span>
+                                  </div>
+                                )}
+                                <div className="flex justify-between">
+                                  <span>{language === 'th' ? '• ได้ประกอบอาชีพ:' : '• Working:'}</span>
+                                  <span className="font-medium text-green-600">
+                                    {totalWorking.toFixed(1)}% ({workingGroups.reduce((sum, item) => sum + item.count, 0)} {language === 'th' ? 'คน' : 'people'})
+                                  </span>
+                                </div>
+                                {workingGroups.length > 0 && (
+                                  <div className="ml-4 mt-2 space-y-1">
+                                    <div className="text-gray-500">{language === 'th' ? 'ประเภทอาชีพ:' : 'Occupation Types:'}</div>
+                                    {workingGroups.slice(0, 3).map((item, idx) => (
+                                      <div key={idx} className="flex justify-between ml-2">
+                                        <span>◦ {item.group}:</span>
+                                        <span>{item.value.toFixed(1)}%</span>
+                                      </div>
+                                    ))}
+                                    {workingGroups.length > 3 && (
+                                      <div className="text-gray-400 ml-2">
+                                        {language === 'th' ? `... และอีก ${workingGroups.length - 3} ประเภท` : `... and ${workingGroups.length - 3} more types`}
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })()}
+                        </div>
+                      </div>
                     </>
                   ) : (
                     <div className="h-80 flex items-center justify-center text-gray-500">
                       <div className="text-center">
                         <p className="text-sm">
                           {language === 'th' 
-                            ? 'ไม่มีข้อมูลอาชีพสำหรับกลุ่มนี้' 
-                            : 'No occupation data available for this group'}
-                        </p>
-                        <p className="text-xs mt-1">
-                          {language === 'th' 
-                            ? 'ข้อมูลอาชีพแสดงเฉพาะผู้ที่มีงานทำ' 
-                            : 'Occupation data shown only for employed individuals'}
+                            ? 'ไม่มีข้อมูลสถานะการทำงานสำหรับกลุ่มนี้' 
+                            : 'No employment status data available for this group'}
                         </p>
                       </div>
                     </div>
@@ -909,7 +972,7 @@ const IndicatorDetailPage = ({
               </div>
             </div>
 
-            {/* Equity Analysis */}
+            {/* Enhanced Equity Analysis */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">
                 {language === 'th' ? 'การวิเคราะห์ความเท่าเทียม' : 'Equity Analysis'}
@@ -955,11 +1018,11 @@ const IndicatorDetailPage = ({
                 </div>
               )}
 
-              {/* NEW: Occupation equity analysis */}
+              {/* ENHANCED: Employment status equity analysis */}
               {disaggregationData.occupation.length > 1 && (
                 <div className="p-4 bg-green-50 rounded-lg">
                   <h4 className="font-medium text-green-900 mb-2">
-                    {language === 'th' ? 'ความแตกต่างตามอาชีพ' : 'Occupation Disparities'}
+                    {language === 'th' ? 'ความแตกต่างตามสถานะการทำงาน' : 'Employment Status Disparities'}
                   </h4>
                   <p className="text-green-800 text-sm">
                     {(() => {
@@ -968,9 +1031,28 @@ const IndicatorDetailPage = ({
                       const min = Math.min(...values);
                       const ratio = min > 0 ? max / min : 0;
                       
-                      return language === 'th' 
-                        ? `ความแตกต่างระหว่างประเภทอาชีพ: ${(max - min).toFixed(1)} เปอร์เซ็นต์พอยต์ (อัตราส่วน: ${ratio.toFixed(1)}:1)`
-                        : `Difference between occupation types: ${(max - min).toFixed(1)} percentage points (ratio: ${ratio.toFixed(1)}:1)`;
+                      // Find working vs not working groups
+                      const notWorkingGroup = disaggregationData.occupation.find(item => 
+                        item.group.includes('ไม่ได้ประกอบอาชีพ') || item.group.includes('Not Working')
+                      );
+                      const workingGroups = disaggregationData.occupation.filter(item => 
+                        !item.group.includes('ไม่ได้ประกอบอาชีพ') && !item.group.includes('Not Working')
+                      );
+                      
+                      let analysisText = language === 'th' 
+                        ? `ความแตกต่างระหว่างสถานะการทำงาน: ${(max - min).toFixed(1)} เปอร์เซ็นต์พอยต์ (อัตราส่วน: ${ratio.toFixed(1)}:1)`
+                        : `Difference between employment statuses: ${(max - min).toFixed(1)} percentage points (ratio: ${ratio.toFixed(1)}:1)`;
+                      
+                      if (notWorkingGroup && workingGroups.length > 0) {
+                        const avgWorkingIndicator = workingGroups.reduce((sum, item) => sum + (item.indicatorValue || 0), 0) / workingGroups.length;
+                        const workingVsNotWorkingDiff = Math.abs((notWorkingGroup.indicatorValue || 0) - avgWorkingIndicator);
+                        
+                        analysisText += language === 'th'
+                          ? ` | ความแตกต่างระหว่างผู้ทำงานและไม่ทำงาน: ${workingVsNotWorkingDiff.toFixed(1)} เปอร์เซ็นต์พอยต์`
+                          : ` | Working vs Not Working difference: ${workingVsNotWorkingDiff.toFixed(1)} percentage points`;
+                      }
+                      
+                      return analysisText;
                     })()}
                   </p>
                 </div>
@@ -1023,7 +1105,26 @@ const IndicatorDetailPage = ({
                     <ul className="list-disc list-inside text-blue-700 text-sm space-y-1">
                       <li><strong>{language === 'th' ? 'อายุ' : 'Age'}:</strong> {language === 'th' ? 'กลุ่มอายุ 5 กลุ่ม (< 18, 18-29, 30-44, 45-59, 60+)' : '5 age groups (< 18, 18-29, 30-44, 45-59, 60+)'}</li>
                       <li><strong>{language === 'th' ? 'เพศ' : 'Sex'}:</strong> {language === 'th' ? 'ชาย หญิง LGBTQ+ และไม่ระบุ' : 'Male, Female, LGBTQ+, and Not specified'}</li>
-                      <li><strong>{language === 'th' ? 'อาชีพ' : 'Occupation'}:</strong> {language === 'th' ? '6 ประเภท (รับราชการ รัฐวิสาหกิจ พนักงานบริษัท ธุรกิจส่วนตัว อาชีพอิสระ และอื่น ๆ)' : '6 types (Government, State Enterprise, Company Employee, Private Business, Freelance, Other)'}</li>
+                      <li><strong>{language === 'th' ? 'สถานะการทำงาน' : 'Employment Status'}:</strong> {language === 'th' ? 'แยกตามสถานะการทำงาน (ได้ประกอบอาชีพ/ไม่ได้ประกอบอาชีพ) และประเภทอาชีพ (รับราชการ รัฐวิสาหกิจ พนักงานบริษัท ธุรกิจส่วนตัว อาชีพอิสระ และอื่น ๆ)' : 'By employment status (Working/Not Working) and occupation type (Government, State Enterprise, Company Employee, Private Business, Freelance, Other)'}</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-gray-800 mb-3">
+                    {language === 'th' ? 'การปรับปรุงการแยกย่อยข้อมูลสถานะการทำงาน' : 'Enhanced Employment Status Disaggregation'}
+                  </h4>
+                  <div className="bg-amber-50 p-4 rounded-lg">
+                    <p className="text-amber-800 text-sm mb-2">
+                      {language === 'th' 
+                        ? 'การแยกย่อยข้อมูลสถานะการทำงานได้รับการปรับปรุงให้ครอบคลุมมากขึ้น:'
+                        : 'Employment status disaggregation has been enhanced for better coverage:'
+                      }
+                    </p>
+                    <ul className="list-disc list-inside text-amber-700 text-sm space-y-1">
+                      <li><strong>{language === 'th' ? 'รวมผู้ไม่ได้ประกอบอาชีพ' : 'Includes Non-Working Population'}:</strong> {language === 'th' ? 'แสดงข้อมูลของผู้ที่ไม่ได้ประกอบอาชีพ (occupation_status = 0) เป็นกลุ่มแยกต่างหาก' : 'Shows data for those not working (occupation_status = 0) as a separate category'}</li>
+                      <li><strong>{language === 'th' ? 'จำแนกประเภทอาชีพ' : 'Occupation Type Classification'}:</strong> {language === 'th' ? 'สำหรับผู้ที่ได้ประกอบอาชีพ จำแนกตามประเภทอาชีพ (occupation_type) รวม 6 ประเภท' : 'For working population, classified by occupation type (occupation_type) into 6 categories'}</li>
+                      <li><strong>{language === 'th' ? 'การวิเคราะห์ความเท่าเทียม' : 'Equity Analysis'}:</strong> {language === 'th' ? 'เปรียบเทียบค่าตัวชี้วัดระหว่างกลุ่มผู้ทำงานและไม่ทำงาน รวมถึงระหว่างประเภทอาชีพต่าง ๆ' : 'Compares indicator values between working and non-working groups, as well as across different occupation types'}</li>
                     </ul>
                   </div>
                 </div>
@@ -1053,11 +1154,31 @@ const IndicatorDetailPage = ({
                     </li>
                     <li>
                       {language === 'th' 
-                        ? 'ข้อมูลอาชีพแสดงเฉพาะผู้ที่มีสถานะการจ้างงาน (occupation_status = 1)'
-                        : 'Occupation data shown only for employed individuals (occupation_status = 1)'
+                        ? 'ข้อมูลสถานะการทำงานและประเภทอาชีพอาจมีความไม่สมบูรณ์ในบางกรณี'
+                        : 'Employment status and occupation type data may be incomplete in some cases'
+                      }
+                    </li>
+                    <li>
+                      {language === 'th' 
+                        ? 'การแยกย่อยข้อมูลแบบรวมอาจทำให้ขนาดกลุ่มย่อยเล็กลง ส่งผลต่อความน่าเชื่อถือของสถิติ'
+                        : 'Multiple disaggregation may result in smaller subgroup sizes, affecting statistical reliability'
                       }
                     </li>
                   </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-gray-800 mb-3">
+                    {language === 'th' ? 'คำแนะนำในการตีความผล' : 'Interpretation Guidelines'}
+                  </h4>
+                  <div className="bg-purple-50 p-4 rounded-lg">
+                    <ul className="list-disc list-inside text-purple-700 text-sm space-y-1">
+                      <li>{language === 'th' ? 'ควรพิจารณาขนาดกลุ่มตัวอย่างในการตีความผล กลุ่มที่มีขนาดเล็ก (< 30 คน) ควรตีความด้วยความระมัดระวัง' : 'Consider sample sizes when interpreting results. Small groups (< 30 people) should be interpreted with caution'}</li>
+                      <li>{language === 'th' ? 'ความแตกต่างที่พบอาจสะท้อนปัจจัยทางสังคม เศรษฐกิจ และการเข้าถึงบริการสาธารณสุข' : 'Observed differences may reflect social, economic, and healthcare access factors'}</li>
+                      <li>{language === 'th' ? 'การเปรียบเทียบระหว่างกลุ่มควรคำนึงถึงบริบทและปัจจัยแวดล้อมของแต่ละกลุ่ม' : 'Comparisons between groups should consider context and environmental factors of each group'}</li>
+                      <li>{language === 'th' ? 'ผลลัพธ์ที่ได้สามารถนำไปใช้เป็นข้อมูลพื้นฐานสำหรับการวางแผนนโยบายและการแทรกแซงเพื่อลดความเหลื่อมล้ำ' : 'Results can be used as baseline data for policy planning and interventions to reduce inequalities'}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
