@@ -878,40 +878,7 @@ class BasicSDHEProcessor {
   Object.keys(domainMapping).forEach(indicator => {
     const mapping = domainMapping[indicator];
     
-    // SPECIAL HANDLING FOR NORMAL POPULATION
-    if (populationGroup === 'normal_population') {
-      // Check if this indicator has pre-calculated data
-      if (this.normalPopulationLookup && this.normalPopulationLookup[indicator] !== undefined) {
-        
-        // For Bangkok Overall, use pre-calculated score directly
-        if (districtName === 'Bangkok Overall') {
-          results[indicator] = {
-            value: parseFloat(this.normalPopulationLookup[indicator]),
-            label: mapping.label,
-            sample_size: 'Bangkok-wide',
-            isPreCalculated: true
-          };
-          return; // EXIT THIS ITERATION - use return instead of continuing to normal calculation
-        }
-        
-        // For individual districts, check if we have survey data
-        if (records.length === 0) {
-          // No survey data for this district - skip this indicator
-          results[indicator] = {
-            value: null,
-            label: mapping.label,
-            sample_size: 0,
-            noData: true
-          };
-          return; // EXIT THIS ITERATION
-        }
-        
-        // If we have both pre-calculated and survey data, prefer survey data for districts
-        // Fall through to normal calculation
-      }
-    }
-    
-    // Handle healthcare supply indicators
+    // Handle healthcare supply indicators (these work the same for all population groups)
     if (mapping.isSupplyIndicator && districtName) {
       // Get district code from district name
       const districtCode = Object.keys(this.districtCodeMap).find(
@@ -921,13 +888,13 @@ class BasicSDHEProcessor {
       if (districtCode) {
         let supplyData;
         
-        // Handle NEW health service access indicator (uses health_facilities.csv)
+        // Handle health service access indicator (uses health_facilities.csv)
         if (indicator === 'health_service_access') {
           supplyData = { 
             [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
           };
         } 
-        // Handle EXISTING healthcare worker indicators (uses health_supply.csv)
+        // Handle healthcare worker indicators (uses health_supply.csv)
         else {
           supplyData = this.calculateHealthcareSupplyIndicators(
             parseInt(districtCode), 
@@ -1003,6 +970,125 @@ class BasicSDHEProcessor {
         }
       }
     }
+    // ENHANCED COMBINED CALCULATION FOR NORMAL POPULATION (ALL DISTRICTS)
+    else if (populationGroup === 'normal_population') {
+      let finalValue = null;
+      let finalSampleSize = records.length;
+      let isPreCalculated = false;
+      let isCombined = false;
+      let combinationMethod = '';
+      
+      const hasSurveyData = records.length > 0;
+      const hasPreCalculatedData = this.normalPopulationLookup && 
+                                  this.normalPopulationLookup[indicator] !== undefined;
+
+      // Calculate survey-based value if we have survey data
+      let surveyValue = null;
+      let surveySampleSize = 0;
+      
+      if (hasSurveyData) {
+        if (mapping.calculation) {
+          surveyValue = mapping.calculation(records);
+          surveySampleSize = records.length;
+        } else if (mapping.condition) {
+          let filteredRecords = records;
+          if (mapping.ageFilter) {
+            filteredRecords = records.filter(r => mapping.ageFilter(r.age));
+          }
+          
+          const meetCondition = filteredRecords.filter(record => {
+            if (mapping.fields) {
+              return mapping.condition(record);
+            } else {
+              return mapping.condition(record[mapping.field]);
+            }
+          }).length;
+          
+          surveyValue = filteredRecords.length > 0 ? 
+            (meetCondition / filteredRecords.length) * 100 : null;
+          surveySampleSize = filteredRecords.length;
+        }
+      }
+      
+      // Get pre-calculated value
+      const preCalculatedValue = hasPreCalculatedData ? 
+        parseFloat(this.normalPopulationLookup[indicator]) : null;
+      
+      // SMART COMBINATION LOGIC
+      if (surveyValue !== null && !isNaN(surveyValue) && 
+          preCalculatedValue !== null && !isNaN(preCalculatedValue)) {
+        
+        // Both sources available - use smart combination
+        const isSmallSample = surveySampleSize < 20; // Small sample threshold
+        const isLowSurveyValue = surveyValue < 10; // Low value threshold (might be due to small sample)
+        const isHighVariance = Math.abs(surveyValue - preCalculatedValue) > 20; // High difference threshold
+        
+        if (isSmallSample && isLowSurveyValue) {
+          // Small sample with low value - favor pre-calculated data
+          finalValue = (surveyValue * 0.3) + (preCalculatedValue * 0.7);
+          combinationMethod = 'small_sample_fallback';
+          console.log(`${indicator} in ${districtName}: Small sample (${surveySampleSize}) with low value (${surveyValue.toFixed(1)}%) - using 30% survey + 70% Bangkok`);
+          
+        } else if (isSmallSample) {
+          // Small sample but reasonable value - balanced combination
+          finalValue = (surveyValue * 0.4) + (preCalculatedValue * 0.6);
+          combinationMethod = 'small_sample_balanced';
+          
+        } else if (isHighVariance) {
+          // High variance between sources - favor survey data but moderate with Bangkok
+          finalValue = (surveyValue * 0.6) + (preCalculatedValue * 0.4);
+          combinationMethod = 'high_variance';
+          
+        } else {
+          // Normal case - favor survey data
+          finalValue = (surveyValue * 0.7) + (preCalculatedValue * 0.3);
+          combinationMethod = 'normal_combination';
+        }
+        
+        isCombined = true;
+        finalSampleSize = `${surveySampleSize} + Bangkok-wide`;
+        
+      } else if (surveyValue !== null && !isNaN(surveyValue)) {
+        // Only survey data available
+        finalValue = surveyValue;
+        finalSampleSize = surveySampleSize;
+        combinationMethod = 'survey_only';
+        
+      } else if (preCalculatedValue !== null && !isNaN(preCalculatedValue)) {
+        // Only pre-calculated data available
+        finalValue = preCalculatedValue;
+        isPreCalculated = true;
+        finalSampleSize = 'Bangkok-wide';
+        combinationMethod = 'precalculated_only';
+        
+      } else {
+        // No data available
+        results[indicator] = {
+          value: null,
+          label: mapping.label,
+          sample_size: 0,
+          noData: true
+        };
+        return; // Skip to next indicator
+      }
+      
+      // Store the result with metadata
+      results[indicator] = {
+        value: parseFloat(finalValue.toFixed(2)),
+        label: mapping.label,
+        sample_size: finalSampleSize,
+        isPreCalculated: isPreCalculated,
+        isCombined: isCombined,
+        combinationMethod: combinationMethod,
+        surveyValue: surveyValue,
+        preCalculatedValue: preCalculatedValue,
+        surveySampleSize: surveySampleSize
+      };
+      
+      return; // Skip normal calculation, we have our result
+    }
+    
+    // NORMAL CALCULATION (for all other cases)
     else if (mapping.calculation) {
       // Custom calculation function
       const calculatedValue = mapping.calculation(records);
