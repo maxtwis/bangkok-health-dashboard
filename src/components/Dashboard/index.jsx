@@ -86,6 +86,24 @@ const Dashboard = () => {
     multiple_chronic_conditions: true
   };
 
+  const getHealthcareSupplyColor = (value, indicator) => {
+  const benchmarks = {
+    doctor_per_population: { good: 2.5, fair: 1.0, poor: 0.5 },
+    nurse_per_population: { good: 8.0, fair: 3.0, poor: 1.5 },
+    healthworker_per_population: { good: 40, fair: 20, poor: 10 },
+    community_healthworker_per_population: { good: 5.0, fair: 2.0, poor: 1.0 },
+    health_service_access: { good: 50, fair: 20, poor: 10 }
+  };
+  
+  const benchmark = benchmarks[indicator];
+  if (!benchmark) return 'bg-gray-100 text-gray-600';
+  
+  if (value >= benchmark.good) return 'bg-green-100 text-green-800';
+  if (value >= benchmark.fair) return 'bg-yellow-100 text-yellow-800';  
+  if (value >= benchmark.poor) return 'bg-orange-100 text-orange-800';
+  return 'bg-red-100 text-red-800';
+};
+
   // Load survey data when component mounts
   React.useEffect(() => {
     const loadSurveyData = async () => {
@@ -173,37 +191,69 @@ const Dashboard = () => {
     return `${Number(value).toFixed(1)}%`;
   };
 
-  const getScoreColor = (value, indicator) => {
-    const isReverse = reverseIndicators[indicator];
-    
-    if (isReverse) {
-      if (value <= 20) return 'bg-green-100 text-green-800';
-      if (value <= 40) return 'bg-yellow-100 text-yellow-800';
-      if (value <= 60) return 'bg-orange-100 text-orange-800';
-      return 'bg-red-100 text-red-800';
-    } else {
-      if (value >= 80) return 'bg-green-100 text-green-800';
-      if (value >= 60) return 'bg-yellow-100 text-yellow-800';
-      if (value >= 40) return 'bg-orange-100 text-orange-800';
-      return 'bg-red-100 text-red-800';
-    }
-  };
+ const getScoreColor = (value, indicator) => {
+  // Handle healthcare supply indicators with WHO benchmarks
+  const healthcareSupplyIndicators = [
+    'doctor_per_population', 
+    'nurse_per_population', 
+    'healthworker_per_population', 
+    'community_healthworker_per_population',
+    'health_service_access'
+  ];
+  
+  if (healthcareSupplyIndicators.includes(indicator)) {
+    return getHealthcareSupplyColor(value, indicator);
+  }
+  
+  // Original logic for other indicators
+  const isReverse = reverseIndicators[indicator];
+  
+  if (isReverse) {
+    if (value <= 20) return 'bg-green-100 text-green-800';
+    if (value <= 40) return 'bg-yellow-100 text-yellow-800';
+    if (value <= 60) return 'bg-orange-100 text-orange-800';
+    return 'bg-red-100 text-red-800';
+  } else {
+    if (value >= 80) return 'bg-green-100 text-green-800';
+    if (value >= 60) return 'bg-yellow-100 text-yellow-800';
+    if (value >= 40) return 'bg-orange-100 text-orange-800';
+    return 'bg-red-100 text-red-800';
+  }
+};
 
-  const getPerformanceBarColor = (value, indicator) => {
-    const isReverse = reverseIndicators[indicator];
-    
-    if (isReverse) {
-      if (value <= 20) return 'bg-green-500';
-      if (value <= 40) return 'bg-yellow-500';
-      if (value <= 60) return 'bg-orange-500';
-      return 'bg-red-500';
-    } else {
-      if (value >= 80) return 'bg-green-500';
-      if (value >= 60) return 'bg-yellow-500';
-      if (value >= 40) return 'bg-orange-500';
-      return 'bg-red-500';
-    }
-  };
+ const getPerformanceBarColor = (value, indicator) => {
+  // Handle healthcare supply indicators with WHO benchmarks
+  const healthcareSupplyIndicators = [
+    'doctor_per_population', 
+    'nurse_per_population', 
+    'healthworker_per_population', 
+    'community_healthworker_per_population',
+    'health_service_access'
+  ];
+  
+  if (healthcareSupplyIndicators.includes(indicator)) {
+    const colorClass = getHealthcareSupplyColor(value, indicator);
+    if (colorClass.includes('green')) return 'bg-green-500';
+    if (colorClass.includes('yellow')) return 'bg-yellow-500';
+    if (colorClass.includes('orange')) return 'bg-orange-500';
+    return 'bg-red-500';
+  }
+  
+  // Original logic for other indicators
+  const isReverse = reverseIndicators[indicator];
+  
+  if (isReverse) {
+    if (value <= 20) return 'bg-green-500';
+    if (value <= 40) return 'bg-yellow-500';
+    if (value <= 60) return 'bg-orange-500';
+    return 'bg-red-500';
+  } else {
+    if (value >= 80) return 'bg-green-500';
+    if (value >= 60) return 'bg-yellow-500';
+    if (value >= 40) return 'bg-orange-500';
+    return 'bg-red-500';
+  }
+};
 
   // Show detail page if indicator is selected
   if (showDetailPage && selectedIndicator) {
