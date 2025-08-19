@@ -465,7 +465,7 @@ const Dashboard = () => {
                 <p className="text-sm text-purple-800">
                   ℹ️ <strong>{language === 'th' ? 'หมายเหตุ:' : 'Note:'}</strong> {
                     language === 'th' 
-                      ? 'ข้อมูลประชากรทั่วไปรวมข้อมูลจากแหล่งที่มา 2 แหล่ง: ข้อมูลสำรวจระดับเขต และข้อมูลที่คำนวณแล้วระดับกรุงเทพฯ (*)'
+                      ? 'ข้อมูลประชากรทั่วไปรวมข้อมูลจาก 2 แหล่งที่มา: ข้อมูลสำรวจระดับเขต และข้อมูลที่คำนวดแล้วระดับกรุงเทพฯ (*)'
                       : 'General population data combines 2 sources: district-level survey data and pre-calculated Bangkok-wide data (*)'
                   }
                 </p>
@@ -575,342 +575,6 @@ const Dashboard = () => {
                               indicator !== undefined &&
                               indicator !== ''
                             );
-                          })
-                          .map((item, index) => {
-                            const value = item?.value ?? 0;
-                            const sampleSize = item?.sample_size ?? 0;
-                            const isDomainScore = item?.isDomainScore ?? false;
-                            const indicator = item?.indicator;
-                            
-                            // Get translated label using CSV data
-                            const translatedLabel = isDomainScore 
-                              ? (language === 'th' 
-                                  ? `คะแนนรวมตัวชี้วัดด้าน${t(`domains.${selectedDomain}`)}`
-                                  : `${t(`domains.${selectedDomain}`)} Score`)
-                              : getIndicatorName(indicator, language) || 
-                                (t(`indicators.${indicator}`) !== `indicators.${indicator}` 
-                                  ? t(`indicators.${indicator}`)
-                                  : item?.label ?? 'Unknown Indicator');
-                            
-                            return (
-                              <tr 
-                                key={item?.indicator || index} 
-                                className={`border-b border-gray-100 ${
-                                  isDomainScore ? 'bg-blue-50 font-medium' : 
-                                  index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
-                                } ${!isDomainScore ? 'hover:bg-blue-50 transition-colors' : ''}`}
-                              >
-                                <td className="py-3 px-4">
-                                  <div className="flex items-center space-x-2">
-                                    {isDomainScore && (
-                                      <span className="text-blue-600 font-bold">▊</span>
-                                    )}
-                                    {/* Make indicator name clickable */}
-                                    {!isDomainScore ? (
-                                      <button
-                                        onClick={() => handleIndicatorClick(indicator)}
-                                        className={`text-left hover:text-blue-600 hover:underline focus:outline-none focus:text-blue-600 ${
-                                          isDomainScore ? 'font-bold text-blue-800 cursor-default' : 'cursor-pointer'
-                                        }`}
-                                      >
-                                        {translatedLabel}
-                                      </button>
-                                    ) : (
-                                      <span className="font-bold text-blue-800">
-                                        {translatedLabel}
-                                      </span>
-                                    )}
-                                    {/* Special highlighting for severe diseases in health outcomes */}
-                                    {selectedDomain === 'health_outcomes' && !isDomainScore && (
-                                      ['cancer', 'hiv', 'stroke', 'ischemic_heart_disease', 'chronic_kidney_disease'].includes(indicator) && (
-                                        <span className="text-red-500 text-xs">!</span>
-                                      )
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="text-center py-3 px-4">
-                                  {(() => {
-                                    // Handle no data case
-                                    if (item.noData || value === null) {
-                                      return (
-                                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
-                                          {language === 'th' ? 'ไม่มีข้อมูล' : 'No data'}
-                                        </span>
-                                      );
-                                    }
-                                    
-                                    // Handle pre-calculated indicators
-                                    if (item.isPreCalculated) {
-                                      return (
-                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}>
-                                          {(() => {
-                                            const isSupplyIndicator = [
-                                              'doctor_per_population', 
-                                              'nurse_per_population', 
-                                              'healthworker_per_population', 
-                                              'community_healthworker_per_population',
-                                              'health_service_access',
-                                              'bed_per_population'
-                                            ].includes(indicator);
-                                            
-                                            if (isSupplyIndicator) {
-                                              const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                                           indicator === 'health_service_access' ? '10,000' :
-                                                           indicator === 'bed_per_population' ? '10,000' : '1,000';
-                                              return `${value.toFixed(1)} per ${unit}`;
-                                            } else {
-                                              return formatValue(value);
-                                            }
-                                          })()}
-                                          <span className="ml-1 text-xs opacity-75">*</span>
-                                        </span>
-                                      );
-                                    }
-                                    
-                                    // Regular indicators
-                                    return (
-                                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}>
-                                        {(() => {
-                                          const isSupplyIndicator = [
-                                            'doctor_per_population', 
-                                            'nurse_per_population', 
-                                            'healthworker_per_population', 
-                                            'community_healthworker_per_population',
-                                            'health_service_access',
-                                            'bed_per_population'
-                                          ].includes(indicator);
-                                          
-                                          if (isSupplyIndicator) {
-                                            const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                                         indicator === 'health_service_access' ? '10,000' :
-                                                         indicator === 'bed_per_population' ? '10,000' : '1,000';
-                                            return `${value.toFixed(1)} per ${unit}`;
-                                          } else {
-                                            return formatValue(value);
-                                          }
-                                        })()}
-                                      </span>
-                                    );
-                                  })()}
-                                </td>
-                                  <td className="text-center py-3 px-4 text-gray-600">
-                                    {(() => {
-                                      // Check combination method for detailed display
-                                      if (item.isCombined && item.combinationMethod) {
-                                        const method = item.combinationMethod;
-                                        let description = '';
-                                        let color = 'text-blue-600';
-                                        
-                                        switch (method) {
-                                          case 'small_sample_fallback':
-                                            description = language === 'th' ? 'ตย.น้อย→BKK' : 'Small→BKK';
-                                            color = 'text-orange-600';
-                                            break;
-                                          case 'small_sample_balanced':
-                                            description = language === 'th' ? 'ตย.น้อย+BKK' : 'Small+BKK';
-                                            color = 'text-yellow-600';
-                                            break;
-                                          case 'high_variance':
-                                            description = language === 'th' ? 'ส.แตกต่าง' : 'High Var';
-                                            color = 'text-purple-600';
-                                            break;
-                                          case 'normal_combination':
-                                            description = language === 'th' ? 'ส.+BKK' : 'Survey+BKK';
-                                            color = 'text-green-600';
-                                            break;
-                                          default:
-                                            description = language === 'th' ? 'ข้อมูลรวม' : 'Combined';
-                                        }
-                                        
-                                        return (
-                                          <span className="text-xs">
-                                            <span className={`font-medium ${color}`}>{description}</span>
-                                            <span className="block text-gray-500 text-xs">
-                                              {typeof item.sample_size === 'string' ? item.sample_size : formatSampleSize(item.sample_size)}
-                                            </span>
-                                          </span>
-                                        );
-                                      }
-                                      
-                                      // Check if this is a pre-calculated indicator for normal population
-                                      if (item.sample_size === 'Bangkok-wide' || item.isPreCalculated) {
-                                        return language === 'th' ? 'ข้อมูลกรุงเทพฯ' : 'Bangkok-wide';
-                                      }
-                                      
-                                      // Check if no data available
-                                      if (item.noData) {
-                                        return language === 'th' ? 'ไม่มีข้อมูล' : 'No data';
-                                      }
-                                      
-                                      return formatSampleSize(item.sample_size);
-                                    })()}
-                                  </td>
-
-                                  // Enhanced score display with hover tooltips:
-
-                                  <td className="text-center py-3 px-4">
-                                    {(() => {
-                                      // Handle no data case
-                                      if (item.noData || value === null) {
-                                        return (
-                                          <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
-                                            {language === 'th' ? 'ไม่มีข้อมูล' : 'No data'}
-                                          </span>
-                                        );
-                                      }
-                                      
-                                      // Handle combined indicators with detailed tooltip
-                                      if (item.isCombined) {
-                                        const tooltipText = (() => {
-                                          const survey = item.surveyValue?.toFixed(1) || 'N/A';
-                                          const bangkok = item.preCalculatedValue?.toFixed(1) || 'N/A';
-                                          const sampleSize = item.surveySampleSize || 0;
-                                          
-                                          switch (item.combinationMethod) {
-                                            case 'small_sample_fallback':
-                                              return language === 'th' 
-                                                ? `ตัวอย่างน้อย (${sampleSize}): สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 30%:70%`
-                                                : `Small sample (${sampleSize}): Survey ${survey}% + BKK ${bangkok}% → 30%:70% weight`;
-                                            case 'small_sample_balanced':
-                                              return language === 'th'
-                                                ? `ตัวอย่างน้อย (${sampleSize}): สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 40%:60%`
-                                                : `Small sample (${sampleSize}): Survey ${survey}% + BKK ${bangkok}% → 40%:60% weight`;
-                                            case 'high_variance':
-                                              return language === 'th'
-                                                ? `ส่วนต่างสูง: สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 60%:40%`
-                                                : `High variance: Survey ${survey}% + BKK ${bangkok}% → 60%:40% weight`;
-                                            case 'normal_combination':
-                                              return language === 'th'
-                                                ? `ปกติ: สำรวจ ${survey}% + กทม ${bangkok}% → ใช้ 70%:30%`
-                                                : `Normal: Survey ${survey}% + BKK ${bangkok}% → 70%:30% weight`;
-                                            default:
-                                              return language === 'th' ? 'ข้อมูลผสม' : 'Combined data';
-                                          }
-                                        })();
-                                        
-                                        return (
-                                          <span 
-                                            className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)} cursor-help`}
-                                            title={tooltipText}
-                                          >
-                                            {(() => {
-                                              const isSupplyIndicator = [
-                                                'doctor_per_population', 
-                                                'nurse_per_population', 
-                                                'healthworker_per_population', 
-                                                'community_healthworker_per_population',
-                                                'health_service_access',
-                                                'bed_per_population'
-                                              ].includes(indicator);
-                                              
-                                              if (isSupplyIndicator) {
-                                                const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                                            indicator === 'health_service_access' ? '10,000' :
-                                                            indicator === 'bed_per_population' ? '10,000' : '1,000';
-                                                return `${value.toFixed(1)} per ${unit}`;
-                                              } else {
-                                                return formatValue(value);
-                                              }
-                                            })()}
-                                            <span className="ml-1 text-xs opacity-75">⚬</span>
-                                          </span>
-                                        );
-                                      }
-                                      
-                                      // Handle pre-calculated indicators
-                                      if (item.isPreCalculated) {
-                                        return (
-                                          <span 
-                                            className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}
-                                            title={language === 'th' ? 'ข้อมูลจากการคำนวณระดับกรุงเทพฯ' : 'Bangkok-wide pre-calculated data'}
-                                          >
-                                            {(() => {
-                                              const isSupplyIndicator = [
-                                                'doctor_per_population', 
-                                                'nurse_per_population', 
-                                                'healthworker_per_population', 
-                                                'community_healthworker_per_population',
-                                                'health_service_access',
-                                                'bed_per_population'
-                                              ].includes(indicator);
-                                              
-                                              if (isSupplyIndicator) {
-                                                const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                                            indicator === 'health_service_access' ? '10,000' :
-                                                            indicator === 'bed_per_population' ? '10,000' : '1,000';
-                                                return `${value.toFixed(1)} per ${unit}`;
-                                              } else {
-                                                return formatValue(value);
-                                              }
-                                            })()}
-                                            <span className="ml-1 text-xs opacity-75">*</span>
-                                          </span>
-                                        );
-                                      }
-                                      
-                                      // Regular indicators
-                                      return (
-                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}>
-                                          {(() => {
-                                            const isSupplyIndicator = [
-                                              'doctor_per_population', 
-                                              'nurse_per_population', 
-                                              'healthworker_per_population', 
-                                              'community_healthworker_per_population',
-                                              'health_service_access',
-                                              'bed_per_population'
-                                            ].includes(indicator);
-                                            
-                                            if (isSupplyIndicator) {
-                                              const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                                          indicator === 'health_service_access' ? '10,000' :
-                                                          indicator === 'bed_per_population' ? '10,000' : '1,000';
-                                              return `${value.toFixed(1)} per ${unit}`;
-                                            } else {
-                                              return formatValue(value);
-                                            }
-                                          })()}
-                                        </span>
-                                      );
-                                    })()}
-                                  </td>
-
-                                  // Enhanced normal population note with combination details:
-
-                                  {selectedPopulationGroup === 'normal_population' && (
-                                    <div className="mt-3 bg-purple-50 border border-purple-200 rounded-lg p-3">
-                                      <p className="text-sm text-purple-800 mb-2">
-                                        ℹ️ <strong>{language === 'th' ? 'ระบบข้อมูลผสมอัจฉริยะ:' : 'Smart Data Combination System:'}</strong>
-                                      </p>
-                                      <div className="text-xs text-purple-700 space-y-1">
-                                        <div><strong>(*)</strong> {language === 'th' ? 'ข้อมูลกรุงเทพฯเท่านั้น' : 'Bangkok-wide data only'}</div>
-                                        <div><strong>(⚬)</strong> {language === 'th' ? 'ข้อมูลผสมอัจฉริยะ:' : 'Smart combined data:'}</div>
-                                        <div className="ml-4 space-y-0.5">
-                                          <div>• <span className="text-green-600">{language === 'th' ? 'ส.+BKK' : 'Survey+BKK'}</span>: {language === 'th' ? 'ปกติ 70%:30%' : 'Normal 70%:30%'}</div>
-                                          <div>• <span className="text-orange-600">{language === 'th' ? 'ตย.น้อย→BKK' : 'Small→BKK'}</span>: {language === 'th' ? 'ตัวอย่างน้อยค่าต่ำ 30%:70%' : 'Small sample, low value 30%:70%'}</div>
-                                          <div>• <span className="text-yellow-600">{language === 'th' ? 'ตย.น้อย+BKK' : 'Small+BKK'}</span>: {language === 'th' ? 'ตัวอย่างน้อย 40%:60%' : 'Small sample 40%:60%'}</div>
-                                          <div>• <span className="text-purple-600">{language === 'th' ? 'ส.แตกต่าง' : 'High Var'}</span>: {language === 'th' ? 'ค่าแตกต่างสูง 60%:40%' : 'High variance 60%:40%'}</div>
-                                        </div>
-                                        <div><strong>{language === 'th' ? 'ไม่มีสัญลักษณ์' : 'No symbol'}</strong>: {language === 'th' ? 'ข้อมูลสำรวจเท่านั้น' : 'Survey data only'}</div>
-                                      </div>
-                                    </div>
-                                  )}
-                                <td className="text-center py-3 px-4">
-                                  {item.noData || value === null ? (
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
-                                      <div className="h-2 rounded-full bg-gray-300" style={{ width: '0%' }}></div>
-                                    </div>
-                                  ) : (
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
-                                      <div 
-                                        className={`h-2 rounded-full ${getPerformanceBarColor(value, indicator)}`}
-                                        style={{ width: `${Math.min(100, Math.max(0, value || 0))}%` }}
-                                      ></div>
-                                    </div>
-                                  )}
-                                </td>
-                              </tr>
-                            );
                           })}
                       </tbody>
                     </table>
@@ -919,6 +583,26 @@ const Dashboard = () => {
                   <div className="text-center py-8 text-gray-500">
                     <p>{t('ui.noData')}</p>
                     <p className="text-sm mt-1">{t('ui.tryDifferent')}</p>
+                  </div>
+                )}
+
+                {/* Enhanced normal population note with combination details */}
+                {selectedPopulationGroup === 'normal_population' && (
+                  <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-3">
+                    <p className="text-sm text-purple-800 mb-2">
+                      ℹ️ <strong>{language === 'th' ? 'ระบบข้อมูลผสมอัจฉริยะ:' : 'Smart Data Combination System:'}</strong>
+                    </p>
+                    <div className="text-xs text-purple-700 space-y-1">
+                      <div><strong>(*)</strong> {language === 'th' ? 'ข้อมูลกรุงเทพฯเท่านั้น' : 'Bangkok-wide data only'}</div>
+                      <div><strong>(⚬)</strong> {language === 'th' ? 'ข้อมูลผสมอัจฉริยะ:' : 'Smart combined data:'}</div>
+                      <div className="ml-4 space-y-0.5">
+                        <div>• <span className="text-green-600">{language === 'th' ? 'ส.+BKK' : 'Survey+BKK'}</span>: {language === 'th' ? 'ปกติ 70%:30%' : 'Normal 70%:30%'}</div>
+                        <div>• <span className="text-orange-600">{language === 'th' ? 'ตย.น้อย→BKK' : 'Small→BKK'}</span>: {language === 'th' ? 'ตัวอย่างน้อยค่าต่ำ 30%:70%' : 'Small sample, low value 30%:70%'}</div>
+                        <div>• <span className="text-yellow-600">{language === 'th' ? 'ตย.น้อย+BKK' : 'Small+BKK'}</span>: {language === 'th' ? 'ตัวอย่างน้อย 40%:60%' : 'Small sample 40%:60%'}</div>
+                        <div>• <span className="text-purple-600">{language === 'th' ? 'ส.แตกต่าง' : 'High Var'}</span>: {language === 'th' ? 'ค่าแตกต่างสูง 60%:40%' : 'High variance 60%:40%'}</div>
+                      </div>
+                      <div><strong>{language === 'th' ? 'ไม่มีสัญลักษณ์' : 'No symbol'}</strong>: {language === 'th' ? 'ข้อมูลสำรวจเท่านั้น' : 'Survey data only'}</div>
+                    </div>
                   </div>
                 )}
               </div>
