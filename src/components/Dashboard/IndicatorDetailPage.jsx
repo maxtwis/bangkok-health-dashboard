@@ -904,58 +904,7 @@ const IndicatorDetailPage = ({
                         </table>
                       </div>
 
-                      {/* Enhanced Employment Status Summary */}
-                      <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                        <h5 className="font-medium text-gray-800 mb-2">
-                          {language === 'th' ? 'สรุปสถานะการทำงาน' : 'Employment Status Summary'}
-                        </h5>
-                        <div className="text-xs text-gray-600 space-y-1">
-                          {(() => {
-                            const notWorkingGroup = disaggregationData.occupation.find(item => 
-                              item.group.includes('ไม่ได้ประกอบอาชีพ') || item.group.includes('Not Working')
-                            );
-                            const workingGroups = disaggregationData.occupation.filter(item => 
-                              !item.group.includes('ไม่ได้ประกอบอาชีพ') && !item.group.includes('Not Working')
-                            );
-                            const totalWorking = workingGroups.reduce((sum, item) => sum + item.value, 0);
-                            
-                            return (
-                              <>
-                                {notWorkingGroup && (
-                                  <div className="flex justify-between">
-                                    <span>{language === 'th' ? '• ไม่ได้ประกอบอาชีพ:' : '• Not Working:'}</span>
-                                    <span className="font-medium text-red-600">
-                                      {notWorkingGroup.value.toFixed(1)}% ({notWorkingGroup.count} {language === 'th' ? 'คน' : 'people'})
-                                    </span>
-                                  </div>
-                                )}
-                                <div className="flex justify-between">
-                                  <span>{language === 'th' ? '• ได้ประกอบอาชีพ:' : '• Working:'}</span>
-                                  <span className="font-medium text-green-600">
-                                    {totalWorking.toFixed(1)}% ({workingGroups.reduce((sum, item) => sum + item.count, 0)} {language === 'th' ? 'คน' : 'people'})
-                                  </span>
-                                </div>
-                                {workingGroups.length > 0 && (
-                                  <div className="ml-4 mt-2 space-y-1">
-                                    <div className="text-gray-500">{language === 'th' ? 'ประเภทอาชีพ:' : 'Occupation Types:'}</div>
-                                    {workingGroups.slice(0, 3).map((item, idx) => (
-                                      <div key={idx} className="flex justify-between ml-2">
-                                        <span>◦ {item.group}:</span>
-                                        <span>{item.value.toFixed(1)}%</span>
-                                      </div>
-                                    ))}
-                                    {workingGroups.length > 3 && (
-                                      <div className="text-gray-400 ml-2">
-                                        {language === 'th' ? `... และอีก ${workingGroups.length - 3} ประเภท` : `... and ${workingGroups.length - 3} more types`}
-                                      </div>
-                                    )}
-                                  </div>
-                                )}
-                              </>
-                            );
-                          })()}
-                        </div>
-                      </div>
+
                     </>
                   ) : (
                     <div className="h-80 flex items-center justify-center text-gray-500">
