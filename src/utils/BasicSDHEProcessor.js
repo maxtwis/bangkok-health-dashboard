@@ -488,16 +488,41 @@ class BasicSDHEProcessor {
         community_safety: { 
           field: 'community_safety', 
           calculation: (records) => {
-            const safetyResponses = records.filter(r => r.community_safety);
+            console.log('🔍 Community Safety Debug:');
+            console.log('Total records:', records.length);
+            
+            // Filter for valid community safety responses (1, 2, 3, 4)
+            const safetyResponses = records.filter(r => 
+              r.community_safety !== null && 
+              r.community_safety !== undefined && 
+              r.community_safety !== '' &&
+              (r.community_safety === 1 || r.community_safety === 2 || 
+              r.community_safety === 3 || r.community_safety === 4)
+            );
+            
+            console.log('Records with valid safety data:', safetyResponses.length);
+            if (safetyResponses.length > 0) {
+              console.log('Sample safety values:', safetyResponses.slice(0, 5).map(r => r.community_safety));
+            }
+            
             if (safetyResponses.length === 0) return 0;
             
-            return safetyResponses.reduce((sum, r) => {
-              if (r.community_safety === '4') return sum + 100;  
-              if (r.community_safety === '3') return sum + 75;   
-              if (r.community_safety === '2') return sum + 50;
-              if (r.community_safety === '1') return sum + 25;
+            const totalScore = safetyResponses.reduce((sum, r) => {
+              const safetyValue = r.community_safety;
+              
+              if (safetyValue === 4) return sum + 100;  // Very Safe
+              if (safetyValue === 3) return sum + 75;   // Safe
+              if (safetyValue === 2) return sum + 50;   // Somewhat Safe
+              if (safetyValue === 1) return sum + 25;   // Unsafe
+              
+              console.log('⚠️ Unexpected safety value:', safetyValue, typeof safetyValue);
               return sum;
-            }, 0) / safetyResponses.length;
+            }, 0);
+            
+            const averageScore = totalScore / safetyResponses.length;
+            console.log('Average safety score:', averageScore);
+            
+            return averageScore;
           },
           label: 'Community Safety'
         },
