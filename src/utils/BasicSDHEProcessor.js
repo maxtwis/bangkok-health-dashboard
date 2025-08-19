@@ -818,64 +818,64 @@ class BasicSDHEProcessor {
   }
 
   // Calculate indicators for a specific set of records
-  calculateIndicatorsForRecords(records, domain, districtName = null) {
-    const domainMapping = this.indicatorMappings[domain];
-    const results = { sample_size: records.length };
+  calculateIndicatorsForRecords(records, domain, districtName = null, populationGroup = null) {
+  const domainMapping = this.indicatorMappings[domain];
+  const results = { sample_size: records.length };
 
-    // Define reverse indicators (diseases and problems are bad when high)
-    const reverseIndicators = {
-      unemployment_rate: true,
-      vulnerable_employment: true,
-      food_insecurity_moderate: true,
-      food_insecurity_severe: true,
-      work_injury_fatal: true,
-      work_injury_non_fatal: true,
-      catastrophic_health_spending_household: true,
-      health_spending_over_10_percent: true,
-      health_spending_over_25_percent: true,
-      medical_consultation_skip_cost: true,
-      medical_treatment_skip_cost: true,
-      prescribed_medicine_skip_cost: true,
-      housing_overcrowding: true,
-      disaster_experience: true,
-      violence_physical: true,
-      violence_psychological: true,
-      violence_sexual: true,
-      discrimination_experience: true,
-      community_murder: true,
-      alcohol_consumption: true,
-      tobacco_use: true,
-      obesity: true,
-      // All health outcomes are reverse (diseases are bad)
-      any_chronic_disease: true,
-      diabetes: true,
-      hypertension: true,
-      gout: true,
-      chronic_kidney_disease: true,
-      cancer: true,
-      high_cholesterol: true,
-      ischemic_heart_disease: true,
-      liver_disease: true,
-      stroke: true,
-      hiv: true,
-      mental_health: true,
-      allergies: true,
-      bone_joint_disease: true,
-      respiratory_disease: true,
-      emphysema: true,
-      anemia: true,
-      stomach_ulcer: true,
-      epilepsy: true,
-      intestinal_disease: true,
-      paralysis: true,
-      dementia: true,
-      cardiovascular_diseases: true,
-      metabolic_diseases: true,
-      multiple_chronic_conditions: true
-      // Healthcare supply indicators are NOT reverse (higher is better)
-    };
+  // Define reverse indicators (diseases and problems are bad when high)
+  const reverseIndicators = {
+    unemployment_rate: true,
+    vulnerable_employment: true,
+    food_insecurity_moderate: true,
+    food_insecurity_severe: true,
+    work_injury_fatal: true,
+    work_injury_non_fatal: true,
+    catastrophic_health_spending_household: true,
+    health_spending_over_10_percent: true,
+    health_spending_over_25_percent: true,
+    medical_consultation_skip_cost: true,
+    medical_treatment_skip_cost: true,
+    prescribed_medicine_skip_cost: true,
+    housing_overcrowding: true,
+    disaster_experience: true,
+    violence_physical: true,
+    violence_psychological: true,
+    violence_sexual: true,
+    discrimination_experience: true,
+    community_murder: true,
+    alcohol_consumption: true,
+    tobacco_use: true,
+    obesity: true,
+    // All health outcomes are reverse (diseases are bad)
+    any_chronic_disease: true,
+    diabetes: true,
+    hypertension: true,
+    gout: true,
+    chronic_kidney_disease: true,
+    cancer: true,
+    high_cholesterol: true,
+    ischemic_heart_disease: true,
+    liver_disease: true,
+    stroke: true,
+    hiv: true,
+    mental_health: true,
+    allergies: true,
+    bone_joint_disease: true,
+    respiratory_disease: true,
+    emphysema: true,
+    anemia: true,
+    stomach_ulcer: true,
+    epilepsy: true,
+    intestinal_disease: true,
+    paralysis: true,
+    dementia: true,
+    cardiovascular_diseases: true,
+    metabolic_diseases: true,
+    multiple_chronic_conditions: true
+    // Healthcare supply indicators are NOT reverse (higher is better)
+  };
 
-    Object.keys(domainMapping).forEach(indicator => {
+  Object.keys(domainMapping).forEach(indicator => {
     const mapping = domainMapping[indicator];
     
     // SPECIAL HANDLING FOR NORMAL POPULATION
@@ -888,10 +888,10 @@ class BasicSDHEProcessor {
           results[indicator] = {
             value: parseFloat(this.normalPopulationLookup[indicator]),
             label: mapping.label,
-            sample_size: 'Bangkok-wide', // Special sample size indicator
+            sample_size: 'Bangkok-wide',
             isPreCalculated: true
           };
-          return; // Skip normal calculation for this indicator
+          return; // EXIT THIS ITERATION - use return instead of continuing to normal calculation
         }
         
         // For individual districts, check if we have survey data
@@ -903,47 +903,48 @@ class BasicSDHEProcessor {
             sample_size: 0,
             noData: true
           };
-          return;
+          return; // EXIT THIS ITERATION
         }
         
         // If we have both pre-calculated and survey data, prefer survey data for districts
         // Fall through to normal calculation
       }
     }
-      
-      // Handle healthcare supply indicators
-if (mapping.isSupplyIndicator && districtName) {
-  // Get district code from district name
-  const districtCode = Object.keys(this.districtCodeMap).find(
-    code => this.districtCodeMap[code] === districtName
-  );
-  
-  if (districtCode) {
-    let supplyData;
     
-     // Handle NEW health service access indicator (uses health_facilities.csv)
-    if (indicator === 'health_service_access') {
-      supplyData = { 
-        [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
-      };
-    } 
-      else {
-      supplyData = this.calculateHealthcareSupplyIndicators(
-        parseInt(districtCode), 
-        districtName
+    // Handle healthcare supply indicators
+    if (mapping.isSupplyIndicator && districtName) {
+      // Get district code from district name
+      const districtCode = Object.keys(this.districtCodeMap).find(
+        code => this.districtCodeMap[code] === districtName
       );
-    }
-    
-    if (supplyData[indicator]) {
-      results[indicator] = {
-        value: supplyData[indicator].value,
-        label: mapping.label,
-        sample_size: supplyData[indicator].sample_size,
-        population: supplyData[indicator].population,
-        absolute_count: supplyData[indicator].absolute_count
-      };
-    }
-  } else {
+      
+      if (districtCode) {
+        let supplyData;
+        
+        // Handle NEW health service access indicator (uses health_facilities.csv)
+        if (indicator === 'health_service_access') {
+          supplyData = { 
+            [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
+          };
+        } 
+        // Handle EXISTING healthcare worker indicators (uses health_supply.csv)
+        else {
+          supplyData = this.calculateHealthcareSupplyIndicators(
+            parseInt(districtCode), 
+            districtName
+          );
+        }
+        
+        if (supplyData[indicator]) {
+          results[indicator] = {
+            value: supplyData[indicator].value,
+            label: mapping.label,
+            sample_size: supplyData[indicator].sample_size,
+            population: supplyData[indicator].population,
+            absolute_count: supplyData[indicator].absolute_count
+          };
+        }
+      } else {
         // For Bangkok Overall, calculate average across all districts
         if (districtName === 'Bangkok Overall') {
           const allDistrictCodes = Object.keys(this.districtCodeMap).map(code => parseInt(code));
@@ -977,6 +978,8 @@ if (mapping.isSupplyIndicator && districtName) {
               overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
             } else if (indicator === 'health_service_access') {
               overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
+            } else if (indicator === 'bed_per_population') {
+              overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
             } else {
               overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
             }
@@ -1000,193 +1003,194 @@ if (mapping.isSupplyIndicator && districtName) {
         }
       }
     }
-      else if (mapping.calculation) {
-        // Custom calculation function
-        const calculatedValue = mapping.calculation(records);
-        results[indicator] = {
-          value: parseFloat(calculatedValue.toFixed(2)),
-          label: mapping.label,
-          sample_size: records.length
-        };
-        
-        // Track sample size for financial indicators that filter out null income
-        if (indicator.includes('health_spending') || indicator.includes('catastrophic')) {
-          const validRecords = records.filter(r => 
-            r.income !== null && 
-            r.income !== undefined && 
-            r.income > 0 &&
-            ((indicator.includes('household') && r.hh_health_expense !== null) ||
-             (!indicator.includes('household') && r.health_expense !== null))
-          );
-          results[indicator].sample_size = validRecords.length;
-        }
-      } else if (mapping.condition) {
-        // Standard condition-based calculation
-        let filteredRecords = records;
-        
-        // Apply age filter if specified
-        if (mapping.ageFilter) {
-          filteredRecords = records.filter(r => mapping.ageFilter(r.age));
-        }
-        
-        const meetCondition = filteredRecords.filter(record => {
-          if (mapping.fields) {
-            return mapping.condition(record);
-          } else {
-            return mapping.condition(record[mapping.field]);
-          }
-        }).length;
-        
-        const rate = filteredRecords.length > 0 ? 
-          (meetCondition / filteredRecords.length) * 100 : 0;
-        
-        results[indicator] = {
-          value: parseFloat(rate.toFixed(2)),
-          label: mapping.label,
-          sample_size: mapping.ageFilter ? filteredRecords.length : records.length
-        };
+    else if (mapping.calculation) {
+      // Custom calculation function
+      const calculatedValue = mapping.calculation(records);
+      results[indicator] = {
+        value: parseFloat(calculatedValue.toFixed(2)),
+        label: mapping.label,
+        sample_size: records.length
+      };
+      
+      // Track sample size for financial indicators that filter out null income
+      if (indicator.includes('health_spending') || indicator.includes('catastrophic')) {
+        const validRecords = records.filter(r => 
+          r.income !== null && 
+          r.income !== undefined && 
+          r.income > 0 &&
+          ((indicator.includes('household') && r.hh_health_expense !== null) ||
+           (!indicator.includes('household') && r.health_expense !== null))
+        );
+        results[indicator].sample_size = validRecords.length;
       }
-    });
-
-        const indicators = Object.keys(domainMapping);
-        const goodnessScores = indicators.filter(indicator => {
-          // Exclude indicators with no data from domain score calculation
-          return results[indicator] && results[indicator].value !== null && !results[indicator].noData;
-        }).map(indicator => {
-          const rawValue = results[indicator].value;
-        
-        // Handle healthcare supply indicators with normalized scoring
-        const healthcareSupplyIndicators = [
-          'doctor_per_population', 
-          'nurse_per_population', 
-          'healthworker_per_population', 
-          'community_healthworker_per_population',
-          'health_service_access',
-          'bed_per_population'
-        ];
-        
-        if (healthcareSupplyIndicators.includes(indicator)) {
-          // Convert healthcare supply indicators to 0-100 scale using WHO benchmarks
-          const benchmarks = {
-            doctor_per_population: { excellent: 2.5, good: 1.0, poor: 0.5 },
-            nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
-            healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
-            community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
-            health_service_access: { excellent: 50, good: 20, poor: 10 },
-            bed_per_population: { excellent: 30, good: 15, poor: 10 }
-          };
-          
-          const benchmark = benchmarks[indicator];
-          if (!benchmark) return 50; // Default middle score
-          
-          // Convert to 0-100 scale
-          if (rawValue >= benchmark.excellent) return 100;
-          if (rawValue >= benchmark.good) {
-            // Linear interpolation between good and excellent
-            const ratio = (rawValue - benchmark.good) / (benchmark.excellent - benchmark.good);
-            return 75 + (25 * ratio);
-          }
-          if (rawValue >= benchmark.poor) {
-            // Linear interpolation between poor and good
-            const ratio = (rawValue - benchmark.poor) / (benchmark.good - benchmark.poor);
-            return 25 + (50 * ratio);
-          }
-          // Below poor threshold
-          const ratio = Math.min(1, rawValue / benchmark.poor);
-          return 25 * ratio;
-        }
-        
-        // Handle regular indicators
-        if (reverseIndicators[indicator]) {
-          // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
-          return 100 - rawValue;
-        } else {
-          // Normal indicator - higher is better
-          return rawValue;
-        }
-      });
-
-        if (goodnessScores.length > 0) {
-          const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
-          results['_domain_score'] = {
-            value: parseFloat(domainScore.toFixed(1)),
-            label: `${domain.replace('_', ' ')} Score`,
-            sample_size: records.length
-          };
-        } else {
-          results['_domain_score'] = {
-            value: null,
-            label: `${domain.replace('_', ' ')} Score`,
-            sample_size: 0,
-            noData: true
-          };
-        }
-
-        return results;
+    } else if (mapping.condition) {
+      // Standard condition-based calculation
+      let filteredRecords = records;
+      
+      // Apply age filter if specified
+      if (mapping.ageFilter) {
+        filteredRecords = records.filter(r => mapping.ageFilter(r.age));
       }
+      
+      const meetCondition = filteredRecords.filter(record => {
+        if (mapping.fields) {
+          return mapping.condition(record);
+        } else {
+          return mapping.condition(record[mapping.field]);
+        }
+      }).length;
+      
+      const rate = filteredRecords.length > 0 ? 
+        (meetCondition / filteredRecords.length) * 100 : 0;
+      
+      results[indicator] = {
+        value: parseFloat(rate.toFixed(2)),
+        label: mapping.label,
+        sample_size: mapping.ageFilter ? filteredRecords.length : records.length
+      };
+    }
+  });
+
+  // Calculate domain score with proper reverse indicator handling
+  const indicators = Object.keys(domainMapping);
+  const goodnessScores = indicators.filter(indicator => {
+    // Exclude indicators with no data from domain score calculation
+    return results[indicator] && results[indicator].value !== null && !results[indicator].noData;
+  }).map(indicator => {
+    const rawValue = results[indicator].value;
+    
+    // Handle healthcare supply indicators with normalized scoring
+    const healthcareSupplyIndicators = [
+      'doctor_per_population', 
+      'nurse_per_population', 
+      'healthworker_per_population', 
+      'community_healthworker_per_population',
+      'health_service_access',
+      'bed_per_population'
+    ];
+    
+    if (healthcareSupplyIndicators.includes(indicator)) {
+      // Convert healthcare supply indicators to 0-100 scale using WHO benchmarks
+      const benchmarks = {
+        doctor_per_population: { excellent: 2.5, good: 1.0, poor: 0.5 },
+        nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
+        healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
+        community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
+        health_service_access: { excellent: 50, good: 20, poor: 10 },
+        bed_per_population: { excellent: 30, good: 15, poor: 10 }
+      };
+      
+      const benchmark = benchmarks[indicator];
+      if (!benchmark) return 50; // Default middle score
+      
+      // Convert to 0-100 scale
+      if (rawValue >= benchmark.excellent) return 100;
+      if (rawValue >= benchmark.good) {
+        // Linear interpolation between good and excellent
+        const ratio = (rawValue - benchmark.good) / (benchmark.excellent - benchmark.good);
+        return 75 + (25 * ratio);
+      }
+      if (rawValue >= benchmark.poor) {
+        // Linear interpolation between poor and good
+        const ratio = (rawValue - benchmark.poor) / (benchmark.good - benchmark.poor);
+        return 25 + (50 * ratio);
+      }
+      // Below poor threshold
+      const ratio = Math.min(1, rawValue / benchmark.poor);
+      return 25 * ratio;
+    }
+    
+    // Handle regular indicators
+    if (reverseIndicators[indicator]) {
+      // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
+      return 100 - rawValue;
+    } else {
+      // Normal indicator - higher is better
+      return rawValue;
+    }
+  });
+
+  if (goodnessScores.length > 0) {
+    const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
+    results['_domain_score'] = {
+      value: parseFloat(domainScore.toFixed(1)),
+      label: `${domain.replace('_', ' ')} Score`,
+      sample_size: records.length
+    };
+  } else {
+    results['_domain_score'] = {
+      value: null,
+      label: `${domain.replace('_', ' ')} Score`,
+      sample_size: 0,
+      noData: true
+    };
+  }
+
+  return results;
+}
 
   calculateIndicators() {
-    const results = {};
-    const domains = Object.keys(this.indicatorMappings);
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
-    const districts = [...new Set(this.surveyData.map(r => r.district_name))];
+  const results = {};
+  const domains = Object.keys(this.indicatorMappings);
+  const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
+  const districts = [...new Set(this.surveyData.map(r => r.district_name))];
 
-    // Initialize results structure for districts
-    domains.forEach(domain => {
-      results[domain] = {};
-      
-      // Initialize Bangkok Overall
-      results[domain]['Bangkok Overall'] = {};
+  // Initialize results structure for districts
+  domains.forEach(domain => {
+    results[domain] = {};
+    
+    // Initialize Bangkok Overall
+    results[domain]['Bangkok Overall'] = {};
+    populationGroups.forEach(group => {
+      results[domain]['Bangkok Overall'][group] = {};
+    });
+    
+    // Initialize individual districts
+    districts.forEach(district => {
+      results[domain][district] = {};
       populationGroups.forEach(group => {
-        results[domain]['Bangkok Overall'][group] = {};
-      });
-      
-      // Initialize individual districts
-      districts.forEach(district => {
-        results[domain][district] = {};
-        populationGroups.forEach(group => {
-          results[domain][district][group] = {};
-        });
+        results[domain][district][group] = {};
       });
     });
+  });
 
-    // Calculate indicators for each combination
-    domains.forEach(domain => {
-      // Calculate Bangkok Overall first (using all data)
+  // Calculate indicators for each combination
+  domains.forEach(domain => {
+    // Calculate Bangkok Overall first (using all data)
+    populationGroups.forEach(group => {
+      const allRecords = this.surveyData.filter(r => r.population_group === group);
+      if (allRecords.length > 0 || group === 'normal_population') {
+        results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
+          allRecords, 
+          domain, 
+          'Bangkok Overall',
+          group  // MAKE SURE THIS IS PASSED
+        );
+      }
+    });
+    
+    // Calculate individual districts
+    districts.forEach(district => {
       populationGroups.forEach(group => {
-        const allRecords = this.surveyData.filter(r => r.population_group === group);
-        if (allRecords.length > 0 || group === 'normal_population') {
-          results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
-            allRecords, 
-            domain,
-            'Bangkok Overall',
-            group // ADD population group parameter
+        const records = this.surveyData.filter(r => 
+          r.district_name === district && r.population_group === group
+        );
+
+        if (records.length > 0 || (group === 'normal_population' && district !== 'Bangkok Overall')) {
+          results[domain][district][group] = this.calculateIndicatorsForRecords(
+            records, 
+            domain, 
+            district,
+            group  // MAKE SURE THIS IS PASSED
           );
         }
       });
-      
-      // Calculate individual districts
-      districts.forEach(district => {
-        populationGroups.forEach(group => {
-          const records = this.surveyData.filter(r => 
-            r.district_name === district && r.population_group === group
-          );
-
-          if (records.length > 0) {
-            results[domain][district][group] = this.calculateIndicatorsForRecords(
-              records, 
-              domain, 
-              district,
-              group
-            );
-          }
-        });
-      });
     });
+  });
 
-    this.sdheResults = results;
-    return results;
-  }
+  this.sdheResults = results;
+  return results;
+}
 
   getAvailableDistricts() {
     // Add Bangkok Overall as the first option
