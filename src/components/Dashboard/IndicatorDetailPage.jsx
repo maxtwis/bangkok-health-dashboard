@@ -1,4 +1,4 @@
-// IndicatorDetailPage.jsx - Fixed with Cases/Sample display
+// IndicatorDetailPage.jsx - Enhanced with Occupation Disaggregation
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
@@ -81,7 +81,7 @@ const IndicatorDetailPage = ({
   const indicatorData = getIndicatorData(domain, district, populationGroup);
   const currentIndicator = indicatorData.find(item => item.indicator === indicator);
 
-  // Calculate disaggregation data
+  // Calculate disaggregation data - ENHANCED with occupation
   const disaggregationData = useMemo(() => {
     if (!surveyData || !indicator) return null;
 
@@ -95,7 +95,7 @@ const IndicatorDetailPage = ({
     return calculateDisaggregation(filteredData, indicator);
   }, [surveyData, indicator, district, populationGroup]);
 
-  // Calculate disaggregation by age and sex
+  // ENHANCED: Calculate disaggregation by age, sex, and occupation
   function calculateDisaggregation(records, indicatorKey) {
     if (!records || records.length === 0) return null;
 
@@ -116,19 +116,41 @@ const IndicatorDetailPage = ({
       return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
     };
 
-    // Group by age and sex
+    // NEW: Occupation type classification
+    const getOccupationGroup = (occupationType) => {
+      const occupationMap = {
+        1: language === 'th' ? 'รับราชการ' : 'Government',
+        2: language === 'th' ? 'รัฐวิสาหกิจ' : 'State Enterprise',
+        3: language === 'th' ? 'พนักงานบริษัท/ลูกจ้าง' : 'Company Employee',
+        5: language === 'th' ? 'ธุรกิจส่วนตัว' : 'Private Business',
+        6: language === 'th' ? 'อาชีพอิสระ' : 'Freelance/Independent',
+        'other': language === 'th' ? 'อื่น ๆ' : 'Other'
+      };
+      
+      return occupationMap[occupationType] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+    };
+
+    // Group by age, sex, and occupation
     const ageGroups = {};
     const sexGroups = {};
+    const occupationGroups = {};
 
     records.forEach(record => {
       const ageGroup = getAgeGroup(record.age);
       const sexGroup = getSexGroup(record.sex);
+      const occupationGroup = getOccupationGroup(record.occupation_type);
 
       if (!ageGroups[ageGroup]) ageGroups[ageGroup] = [];
       if (!sexGroups[sexGroup]) sexGroups[sexGroup] = [];
+      if (!occupationGroups[occupationGroup]) occupationGroups[occupationGroup] = [];
 
       ageGroups[ageGroup].push(record);
       sexGroups[sexGroup].push(record);
+      
+      // Only add to occupation groups if person has employment status
+      if (record.occupation_status === 1 && record.occupation_type) {
+        occupationGroups[occupationGroup].push(record);
+      }
     });
 
     // Calculate both demographic distribution AND indicator prevalence for each group
@@ -148,7 +170,7 @@ const IndicatorDetailPage = ({
 
     // Calculate indicator for each group
     const calculateIndicatorValueForGroup = (groupRecords, indicatorKey) => {
-      // Regular indicator calculations
+      // Regular indicator calculations - comprehensive set
       switch (indicatorKey) {
         case 'unemployment_rate':
           const unemployed = groupRecords.filter(r => r.occupation_status === 0).length;
@@ -316,7 +338,7 @@ const IndicatorDetailPage = ({
           ).length;
           return groupRecords.length > 0 ? (healthCoverage / groupRecords.length) * 100 : 0;
 
-        // EDUCATION INDICATORS - MISSING CASES ADDED
+        // EDUCATION INDICATORS
         case 'primary_completion':
           const primaryCompletion = groupRecords.filter(r => r.education >= 2).length;
           return groupRecords.length > 0 ? (primaryCompletion / groupRecords.length) * 100 : 0;
@@ -333,7 +355,7 @@ const IndicatorDetailPage = ({
           const trainingParticipation = groupRecords.filter(r => r.training === 1).length;
           return groupRecords.length > 0 ? (trainingParticipation / groupRecords.length) * 100 : 0;
 
-        // ECONOMIC SECURITY INDICATORS - ADD MISSING ONES  
+        // ECONOMIC SECURITY INDICATORS
         case 'catastrophic_health_spending_household':
           const validHouseholdRecords = groupRecords.filter(r => 
             r.hh_health_expense !== null && r.hh_health_expense !== undefined && 
@@ -449,8 +471,8 @@ const IndicatorDetailPage = ({
       const groupData = calculateGroupData(ageGroups[ageGroup], records);
       return {
         group: ageGroup,
-        value: groupData.demographicPercent, // Show what % of population this age group represents
-        indicatorValue: groupData.indicatorValue, // Also track indicator value for this group
+        value: groupData.demographicPercent,
+        indicatorValue: groupData.indicatorValue,
         count: groupData.count,
         type: 'age'
       };
@@ -464,16 +486,29 @@ const IndicatorDetailPage = ({
       const groupData = calculateGroupData(sexGroups[sexGroup], records);
       return {
         group: sexGroup,
-        value: groupData.demographicPercent, // Show what % of population this sex group represents
-        indicatorValue: groupData.indicatorValue, // Also track indicator value for this group
+        value: groupData.demographicPercent,
+        indicatorValue: groupData.indicatorValue,
         count: groupData.count,
         type: 'sex'
       };
     });
 
+    // NEW: Process occupation groups - Show demographic composition
+    const occupationData = Object.keys(occupationGroups).map(occupationGroup => {
+      const groupData = calculateGroupData(occupationGroups[occupationGroup], records);
+      return {
+        group: occupationGroup,
+        value: groupData.demographicPercent,
+        indicatorValue: groupData.indicatorValue,
+        count: groupData.count,
+        type: 'occupation'
+      };
+    }).filter(item => item.count > 0); // Only show occupation groups with data
+
     return {
       age: ageData,
       sex: sexData,
+      occupation: occupationData, // NEW
       total: {
         value: calculateIndicatorValueForGroup(records, indicatorKey),
         count: records.length
@@ -484,6 +519,7 @@ const IndicatorDetailPage = ({
   // Color schemes
   const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
+  const occupationColors = ['#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16']; // NEW
 
   if (indicatorDetailsLoading) {
     return (
@@ -554,7 +590,7 @@ const IndicatorDetailPage = ({
               {[
                 { id: 'overview', icon: Eye, label: language === 'th' ? 'ภาพรวม' : 'Overview' },
                 { id: 'disaggregation', icon: Users, label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Disaggregation' },
-                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวณ' : 'Methodology' }
+                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวด' : 'Methodology' }
               ].map(tab => (
                 <button
                   key={tab.id}
@@ -663,15 +699,15 @@ const IndicatorDetailPage = ({
           </div>
         )}
 
-        {/* Disaggregation Tab */}
+        {/* Disaggregation Tab - ENHANCED with occupation */}
         {activeTab === 'disaggregation' && disaggregationData && (
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุและเพศ' : 'Disaggregation by Age and Sex'}
+                {language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ และอาชีพ' : 'Disaggregation by Age, Sex and Occupation'}
               </h3>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Age Groups */}
                 <div>
                   <h4 className="font-medium text-gray-800 mb-4">
@@ -784,12 +820,91 @@ const IndicatorDetailPage = ({
                         ))}
                       </tbody>
                     </table>
-                    <div className="mt-2 text-xs text-gray-500">
-                      <p><strong>{language === 'th' ? 'สัดส่วน' : 'Proportion'}:</strong> {language === 'th' ? 'เปอร์เซ็นต์ของประชากรกลุ่มนี้' : 'Percentage of this population group'}</p>
-                      <p><strong>{language === 'th' ? 'ค่าตัวชี้วัด' : 'Indicator'}:</strong> {language === 'th' ? 'ค่าตัวชี้วัดในกลุ่มเพศนี้' : 'Indicator value within this sex group'}</p>
-                      <p><strong>{language === 'th' ? 'จำนวน' : 'Count'}:</strong> {language === 'th' ? 'จำนวนผู้ที่มีลักษณะนี้' : 'Number of people with this characteristic'}</p>
-                    </div>
                   </div>
+                </div>
+
+                {/* NEW: Occupation Groups */}
+                <div>
+                  <h4 className="font-medium text-gray-800 mb-4">
+                    {language === 'th' ? 'ตามประเภทอาชีพ' : 'By Occupation Type'}
+                  </h4>
+                  
+                  {disaggregationData.occupation.length > 0 ? (
+                    <>
+                      <div className="h-80">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={disaggregationData.occupation}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                              dataKey="group" 
+                              angle={-45}
+                              textAnchor="end"
+                              height={80}
+                              tick={{ fontSize: 10 }}
+                              interval={0}
+                            />
+                            <YAxis tickFormatter={(value) => `${value}%`} />
+                            <Tooltip 
+                              formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
+                              labelFormatter={(label) => `${language === 'th' ? 'ประเภทอาชีพ' : 'Occupation'}: ${label}`}
+                            />
+                            <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]}>
+                              {disaggregationData.occupation.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
+                              ))}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                      
+                      {/* Occupation Group Table */}
+                      <div className="mt-4">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b">
+                              <th className="text-left py-2">{language === 'th' ? 'ประเภทอาชีพ' : 'Occupation'}</th>
+                              <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
+                              <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
+                              <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {disaggregationData.occupation.map((item, index) => (
+                              <tr key={item.group} className="border-b">
+                                <td className="py-2 flex items-center">
+                                  <div 
+                                    className="w-3 h-3 rounded mr-2" 
+                                    style={{ backgroundColor: occupationColors[index % occupationColors.length] }}
+                                  ></div>
+                                  <span className="text-xs">{item.group}</span>
+                                </td>
+                                <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
+                                <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
+                                <td className="text-right py-2 text-gray-600">
+                                  {Math.round((item.indicatorValue || 0) * item.count / 100)}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="h-80 flex items-center justify-center text-gray-500">
+                      <div className="text-center">
+                        <p className="text-sm">
+                          {language === 'th' 
+                            ? 'ไม่มีข้อมูลอาชีพสำหรับกลุ่มนี้' 
+                            : 'No occupation data available for this group'}
+                        </p>
+                        <p className="text-xs mt-1">
+                          {language === 'th' 
+                            ? 'ข้อมูลอาชีพแสดงเฉพาะผู้ที่มีงานทำ' 
+                            : 'Occupation data shown only for employed individuals'}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -821,7 +936,7 @@ const IndicatorDetailPage = ({
               )}
               
               {disaggregationData.sex.length > 1 && (
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="mb-4 p-4 bg-blue-50 rounded-lg">
                   <h4 className="font-medium text-blue-900 mb-2">
                     {language === 'th' ? 'ความแตกต่างตามเพศ' : 'Sex Disparities'}
                   </h4>
@@ -839,6 +954,27 @@ const IndicatorDetailPage = ({
                   </p>
                 </div>
               )}
+
+              {/* NEW: Occupation equity analysis */}
+              {disaggregationData.occupation.length > 1 && (
+                <div className="p-4 bg-green-50 rounded-lg">
+                  <h4 className="font-medium text-green-900 mb-2">
+                    {language === 'th' ? 'ความแตกต่างตามอาชีพ' : 'Occupation Disparities'}
+                  </h4>
+                  <p className="text-green-800 text-sm">
+                    {(() => {
+                      const values = disaggregationData.occupation.map(d => d.indicatorValue || 0);
+                      const max = Math.max(...values);
+                      const min = Math.min(...values);
+                      const ratio = min > 0 ? max / min : 0;
+                      
+                      return language === 'th' 
+                        ? `ความแตกต่างระหว่างประเภทอาชีพ: ${(max - min).toFixed(1)} เปอร์เซ็นต์พอยต์ (อัตราส่วน: ${ratio.toFixed(1)}:1)`
+                        : `Difference between occupation types: ${(max - min).toFixed(1)} percentage points (ratio: ${ratio.toFixed(1)}:1)`;
+                    })()}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -848,13 +984,13 @@ const IndicatorDetailPage = ({
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'วิธีการคำนวณและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
+                {language === 'th' ? 'วิธีการคำนวดและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
               </h3>
               
               <div className="space-y-6">
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'สูตรการคำนวณ' : 'Calculation Formula'}
+                    {language === 'th' ? 'สูตรการคำนวด' : 'Calculation Formula'}
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm">
                     {indicatorInfo.calculation}
@@ -871,6 +1007,25 @@ const IndicatorDetailPage = ({
                       : 'Data from Million Health Check Project, Medical Department, Bangkok Metropolitan Administration'
                     }
                   </p>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-gray-800 mb-3">
+                    {language === 'th' ? 'การแยกย่อยข้อมูล' : 'Data Disaggregation'}
+                  </h4>
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <p className="text-blue-800 text-sm mb-2">
+                      {language === 'th' 
+                        ? 'ข้อมูลถูกแยกย่อยตามมิติต่าง ๆ เพื่อวิเคราะห์ความเท่าเทียม:'
+                        : 'Data is disaggregated across multiple dimensions for equity analysis:'
+                      }
+                    </p>
+                    <ul className="list-disc list-inside text-blue-700 text-sm space-y-1">
+                      <li><strong>{language === 'th' ? 'อายุ' : 'Age'}:</strong> {language === 'th' ? 'กลุ่มอายุ 5 กลุ่ม (< 18, 18-29, 30-44, 45-59, 60+)' : '5 age groups (< 18, 18-29, 30-44, 45-59, 60+)'}</li>
+                      <li><strong>{language === 'th' ? 'เพศ' : 'Sex'}:</strong> {language === 'th' ? 'ชาย หญิง LGBTQ+ และไม่ระบุ' : 'Male, Female, LGBTQ+, and Not specified'}</li>
+                      <li><strong>{language === 'th' ? 'อาชีพ' : 'Occupation'}:</strong> {language === 'th' ? '6 ประเภท (รับราชการ รัฐวิสาหกิจ พนักงานบริษัท ธุรกิจส่วนตัว อาชีพอิสระ และอื่น ๆ)' : '6 types (Government, State Enterprise, Company Employee, Private Business, Freelance, Other)'}</li>
+                    </ul>
+                  </div>
                 </div>
                 
                 <div>
@@ -894,6 +1049,12 @@ const IndicatorDetailPage = ({
                       {language === 'th' 
                         ? 'ขนาดกลุ่มตัวอย่างในบางเขตอาจมีจำนวนจำกัด'
                         : 'Sample sizes in some districts may be limited'
+                      }
+                    </li>
+                    <li>
+                      {language === 'th' 
+                        ? 'ข้อมูลอาชีพแสดงเฉพาะผู้ที่มีสถานะการจ้างงาน (occupation_status = 1)'
+                        : 'Occupation data shown only for employed individuals (occupation_status = 1)'
                       }
                     </li>
                   </ul>
