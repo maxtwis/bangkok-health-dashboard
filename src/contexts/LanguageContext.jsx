@@ -28,7 +28,8 @@ const baseTranslations = {
       informal_workers: 'Informal Workers',
       elderly: 'Elderly',
       disabled: 'People with Disabilities',
-      lgbtq: 'LGBTQ+'
+      lgbtq: 'LGBTQ+',
+      normal_population: 'General Population'
     },
     
     // Domains
@@ -112,7 +113,8 @@ const baseTranslations = {
       informal_workers: 'แรงงานนอกระบบ',
       elderly: 'ผู้สูงอายุ',
       disabled: 'คนพิการ',
-      lgbtq: 'กลุ่มเพศหลากหลาย'
+      lgbtq: 'กลุ่มเพศหลากหลาย',
+      normal_population: 'ประชากรทั่วไป'
     },
     
     // Domains

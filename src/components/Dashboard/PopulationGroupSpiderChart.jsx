@@ -11,7 +11,8 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     { value: 'informal_workers', color: '#ef4444' },
     { value: 'elderly', color: '#3b82f6' },
     { value: 'disabled', color: '#10b981' },
-    { value: 'lgbtq', color: '#f59e0b' }
+    { value: 'lgbtq', color: '#f59e0b' },
+    { value: 'normal_population', color: '#8b5cf6' }
   ];
 
   const domains = [

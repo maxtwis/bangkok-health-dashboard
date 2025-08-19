@@ -385,16 +385,17 @@ const Dashboard = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('ui.populationGroup')}
                 </label>
-                <select 
-                  value={selectedPopulationGroup}
-                  onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
-                  <option value="elderly">{t('populationGroups.elderly')}</option>
-                  <option value="disabled">{t('populationGroups.disabled')}</option>
-                  <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
-                </select>
+                  <select 
+                    value={selectedPopulationGroup}
+                    onChange={(e) => setSelectedPopulationGroup(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
+                    <option value="elderly">{t('populationGroups.elderly')}</option>
+                    <option value="disabled">{t('populationGroups.disabled')}</option>
+                    <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
+                    <option value="normal_population">{t('populationGroups.normal_population')}</option> 
+                  </select>
               </div>
 
               {/* Domain Filter */}
@@ -613,32 +614,84 @@ const Dashboard = () => {
                                   </div>
                                 </td>
                                 <td className="text-center py-3 px-4">
-                                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                                    getScoreColor(value, indicator)
-                                  }`}>
-                                    {(() => {
-                                      const isSupplyIndicator = 
-                                      ['doctor_per_population', 
-                                        'nurse_per_population', 
-                                        'healthworker_per_population', 
-                                        'community_healthworker_per_population',
-                                        'health_service_access',
-                                        'bed_per_population'
-                                      ].includes(indicator);
-                                      
-                                      if (isSupplyIndicator) {
-                                          const unit = indicator === 'healthworker_per_population' ? '10,000' : 
-                                          indicator === 'health_service_access' ? '10,000' :
-                                          indicator === 'bed_per_population' ? '10,000' : '1,000';
-                                        return `${value.toFixed(1)} per ${unit}`;
-                                      } else {
-                                        return formatValue(value);
-                                      }
-                                    })()}
-                                  </span>
+                                  {(() => {
+                                    // Handle no data case
+                                    if (item.noData || value === null) {
+                                      return (
+                                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
+                                          {language === 'th' ? 'ไม่มีข้อมูล' : 'No data'}
+                                        </span>
+                                      );
+                                    }
+                                    
+                                    // Handle pre-calculated indicators
+                                    if (item.isPreCalculated) {
+                                      return (
+                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}>
+                                          {(() => {
+                                            const isSupplyIndicator = [
+                                              'doctor_per_population', 
+                                              'nurse_per_population', 
+                                              'healthworker_per_population', 
+                                              'community_healthworker_per_population',
+                                              'health_service_access',
+                                              'bed_per_population'
+                                            ].includes(indicator);
+                                            
+                                            if (isSupplyIndicator) {
+                                              const unit = indicator === 'healthworker_per_population' ? '10,000' : 
+                                                          indicator === 'health_service_access' ? '10,000' :
+                                                          indicator === 'bed_per_population' ? '10,000' : '1,000';
+                                              return `${value.toFixed(1)} per ${unit}`;
+                                            } else {
+                                              return formatValue(value);
+                                            }
+                                          })()}
+                                          <span className="ml-1 text-xs opacity-75">*</span>
+                                        </span>
+                                      );
+                                    }
+                                    
+                                    // Regular indicators (your existing logic)
+                                    return (
+                                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(value, indicator)}`}>
+                                        {(() => {
+                                          const isSupplyIndicator = [
+                                            'doctor_per_population', 
+                                            'nurse_per_population', 
+                                            'healthworker_per_population', 
+                                            'community_healthworker_per_population',
+                                            'health_service_access',
+                                            'bed_per_population'
+                                          ].includes(indicator);
+                                          
+                                          if (isSupplyIndicator) {
+                                            const unit = indicator === 'healthworker_per_population' ? '10,000' : 
+                                                        indicator === 'health_service_access' ? '10,000' :
+                                                        indicator === 'bed_per_population' ? '10,000' : '1,000';
+                                            return `${value.toFixed(1)} per ${unit}`;
+                                          } else {
+                                            return formatValue(value);
+                                          }
+                                        })()}
+                                      </span>
+                                    );
+                                  })()}
                                 </td>
                                 <td className="text-center py-3 px-4 text-gray-600">
-                                  {formatSampleSize(sampleSize)}
+                                  {(() => {
+                                    // Check if this is a pre-calculated indicator for normal population
+                                    if (item.sample_size === 'Bangkok-wide') {
+                                      return language === 'th' ? 'ข้อมูลกรุงเทพฯ' : 'Bangkok-wide';
+                                    }
+                                    
+                                    // Check if no data available
+                                    if (item.noData) {
+                                      return language === 'th' ? 'ไม่มีข้อมูล' : 'No data';
+                                    }
+                                    
+                                    return formatSampleSize(sampleSize);
+                                  })()}
                                 </td>
                                 <td className="text-center py-3 px-4">
                                   <div className="w-full bg-gray-200 rounded-full h-2">

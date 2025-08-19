@@ -10,6 +10,7 @@ class BasicSDHEProcessor {
     this.districtPopulationData = [];
     this.communityHealthWorkerData = [];
     this.communityPopulationData = [];
+     this.normalPopulationData = [];
     this.sdheResults = {};
     this.districtCodeMap = this.createDistrictCodeMap();
     this.indicatorMappings = this.createIndicatorMappings();
@@ -32,6 +33,43 @@ class BasicSDHEProcessor {
       1049: "ทุ่งครุ", 1050: "บางบอน"
     };
   }
+
+  async loadNormalPopulationData() {
+  try {
+    console.log('👥 Loading normal population data...');
+    
+    const normalPopResponse = await fetch('/data/normal_population_indicator.csv');
+    if (!normalPopResponse.ok) {
+      throw new Error('Could not load normal_population_indicator.csv');
+    }
+    
+    const normalPopCsv = await normalPopResponse.text();
+    const normalPopParsed = Papa.parse(normalPopCsv, {
+      header: true,
+      dynamicTyping: true,
+      skipEmptyLines: true
+    });
+    
+    this.normalPopulationData = normalPopParsed.data;
+    console.log(`✅ Loaded ${this.normalPopulationData.length} normal population indicators`);
+    
+    // Create lookup for quick access
+    this.normalPopulationLookup = {};
+    this.normalPopulationData.forEach(row => {
+      if (row.indicator) {
+        this.normalPopulationLookup[row.indicator] = row.score;
+      }
+    });
+    
+    console.log('Available normal population indicators:', Object.keys(this.normalPopulationLookup));
+    
+  } catch (error) {
+    console.error('❌ Error loading normal population data:', error);
+    // Don't throw - continue without normal population data
+    this.normalPopulationData = [];
+    this.normalPopulationLookup = {};
+  }
+}
 
   // Load additional healthcare supply data files
   async loadHealthcareSupplyData() {
@@ -107,6 +145,8 @@ class BasicSDHEProcessor {
       });
       this.communityPopulationData = commPopParsed.data;
       console.log(`✅ Loaded ${this.communityPopulationData.length} community population records`);
+
+      await this.loadNormalPopulationData();
 
     } catch (error) {
       console.error('❌ Error loading healthcare supply data:', error);
@@ -774,7 +814,7 @@ class BasicSDHEProcessor {
     if (record.age >= 60) return 'elderly';  
     if (record.disable_status === 1) return 'disabled';
     if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
-    return 'general_population';
+    return 'normal_population';
   }
 
   // Calculate indicators for a specific set of records
@@ -836,7 +876,40 @@ class BasicSDHEProcessor {
     };
 
     Object.keys(domainMapping).forEach(indicator => {
-      const mapping = domainMapping[indicator];
+    const mapping = domainMapping[indicator];
+    
+    // SPECIAL HANDLING FOR NORMAL POPULATION
+    if (populationGroup === 'normal_population') {
+      // Check if this indicator has pre-calculated data
+      if (this.normalPopulationLookup && this.normalPopulationLookup[indicator] !== undefined) {
+        
+        // For Bangkok Overall, use pre-calculated score directly
+        if (districtName === 'Bangkok Overall') {
+          results[indicator] = {
+            value: parseFloat(this.normalPopulationLookup[indicator]),
+            label: mapping.label,
+            sample_size: 'Bangkok-wide', // Special sample size indicator
+            isPreCalculated: true
+          };
+          return; // Skip normal calculation for this indicator
+        }
+        
+        // For individual districts, check if we have survey data
+        if (records.length === 0) {
+          // No survey data for this district - skip this indicator
+          results[indicator] = {
+            value: null,
+            label: mapping.label,
+            sample_size: 0,
+            noData: true
+          };
+          return;
+        }
+        
+        // If we have both pre-calculated and survey data, prefer survey data for districts
+        // Fall through to normal calculation
+      }
+    }
       
       // Handle healthcare supply indicators
 if (mapping.isSupplyIndicator && districtName) {
@@ -975,9 +1048,12 @@ if (mapping.isSupplyIndicator && districtName) {
       }
     });
 
-      const indicators = Object.keys(domainMapping);
-      const goodnessScores = indicators.map(indicator => {
-        const rawValue = results[indicator].value;
+        const indicators = Object.keys(domainMapping);
+        const goodnessScores = indicators.filter(indicator => {
+          // Exclude indicators with no data from domain score calculation
+          return results[indicator] && results[indicator].value !== null && !results[indicator].noData;
+        }).map(indicator => {
+          const rawValue = results[indicator].value;
         
         // Handle healthcare supply indicators with normalized scoring
         const healthcareSupplyIndicators = [
@@ -1030,21 +1106,29 @@ if (mapping.isSupplyIndicator && districtName) {
         }
       });
 
-      const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
+        if (goodnessScores.length > 0) {
+          const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
+          results['_domain_score'] = {
+            value: parseFloat(domainScore.toFixed(1)),
+            label: `${domain.replace('_', ' ')} Score`,
+            sample_size: records.length
+          };
+        } else {
+          results['_domain_score'] = {
+            value: null,
+            label: `${domain.replace('_', ' ')} Score`,
+            sample_size: 0,
+            noData: true
+          };
+        }
 
-      results['_domain_score'] = {
-        value: parseFloat(domainScore.toFixed(1)),
-        label: `${domain.replace('_', ' ')} Score`,
-        sample_size: records.length
-      };
-
-    return results;
-  }
+        return results;
+      }
 
   calculateIndicators() {
     const results = {};
     const domains = Object.keys(this.indicatorMappings);
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq'];
+    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
     const districts = [...new Set(this.surveyData.map(r => r.district_name))];
 
     // Initialize results structure for districts
@@ -1071,11 +1155,12 @@ if (mapping.isSupplyIndicator && districtName) {
       // Calculate Bangkok Overall first (using all data)
       populationGroups.forEach(group => {
         const allRecords = this.surveyData.filter(r => r.population_group === group);
-        if (allRecords.length > 0) {
+        if (allRecords.length > 0 || group === 'normal_population') {
           results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
             allRecords, 
-            domain, 
-            'Bangkok Overall'
+            domain,
+            'Bangkok Overall',
+            group // ADD population group parameter
           );
         }
       });
@@ -1091,7 +1176,8 @@ if (mapping.isSupplyIndicator && districtName) {
             results[domain][district][group] = this.calculateIndicatorsForRecords(
               records, 
               domain, 
-              district
+              district,
+              group
             );
           }
         });
@@ -1130,25 +1216,25 @@ if (mapping.isSupplyIndicator && districtName) {
   }
 
   // Get summary statistics for Bangkok Overall
-  getBangkokOverallSummary() {
-    const summary = {
-      total_responses: this.surveyData.length,
-      population_groups: {},
-      districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length
-    };
+getBangkokOverallSummary() {
+  const summary = {
+    total_responses: this.surveyData.length,
+    population_groups: {},
+    districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length
+  };
 
     // Population group breakdown for Bangkok Overall
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq'];
-    populationGroups.forEach(group => {
-      const groupRecords = this.surveyData.filter(r => r.population_group === group);
-      summary.population_groups[group] = {
-        count: groupRecords.length,
-        percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1)
-      };
-    });
+  const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population']; // ADD normal_population
+  populationGroups.forEach(group => {
+    const groupRecords = this.surveyData.filter(r => r.population_group === group);
+    summary.population_groups[group] = {
+      count: groupRecords.length,
+      percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1)
+    };
+  });
 
-    return summary;
-  }
+  return summary;
+}
 
   async processSurveyData(csvContent) {
     try {
