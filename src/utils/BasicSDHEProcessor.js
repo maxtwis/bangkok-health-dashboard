@@ -492,10 +492,10 @@ class BasicSDHEProcessor {
           condition: (val) => val === 1,
           label: 'Skipped Medicine Purchase (Cost)'
         },
-        dental_access: { 
-          field: 'oral_health_access', 
-          condition: (val) => val === 1,
-          label: 'Dental Access'
+        dental_access: {
+          fields: ['oral_health', 'oral_health_access'],
+          condition: (r) => r.oral_health === 1 && r.oral_health_access === 1,
+          label: 'Dental Access (Among Those with Oral Health Problems)'
         },
         // NEW HEALTHCARE SUPPLY INDICATORS
         doctor_per_population: {
