@@ -83,19 +83,19 @@ const IndicatorDetailPage = ({
 
   // Calculate disaggregation data - ENHANCED with combined occupation status and type + welfare
   const disaggregationData = useMemo(() => {
-    if (!surveyData || !indicator) return null;
+  if (!surveyData || !indicator) return null;
 
-    // Filter data for current selection
-    let filteredData = surveyData.filter(record => {
-      if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
-      if (record.population_group !== populationGroup) return false;
-      return true;
-    });
+  // Filter data for current selection
+  let filteredData = surveyData.filter(record => {
+    if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
+    if (record.population_group !== populationGroup) return false;
+    return true;
+  });
 
-    return calculateDisaggregation(filteredData, indicator);
-  }, [surveyData, indicator, district, populationGroup]);
+  return calculateDisaggregation(filteredData, indicator, language, healthFacilitiesData, district);
+}, [surveyData, indicator, district, populationGroup, language, healthFacilitiesData]);
 
-function calculateDisaggregation(records, indicatorKey) {
+function calculateDisaggregation(records, indicatorKey, language, healthFacilitiesData, district) {
   if (!records || records.length === 0) return null;
 
   // Age group classification
@@ -185,10 +185,10 @@ function calculateDisaggregation(records, indicatorKey) {
 
   if (indicatorKey === 'health_service_access') {
 
-    const healthFacilitiesForDistrict = healthFacilitiesData ? 
+const healthFacilitiesForDistrict = healthFacilitiesData ? 
   healthFacilitiesData.filter(facility => {
     if (district === 'Bangkok Overall') {
-      return true;
+      return true; // Include all facilities for Bangkok Overall
     } else {
       return facility.dname === district;
     }
