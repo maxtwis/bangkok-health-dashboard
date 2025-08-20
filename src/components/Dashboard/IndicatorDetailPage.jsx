@@ -978,14 +978,15 @@ const IndicatorDetailPage = ({
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={disaggregationData.welfare}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis 
-                          dataKey="group" 
-                          angle={-45}
-                          textAnchor="end"
-                          height={120}
-                          tick={{ fontSize: 8 }}
-                          interval={0}
-                        />
+                          <XAxis 
+                            dataKey="group" 
+                            angle={0}
+                            textAnchor="middle"
+                            height={60}
+                            tick={{ fontSize: 12 }}
+                            interval={0}
+                            width={200}
+                          />
                         <YAxis tickFormatter={(value) => `${value}%`} />
                         <Tooltip 
                           formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
