@@ -493,9 +493,18 @@ class BasicSDHEProcessor {
           label: 'Skipped Medicine Purchase (Cost)'
         },
         dental_access: {
-          fields: ['oral_health', 'oral_health_access'],
-          condition: (r) => r.oral_health === 1 && r.oral_health_access === 1,
-          label: 'Dental Access (Among Those with Oral Health Problems)'
+          calculation: (records) => {
+            // Filter to only people who have oral health problems
+            const peopleWithOralProblems = records.filter(r => r.oral_health === 1);
+            
+            if (peopleWithOralProblems.length === 0) return 0;
+            
+            // Among those with problems, count how many couldn't get treatment
+            const couldNotAccess = peopleWithOralProblems.filter(r => r.oral_health_access === 0);
+            
+            return (couldNotAccess.length / peopleWithOralProblems.length) * 100;
+          },
+          label: 'Unable to Access Dental Care (Among Those with Oral Health Problems)'
         },
         // NEW HEALTHCARE SUPPLY INDICATORS
         doctor_per_population: {
