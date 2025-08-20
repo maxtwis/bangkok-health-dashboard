@@ -769,7 +769,7 @@ const IndicatorDetailPage = ({
                 }
               </h3>
               
-              <div className={`grid grid-cols-1 ${indicator === 'health_coverage' ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-8`}>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Age Groups */}
                 <div>
                   <h4 className="font-medium text-gray-800 mb-4">
@@ -886,7 +886,7 @@ const IndicatorDetailPage = ({
                 </div>
 
                 {/* ENHANCED: Combined Employment Status and Occupation Type */}
-                {indicator !== 'health_coverage' && (
+                {(
                   <div>
                     <h4 className="font-medium text-gray-800 mb-4">
                       {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
