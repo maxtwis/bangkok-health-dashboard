@@ -182,7 +182,7 @@ const IndicatorDetailPage = ({
       occupationGroups[occupationGroup].push(record);
 
       // Add welfare grouping only for health_coverage indicator
-      if (indicatorKey === 'health_coverage') {
+      if (['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicatorKey)) {
         const welfareGroup = getWelfareGroup(record.welfare);
         if (!welfareGroups[welfareGroup]) welfareGroups[welfareGroup] = [];
         welfareGroups[welfareGroup].push(record);
@@ -548,7 +548,7 @@ const IndicatorDetailPage = ({
     });
 
     // NEW: Process welfare groups - Show health insurance type composition (only for health_coverage)
-    const welfareData = indicatorKey === 'health_coverage' 
+    const welfareData = ['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicatorKey)
       ? Object.keys(welfareGroups).map(welfareGroup => {
           const groupData = calculateGroupData(welfareGroups[welfareGroup], records);
           return {
@@ -763,7 +763,7 @@ const IndicatorDetailPage = ({
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {indicator === 'health_coverage' 
+                {['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicator)
                   ? (language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ สถานะการทำงาน และประเภทสิทธิประกันสุขภาพ' : 'Disaggregation by Age, Sex, Employment Status and Health Insurance Type')
                   : (language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ และสถานะการทำงาน' : 'Disaggregation by Age, Sex and Employment Status')
                 }
@@ -968,7 +968,7 @@ const IndicatorDetailPage = ({
               </div>
 
               {/* WELFARE GROUPS (only for health_coverage indicator) */}
-              {indicator === 'health_coverage' && disaggregationData.welfare.length > 0 && (
+              {['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicator) && disaggregationData.welfare.length > 0 && (
                 <div className="mt-8">
                   <h4 className="font-medium text-gray-800 mb-4">
                     {language === 'th' ? 'ตามประเภทสิทธิประกันสุขภาพ' : 'By Health Insurance Type'}
