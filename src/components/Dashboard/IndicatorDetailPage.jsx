@@ -1,4 +1,3 @@
-// IndicatorDetailPage.jsx - Enhanced with Combined Occupation Status and Type Disaggregation
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
@@ -81,7 +80,7 @@ const IndicatorDetailPage = ({
   const indicatorData = getIndicatorData(domain, district, populationGroup);
   const currentIndicator = indicatorData.find(item => item.indicator === indicator);
 
-  // Calculate disaggregation data - ENHANCED with combined occupation status and type
+  // Calculate disaggregation data - ENHANCED with combined occupation status and type + welfare
   const disaggregationData = useMemo(() => {
     if (!surveyData || !indicator) return null;
 
@@ -95,7 +94,7 @@ const IndicatorDetailPage = ({
     return calculateDisaggregation(filteredData, indicator);
   }, [surveyData, indicator, district, populationGroup]);
 
-  // ENHANCED: Calculate disaggregation by age, sex, and combined occupation
+  // ENHANCED: Calculate disaggregation by age, sex, combined occupation, and welfare
   function calculateDisaggregation(records, indicatorKey) {
     if (!records || records.length === 0) return null;
 
@@ -141,10 +140,33 @@ const IndicatorDetailPage = ({
       return language === 'th' ? 'ไม่ระบุสถานะ' : 'Status Unclear';
     };
 
-    // Group by age, sex, and enhanced occupation
+    // NEW: Welfare classification (only for health_coverage indicator)
+    const getWelfareGroup = (welfare) => {
+      switch (welfare) {
+        case 1:
+          return language === 'th' 
+            ? 'สิทธิสวัสดิการข้าราชการ/รัฐวิสาหกิจ/องค์กรของรัฐ/องค์กรปกครองส่วนท้องถิ่น'
+            : 'Government/State Enterprise/Local Authority Welfare';
+        case 2:
+          return language === 'th' 
+            ? 'สิทธิประกันสังคม'
+            : 'Social Security';
+        case 3:
+          return language === 'th' 
+            ? 'สิทธิหลักประกันสุขภาพ 30 บาท (บัตรทอง)'
+            : 'Universal Health Coverage (30 Baht Gold Card)';
+        case 'other':
+          return language === 'th' ? 'อื่น ๆ' : 'Other';
+        default:
+          return language === 'th' ? 'ไม่มีสิทธิ/ไม่ระบุ' : 'No Coverage/Not Specified';
+      }
+    };
+
+    // Group by age, sex, enhanced occupation, and welfare
     const ageGroups = {};
     const sexGroups = {};
     const occupationGroups = {};
+    const welfareGroups = {};
 
     records.forEach(record => {
       const ageGroup = getAgeGroup(record.age);
@@ -157,9 +179,14 @@ const IndicatorDetailPage = ({
 
       ageGroups[ageGroup].push(record);
       sexGroups[sexGroup].push(record);
-      
-      // Add to occupation groups for all people (not just employed)
       occupationGroups[occupationGroup].push(record);
+
+      // Add welfare grouping only for health_coverage indicator
+      if (indicatorKey === 'health_coverage') {
+        const welfareGroup = getWelfareGroup(record.welfare);
+        if (!welfareGroups[welfareGroup]) welfareGroups[welfareGroup] = [];
+        welfareGroups[welfareGroup].push(record);
+      }
     });
 
     // Calculate both demographic distribution AND indicator prevalence for each group
@@ -520,10 +547,26 @@ const IndicatorDetailPage = ({
       return b.count - a.count;
     });
 
+    // NEW: Process welfare groups - Show health insurance type composition (only for health_coverage)
+    const welfareData = indicatorKey === 'health_coverage' 
+      ? Object.keys(welfareGroups).map(welfareGroup => {
+          const groupData = calculateGroupData(welfareGroups[welfareGroup], records);
+          return {
+            group: welfareGroup,
+            value: groupData.demographicPercent,
+            indicatorValue: groupData.indicatorValue,
+            count: groupData.count,
+            type: 'welfare'
+          };
+        }).filter(item => item.count > 0)
+        .sort((a, b) => b.count - a.count) // Sort by count (largest first)
+      : [];
+
     return {
       age: ageData,
       sex: sexData,
-      occupation: occupationData, // Enhanced with combined status and type
+      occupation: occupationData,
+      welfare: welfareData, // Add welfare data
       total: {
         value: calculateIndicatorValueForGroup(records, indicatorKey),
         count: records.length
@@ -534,7 +577,8 @@ const IndicatorDetailPage = ({
   // Color schemes
   const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
-  const occupationColors = ['#dc2626', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16']; // Red for "Not Working"
+  const occupationColors = ['#dc2626', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16'];
+  const welfareColors = ['#2563eb', '#16a34a', '#eab308', '#dc2626', '#6b7280'];
 
   if (indicatorDetailsLoading) {
     return (
@@ -714,15 +758,18 @@ const IndicatorDetailPage = ({
           </div>
         )}
 
-        {/* Disaggregation Tab - ENHANCED with combined occupation status and type */}
+        {/* Disaggregation Tab - ENHANCED with combined occupation status and type + welfare */}
         {activeTab === 'disaggregation' && disaggregationData && (
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ และสถานะการทำงาน' : 'Disaggregation by Age, Sex and Employment Status'}
+                {indicator === 'health_coverage' 
+                  ? (language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ สถานะการทำงาน และประเภทสิทธิประกันสุขภาพ' : 'Disaggregation by Age, Sex, Employment Status and Health Insurance Type')
+                  : (language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ และสถานะการทำงาน' : 'Disaggregation by Age, Sex and Employment Status')
+                }
               </h3>
               
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className={`grid grid-cols-1 ${indicator === 'health_coverage' ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-8`}>
                 {/* Age Groups */}
                 <div>
                   <h4 className="font-medium text-gray-800 mb-4">
@@ -838,87 +885,154 @@ const IndicatorDetailPage = ({
                   </div>
                 </div>
 
-                {/* ENHANCED: Combined Employment Status and Occupation Type */}
-                <div>
+                {/* ENHANCED: Combined Employment Status and Occupation Type (only if NOT health_coverage) */}
+                {indicator !== 'health_coverage' && (
+                  <div>
+                    <h4 className="font-medium text-gray-800 mb-4">
+                      {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
+                    </h4>
+                    
+                    {disaggregationData.occupation.length > 0 ? (
+                      <>
+                        <div className="h-80">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={disaggregationData.occupation}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis 
+                                dataKey="group" 
+                                angle={-45}
+                                textAnchor="end"
+                                height={100}
+                                tick={{ fontSize: 9 }}
+                                interval={0}
+                              />
+                              <YAxis tickFormatter={(value) => `${value}%`} />
+                              <Tooltip 
+                                formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
+                                labelFormatter={(label) => `${language === 'th' ? 'สถานะการทำงาน' : 'Employment Status'}: ${label}`}
+                              />
+                              <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]}>
+                                {disaggregationData.occupation.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
+                                ))}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+                        
+                        {/* Enhanced Occupation Group Table */}
+                        <div className="mt-4">
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b">
+                                <th className="text-left py-2">{language === 'th' ? 'สถานะ/ประเภทการทำงาน' : 'Employment Status/Type'}</th>
+                                <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
+                                <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
+                                <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {disaggregationData.occupation.map((item, index) => (
+                                <tr key={item.group} className="border-b">
+                                  <td className="py-2 flex items-center">
+                                    <div 
+                                      className="w-3 h-3 rounded mr-2" 
+                                      style={{ backgroundColor: occupationColors[index % occupationColors.length] }}
+                                    ></div>
+                                    <span className="text-xs">{item.group}</span>
+                                  </td>
+                                  <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
+                                  <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
+                                  <td className="text-right py-2 text-gray-600">
+                                    {Math.round((item.indicatorValue || 0) * item.count / 100)}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="h-80 flex items-center justify-center text-gray-500">
+                        <div className="text-center">
+                          <p className="text-sm">
+                            {language === 'th' 
+                              ? 'ไม่มีข้อมูลสถานะการทำงานสำหรับกลุ่มนี้' 
+                              : 'No employment status data available for this group'}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* WELFARE GROUPS (only for health_coverage indicator) */}
+              {indicator === 'health_coverage' && disaggregationData.welfare.length > 0 && (
+                <div className="mt-8">
                   <h4 className="font-medium text-gray-800 mb-4">
-                    {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
+                    {language === 'th' ? 'ตามประเภทสิทธิประกันสุขภาพ' : 'By Health Insurance Type'}
                   </h4>
                   
-                  {disaggregationData.occupation.length > 0 ? (
-                    <>
-                      <div className="h-80">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={disaggregationData.occupation}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                              dataKey="group" 
-                              angle={-45}
-                              textAnchor="end"
-                              height={100}
-                              tick={{ fontSize: 9 }}
-                              interval={0}
-                            />
-                            <YAxis tickFormatter={(value) => `${value}%`} />
-                            <Tooltip 
-                              formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
-                              labelFormatter={(label) => `${language === 'th' ? 'สถานะการทำงาน' : 'Employment Status'}: ${label}`}
-                            />
-                            <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]}>
-                              {disaggregationData.occupation.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
-                              ))}
-                            </Bar>
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                      
-                      {/* Enhanced Occupation Group Table */}
-                      <div className="mt-4">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b">
-                              <th className="text-left py-2">{language === 'th' ? 'สถานะ/ประเภทการทำงาน' : 'Employment Status/Type'}</th>
-                              <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
-                              <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
-                              <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {disaggregationData.occupation.map((item, index) => (
-                              <tr key={item.group} className="border-b">
-                                <td className="py-2 flex items-center">
-                                  <div 
-                                    className="w-3 h-3 rounded mr-2" 
-                                    style={{ backgroundColor: occupationColors[index % occupationColors.length] }}
-                                  ></div>
-                                  <span className="text-xs">{item.group}</span>
-                                </td>
-                                <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
-                                <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
-                                <td className="text-right py-2 text-gray-600">
-                                  {Math.round((item.indicatorValue || 0) * item.count / 100)}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-
-
-                    </>
-                  ) : (
-                    <div className="h-80 flex items-center justify-center text-gray-500">
-                      <div className="text-center">
-                        <p className="text-sm">
-                          {language === 'th' 
-                            ? 'ไม่มีข้อมูลสถานะการทำงานสำหรับกลุ่มนี้' 
-                            : 'No employment status data available for this group'}
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                  <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={disaggregationData.welfare}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="group" 
+                          angle={-45}
+                          textAnchor="end"
+                          height={120}
+                          tick={{ fontSize: 8 }}
+                          interval={0}
+                        />
+                        <YAxis tickFormatter={(value) => `${value}%`} />
+                        <Tooltip 
+                          formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
+                          labelFormatter={(label) => `${language === 'th' ? 'ประเภทสิทธิ' : 'Insurance Type'}: ${label}`}
+                        />
+                        <Bar dataKey="value" fill="#2563eb" radius={[4, 4, 0, 0]}>
+                          {disaggregationData.welfare.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={welfareColors[index % welfareColors.length]} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  
+                  {/* Welfare Group Table */}
+                  <div className="mt-4">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left py-2">{language === 'th' ? 'ประเภทสิทธิประกันสุขภาพ' : 'Health Insurance Type'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {disaggregationData.welfare.map((item, index) => (
+                          <tr key={item.group} className="border-b">
+                            <td className="py-2 flex items-center">
+                              <div 
+                                className="w-3 h-3 rounded mr-2" 
+                                style={{ backgroundColor: welfareColors[index % welfareColors.length] }}
+                              ></div>
+                              <span className="text-xs">{item.group}</span>
+                            </td>
+                            <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
+                            <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
+                            <td className="text-right py-2 text-gray-600">
+                              {Math.round((item.indicatorValue || 0) * item.count / 100)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         )}
