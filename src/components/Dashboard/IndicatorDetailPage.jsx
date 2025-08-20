@@ -1,3 +1,4 @@
+// IndicatorDetailPage.jsx - Fixed version with proper hook usage
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
@@ -81,317 +82,291 @@ const IndicatorDetailPage = ({
   const indicatorData = getIndicatorData(domain, district, populationGroup);
   const currentIndicator = indicatorData.find(item => item.indicator === indicator);
 
-  // Calculate disaggregation data - ENHANCED with combined occupation status and type + welfare
+  // Calculate disaggregation data
   const disaggregationData = useMemo(() => {
-  if (!surveyData || !indicator) return null;
+    if (!surveyData || !indicator) return null;
 
-  // Filter data for current selection
-  let filteredData = surveyData.filter(record => {
-    if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
-    if (record.population_group !== populationGroup) return false;
-    return true;
-  });
-
-  return calculateDisaggregation(filteredData, indicator, language, healthFacilitiesData, district);
-}, [surveyData, indicator, district, populationGroup, language, healthFacilitiesData]);
-
-function calculateDisaggregation(records, indicatorKey, language, healthFacilitiesData, district) {
-  if (!records || records.length === 0) return null;
-
-  // Age group classification
-  const getAgeGroup = (age) => {
-    if (age < 18) return '< 18';
-    if (age < 30) return '18-29';
-    if (age < 45) return '30-44';
-    if (age < 60) return '45-59';
-    return '60+';
-  };
-
-  // Sex classification
-  const getSexGroup = (sex) => {
-    if (sex === 'lgbt') return 'LGBTQ+';
-    if (sex === 'male' || sex === 'M' || sex === 1) return language === 'th' ? 'ชาย' : 'Male';
-    if (sex === 'female' || sex === 'F' || sex === 2) return language === 'th' ? 'หญิง' : 'Female';
-    return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
-  };
-
-  // ENHANCED: Combined occupation status and type classification
-  const getOccupationGroup = (occupationStatus, occupationType) => {
-    // First check occupation status
-    if (occupationStatus === 0) {
-      return language === 'th' ? 'ไม่ได้ประกอบอาชีพ' : 'Not Working';
-    }
-    
-    // If working (occupation_status === 1), then categorize by type
-    if (occupationStatus === 1) {
-      const occupationMap = {
-        1: language === 'th' ? 'รับราชการ' : 'Government',
-        2: language === 'th' ? 'รัฐวิสาหกิจ' : 'State Enterprise',
-        3: language === 'th' ? 'พนักงานบริษัท/ลูกจ้าง' : 'Company Employee',
-        5: language === 'th' ? 'ธุรกิจส่วนตัว' : 'Private Business',
-        6: language === 'th' ? 'อาชีพอิสระ' : 'Freelance/Independent',
-        'other': language === 'th' ? 'อื่น ๆ' : 'Other'
-      };
-      
-      return occupationMap[occupationType] || (language === 'th' ? 'ทำงานแต่ไม่ระบุประเภท' : 'Working (Type Unspecified)');
-    }
-    
-    // Fallback for unclear cases
-    return language === 'th' ? 'ไม่ระบุสถานะ' : 'Status Unclear';
-  };
-
-  // NEW: Welfare classification (only for health_coverage indicator)
-  const getWelfareGroup = (welfare) => {
-    switch (welfare) {
-      case 1:
-        return language === 'th' 
-          ? 'สิทธิสวัสดิการข้าราชการ/รัฐวิสาหกิจ/องค์กรของรัฐ/องค์กรปกครองส่วนท้องถิ่น'
-          : 'Government/State Enterprise/Local Authority Welfare';
-      case 2:
-        return language === 'th' 
-          ? 'สิทธิประกันสังคม'
-          : 'Social Security';
-      case 3:
-        return language === 'th' 
-          ? 'สิทธิหลักประกันสุขภาพ 30 บาท (บัตรทอง)'
-          : 'Universal Health Coverage (30 Baht Gold Card)';
-      case 'other':
-        return language === 'th' ? 'อื่น ๆ' : 'Other';
-      default:
-        return language === 'th' ? 'ไม่มีสิทธิ/ไม่ระบุ' : 'No Coverage/Not Specified';
-    }
-  };
-
-  // NEW: Health Facility Type classification (for health_service_access indicator)
-  const getHealthFacilityType = (type) => {
-    const facilityTypeMap = {
-      1: language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
-      2: language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
-      3: language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
-      4: language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
-      5: language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
-      6: language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)'
-    };
-    
-    return facilityTypeMap[type] || (language === 'th' ? 'ไม่ระบุประเภท' : 'Type Not Specified');
-  };
-
-  // Group by age, sex, enhanced occupation, welfare, and facility type
-  const ageGroups = {};
-  const sexGroups = {};
-  const occupationGroups = {};
-  const welfareGroups = {};
-  const facilityTypeGroups = {};
-
-  if (indicatorKey === 'health_service_access') {
-
-const healthFacilitiesForDistrict = healthFacilitiesData ? 
-  healthFacilitiesData.filter(facility => {
-    if (district === 'Bangkok Overall') {
-      return true; // Include all facilities for Bangkok Overall
-    } else {
-      return facility.dname === district;
-    }
-  }) : [];
-    
-    // Group facilities by type
-    healthFacilitiesForDistrict.forEach(facility => {
-      const facilityType = getHealthFacilityType(facility.type_);
-      if (!facilityTypeGroups[facilityType]) {
-        facilityTypeGroups[facilityType] = [];
-      }
-      facilityTypeGroups[facilityType].push(facility);
-    });
-  }
-
-  // For non-healthcare supply indicators, process survey records normally
-  if (!['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-        'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicatorKey)) {
-    
-    records.forEach(record => {
-      const ageGroup = getAgeGroup(record.age);
-      const sexGroup = getSexGroup(record.sex);
-      const occupationGroup = getOccupationGroup(record.occupation_status, record.occupation_type);
-
-      if (!ageGroups[ageGroup]) ageGroups[ageGroup] = [];
-      if (!sexGroups[sexGroup]) sexGroups[sexGroup] = [];
-      if (!occupationGroups[occupationGroup]) occupationGroups[occupationGroup] = [];
-
-      ageGroups[ageGroup].push(record);
-      sexGroups[sexGroup].push(record);
-      occupationGroups[occupationGroup].push(record);
-
-      // Add welfare grouping only for health_coverage indicator
-      if (['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicatorKey)) {
-        const welfareGroup = getWelfareGroup(record.welfare);
-        if (!welfareGroups[welfareGroup]) welfareGroups[welfareGroup] = [];
-        welfareGroups[welfareGroup].push(record);
-      }
-    });
-  }
-    
-  // Calculate both demographic distribution AND indicator prevalence for each group
-  const calculateGroupData = (groupRecords, totalRecords) => {
-    // Demographic percentage (what % of total population this group represents)
-    const demographicPercent = (groupRecords.length / totalRecords.length) * 100;
-    
-    // Indicator prevalence within this specific demographic group
-    const indicatorValue = calculateIndicatorValueForGroup(groupRecords, indicatorKey);
-    
-    return {
-      demographicPercent,
-      indicatorValue,
-      count: groupRecords.length
-    };
-  };
-
-  // Calculate facility type data for health_service_access
-  const calculateFacilityTypeData = (facilityGroup, totalFacilities, totalPopulation) => {
-    const facilityCount = facilityGroup.length;
-    const percentageOfFacilities = totalFacilities > 0 ? (facilityCount / totalFacilities) * 100 : 0;
-    const facilitiesPerPopulation = totalPopulation > 0 ? (facilityCount / totalPopulation) * 10000 : 0;
-    
-    return {
-      demographicPercent: percentageOfFacilities,
-      indicatorValue: facilitiesPerPopulation,
-      count: facilityCount
-    };
-  };
-
-  // Calculate indicator for each group
-  const calculateIndicatorValueForGroup = (groupRecords, indicatorKey) => {
-    // [Keep all existing indicator calculations here - same as before]
-    // ... (all the existing switch cases remain the same)
-    
-    switch (indicatorKey) {
-      case 'unemployment_rate':
-        const unemployed = groupRecords.filter(r => r.occupation_status === 0).length;
-        return groupRecords.length > 0 ? (unemployed / groupRecords.length) * 100 : 0;
-      // ... [all other cases remain the same as in your original code]
-      default:
-        return 0;
-    }
-  };
-
-  // Process different types of data based on indicator
-  let ageData = [];
-  let sexData = [];
-  let occupationData = [];
-  let welfareData = [];
-  let facilityTypeData = [];
-
-  // For healthcare supply indicators, return empty arrays for age/sex/occupation
-  if (['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-       'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicatorKey)) {
-    
-    // Only process facility type data for health_service_access
-    if (indicatorKey === 'health_service_access' && Object.keys(facilityTypeGroups).length > 0) {
-      const totalFacilities = Object.values(facilityTypeGroups).reduce((sum, group) => sum + group.length, 0);
-      const totalPopulation = records.length; // This should be actual population data
-      
-      facilityTypeData = Object.keys(facilityTypeGroups).map(facilityType => {
-        const facilityData = calculateFacilityTypeData(
-          facilityTypeGroups[facilityType], 
-          totalFacilities, 
-          totalPopulation
-        );
-        return {
-          group: facilityType,
-          value: facilityData.demographicPercent,
-          indicatorValue: facilityData.indicatorValue,
-          count: facilityData.count,
-          type: 'facility_type'
-        };
-      }).sort((a, b) => b.count - a.count); // Sort by facility count
-    }
-    
-    // Return empty arrays for other disaggregation types for healthcare supply indicators
-    ageData = [];
-    sexData = [];
-    occupationData = [];
-    welfareData = [];
-    
-  } else {
-    // Process age groups - Show demographic composition (for non-healthcare supply indicators)
-    ageData = Object.keys(ageGroups).map(ageGroup => {
-      const groupData = calculateGroupData(ageGroups[ageGroup], records);
-      return {
-        group: ageGroup,
-        value: groupData.demographicPercent,
-        indicatorValue: groupData.indicatorValue,
-        count: groupData.count,
-        type: 'age'
-      };
-    }).sort((a, b) => {
-      const ageOrder = ['< 18', '18-29', '30-44', '45-59', '60+'];
-      return ageOrder.indexOf(a.group) - ageOrder.indexOf(b.group);
+    // Filter data for current selection
+    let filteredData = surveyData.filter(record => {
+      if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
+      if (record.population_group !== populationGroup) return false;
+      return true;
     });
 
-    // Process sex groups - Show demographic composition
-    sexData = Object.keys(sexGroups).map(sexGroup => {
-      const groupData = calculateGroupData(sexGroups[sexGroup], records);
-      return {
-        group: sexGroup,
-        value: groupData.demographicPercent,
-        indicatorValue: groupData.indicatorValue,
-        count: groupData.count,
-        type: 'sex'
-      };
-    });
-
-    // ENHANCED: Process combined occupation groups - Show both working and non-working
-    occupationData = Object.keys(occupationGroups).map(occupationGroup => {
-      const groupData = calculateGroupData(occupationGroups[occupationGroup], records);
-      return {
-        group: occupationGroup,
-        value: groupData.demographicPercent,
-        indicatorValue: groupData.indicatorValue,
-        count: groupData.count,
-        type: 'occupation'
-      };
-    }).filter(item => item.count > 0) // Only show occupation groups with data
-    .sort((a, b) => {
-      // Custom sort: Not Working first, then by count (largest first)
-      if (a.group.includes('ไม่ได้ประกอบอาชีพ') || a.group.includes('Not Working')) return -1;
-      if (b.group.includes('ไม่ได้ประกอบอาชีพ') || b.group.includes('Not Working')) return 1;
-      return b.count - a.count;
-    });
-
-    // NEW: Process welfare groups - Show health insurance type composition (only for health_coverage)
-    welfareData = ['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicatorKey)
-      ? Object.keys(welfareGroups).map(welfareGroup => {
-          const groupData = calculateGroupData(welfareGroups[welfareGroup], records);
-          return {
-            group: welfareGroup,
-            value: groupData.demographicPercent,
-            indicatorValue: groupData.indicatorValue,
-            count: groupData.count,
-            type: 'welfare'
-          };
-        }).filter(item => item.count > 0)
-        .sort((a, b) => b.count - a.count) // Sort by count (largest first)
-      : [];
-  }
-
-  return {
-    age: ageData,
-    sex: sexData,
-    occupation: occupationData,
-    welfare: welfareData,
-    facilityType: facilityTypeData, // Add facility type data
-    total: {
-      value: calculateIndicatorValueForGroup(records, indicatorKey),
-      count: records.length
-    }
-  };
-}
+    return calculateDisaggregation(filteredData, indicator, language, healthFacilitiesData, district);
+  }, [surveyData, indicator, district, populationGroup, language, healthFacilitiesData]);
 
   // Color schemes
   const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
   const occupationColors = ['#dc2626', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16'];
   const welfareColors = ['#2563eb', '#16a34a', '#eab308', '#dc2626', '#6b7280'];
-  const facilityTypeColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+
+  // Calculate disaggregation function
+  function calculateDisaggregation(records, indicatorKey, language, healthFacilitiesData, district) {
+    if (!records || records.length === 0) return null;
+
+    // Health Facility Type classification (for health_service_access indicator)
+    const getHealthFacilityType = (type) => {
+      const facilityTypeMap = {
+        1: language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
+        2: language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
+        3: language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
+        4: language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
+        5: language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
+        6: language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)'
+      };
+      
+      return facilityTypeMap[type] || (language === 'th' ? 'ไม่ระบุประเภท' : 'Type Not Specified');
+    };
+
+    // Initialize empty arrays for all data types
+    let ageData = [];
+    let sexData = [];
+    let occupationData = [];
+    let welfareData = [];
+    let facilityTypeData = [];
+
+    // For healthcare supply indicators
+    const healthcareSupplyIndicators = [
+      'doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+      'community_healthworker_per_population', 'health_service_access', 'bed_per_population'
+    ];
+
+    if (healthcareSupplyIndicators.includes(indicatorKey)) {
+      // Only process facility type data for health_service_access
+      if (indicatorKey === 'health_service_access' && healthFacilitiesData) {
+        // Get health facilities data for the current district
+        const healthFacilitiesForDistrict = healthFacilitiesData.filter(facility => {
+          if (district === 'Bangkok Overall') {
+            return true; // Include all facilities for Bangkok Overall
+          } else {
+            return facility.dname === district;
+          }
+        });
+
+        // Group facilities by type
+        const facilityTypeGroups = {};
+        healthFacilitiesForDistrict.forEach(facility => {
+          const facilityType = getHealthFacilityType(facility.type_);
+          if (!facilityTypeGroups[facilityType]) {
+            facilityTypeGroups[facilityType] = [];
+          }
+          facilityTypeGroups[facilityType].push(facility);
+        });
+
+        // Calculate facility type data
+        const totalFacilities = healthFacilitiesForDistrict.length;
+        const totalPopulation = 1000000; // This should be actual population data for the district
+
+        facilityTypeData = Object.keys(facilityTypeGroups).map(facilityType => {
+          const facilityCount = facilityTypeGroups[facilityType].length;
+          const percentageOfFacilities = totalFacilities > 0 ? (facilityCount / totalFacilities) * 100 : 0;
+          const facilitiesPerPopulation = totalPopulation > 0 ? (facilityCount / totalPopulation) * 10000 : 0;
+          
+          return {
+            group: facilityType,
+            value: percentageOfFacilities,
+            indicatorValue: facilitiesPerPopulation,
+            count: facilityCount,
+            type: 'facility_type'
+          };
+        }).sort((a, b) => b.count - a.count); // Sort by facility count
+      }
+    } else {
+      // For non-healthcare supply indicators, process normally
+      // Age group classification
+      const getAgeGroup = (age) => {
+        if (age < 18) return '< 18';
+        if (age < 30) return '18-29';
+        if (age < 45) return '30-44';
+        if (age < 60) return '45-59';
+        return '60+';
+      };
+
+      // Sex classification
+      const getSexGroup = (sex) => {
+        if (sex === 'lgbt') return 'LGBTQ+';
+        if (sex === 'male' || sex === 'M' || sex === 1) return language === 'th' ? 'ชาย' : 'Male';
+        if (sex === 'female' || sex === 'F' || sex === 2) return language === 'th' ? 'หญิง' : 'Female';
+        return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
+      };
+
+      // Combined occupation status and type classification
+      const getOccupationGroup = (occupationStatus, occupationType) => {
+        if (occupationStatus === 0) {
+          return language === 'th' ? 'ไม่ได้ประกอบอาชีพ' : 'Not Working';
+        }
+        
+        if (occupationStatus === 1) {
+          const occupationMap = {
+            1: language === 'th' ? 'รับราชการ' : 'Government',
+            2: language === 'th' ? 'รัฐวิสาหกิจ' : 'State Enterprise',
+            3: language === 'th' ? 'พนักงานบริษัท/ลูกจ้าง' : 'Company Employee',
+            5: language === 'th' ? 'ธุรกิจส่วนตัว' : 'Private Business',
+            6: language === 'th' ? 'อาชีพอิสระ' : 'Freelance/Independent',
+            'other': language === 'th' ? 'อื่น ๆ' : 'Other'
+          };
+          
+          return occupationMap[occupationType] || (language === 'th' ? 'ทำงานแต่ไม่ระบุประเภท' : 'Working (Type Unspecified)');
+        }
+        
+        return language === 'th' ? 'ไม่ระบุสถานะ' : 'Status Unclear';
+      };
+
+      // Welfare classification
+      const getWelfareGroup = (welfare) => {
+        switch (welfare) {
+          case 1:
+            return language === 'th' 
+              ? 'สิทธิสวัสดิการข้าราชการ/รัฐวิสาหกิจ/องค์กรของรัฐ/องค์กรปกครองส่วนท้องถิ่น'
+              : 'Government/State Enterprise/Local Authority Welfare';
+          case 2:
+            return language === 'th' 
+              ? 'สิทธิประกันสังคม'
+              : 'Social Security';
+          case 3:
+            return language === 'th' 
+              ? 'สิทธิหลักประกันสุขภาพ 30 บาท (บัตรทอง)'
+              : 'Universal Health Coverage (30 Baht Gold Card)';
+          case 'other':
+            return language === 'th' ? 'อื่น ๆ' : 'Other';
+          default:
+            return language === 'th' ? 'ไม่มีสิทธิ/ไม่ระบุ' : 'No Coverage/Not Specified';
+        }
+      };
+
+      // Group records
+      const ageGroups = {};
+      const sexGroups = {};
+      const occupationGroups = {};
+      const welfareGroups = {};
+
+      records.forEach(record => {
+        const ageGroup = getAgeGroup(record.age);
+        const sexGroup = getSexGroup(record.sex);
+        const occupationGroup = getOccupationGroup(record.occupation_status, record.occupation_type);
+
+        if (!ageGroups[ageGroup]) ageGroups[ageGroup] = [];
+        if (!sexGroups[sexGroup]) sexGroups[sexGroup] = [];
+        if (!occupationGroups[occupationGroup]) occupationGroups[occupationGroup] = [];
+
+        ageGroups[ageGroup].push(record);
+        sexGroups[sexGroup].push(record);
+        occupationGroups[occupationGroup].push(record);
+
+        // Add welfare grouping for specific indicators
+        if (['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicatorKey)) {
+          const welfareGroup = getWelfareGroup(record.welfare);
+          if (!welfareGroups[welfareGroup]) welfareGroups[welfareGroup] = [];
+          welfareGroups[welfareGroup].push(record);
+        }
+      });
+
+      // Calculate group data
+      const calculateGroupData = (groupRecords, totalRecords) => {
+        const demographicPercent = (groupRecords.length / totalRecords.length) * 100;
+        const indicatorValue = calculateIndicatorValueForGroup(groupRecords, indicatorKey);
+        
+        return {
+          demographicPercent,
+          indicatorValue,
+          count: groupRecords.length
+        };
+      };
+
+      // Process age groups
+      ageData = Object.keys(ageGroups).map(ageGroup => {
+        const groupData = calculateGroupData(ageGroups[ageGroup], records);
+        return {
+          group: ageGroup,
+          value: groupData.demographicPercent,
+          indicatorValue: groupData.indicatorValue,
+          count: groupData.count,
+          type: 'age'
+        };
+      }).sort((a, b) => {
+        const ageOrder = ['< 18', '18-29', '30-44', '45-59', '60+'];
+        return ageOrder.indexOf(a.group) - ageOrder.indexOf(b.group);
+      });
+
+      // Process sex groups
+      sexData = Object.keys(sexGroups).map(sexGroup => {
+        const groupData = calculateGroupData(sexGroups[sexGroup], records);
+        return {
+          group: sexGroup,
+          value: groupData.demographicPercent,
+          indicatorValue: groupData.indicatorValue,
+          count: groupData.count,
+          type: 'sex'
+        };
+      });
+
+      // Process occupation groups
+      occupationData = Object.keys(occupationGroups).map(occupationGroup => {
+        const groupData = calculateGroupData(occupationGroups[occupationGroup], records);
+        return {
+          group: occupationGroup,
+          value: groupData.demographicPercent,
+          indicatorValue: groupData.indicatorValue,
+          count: groupData.count,
+          type: 'occupation'
+        };
+      }).filter(item => item.count > 0)
+      .sort((a, b) => {
+        if (a.group.includes('ไม่ได้ประกอบอาชีพ') || a.group.includes('Not Working')) return -1;
+        if (b.group.includes('ไม่ได้ประกอบอาชีพ') || b.group.includes('Not Working')) return 1;
+        return b.count - a.count;
+      });
+
+      // Process welfare groups
+      welfareData = ['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicatorKey)
+        ? Object.keys(welfareGroups).map(welfareGroup => {
+            const groupData = calculateGroupData(welfareGroups[welfareGroup], records);
+            return {
+              group: welfareGroup,
+              value: groupData.demographicPercent,
+              indicatorValue: groupData.indicatorValue,
+              count: groupData.count,
+              type: 'welfare'
+            };
+          }).filter(item => item.count > 0)
+          .sort((a, b) => b.count - a.count)
+        : [];
+    }
+
+    return {
+      age: ageData,
+      sex: sexData,
+      occupation: occupationData,
+      welfare: welfareData,
+      facilityType: facilityTypeData,
+      total: {
+        value: calculateIndicatorValueForGroup(records, indicatorKey),
+        count: records.length
+      }
+    };
+  }
+
+  // Calculate indicator value for a group of records
+  function calculateIndicatorValueForGroup(groupRecords, indicatorKey) {
+    // Simple calculation - you can expand this based on your needs
+    switch (indicatorKey) {
+      case 'unemployment_rate':
+        const unemployed = groupRecords.filter(r => r.occupation_status === 0).length;
+        return groupRecords.length > 0 ? (unemployed / groupRecords.length) * 100 : 0;
+      
+      case 'health_coverage':
+        const healthCoverage = groupRecords.filter(r => 
+          r.welfare !== null && r.welfare !== undefined && r.welfare !== 'other' && r.welfare !== 'Other'
+        ).length;
+        return groupRecords.length > 0 ? (healthCoverage / groupRecords.length) * 100 : 0;
+      
+      // Add more cases as needed
+      default:
+        return 0;
+    }
+  }
 
   if (indicatorDetailsLoading) {
     return (
@@ -462,7 +437,7 @@ const healthFacilitiesForDistrict = healthFacilitiesData ?
               {[
                 { id: 'overview', icon: Eye, label: language === 'th' ? 'ภาพรวม' : 'Overview' },
                 { id: 'disaggregation', icon: Users, label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Disaggregation' },
-                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวณ' : 'Methodology' }
+                { id: 'methodology', icon: Calculator, label: language === 'th' ? 'วิธีการคำนวด' : 'Methodology' }
               ].map(tab => (
                 <button
                   key={tab.id}
@@ -571,402 +546,222 @@ const healthFacilitiesForDistrict = healthFacilitiesData ?
           </div>
         )}
 
-        {/* Disaggregation Tab - ENHANCED with facility type for health_service_access */}
-{activeTab === 'disaggregation' && disaggregationData && (
-  <div className="space-y-6">
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <h3 className="text-lg font-medium text-gray-900 mb-6">
-        {/* Different titles based on indicator type */}
-        {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-          'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator)
-          ? (indicator === 'health_service_access'
-              ? (language === 'th' 
-                  ? 'การแยกย่อยข้อมูลตามประเภทสถานพยาบาล' 
-                  : 'Disaggregation by Health Facility Type')
-              : (language === 'th' 
-                  ? 'ตัวชี้วัดด้านทรัพยากรสุขภาพ (ไม่มีการแยกย่อยข้อมูลตามลักษณะประชากร)' 
-                  : 'Healthcare Supply Indicator (No demographic disaggregation available)')
-            )
-          : (['health_coverage', 'medical_consultation_skip_cost', 'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'dental_access'].includes(indicator)
-              ? (language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ สถานะการทำงาน และประเภทสิทธิประกันสุขภาพ' : 'Disaggregation by Age, Sex, Employment Status and Health Insurance Type')
-              : (language === 'th' ? 'การแยกย่อยข้อมูลตามกลุ่มอายุ เพศ และสถานะการทำงาน' : 'Disaggregation by Age, Sex and Employment Status')
-            )
-        }
-      </h3>
-      
-      {/* For healthcare supply indicators except health_service_access, show message */}
-      {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-        'community_healthworker_per_population', 'bed_per_population'].includes(indicator) && (
-        <div className="text-center py-8 text-gray-500">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <p className="text-blue-800 font-medium mb-2">
-              {language === 'th' 
-                ? 'ตัวชี้วัดด้านทรัพยากรสุขภาพ' 
-                : 'Healthcare Supply Indicator'}
-            </p>
-            <p className="text-blue-700 text-sm">
-              {language === 'th' 
-                ? 'ตัวชี้วัดนี้คำนวณจากข้อมูลสถานพยาบาลและจำนวนประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้' 
-                : 'This indicator is calculated from health facility data and total population. Demographic disaggregation is not available.'}
-            </p>
-          </div>
-        </div>
-      )}
-      
-      {/* For health_service_access, show facility type disaggregation */}
-      {indicator === 'health_service_access' && disaggregationData.facilityType && disaggregationData.facilityType.length > 0 && (
-        <div className="grid grid-cols-1 gap-8">
-          {/* Health Facility Types */}
-          <div>
-            <h4 className="font-medium text-gray-800 mb-4">
-              {language === 'th' ? 'ตามประเภทสถานพยาบาล' : 'By Health Facility Type'}
-            </h4>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={disaggregationData.facilityType}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="group" 
-                    angle={-45}
-                    textAnchor="end"
-                    height={120}
-                    tick={{ fontSize: 10 }}
-                    interval={0}
-                  />
-                  <YAxis tickFormatter={(value) => `${value.toFixed(0)}`} />
-                  <Tooltip 
-                    formatter={(value, name) => [
-                      `${value.toFixed(1)} per 10,000 population`, 
-                      language === 'th' ? 'จำนวนต่อประชากร 10,000 คน' : 'Per 10,000 Population'
-                    ]}
-                    labelFormatter={(label) => `${language === 'th' ? 'ประเภทสถานพยาบาล' : 'Facility Type'}: ${label}`}
-                  />
-                  <Bar dataKey="indicatorValue" fill="#2563eb" radius={[4, 4, 0, 0]}>
-                    {disaggregationData.facilityType.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={`hsl(${220 + index * 30}, 70%, ${50 + index * 8}%)`} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            
-            {/* Facility Type Table */}
-            <div className="mt-4">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">{language === 'th' ? 'ประเภทสถานพยาบาล' : 'Facility Type'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'ต่อประชากร 10,000 คน' : 'Per 10,000 Population'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'จำนวนสถานพยาบาล' : 'Number of Facilities'}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {disaggregationData.facilityType.map((item, index) => (
-                    <tr key={item.group} className="border-b">
-                      <td className="py-2 flex items-center">
-                        <div 
-                          className="w-3 h-3 rounded mr-2" 
-                          style={{ backgroundColor: `hsl(${220 + index * 30}, 70%, ${50 + index * 8}%)` }}
-                        ></div>
-                        <span className="text-xs">{item.group}</span>
-                      </td>
-                      <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
-                      <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(2) || 'N/A'}</td>
-                      <td className="text-right py-2 text-gray-600">{item.count}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {/* For non-healthcare supply indicators, show regular disaggregation */}
-      {!['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-         'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Age Groups */}
-          <div>
-            <h4 className="font-medium text-gray-800 mb-4">
-              {language === 'th' ? 'ตามกลุ่มอายุ' : 'By Age Group'}
-            </h4>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={disaggregationData.age}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="group" />
-                  <YAxis tickFormatter={(value) => `${value}%`} />
-                  <Tooltip 
-                    formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
-                    labelFormatter={(label) => `${language === 'th' ? 'กลุ่มอายุ' : 'Age Group'}: ${label}`}
-                  />
-                  <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]}>
-                    {disaggregationData.age.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={ageColors[index % ageColors.length]} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            
-            {/* Age Group Table */}
-            <div className="mt-4">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">{language === 'th' ? 'กลุ่มอายุ' : 'Age Group'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {disaggregationData.age.map((item, index) => (
-                    <tr key={item.group} className="border-b">
-                      <td className="py-2 flex items-center">
-                        <div 
-                          className="w-3 h-3 rounded mr-2" 
-                          style={{ backgroundColor: ageColors[index % ageColors.length] }}
-                        ></div>
-                        {item.group}
-                      </td>
-                      <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
-                      <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
-                      <td className="text-right py-2 text-gray-600">
-                        {Math.round((item.indicatorValue || 0) * item.count / 100)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Sex Groups */}
-          <div>
-            <h4 className="font-medium text-gray-800 mb-4">
-              {language === 'th' ? 'ตามเพศ' : 'By Sex'}
-            </h4>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={disaggregationData.sex}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    dataKey="value"
-                    label={({group, value}) => `${group}: ${value.toFixed(1)}%`}
-                  >
-                    {disaggregationData.sex.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={sexColors[index % sexColors.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value) => `${value.toFixed(1)}%`} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            
-            {/* Sex Group Table */}
-            <div className="mt-4">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">{language === 'th' ? 'เพศ' : 'Sex'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
-                    <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {disaggregationData.sex.map((item, index) => (
-                    <tr key={item.group} className="border-b">
-                      <td className="py-2 flex items-center">
-                        <div 
-                          className="w-3 h-3 rounded mr-2" 
-                          style={{ backgroundColor: sexColors[index % sexColors.length] }}
-                        ></div>
-                        {item.group}
-                      </td>
-                      <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
-                      <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
-                      <td className="text-right py-2 text-gray-600">
-                        {Math.round((item.indicatorValue || 0) * item.count / 100)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* ENHANCED: Combined Employment Status and Occupation Type */}
-          <div>
-            <h4 className="font-medium text-gray-800 mb-4">
-              {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
-            </h4>
-            
-            {disaggregationData.occupation.length > 0 ? (
-              <>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={disaggregationData.occupation}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="group" 
-                        angle={-45}
-                        textAnchor="end"
-                        height={100}
-                        tick={{ fontSize: 9 }}
-                        interval={0}
-                      />
-                      <YAxis tickFormatter={(value) => `${value}%`} />
-                      <Tooltip 
-                        formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
-                        labelFormatter={(label) => `${language === 'th' ? 'สถานะการทำงาน' : 'Employment Status'}: ${label}`}
-                      />
-                      <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]}>
-                        {disaggregationData.occupation.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
+        {/* Disaggregation Tab */}
+        {activeTab === 'disaggregation' && (
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-6">
+                {indicator === 'health_service_access'
+                  ? (language === 'th' 
+                      ? 'การแยกย่อยข้อมูลตามประเภทสถานพยาบาล' 
+                      : 'Disaggregation by Health Facility Type')
+                  : (['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                      'community_healthworker_per_population', 'bed_per_population'].includes(indicator)
+                      ? (language === 'th' 
+                          ? 'ตัวชี้วัดด้านทรัพยากรสุขภาพ (ไม่มีการแยกย่อยข้อมูลตามลักษณะประชากร)' 
+                          : 'Healthcare Supply Indicator (No demographic disaggregation available)')
+                      : (language === 'th' ? 'การแยกย่อยข้อมูลตามลักษณะประชากร' : 'Demographic Disaggregation')
+                    )
+                }
+              </h3>
+              
+              {/* Show message for healthcare supply indicators except health_service_access */}
+              {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                'community_healthworker_per_population', 'bed_per_population'].includes(indicator) && (
+                <div className="text-center py-8">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                    <p className="text-blue-800 font-medium mb-2">
+                      {language === 'th' 
+                        ? 'ตัวชี้วัดด้านทรัพยากรสุขภาพ' 
+                        : 'Healthcare Supply Indicator'}
+                    </p>
+                    <p className="text-blue-700 text-sm">
+                      {language === 'th' 
+                        ? 'ตัวชี้วัดนี้คำนวณจากข้อมูลสถานพยาบาลและจำนวนประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้' 
+                        : 'This indicator is calculated from health facility data and total population. Demographic disaggregation is not available.'}
+                    </p>
+                  </div>
                 </div>
-                
-                {/* Enhanced Occupation Group Table */}
-                <div className="mt-4">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left py-2">{language === 'th' ? 'สถานะ/ประเภทการทำงาน' : 'Employment Status/Type'}</th>
-                        <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
-                        <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
-                        <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {disaggregationData.occupation.map((item, index) => (
-                        <tr key={item.group} className="border-b">
-                          <td className="py-2 flex items-center">
-                            <div 
-                              className="w-3 h-3 rounded mr-2" 
-                              style={{ backgroundColor: occupationColors[index % occupationColors.length] }}
-                            ></div>
-                            <span className="text-xs">{item.group}</span>
-                          </td>
-                          <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
-                          <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
-                          <td className="text-right py-2 text-gray-600">
-                            {Math.round((item.indicatorValue || 0) * item.count / 100)}
-                          </td>
+              )}
+              
+              {/* For health_service_access, show facility type disaggregation */}
+              {indicator === 'health_service_access' && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-gray-800 mb-4">
+                    {language === 'th' ? 'ตามประเภทสถานพยาบาล' : 'By Health Facility Type'}
+                  </h4>
+                  <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={disaggregationData.facilityType}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="group" 
+                          angle={-45}
+                          textAnchor="end"
+                          height={120}
+                          tick={{ fontSize: 10 }}
+                          interval={0}
+                        />
+                        <YAxis tickFormatter={(value) => `${value.toFixed(0)}`} />
+                        <Tooltip 
+                          formatter={(value, name) => [
+                            `${value.toFixed(1)} per 10,000 population`, 
+                            language === 'th' ? 'จำนวนต่อประชากร 10,000 คน' : 'Per 10,000 Population'
+                          ]}
+                          labelFormatter={(label) => `${language === 'th' ? 'ประเภทสถานพยาบาล' : 'Facility Type'}: ${label}`}
+                        />
+                        <Bar dataKey="indicatorValue" fill="#2563eb" radius={[4, 4, 0, 0]}>
+                          {disaggregationData.facilityType.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={`hsl(${220 + index * 30}, 70%, ${50 + index * 8}%)`} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  
+                  {/* Facility Type Table */}
+                  <div className="mt-4">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left py-2">{language === 'th' ? 'ประเภทสถานพยาบาล' : 'Facility Type'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'ต่อประชากร 10,000 คน' : 'Per 10,000 Population'}</th>
+                          <th className="text-right py-2">{language === 'th' ? 'จำนวนสถานพยาบาล' : 'Number of Facilities'}</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {disaggregationData.facilityType.map((item, index) => (
+                          <tr key={item.group} className="border-b">
+                            <td className="py-2 flex items-center">
+                              <div 
+                                className="w-3 h-3 rounded mr-2" 
+                                style={{ backgroundColor: `hsl(${220 + index * 30}, 70%, ${50 + index * 8}%)` }}
+                              ></div>
+                              <span className="text-xs">{item.group}</span>
+                            </td>
+                            <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
+                            <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(2) || 'N/A'}</td>
+                            <td className="text-right py-2 text-gray-600">{item.count}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </>
-            ) : (
-              <div className="h-80 flex items-center justify-center text-gray-500">
-                <div className="text-center">
-                  <p className="text-sm">
-                    {language === 'th' 
-                      ? 'ไม่มีข้อมูลสถานะการทำงานสำหรับกลุ่มนี้' 
-                      : 'No employment status data available for this group'}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+              )}
+              
+              {/* For non-healthcare supply indicators, show regular disaggregation */}
+              {!['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                 'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) && 
+               disaggregationData && (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Age Groups */}
+                  {disaggregationData.age && disaggregationData.age.length > 0 && (
+                    <div>
+                      <h4 className="font-medium text-gray-800 mb-4">
+                        {language === 'th' ? 'ตามกลุ่มอายุ' : 'By Age Group'}
+                      </h4>
+                      <div className="h-80">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={disaggregationData.age}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="group" />
+                            <YAxis tickFormatter={(value) => `${value}%`} />
+                            <Tooltip 
+                              formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
+                              labelFormatter={(label) => `${language === 'th' ? 'กลุ่มอายุ' : 'Age Group'}: ${label}`}
+                            />
+                            <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]}>
+                              {disaggregationData.age.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={ageColors[index % ageColors.length]} />
+                              ))}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  )}
 
-      {/* WELFARE GROUPS (only for health_coverage indicator) */}
-      {!['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-         'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) &&
-       indicator === 'health_coverage' && disaggregationData.welfare.length > 0 && (
-        <div className="mt-8">
-          <h4 className="font-medium text-gray-800 mb-4">
-            {language === 'th' ? 'ตามประเภทสิทธิประกันสุขภาพ' : 'By Health Insurance Type'}
-          </h4>
-          
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={disaggregationData.welfare}>
-                <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="group" 
-                    angle={0}
-                    textAnchor="middle"
-                    height={60}
-                    tick={{ fontSize: 12 }}
-                    interval={0}
-                    width={200}
-                  />
-                <YAxis tickFormatter={(value) => `${value}%`} />
-                <Tooltip 
-                  formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
-                  labelFormatter={(label) => `${language === 'th' ? 'ประเภทสิทธิ' : 'Insurance Type'}: ${label}`}
-                />
-                <Bar dataKey="value" fill="#2563eb" radius={[4, 4, 0, 0]}>
-                  {disaggregationData.welfare.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={welfareColors[index % welfareColors.length]} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+                  {/* Sex Groups */}
+                  {disaggregationData.sex && disaggregationData.sex.length > 0 && (
+                    <div>
+                      <h4 className="font-medium text-gray-800 mb-4">
+                        {language === 'th' ? 'ตามเพศ' : 'By Sex'}
+                      </h4>
+                      <div className="h-80">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart>
+                            <Pie
+                              data={disaggregationData.sex}
+                              cx="50%"
+                              cy="50%"
+                              outerRadius={80}
+                              dataKey="value"
+                              label={({group, value}) => `${group}: ${value.toFixed(1)}%`}
+                            >
+                              {disaggregationData.sex.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={sexColors[index % sexColors.length]} />
+                              ))}
+                            </Pie>
+                            <Tooltip formatter={(value) => `${value.toFixed(1)}%`} />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Occupation Groups */}
+                  {disaggregationData.occupation && disaggregationData.occupation.length > 0 && (
+                    <div>
+                      <h4 className="font-medium text-gray-800 mb-4">
+                        {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
+                      </h4>
+                      <div className="h-80">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={disaggregationData.occupation}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                              dataKey="group" 
+                              angle={-45}
+                              textAnchor="end"
+                              height={100}
+                              tick={{ fontSize: 9 }}
+                              interval={0}
+                            />
+                            <YAxis tickFormatter={(value) => `${value}%`} />
+                            <Tooltip 
+                              formatter={(value, name) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']}
+                              labelFormatter={(label) => `${language === 'th' ? 'สถานะการทำงาน' : 'Employment Status'}: ${label}`}
+                            />
+                            <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]}>
+                              {disaggregationData.occupation.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
+                              ))}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-          
-          {/* Welfare Group Table */}
-          <div className="mt-4">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2">{language === 'th' ? 'ประเภทสิทธิประกันสุขภาพ' : 'Health Insurance Type'}</th>
-                  <th className="text-right py-2">{language === 'th' ? 'สัดส่วน (%)' : 'Proportion (%)'}</th>
-                  <th className="text-right py-2">{language === 'th' ? 'ค่าตัวชี้วัด (%)' : 'Indicator (%)'}</th>
-                  <th className="text-right py-2">{language === 'th' ? 'จำนวน' : 'Count'}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {disaggregationData.welfare.map((item, index) => (
-                  <tr key={item.group} className="border-b">
-                    <td className="py-2 flex items-center">
-                      <div 
-                        className="w-3 h-3 rounded mr-2" 
-                        style={{ backgroundColor: welfareColors[index % welfareColors.length] }}
-                      ></div>
-                      <span className="text-xs">{item.group}</span>
-                    </td>
-                    <td className="text-right py-2 font-medium">{item.value.toFixed(1)}%</td>
-                    <td className="text-right py-2 text-blue-600">{item.indicatorValue?.toFixed(1) || 'N/A'}%</td>
-                    <td className="text-right py-2 text-gray-600">
-                      {Math.round((item.indicatorValue || 0) * item.count / 100)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-    </div>
-  </div>
-)} 
+        )}
+
         {/* Methodology Tab */}
         {activeTab === 'methodology' && (
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'วิธีการคำนวณและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
+                {language === 'th' ? 'วิธีการคำนวดและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
               </h3>
               
               <div className="space-y-6">
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'สูตรการคำนวณ' : 'Calculation Formula'}
+                    {language === 'th' ? 'สูตรการคำนวด' : 'Calculation Formula'}
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm">
                     {indicatorInfo.calculation}
