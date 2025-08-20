@@ -96,6 +96,8 @@ const Dashboard = () => {
       health_service_access: { good: 50, fair: 20, poor: 10 },
       bed_per_population: { good: 30, fair: 15, poor: 10 }
     };
+
+  const [healthFacilitiesData, setHealthFacilitiesData] = useState(null);
     
     const benchmark = benchmarks[indicator];
     if (!benchmark) return 'bg-gray-100 text-gray-600';
@@ -106,6 +108,7 @@ const Dashboard = () => {
     return 'bg-red-100 text-red-800';
   };
 
+  // Load survey data when component mounts
   // Load survey data when component mounts
   React.useEffect(() => {
     const loadSurveyData = async () => {
@@ -261,18 +264,19 @@ const Dashboard = () => {
 
   // Show detail page if indicator is selected
   if (showDetailPage && selectedIndicator) {
-    return (
-      <IndicatorDetailPage
-        indicator={selectedIndicator}
-        domain={selectedDomain}
-        district={selectedDistrict}
-        populationGroup={selectedPopulationGroup}
-        onBack={handleBackFromDetail}
-        surveyData={surveyData}
-        getIndicatorData={getIndicatorData}
-      />
-    );
-  }
+  return (
+    <IndicatorDetailPage
+      indicator={selectedIndicator}
+      domain={selectedDomain}
+      district={selectedDistrict}
+      populationGroup={selectedPopulationGroup}
+      onBack={handleBackFromDetail}
+      surveyData={surveyData}
+      getIndicatorData={getIndicatorData}
+      healthFacilitiesData={healthFacilitiesData}
+    />
+  );
+}
 
   if (isLoading || indicatorDetailsLoading) {
     return (
