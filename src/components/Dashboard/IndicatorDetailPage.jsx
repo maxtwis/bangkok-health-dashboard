@@ -885,7 +885,7 @@ const IndicatorDetailPage = ({
                   </div>
                 </div>
 
-                {/* ENHANCED: Combined Employment Status and Occupation Type (only if NOT health_coverage) */}
+                {/* ENHANCED: Combined Employment Status and Occupation Type */}
                 {indicator !== 'health_coverage' && (
                   <div>
                     <h4 className="font-medium text-gray-800 mb-4">
@@ -1036,7 +1036,6 @@ const IndicatorDetailPage = ({
             </div>
           </div>
         )}
-
         {/* Methodology Tab */}
         {activeTab === 'methodology' && (
           <div className="space-y-6">
