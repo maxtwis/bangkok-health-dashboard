@@ -641,9 +641,10 @@ const IndicatorDetailPage = ({
                               cx="50%"
                               cy="50%"
                               labelLine={false}
-                              label={false} // Disable pie chart labels to avoid overlap
+                              label={({ percentage }) => percentage > 5 ? `${percentage.toFixed(1)}%` : ''} // Only show label if slice is > 5%
                               outerRadius={100}
                               dataKey="value"
+                              fontSize={12}
                             >
                               {disaggregationData.facilityType.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -651,12 +652,15 @@ const IndicatorDetailPage = ({
                             </Pie>
                             <Tooltip 
                               formatter={(value, name) => [
-                                value, 
+                                `${value} (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`, 
                                 language === 'th' ? 'จำนวน' : 'Count'
                               ]} 
-                              labelFormatter={(label) => {
-                                const item = disaggregationData.facilityType.find(d => d.value === label);
-                                return item ? item.name : label;
+                              labelFormatter={(label, payload) => {
+                                if (payload && payload[0]) {
+                                  const dataIndex = payload[0].payload;
+                                  return dataIndex.name;
+                                }
+                                return label;
                               }}
                             />
                           </PieChart>
@@ -664,7 +668,7 @@ const IndicatorDetailPage = ({
                       </div>
                       <div className="space-y-2">
                         <h4 className="font-medium text-gray-700 mb-3">
-                          {language === 'th' ? 'รายละเอียด' : 'Details'}
+                          {language === 'th' ? 'รายละเอียด' : 'Legend & Details'}
                         </h4>
                         <div className="space-y-3">
                           {disaggregationData.facilityType.map((item, index) => (
