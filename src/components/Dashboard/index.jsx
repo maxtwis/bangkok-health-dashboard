@@ -139,11 +139,39 @@ const Dashboard = () => {
     return Number(sampleSize).toLocaleString();
   };
 
-  // Safe function to format value
-  const formatValue = (value) => {
+  // Safe function to format value - Updated for healthcare supply indicators
+  const formatValue = (value, indicator) => {
     if (value === null || value === undefined || isNaN(value)) {
       return 'N/A';
     }
+
+    // Format healthcare supply indicators with proper units
+    const healthcareSupplyIndicators = [
+      'doctor_per_population', 
+      'nurse_per_population', 
+      'healthworker_per_population', 
+      'community_healthworker_per_population',
+      'health_service_access',
+      'bed_per_population'
+    ];
+
+    if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {
+      const valueNum = Number(value);
+      
+      // Define units for each healthcare supply indicator
+      const unitMap = {
+        'doctor_per_population': `${valueNum.toFixed(1)} per 1,000`,
+        'nurse_per_population': `${valueNum.toFixed(1)} per 1,000`, 
+        'healthworker_per_population': `${valueNum.toFixed(1)} per 10,000`,
+        'community_healthworker_per_population': `${valueNum.toFixed(1)} per 1,000`,
+        'health_service_access': `${valueNum.toFixed(1)} per 10,000`,
+        'bed_per_population': `${valueNum.toFixed(1)} per 10,000`
+      };
+
+      return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
+    }
+
+    // Regular percentage formatting for other indicators
     return `${Number(value).toFixed(1)}%`;
   };
 
@@ -472,7 +500,7 @@ const Dashboard = () => {
                                         </span>
                                       ) : (
                                         <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getScoreColor(value, indicator)}`}>
-                                          {formatValue(value)}
+                                          {formatValue(value, indicator)}
                                         </span>
                                       )}
                                     </td>

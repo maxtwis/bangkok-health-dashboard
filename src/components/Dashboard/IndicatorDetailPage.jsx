@@ -101,11 +101,30 @@ const IndicatorDetailPage = ({
     };
   }, [indicator, language, indicatorDetailsLoading, getIndicatorInfo, reverseIndicators]);
 
+  // Function to format healthcare supply indicator values with proper units
+  const formatHealthcareSupplyValue = (value, indicator) => {
+    if (value === null || value === undefined || isNaN(value)) {
+      return 'N/A';
+    }
+
+    const valueNum = Number(value);
+    
+    // Define units for each healthcare supply indicator
+    const unitMap = {
+      'doctor_per_population': `${valueNum.toFixed(1)} per 1,000`,
+      'nurse_per_population': `${valueNum.toFixed(1)} per 1,000`, 
+      'healthworker_per_population': `${valueNum.toFixed(1)} per 10,000`,
+      'community_healthworker_per_population': `${valueNum.toFixed(1)} per 1,000`,
+      'health_service_access': `${valueNum.toFixed(1)} per 10,000`,
+      'bed_per_population': `${valueNum.toFixed(1)} per 10,000`
+    };
+
+    return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
+  };
+
   // Get current indicator data
   const indicatorData = getIndicatorData(domain, district, populationGroup);
   const currentIndicator = indicatorData ? indicatorData.find(item => item.indicator === indicator) : null;
-
-  // Color schemes for charts
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658'];
   const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
@@ -466,7 +485,7 @@ const IndicatorDetailPage = ({
                     : 'text-gray-400'
                 }`}>
                   {currentIndicator.value !== null && currentIndicator.value !== undefined 
-                    ? `${currentIndicator.value.toFixed(1)}%` 
+                    ? formatHealthcareSupplyValue(currentIndicator.value, indicator)
                     : 'N/A'}
                 </div>
                 <div className="text-sm text-gray-500 mb-1">
@@ -821,7 +840,7 @@ const IndicatorDetailPage = ({
                             {language === 'th' ? 'คะแนนปัจจุบัน' : 'Current Score'}
                           </span>
                           <span className="text-2xl font-bold text-blue-600">
-                            {currentIndicator.value.toFixed(1)}%
+                            {formatHealthcareSupplyValue(currentIndicator.value, indicator)}
                           </span>
                         </div>
                         
