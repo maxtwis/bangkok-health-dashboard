@@ -634,42 +634,44 @@ const IndicatorDetailPage = ({
                     </h3>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Left Column - Centered Pie Chart */}
-                      <div className="h-80 flex items-center justify-center">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <PieChart>
-                            <Pie
-                              data={disaggregationData.facilityType}
-                              cx="50%"
-                              cy="50%"
-                              labelLine={true}
-                              label={({ name, percentage }) => {
-                                // Show name and percentage, but truncate long names
-                                const shortName = name.length > 20 ? name.substring(0, 17) + '...' : name;
-                                return `${shortName}: ${percentage.toFixed(1)}%`;
-                              }}
-                              outerRadius={120}
-                              dataKey="value"
-                              fontSize={11}
-                            >
-                              {disaggregationData.facilityType.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.fill} />
-                              ))}
-                            </Pie>
-                            <Tooltip 
-                              formatter={(value, name) => [
-                                `${value} facilities (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`, 
-                                language === 'th' ? 'จำนวน' : 'Count'
-                              ]} 
-                              labelFormatter={(label, payload) => {
-                                if (payload && payload[0]) {
-                                  const dataIndex = payload[0].payload;
-                                  return dataIndex.name;
-                                }
-                                return label;
-                              }}
-                            />
-                          </PieChart>
-                        </ResponsiveContainer>
+                      <div className="h-80 flex items-center justify-center bg-gray-25">
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ResponsiveContainer width="90%" height="90%">
+                            <PieChart>
+                              <Pie
+                                data={disaggregationData.facilityType}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={true}
+                                label={({ name, percentage }) => {
+                                  // Show name and percentage, but truncate long names
+                                  const shortName = name.length > 20 ? name.substring(0, 17) + '...' : name;
+                                  return `${shortName}: ${percentage.toFixed(1)}%`;
+                                }}
+                                outerRadius={100}
+                                dataKey="value"
+                                fontSize={11}
+                              >
+                                {disaggregationData.facilityType.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                                ))}
+                              </Pie>
+                              <Tooltip 
+                                formatter={(value, name) => [
+                                  `${value} facilities (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`, 
+                                  language === 'th' ? 'จำนวน' : 'Count'
+                                ]} 
+                                labelFormatter={(label, payload) => {
+                                  if (payload && payload[0]) {
+                                    const dataIndex = payload[0].payload;
+                                    return dataIndex.name;
+                                  }
+                                  return label;
+                                }}
+                              />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        </div>
                       </div>
                       
                       {/* Right Column - Details */}
