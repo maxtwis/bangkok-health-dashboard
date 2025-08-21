@@ -640,16 +640,25 @@ const IndicatorDetailPage = ({
                               data={disaggregationData.facilityType}
                               cx="50%"
                               cy="50%"
-                              innerRadius={60}
-                              outerRadius={120}
+                              labelLine={false}
+                              label={false} // Disable pie chart labels to avoid overlap
+                              outerRadius={100}
                               dataKey="value"
-                              label={({ name, percentage }) => `${name}: ${percentage.toFixed(1)}%`}
                             >
                               {disaggregationData.facilityType.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.fill} />
                               ))}
                             </Pie>
-                            <Tooltip formatter={(value, name) => [value, language === 'th' ? 'จำนวน' : 'Count']} />
+                            <Tooltip 
+                              formatter={(value, name) => [
+                                value, 
+                                language === 'th' ? 'จำนวน' : 'Count'
+                              ]} 
+                              labelFormatter={(label) => {
+                                const item = disaggregationData.facilityType.find(d => d.value === label);
+                                return item ? item.name : label;
+                              }}
+                            />
                           </PieChart>
                         </ResponsiveContainer>
                       </div>
@@ -657,22 +666,24 @@ const IndicatorDetailPage = ({
                         <h4 className="font-medium text-gray-700 mb-3">
                           {language === 'th' ? 'รายละเอียด' : 'Details'}
                         </h4>
-                        {disaggregationData.facilityType.map((item, index) => (
-                          <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                            <div className="flex items-center">
-                              <div 
-                                className="w-4 h-4 rounded mr-3" 
-                                style={{ backgroundColor: item.fill }}
-                              ></div>
-                              <span className="text-sm font-medium">{item.name}</span>
+                        <div className="space-y-3">
+                          {disaggregationData.facilityType.map((item, index) => (
+                            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                              <div className="flex items-center">
+                                <div 
+                                  className="w-4 h-4 rounded mr-3 flex-shrink-0" 
+                                  style={{ backgroundColor: item.fill }}
+                                ></div>
+                                <span className="text-sm font-medium text-gray-800">{item.name}</span>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-sm font-bold text-gray-900">{item.value}</div>
+                                <div className="text-xs text-gray-500">{item.percentage.toFixed(1)}%</div>
+                                <div className="text-xs text-blue-600">{item.facilitiesPer10k?.toFixed(1)} per 10k</div>
+                              </div>
                             </div>
-                            <div className="text-right">
-                              <div className="text-sm font-medium">{item.value}</div>
-                              <div className="text-xs text-gray-500">{item.percentage.toFixed(1)}%</div>
-                              <div className="text-xs text-blue-600">{item.facilitiesPer10k?.toFixed(1)} per 10k</div>
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
