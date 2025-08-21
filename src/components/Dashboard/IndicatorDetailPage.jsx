@@ -133,7 +133,7 @@ const IndicatorDetailPage = ({
 
   // Calculate disaggregation data
   const disaggregationData = useMemo(() => {
-    if (!surveyData || !indicator) return null;
+    if (!indicator) return null;
 
     // Healthcare supply indicators - limited disaggregation
     const healthcareSupplyIndicators = [
@@ -141,17 +141,26 @@ const IndicatorDetailPage = ({
       'community_healthworker_per_population', 'health_service_access', 'bed_per_population'
     ];
 
-    if (healthcareSupplyIndicators.includes(indicator)) {
-      // Only show facility type data for health_service_access
-      if (indicator === 'health_service_access' && healthFacilitiesData) {
-        const facilityTypeData = calculateFacilityTypeData();
-        return {
-          age: [],
-          sex: [],
-          occupation: [],
-          welfare: [],
-          facilityType: facilityTypeData
-        };
+    if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {
+      // Show facility type data for health_service_access (health facilities per capita)
+      if (indicator === 'health_service_access') {
+        console.log('Calculating facility type data for health_service_access');
+        console.log('healthFacilitiesData:', healthFacilitiesData);
+        
+        if (healthFacilitiesData && Array.isArray(healthFacilitiesData) && healthFacilitiesData.length > 0) {
+          const facilityTypeData = calculateFacilityTypeData();
+          console.log('Calculated facility type data:', facilityTypeData);
+          
+          return {
+            age: [],
+            sex: [],
+            occupation: [],
+            welfare: [],
+            facilityType: facilityTypeData
+          };
+        } else {
+          console.warn('healthFacilitiesData not available or empty:', healthFacilitiesData);
+        }
       }
       
       // For other supply indicators, no disaggregation available
@@ -165,17 +174,25 @@ const IndicatorDetailPage = ({
     }
 
     // For regular survey indicators, calculate full disaggregation
-    let filteredData = surveyData.filter(record => {
-      if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
-      if (record.population_group !== populationGroup) return false;
-      return true;
-    });
+    if (surveyData && Array.isArray(surveyData)) {
+      let filteredData = surveyData.filter(record => {
+        if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
+        if (record.population_group !== populationGroup) return false;
+        return true;
+      });
 
-    return calculateDemographicDisaggregation(filteredData);
+      return calculateDemographicDisaggregation(filteredData);
+    }
+
+    return null;
   }, [surveyData, indicator, district, populationGroup, healthFacilitiesData, language]);
 
   // Calculate facility type breakdown for health_service_access
   function calculateFacilityTypeData() {
+    console.log('=== calculateFacilityTypeData called ===');
+    console.log('healthFacilitiesData:', healthFacilitiesData);
+    console.log('district:', district);
+    
     if (!healthFacilitiesData || !Array.isArray(healthFacilitiesData)) {
       console.warn('healthFacilitiesData is not available or not an array');
       return [];
@@ -185,9 +202,15 @@ const IndicatorDetailPage = ({
       // Filter facilities for current district
       const facilitiesForDistrict = district === 'Bangkok Overall' 
         ? healthFacilitiesData 
-        : healthFacilitiesData.filter(facility => facility && facility.dname === district);
+        : healthFacilitiesData.filter(facility => {
+            console.log('Facility:', facility, 'District match:', facility && facility.dname === district);
+            return facility && facility.dname === district;
+          });
+
+      console.log('Facilities for district:', facilitiesForDistrict.length);
 
       if (!facilitiesForDistrict || facilitiesForDistrict.length === 0) {
+        console.warn('No facilities found for district:', district);
         return [];
       }
 
@@ -196,6 +219,7 @@ const IndicatorDetailPage = ({
       facilitiesForDistrict.forEach(facility => {
         if (facility && facility.type_) {
           const type = facility.type_;
+          console.log('Processing facility type:', type);
           if (!typeGroups[type]) {
             typeGroups[type] = [];
           }
@@ -203,7 +227,9 @@ const IndicatorDetailPage = ({
         }
       });
 
-      // Convert to chart data
+      console.log('Type groups:', typeGroups);
+
+      // Convert to chart data with correct Thai translations
       const facilityTypeMap = {
         1: language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
         2: language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
@@ -214,18 +240,26 @@ const IndicatorDetailPage = ({
       };
 
       const totalFacilities = facilitiesForDistrict.length;
+      // Use approximate population - this should ideally come from district population data
+      const approximatePopulation = 100000; // ~100k people per district average in Bangkok
 
-      return Object.keys(typeGroups).map((type, index) => {
+      const result = Object.keys(typeGroups).map((type, index) => {
         const count = typeGroups[type].length;
         const percentage = totalFacilities > 0 ? (count / totalFacilities) * 100 : 0;
+        const facilitiesPer10k = approximatePopulation > 0 ? (count / approximatePopulation) * 10000 : 0;
         
         return {
           name: facilityTypeMap[type] || `Type ${type}`,
           value: count,
           percentage: percentage,
+          facilitiesPer10k: facilitiesPer10k,
           fill: COLORS[index % COLORS.length]
         };
       }).sort((a, b) => b.value - a.value);
+
+      console.log('Final facility type data:', result);
+      return result;
+      
     } catch (error) {
       console.error('Error calculating facility type data:', error);
       return [];
@@ -631,10 +665,26 @@ const IndicatorDetailPage = ({
                             <div className="text-right">
                               <div className="text-sm font-medium">{item.value}</div>
                               <div className="text-xs text-gray-500">{item.percentage.toFixed(1)}%</div>
+                              <div className="text-xs text-blue-600">{item.facilitiesPer10k?.toFixed(1)} per 10k</div>
                             </div>
                           </div>
                         ))}
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Debug info for health_service_access */}
+                {indicator === 'health_service_access' && (
+                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded">
+                    <h4 className="font-medium text-yellow-800 mb-2">Debug Info</h4>
+                    <div className="text-xs text-yellow-700 space-y-1">
+                      <div>Indicator: {indicator}</div>
+                      <div>healthFacilitiesData available: {healthFacilitiesData ? 'Yes' : 'No'}</div>
+                      <div>healthFacilitiesData length: {healthFacilitiesData?.length || 0}</div>
+                      <div>District: {district}</div>
+                      <div>Disaggregation data: {disaggregationData ? 'Available' : 'Not available'}</div>
+                      <div>Facility type data length: {disaggregationData?.facilityType?.length || 0}</div>
                     </div>
                   </div>
                 )}
