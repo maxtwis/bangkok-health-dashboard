@@ -1,4 +1,4 @@
-// useBasicSDHEData Hook - src/hooks/useBasicSDHEData.js
+// useBasicSDHEData Hook - Fixed version with healthFacilitiesData exposure
 import { useState, useEffect, useRef } from 'react';
 import BasicSDHEProcessor from '../utils/BasicSDHEProcessor';
 
@@ -6,6 +6,8 @@ const useBasicSDHEData = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const [surveyData, setSurveyData] = useState(null);
+  const [healthFacilitiesData, setHealthFacilitiesData] = useState(null);
   const processorRef = useRef(null);
 
   useEffect(() => {
@@ -28,6 +30,10 @@ const useBasicSDHEData = () => {
         
         const results = await processor.processSurveyData(csvContent);
         setData(results);
+
+        // Extract survey data and health facilities data from processor
+        setSurveyData(processor.surveyData);
+        setHealthFacilitiesData(processor.healthFacilitiesData);
         
       } catch (err) {
         console.error('Error loading SDHE data:', err);
@@ -57,6 +63,8 @@ const useBasicSDHEData = () => {
     isLoading,
     error,
     data,
+    surveyData,
+    healthFacilitiesData,
     getAvailableDistricts,
     getAvailableDomains,
     getIndicatorData
