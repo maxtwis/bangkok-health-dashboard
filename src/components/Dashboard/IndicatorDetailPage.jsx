@@ -632,19 +632,24 @@ const IndicatorDetailPage = ({
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">
                       {language === 'th' ? 'ประเภทสถานพยาบาล' : 'Health Facility Types'}
                     </h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      <div className="h-80">
+                    <div className="grid grid-cols-1 gap-6">
+                      {/* Centered Pie Chart */}
+                      <div className="h-96 flex justify-center">
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
                               data={disaggregationData.facilityType}
                               cx="50%"
                               cy="50%"
-                              labelLine={false}
-                              label={({ percentage }) => percentage > 5 ? `${percentage.toFixed(1)}%` : ''} // Only show label if slice is > 5%
-                              outerRadius={100}
+                              labelLine={true}
+                              label={({ name, percentage }) => {
+                                // Show name and percentage, but truncate long names
+                                const shortName = name.length > 20 ? name.substring(0, 17) + '...' : name;
+                                return `${shortName}: ${percentage.toFixed(1)}%`;
+                              }}
+                              outerRadius={120}
                               dataKey="value"
-                              fontSize={12}
+                              fontSize={11}
                             >
                               {disaggregationData.facilityType.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -652,7 +657,7 @@ const IndicatorDetailPage = ({
                             </Pie>
                             <Tooltip 
                               formatter={(value, name) => [
-                                `${value} (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`, 
+                                `${value} facilities (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`, 
                                 language === 'th' ? 'จำนวน' : 'Count'
                               ]} 
                               labelFormatter={(label, payload) => {
@@ -666,11 +671,13 @@ const IndicatorDetailPage = ({
                           </PieChart>
                         </ResponsiveContainer>
                       </div>
-                      <div className="space-y-2">
-                        <h4 className="font-medium text-gray-700 mb-3">
-                          {language === 'th' ? 'รายละเอียด' : 'Legend & Details'}
+                      
+                      {/* Details Table */}
+                      <div>
+                        <h4 className="font-medium text-gray-700 mb-4 text-center">
+                          {language === 'th' ? 'รายละเอียดข้อมูล' : 'Detailed Breakdown'}
                         </h4>
-                        <div className="space-y-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                           {disaggregationData.facilityType.map((item, index) => (
                             <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
                               <div className="flex items-center">
@@ -678,12 +685,12 @@ const IndicatorDetailPage = ({
                                   className="w-4 h-4 rounded mr-3 flex-shrink-0" 
                                   style={{ backgroundColor: item.fill }}
                                 ></div>
-                                <span className="text-sm font-medium text-gray-800">{item.name}</span>
+                                <span className="text-xs font-medium text-gray-800">{item.name}</span>
                               </div>
                               <div className="text-right">
                                 <div className="text-sm font-bold text-gray-900">{item.value}</div>
                                 <div className="text-xs text-gray-500">{item.percentage.toFixed(1)}%</div>
-                                <div className="text-xs text-blue-600">{item.facilitiesPer10k?.toFixed(1)} per 10k</div>
+                                <div className="text-xs text-blue-600">{item.facilitiesPer10k?.toFixed(1)}/10k</div>
                               </div>
                             </div>
                           ))}
