@@ -628,25 +628,29 @@ const IndicatorDetailPage = ({
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">
                       {language === 'th' ? 'ประเภทสถานพยาบาล' : 'Health Facility Types'}
                     </h3>
-                    <div className="h-96">
+                    <div className="h-96 bg-white p-4 border rounded-lg">
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart
                           data={disaggregationData.facilityType}
                           layout="horizontal"
-                          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                          margin={{ top: 20, right: 50, left: 250, bottom: 20 }}
                         >
-                          <CartesianGrid strokeDasharray="3 3" />
+                          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                           <XAxis 
                             type="number" 
-                            tickFormatter={(value) => `${value}`}
-                            domain={[0, 'dataMax']}
+                            domain={[0, 'dataMax + 100']}
+                            tickFormatter={(value) => value.toString()}
+                            axisLine={true}
+                            tickLine={true}
                           />
                           <YAxis 
                             type="category" 
                             dataKey="name" 
-                            width={200}
-                            tick={{ fontSize: 12 }}
+                            width={240}
+                            tick={{ fontSize: 12, fill: '#374151' }}
                             interval={0}
+                            axisLine={true}
+                            tickLine={true}
                           />
                           <Tooltip 
                             formatter={(value, name) => [
@@ -654,14 +658,23 @@ const IndicatorDetailPage = ({
                               language === 'th' ? 'จำนวน' : 'Count'
                             ]}
                             labelFormatter={(label) => label}
+                            contentStyle={{
+                              backgroundColor: 'white',
+                              border: '1px solid #d1d5db',
+                              borderRadius: '6px',
+                              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                            }}
                           />
                           <Bar 
                             dataKey="value" 
                             radius={[0, 4, 4, 0]}
-                            fill="#2563eb"
+                            stroke="none"
                           >
                             {disaggregationData.facilityType.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={entry.fill} />
+                              <Cell 
+                                key={`cell-${index}`} 
+                                fill={entry.fill || COLORS[index % COLORS.length]} 
+                              />
                             ))}
                           </Bar>
                         </BarChart>
