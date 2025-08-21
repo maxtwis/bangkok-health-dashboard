@@ -755,13 +755,13 @@ const IndicatorDetailPage = ({
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {language === 'th' ? 'วิธีการคำนวดและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
+                {language === 'th' ? 'วิธีการคำนวณและแหล่งข้อมูล' : 'Calculation Method and Data Source'}
               </h3>
               
               <div className="space-y-6">
                 <div>
                   <h4 className="font-medium text-gray-800 mb-3">
-                    {language === 'th' ? 'สูตรการคำนวด' : 'Calculation Formula'}
+                    {language === 'th' ? 'สูตรการคำนวณ' : 'Calculation Formula'}
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm">
                     {indicatorInfo.calculation}
