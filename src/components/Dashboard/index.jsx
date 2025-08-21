@@ -6,6 +6,7 @@ import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 import IndicatorAnalysis from './IndicatorAnalysis';
 import IndicatorDetailPage from './IndicatorDetailPage';
 import BangkokMap from './BangkokMap';
+import Papa from 'papaparse';
 
 const Dashboard = () => {
   const { language, toggleLanguage, t } = useLanguage();
