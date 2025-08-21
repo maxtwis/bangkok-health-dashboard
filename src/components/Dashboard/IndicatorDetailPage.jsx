@@ -597,221 +597,284 @@ const IndicatorDetailPage = ({
               </div>
             )}
 
-            {/* Demographics Tab */}
-            {activeTab === 'demographics' && (
-              <div className="space-y-8">
-                {/* Healthcare Supply Indicators Message */}
-                {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-                  'community_healthworker_per_population', 'bed_per_population'].includes(indicator) && (
-                  <div className="text-center py-8">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto">
-                      <div className="flex items-center justify-center mb-4">
-                        <div className="bg-blue-100 rounded-full p-3">
-                          <TrendingUp className="w-6 h-6 text-blue-600" />
-                        </div>
-                      </div>
-                      <h3 className="text-lg font-medium text-blue-900 mb-2">
-                        {language === 'th' ? 'ตัวชี้วัดทรัพยากรสุขภาพ' : 'Healthcare Supply Indicator'}
-                      </h3>
-                      <p className="text-blue-800">
-                        {language === 'th' 
-                          ? 'ตัวชี้วัดนี้คำนวดจากข้อมูลสถานพยาบาลและประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้'
-                          : 'This indicator is calculated from health facility data and total population. Demographic disaggregation is not available.'}
-                      </p>
-                    </div>
+            /* Demographics Tab - Complete Fixed Version */
+{activeTab === 'demographics' && (
+  <div className="space-y-8">
+    {/* Healthcare Supply Indicators Message */}
+    {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+      'community_healthworker_per_population', 'bed_per_population'].includes(indicator) && (
+      <div className="text-center py-8">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto">
+          <div className="flex items-center justify-center mb-4">
+            <div className="bg-blue-100 rounded-full p-3">
+              <TrendingUp className="w-6 h-6 text-blue-600" />
+            </div>
+          </div>
+          <h3 className="text-lg font-medium text-blue-900 mb-2">
+            {language === 'th' ? 'ตัวชี้วัดทรัพยากรสุขภาพ' : 'Healthcare Supply Indicator'}
+          </h3>
+          <p className="text-blue-800">
+            {language === 'th' 
+              ? 'ตัวชี้วัดนี้คำนวดจากข้อมูลสถานพยาบาลและประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้'
+              : 'This indicator is calculated from health facility data and total population. Demographic disaggregation is not available.'}
+          </p>
+        </div>
+      </div>
+    )}
+
+    {/* Health Service Access - Fixed Horizontal Bar Chart */}
+    {indicator === 'health_service_access' && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
+      <div>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+          {language === 'th' ? 'ประเภทสถานพยาบาล' : 'Health Facility Types'}
+        </h3>
+        
+        {/* Chart Container with proper sizing */}
+        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+          <div style={{ width: '100%', height: '400px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={disaggregationData.facilityType}
+                layout="horizontal"
+                margin={{ top: 20, right: 60, left: 280, bottom: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis 
+                  type="number" 
+                  domain={[0, 'dataMax + 5']}
+                  tick={{ fontSize: 12, fill: '#374151' }}
+                  axisLine={true}
+                  tickLine={true}
+                />
+                <YAxis 
+                  type="category" 
+                  dataKey="name" 
+                  width={260}
+                  tick={{ fontSize: 11, fill: '#374151' }}
+                  interval={0}
+                  axisLine={true}
+                  tickLine={true}
+                />
+                <Tooltip 
+                  formatter={(value, name, props) => {
+                    const total = disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0);
+                    const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                    return [
+                      `${value} facilities (${percentage}%)`,
+                      language === 'th' ? 'จำนวน' : 'Count'
+                    ];
+                  }}
+                  labelFormatter={(label) => label}
+                  contentStyle={{
+                    backgroundColor: 'white',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '6px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    fontSize: '12px'
+                  }}
+                  cursor={{ fill: 'rgba(156, 163, 175, 0.1)' }}
+                />
+                <Bar 
+                  dataKey="value" 
+                  radius={[0, 4, 4, 0]}
+                  stroke="none"
+                  fill="#3b82f6"
+                >
+                  {disaggregationData.facilityType.map((entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={COLORS[index % COLORS.length]} 
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+        
+        {/* Summary Statistics */}
+        <div className="bg-white border rounded-lg p-4">
+          <h4 className="text-sm font-medium text-gray-800 mb-3">
+            {language === 'th' ? 'สรุปข้อมูลสถานพยาบาล' : 'Health Facility Summary'}
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {disaggregationData.facilityType.map((item, index) => {
+              const total = disaggregationData.facilityType.reduce((sum, i) => sum + i.value, 0);
+              const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
+              return (
+                <div key={index} className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                  <div className="flex items-center flex-1 min-w-0">
+                    <div 
+                      className="w-4 h-4 rounded mr-3 flex-shrink-0" 
+                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                    ></div>
+                    <span className="text-sm text-gray-700 truncate" title={item.name}>
+                      {item.name}
+                    </span>
                   </div>
-                )}
-
-                {/* Health Service Access - Horizontal Bar Chart */}
-                {indicator === 'health_service_access' && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                      {language === 'th' ? 'ประเภทสถานพยาบาล' : 'Health Facility Types'}
-                    </h3>
-                    <div className="h-96 bg-white p-4 border rounded-lg">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={disaggregationData.facilityType}
-                          layout="horizontal"
-                          margin={{ top: 20, right: 50, left: 250, bottom: 20 }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                          <XAxis 
-                            type="number" 
-                            domain={[0, 'dataMax + 100']}
-                            tickFormatter={(value) => value.toString()}
-                            axisLine={true}
-                            tickLine={true}
-                          />
-                          <YAxis 
-                            type="category" 
-                            dataKey="name" 
-                            width={240}
-                            tick={{ fontSize: 12, fill: '#374151' }}
-                            interval={0}
-                            axisLine={true}
-                            tickLine={true}
-                          />
-                          <Tooltip 
-                            formatter={(value, name) => [
-                              `${value} facilities (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`,
-                              language === 'th' ? 'จำนวน' : 'Count'
-                            ]}
-                            labelFormatter={(label) => label}
-                            contentStyle={{
-                              backgroundColor: 'white',
-                              border: '1px solid #d1d5db',
-                              borderRadius: '6px',
-                              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                            }}
-                          />
-                          <Bar 
-                            dataKey="value" 
-                            radius={[0, 4, 4, 0]}
-                            stroke="none"
-                          >
-                            {disaggregationData.facilityType.map((entry, index) => (
-                              <Cell 
-                                key={`cell-${index}`} 
-                                fill={entry.fill || COLORS[index % COLORS.length]} 
-                              />
-                            ))}
-                          </Bar>
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
+                  <div className="text-right ml-3 flex-shrink-0">
+                    <div className="text-sm font-semibold text-gray-900">{item.value}</div>
+                    <div className="text-xs text-gray-500">{percentage}%</div>
                   </div>
-                )}
-
-                {/* Regular Survey Indicators - Show demographic disaggregation */}
-                {disaggregationData && disaggregationData.age && disaggregationData.age.length > 0 && (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Age Groups */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                        {language === 'th' ? 'ตามกลุ่มอายุ' : 'By Age Group'}
-                      </h3>
-                      <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={disaggregationData.age}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
-                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                              {disaggregationData.age.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={ageColors[index % ageColors.length]} />
-                              ))}
-                            </Bar>
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
-
-                    {/* Sex */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                        {language === 'th' ? 'ตามเพศ' : 'By Sex'}
-                      </h3>
-                      <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={disaggregationData.sex}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
-                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                              {disaggregationData.sex.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={sexColors[index % sexColors.length]} />
-                              ))}
-                            </Bar>
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
-
-                    {/* Occupation */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                        {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
-                      </h3>
-                      <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={disaggregationData.occupation}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                              dataKey="name" 
-                              angle={-45}
-                              textAnchor="end"
-                              height={80}
-                              tick={{ fontSize: 10 }}
-                            />
-                            <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
-                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                              {disaggregationData.occupation.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
-                              ))}
-                            </Bar>
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
-
-                    {/* Welfare/Insurance */}
-                    {disaggregationData.welfare && disaggregationData.welfare.length > 0 && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                          {language === 'th' ? 'ตามประเภทสิทธิประกันสุขภาพ' : 'By Health Insurance Type'}
-                        </h3>
-                        <div className="h-64">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={disaggregationData.welfare}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis 
-                                dataKey="name" 
-                                angle={-45}
-                                textAnchor="end"
-                                height={80}
-                                tick={{ fontSize: 10 }}
-                              />
-                              <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                              <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
-                              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                                {disaggregationData.welfare.map((entry, index) => (
-                                  <Cell key={`cell-${index}`} fill={welfareColors[index % welfareColors.length]} />
-                                ))}
-                              </Bar>
-                            </BarChart>
-                          </ResponsiveContainer>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* No Data Message */}
-                {(!disaggregationData || 
-                  ((!disaggregationData.age || disaggregationData.age.length === 0) && 
-                   (!disaggregationData.facilityType || disaggregationData.facilityType.length === 0))) && (
-                  <div className="text-center py-12">
-                    <div className="bg-gray-50 rounded-lg p-8 max-w-md mx-auto">
-                      <div className="text-gray-400 mb-4">
-                        <Users className="w-12 h-12 mx-auto" />
-                      </div>
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">
-                        {language === 'th' ? 'ไม่มีข้อมูลการแยกย่อย' : 'No Disaggregation Data'}
-                      </h3>
-                      <p className="text-gray-600">
-                        {language === 'th' 
-                          ? 'ไม่มีข้อมูลสำหรับการแยกย่อยในตัวชี้วัดนี้'
-                          : 'No disaggregation data available for this indicator'}
-                      </p>
-                    </div>
-                  </div>
-                )}
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Total */}
+          <div className="mt-4 pt-3 border-t border-gray-200">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'th' ? 'รวมทั้งหมด' : 'Total Facilities'}:
+              </span>
+              <span className="text-lg font-bold text-blue-600">
+                {disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)} 
+                <span className="text-sm text-gray-500 ml-1">
+                  {language === 'th' ? 'แห่ง' : 'facilities'}
+                </span>
+              </span>
+            </div>
+            {district !== 'Bangkok Overall' && (
+              <div className="mt-2">
+                <span className="text-xs text-gray-500">
+                  {language === 'th' ? 'ใน' : 'in'} {district}
+                </span>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Regular Survey Indicators - Show demographic disaggregation */}
+    {disaggregationData && disaggregationData.age && disaggregationData.age.length > 0 && (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Age Groups */}
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            {language === 'th' ? 'ตามกลุ่มอายุ' : 'By Age Group'}
+          </h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={disaggregationData.age}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                  {disaggregationData.age.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={ageColors[index % ageColors.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Sex */}
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            {language === 'th' ? 'ตามเพศ' : 'By Sex'}
+          </h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={disaggregationData.sex}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                  {disaggregationData.sex.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={sexColors[index % sexColors.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Occupation */}
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
+          </h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={disaggregationData.occupation}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="name" 
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  tick={{ fontSize: 10 }}
+                />
+                <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                  {disaggregationData.occupation.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Welfare/Insurance */}
+        {disaggregationData.welfare && disaggregationData.welfare.length > 0 && (
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              {language === 'th' ? 'ตามประเภทสิทธิประกันสุขภาพ' : 'By Health Insurance Type'}
+            </h3>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={disaggregationData.welfare}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                  <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                    {disaggregationData.welfare.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={welfareColors[index % welfareColors.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+
+    {/* No Data Message */}
+    {(!disaggregationData || 
+      ((!disaggregationData.age || disaggregationData.age.length === 0) && 
+       (!disaggregationData.facilityType || disaggregationData.facilityType.length === 0))) && (
+      <div className="text-center py-12">
+        <div className="bg-gray-50 rounded-lg p-8 max-w-md mx-auto">
+          <div className="text-gray-400 mb-4">
+            <Users className="w-12 h-12 mx-auto" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            {language === 'th' ? 'ไม่มีข้อมูลการแยกย่อย' : 'No Disaggregation Data'}
+          </h3>
+          <p className="text-gray-600">
+            {language === 'th' 
+              ? 'ไม่มีข้อมูลสำหรับการแยกย่อยในตัวชี้วัดนี้'
+              : 'No disaggregation data available for this indicator'}
+          </p>
+        </div>
+      </div>
+    )}
+  </div>
+)}
 
             {/* Details Tab */}
             {activeTab === 'details' && (
