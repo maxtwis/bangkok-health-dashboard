@@ -1,6 +1,6 @@
-// Clean IndicatorDetailPage.jsx - No maps, fixed errors
+// Clean IndicatorDetailPage.jsx - With Horizontal Bar Chart for Health Facilities
 import React, { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useIndicatorDetails from '../../hooks/useIndicatorDetails';
@@ -125,6 +125,8 @@ const IndicatorDetailPage = ({
   // Get current indicator data
   const indicatorData = getIndicatorData(domain, district, populationGroup);
   const currentIndicator = indicatorData ? indicatorData.find(item => item.indicator === indicator) : null;
+
+  // Color schemes for charts
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658'];
   const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
@@ -144,12 +146,8 @@ const IndicatorDetailPage = ({
     if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {
       // Show facility type data for health_service_access (health facilities per capita)
       if (indicator === 'health_service_access') {
-        console.log('Calculating facility type data for health_service_access');
-        console.log('healthFacilitiesData:', healthFacilitiesData);
-        
         if (healthFacilitiesData && Array.isArray(healthFacilitiesData) && healthFacilitiesData.length > 0) {
           const facilityTypeData = calculateFacilityTypeData();
-          console.log('Calculated facility type data:', facilityTypeData);
           
           return {
             age: [],
@@ -158,8 +156,6 @@ const IndicatorDetailPage = ({
             welfare: [],
             facilityType: facilityTypeData
           };
-        } else {
-          console.warn('healthFacilitiesData not available or empty:', healthFacilitiesData);
         }
       }
       
@@ -626,78 +622,50 @@ const IndicatorDetailPage = ({
                   </div>
                 )}
 
-                {/* Health Service Access - Show facility types */}
+                {/* Health Service Access - Horizontal Bar Chart */}
                 {indicator === 'health_service_access' && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">
                       {language === 'th' ? 'ประเภทสถานพยาบาล' : 'Health Facility Types'}
                     </h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      {/* Left Column - Centered Pie Chart */}
-                      <div className="h-80 flex items-center justify-center bg-gray-25">
-                        <div className="w-full h-full flex items-center justify-center">
-                          <ResponsiveContainer width="90%" height="90%">
-                            <PieChart>
-                              <Pie
-                                data={disaggregationData.facilityType}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={true}
-                                label={({ name, percentage }) => {
-                                  // Show name and percentage, but truncate long names
-                                  const shortName = name.length > 20 ? name.substring(0, 17) + '...' : name;
-                                  return `${shortName}: ${percentage.toFixed(1)}%`;
-                                }}
-                                outerRadius={100}
-                                dataKey="value"
-                                fontSize={11}
-                              >
-                                {disaggregationData.facilityType.map((entry, index) => (
-                                  <Cell key={`cell-${index}`} fill={entry.fill} />
-                                ))}
-                              </Pie>
-                              <Tooltip 
-                                formatter={(value, name) => [
-                                  `${value} facilities (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`, 
-                                  language === 'th' ? 'จำนวน' : 'Count'
-                                ]} 
-                                labelFormatter={(label, payload) => {
-                                  if (payload && payload[0]) {
-                                    const dataIndex = payload[0].payload;
-                                    return dataIndex.name;
-                                  }
-                                  return label;
-                                }}
-                              />
-                            </PieChart>
-                          </ResponsiveContainer>
-                        </div>
-                      </div>
-                      
-                      {/* Right Column - Details */}
-                      <div className="space-y-2">
-                        <h4 className="font-medium text-gray-700 mb-3">
-                          {language === 'th' ? 'รายละเอียด' : 'Details'}
-                        </h4>
-                        <div className="space-y-3">
-                          {disaggregationData.facilityType.map((item, index) => (
-                            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                              <div className="flex items-center">
-                                <div 
-                                  className="w-4 h-4 rounded mr-3 flex-shrink-0" 
-                                  style={{ backgroundColor: item.fill }}
-                                ></div>
-                                <span className="text-sm font-medium text-gray-800">{item.name}</span>
-                              </div>
-                              <div className="text-right">
-                                <div className="text-sm font-bold text-gray-900">{item.value}</div>
-                                <div className="text-xs text-gray-500">{item.percentage.toFixed(1)}%</div>
-                                <div className="text-xs text-blue-600">{item.facilitiesPer10k?.toFixed(1)} per 10k</div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                    <div className="h-96">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                          data={disaggregationData.facilityType}
+                          layout="horizontal"
+                          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            type="number" 
+                            tickFormatter={(value) => `${value}`}
+                            domain={[0, 'dataMax']}
+                          />
+                          <YAxis 
+                            type="category" 
+                            dataKey="name" 
+                            width={200}
+                            tick={{ fontSize: 12 }}
+                            interval={0}
+                          />
+                          <Tooltip 
+                            formatter={(value, name) => [
+                              `${value} facilities (${((value / disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`,
+                              language === 'th' ? 'จำนวน' : 'Count'
+                            ]}
+                            labelFormatter={(label) => label}
+                          />
+                          <Bar 
+                            dataKey="value" 
+                            radius={[0, 4, 4, 0]}
+                            fill="#2563eb"
+                          >
+                            {disaggregationData.facilityType.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.fill} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
                     </div>
                   </div>
                 )}
