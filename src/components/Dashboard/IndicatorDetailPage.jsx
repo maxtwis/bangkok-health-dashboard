@@ -1,4 +1,4 @@
-// Complete IndicatorDetailPage.jsx - With all disaggregations preserved - Original UI
+// Clean IndicatorDetailPage.jsx - No maps, fixed errors
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
@@ -19,6 +19,57 @@ const IndicatorDetailPage = ({
   const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicatorDetails();
   const [activeTab, setActiveTab] = useState('overview');
 
+  // FIXED: Define reverse indicators as OBJECT, not Set or Array, to avoid .includes errors
+  const reverseIndicators = {
+    'unemployment_rate': true,
+    'vulnerable_employment': true,
+    'food_insecurity_moderate': true,
+    'food_insecurity_severe': true,
+    'work_injury_fatal': true,
+    'work_injury_non_fatal': true,
+    'catastrophic_health_spending_household': true,
+    'health_spending_over_10_percent': true,
+    'health_spending_over_25_percent': true,
+    'medical_consultation_skip_cost': true,
+    'medical_treatment_skip_cost': true,
+    'prescribed_medicine_skip_cost': true,
+    'housing_overcrowding': true,
+    'disaster_experience': true,
+    'violence_physical': true,
+    'violence_psychological': true,
+    'violence_sexual': true,
+    'discrimination_experience': true,
+    'community_murder': true,
+    'alcohol_consumption': true,
+    'tobacco_use': true,
+    'obesity': true,
+    'any_chronic_disease': true,
+    'diabetes': true,
+    'hypertension': true,
+    'gout': true,
+    'chronic_kidney_disease': true,
+    'cancer': true,
+    'high_cholesterol': true,
+    'ischemic_heart_disease': true,
+    'liver_disease': true,
+    'stroke': true,
+    'hiv': true,
+    'mental_health': true,
+    'allergies': true,
+    'bone_joint_disease': true,
+    'respiratory_disease': true,
+    'emphysema': true,
+    'anemia': true,
+    'stomach_ulcer': true,
+    'epilepsy': true,
+    'intestinal_disease': true,
+    'paralysis': true,
+    'dementia': true,
+    'cardiovascular_diseases': true,
+    'metabolic_diseases': true,
+    'multiple_chronic_conditions': true
+  };
+
   // Get indicator metadata from CSV via hook
   const indicatorInfo = useMemo(() => {
     if (indicatorDetailsLoading) {
@@ -33,27 +84,12 @@ const IndicatorDetailPage = ({
     }
 
     const csvInfo = getIndicatorInfo(indicator, language);
-    
-    // Define reverse indicators (diseases and problems are bad when high) - USE ARRAY NOT SET
-    const reverseIndicators = [
-      'unemployment_rate', 'vulnerable_employment', 'food_insecurity_moderate', 'food_insecurity_severe',
-      'work_injury_fatal', 'work_injury_non_fatal', 'catastrophic_health_spending_household', 
-      'health_spending_over_10_percent', 'health_spending_over_25_percent', 'medical_consultation_skip_cost',
-      'medical_treatment_skip_cost', 'prescribed_medicine_skip_cost', 'housing_overcrowding', 
-      'disaster_experience', 'violence_physical', 'violence_psychological', 'violence_sexual',
-      'discrimination_experience', 'community_murder', 'alcohol_consumption', 'tobacco_use', 'obesity',
-      'any_chronic_disease', 'diabetes', 'hypertension', 'gout', 'chronic_kidney_disease', 'cancer',
-      'high_cholesterol', 'ischemic_heart_disease', 'liver_disease', 'stroke', 'hiv', 'mental_health',
-      'allergies', 'bone_joint_disease', 'respiratory_disease', 'emphysema', 'anemia', 'stomach_ulcer',
-      'epilepsy', 'intestinal_disease', 'paralysis', 'dementia', 'cardiovascular_diseases',
-      'metabolic_diseases', 'multiple_chronic_conditions'
-    ];
 
     return {
       name: csvInfo.name,
       description: csvInfo.description,
       calculation: csvInfo.calculation,
-      interpretation: reverseIndicators.includes(indicator)
+      interpretation: reverseIndicators[indicator]
         ? (language === 'th' 
             ? 'ค่าที่ต่ำกว่าแสดงถึงผลลัพธ์ที่ดีกว่า (ปัญหาน้อยกว่า)'
             : 'Lower values indicate better outcomes (fewer problems)')
@@ -61,9 +97,9 @@ const IndicatorDetailPage = ({
             ? 'ค่าที่สูงกว่าแสดงถึงผลลัพธ์ที่ดีกว่า'
             : 'Higher values indicate better outcomes'),
       target: csvInfo.target || (language === 'th' ? 'ไม่ระบุ' : 'Not specified'),
-      reverse: reverseIndicators.includes(indicator)
+      reverse: Boolean(reverseIndicators[indicator])
     };
-  }, [indicator, language, indicatorDetailsLoading, getIndicatorInfo]);
+  }, [indicator, language, indicatorDetailsLoading, getIndicatorInfo, reverseIndicators]);
 
   // Get current indicator data
   const indicatorData = getIndicatorData(domain, district, populationGroup);
@@ -121,8 +157,8 @@ const IndicatorDetailPage = ({
 
   // Calculate facility type breakdown for health_service_access
   function calculateFacilityTypeData() {
-    if (!healthFacilitiesData) {
-      console.warn('healthFacilitiesData is not available');
+    if (!healthFacilitiesData || !Array.isArray(healthFacilitiesData)) {
+      console.warn('healthFacilitiesData is not available or not an array');
       return [];
     }
 
@@ -130,16 +166,22 @@ const IndicatorDetailPage = ({
       // Filter facilities for current district
       const facilitiesForDistrict = district === 'Bangkok Overall' 
         ? healthFacilitiesData 
-        : healthFacilitiesData.filter(facility => facility.dname === district);
+        : healthFacilitiesData.filter(facility => facility && facility.dname === district);
+
+      if (!facilitiesForDistrict || facilitiesForDistrict.length === 0) {
+        return [];
+      }
 
       // Group by facility type
       const typeGroups = {};
       facilitiesForDistrict.forEach(facility => {
-        const type = facility.type_;
-        if (!typeGroups[type]) {
-          typeGroups[type] = [];
+        if (facility && facility.type_) {
+          const type = facility.type_;
+          if (!typeGroups[type]) {
+            typeGroups[type] = [];
+          }
+          typeGroups[type].push(facility);
         }
-        typeGroups[type].push(facility);
       });
 
       // Convert to chart data
@@ -197,15 +239,15 @@ const IndicatorDetailPage = ({
       }
       
       if (occupationStatus === 1) {
-        if (occupationType && occupationType.includes('เกษตร')) {
+        if (occupationType && occupationType.includes && occupationType.includes('เกษตร')) {
           return language === 'th' ? 'เกษตรกรรม' : 'Agriculture';
-        } else if (occupationType && (occupationType.includes('ค้าขาย') || occupationType.includes('ธุรกิจ'))) {
+        } else if (occupationType && occupationType.includes && (occupationType.includes('ค้าขาย') || occupationType.includes('ธุรกิจ'))) {
           return language === 'th' ? 'ค้าขาย/ธุรกิจ' : 'Trade/Business';
-        } else if (occupationType && occupationType.includes('รับจ้าง')) {
+        } else if (occupationType && occupationType.includes && occupationType.includes('รับจ้าง')) {
           return language === 'th' ? 'รับจ้าง' : 'Daily Labor';
-        } else if (occupationType && occupationType.includes('ข้าราชการ')) {
+        } else if (occupationType && occupationType.includes && occupationType.includes('ข้าราชการ')) {
           return language === 'th' ? 'ข้าราชการ' : 'Government';
-        } else if (occupationType && occupationType.includes('พนักงานบริษัท')) {
+        } else if (occupationType && occupationType.includes && occupationType.includes('พนักงานบริษัท')) {
           return language === 'th' ? 'พนักงานบริษัท' : 'Company Employee';
         } else {
           return language === 'th' ? 'อื่นๆ' : 'Others';
@@ -232,15 +274,17 @@ const IndicatorDetailPage = ({
       const groups = {};
       
       records.forEach(record => {
-        const group = groupFunction(record);
-        if (!groups[group]) {
-          groups[group] = { total: 0, positive: 0 };
-        }
-        groups[group].total++;
-        
-        // Calculate positive cases based on indicator
-        if (calculateIndicatorPositive(record, indicator)) {
-          groups[group].positive++;
+        if (record) {
+          const group = groupFunction(record);
+          if (!groups[group]) {
+            groups[group] = { total: 0, positive: 0 };
+          }
+          groups[group].total++;
+          
+          // Calculate positive cases based on indicator
+          if (calculateIndicatorPositive(record, indicator)) {
+            groups[group].positive++;
+          }
         }
       });
 
@@ -263,6 +307,8 @@ const IndicatorDetailPage = ({
 
   // Calculate if a record meets the indicator criteria
   function calculateIndicatorPositive(record, indicator) {
+    if (!record) return false;
+    
     switch (indicator) {
       case 'unemployment_rate':
         return record.occupation_status === 0;
@@ -323,6 +369,19 @@ const IndicatorDetailPage = ({
       default:
         return false;
     }
+  }
+
+  if (indicatorDetailsLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-700 mb-2">
+            {language === 'th' ? 'กำลังโหลดข้อมูลตัวชี้วัด...' : 'Loading indicator details...'}
+          </h2>
+        </div>
+      </div>
+    );
   }
 
   if (!currentIndicator) {
@@ -670,8 +729,8 @@ const IndicatorDetailPage = ({
 
                 {/* No Data Message */}
                 {(!disaggregationData || 
-                  (disaggregationData.age.length === 0 && 
-                   disaggregationData.facilityType.length === 0)) && (
+                  ((!disaggregationData.age || disaggregationData.age.length === 0) && 
+                   (!disaggregationData.facilityType || disaggregationData.facilityType.length === 0))) && (
                   <div className="text-center py-12">
                     <div className="bg-gray-50 rounded-lg p-8 max-w-md mx-auto">
                       <div className="text-gray-400 mb-4">
@@ -713,7 +772,7 @@ const IndicatorDetailPage = ({
                         </dt>
                         <dd className="text-sm text-gray-900">
                           {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-                            'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator)
+                            'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].indexOf(indicator) >= 0
                             ? (language === 'th' ? 'ตัวชี้วัดทรัพยากรสุขภาพ' : 'Healthcare Supply Indicator')
                             : (language === 'th' ? 'ตัวชี้วัดจากการสำรวจ' : 'Survey-based Indicator')
                           }
