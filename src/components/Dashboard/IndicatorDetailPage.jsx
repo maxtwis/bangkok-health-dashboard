@@ -189,74 +189,53 @@ const IndicatorDetailPage = ({
 
   // Calculate facility type breakdown for health_service_access
   function calculateFacilityTypeData() {
-    console.log('=== calculateFacilityTypeData called ===');
-    console.log('healthFacilitiesData:', healthFacilitiesData);
-    console.log('healthFacilitiesData length:', healthFacilitiesData?.length);
-    console.log('district:', district);
-    
     if (!healthFacilitiesData || !Array.isArray(healthFacilitiesData)) {
-      console.warn('healthFacilitiesData is not available or not an array');
       return [];
     }
 
     try {
-      // Log sample facility to understand data structure
-      if (healthFacilitiesData.length > 0) {
-        console.log('Sample facility:', healthFacilitiesData[0]);
-      }
-
       // Filter facilities for current district
       let facilitiesForDistrict;
       if (district === 'Bangkok Overall') {
         facilitiesForDistrict = healthFacilitiesData;
-        console.log('Using all facilities for Bangkok Overall');
       } else {
         facilitiesForDistrict = healthFacilitiesData.filter(facility => {
-          if (!facility) return false;
-          const match = facility.dname === district;
-          if (!match) {
-            console.log('Facility district mismatch:', facility.dname, 'vs', district);
-          }
-          return match;
+          return facility && facility.dname === district;
         });
-        console.log('Filtered facilities for district:', facilitiesForDistrict.length);
       }
 
       if (!facilitiesForDistrict || facilitiesForDistrict.length === 0) {
-        console.warn('No facilities found for district:', district);
         return [];
       }
 
       // Group by facility type
       const typeGroups = {};
-      facilitiesForDistrict.forEach((facility, index) => {
-        if (facility && facility.type) { // Changed from type_ to type
+      facilitiesForDistrict.forEach((facility) => {
+        if (facility && facility.type) {
           const type = facility.type;
-          if (index < 5) { // Log first 5 for debugging
-            console.log(`Facility ${index}:`, { type: type, name: facility.Name });
-          }
           if (!typeGroups[type]) {
             typeGroups[type] = [];
           }
           typeGroups[type].push(facility);
-        } else {
-          if (index < 5) {
-            console.log(`Facility ${index} missing type:`, facility);
-          }
         }
       });
 
-      console.log('Type groups:', Object.keys(typeGroups).map(key => ({ type: key, count: typeGroups[key].length })));
-
       // Convert to chart data with correct Thai translations
       const facilityTypeMap = {
+        // Handle string values from CSV
+        'clinic': language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
+        'community_healthcenter': language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
+        'healthcenter': language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
+        'hospital_private': language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
+        'hospital_public': language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
+        'pharmacy_nhso': language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)',
+        // Also handle numeric values as fallback
         '1': language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
         '2': language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center', 
         '3': language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
         '4': language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
         '5': language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
         '6': language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)',
-        // Also handle numeric types
         1: language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
         2: language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
         3: language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
@@ -275,7 +254,7 @@ const IndicatorDetailPage = ({
         const facilitiesPer10k = approximatePopulation > 0 ? (count / approximatePopulation) * 10000 : 0;
         
         return {
-          name: facilityTypeMap[type] || `Type ${type}`,
+          name: facilityTypeMap[type] || type, // Fallback to original type name if not found
           value: count,
           percentage: percentage,
           facilitiesPer10k: facilitiesPer10k,
@@ -283,7 +262,6 @@ const IndicatorDetailPage = ({
         };
       }).sort((a, b) => b.value - a.value);
 
-      console.log('Final facility type data:', result);
       return result;
       
     } catch (error) {
@@ -696,21 +674,6 @@ const IndicatorDetailPage = ({
                           </div>
                         ))}
                       </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Debug info for health_service_access */}
-                {indicator === 'health_service_access' && (
-                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded">
-                    <h4 className="font-medium text-yellow-800 mb-2">Debug Info</h4>
-                    <div className="text-xs text-yellow-700 space-y-1">
-                      <div>Indicator: {indicator}</div>
-                      <div>healthFacilitiesData available: {healthFacilitiesData ? 'Yes' : 'No'}</div>
-                      <div>healthFacilitiesData length: {healthFacilitiesData?.length || 0}</div>
-                      <div>District: {district}</div>
-                      <div>Disaggregation data: {disaggregationData ? 'Available' : 'Not available'}</div>
-                      <div>Facility type data length: {disaggregationData?.facilityType?.length || 0}</div>
                     </div>
                   </div>
                 )}
