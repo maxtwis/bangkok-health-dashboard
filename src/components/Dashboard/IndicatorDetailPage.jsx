@@ -191,6 +191,7 @@ const IndicatorDetailPage = ({
   function calculateFacilityTypeData() {
     console.log('=== calculateFacilityTypeData called ===');
     console.log('healthFacilitiesData:', healthFacilitiesData);
+    console.log('healthFacilitiesData length:', healthFacilitiesData?.length);
     console.log('district:', district);
     
     if (!healthFacilitiesData || !Array.isArray(healthFacilitiesData)) {
@@ -199,15 +200,27 @@ const IndicatorDetailPage = ({
     }
 
     try {
-      // Filter facilities for current district
-      const facilitiesForDistrict = district === 'Bangkok Overall' 
-        ? healthFacilitiesData 
-        : healthFacilitiesData.filter(facility => {
-            console.log('Facility:', facility, 'District match:', facility && facility.dname === district);
-            return facility && facility.dname === district;
-          });
+      // Log sample facility to understand data structure
+      if (healthFacilitiesData.length > 0) {
+        console.log('Sample facility:', healthFacilitiesData[0]);
+      }
 
-      console.log('Facilities for district:', facilitiesForDistrict.length);
+      // Filter facilities for current district
+      let facilitiesForDistrict;
+      if (district === 'Bangkok Overall') {
+        facilitiesForDistrict = healthFacilitiesData;
+        console.log('Using all facilities for Bangkok Overall');
+      } else {
+        facilitiesForDistrict = healthFacilitiesData.filter(facility => {
+          if (!facility) return false;
+          const match = facility.dname === district;
+          if (!match) {
+            console.log('Facility district mismatch:', facility.dname, 'vs', district);
+          }
+          return match;
+        });
+        console.log('Filtered facilities for district:', facilitiesForDistrict.length);
+      }
 
       if (!facilitiesForDistrict || facilitiesForDistrict.length === 0) {
         console.warn('No facilities found for district:', district);
@@ -216,21 +229,34 @@ const IndicatorDetailPage = ({
 
       // Group by facility type
       const typeGroups = {};
-      facilitiesForDistrict.forEach(facility => {
-        if (facility && facility.type_) {
-          const type = facility.type_;
-          console.log('Processing facility type:', type);
+      facilitiesForDistrict.forEach((facility, index) => {
+        if (facility && facility.type) { // Changed from type_ to type
+          const type = facility.type;
+          if (index < 5) { // Log first 5 for debugging
+            console.log(`Facility ${index}:`, { type: type, name: facility.Name });
+          }
           if (!typeGroups[type]) {
             typeGroups[type] = [];
           }
           typeGroups[type].push(facility);
+        } else {
+          if (index < 5) {
+            console.log(`Facility ${index} missing type:`, facility);
+          }
         }
       });
 
-      console.log('Type groups:', typeGroups);
+      console.log('Type groups:', Object.keys(typeGroups).map(key => ({ type: key, count: typeGroups[key].length })));
 
       // Convert to chart data with correct Thai translations
       const facilityTypeMap = {
+        '1': language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
+        '2': language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center', 
+        '3': language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
+        '4': language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
+        '5': language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
+        '6': language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)',
+        // Also handle numeric types
         1: language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
         2: language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
         3: language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
