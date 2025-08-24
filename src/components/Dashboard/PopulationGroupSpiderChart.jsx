@@ -302,15 +302,15 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                         {t(`populationGroups.${group.value}`)}
                       </h5>
                     </div>
-                    <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                    <div className="space-y-1">
                       {groupScores.map((item, index) => (
-                        <div key={item.domain} className="flex justify-between items-center text-xs">
+                        <div key={item.domain} className="flex items-center text-xs">
                           <span className={`font-medium ${
                             index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
                           }`} title={item.domain}>
                             {index + 1}. {item.domain}
                           </span>
-                          <span className="font-semibold text-gray-900 ml-2">{item.score.toFixed(0)}%</span>
+                          <span className="font-semibold text-gray-900 ml-3">{item.score.toFixed(0)}%</span>
                         </div>
                       ))}
                     </div>
