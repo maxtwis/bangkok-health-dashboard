@@ -245,9 +245,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
         {/* Population Group Filter Checkboxes - Only show if not hidden */}
         {!hideCheckboxes && (
           <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-            <h4 className="text-sm font-medium text-gray-700 mb-3">
-              {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
-            </h4>
             <div className="grid grid-cols-2 gap-2">
               {populationGroups.map(group => (
                 <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded p-2 transition-colors">
