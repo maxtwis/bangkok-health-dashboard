@@ -196,8 +196,75 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
   };
 
   return (
-    <div className="w-full"> 
-    {/* Check if we have valid data */}
+    <div className="w-full">
+      {/* Header Section - Conditional checkboxes */}
+      <div className="mb-6">
+        <div className="flex justify-between items-start mb-3">
+          <div className="flex-1 pr-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              {t('ui.spiderChartTitle')}
+            </h3>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              {t('ui.spiderChartDescription')} {
+                selectedDistrict === 'Bangkok Overall' && language === 'th'
+                  ? t('ui.bangkokOverall') 
+                  : selectedDistrict
+              }
+            </p>
+          </div>
+          
+          {/* Scale Toggle - Compact */}
+          <div className="flex bg-gray-100 rounded-lg p-1 flex-shrink-0">
+            <button
+              onClick={() => setScaleMode('dynamic')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+                scaleMode === 'dynamic' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {t('ui.dynamicScale')}
+            </button>
+            <button
+              onClick={() => setScaleMode('full')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+                scaleMode === 'full' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {t('ui.fullScale')}
+            </button>
+          </div>
+        </div>
+        
+        {/* Population Group Filter Checkboxes - Only show if not hidden */}
+        {!hideCheckboxes && (
+          <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+            <div className="grid grid-cols-2 gap-2">
+              {populationGroups.map(group => (
+                <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded p-2 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={visibleGroups[group.value]}
+                    onChange={() => handleGroupToggle(group.value)}
+                    className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                  />
+                  <div 
+                    className="w-3 h-3 rounded-full flex-shrink-0" 
+                    style={{ backgroundColor: group.color }}
+                  ></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    {t(`populationGroups.${group.value}`)}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Check if we have valid data */}
       {allValues.length === 0 || allValues.every(val => val === 0) ? (
         <div className="h-96 flex items-center justify-center text-gray-500">
           <div className="text-center">
