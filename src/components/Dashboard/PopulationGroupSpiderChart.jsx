@@ -211,31 +211,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
         </p>
       </div>
 
-      {/* MOVED CHECKBOXES ABOVE CHART - Only show if not hidden */}
-      {!hideCheckboxes && (
-        <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-6">
-          <div className="flex items-center gap-2 flex-wrap">
-            {/* Checkboxes in single row - more compact */}
-            {populationGroups.map(group => (
-              <label key={group.value} className="flex items-center space-x-1.5 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors flex-shrink-0">
-                <input
-                  type="checkbox"
-                  checked={visibleGroups[group.value]}
-                  onChange={() => handleGroupToggle(group.value)}
-                  className="w-3.5 h-3.5 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-1"
-                  style={{ 
-                    accentColor: group.color,
-                    backgroundColor: visibleGroups[group.value] ? group.color : 'white' 
-                  }}
-                />
-                <span className="text-xs font-medium text-gray-700 whitespace-nowrap">
-                  {t(`populationGroups.${group.value}`)}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Checkboxes are handled in parent component (index.jsx) */}
 
       {/* SCALE TOGGLE - Now positioned above chart */}
       <div className="flex justify-between items-center mb-4">
