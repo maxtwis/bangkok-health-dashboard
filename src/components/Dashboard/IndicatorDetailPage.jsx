@@ -1,1390 +1,1084 @@
-import Papa from 'papaparse';
-import _ from 'lodash';
+import React, { useState, useMemo } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
+import useIndicatorDetails from '../../hooks/useIndicatorDetails';
 
-class BasicSDHEProcessor {
-  constructor() {
-    this.surveyData = [];
-    this.healthSupplyData = [];
-    this.healthFacilitiesData = [];
-    this.districtPopulationData = [];
-    this.communityHealthWorkerData = [];
-    this.communityPopulationData = [];
-    this.normalPopulationData = [];
-    this.normalPopulationDistrictData = [];
-    this.sdheResults = {};
-    this.districtCodeMap = this.createDistrictCodeMap();
-    this.indicatorMappings = this.createIndicatorMappings();
-    this.MINIMUM_SAMPLE_SIZE = 5; // Minimum sample size requirement
-  }
+const IndicatorDetailPage = ({ 
+  indicator, 
+  domain, 
+  district, 
+  populationGroup, 
+  onBack, 
+  surveyData,
+  getIndicatorData,
+  healthFacilitiesData
+}) => {
+  const { t, language } = useLanguage();
+  const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicatorDetails();
+  const [activeTab, setActiveTab] = useState('overview');
 
-  createDistrictCodeMap() {
-    return {
-      1001: "พระนคร", 1002: "ดุสิต", 1003: "หนองจอก", 1004: "บางรัก",
-      1005: "บางเขน", 1006: "บางกะปิ", 1007: "ปทุมวัน", 1008: "ป้อมปราบศัตรูพ่าย",
-      1009: "พระโขนง", 1010: "มีนบุรี", 1011: "ลาดกระบัง", 1012: "ยานนาวา",
-      1013: "สัมพันธวงศ์", 1014: "พญาไท", 1015: "ธนบุรี", 1016: "บางกอกใหญ่",
-      1017: "ห้วยขวาง", 1018: "คลองสาน", 1019: "ตลิ่งชัน", 1020: "บางกอกน้อย",
-      1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฎร์บูรณะ",
-      1025: "บางพลัด", 1026: "ดินแดง", 1027: "บึงกุ่ม", 1028: "สาทร",
-      1029: "บางซื่อ", 1030: "จตุจักร", 1031: "บางคอแหลม", 1032: "ประเวศ",
-      1033: "คลองเตย", 1034: "สวนหลวง", 1035: "จอมทอง", 1036: "ดอนเมือง",
-      1037: "ราชเทวี", 1038: "ลาดพร้าว", 1039: "วัฒนา", 1040: "บางแค",
-      1041: "หลักสี่", 1042: "สายไหม", 1043: "คันนายาว", 1044: "สะพานสูง",
-      1045: "วังทองหลาง", 1046: "คลองสามวา", 1047: "บางนา", 1048: "ทวีวัฒนา",
-      1049: "ทุ่งครุ", 1050: "บางบอน"
-    };
-  }
+  const reverseIndicators = {
+    'unemployment_rate': true,
+    'vulnerable_employment': true,
+    'food_insecurity_moderate': true,
+    'food_insecurity_severe': true,
+    'work_injury_fatal': true,
+    'work_injury_non_fatal': true,
+    'catastrophic_health_spending_household': true,
+    'health_spending_over_10_percent': true,
+    'health_spending_over_25_percent': true,
+    'medical_consultation_skip_cost': true,
+    'medical_treatment_skip_cost': true,
+    'prescribed_medicine_skip_cost': true,
+    'housing_overcrowding': true,
+    'disaster_experience': true,
+    'violence_physical': true,
+    'violence_psychological': true,
+    'violence_sexual': true,
+    'discrimination_experience': true,
+    'community_murder': true,
+    'alcohol_consumption': true,
+    'tobacco_use': true,
+    'obesity': true,
+    'any_chronic_disease': true,
+    'diabetes': true,
+    'hypertension': true,
+    'gout': true,
+    'chronic_kidney_disease': true,
+    'cancer': true,
+    'high_cholesterol': true,
+    'ischemic_heart_disease': true,
+    'liver_disease': true,
+    'stroke': true,
+    'hiv': true,
+    'mental_health': true,
+    'allergies': true,
+    'bone_joint_disease': true,
+    'respiratory_disease': true,
+    'emphysema': true,
+    'anemia': true,
+    'stomach_ulcer': true,
+    'epilepsy': true,
+    'intestinal_disease': true,
+    'paralysis': true,
+    'dementia': true,
+    'cardiovascular_diseases': true,
+    'metabolic_diseases': true,
+    'multiple_chronic_conditions': true
+  };
 
-  async loadNormalPopulationDistrictData() {
-    try {
-      const normalPopDistrictResponse = await fetch('/data/normal_population_indicator_district.csv');
-      if (!normalPopDistrictResponse.ok) {
-        throw new Error('Could not load normal_population_indicator_district.csv');
-      }
-      
-      const normalPopDistrictCsv = await normalPopDistrictResponse.text();
-      const normalPopDistrictParsed = Papa.parse(normalPopDistrictCsv, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true
-      });
-      
-      this.normalPopulationDistrictData = normalPopDistrictParsed.data;
-      
-      this.normalPopulationDistrictLookup = {};
-      this.normalPopulationDistrictData.forEach(row => {
-        if (row.indicator && row.dcode) {
-          const key = `${row.dcode}_${row.indicator}`;
-          this.normalPopulationDistrictLookup[key] = row.score;
-        }
-      });
-      
-    } catch (error) {
-      this.normalPopulationDistrictData = [];
-      this.normalPopulationDistrictLookup = {};
-    }
-  }
-
-  async loadNormalPopulationData() {
-    try {
-      const normalPopResponse = await fetch('/data/normal_population_indicator.csv');
-      if (!normalPopResponse.ok) {
-        throw new Error('Could not load normal_population_indicator.csv');
-      }
-      
-      const normalPopCsv = await normalPopResponse.text();
-      const normalPopParsed = Papa.parse(normalPopCsv, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true
-      });
-      
-      this.normalPopulationData = normalPopParsed.data;
-      
-      this.normalPopulationLookup = {};
-      this.normalPopulationData.forEach(row => {
-        if (row.indicator) {
-          this.normalPopulationLookup[row.indicator] = row.score;
-        }
-      });
-      
-      await this.loadNormalPopulationDistrictData();
-      
-    } catch (error) {
-      this.normalPopulationData = [];
-      this.normalPopulationLookup = {};
-    }
-  }
-
-  async loadHealthcareSupplyData() {
-    try {
-      const healthSupplyResponse = await fetch('/data/health_supply.csv');
-      if (!healthSupplyResponse.ok) {
-        throw new Error('Could not load health_supply.csv');
-      }
-      const healthSupplyCsv = await healthSupplyResponse.text();
-      const healthSupplyParsed = Papa.parse(healthSupplyCsv, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true
-      });
-      this.healthSupplyData = healthSupplyParsed.data;
-
-      const healthFacilitiesResponse = await fetch('/data/health_facilities.csv');
-      if (!healthFacilitiesResponse.ok) {
-        throw new Error('Could not load health_facilities.csv');
-      }
-      const healthFacilitiesCsv = await healthFacilitiesResponse.text();
-      const healthFacilitiesParsed = Papa.parse(healthFacilitiesCsv, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true
-      });
-      this.healthFacilitiesData = healthFacilitiesParsed.data;
-
-      const districtPopResponse = await fetch('/data/district_population.csv');
-      if (!districtPopResponse.ok) {
-        throw new Error('Could not load district_population.csv');
-      }
-      const districtPopCsv = await districtPopResponse.text();
-      const districtPopParsed = Papa.parse(districtPopCsv, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true
-      });
-      this.districtPopulationData = districtPopParsed.data;
-
-      const chwResponse = await fetch('/data/community_health_worker.csv');
-      if (!chwResponse.ok) {
-        throw new Error('Could not load community_health_worker.csv');
-      }
-      const chwCsv = await chwResponse.text();
-      const chwParsed = Papa.parse(chwCsv, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true
-      });
-      this.communityHealthWorkerData = chwParsed.data;
-
-      const commPopResponse = await fetch('/data/community_population.csv');
-      if (!commPopResponse.ok) {
-        throw new Error('Could not load community_population.csv');
-      }
-      const commPopCsv = await commPopResponse.text();
-      const commPopParsed = Papa.parse(commPopCsv, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true
-      });
-      this.communityPopulationData = commPopParsed.data;
-
-      await this.loadNormalPopulationData();
-
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  calculateHealthcareSupplyIndicators(districtCode, districtName) {
-    const results = {};
-
-    try {
-      const districtPopulation = this.districtPopulationData
-        .filter(record => record.dcode === districtCode)
-        .reduce((sum, record) => sum + (record.population || 0), 0);
-
-      if (districtPopulation === 0) {
-        return {
-          doctor_per_population: { value: 0, sample_size: 0 },
-          nurse_per_population: { value: 0, sample_size: 0 },
-          healthworker_per_population: { value: 0, sample_size: 0 },
-          community_healthworker_per_population: { value: 0, sample_size: 0 },
-          bed_per_population: { value: 0, sample_size: 0 }
-        };
-      }
-
-      const districtHealthFacilities = this.healthSupplyData.filter(facility => 
-        facility.dcode === districtCode
-      );
-
-      const totalDoctors = districtHealthFacilities.reduce((sum, facility) => 
-        sum + (facility.doctor_count || 0), 0);
-      const totalNurses = districtHealthFacilities.reduce((sum, facility) => 
-        sum + (facility.nurse_count || 0), 0);
-      const totalHealthWorkers = districtHealthFacilities.reduce((sum, facility) => 
-        sum + (facility.healthworker_count || 0), 0);
-      const totalBeds = districtHealthFacilities.reduce((sum, facility) => 
-        sum + (facility.bed_count || 0), 0);
-
-      results.doctor_per_population = {
-        value: parseFloat(((totalDoctors / districtPopulation) * 1000).toFixed(2)),
-        sample_size: districtHealthFacilities.length,
-        population: districtPopulation,
-        absolute_count: totalDoctors
-      };
-
-      results.nurse_per_population = {
-        value: parseFloat(((totalNurses / districtPopulation) * 1000).toFixed(2)),
-        sample_size: districtHealthFacilities.length,
-        population: districtPopulation,
-        absolute_count: totalNurses
-      };
-
-      results.healthworker_per_population = {
-        value: parseFloat(((totalHealthWorkers / districtPopulation) * 10000).toFixed(2)),
-        sample_size: districtHealthFacilities.length,
-        population: districtPopulation,
-        absolute_count: totalHealthWorkers
-      };
-
-      results.bed_per_population = {
-        value: parseFloat(((totalBeds / districtPopulation) * 10000).toFixed(2)),
-        sample_size: districtHealthFacilities.length,
-        population: districtPopulation,
-        absolute_count: totalBeds
-      };
-
-      const districtCHW = this.communityHealthWorkerData.find(record => 
-        record.dcode === districtCode
-      );
-      
-      const communityPopulation = this.communityPopulationData
-        .filter(record => record.dcode === districtCode)
-        .reduce((sum, record) => sum + (record.community_population_count || 0), 0);
-
-      if (districtCHW && communityPopulation > 0) {
-        results.community_healthworker_per_population = {
-          value: parseFloat(((districtCHW.community_health_worker_count / communityPopulation) * 1000).toFixed(2)),
-          sample_size: 1,
-          population: communityPopulation,
-          absolute_count: districtCHW.community_health_worker_count
-        };
-      } else {
-        results.community_healthworker_per_population = {
-          value: 0,
-          sample_size: 0,
-          population: communityPopulation,
-          absolute_count: 0
-        };
-      }
-
-    } catch (error) {
+  // Get indicator metadata from CSV via hook
+  const indicatorInfo = useMemo(() => {
+    if (indicatorDetailsLoading) {
       return {
-        doctor_per_population: { value: 0, sample_size: 0 },
-        nurse_per_population: { value: 0, sample_size: 0 },
-        healthworker_per_population: { value: 0, sample_size: 0 },
-        community_healthworker_per_population: { value: 0, sample_size: 0 },
-        bed_per_population: { value: 0, sample_size: 0 }
+        name: indicator,
+        description: language === 'th' ? 'กำลังโหลด...' : 'Loading...',
+        calculation: language === 'th' ? 'กำลังโหลด...' : 'Loading...',
+        interpretation: language === 'th' ? 'กำลังโหลด...' : 'Loading...',
+        target: '...',
+        reverse: false
       };
     }
 
-    return results;
-  }
+    const csvInfo = getIndicatorInfo(indicator, language);
 
-  calculateHealthServiceAccess(districtCode, districtName) {
-    try {
-      const districtPopulation = this.districtPopulationData
-        .filter(record => record.dcode === districtCode)
-        .reduce((sum, record) => sum + (record.population || 0), 0);
-
-      if (districtPopulation === 0) {
-        return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
-      }
-
-      const districtHealthFacilities = this.healthFacilitiesData.filter(facility => 
-        facility.dcode === districtCode
-      );
-
-      const facilitiesPer10k = parseFloat(((districtHealthFacilities.length / districtPopulation) * 10000).toFixed(2));
-
-      return {
-        value: facilitiesPer10k,
-        sample_size: districtHealthFacilities.length,
-        population: districtPopulation,
-        absolute_count: districtHealthFacilities.length
-      };
-
-    } catch (error) {
-      return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
-    }
-  }
-
-  getDistrictSpecificPreCalculatedValue(indicator, districtName) {
-    const healthBehaviorsIndicators = ['alcohol_consumption', 'tobacco_use', 'physical_activity', 'obesity'];
-    
-    if (!healthBehaviorsIndicators.includes(indicator)) {
-      return null;
-    }
-
-    const districtCode = Object.keys(this.districtCodeMap).find(
-      code => this.districtCodeMap[code] === districtName
-    );
-
-    if (!districtCode || !this.normalPopulationDistrictLookup) {
-      return null;
-    }
-
-    const key = `${districtCode}_${indicator}`;
-    return this.normalPopulationDistrictLookup[key] || null;
-  }
-
-  createIndicatorMappings() {
     return {
-      economic_security: {
-        unemployment_rate: { 
-          field: 'occupation_status', 
-          condition: (val) => val === 0
-        },
-        employment_rate: { 
-          field: 'occupation_status', 
-          condition: (val) => val === 1
-        },
-        vulnerable_employment: { 
-          fields: ['occupation_status', 'occupation_contract'], 
-          condition: (r) => r.occupation_status === 1 && r.occupation_contract === 0
-        },
-        food_insecurity_moderate: { 
-          field: 'food_insecurity_1', 
-          condition: (val) => val === 1
-        },
-        food_insecurity_severe: { 
-          field: 'food_insecurity_2', 
-          condition: (val) => val === 1
-        },
-        work_injury_fatal: { 
-          field: 'occupation_injury', 
-          condition: (val) => val === 1
-        },
-        work_injury_non_fatal: { 
-          field: 'occupation_small_injury', 
-          condition: (val) => val === 1
-        },
-        catastrophic_health_spending_household: {
-          calculation: (records) => {
-            const validRecords = records.filter(r => 
-              r.hh_health_expense !== null && 
-              r.hh_health_expense !== undefined && 
-              r.income !== null && 
-              r.income !== undefined && 
-              r.income > 0
-            );
-            
-            if (validRecords.length === 0) return 0;
-            
-            const catastrophicHouseholds = validRecords.filter(r => {
-              const monthlyIncome = r.income_type === 1 ? r.income * 30 : r.income;
-              const healthSpendingRatio = (r.hh_health_expense / monthlyIncome) * 100;
-              return healthSpendingRatio > 40;
-            });
-            
-            return (catastrophicHouseholds.length / validRecords.length) * 100;
-          }
-        },
-        health_spending_over_10_percent: {
-          calculation: (records) => {
-            const validRecords = records.filter(r => 
-              r.health_expense !== null && 
-              r.health_expense !== undefined && 
-              r.income !== null && 
-              r.income !== undefined && 
-              r.income > 0
-            );
-            
-            if (validRecords.length === 0) return 0;
-            
-            const highSpenders = validRecords.filter(r => {
-              const monthlyIncome = r.income_type === 1 ? r.income * 30 : r.income;
-              const healthSpendingRatio = (r.health_expense / monthlyIncome) * 100;
-              return healthSpendingRatio > 10;
-            });
-            
-            return (highSpenders.length / validRecords.length) * 100;
-          }
-        },
-        health_spending_over_25_percent: {
-          calculation: (records) => {
-            const validRecords = records.filter(r => 
-              r.health_expense !== null && 
-              r.health_expense !== undefined && 
-              r.income !== null && 
-              r.income !== undefined && 
-              r.income > 0
-            );
-            
-            if (validRecords.length === 0) return 0;
-            
-            const veryHighSpenders = validRecords.filter(r => {
-              const monthlyIncome = r.income_type === 1 ? r.income * 30 : r.income;
-              const healthSpendingRatio = (r.health_expense / monthlyIncome) * 100;
-              return healthSpendingRatio > 25;
-            });
-            
-            return (veryHighSpenders.length / validRecords.length) * 100;
-          }
-        }
-      },
-
-      education: {
-        functional_literacy: { 
-          fields: ['speak', 'read', 'write', 'math'],
-          condition: (r) => r.speak === 1 && r.read === 1 && r.write === 1 && r.math === 1
-        },
-        primary_completion: { 
-          field: 'education', 
-          condition: (val) => val >= 2
-        },
-        secondary_completion: { 
-          field: 'education', 
-          condition: (val) => val >= 4
-        },
-        tertiary_completion: { 
-          field: 'education', 
-          condition: (val) => val >= 7
-        },
-        training_participation: { 
-          field: 'training', 
-          condition: (val) => val === 1
-        }
-      },
-
-      healthcare_access: {
-        health_coverage: { 
-          field: 'welfare', 
-          condition: (val) => val !== null && val !== undefined && val !== 'other' && val !== 'Other'
-        },
-        medical_consultation_skip_cost: { 
-          field: 'medical_skip_1', 
-          condition: (val) => val === 1
-        },
-        medical_treatment_skip_cost: { 
-          field: 'medical_skip_2', 
-          condition: (val) => val === 1
-        },
-        prescribed_medicine_skip_cost: { 
-          field: 'medical_skip_3', 
-          condition: (val) => val === 1
-        },
-        dental_access: {
-          fields: ['oral_health', 'oral_health_access'],
-          condition: (r) => r.oral_health === 1 && r.oral_health_access === 1
-        },
-        doctor_per_population: {
-          isSupplyIndicator: true
-        },
-        nurse_per_population: {
-          isSupplyIndicator: true
-        },
-        healthworker_per_population: {
-          isSupplyIndicator: true
-        },
-        community_healthworker_per_population: {
-          isSupplyIndicator: true
-        },
-        health_service_access: {
-          isSupplyIndicator: true
-        },
-        bed_per_population: {
-          isSupplyIndicator: true
-        }
-      },
-
-      physical_environment: {
-        electricity_access: { 
-          field: 'community_environment_4', 
-          condition: (val) => val !== 1
-        },
-        clean_water_access: { 
-          field: 'community_environment_3', 
-          condition: (val) => val !== 1
-        },
-        sanitation_facilities: { 
-          field: 'house_sink', 
-          condition: (val) => val === 1
-        },
-        waste_management: { 
-          field: 'community_environment_5', 
-          condition: (val) => val !== 1
-        },
-        housing_overcrowding: { 
-          fields: ['community_environment_1', 'community_environment_2'],
-          condition: (r) => r.community_environment_1 === 1 || r.community_environment_2 === 1
-        },
-        home_ownership: { 
-          field: 'house_status', 
-          condition: (val) => val === 1
-        },
-        disaster_experience: {
-          fields: ['community_disaster_1', 'community_disaster_2', 'community_disaster_3', 'community_disaster_4'],
-          condition: (r) => r.community_disaster_1 === 1 || r.community_disaster_2 === 1 || 
-                           r.community_disaster_3 === 1 || r.community_disaster_4 === 1
-        }
-      },
-
-      social_context: {
-        community_safety: { 
-          field: 'community_safety', 
-          calculation: (records) => {
-            const safetyResponses = records.filter(r => 
-              r.community_safety !== null && 
-              r.community_safety !== undefined && 
-              r.community_safety !== '' &&
-              (r.community_safety === 1 || r.community_safety === 2 || 
-              r.community_safety === 3 || r.community_safety === 4)
-            );
-            
-            if (safetyResponses.length === 0) return 0;
-            
-            const totalScore = safetyResponses.reduce((sum, r) => {
-              const safetyValue = r.community_safety;
-              
-              if (safetyValue === 4) return sum + 100;
-              if (safetyValue === 3) return sum + 75;
-              if (safetyValue === 2) return sum + 50;
-              if (safetyValue === 1) return sum + 25;
-              
-              return sum;
-            }, 0);
-            
-            const averageScore = totalScore / safetyResponses.length;
-            return averageScore;
-          }
-        },
-        violence_physical: { 
-          field: 'physical_violence', 
-          condition: (val) => val === 1
-        },
-        violence_psychological: { 
-          field: 'psychological_violence', 
-          condition: (val) => val === 1
-        },
-        violence_sexual: { 
-          field: 'sexual_violence', 
-          condition: (val) => val === 1
-        },
-        discrimination_experience: {
-          fields: ['discrimination_1', 'discrimination_2', 'discrimination_3', 'discrimination_4', 'discrimination_5'],
-          condition: (r) => r.discrimination_1 === 1 || r.discrimination_2 === 1 || r.discrimination_3 === 1 || 
-                           r.discrimination_4 === 1 || r.discrimination_5 === 1
-        },
-        social_support: { 
-          field: 'helper', 
-          condition: (val) => val === 1
-        },
-        community_murder: { 
-          field: 'community_murder', 
-          condition: (val) => val === 1
-        }
-      },
-
-      health_behaviors: {
-        alcohol_consumption: { 
-          fields: ['drink_status', 'drink_rate'],
-          condition: (r) => r.drink_status === 1 && (r.drink_rate === 1 || r.drink_rate === 2)
-        },
-        tobacco_use: { 
-          field: 'smoke_status', 
-          condition: (val) => val === 2 || val === 3,
-          ageFilter: (age) => age >= 15
-        },
-        physical_activity: { 
-          field: 'exercise_status', 
-          condition: (val) => val >= 2
-        },
-        obesity: {
-          calculation: (records) => {
-            const validBMI = records.filter(r => r.height > 0 && r.weight > 0);
-            if (validBMI.length === 0) return 0;
-            
-            const obese = validBMI.filter(r => {
-              const bmi = r.weight / Math.pow(r.height / 100, 2);
-              return bmi >= 30;
-            });
-            
-            return (obese.length / validBMI.length) * 100;
-          }
-        }
-      },
-
-      health_outcomes: {
-        any_chronic_disease: {
-          field: 'diseases_status',
-          condition: (val) => val === 1
-        },
-        
-        diabetes: {
-          fields: ['diseases_status', 'diseases_type/1'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/1'] === 1
-        },
-        hypertension: {
-          fields: ['diseases_status', 'diseases_type/2'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/2'] === 1
-        },
-        gout: {
-          fields: ['diseases_status', 'diseases_type/3'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/3'] === 1
-        },
-        chronic_kidney_disease: {
-          fields: ['diseases_status', 'diseases_type/4'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/4'] === 1
-        },
-        cancer: {
-          fields: ['diseases_status', 'diseases_type/5'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/5'] === 1
-        },
-        high_cholesterol: {
-          fields: ['diseases_status', 'diseases_type/6'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/6'] === 1
-        },
-        ischemic_heart_disease: {
-          fields: ['diseases_status', 'diseases_type/7'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/7'] === 1
-        },
-        liver_disease: {
-          fields: ['diseases_status', 'diseases_type/8'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/8'] === 1
-        },
-        stroke: {
-          fields: ['diseases_status', 'diseases_type/9'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/9'] === 1
-        },
-        hiv: {
-          fields: ['diseases_status', 'diseases_type/10'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/10'] === 1
-        },
-        mental_health: {
-          fields: ['diseases_status', 'diseases_type/11'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/11'] === 1
-        },
-        allergies: {
-          fields: ['diseases_status', 'diseases_type/12'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/12'] === 1
-        },
-        bone_joint_disease: {
-          fields: ['diseases_status', 'diseases_type/13'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/13'] === 1
-        },
-        respiratory_disease: {
-          fields: ['diseases_status', 'diseases_type/14'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/14'] === 1
-        },
-        emphysema: {
-          fields: ['diseases_status', 'diseases_type/15'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/15'] === 1
-        },
-        anemia: {
-          fields: ['diseases_status', 'diseases_type/16'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/16'] === 1
-        },
-        stomach_ulcer: {
-          fields: ['diseases_status', 'diseases_type/17'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/17'] === 1
-        },
-        epilepsy: {
-          fields: ['diseases_status', 'diseases_type/18'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/18'] === 1
-        },
-        intestinal_disease: {
-          fields: ['diseases_status', 'diseases_type/19'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/19'] === 1
-        },
-        paralysis: {
-          fields: ['diseases_status', 'diseases_type/20'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/20'] === 1
-        },
-        dementia: {
-          fields: ['diseases_status', 'diseases_type/21'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/21'] === 1
-        },
-
-        cardiovascular_diseases: {
-          calculation: (records) => {
-            const diseaseRecords = records.filter(r => r.diseases_status === 1);
-            if (diseaseRecords.length === 0) return 0;
-            
-            const cvdCases = diseaseRecords.filter(r => 
-              r['diseases_type/2'] === 1 || // Hypertension
-              r['diseases_type/6'] === 1 || // High cholesterol
-              r['diseases_type/7'] === 1 || // Ischemic heart disease
-              r['diseases_type/9'] === 1    // Stroke
-            );
-            
-            return (cvdCases.length / records.length) * 100;
-          }
-        },
-        
-        metabolic_diseases: {
-          calculation: (records) => {
-            const diseaseRecords = records.filter(r => r.diseases_status === 1);
-            if (diseaseRecords.length === 0) return 0;
-            
-            const metabolicCases = diseaseRecords.filter(r => 
-              r['diseases_type/1'] === 1 || // Diabetes
-              r['diseases_type/3'] === 1 || // Gout
-              r['diseases_type/6'] === 1    // High cholesterol
-            );
-            
-            return (metabolicCases.length / records.length) * 100;
-          }
-        },
-
-        multiple_chronic_conditions: {
-          calculation: (records) => {
-            const diseaseRecords = records.filter(r => r.diseases_status === 1);
-            if (diseaseRecords.length === 0) return 0;
-            
-            const multipleCCCases = diseaseRecords.filter(r => {
-              const diseaseCount = Object.keys(r)
-                .filter(key => key.startsWith('diseases_type/') && 
-                              key !== 'diseases_type/other' && 
-                              r[key] === 1)
-                .length;
-              return diseaseCount >= 2;
-            });
-            
-            return (multipleCCCases.length / records.length) * 100;
-          }
-        }
-      }
+      name: csvInfo.name,
+      description: csvInfo.description,
+      calculation: csvInfo.calculation,
+      interpretation: reverseIndicators[indicator]
+        ? (language === 'th' 
+            ? 'ค่าที่ต่ำกว่าแสดงถึงผลลัพธ์ที่ดีกว่า (ปัญหาน้อยกว่า)'
+            : 'Lower values indicate better outcomes (fewer problems)')
+        : (language === 'th' 
+            ? 'ค่าที่สูงกว่าแสดงถึงผลลัพธ์ที่ดีกว่า'
+            : 'Higher values indicate better outcomes'),
+      target: csvInfo.target || (language === 'th' ? 'ไม่ระบุ' : 'Not specified'),
+      reverse: Boolean(reverseIndicators[indicator])
     };
-  }
+  }, [indicator, language, indicatorDetailsLoading, getIndicatorInfo, reverseIndicators]);
 
-  async loadSurveyData(csvContent) {
-    const parsed = Papa.parse(csvContent, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true
-    });
+  // Function to format healthcare supply indicator values with proper units
+  const formatHealthcareSupplyValue = (value, indicator) => {
+    if (value === null || value === undefined || isNaN(value)) {
+      return 'N/A';
+    }
 
-    this.surveyData = parsed.data.map(record => ({
-      ...record,
-      district_name: this.districtCodeMap[record.dname] || `District_${record.dname}`,
-      population_group: this.classifyPopulationGroup(record)
-    }));
-
-    return this.surveyData;
-  }
-
-  classifyPopulationGroup(record) {
-    if (record.sex === 'lgbt') return 'lgbtq';
-    if (record.age >= 60) return 'elderly';  
-    if (record.disable_status === 1) return 'disabled';
-    if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
-    return 'normal_population';
-  }
-
-  calculateIndicatorsForRecords(records, domain, districtName = null, populationGroup = null) {
-    const domainMapping = this.indicatorMappings[domain];
-    const results = {}; // Remove sample_size from top level
-
-    const hasMinimumSample = records.length >= this.MINIMUM_SAMPLE_SIZE;
-
-    // Define reverse indicators (diseases and problems are bad when high)
-    const reverseIndicators = {
-      unemployment_rate: true,
-      vulnerable_employment: true,
-      food_insecurity_moderate: true,
-      food_insecurity_severe: true,
-      work_injury_fatal: true,
-      work_injury_non_fatal: true,
-      catastrophic_health_spending_household: true,
-      health_spending_over_10_percent: true,
-      health_spending_over_25_percent: true,
-      medical_consultation_skip_cost: true,
-      medical_treatment_skip_cost: true,
-      prescribed_medicine_skip_cost: true,
-      housing_overcrowding: true,
-      disaster_experience: true,
-      violence_physical: true,
-      violence_psychological: true,
-      violence_sexual: true,
-      discrimination_experience: true,
-      community_murder: true,
-      alcohol_consumption: true,
-      tobacco_use: true,
-      obesity: true,
-      // All health outcomes are reverse (diseases are bad)
-      any_chronic_disease: true,
-      diabetes: true,
-      hypertension: true,
-      gout: true,
-      chronic_kidney_disease: true,
-      cancer: true,
-      high_cholesterol: true,
-      ischemic_heart_disease: true,
-      liver_disease: true,
-      stroke: true,
-      hiv: true,
-      mental_health: true,
-      allergies: true,
-      bone_joint_disease: true,
-      respiratory_disease: true,
-      emphysema: true,
-      anemia: true,
-      stomach_ulcer: true,
-      epilepsy: true,
-      intestinal_disease: true,
-      paralysis: true,
-      dementia: true,
-      cardiovascular_diseases: true,
-      metabolic_diseases: true,
-      multiple_chronic_conditions: true
-      // Healthcare supply indicators are NOT reverse (higher is better)
+    const valueNum = Number(value);
+    
+    // Define units for each healthcare supply indicator
+    const unitMap = {
+      'doctor_per_population': `${valueNum.toFixed(1)} per 1,000`,
+      'nurse_per_population': `${valueNum.toFixed(1)} per 1,000`, 
+      'healthworker_per_population': `${valueNum.toFixed(1)} per 10,000`,
+      'community_healthworker_per_population': `${valueNum.toFixed(1)} per 1,000`,
+      'health_service_access': `${valueNum.toFixed(1)} per 10,000`,
+      'bed_per_population': `${valueNum.toFixed(1)} per 10,000`
     };
 
-    Object.keys(domainMapping).forEach(indicator => {
-      const mapping = domainMapping[indicator];
-      
-      // Handle healthcare supply indicators (these work the same for all population groups)
-      if (mapping.isSupplyIndicator && districtName) {
-        // Get district code from district name
-        const districtCode = Object.keys(this.districtCodeMap).find(
-          code => this.districtCodeMap[code] === districtName
-        );
-        
-        if (districtCode) {
-          let supplyData;
-          
-          // Handle health service access indicator (uses health_facilities.csv)
-          if (indicator === 'health_service_access') {
-            supplyData = { 
-              [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
-            };
-          } 
-          // Handle healthcare worker indicators (uses health_supply.csv)
-          else {
-            supplyData = this.calculateHealthcareSupplyIndicators(
-              parseInt(districtCode), 
-              districtName
-            );
-          }
-          
-          if (supplyData[indicator]) {
-            results[indicator] = {
-              value: supplyData[indicator].value,
-              sample_size: supplyData[indicator].sample_size,
-              population: supplyData[indicator].population,
-              absolute_count: supplyData[indicator].absolute_count
-            };
-          }
-        } else {
-          // For Bangkok Overall, calculate average across all districts
-          if (districtName === 'Bangkok Overall') {
-            const allDistrictCodes = Object.keys(this.districtCodeMap).map(code => parseInt(code));
-            let totalPopulation = 0;
-            let totalAbsoluteCount = 0;
-            let validDistricts = 0;
-            
-            allDistrictCodes.forEach(dcode => {
-              const dname = this.districtCodeMap[dcode];
-              let supplyData;
-              
-              if (indicator === 'health_service_access') {
-                supplyData = { 
-                  [indicator]: this.calculateHealthServiceAccess(dcode, dname) 
-                };
-              } else {
-                supplyData = this.calculateHealthcareSupplyIndicators(dcode, dname);
-              }
-              
-              if (supplyData[indicator] && supplyData[indicator].population > 0) {
-                totalPopulation += supplyData[indicator].population;
-                totalAbsoluteCount += supplyData[indicator].absolute_count;
-                validDistricts++;
-              }
-            });
-            
-            if (totalPopulation > 0) {
-              // Calculate overall rate for Bangkok
-              let overallRate = 0;
-              if (indicator === 'healthworker_per_population') {
-                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
-              } else if (indicator === 'health_service_access') {
-                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
-              } else if (indicator === 'bed_per_population') {
-                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
-              } else {
-                overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
-              }
-              
-              results[indicator] = {
-                value: parseFloat(overallRate.toFixed(2)),
-                sample_size: validDistricts,
-                population: totalPopulation,
-                absolute_count: totalAbsoluteCount
-              };
-            } else {
-              results[indicator] = {
-                value: 0,
-                sample_size: 0,
-                population: 0,
-                absolute_count: 0
-              };
-            }
-          }
-        }
-      }
-      // ENHANCED COMBINED CALCULATION FOR NORMAL POPULATION (ALL DISTRICTS)
-      else if (populationGroup === 'normal_population') {
-        let finalValue = null;
-        let finalSampleSize = records.length;
-        let isPreCalculated = false;
-        let isCombined = false;
-        let combinationMethod = '';
-        
-        const hasSurveyData = records.length > 0;
-        
-        // Check for district-specific pre-calculated data for health behaviors
-        const districtSpecificValue = this.getDistrictSpecificPreCalculatedValue(indicator, districtName);
-        const hasDistrictSpecificData = districtSpecificValue !== null && districtSpecificValue !== undefined;
-        
-        // Check for Bangkok-wide pre-calculated data
-        const bangkokWideValue = this.normalPopulationLookup && 
-                                this.normalPopulationLookup[indicator] !== undefined ?
-                                parseFloat(this.normalPopulationLookup[indicator]) : null;
-        const hasBangkokWideData = bangkokWideValue !== null && !isNaN(bangkokWideValue);
+    return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
+  };
 
-        // Calculate survey-based value if we have survey data AND minimum sample size
-        let surveyValue = null;
-        let surveySampleSize = 0;
-        
-        if (hasSurveyData && hasMinimumSample) {
-          if (mapping.calculation) {
-            surveyValue = mapping.calculation(records);
-            surveySampleSize = records.length;
-          } else if (mapping.condition) {
-            let filteredRecords = records;
-            if (mapping.ageFilter) {
-              filteredRecords = records.filter(r => mapping.ageFilter(r.age));
-            }
-            
-            const meetCondition = filteredRecords.filter(record => {
-              if (mapping.fields) {
-                return mapping.condition(record);
-              } else {
-                return mapping.condition(record[mapping.field]);
-              }
-            }).length;
-            
-            surveyValue = filteredRecords.length > 0 ? 
-              (meetCondition / filteredRecords.length) * 100 : null;
-            surveySampleSize = filteredRecords.length;
-          }
-        }
-        
-        // UPDATED COMBINATION LOGIC: Prioritize district-specific data for health behaviors
-        if (hasDistrictSpecificData) {
-          // Use district-specific data for health behaviors indicators
-          if (surveyValue !== null && !isNaN(surveyValue)) {
-            // Both survey and district-specific data available - combine them
-            const isSmallSample = surveySampleSize < 20;
-            const isLowSurveyValue = surveyValue < 10;
-            const isHighVariance = Math.abs(surveyValue - districtSpecificValue) > 20;
-            
-            if (isSmallSample && isLowSurveyValue) {
-              finalValue = (surveyValue * 0.3) + (districtSpecificValue * 0.7);
-              combinationMethod = 'small_sample_fallback';
-            } else if (isSmallSample) {
-              finalValue = (surveyValue * 0.4) + (districtSpecificValue * 0.6);
-              combinationMethod = 'small_sample_balanced';
-            } else if (isHighVariance) {
-              finalValue = (surveyValue * 0.6) + (districtSpecificValue * 0.4);
-              combinationMethod = 'high_variance';
-            } else {
-              finalValue = (surveyValue * 0.7) + (districtSpecificValue * 0.3);
-              combinationMethod = 'normal_combination';
-            }
-            
-            isCombined = true;
-            finalSampleSize = `${surveySampleSize} + District`;
-          } else {
-            // Only district-specific data available OR insufficient survey sample
-            finalValue = districtSpecificValue;
-            isPreCalculated = true;
-            finalSampleSize = records.length < this.MINIMUM_SAMPLE_SIZE ? `${records.length} (District fallback)` : 'District-wide';
-            combinationMethod = 'district_only';
-          }
-        } else if (surveyValue !== null && !isNaN(surveyValue) && 
-                   hasBangkokWideData) {
-          // Fall back to Bangkok-wide combination if no district-specific data
-          const isSmallSample = surveySampleSize < 20;
-          const isLowSurveyValue = surveyValue < 10;
-          const isHighVariance = Math.abs(surveyValue - bangkokWideValue) > 20;
+  // Get current indicator data
+  const indicatorData = getIndicatorData(domain, district, populationGroup);
+  const currentIndicator = indicatorData ? indicatorData.find(item => item.indicator === indicator) : null;
+
+  // Color schemes for charts
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658'];
+  const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
+  const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
+  const occupationColors = ['#dc2626', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16'];
+  const welfareColors = ['#2563eb', '#16a34a', '#eab308', '#dc2626', '#6b7280'];
+
+  // Calculate disaggregation data
+  const disaggregationData = useMemo(() => {
+    if (!indicator) return null;
+
+    // Healthcare supply indicators - limited disaggregation
+    const healthcareSupplyIndicators = [
+      'doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+      'community_healthworker_per_population', 'health_service_access', 'bed_per_population'
+    ];
+
+    if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {
+      // Show facility type data for health_service_access (health facilities per capita)
+      if (indicator === 'health_service_access') {
+        if (healthFacilitiesData && Array.isArray(healthFacilitiesData) && healthFacilitiesData.length > 0) {
+          const facilityTypeData = calculateFacilityTypeData();
           
-          if (isSmallSample && isLowSurveyValue) {
-            finalValue = (surveyValue * 0.3) + (bangkokWideValue * 0.7);
-            combinationMethod = 'small_sample_fallback';
-          } else if (isSmallSample) {
-            finalValue = (surveyValue * 0.4) + (bangkokWideValue * 0.6);
-            combinationMethod = 'small_sample_balanced';
-          } else if (isHighVariance) {
-            finalValue = (surveyValue * 0.6) + (bangkokWideValue * 0.4);
-            combinationMethod = 'high_variance';
-          } else {
-            finalValue = (surveyValue * 0.7) + (bangkokWideValue * 0.3);
-            combinationMethod = 'normal_combination';
-          }
-          
-          isCombined = true;
-          finalSampleSize = `${surveySampleSize} + Bangkok-wide`;
-          
-        } else if (surveyValue !== null && !isNaN(surveyValue)) {
-          // Only survey data available with sufficient sample
-          finalValue = surveyValue;
-          finalSampleSize = surveySampleSize;
-          combinationMethod = 'survey_only';
-          
-        } else if (hasDistrictSpecificData) {
-          // Only district-specific pre-calculated data available
-          finalValue = districtSpecificValue;
-          isPreCalculated = true;
-          finalSampleSize = records.length < this.MINIMUM_SAMPLE_SIZE ? `${records.length} (District fallback)` : 'District-wide';
-          combinationMethod = 'district_only';
-          
-        } else if (hasBangkokWideData) {
-          // Only Bangkok-wide pre-calculated data available
-          finalValue = bangkokWideValue;
-          isPreCalculated = true;
-          finalSampleSize = records.length < this.MINIMUM_SAMPLE_SIZE ? `${records.length} (Bangkok fallback)` : 'Bangkok-wide';
-          combinationMethod = 'bangkok_only';
-          
-        } else {
-          // No data available
-          results[indicator] = {
-            value: null,
-            sample_size: records.length,
-            noData: true,
-            insufficientSample: !hasMinimumSample
-          };
-          return; // Skip to next indicator
-        }
-        
-        // Store the result with metadata
-        results[indicator] = {
-          value: parseFloat(finalValue.toFixed(2)),
-          sample_size: finalSampleSize,
-          isPreCalculated: isPreCalculated,
-          isCombined: isCombined,
-          combinationMethod: combinationMethod,
-          surveyValue: surveyValue,
-          preCalculatedValue: hasDistrictSpecificData ? districtSpecificValue : bangkokWideValue,
-          surveySampleSize: surveySampleSize,
-          insufficientSample: !hasMinimumSample && !isPreCalculated
-        };
-        
-        return; // Skip normal calculation, we have our result
-      }
-      
-      // NORMAL CALCULATION (for all other cases) - UPDATED with minimum sample size check
-      else if (!hasMinimumSample) {
-        // Insufficient sample size for regular survey-based indicators
-        results[indicator] = {
-          value: null,
-          sample_size: records.length,
-          noData: true,
-          insufficientSample: true
-        };
-      } else if (mapping.calculation) {
-        // Custom calculation function
-        const calculatedValue = mapping.calculation(records);
-        results[indicator] = {
-          value: parseFloat(calculatedValue.toFixed(2)),
-          sample_size: records.length
-        };
-        
-        // Track sample size for financial indicators that filter out null income
-        if (indicator.includes('health_spending') || indicator.includes('catastrophic')) {
-          const validRecords = records.filter(r => 
-            r.income !== null && 
-            r.income !== undefined && 
-            r.income > 0 &&
-            ((indicator.includes('household') && r.hh_health_expense !== null) ||
-             (!indicator.includes('household') && r.health_expense !== null))
-          );
-          
-          // Check if financial calculation has sufficient valid records
-          if (validRecords.length < this.MINIMUM_SAMPLE_SIZE) {
-            results[indicator] = {
-              value: null,
-              sample_size: validRecords.length,
-              noData: true,
-              insufficientSample: true
-            };
-          } else {
-            results[indicator].sample_size = validRecords.length;
-          }
-        }
-      } else if (mapping.condition) {
-        // Standard condition-based calculation
-        let filteredRecords = records;
-        
-        // Apply age filter if specified
-        if (mapping.ageFilter) {
-          filteredRecords = records.filter(r => mapping.ageFilter(r.age));
-        }
-        
-        // Check if filtered records still meet minimum sample size
-        if (filteredRecords.length < this.MINIMUM_SAMPLE_SIZE) {
-          results[indicator] = {
-            value: null,
-            sample_size: filteredRecords.length,
-            noData: true,
-            insufficientSample: true
-          };
-        } else {
-          const meetCondition = filteredRecords.filter(record => {
-            if (mapping.fields) {
-              return mapping.condition(record);
-            } else {
-              return mapping.condition(record[mapping.field]);
-            }
-          }).length;
-          
-          const rate = filteredRecords.length > 0 ? 
-            (meetCondition / filteredRecords.length) * 100 : 0;
-          
-          results[indicator] = {
-            value: parseFloat(rate.toFixed(2)),
-            sample_size: mapping.ageFilter ? filteredRecords.length : records.length
+          return {
+            age: [],
+            sex: [],
+            occupation: [],
+            welfare: [],
+            facilityType: facilityTypeData
           };
         }
       }
-    });
-
-    // Calculate domain score with proper reverse indicator handling
-    const indicators = Object.keys(domainMapping);
-    const goodnessScores = indicators.filter(indicator => {
-      // Exclude indicators with no data or insufficient sample from domain score calculation
-      return results[indicator] && 
-             results[indicator].value !== null && 
-             !results[indicator].noData && 
-             !results[indicator].insufficientSample;
-    }).map(indicator => {
-      const rawValue = results[indicator].value;
       
-      // Handle healthcare supply indicators with normalized scoring
-      const healthcareSupplyIndicators = [
-        'doctor_per_population', 
-        'nurse_per_population', 
-        'healthworker_per_population', 
-        'community_healthworker_per_population',
-        'health_service_access',
-        'bed_per_population'
-      ];
-      
-      if (healthcareSupplyIndicators.includes(indicator)) {
-        // Convert healthcare supply indicators to 0-100 scale using WHO benchmarks
-        const benchmarks = {
-          doctor_per_population: { excellent: 2.5, good: 1.0, poor: 0.5 },
-          nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
-          healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
-          community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
-          health_service_access: { excellent: 50, good: 20, poor: 10 },
-          bed_per_population: { excellent: 30, good: 15, poor: 10 }
-        };
-        
-        const benchmark = benchmarks[indicator];
-        if (!benchmark) return 50; // Default middle score
-        
-        // Convert to 0-100 scale
-        if (rawValue >= benchmark.excellent) return 100;
-        if (rawValue >= benchmark.good) {
-          // Linear interpolation between good and excellent
-          const ratio = (rawValue - benchmark.good) / (benchmark.excellent - benchmark.good);
-          return 75 + (25 * ratio);
-        }
-        if (rawValue >= benchmark.poor) {
-          // Linear interpolation between poor and good
-          const ratio = (rawValue - benchmark.poor) / (benchmark.good - benchmark.poor);
-          return 25 + (50 * ratio);
-        }
-        // Below poor threshold
-        const ratio = Math.min(1, rawValue / benchmark.poor);
-        return 25 * ratio;
-      }
-      
-      // Handle regular indicators
-      if (reverseIndicators[indicator]) {
-        // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
-        return 100 - rawValue;
-      } else {
-        // Normal indicator - higher is better
-        return rawValue;
-      }
-    });
-
-    if (goodnessScores.length > 0) {
-      const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
-      results['_domain_score'] = {
-        value: parseFloat(domainScore.toFixed(1)),
-        sample_size: records.length,
-        validIndicators: goodnessScores.length,
-        totalIndicators: indicators.length
-      };
-    } else {
-      results['_domain_score'] = {
-        value: null,
-        sample_size: records.length,
-        noData: true,
-        insufficientSample: !hasMinimumSample,
-        validIndicators: 0,
-        totalIndicators: indicators.length
+      // For other supply indicators, no disaggregation available
+      return {
+        age: [],
+        sex: [],
+        occupation: [],
+        welfare: [],
+        facilityType: []
       };
     }
 
-    return results;
-  }
-
-  calculateIndicators() {
-    const results = {};
-    const domains = Object.keys(this.indicatorMappings);
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
-    const districts = [...new Set(this.surveyData.map(r => r.district_name))];
-
-    // Initialize results structure for districts
-    domains.forEach(domain => {
-      results[domain] = {};
-      
-      // Initialize Bangkok Overall
-      results[domain]['Bangkok Overall'] = {};
-      populationGroups.forEach(group => {
-        results[domain]['Bangkok Overall'][group] = {};
+    // For regular survey indicators, calculate full disaggregation
+    if (surveyData && Array.isArray(surveyData)) {
+      let filteredData = surveyData.filter(record => {
+        if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
+        if (record.population_group !== populationGroup) return false;
+        return true;
       });
-      
-      // Initialize individual districts
-      districts.forEach(district => {
-        results[domain][district] = {};
-        populationGroups.forEach(group => {
-          results[domain][district][group] = {};
-        });
-      });
-    });
 
-    // Calculate indicators for each combination
-    domains.forEach(domain => {
-      // Calculate Bangkok Overall first (using all data)
-      populationGroups.forEach(group => {
-        const allRecords = this.surveyData.filter(r => r.population_group === group);
-        if (allRecords.length > 0 || group === 'normal_population') {
-          results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
-            allRecords, 
-            domain, 
-            'Bangkok Overall',
-            group
-          );
-        }
-      });
-      
-      // Calculate individual districts
-      districts.forEach(district => {
-        populationGroups.forEach(group => {
-          const records = this.surveyData.filter(r => 
-            r.district_name === district && r.population_group === group
-          );
+      return calculateDemographicDisaggregation(filteredData);
+    }
 
-          if (records.length > 0 || (group === 'normal_population' && district !== 'Bangkok Overall')) {
-            results[domain][district][group] = this.calculateIndicatorsForRecords(
-              records, 
-              domain, 
-              district,
-              group
-            );
-          }
-        });
-      });
-    });
+    return null;
+  }, [surveyData, indicator, district, populationGroup, healthFacilitiesData, language]);
 
-    this.sdheResults = results;
-    return results;
-  }
-
-  getAvailableDistricts() {
-    // Get unique districts from survey data, filter out any "Bangkok Overall" from data, sort them
-    const districts = [...new Set(this.surveyData.map(r => r.district_name))]
-      .filter(district => district !== 'Bangkok Overall') // Remove any Bangkok Overall from survey data
-      .sort();
-    
-    // Add Bangkok Overall as the first option
-    return ['Bangkok Overall', ...districts];
-  }
-
-  getAvailableDomains() {
-    return Object.keys(this.indicatorMappings);
-  }
-
-  getIndicatorData(domain, district, populationGroup) {
-    if (!this.sdheResults[domain] || !this.sdheResults[domain][district] || !this.sdheResults[domain][district][populationGroup]) {
+  // Calculate facility type breakdown for health_service_access
+  function calculateFacilityTypeData() {
+    if (!healthFacilitiesData || !Array.isArray(healthFacilitiesData)) {
       return [];
     }
 
-    const data = this.sdheResults[domain][district][populationGroup];
-    
-    // Filter out sample_size and other metadata fields, only return actual indicators
-    return Object.keys(data)
-      .filter(key => key !== 'sample_size')
-      .map(indicator => ({
-        indicator,
-        value: data[indicator].value,
-        sample_size: data[indicator].sample_size,
-        population: data[indicator].population || null,
-        absolute_count: data[indicator].absolute_count || null,
-        isDomainScore: indicator === '_domain_score',
-        noData: data[indicator].noData || false,
-        insufficientSample: data[indicator].insufficientSample || false,
-        isPreCalculated: data[indicator].isPreCalculated || false,
-        isCombined: data[indicator].isCombined || false,
-        combinationMethod: data[indicator].combinationMethod || null,
-        validIndicators: data[indicator].validIndicators || null,
-        totalIndicators: data[indicator].totalIndicators || null
-      }));
-  }
+    try {
+      // Filter facilities for current district
+      let facilitiesForDistrict;
+      if (district === 'Bangkok Overall') {
+        facilitiesForDistrict = healthFacilitiesData;
+      } else {
+        facilitiesForDistrict = healthFacilitiesData.filter(facility => {
+          return facility && facility.dname === district;
+        });
+      }
 
-  // Get summary statistics for Bangkok Overall
-  getBangkokOverallSummary() {
-    const summary = {
-      total_responses: this.surveyData.length,
-      population_groups: {},
-      districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length,
-      minimum_sample_size: this.MINIMUM_SAMPLE_SIZE
-    };
+      if (!facilitiesForDistrict || facilitiesForDistrict.length === 0) {
+        return [];
+      }
 
-    // Population group breakdown for Bangkok Overall
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
-    populationGroups.forEach(group => {
-      const groupRecords = this.surveyData.filter(r => r.population_group === group);
-      summary.population_groups[group] = {
-        count: groupRecords.length,
-        percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1),
-        meets_minimum: groupRecords.length >= this.MINIMUM_SAMPLE_SIZE
-      };
-    });
-
-    // Calculate district sample size statistics
-    const districts = [...new Set(this.surveyData.map(r => r.district_name))];
-    const districtStats = {
-      total_districts: districts.length,
-      districts_with_minimum_sample: 0,
-      districts_below_minimum: 0
-    };
-
-    districts.forEach(district => {
-      populationGroups.forEach(group => {
-        const records = this.surveyData.filter(r => 
-          r.district_name === district && r.population_group === group
-        );
-        
-        if (records.length >= this.MINIMUM_SAMPLE_SIZE) {
-          districtStats.districts_with_minimum_sample++;
-        } else if (records.length > 0) {
-          districtStats.districts_below_minimum++;
+      // Group by facility type
+      const typeGroups = {};
+      facilitiesForDistrict.forEach((facility) => {
+        if (facility && facility.type) {
+          const type = facility.type;
+          if (!typeGroups[type]) {
+            typeGroups[type] = [];
+          }
+          typeGroups[type].push(facility);
         }
       });
-    });
 
-    summary.district_statistics = districtStats;
-
-    return summary;
-  }
-
-  async processSurveyData(csvContent) {
-    try {
-      // Load survey data first
-      await this.loadSurveyData(csvContent);
-      
-      // Load healthcare supply data
-      await this.loadHealthcareSupplyData();
-      
-      // Calculate all indicators
-      const results = this.calculateIndicators();
-      
-      return {
-        results,
-        processor: this
+      // Convert to chart data with correct Thai translations
+      const facilityTypeMap = {
+        // Handle string values from CSV
+        'clinic': language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
+        'community_healthcenter': language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
+        'healthcenter': language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
+        'hospital_private': language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
+        'hospital_public': language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
+        'pharmacy_nhso': language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)',
+        // Also handle numeric values as fallback
+        '1': language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
+        '2': language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center', 
+        '3': language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
+        '4': language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
+        '5': language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
+        '6': language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)',
+        1: language === 'th' ? 'คลินิกเอกชน' : 'Private Clinic',
+        2: language === 'th' ? 'ศูนย์สุขภาพชุมชน' : 'Community Health Center',
+        3: language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
+        4: language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital',
+        5: language === 'th' ? 'โรงพยาบาลรัฐ' : 'Public Hospital',
+        6: language === 'th' ? 'ร้านยาคุณภาพ (สปสช.)' : 'Quality Pharmacy (NHSO)'
       };
+
+      const totalFacilities = facilitiesForDistrict.length;
+      // Use approximate population - this should ideally come from district population data
+      const approximatePopulation = 100000; // ~100k people per district average in Bangkok
+
+      const result = Object.keys(typeGroups).map((type, index) => {
+        const count = typeGroups[type].length;
+        const percentage = totalFacilities > 0 ? (count / totalFacilities) * 100 : 0;
+        const facilitiesPer10k = approximatePopulation > 0 ? (count / approximatePopulation) * 10000 : 0;
+        
+        return {
+          name: facilityTypeMap[type] || type, // Fallback to original type name if not found
+          value: count,
+          percentage: percentage,
+          facilitiesPer10k: facilitiesPer10k,
+          fill: COLORS[index % COLORS.length]
+        };
+      }).sort((a, b) => b.value - a.value);
+
+      return result;
       
     } catch (error) {
-      throw error;
+      console.error('Error calculating facility type data:', error);
+      return [];
     }
   }
-}
 
-export default BasicSDHEProcessor;
+  // Calculate demographic disaggregation for survey indicators
+  function calculateDemographicDisaggregation(records) {
+    if (!records || records.length === 0) return null;
+
+    // Classification functions
+    const getAgeGroup = (age) => {
+      if (age < 18) return '< 18';
+      if (age < 30) return '18-29';
+      if (age < 45) return '30-44';
+      if (age < 60) return '45-59';
+      return '60+';
+    };
+
+    const getSexGroup = (sex) => {
+      if (sex === 'lgbt') return 'LGBTQ+';
+      if (sex === 'male' || sex === 'M' || sex === 1) return language === 'th' ? 'ชาย' : 'Male';
+      if (sex === 'female' || sex === 'F' || sex === 2) return language === 'th' ? 'หญิง' : 'Female';
+      return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
+    };
+
+    const getOccupationGroup = (occupationStatus, occupationType) => {
+      if (occupationStatus === 0) {
+        return language === 'th' ? 'ว่างงาน' : 'Unemployed';
+      }
+      
+      if (occupationStatus === 1) {
+        if (occupationType && occupationType.includes && occupationType.includes('เกษตร')) {
+          return language === 'th' ? 'เกษตรกรรม' : 'Agriculture';
+        } else if (occupationType && occupationType.includes && (occupationType.includes('ค้าขาย') || occupationType.includes('ธุรกิจ'))) {
+          return language === 'th' ? 'ค้าขาย/ธุรกิจ' : 'Trade/Business';
+        } else if (occupationType && occupationType.includes && occupationType.includes('รับจ้าง')) {
+          return language === 'th' ? 'รับจ้าง' : 'Daily Labor';
+        } else if (occupationType && occupationType.includes && occupationType.includes('ข้าราชการ')) {
+          return language === 'th' ? 'ข้าราชการ' : 'Government';
+        } else if (occupationType && occupationType.includes && occupationType.includes('พนักงานบริษัท')) {
+          return language === 'th' ? 'พนักงานบริษัท' : 'Company Employee';
+        } else {
+          return language === 'th' ? 'อื่นๆ' : 'Others';
+        }
+      }
+      
+      return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
+    };
+
+    const getWelfareGroup = (welfare) => {
+      const welfareMap = {
+        'สปสช.': language === 'th' ? 'สปสช.' : 'NHSO',
+        'สปส.': language === 'th' ? 'สปส.' : 'SSO', 
+        'ข้าราชการ': language === 'th' ? 'ข้าราชการ' : 'Civil Servant',
+        'จ่ายเอง': language === 'th' ? 'จ่ายเอง' : 'Self-pay',
+        'อื่นๆ': language === 'th' ? 'อื่นๆ' : 'Others'
+      };
+      
+      return welfareMap[welfare] || welfare || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+    };
+
+    // Calculate rates for each demographic group
+    const calculateGroupedRates = (groupFunction, records) => {
+      const groups = {};
+      
+      records.forEach(record => {
+        if (record) {
+          const group = groupFunction(record);
+          if (!groups[group]) {
+            groups[group] = { total: 0, positive: 0 };
+          }
+          groups[group].total++;
+          
+          // Calculate positive cases based on indicator
+          if (calculateIndicatorPositive(record, indicator)) {
+            groups[group].positive++;
+          }
+        }
+      });
+
+      return Object.keys(groups).map((group, index) => ({
+        name: group,
+        value: groups[group].total > 0 ? (groups[group].positive / groups[group].total) * 100 : 0,
+        count: groups[group].positive,
+        total: groups[group].total,
+        fill: COLORS[index % COLORS.length]
+      }));
+    };
+
+    return {
+      age: calculateGroupedRates(record => getAgeGroup(record.age), records),
+      sex: calculateGroupedRates(record => getSexGroup(record.sex), records),
+      occupation: calculateGroupedRates(record => getOccupationGroup(record.occupation_status, record.occupation_type), records),
+      welfare: calculateGroupedRates(record => getWelfareGroup(record.welfare), records)
+    };
+  }
+
+  // Calculate if a record meets the indicator criteria
+  function calculateIndicatorPositive(record, indicator) {
+    if (!record) return false;
+    
+    switch (indicator) {
+      case 'unemployment_rate':
+        return record.occupation_status === 0;
+      case 'employment_rate':
+        return record.occupation_status === 1;
+      case 'vulnerable_employment':
+        return record.occupation_status === 1 && record.occupation_contract === 0;
+      case 'food_insecurity_moderate':
+        return record.food_insecurity_1 === 1;
+      case 'food_insecurity_severe':
+        return record.food_insecurity_2 === 1;
+      case 'work_injury_fatal':
+        return record.occupation_injury === 1;
+      case 'work_injury_non_fatal':
+        return record.occupation_small_injury === 1;
+      case 'health_coverage':
+        return record.welfare !== null && record.welfare !== undefined && record.welfare !== 'other';
+      case 'medical_consultation_skip_cost':
+        return record.medical_skip_1 === 1;
+      case 'medical_treatment_skip_cost':
+        return record.medical_skip_2 === 1;
+      case 'prescribed_medicine_skip_cost':
+        return record.medical_skip_3 === 1;
+      case 'dental_access':
+        return record.oral_health_access === 1;
+      case 'functional_literacy':
+        return record.speak === 1 && record.read === 1 && record.write === 1 && record.math === 1;
+      case 'primary_completion':
+        return record.education >= 2;
+      case 'secondary_completion':
+        return record.education >= 4;
+      case 'tertiary_completion':
+        return record.education >= 7;
+      case 'training_participation':
+        return record.training === 1;
+      case 'alcohol_consumption':
+        return record.drink_status === 1 || record.drink_status === 2;
+      case 'tobacco_use':
+        return record.smoke_status === 1;
+      case 'exercise_regular':
+        return record.exercise_status === 1;
+      case 'any_chronic_disease':
+        return record.diseases_status === 1;
+      case 'diabetes':
+        return record['diseases_type/1'] === 1;
+      case 'hypertension':
+        return record['diseases_type/2'] === 1;
+      case 'violence_physical':
+        return record.physical_violence === 1;
+      case 'violence_psychological':
+        return record.psychological_violence === 1;
+      case 'violence_sexual':
+        return record.sexual_violence === 1;
+      case 'discrimination_experience':
+        return record['discrimination/1'] === 1 || record['discrimination/2'] === 1 || 
+               record['discrimination/3'] === 1 || record['discrimination/4'] === 1 || 
+               record['discrimination/5'] === 1;
+      default:
+        return false;
+    }
+  }
+
+  if (indicatorDetailsLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-700 mb-2">
+            {language === 'th' ? 'กำลังโหลดข้อมูลตัวชี้วัด...' : 'Loading indicator details...'}
+          </h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentIndicator) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-4xl mx-auto">
+          <button
+            onClick={onBack}
+            className="flex items-center text-blue-600 hover:text-blue-800 mb-6"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            {language === 'th' ? 'กลับ' : 'Back'}
+          </button>
+          
+          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+            <p className="text-gray-500">
+              {language === 'th' ? 'ไม่พบข้อมูลตัวชี้วัด' : 'Indicator data not found'}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="flex items-center text-blue-600 hover:text-blue-800"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            {language === 'th' ? 'กลับ' : 'Back'}
+          </button>
+        </div>
+
+       {/* Indicator Overview Card */}
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column - Basic Info */}
+            <div className="lg:col-span-2">
+              <div className="flex items-start space-x-4">
+                <div className={`p-3 rounded-lg ${indicatorInfo.reverse ? 'bg-orange-100' : 'bg-blue-100'}`}>
+                  {indicatorInfo.reverse ? (
+                    <TrendingUp className={`w-6 h-6 ${indicatorInfo.reverse ? 'text-orange-600' : 'text-blue-600'} transform rotate-180`} />
+                  ) : (
+                    <TrendingUp className="w-6 h-6 text-blue-600" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                    {indicatorInfo.name}
+                  </h1>
+                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
+                    <span className="flex items-center">
+                      <Users className="w-4 h-4 mr-1" />
+                      {t(`populationGroups.${populationGroup}`)}
+                    </span>
+                    <span className="flex items-center">
+                      <span className="w-4 h-4 mr-1 text-center">🏢</span>
+                      {district}
+                    </span>
+                    <span className="flex items-center">
+                      <span className="w-4 h-4 mr-1 text-center">📊</span>
+                      {t(`domains.${domain}`)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Score */}
+            <div className="flex items-center justify-center lg:justify-end">
+              <div className="text-center">
+                <div className={`text-4xl font-bold mb-2 ${
+                  currentIndicator.value !== null 
+                    ? (indicatorInfo.reverse 
+                        ? (currentIndicator.value <= 20 ? 'text-green-600' : currentIndicator.value <= 40 ? 'text-yellow-600' : 'text-red-600')
+                        : (currentIndicator.value >= 80 ? 'text-green-600' : currentIndicator.value >= 60 ? 'text-yellow-600' : 'text-red-600'))
+                    : 'text-gray-400'
+                }`}>
+                  {currentIndicator.value !== null && currentIndicator.value !== undefined 
+                    ? formatHealthcareSupplyValue(currentIndicator.value, indicator)
+                    : 'N/A'}
+                </div>
+                <div className="text-sm text-gray-500 mb-1">
+                  {language === 'th' ? 'คะแนน' : 'Score'}
+                </div>
+                {currentIndicator.sample_size && (
+                  <div className="text-xs text-gray-400">
+                    n = {currentIndicator.sample_size.toLocaleString()}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="bg-white rounded-lg shadow-sm mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="flex space-x-8 px-6">
+              {[
+                { id: 'overview', label: language === 'th' ? 'ภาพรวม' : 'Overview', icon: Eye },
+                { id: 'demographics', label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Demographics', icon: Users },
+                { id: 'details', label: language === 'th' ? 'รายละเอียด' : 'Details', icon: Info }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? 'border-blue-500 text-blue-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <tab.icon className="w-4 h-4 mr-2" />
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          {/* Tab Content */}
+          <div className="p-6">
+            {/* Overview Tab */}
+            {activeTab === 'overview' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h3 className="font-medium text-gray-800 mb-2">
+                      {language === 'th' ? 'คำอธิบาย' : 'Description'}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {indicatorInfo.description}
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h3 className="font-medium text-gray-800 mb-2">
+                      {language === 'th' ? 'การตีความ' : 'Interpretation'}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {indicatorInfo.interpretation}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Calculation Method */}
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <h3 className="font-medium text-gray-800 mb-2 flex items-center">
+                    <Calculator className="w-4 h-4 mr-2" />
+                    {language === 'th' ? 'วิธีการคำนวด' : 'Calculation Method'}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {indicatorInfo.calculation}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Demographics Tab */}
+            {activeTab === 'demographics' && (
+              <div className="space-y-8">
+                {/* Healthcare Supply Indicators Message */}
+                {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                  'community_healthworker_per_population', 'bed_per_population'].includes(indicator) && (
+                  <div className="text-center py-8">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto">
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="bg-blue-100 rounded-full p-3">
+                          <TrendingUp className="w-6 h-6 text-blue-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-lg font-medium text-blue-900 mb-2">
+                        {language === 'th' ? 'ตัวชี้วัดทรัพยากรสุขภาพ' : 'Healthcare Supply Indicator'}
+                      </h3>
+                      <p className="text-blue-800">
+                        {language === 'th' 
+                          ? 'ตัวชี้วัดนี้คำนวดจากข้อมูลสถานพยาบาลและประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้'
+                          : 'This indicator is calculated from health facility data and total population. Demographic disaggregation is not available.'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Health Service Access - Custom Horizontal Bar Chart */}
+                {indicator === 'health_service_access' && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      {language === 'th' ? 'ประเภทสถานพยาบาล' : 'Health Facility Types'}
+                    </h3>
+                    
+                    {/* Custom Horizontal Bar Chart */}
+                    <div className="bg-gray-50 rounded-lg p-6 mb-4">
+                      <div className="space-y-4">
+                        {disaggregationData.facilityType
+                          .sort((a, b) => b.value - a.value) // Sort by value descending
+                          .map((item, index) => {
+                            const maxValue = Math.max(...disaggregationData.facilityType.map(i => i.value));
+                            const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
+                            const total = disaggregationData.facilityType.reduce((sum, i) => sum + i.value, 0);
+                            const sharePercentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
+                            
+                            return (
+                              <div key={index} className="flex items-center">
+                                {/* Label */}
+                                <div className="w-64 text-right pr-4 text-sm text-gray-700 flex-shrink-0">
+                                  {item.name}
+                                </div>
+                                
+                                {/* Bar Container */}
+                                <div className="flex-1 relative">
+                                  <div className="bg-gray-200 rounded-full h-8 relative overflow-hidden">
+                                    {/* Bar */}
+                                    <div 
+                                      className="h-full rounded-full transition-all duration-500 ease-out flex items-center justify-end pr-3"
+                                      style={{ 
+                                        width: `${percentage}%`,
+                                        backgroundColor: COLORS[index % COLORS.length],
+                                        minWidth: item.value > 0 ? '40px' : '0px'
+                                      }}
+                                    >
+                                      {/* Value label inside bar */}
+                                      <span className="text-white text-sm font-semibold">
+                                        {item.value.toLocaleString()}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  
+                                  {/* Percentage label outside bar */}
+                                  <div className="absolute right-0 top-0 h-8 flex items-center pl-3">
+                                    <span className="text-sm text-gray-600 font-medium">
+                                      {sharePercentage}%
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
+                      
+                      {/* Scale indicator */}
+                      <div className="mt-4 pt-4 border-t border-gray-300">
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <span>0</span>
+                          <span>
+                            Max: {Math.max(...disaggregationData.facilityType.map(i => i.value)).toLocaleString()} facilities
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Summary Statistics */}
+                    <div className="bg-white border rounded-lg p-4">
+                      <h4 className="text-sm font-medium text-gray-800 mb-4">
+                        {language === 'th' ? 'สรุปข้อมูลสถานพยาบาล' : 'Health Facility Summary'}
+                      </h4>
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        {disaggregationData.facilityType.map((item, index) => {
+                          const total = disaggregationData.facilityType.reduce((sum, i) => sum + i.value, 0);
+                          const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
+                          return (
+                            <div key={index} className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                              <div className="flex items-center mb-2">
+                                <div 
+                                  className="w-4 h-4 rounded mr-3 flex-shrink-0" 
+                                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                                ></div>
+                                <span className="text-sm font-medium text-gray-800 truncate" title={item.name}>
+                                  {item.name}
+                                </span>
+                              </div>
+                              <div className="ml-7">
+                                <div className="text-lg font-bold text-gray-900">{item.value.toLocaleString()}</div>
+                                <div className="text-sm text-gray-500">{percentage}% of total</div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      
+                      <div className="border-t border-gray-200 pt-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-base font-semibold text-gray-800">
+                            {language === 'th' ? 'รวมสถานพยาบาลทั้งหมด' : 'Total Health Facilities'}:
+                          </span>
+                          <span className="text-xl font-bold text-blue-600">
+                            {disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0).toLocaleString()} 
+                            <span className="text-sm text-gray-500 ml-1">
+                              {language === 'th' ? 'แห่ง' : 'facilities'}
+                            </span>
+                          </span>
+                        </div>
+                        {district !== 'Bangkok Overall' && (
+                          <div className="mt-1">
+                            <span className="text-sm text-gray-500">
+                              {language === 'th' ? 'ใน' : 'in'} {district}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Regular Survey Indicators - Show demographic disaggregation */}
+                {disaggregationData && disaggregationData.age && disaggregationData.age.length > 0 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Age Groups */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        {language === 'th' ? 'ตามกลุ่มอายุ' : 'By Age Group'}
+                      </h3>
+                      <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={disaggregationData.age}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                              {disaggregationData.age.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={ageColors[index % ageColors.length]} />
+                              ))}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+
+                    {/* Sex */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        {language === 'th' ? 'ตามเพศ' : 'By Sex'}
+                      </h3>
+                      <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={disaggregationData.sex}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                              {disaggregationData.sex.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={sexColors[index % sexColors.length]} />
+                              ))}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+
+                    {/* Occupation */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
+                      </h3>
+                      <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={disaggregationData.occupation}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                              dataKey="name" 
+                              angle={-45}
+                              textAnchor="end"
+                              height={80}
+                              tick={{ fontSize: 10 }}
+                            />
+                            <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                              {disaggregationData.occupation.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
+                              ))}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+
+                    {/* Welfare/Insurance */}
+                    {disaggregationData.welfare && disaggregationData.welfare.length > 0 && (
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                          {language === 'th' ? 'ตามประเภทสิทธิประกันสุขภาพ' : 'By Health Insurance Type'}
+                        </h3>
+                        <div className="h-64">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={disaggregationData.welfare}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis 
+                                dataKey="name" 
+                                angle={-45}
+                                textAnchor="end"
+                                height={80}
+                                tick={{ fontSize: 10 }}
+                              />
+                              <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                              <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                {disaggregationData.welfare.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={welfareColors[index % welfareColors.length]} />
+                                ))}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* No Data Message */}
+                {(!disaggregationData || 
+                  ((!disaggregationData.age || disaggregationData.age.length === 0) && 
+                   (!disaggregationData.facilityType || disaggregationData.facilityType.length === 0))) && (
+                  <div className="text-center py-12">
+                    <div className="bg-gray-50 rounded-lg p-8 max-w-md mx-auto">
+                      <div className="text-gray-400 mb-4">
+                        <Users className="w-12 h-12 mx-auto" />
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        {language === 'th' ? 'ไม่มีข้อมูลการแยกย่อย' : 'No Disaggregation Data'}
+                      </h3>
+                      <p className="text-gray-600">
+                        {language === 'th' 
+                          ? 'ไม่มีข้อมูลสำหรับการแยกย่อยในตัวชี้วัดนี้'
+                          : 'No disaggregation data available for this indicator'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Details Tab */}
+            {activeTab === 'details' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Indicator Metadata */}
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      {language === 'th' ? 'ข้อมูลตัวชี้วัด' : 'Indicator Metadata'}
+                    </h3>
+                    <dl className="space-y-3">
+                      <div>
+                        <dt className="text-sm font-medium text-gray-600">
+                          {language === 'th' ? 'โดเมน' : 'Domain'}
+                        </dt>
+                        <dd className="text-sm text-gray-900">{t(`domains.${domain}`)}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-sm font-medium text-gray-600">
+                          {language === 'th' ? 'ประเภท' : 'Type'}
+                        </dt>
+                        <dd className="text-sm text-gray-900">
+                          {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                            'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].indexOf(indicator) >= 0
+                            ? (language === 'th' ? 'ตัวชี้วัดทรัพยากรสุขภาพ' : 'Healthcare Supply Indicator')
+                            : (language === 'th' ? 'ตัวชี้วัดจากการสำรวจ' : 'Survey-based Indicator')
+                          }
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="text-sm font-medium text-gray-600">
+                          {language === 'th' ? 'การตีความ' : 'Interpretation Direction'}
+                        </dt>
+                        <dd className="text-sm text-gray-900">
+                          {indicatorInfo.reverse 
+                            ? (language === 'th' ? 'ยิ่งต่ำยิ่งดี' : 'Lower is better')
+                            : (language === 'th' ? 'ยิ่งสูงยิ่งดี' : 'Higher is better')
+                          }
+                        </dd>
+                      </div>
+                      {currentIndicator.sample_size && (
+                        <div>
+                          <dt className="text-sm font-medium text-gray-600">
+                            {language === 'th' ? 'ขนาดตัวอย่าง' : 'Sample Size'}
+                          </dt>
+                          <dd className="text-sm text-gray-900">{currentIndicator.sample_size.toLocaleString()}</dd>
+                        </div>
+                      )}
+                      {currentIndicator.population && (
+                        <div>
+                          <dt className="text-sm font-medium text-gray-600">
+                            {language === 'th' ? 'ประชากรรวม' : 'Total Population'}
+                          </dt>
+                          <dd className="text-sm text-gray-900">{currentIndicator.population.toLocaleString()}</dd>
+                        </div>
+                      )}
+                    </dl>
+                  </div>
+
+                  {/* Performance Assessment */}
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      {language === 'th' ? 'การประเมินผลการปฏิบัติ' : 'Performance Assessment'}
+                    </h3>
+                    
+                    {currentIndicator.value !== null && currentIndicator.value !== undefined ? (
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-gray-600">
+                            {language === 'th' ? 'คะแนนปัจจุบัน' : 'Current Score'}
+                          </span>
+                          <span className="text-2xl font-bold text-blue-600">
+                            {formatHealthcareSupplyValue(currentIndicator.value, indicator)}
+                          </span>
+                        </div>
+                        
+                        <div className="w-full bg-gray-200 rounded-full h-3">
+                          <div 
+                            className={`h-3 rounded-full ${
+                              indicatorInfo.reverse
+                                ? (currentIndicator.value <= 20 ? 'bg-green-500' : currentIndicator.value <= 40 ? 'bg-yellow-500' : 'bg-red-500')
+                                : (currentIndicator.value >= 80 ? 'bg-green-500' : currentIndicator.value >= 60 ? 'bg-yellow-500' : 'bg-red-500')
+                            }`}
+                            style={{ width: `${Math.min(100, Math.max(0, currentIndicator.value))}%` }}
+                          ></div>
+                        </div>
+                        
+                        <div className="text-center">
+                          <span className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${
+                            indicatorInfo.reverse
+                              ? (currentIndicator.value <= 20 ? 'bg-green-100 text-green-800' : 
+                                 currentIndicator.value <= 40 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800')
+                              : (currentIndicator.value >= 80 ? 'bg-green-100 text-green-800' : 
+                                 currentIndicator.value >= 60 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800')
+                          }`}>
+                            {indicatorInfo.reverse
+                              ? (currentIndicator.value <= 20 ? (language === 'th' ? 'ดีเยี่ยม' : 'Excellent') :
+                                 currentIndicator.value <= 40 ? (language === 'th' ? 'ดี' : 'Good') : 
+                                 currentIndicator.value <= 60 ? (language === 'th' ? 'ปานกลาง' : 'Fair') : (language === 'th' ? 'ต้องปรับปรุง' : 'Needs Improvement'))
+                              : (currentIndicator.value >= 80 ? (language === 'th' ? 'ดีเยี่ยม' : 'Excellent') :
+                                 currentIndicator.value >= 60 ? (language === 'th' ? 'ดี' : 'Good') : 
+                                 currentIndicator.value >= 40 ? (language === 'th' ? 'ปานกลาง' : 'Fair') : (language === 'th' ? 'ต้องปรับปรุง' : 'Needs Improvement'))
+                            }
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <p className="text-gray-500">
+                          {language === 'th' ? 'ไม่มีข้อมูลสำหรับการประเมิน' : 'No data available for assessment'}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {/* Full Calculation Details */}
+                <div className="bg-blue-50 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                    <Calculator className="w-5 h-5 mr-2" />
+                    {language === 'th' ? 'รายละเอียดการคำนวด' : 'Calculation Details'}
+                  </h3>
+                  <div className="prose prose-sm max-w-none">
+                    <p className="text-gray-700 mb-4">
+                      {indicatorInfo.calculation}
+                    </p>
+                    
+                    {currentIndicator.sample_size && (
+                      <div className="bg-white rounded p-4 mt-4">
+                        <h4 className="font-medium text-gray-800 mb-2">
+                          {language === 'th' ? 'ข้อมูลที่ใช้ในการคำนวด' : 'Data Used in Calculation'}
+                        </h4>
+                        <ul className="text-sm text-gray-600 space-y-1">
+                          <li>
+                            <strong>{language === 'th' ? 'กลุ่มประชากร:' : 'Population Group:'}</strong> {t(`populationGroups.${populationGroup}`)}
+                          </li>
+                          <li>
+                            <strong>{language === 'th' ? 'พื้นที่:' : 'Area:'}</strong> {district}
+                          </li>
+                          <li>
+                            <strong>{language === 'th' ? 'ขนาดตัวอย่าง:' : 'Sample Size:'}</strong> {currentIndicator.sample_size.toLocaleString()} {language === 'th' ? 'คน' : 'people'}
+                          </li>
+                          {currentIndicator.population && (
+                            <li>
+                              <strong>{language === 'th' ? 'ประชากรรวม:' : 'Total Population:'}</strong> {currentIndicator.population.toLocaleString()} {language === 'th' ? 'คน' : 'people'}
+                            </li>
+                          )}
+                          {currentIndicator.absolute_count && (
+                            <li>
+                              <strong>{language === 'th' ? 'จำนวนจริง:' : 'Absolute Count:'}</strong> {currentIndicator.absolute_count.toLocaleString()}
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Additional calculation info for combined data */}
+                    {currentIndicator.isCombined && (
+                      <div className="bg-amber-50 border border-amber-200 rounded p-4 mt-4">
+                        <h4 className="font-medium text-amber-800 mb-2">
+                          {language === 'th' ? 'ข้อมูลรวม' : 'Combined Data'}
+                        </h4>
+                        <p className="text-sm text-amber-700 mb-2">
+                          {language === 'th' 
+                            ? 'ข้อมูลนี้รวมจากการสำรวจและข้อมูลอ้างอิงเพื่อให้ได้ค่าที่แม่นยำมากขึ้น'
+                            : 'This data combines survey results with reference data for improved accuracy.'}
+                        </p>
+                        <div className="text-xs text-amber-600 space-y-1">
+                          {currentIndicator.surveyValue !== null && (
+                            <div>
+                              <strong>{language === 'th' ? 'จากการสำรวจ:' : 'Survey value:'}</strong> {currentIndicator.surveyValue.toFixed(1)}%
+                            </div>
+                          )}
+                          {currentIndicator.preCalculatedValue !== null && (
+                            <div>
+                              <strong>{language === 'th' ? 'ข้อมูลอ้างอิง:' : 'Reference value:'}</strong> {currentIndicator.preCalculatedValue.toFixed(1)}%
+                            </div>
+                          )}
+                          {currentIndicator.combinationMethod && (
+                            <div>
+                              <strong>{language === 'th' ? 'วิธีการรวม:' : 'Combination method:'}</strong> {currentIndicator.combinationMethod}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Note for healthcare supply indicators */}
+                    {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                      'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) && (
+                      <div className="bg-blue-50 border border-blue-200 rounded p-4 mt-4">
+                        <h4 className="font-medium text-blue-800 mb-2">
+                          {language === 'th' ? 'หมายเหตุ' : 'Note'}
+                        </h4>
+                        <p className="text-sm text-blue-700">
+                          {language === 'th' 
+                            ? 'ข้อมูลนี้คำนวดจากจำนวนบุคลากรและสถานพยาบาลในแต่ละเขต เทียบกับจำนวนประชากรรวมในเขตนั้น ๆ'
+                            : 'This data is calculated from the number of healthcare personnel and facilities in each district, compared to the total population in that district.'}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default IndicatorDetailPage;
