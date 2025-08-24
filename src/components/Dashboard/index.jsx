@@ -421,10 +421,6 @@ const Dashboard = () => {
 
                 {/* Map - Wider */}
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '700px' }}>
-                  <div className="p-4 border-b border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Bangkok District Map</h3>
-                    <p className="text-sm text-gray-600">Interactive map showing health equity scores by district</p>
-                  </div>
                   <div className="h-full">
                     <BangkokMap
                       selectedDomain={selectedDomain}
@@ -560,10 +556,6 @@ const Dashboard = () => {
             {/* Full-width Map for indicators view */}
             {viewMode === 'indicators' && (
               <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
-                <div className="p-6 border-b border-gray-100">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Geographic Distribution</h3>
-                  <p className="text-gray-600">Map view of selected indicators across Bangkok districts</p>
-                </div>
                 <div className="h-full">
                   <BangkokMap
                     selectedDomain={selectedDomain}
