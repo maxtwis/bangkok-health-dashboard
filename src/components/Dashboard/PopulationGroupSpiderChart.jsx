@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
+const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCheckboxes = false }) => {
   const { t, language } = useLanguage();
   const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
   
@@ -23,6 +23,22 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
       return acc;
     }, {})
   );
+
+  // Listen for external checkbox changes when hideCheckboxes is true
+  React.useEffect(() => {
+    if (hideCheckboxes) {
+      const handleToggle = (event) => {
+        const { group, checked } = event.detail;
+        setVisibleGroups(prev => ({
+          ...prev,
+          [group]: checked
+        }));
+      };
+
+      window.addEventListener('populationGroupToggle', handleToggle);
+      return () => window.removeEventListener('populationGroupToggle', handleToggle);
+    }
+  }, [hideCheckboxes]);
 
   // Handler for checkbox changes
   const handleGroupToggle = (groupValue) => {
@@ -185,7 +201,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
   return (
     <div className="w-full">
-      {/* Header Section with Population Group Filter */}
+      {/* Header Section - Conditional checkboxes */}
       <div className="mb-6">
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1 pr-4">
@@ -226,31 +242,33 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
           </div>
         </div>
         
-        {/* Population Group Filter Checkboxes */}
-        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-          <h4 className="text-sm font-medium text-gray-700 mb-3">
-            {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
-          </h4>
-          <div className="grid grid-cols-2 gap-2">
-            {populationGroups.map(group => (
-              <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded p-2 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={visibleGroups[group.value]}
-                  onChange={() => handleGroupToggle(group.value)}
-                  className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
-                />
-                <div 
-                  className="w-3 h-3 rounded-full flex-shrink-0" 
-                  style={{ backgroundColor: group.color }}
-                ></div>
-                <span className="text-sm font-medium text-gray-700">
-                  {t(`populationGroups.${group.value}`)}
-                </span>
-              </label>
-            ))}
+        {/* Population Group Filter Checkboxes - Only show if not hidden */}
+        {!hideCheckboxes && (
+          <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+            <h4 className="text-sm font-medium text-gray-700 mb-3">
+              {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
+            </h4>
+            <div className="grid grid-cols-2 gap-2">
+              {populationGroups.map(group => (
+                <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded p-2 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={visibleGroups[group.value]}
+                    onChange={() => handleGroupToggle(group.value)}
+                    className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                  />
+                  <div 
+                    className="w-3 h-3 rounded-full flex-shrink-0" 
+                    style={{ backgroundColor: group.color }}
+                  ></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    {t(`populationGroups.${group.value}`)}
+                  </span>
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Check if we have valid data */}
@@ -326,59 +344,80 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </ResponsiveContainer>
           </div>
 
-          {/* Domain Rankings - Complete view with all domains and groups */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h4 className="text-base font-semibold text-gray-800 mb-3">{t('ui.domainPerformanceRankings')}</h4>
-            <div className="grid grid-cols-1 gap-3">
-              {activeGroups.map(group => {
-                const groupScores = chartData.map(d => ({
-                  domain: d.domain,
-                  score: d[group.value] || 0
-                })).sort((a, b) => b.score - a.score);
+          {/* Domain Rankings - Only show if checkboxes are hidden (external layout) */}
+          {hideCheckboxes && (
+            <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
+              <div className="flex items-start space-x-2">
+                <div className="flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs font-medium text-blue-900 mb-1">{t('ui.howToRead')}:</p>
+                  <p className="text-xs text-blue-800 leading-relaxed">{t('ui.spiderChartInstructions')}</p>
+                </div>
+              </div>
+            </div>
+          )}
 
-                return (
-                  <div key={group.value} className="bg-white rounded-md p-3 shadow-sm border border-gray-100">
-                    <div className="flex items-center mb-2">
-                      <div 
-                        className="w-3 h-3 rounded-full mr-2 flex-shrink-0" 
-                        style={{ backgroundColor: group.color }}
-                      ></div>
-                      <h5 className="font-medium text-gray-800 text-sm">
-                        {t(`populationGroups.${group.value}`)}
-                      </h5>
-                    </div>
-                    <div className="space-y-1">
-                      {groupScores.map((item, index) => (
-                        <div key={item.domain} className="flex items-center text-xs">
-                          <span className={`font-medium ${
-                            index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
-                          }`} title={item.domain}>
-                            {index + 1}. {item.domain}
-                          </span>
-                          <span className="font-semibold text-gray-900 ml-3">{item.score.toFixed(0)}%</span>
+          {/* Domain Rankings - Show if checkboxes are not hidden (internal layout) */}
+          {!hideCheckboxes && (
+            <>
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="text-base font-semibold text-gray-800 mb-3">{t('ui.domainPerformanceRankings')}</h4>
+                <div className="grid grid-cols-1 gap-3">
+                  {activeGroups.map(group => {
+                    const groupScores = chartData.map(d => ({
+                      domain: d.domain,
+                      score: d[group.value] || 0
+                    })).sort((a, b) => b.score - a.score);
+
+                    return (
+                      <div key={group.value} className="bg-white rounded-md p-3 shadow-sm border border-gray-100">
+                        <div className="flex items-center mb-2">
+                          <div 
+                            className="w-3 h-3 rounded-full mr-2 flex-shrink-0" 
+                            style={{ backgroundColor: group.color }}
+                          ></div>
+                          <h5 className="font-medium text-gray-800 text-sm">
+                            {t(`populationGroups.${group.value}`)}
+                          </h5>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                        <div className="space-y-1">
+                          {groupScores.map((item, index) => (
+                            <div key={item.domain} className="flex items-center text-xs">
+                              <span className={`font-medium ${
+                                index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
+                              }`} title={item.domain}>
+                                {index + 1}. {item.domain}
+                              </span>
+                              <span className="font-semibold text-gray-900 ml-3">{item.score.toFixed(0)}%</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
 
-          {/* Chart Legend - Compact */}
-          <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
-            <div className="flex items-start space-x-2">
-              <div className="flex-shrink-0 mt-0.5">
-                <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              {/* Chart Legend */}
+              <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
+                <div className="flex items-start space-x-2">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-medium text-blue-900 mb-1">{t('ui.howToRead')}:</p>
+                    <p className="text-xs text-blue-800 leading-relaxed">{t('ui.spiderChartInstructions')}</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="text-xs font-medium text-blue-900 mb-1">{t('ui.howToRead')}:</p>
-                <p className="text-xs text-blue-800 leading-relaxed">{t('ui.spiderChartInstructions')}</p>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       )}
     </div>

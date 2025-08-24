@@ -407,28 +407,139 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Overview Mode - Side by side with wider components */}
+            {/* Overview Mode - Exact layout as requested */}
             {viewMode === 'overview' && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Spider Chart - Wider */}
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                  <PopulationGroupSpiderChart 
-                    selectedDomain={selectedDomain}
-                    selectedDistrict={selectedDistrict}
-                    getIndicatorData={getIndicatorData}
-                  />
+              <div className="space-y-6">
+                {/* Population Group Checkboxes - Single line across full width */}
+                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                  <div className="flex flex-wrap items-center gap-4">
+                    <span className="text-sm font-medium text-gray-700 flex-shrink-0">
+                      {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
+                    </span>
+                    {/* Checkboxes in single row */}
+                    <div className="flex flex-wrap gap-4">
+                      {[
+                        { value: 'informal_workers', color: '#ef4444' },
+                        { value: 'elderly', color: '#3b82f6' },
+                        { value: 'disabled', color: '#10b981' },
+                        { value: 'lgbtq', color: '#f59e0b' },
+                        { value: 'normal_population', color: '#8b5cf6' }
+                      ].map(group => (
+                        <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors">
+                          <input
+                            type="checkbox"
+                            defaultChecked={true}
+                            className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                            onChange={(e) => {
+                              // This will be handled by the spider chart component
+                              const event = new CustomEvent('populationGroupToggle', {
+                                detail: { group: group.value, checked: e.target.checked }
+                              });
+                              window.dispatchEvent(event);
+                            }}
+                          />
+                          <div 
+                            className="w-3 h-3 rounded-full flex-shrink-0" 
+                            style={{ backgroundColor: group.color }}
+                          ></div>
+                          <span className="text-sm font-medium text-gray-700">
+                            {t(`populationGroups.${group.value}`)}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Map - Wider */}
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '700px' }}>
-                  <div className="h-full">
-                    <BangkokMap
+                {/* Spider Chart and Map - Side by side */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Spider Chart - Left side, no checkboxes inside */}
+                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <PopulationGroupSpiderChart 
                       selectedDomain={selectedDomain}
-                      selectedPopulationGroup={selectedPopulationGroup}
                       selectedDistrict={selectedDistrict}
-                      onDistrictClick={handleMapDistrictClick}
                       getIndicatorData={getIndicatorData}
+                      hideCheckboxes={true}
                     />
+                  </div>
+
+                  {/* Map - Right side, full height */}
+                  <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
+                    <div className="h-full">
+                      <BangkokMap
+                        selectedDomain={selectedDomain}
+                        selectedPopulationGroup={selectedPopulationGroup}
+                        selectedDistrict={selectedDistrict}
+                        onDistrictClick={handleMapDistrictClick}
+                        getIndicatorData={getIndicatorData}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Domain Performance Rankings - Full width bottom */}
+                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <h4 className="text-base font-semibold text-gray-800 mb-4">Domain Performance Rankings</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {[
+                      { value: 'informal_workers', color: '#ef4444' },
+                      { value: 'elderly', color: '#3b82f6' },
+                      { value: 'disabled', color: '#10b981' },
+                      { value: 'lgbtq', color: '#f59e0b' },
+                      { value: 'normal_population', color: '#8b5cf6' }
+                    ].map(group => {
+                      // Calculate scores for this group across all domains
+                      const domains = [
+                        'economic_security', 'education', 'healthcare_access',
+                        'physical_environment', 'social_context', 'health_behaviors'
+                      ];
+                      
+                      const groupScores = domains.map(domain => {
+                        try {
+                          const indicatorData = getIndicatorData(domain, selectedDistrict, group.value);
+                          const domainScore = indicatorData.find(item => 
+                            item.isDomainScore || 
+                            item.indicator === '_domain_score' || 
+                            item.label?.toLowerCase().includes('score')
+                          );
+                          return {
+                            domain: t(`domains.${domain}`),
+                            score: domainScore?.value || 0
+                          };
+                        } catch {
+                          return {
+                            domain: t(`domains.${domain}`),
+                            score: 0
+                          };
+                        }
+                      }).sort((a, b) => b.score - a.score);
+
+                      return (
+                        <div key={group.value} className="bg-white rounded-md p-3 shadow-sm border border-gray-100">
+                          <div className="flex items-center mb-2">
+                            <div 
+                              className="w-3 h-3 rounded-full mr-2 flex-shrink-0" 
+                              style={{ backgroundColor: group.color }}
+                            ></div>
+                            <h5 className="font-medium text-gray-800 text-sm">
+                              {t(`populationGroups.${group.value}`)}
+                            </h5>
+                          </div>
+                          <div className="space-y-1">
+                            {groupScores.map((item, index) => (
+                              <div key={item.domain} className="flex items-center text-xs">
+                                <span className={`font-medium ${
+                                  index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
+                                }`} title={item.domain}>
+                                  {index + 1}. {item.domain}
+                                </span>
+                                <span className="font-semibold text-gray-900 ml-3">{item.score.toFixed(0)}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
