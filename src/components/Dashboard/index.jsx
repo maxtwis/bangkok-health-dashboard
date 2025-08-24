@@ -417,9 +417,6 @@ const Dashboard = () => {
                     {/* Population Group Checkboxes - Inside spider chart box */}
                     <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-medium text-gray-700 mr-2 flex-shrink-0">
-                          {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
-                        </span>
                         {/* Checkboxes in single row - more compact */}
                         {[
                           { value: 'informal_workers', color: '#ef4444' },
