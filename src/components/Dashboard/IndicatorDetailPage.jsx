@@ -586,7 +586,7 @@ const IndicatorDetailPage = ({
                 <div className="bg-blue-50 rounded-lg p-4">
                   <h3 className="font-medium text-gray-800 mb-2 flex items-center">
                     <Calculator className="w-4 h-4 mr-2" />
-                    {language === 'th' ? 'วิธีการคำนวด' : 'Calculation Method'}
+                    {language === 'th' ? 'วิธีการคำนวณ' : 'Calculation Method'}
                   </h3>
                   <p className="text-sm text-gray-600">
                     {indicatorInfo.calculation}
@@ -613,7 +613,7 @@ const IndicatorDetailPage = ({
                       </h3>
                       <p className="text-blue-800">
                         {language === 'th' 
-                          ? 'ตัวชี้วัดนี้คำนวดจากข้อมูลสถานพยาบาลและประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้'
+                          ? 'ตัวชี้วัดนี้คำนวณจากข้อมูลสถานพยาบาลและประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้'
                           : 'This indicator is calculated from health facility data and total population. Demographic disaggregation is not available.'}
                       </p>
                     </div>
@@ -989,7 +989,7 @@ const IndicatorDetailPage = ({
                 <div className="bg-blue-50 rounded-lg p-6">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                     <Calculator className="w-5 h-5 mr-2" />
-                    {language === 'th' ? 'รายละเอียดการคำนวด' : 'Calculation Details'}
+                    {language === 'th' ? 'รายละเอียดการคำนวณ' : 'Calculation Details'}
                   </h3>
                   <div className="prose prose-sm max-w-none">
                     <p className="text-gray-700 mb-4">
@@ -999,7 +999,7 @@ const IndicatorDetailPage = ({
                     {currentIndicator.sample_size && (
                       <div className="bg-white rounded p-4 mt-4">
                         <h4 className="font-medium text-gray-800 mb-2">
-                          {language === 'th' ? 'ข้อมูลที่ใช้ในการคำนวด' : 'Data Used in Calculation'}
+                          {language === 'th' ? 'ข้อมูลที่ใช้ในการคำนวณ' : 'Data Used in Calculation'}
                         </h4>
                         <ul className="text-sm text-gray-600 space-y-1">
                           <li>
@@ -1065,7 +1065,7 @@ const IndicatorDetailPage = ({
                         </h4>
                         <p className="text-sm text-blue-700">
                           {language === 'th' 
-                            ? 'ข้อมูลนี้คำนวดจากจำนวนบุคลากรและสถานพยาบาลในแต่ละเขต เทียบกับจำนวนประชากรรวมในเขตนั้น ๆ'
+                            ? 'ข้อมูลนี้คำนวณจากจำนวนบุคลากรและสถานพยาบาลในแต่ละเขต เทียบกับจำนวนประชากรรวมในเขตนั้น ๆ'
                             : 'This data is calculated from the number of healthcare personnel and facilities in each district, compared to the total population in that district.'}
                         </p>
                       </div>
