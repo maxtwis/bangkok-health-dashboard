@@ -1,5 +1,5 @@
 // Updated Basic SDHE Data Processor with Healthcare Supply Indicators - src/utils/BasicSDHEProcessor.js
-// UPDATED: Added minimum sample size requirement of 5 respondents per district
+// UPDATED: Added minimum sample size requirement of 5 respondents per district, removed console.log and labels
 import Papa from 'papaparse';
 import _ from 'lodash';
 
@@ -12,11 +12,11 @@ class BasicSDHEProcessor {
     this.communityHealthWorkerData = [];
     this.communityPopulationData = [];
     this.normalPopulationData = [];
-    this.normalPopulationDistrictData = []; // NEW: District-specific data
+    this.normalPopulationDistrictData = [];
     this.sdheResults = {};
     this.districtCodeMap = this.createDistrictCodeMap();
     this.indicatorMappings = this.createIndicatorMappings();
-    this.MINIMUM_SAMPLE_SIZE = 5; // NEW: Minimum sample size requirement
+    this.MINIMUM_SAMPLE_SIZE = 5; // Minimum sample size requirement
   }
 
   createDistrictCodeMap() {
@@ -37,7 +37,6 @@ class BasicSDHEProcessor {
     };
   }
 
-  // NEW: Load district-specific normal population data
   async loadNormalPopulationDistrictData() {
     try {
       const normalPopDistrictResponse = await fetch('/data/normal_population_indicator_district.csv');
@@ -54,7 +53,6 @@ class BasicSDHEProcessor {
       
       this.normalPopulationDistrictData = normalPopDistrictParsed.data;
       
-      // Create lookup for quick access by district and indicator
       this.normalPopulationDistrictLookup = {};
       this.normalPopulationDistrictData.forEach(row => {
         if (row.indicator && row.dcode) {
@@ -64,7 +62,6 @@ class BasicSDHEProcessor {
       });
       
     } catch (error) {
-      // Don't throw - continue without district-specific data
       this.normalPopulationDistrictData = [];
       this.normalPopulationDistrictLookup = {};
     }
@@ -72,7 +69,6 @@ class BasicSDHEProcessor {
 
   async loadNormalPopulationData() {
     try {
-      
       const normalPopResponse = await fetch('/data/normal_population_indicator.csv');
       if (!normalPopResponse.ok) {
         throw new Error('Could not load normal_population_indicator.csv');
@@ -87,7 +83,6 @@ class BasicSDHEProcessor {
       
       this.normalPopulationData = normalPopParsed.data;
       
-      // Create lookup for quick access
       this.normalPopulationLookup = {};
       this.normalPopulationData.forEach(row => {
         if (row.indicator) {
@@ -95,21 +90,16 @@ class BasicSDHEProcessor {
         }
       });
       
-      // Load district-specific data
       await this.loadNormalPopulationDistrictData();
       
     } catch (error) {
-      // Don't throw - continue without normal population data
       this.normalPopulationData = [];
       this.normalPopulationLookup = {};
     }
   }
 
-  // Load additional healthcare supply data files
   async loadHealthcareSupplyData() {
     try {
-      
-      // Load health supply data
       const healthSupplyResponse = await fetch('/data/health_supply.csv');
       if (!healthSupplyResponse.ok) {
         throw new Error('Could not load health_supply.csv');
@@ -122,20 +112,18 @@ class BasicSDHEProcessor {
       });
       this.healthSupplyData = healthSupplyParsed.data;
 
-      // Load health facilities data 
       const healthFacilitiesResponse = await fetch('/data/health_facilities.csv');
-    if (!healthFacilitiesResponse.ok) {
-      throw new Error('Could not load health_facilities.csv');
-    }
-    const healthFacilitiesCsv = await healthFacilitiesResponse.text();
-    const healthFacilitiesParsed = Papa.parse(healthFacilitiesCsv, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true
-    });
-    this.healthFacilitiesData = healthFacilitiesParsed.data;
+      if (!healthFacilitiesResponse.ok) {
+        throw new Error('Could not load health_facilities.csv');
+      }
+      const healthFacilitiesCsv = await healthFacilitiesResponse.text();
+      const healthFacilitiesParsed = Papa.parse(healthFacilitiesCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.healthFacilitiesData = healthFacilitiesParsed.data;
 
-      // Load district population data
       const districtPopResponse = await fetch('/data/district_population.csv');
       if (!districtPopResponse.ok) {
         throw new Error('Could not load district_population.csv');
@@ -148,7 +136,6 @@ class BasicSDHEProcessor {
       });
       this.districtPopulationData = districtPopParsed.data;
 
-      // Load community health worker data
       const chwResponse = await fetch('/data/community_health_worker.csv');
       if (!chwResponse.ok) {
         throw new Error('Could not load community_health_worker.csv');
@@ -161,7 +148,6 @@ class BasicSDHEProcessor {
       });
       this.communityHealthWorkerData = chwParsed.data;
 
-      // Load community population data
       const commPopResponse = await fetch('/data/community_population.csv');
       if (!commPopResponse.ok) {
         throw new Error('Could not load community_population.csv');
@@ -181,12 +167,10 @@ class BasicSDHEProcessor {
     }
   }
 
-  // Calculate healthcare supply indicators for a district
   calculateHealthcareSupplyIndicators(districtCode, districtName) {
     const results = {};
 
     try {
-      // Get total population for the district
       const districtPopulation = this.districtPopulationData
         .filter(record => record.dcode === districtCode)
         .reduce((sum, record) => sum + (record.population || 0), 0);
@@ -201,12 +185,10 @@ class BasicSDHEProcessor {
         };
       }
 
-      // Get health facilities in the district
       const districtHealthFacilities = this.healthSupplyData.filter(facility => 
         facility.dcode === districtCode
       );
 
-      // Calculate totals from health facilities
       const totalDoctors = districtHealthFacilities.reduce((sum, facility) => 
         sum + (facility.doctor_count || 0), 0);
       const totalNurses = districtHealthFacilities.reduce((sum, facility) => 
@@ -214,9 +196,8 @@ class BasicSDHEProcessor {
       const totalHealthWorkers = districtHealthFacilities.reduce((sum, facility) => 
         sum + (facility.healthworker_count || 0), 0);
       const totalBeds = districtHealthFacilities.reduce((sum, facility) => 
-      sum + (facility.bed_count || 0), 0);
+        sum + (facility.bed_count || 0), 0);
 
-      // Calculate per 1,000 population for doctors and nurses
       results.doctor_per_population = {
         value: parseFloat(((totalDoctors / districtPopulation) * 1000).toFixed(2)),
         sample_size: districtHealthFacilities.length,
@@ -231,22 +212,20 @@ class BasicSDHEProcessor {
         absolute_count: totalNurses
       };
 
-      // Calculate per 10,000 population for health workers
       results.healthworker_per_population = {
         value: parseFloat(((totalHealthWorkers / districtPopulation) * 10000).toFixed(2)),
         sample_size: districtHealthFacilities.length,
         population: districtPopulation,
         absolute_count: totalHealthWorkers
       };
-      // Calculate per 10,000 population for bed
-      results.bed_per_population = {
-      value: parseFloat(((totalBeds / districtPopulation) * 10000).toFixed(2)),
-      sample_size: districtHealthFacilities.length,
-      population: districtPopulation,
-      absolute_count: totalBeds
-    };
 
-      // Calculate community health workers per 1,000 community population
+      results.bed_per_population = {
+        value: parseFloat(((totalBeds / districtPopulation) * 10000).toFixed(2)),
+        sample_size: districtHealthFacilities.length,
+        population: districtPopulation,
+        absolute_count: totalBeds
+      };
+
       const districtCHW = this.communityHealthWorkerData.find(record => 
         record.dcode === districtCode
       );
@@ -285,45 +264,40 @@ class BasicSDHEProcessor {
   }
 
   calculateHealthServiceAccess(districtCode, districtName) {
-  try {
-    // Get total population for the district
-    const districtPopulation = this.districtPopulationData
-      .filter(record => record.dcode === districtCode)
-      .reduce((sum, record) => sum + (record.population || 0), 0);
+    try {
+      const districtPopulation = this.districtPopulationData
+        .filter(record => record.dcode === districtCode)
+        .reduce((sum, record) => sum + (record.population || 0), 0);
 
-    if (districtPopulation === 0) {
+      if (districtPopulation === 0) {
+        return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
+      }
+
+      const districtHealthFacilities = this.healthFacilitiesData.filter(facility => 
+        facility.dcode === districtCode
+      );
+
+      const facilitiesPer10k = parseFloat(((districtHealthFacilities.length / districtPopulation) * 10000).toFixed(2));
+
+      return {
+        value: facilitiesPer10k,
+        sample_size: districtHealthFacilities.length,
+        population: districtPopulation,
+        absolute_count: districtHealthFacilities.length
+      };
+
+    } catch (error) {
       return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
     }
-
-    // Get health facilities in the district
-    const districtHealthFacilities = this.healthFacilitiesData.filter(facility => 
-      facility.dcode === districtCode
-    );
-
-    // Calculate facilities per 10,000 population
-    const facilitiesPer10k = parseFloat(((districtHealthFacilities.length / districtPopulation) * 10000).toFixed(2));
-
-    return {
-      value: facilitiesPer10k,
-      sample_size: districtHealthFacilities.length,
-      population: districtPopulation,
-      absolute_count: districtHealthFacilities.length
-    };
-
-  } catch (error) {
-    return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
   }
-}
 
-  // NEW: Get district-specific pre-calculated value for health behaviors indicators
   getDistrictSpecificPreCalculatedValue(indicator, districtName) {
     const healthBehaviorsIndicators = ['alcohol_consumption', 'tobacco_use', 'physical_activity', 'obesity'];
     
     if (!healthBehaviorsIndicators.includes(indicator)) {
-      return null; // Not a health behaviors indicator, use Bangkok-wide data
+      return null;
     }
 
-    // Find district code
     const districtCode = Object.keys(this.districtCodeMap).find(
       code => this.districtCodeMap[code] === districtName
     );
@@ -338,7 +312,6 @@ class BasicSDHEProcessor {
 
   createIndicatorMappings() {
     return {
-      // Economic Security Domain - Complete set
       economic_security: {
         unemployment_rate: { 
           field: 'occupation_status', 
@@ -433,7 +406,6 @@ class BasicSDHEProcessor {
         }
       },
 
-      // Education Domain - Complete set
       education: {
         functional_literacy: { 
           fields: ['speak', 'read', 'write', 'math'],
@@ -457,7 +429,6 @@ class BasicSDHEProcessor {
         }
       },
 
-      // Healthcare Access Domain - UPDATED with new indicators
       healthcare_access: {
         health_coverage: { 
           field: 'welfare', 
@@ -479,7 +450,6 @@ class BasicSDHEProcessor {
           fields: ['oral_health', 'oral_health_access'],
           condition: (r) => r.oral_health === 1 && r.oral_health_access === 1
         },
-        // NEW HEALTHCARE SUPPLY INDICATORS
         doctor_per_population: {
           isSupplyIndicator: true
         },
@@ -500,7 +470,6 @@ class BasicSDHEProcessor {
         }
       },
 
-      // Physical Environment Domain - Complete set
       physical_environment: {
         electricity_access: { 
           field: 'community_environment_4', 
@@ -533,7 +502,6 @@ class BasicSDHEProcessor {
         }
       },
 
-      // Social Context Domain - Complete set
       social_context: {
         community_safety: { 
           field: 'community_safety', 
@@ -551,10 +519,10 @@ class BasicSDHEProcessor {
             const totalScore = safetyResponses.reduce((sum, r) => {
               const safetyValue = r.community_safety;
               
-              if (safetyValue === 4) return sum + 100;  // Very Safe
-              if (safetyValue === 3) return sum + 75;   // Safe
-              if (safetyValue === 2) return sum + 50;   // Somewhat Safe
-              if (safetyValue === 1) return sum + 25;   // Unsafe
+              if (safetyValue === 4) return sum + 100;
+              if (safetyValue === 3) return sum + 75;
+              if (safetyValue === 2) return sum + 50;
+              if (safetyValue === 1) return sum + 25;
               
               return sum;
             }, 0);
@@ -590,7 +558,6 @@ class BasicSDHEProcessor {
         }
       },
 
-      // Health Behaviors Domain - Complete set
       health_behaviors: {
         alcohol_consumption: { 
           fields: ['drink_status', 'drink_rate'],
@@ -620,15 +587,12 @@ class BasicSDHEProcessor {
         }
       },
 
-      // Health Outcomes Domain - Complete set (diseases)
       health_outcomes: {
-        // Overall chronic disease burden
         any_chronic_disease: {
           field: 'diseases_status',
           condition: (val) => val === 1
         },
         
-        // Individual disease prevalence
         diabetes: {
           fields: ['diseases_status', 'diseases_type/1'],
           condition: (r) => r.diseases_status === 1 && r['diseases_type/1'] === 1
@@ -644,7 +608,6 @@ class BasicSDHEProcessor {
         chronic_kidney_disease: {
           fields: ['diseases_status', 'diseases_type/4'],
           condition: (r) => r.diseases_status === 1 && r['diseases_type/4'] === 1
-        },
         },
         cancer: {
           fields: ['diseases_status', 'diseases_type/5'],
@@ -715,7 +678,6 @@ class BasicSDHEProcessor {
           condition: (r) => r.diseases_status === 1 && r['diseases_type/21'] === 1
         },
 
-        // Disease burden calculations
         cardiovascular_diseases: {
           calculation: (records) => {
             const diseaseRecords = records.filter(r => r.diseases_status === 1);
@@ -792,12 +754,10 @@ class BasicSDHEProcessor {
     return 'normal_population';
   }
 
-  // UPDATED: Calculate indicators for a specific set of records with minimum sample size requirement
   calculateIndicatorsForRecords(records, domain, districtName = null, populationGroup = null) {
     const domainMapping = this.indicatorMappings[domain];
     const results = { sample_size: records.length };
 
-    // UPDATED: Check minimum sample size requirement for non-supply indicators
     const hasMinimumSample = records.length >= this.MINIMUM_SAMPLE_SIZE;
 
     // Define reverse indicators (diseases and problems are bad when high)
@@ -955,7 +915,7 @@ class BasicSDHEProcessor {
         
         const hasSurveyData = records.length > 0;
         
-        // NEW: Check for district-specific pre-calculated data for health behaviors
+        // Check for district-specific pre-calculated data for health behaviors
         const districtSpecificValue = this.getDistrictSpecificPreCalculatedValue(indicator, districtName);
         const hasDistrictSpecificData = districtSpecificValue !== null && districtSpecificValue !== undefined;
         
