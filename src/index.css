@@ -2,11 +2,32 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Import Mitr font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap');
+
+/* Set Mitr as default font family */
+@layer base {
+  * {
+    font-family: 'Mitr', sans-serif;
+  }
+  
+  body {
+    font-family: 'Mitr', sans-serif;
+  }
+  
+  /* Ensure all text elements use Mitr */
+  h1, h2, h3, h4, h5, h6,
+  p, span, div, button, input, select, textarea,
+  .leaflet-container {
+    font-family: 'Mitr', sans-serif !important;
+  }
+}
+
 /* Critical CSS for Leaflet maps */
 .leaflet-container {
   height: 100% !important;
   width: 100% !important;
-  font-family: inherit;
+  font-family: 'Mitr', sans-serif !important;
 }
 
 .leaflet-tile {
@@ -18,4 +39,12 @@
 .dashboard-map-section {
   height: 600px !important;
   min-height: 600px !important;
+}
+
+/* Ensure Mitr font applies to all Leaflet elements */
+.leaflet-popup-content,
+.leaflet-tooltip,
+.leaflet-control,
+.leaflet-bar a {
+  font-family: 'Mitr', sans-serif !important;
 }
