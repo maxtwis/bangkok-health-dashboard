@@ -416,42 +416,40 @@ const Dashboard = () => {
                   <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                     {/* Population Group Checkboxes - Inside spider chart box */}
                     <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-4">
-                      <div className="space-y-2">
-                        <span className="text-sm font-medium text-gray-700 block">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-medium text-gray-700 mr-2 flex-shrink-0">
                           {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
                         </span>
-                        {/* Checkboxes in single row with better spacing */}
-                        <div className="flex flex-wrap gap-4">
-                          {[
-                            { value: 'informal_workers', color: '#ef4444' },
-                            { value: 'elderly', color: '#3b82f6' },
-                            { value: 'disabled', color: '#10b981' },
-                            { value: 'lgbtq', color: '#f59e0b' },
-                            { value: 'normal_population', color: '#8b5cf6' }
-                          ].map(group => (
-                            <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded px-3 py-2 transition-colors">
-                              <input
-                                type="checkbox"
-                                defaultChecked={true}
-                                className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
-                                style={{ 
-                                  accentColor: group.color,
-                                  backgroundColor: group.color 
-                                }}
-                                onChange={(e) => {
-                                  // This will be handled by the spider chart component
-                                  const event = new CustomEvent('populationGroupToggle', {
-                                    detail: { group: group.value, checked: e.target.checked }
-                                  });
-                                  window.dispatchEvent(event);
-                                }}
-                              />
-                              <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                                {t(`populationGroups.${group.value}`)}
-                              </span>
-                            </label>
-                          ))}
-                        </div>
+                        {/* Checkboxes in single row - more compact */}
+                        {[
+                          { value: 'informal_workers', color: '#ef4444' },
+                          { value: 'elderly', color: '#3b82f6' },
+                          { value: 'disabled', color: '#10b981' },
+                          { value: 'lgbtq', color: '#f59e0b' },
+                          { value: 'normal_population', color: '#8b5cf6' }
+                        ].map(group => (
+                          <label key={group.value} className="flex items-center space-x-1.5 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors flex-shrink-0">
+                            <input
+                              type="checkbox"
+                              defaultChecked={true}
+                              className="w-3.5 h-3.5 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-1"
+                              style={{ 
+                                accentColor: group.color,
+                                backgroundColor: group.color 
+                              }}
+                              onChange={(e) => {
+                                // This will be handled by the spider chart component
+                                const event = new CustomEvent('populationGroupToggle', {
+                                  detail: { group: group.value, checked: e.target.checked }
+                                });
+                                window.dispatchEvent(event);
+                              }}
+                            />
+                            <span className="text-xs font-medium text-gray-700 whitespace-nowrap">
+                              {t(`populationGroups.${group.value}`)}
+                            </span>
+                          </label>
+                        ))}
                       </div>
                     </div>
 
