@@ -281,10 +281,10 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </ResponsiveContainer>
           </div>
 
-          {/* Domain Rankings - More compact horizontal layout */}
+          {/* Domain Rankings - Complete view with all domains and groups */}
           <div className="bg-gray-50 rounded-lg p-4">
             <h4 className="text-base font-semibold text-gray-800 mb-3">{t('ui.domainPerformanceRankings')}</h4>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-3">
               {populationGroups.map(group => {
                 const groupScores = chartData.map(d => ({
                   domain: d.domain,
@@ -292,25 +292,25 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                 })).sort((a, b) => b.score - a.score);
 
                 return (
-                  <div key={group.value} className="bg-white rounded-md p-2 shadow-sm border border-gray-100">
-                    <div className="flex items-center mb-1">
+                  <div key={group.value} className="bg-white rounded-md p-3 shadow-sm border border-gray-100">
+                    <div className="flex items-center mb-2">
                       <div 
-                        className="w-2.5 h-2.5 rounded-full mr-2 flex-shrink-0" 
+                        className="w-3 h-3 rounded-full mr-2 flex-shrink-0" 
                         style={{ backgroundColor: group.color }}
                       ></div>
-                      <h5 className="font-medium text-gray-800 text-xs leading-tight">
+                      <h5 className="font-medium text-gray-800 text-sm">
                         {t(`populationGroups.${group.value}`)}
                       </h5>
                     </div>
-                    <div className="space-y-0.5">
-                      {groupScores.slice(0, 2).map((item, index) => (
-                        <div key={item.domain} className="flex justify-between items-center">
-                          <span className={`text-xs font-medium leading-tight ${
-                            index === 0 ? 'text-green-700' : 'text-gray-600'
-                          }`}>
-                            {index + 1}. {item.domain.length > 12 ? item.domain.substring(0, 12) + '...' : item.domain}
+                    <div className="grid grid-cols-2 gap-1">
+                      {groupScores.map((item, index) => (
+                        <div key={item.domain} className="flex justify-between items-center text-xs">
+                          <span className={`font-medium pr-2 ${
+                            index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
+                          }`} title={item.domain}>
+                            {index + 1}. {item.domain}
                           </span>
-                          <span className="font-semibold text-gray-900 text-xs">{item.score.toFixed(0)}%</span>
+                          <span className="font-semibold text-gray-900 flex-shrink-0">{item.score.toFixed(0)}%</span>
                         </div>
                       ))}
                     </div>
