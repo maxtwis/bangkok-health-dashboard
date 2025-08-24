@@ -410,51 +410,52 @@ const Dashboard = () => {
             {/* Overview Mode - Exact layout as requested */}
             {viewMode === 'overview' && (
               <div className="space-y-6">
-                {/* Population Group Checkboxes - Single line across full width */}
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                  <div className="flex flex-wrap items-center gap-4">
-                    <span className="text-sm font-medium text-gray-700 flex-shrink-0">
-                      {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
-                    </span>
-                    {/* Checkboxes in single row */}
-                    <div className="flex flex-wrap gap-4">
-                      {[
-                        { value: 'informal_workers', color: '#ef4444' },
-                        { value: 'elderly', color: '#3b82f6' },
-                        { value: 'disabled', color: '#10b981' },
-                        { value: 'lgbtq', color: '#f59e0b' },
-                        { value: 'normal_population', color: '#8b5cf6' }
-                      ].map(group => (
-                        <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors">
-                          <input
-                            type="checkbox"
-                            defaultChecked={true}
-                            className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
-                            onChange={(e) => {
-                              // This will be handled by the spider chart component
-                              const event = new CustomEvent('populationGroupToggle', {
-                                detail: { group: group.value, checked: e.target.checked }
-                              });
-                              window.dispatchEvent(event);
-                            }}
-                          />
-                          <div 
-                            className="w-3 h-3 rounded-full flex-shrink-0" 
-                            style={{ backgroundColor: group.color }}
-                          ></div>
-                          <span className="text-sm font-medium text-gray-700">
-                            {t(`populationGroups.${group.value}`)}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
                 {/* Spider Chart and Map - Side by side */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Spider Chart - Left side, no checkboxes inside */}
+                  {/* Spider Chart - Left side, with checkboxes inside */}
                   <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    {/* Population Group Checkboxes - Inside spider chart box */}
+                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 mb-4">
+                      <div className="flex flex-wrap items-center gap-4">
+                        <span className="text-sm font-medium text-gray-700 flex-shrink-0">
+                          {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
+                        </span>
+                        {/* Checkboxes in single row */}
+                        <div className="flex flex-wrap gap-3">
+                          {[
+                            { value: 'informal_workers', color: '#ef4444' },
+                            { value: 'elderly', color: '#3b82f6' },
+                            { value: 'disabled', color: '#10b981' },
+                            { value: 'lgbtq', color: '#f59e0b' },
+                            { value: 'normal_population', color: '#8b5cf6' }
+                          ].map(group => (
+                            <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors">
+                              <input
+                                type="checkbox"
+                                defaultChecked={true}
+                                className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                                style={{ 
+                                  accentColor: group.color,
+                                  backgroundColor: group.color 
+                                }}
+                                onChange={(e) => {
+                                  // This will be handled by the spider chart component
+                                  const event = new CustomEvent('populationGroupToggle', {
+                                    detail: { group: group.value, checked: e.target.checked }
+                                  });
+                                  window.dispatchEvent(event);
+                                }}
+                              />
+                              <span className="text-sm font-medium text-gray-700">
+                                {t(`populationGroups.${group.value}`)}
+                              </span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Spider Chart Component */}
                     <PopulationGroupSpiderChart 
                       selectedDomain={selectedDomain}
                       selectedDistrict={selectedDistrict}
