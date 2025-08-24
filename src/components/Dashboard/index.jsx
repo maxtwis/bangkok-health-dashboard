@@ -282,7 +282,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Header with better spacing and visual hierarchy */}
       <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 lg:px-6">
           <div className="flex justify-between items-center py-8">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold text-gray-900">{t('appTitle')}</h1>
@@ -300,8 +300,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Main Content with reduced max width for less empty space */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-10">
+      {/* Main Content with increased max width for less empty space */}
+      <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-10">
         
         {/* Navigation Tabs with better styling */}
         <div className="mb-10">
@@ -410,18 +410,18 @@ const Dashboard = () => {
             {/* Overview Mode - Exact layout as requested */}
             {viewMode === 'overview' && (
               <div className="space-y-6">
-                {/* Spider Chart and Map - Side by side */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Spider Chart and Map - Side by side with wider containers */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Spider Chart - Left side, with checkboxes inside */}
                   <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                     {/* Population Group Checkboxes - Inside spider chart box */}
-                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 mb-4">
-                      <div className="flex flex-wrap items-center gap-4">
-                        <span className="text-sm font-medium text-gray-700 flex-shrink-0">
+                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-4">
+                      <div className="space-y-2">
+                        <span className="text-sm font-medium text-gray-700 block">
                           {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
                         </span>
-                        {/* Checkboxes in single row */}
-                        <div className="flex flex-wrap gap-3">
+                        {/* Checkboxes in single row with better spacing */}
+                        <div className="flex flex-wrap gap-4">
                           {[
                             { value: 'informal_workers', color: '#ef4444' },
                             { value: 'elderly', color: '#3b82f6' },
@@ -429,7 +429,7 @@ const Dashboard = () => {
                             { value: 'lgbtq', color: '#f59e0b' },
                             { value: 'normal_population', color: '#8b5cf6' }
                           ].map(group => (
-                            <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors">
+                            <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded px-3 py-2 transition-colors">
                               <input
                                 type="checkbox"
                                 defaultChecked={true}
@@ -446,7 +446,7 @@ const Dashboard = () => {
                                   window.dispatchEvent(event);
                                 }}
                               />
-                              <span className="text-sm font-medium text-gray-700">
+                              <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
                                 {t(`populationGroups.${group.value}`)}
                               </span>
                             </label>
@@ -465,7 +465,7 @@ const Dashboard = () => {
                   </div>
 
                   {/* Map - Right side, full height */}
-                  <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
+                  <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '700px' }}>
                     <div className="h-full">
                       <BangkokMap
                         selectedDomain={selectedDomain}
