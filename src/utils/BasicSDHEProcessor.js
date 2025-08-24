@@ -1,4 +1,5 @@
 // Updated Basic SDHE Data Processor with Healthcare Supply Indicators - src/utils/BasicSDHEProcessor.js
+// UPDATED: Added minimum sample size requirement of 5 respondents per district
 import Papa from 'papaparse';
 import _ from 'lodash';
 
@@ -15,6 +16,7 @@ class BasicSDHEProcessor {
     this.sdheResults = {};
     this.districtCodeMap = this.createDistrictCodeMap();
     this.indicatorMappings = this.createIndicatorMappings();
+    this.MINIMUM_SAMPLE_SIZE = 5; // NEW: Minimum sample size requirement
   }
 
   createDistrictCodeMap() {
@@ -858,10 +860,13 @@ class BasicSDHEProcessor {
     return 'normal_population';
   }
 
-  // UPDATED: Calculate indicators for a specific set of records with district-specific health behaviors
+  // UPDATED: Calculate indicators for a specific set of records with minimum sample size requirement
   calculateIndicatorsForRecords(records, domain, districtName = null, populationGroup = null) {
     const domainMapping = this.indicatorMappings[domain];
     const results = { sample_size: records.length };
+
+    // UPDATED: Check minimum sample size requirement for non-supply indicators
+    const hasMinimumSample = records.length >= this.MINIMUM_SAMPLE_SIZE;
 
     // Define reverse indicators (diseases and problems are bad when high)
     const reverseIndicators = {
@@ -1031,11 +1036,11 @@ class BasicSDHEProcessor {
                                 parseFloat(this.normalPopulationLookup[indicator]) : null;
         const hasBangkokWideData = bangkokWideValue !== null && !isNaN(bangkokWideValue);
 
-        // Calculate survey-based value if we have survey data
+        // Calculate survey-based value if we have survey data AND minimum sample size
         let surveyValue = null;
         let surveySampleSize = 0;
         
-        if (hasSurveyData) {
+        if (hasSurveyData && hasMinimumSample) {
           if (mapping.calculation) {
             surveyValue = mapping.calculation(records);
             surveySampleSize = records.length;
@@ -1085,10 +1090,10 @@ class BasicSDHEProcessor {
             isCombined = true;
             finalSampleSize = `${surveySampleSize} + District`;
           } else {
-            // Only district-specific data available
+            // Only district-specific data available OR insufficient survey sample
             finalValue = districtSpecificValue;
             isPreCalculated = true;
-            finalSampleSize = 'District-wide';
+            finalSampleSize = records.length < this.MINIMUM_SAMPLE_SIZE ? `${records.length} (District fallback)` : 'District-wide';
             combinationMethod = 'district_only';
           }
         } else if (surveyValue !== null && !isNaN(surveyValue) && 
@@ -1116,7 +1121,7 @@ class BasicSDHEProcessor {
           finalSampleSize = `${surveySampleSize} + Bangkok-wide`;
           
         } else if (surveyValue !== null && !isNaN(surveyValue)) {
-          // Only survey data available
+          // Only survey data available with sufficient sample
           finalValue = surveyValue;
           finalSampleSize = surveySampleSize;
           combinationMethod = 'survey_only';
@@ -1125,14 +1130,14 @@ class BasicSDHEProcessor {
           // Only district-specific pre-calculated data available
           finalValue = districtSpecificValue;
           isPreCalculated = true;
-          finalSampleSize = 'District-wide';
+          finalSampleSize = records.length < this.MINIMUM_SAMPLE_SIZE ? `${records.length} (District fallback)` : 'District-wide';
           combinationMethod = 'district_only';
           
         } else if (hasBangkokWideData) {
           // Only Bangkok-wide pre-calculated data available
           finalValue = bangkokWideValue;
           isPreCalculated = true;
-          finalSampleSize = 'Bangkok-wide';
+          finalSampleSize = records.length < this.MINIMUM_SAMPLE_SIZE ? `${records.length} (Bangkok fallback)` : 'Bangkok-wide';
           combinationMethod = 'bangkok_only';
           
         } else {
@@ -1140,8 +1145,9 @@ class BasicSDHEProcessor {
           results[indicator] = {
             value: null,
             label: mapping.label,
-            sample_size: 0,
-            noData: true
+            sample_size: records.length,
+            noData: true,
+            insufficientSample: !hasMinimumSample
           };
           return; // Skip to next indicator
         }
@@ -1156,14 +1162,24 @@ class BasicSDHEProcessor {
           combinationMethod: combinationMethod,
           surveyValue: surveyValue,
           preCalculatedValue: hasDistrictSpecificData ? districtSpecificValue : bangkokWideValue,
-          surveySampleSize: surveySampleSize
+          surveySampleSize: surveySampleSize,
+          insufficientSample: !hasMinimumSample && !isPreCalculated
         };
         
         return; // Skip normal calculation, we have our result
       }
       
-      // NORMAL CALCULATION (for all other cases)
-      else if (mapping.calculation) {
+      // NORMAL CALCULATION (for all other cases) - UPDATED with minimum sample size check
+      else if (!hasMinimumSample) {
+        // Insufficient sample size for regular survey-based indicators
+        results[indicator] = {
+          value: null,
+          label: mapping.label,
+          sample_size: records.length,
+          noData: true,
+          insufficientSample: true
+        };
+      } else if (mapping.calculation) {
         // Custom calculation function
         const calculatedValue = mapping.calculation(records);
         results[indicator] = {
@@ -1181,7 +1197,19 @@ class BasicSDHEProcessor {
             ((indicator.includes('household') && r.hh_health_expense !== null) ||
              (!indicator.includes('household') && r.health_expense !== null))
           );
-          results[indicator].sample_size = validRecords.length;
+          
+          // Check if financial calculation has sufficient valid records
+          if (validRecords.length < this.MINIMUM_SAMPLE_SIZE) {
+            results[indicator] = {
+              value: null,
+              label: mapping.label,
+              sample_size: validRecords.length,
+              noData: true,
+              insufficientSample: true
+            };
+          } else {
+            results[indicator].sample_size = validRecords.length;
+          }
         }
       } else if (mapping.condition) {
         // Standard condition-based calculation
@@ -1192,30 +1220,44 @@ class BasicSDHEProcessor {
           filteredRecords = records.filter(r => mapping.ageFilter(r.age));
         }
         
-        const meetCondition = filteredRecords.filter(record => {
-          if (mapping.fields) {
-            return mapping.condition(record);
-          } else {
-            return mapping.condition(record[mapping.field]);
-          }
-        }).length;
-        
-        const rate = filteredRecords.length > 0 ? 
-          (meetCondition / filteredRecords.length) * 100 : 0;
-        
-        results[indicator] = {
-          value: parseFloat(rate.toFixed(2)),
-          label: mapping.label,
-          sample_size: mapping.ageFilter ? filteredRecords.length : records.length
-        };
+        // Check if filtered records still meet minimum sample size
+        if (filteredRecords.length < this.MINIMUM_SAMPLE_SIZE) {
+          results[indicator] = {
+            value: null,
+            label: mapping.label,
+            sample_size: filteredRecords.length,
+            noData: true,
+            insufficientSample: true
+          };
+        } else {
+          const meetCondition = filteredRecords.filter(record => {
+            if (mapping.fields) {
+              return mapping.condition(record);
+            } else {
+              return mapping.condition(record[mapping.field]);
+            }
+          }).length;
+          
+          const rate = filteredRecords.length > 0 ? 
+            (meetCondition / filteredRecords.length) * 100 : 0;
+          
+          results[indicator] = {
+            value: parseFloat(rate.toFixed(2)),
+            label: mapping.label,
+            sample_size: mapping.ageFilter ? filteredRecords.length : records.length
+          };
+        }
       }
     });
 
     // Calculate domain score with proper reverse indicator handling
     const indicators = Object.keys(domainMapping);
     const goodnessScores = indicators.filter(indicator => {
-      // Exclude indicators with no data from domain score calculation
-      return results[indicator] && results[indicator].value !== null && !results[indicator].noData;
+      // Exclude indicators with no data or insufficient sample from domain score calculation
+      return results[indicator] && 
+             results[indicator].value !== null && 
+             !results[indicator].noData && 
+             !results[indicator].insufficientSample;
     }).map(indicator => {
       const rawValue = results[indicator].value;
       
@@ -1275,14 +1317,19 @@ class BasicSDHEProcessor {
       results['_domain_score'] = {
         value: parseFloat(domainScore.toFixed(1)),
         label: `${domain.replace('_', ' ')} Score`,
-        sample_size: records.length
+        sample_size: records.length,
+        validIndicators: goodnessScores.length,
+        totalIndicators: indicators.length
       };
     } else {
       results['_domain_score'] = {
         value: null,
         label: `${domain.replace('_', ' ')} Score`,
-        sample_size: 0,
-        noData: true
+        sample_size: records.length,
+        noData: true,
+        insufficientSample: !hasMinimumSample,
+        validIndicators: 0,
+        totalIndicators: indicators.length
       };
     }
 
@@ -1294,6 +1341,8 @@ class BasicSDHEProcessor {
     const domains = Object.keys(this.indicatorMappings);
     const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
     const districts = [...new Set(this.surveyData.map(r => r.district_name))];
+
+    console.log(`🔧 Calculating indicators with minimum sample size: ${this.MINIMUM_SAMPLE_SIZE}`);
 
     // Initialize results structure for districts
     domains.forEach(domain => {
@@ -1336,6 +1385,11 @@ class BasicSDHEProcessor {
             r.district_name === district && r.population_group === group
           );
 
+          // Log sample sizes for debugging
+          if (records.length > 0 && records.length < this.MINIMUM_SAMPLE_SIZE) {
+            console.log(`⚠️ Small sample: ${district} - ${group} (${records.length} records)`);
+          }
+
           if (records.length > 0 || (group === 'normal_population' && district !== 'Bangkok Overall')) {
             results[domain][district][group] = this.calculateIndicatorsForRecords(
               records, 
@@ -1375,7 +1429,14 @@ class BasicSDHEProcessor {
       sample_size: data[indicator].sample_size,
       population: data[indicator].population || null,
       absolute_count: data[indicator].absolute_count || null,
-      isDomainScore: indicator === '_domain_score'
+      isDomainScore: indicator === '_domain_score',
+      noData: data[indicator].noData || false,
+      insufficientSample: data[indicator].insufficientSample || false,
+      isPreCalculated: data[indicator].isPreCalculated || false,
+      isCombined: data[indicator].isCombined || false,
+      combinationMethod: data[indicator].combinationMethod || null,
+      validIndicators: data[indicator].validIndicators || null,
+      totalIndicators: data[indicator].totalIndicators || null
     }));
   }
 
@@ -1384,7 +1445,8 @@ class BasicSDHEProcessor {
     const summary = {
       total_responses: this.surveyData.length,
       population_groups: {},
-      districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length
+      districts_covered: [...new Set(this.surveyData.map(r => r.district_name))].length,
+      minimum_sample_size: this.MINIMUM_SAMPLE_SIZE
     };
 
     // Population group breakdown for Bangkok Overall
@@ -1393,9 +1455,34 @@ class BasicSDHEProcessor {
       const groupRecords = this.surveyData.filter(r => r.population_group === group);
       summary.population_groups[group] = {
         count: groupRecords.length,
-        percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1)
+        percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1),
+        meets_minimum: groupRecords.length >= this.MINIMUM_SAMPLE_SIZE
       };
     });
+
+    // Calculate district sample size statistics
+    const districts = [...new Set(this.surveyData.map(r => r.district_name))];
+    const districtStats = {
+      total_districts: districts.length,
+      districts_with_minimum_sample: 0,
+      districts_below_minimum: 0
+    };
+
+    districts.forEach(district => {
+      populationGroups.forEach(group => {
+        const records = this.surveyData.filter(r => 
+          r.district_name === district && r.population_group === group
+        );
+        
+        if (records.length >= this.MINIMUM_SAMPLE_SIZE) {
+          districtStats.districts_with_minimum_sample++;
+        } else if (records.length > 0) {
+          districtStats.districts_below_minimum++;
+        }
+      });
+    });
+
+    summary.district_statistics = districtStats;
 
     return summary;
   }
@@ -1410,6 +1497,8 @@ class BasicSDHEProcessor {
       
       // Calculate all indicators
       const results = this.calculateIndicators();
+      
+      console.log(`✅ Processing complete with minimum sample size: ${this.MINIMUM_SAMPLE_SIZE}`);
       
       return {
         results,
