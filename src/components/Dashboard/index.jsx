@@ -225,11 +225,11 @@ const Dashboard = () => {
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <h2 className="text-xl font-semibold text-gray-700 mb-2">{t('ui.loading')}</h2>
-          <p className="text-gray-500">{t('ui.loadingDescription')}</p>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center bg-white rounded-2xl p-12 shadow-xl">
+          <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-6"></div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">{t('ui.loading')}</h2>
+          <p className="text-gray-600">{t('ui.loadingDescription')}</p>
         </div>
       </div>
     );
@@ -238,18 +238,18 @@ const Dashboard = () => {
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center bg-white p-8 rounded-lg shadow-md max-w-md">
-          <div className="text-red-500 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 flex items-center justify-center p-6">
+        <div className="text-center bg-white p-12 rounded-2xl shadow-xl max-w-md">
+          <div className="text-red-500 mb-6">
+            <svg className="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-gray-700 mb-2">{t('ui.error')}</h2>
-          <p className="text-gray-500 mb-4">{error}</p>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">{t('ui.error')}</h2>
+          <p className="text-gray-600 mb-6">{error}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg transition-colors font-medium"
           >
             {t('ui.retry')}
           </button>
@@ -279,19 +279,19 @@ const Dashboard = () => {
   const currentIndicatorData = getIndicatorData(selectedDomain, selectedDistrict, selectedPopulationGroup);
   
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">{t('appTitle')}</h1>
-              <p className="text-sm text-gray-600">{t('appSubtitle')}</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Header with better spacing and visual hierarchy */}
+      <div className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center py-8">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold text-gray-900">{t('appTitle')}</h1>
+              <p className="text-lg text-gray-600 font-medium">{t('appSubtitle')}</p>
             </div>
             <div className="flex items-center space-x-4">
               <button
                 onClick={toggleLanguage}
-                className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-md font-medium"
+                className="px-6 py-3 text-base font-medium bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg shadow-md transition-all duration-200 transform hover:scale-105"
               >
                 {language === 'en' ? 'ไทย' : 'EN'}
               </button>
@@ -300,16 +300,16 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Main Content with increased spacing */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
         
-        {/* Navigation Tabs */}
-        <div className="mb-6">
+        {/* Navigation Tabs with better styling */}
+        <div className="mb-10">
           <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+            <nav className="-mb-px flex space-x-12">
               <button
                 onClick={() => setActiveTab('analysis')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
+                className={`py-4 px-2 border-b-3 font-semibold text-lg whitespace-nowrap transition-all duration-200 ${
                   activeTab === 'analysis'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -319,7 +319,7 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={() => setActiveTab('hot-issues')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
+                className={`py-4 px-2 border-b-3 font-semibold text-lg whitespace-nowrap transition-all duration-200 ${
                   activeTab === 'hot-issues'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -334,18 +334,19 @@ const Dashboard = () => {
         {/* Tab Content */}
         {activeTab === 'analysis' && (
           <>
-            {/* Control Panel */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Control Panel with better spacing and visual design */}
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-10 border border-gray-100">
+              <h3 className="text-xl font-semibold text-gray-800 mb-6">Dashboard Controls</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 {/* Population Group */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     {t('ui.populationGroup')}
                   </label>
                   <select
                     value={selectedPopulationGroup}
                     onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
                   >
                     <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
                     <option value="elderly">{t('populationGroups.elderly')}</option>
@@ -356,14 +357,14 @@ const Dashboard = () => {
                 </div>
 
                 {/* District */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     {t('ui.district')}
                   </label>
                   <select
                     value={selectedDistrict}
                     onChange={(e) => setSelectedDistrict(e.target.value)}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
                   >
                     {availableDistricts.map(district => (
                       <option key={district} value={district}>{district}</option>
@@ -372,14 +373,14 @@ const Dashboard = () => {
                 </div>
 
                 {/* Domain */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     {t('ui.indicator')} Domain
                   </label>
                   <select
                     value={selectedDomain}
                     onChange={(e) => setSelectedDomain(e.target.value)}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
                   >
                     {availableDomains.map(domain => (
                       <option key={domain} value={domain}>
@@ -390,14 +391,14 @@ const Dashboard = () => {
                 </div>
 
                 {/* View Mode */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     View Mode
                   </label>
                   <select
                     value={viewMode}
                     onChange={(e) => setViewMode(e.target.value)}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
                   >
                     <option value="overview">Overview</option>
                     <option value="indicators">Indicators</option>
@@ -406,14 +407,17 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Overview Mode */}
+            {/* Overview Mode with better spacing */}
             {viewMode === 'overview' && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
                 {/* Spider Chart */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                    Population Group Comparison
-                  </h3>
+                <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+                  <div className="mb-6">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      Population Group Comparison
+                    </h3>
+                    <p className="text-gray-600">Compare health equity indicators across different population groups</p>
+                  </div>
                   <PopulationGroupSpiderChart 
                     selectedDomain={selectedDomain}
                     selectedDistrict={selectedDistrict}
@@ -422,46 +426,53 @@ const Dashboard = () => {
                 </div>
 
                 {/* Map */}
-                <div className="bg-white rounded-lg shadow-sm dashboard-map-section">
-                  <BangkokMap
-                    selectedDomain={selectedDomain}
-                    selectedPopulationGroup={selectedPopulationGroup}
-                    selectedDistrict={selectedDistrict}
-                    onDistrictClick={handleMapDistrictClick}
-                    getIndicatorData={getIndicatorData}
-                  />
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '700px' }}>
+                  <div className="p-6 border-b border-gray-100">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Bangkok District Map</h3>
+                    <p className="text-gray-600">Interactive map showing health equity scores by district</p>
+                  </div>
+                  <div className="h-full">
+                    <BangkokMap
+                      selectedDomain={selectedDomain}
+                      selectedPopulationGroup={selectedPopulationGroup}
+                      selectedDistrict={selectedDistrict}
+                      onDistrictClick={handleMapDistrictClick}
+                      getIndicatorData={getIndicatorData}
+                    />
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Indicators Mode */}
+            {/* Indicators Mode with better spacing */}
             {viewMode === 'indicators' && (
-              <div className="space-y-6">
+              <div className="space-y-10">
                 {/* Indicators Table */}
-                <div className="bg-white rounded-lg shadow-sm">
-                  <div className="px-6 py-4 border-b border-gray-200">
-                    <h3 className="text-lg font-semibold text-gray-800">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                  <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
                       {t(`domains.${selectedDomain}`)} - {t(`populationGroups.${selectedPopulationGroup}`)} 
                       {selectedDistrict !== 'Bangkok Overall' && ` - ${selectedDistrict}`}
                     </h3>
+                    <p className="text-gray-600">Detailed indicator breakdown for the selected parameters</p>
                   </div>
                   
                   <div className="overflow-x-auto">
                     {currentIndicatorData && currentIndicatorData.length > 0 ? (
-                      <div className="p-6">
-                        <table className="w-full text-sm">
+                      <div className="p-8">
+                        <table className="w-full text-base">
                           <thead>
-                            <tr className="border-b border-gray-200 bg-gray-50">
-                              <th className="text-left py-3 px-4 font-medium text-gray-700">
+                            <tr className="border-b-2 border-gray-200">
+                              <th className="text-left py-4 px-6 font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.indicator')}
                               </th>
-                              <th className="text-center py-3 px-4 font-medium text-gray-700">
+                              <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.score')}
                               </th>
-                              <th className="text-center py-3 px-4 font-medium text-gray-700">
+                              <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.sampleSize')}
                               </th>
-                              <th className="text-center py-3 px-4 font-medium text-gray-700">
+                              <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.performance')}
                               </th>
                             </tr>
@@ -476,36 +487,36 @@ const Dashboard = () => {
                                 return (
                                   <tr 
                                     key={indicator} 
-                                    className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+                                    className="border-b border-gray-100 hover:bg-blue-50/50 cursor-pointer transition-colors duration-200"
                                     onClick={() => handleIndicatorClick(indicator)}
                                   >
                                     {/* Indicator Name Column */}
-                                    <td className="py-3 px-4">
+                                    <td className="py-4 px-6">
                                       <div className="flex items-center">
-                                        <span className="font-medium text-gray-900 hover:text-blue-600">
+                                        <span className="font-medium text-gray-900 hover:text-blue-600 transition-colors duration-200">
                                           {getIndicatorName(indicator, language) || item.label}
                                         </span>
-                                        <svg className="w-4 h-4 ml-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-5 h-5 ml-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
                                       </div>
                                     </td>
 
                                     {/* Score Column */}
-                                    <td className="text-center py-3 px-4">
+                                    <td className="text-center py-4 px-6">
                                       {item.noData || value === null || value === undefined ? (
-                                        <span className="inline-flex px-2 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
+                                        <span className="inline-flex px-3 py-2 text-sm font-medium bg-gray-100 text-gray-600 rounded-full">
                                           N/A
                                         </span>
                                       ) : (
-                                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getScoreColor(value, indicator)}`}>
+                                        <span className={`inline-flex px-3 py-2 text-sm font-medium rounded-full ${getScoreColor(value, indicator)}`}>
                                           {formatValue(value, indicator)}
                                         </span>
                                       )}
                                     </td>
 
                                     {/* Sample Size Column */}
-                                    <td className="text-center py-3 px-4 text-gray-600">
+                                    <td className="text-center py-4 px-6 text-gray-600">
                                       {(() => {
                                         if (item.noData) {
                                           return language === 'th' ? 'ไม่มีข้อมูล' : 'No data';
@@ -516,15 +527,15 @@ const Dashboard = () => {
                                     </td>
 
                                     {/* Performance Bar Column */}
-                                    <td className="text-center py-3 px-4">
+                                    <td className="text-center py-4 px-6">
                                       {item.noData || value === null || value === undefined ? (
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
-                                          <div className="h-2 rounded-full bg-gray-300" style={{ width: '0%' }}></div>
+                                        <div className="w-full bg-gray-200 rounded-full h-3">
+                                          <div className="h-3 rounded-full bg-gray-300" style={{ width: '0%' }}></div>
                                         </div>
                                       ) : (
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                        <div className="w-full bg-gray-200 rounded-full h-3">
                                           <div 
-                                            className={`h-2 rounded-full ${getPerformanceBarColor(value, indicator)}`}
+                                            className={`h-3 rounded-full ${getPerformanceBarColor(value, indicator)} transition-all duration-500`}
                                             style={{ width: `${Math.min(100, Math.max(0, parseFloat(value) || 0))}%` }}
                                           ></div>
                                         </div>
@@ -537,9 +548,14 @@ const Dashboard = () => {
                         </table>
                       </div>
                     ) : (
-                      <div className="text-center py-8 text-gray-500">
-                        <p>{t('ui.noData')}</p>
-                        <p className="text-sm mt-1">{t('ui.tryDifferent')}</p>
+                      <div className="text-center py-16 text-gray-500">
+                        <div className="mb-4">
+                          <svg className="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </div>
+                        <p className="text-lg font-medium">{t('ui.noData')}</p>
+                        <p className="text-base mt-2">{t('ui.tryDifferent')}</p>
                       </div>
                     )}
                   </div>
@@ -549,62 +565,72 @@ const Dashboard = () => {
 
             {/* Full-width Map for indicators view */}
             {viewMode === 'indicators' && (
-              <div className="bg-white rounded-lg shadow-sm" style={{ height: '500px' }}>
-                <BangkokMap
-                  selectedDomain={selectedDomain}
-                  selectedPopulationGroup={selectedPopulationGroup}
-                  selectedDistrict={selectedDistrict}
-                  onDistrictClick={handleMapDistrictClick}
-                  getIndicatorData={getIndicatorData}
-                />
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
+                <div className="p-6 border-b border-gray-100">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Geographic Distribution</h3>
+                  <p className="text-gray-600">Map view of selected indicators across Bangkok districts</p>
+                </div>
+                <div className="h-full">
+                  <BangkokMap
+                    selectedDomain={selectedDomain}
+                    selectedPopulationGroup={selectedPopulationGroup}
+                    selectedDistrict={selectedDistrict}
+                    onDistrictClick={handleMapDistrictClick}
+                    getIndicatorData={getIndicatorData}
+                  />
+                </div>
               </div>
             )}
 
-            {/* Footer Info */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
-              <h4 className="font-medium text-gray-800 mb-2">{t('ui.aboutSDHE')}</h4>
-              <p className="text-sm text-gray-600 mb-2">
+            {/* Footer Info with better design */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-lg p-8 mt-10 border border-blue-100">
+              <h4 className="text-xl font-semibold text-gray-800 mb-4">{t('ui.aboutSDHE')}</h4>
+              <p className="text-base text-gray-700 mb-6 leading-relaxed">
                 {t('ui.aboutDescription')}
               </p>
               
               {/* Special note for Health Outcomes */}
               {selectedDomain === 'health_outcomes' && (
-                <div className="bg-orange-50 border border-orange-200 rounded p-3 mb-4">
-                  <p className="text-sm text-orange-800">
-                    <strong>{t('ui.healthOutcomesNote')}</strong> {t('ui.healthOutcomesDescription')}
+                <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-200 rounded-lg p-6 mb-6">
+                  <p className="text-base text-orange-800 leading-relaxed">
+                    <strong className="text-orange-900">{t('ui.healthOutcomesNote')}</strong> {t('ui.healthOutcomesDescription')}
                   </p>
                 </div>
               )}
 
-              <div className="flex flex-wrap gap-4 text-xs text-gray-500">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-100 border border-green-300 rounded mr-1"></div>
-                  <span>{t('ui.excellent')}</span>
+              <div className="flex flex-wrap gap-6 text-sm text-gray-600 mb-4">
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-green-100 border-2 border-green-300 rounded-full"></div>
+                  <span className="font-medium">{t('ui.excellent')}</span>
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-yellow-100 border border-yellow-300 rounded mr-1"></div>
-                  <span>{t('ui.good')}</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-yellow-100 border-2 border-yellow-300 rounded-full"></div>
+                  <span className="font-medium">{t('ui.good')}</span>
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-orange-100 border border-orange-300 rounded mr-1"></div>
-                  <span>{t('ui.fair')}</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-orange-100 border-2 border-orange-300 rounded-full"></div>
+                  <span className="font-medium">{t('ui.fair')}</span>
                 </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-red-100 border border-red-300 rounded mr-1"></div>
-                  <span>{t('ui.poor')}</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 bg-red-100 border-2 border-red-300 rounded-full"></div>
+                  <span className="font-medium">{t('ui.poor')}</span>
                 </div>
               </div>
               
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-sm text-gray-600 leading-relaxed">
                 {t('ui.colorNote')}
               </p>
             </div>
           </>
         )}
 
-        {/* Hot Issues Tab */}
+        {/* Hot Issues Tab with better spacing */}
         {activeTab === 'hot-issues' && (
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+            <div className="mb-6">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Hot Issues Analysis</h3>
+              <p className="text-gray-600">Analyze critical health indicators across different districts and population groups</p>
+            </div>
             <IndicatorAnalysis />
           </div>
         )}
