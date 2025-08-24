@@ -166,14 +166,14 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
   return (
     <div className="w-full">
-      {/* Header Section */}
-      <div className="mb-8">
-        <div className="flex justify-between items-start mb-4">
+      {/* Header Section - Compact for side-by-side */}
+      <div className="mb-6">
+        <div className="flex justify-between items-start mb-3">
           <div className="flex-1 pr-4">
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               {t('ui.spiderChartTitle')}
             </h3>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-sm text-gray-600 leading-relaxed">
               {t('ui.spiderChartDescription')} {
                 selectedDistrict === 'Bangkok Overall' && language === 'th'
                   ? t('ui.bangkokOverall') 
@@ -182,13 +182,13 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </p>
           </div>
           
-          {/* Scale Toggle */}
-          <div className="flex bg-gray-100 rounded-xl p-1 flex-shrink-0">
+          {/* Scale Toggle - Compact */}
+          <div className="flex bg-gray-100 rounded-lg p-1 flex-shrink-0">
             <button
               onClick={() => setScaleMode('dynamic')}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
                 scaleMode === 'dynamic' 
-                  ? 'bg-white text-gray-900 shadow-md' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -196,9 +196,9 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </button>
             <button
               onClick={() => setScaleMode('full')}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
                 scaleMode === 'full' 
-                  ? 'bg-white text-gray-900 shadow-md' 
+                  ? 'bg-white text-gray-900 shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -227,16 +227,16 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
         </div>
       ) : (
         <div className="space-y-8">
-          {/* Spider Chart - Increased size */}
-          <div className="h-[500px] w-full">
+          {/* Spider Chart - Optimized for side-by-side layout */}
+          <div className="h-[600px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={transformedData} margin={{ top: 40, right: 120, bottom: 40, left: 120 }}>
+              <RadarChart data={transformedData} margin={{ top: 20, right: 80, bottom: 40, left: 80 }}>
                 <PolarGrid gridType="polygon" />
                 <PolarAngleAxis 
                   dataKey="domain" 
-                  className="text-sm font-medium"
+                  className="text-xs font-medium"
                   tick={{ 
-                    fontSize: 13, 
+                    fontSize: 11, 
                     fill: '#374151',
                     fontWeight: 500
                   }}
@@ -246,8 +246,8 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                   angle={90} 
                   domain={[0, 100]} 
                   className="text-xs"
-                  tick={{ fontSize: 11, fill: '#6b7280' }}
-                  tickCount={6}
+                  tick={{ fontSize: 10, fill: '#6b7280' }}
+                  tickCount={5}
                   tickFormatter={(value) => {
                     if (scaleMode === 'dynamic' && scaleMax > scaleMin) {
                       const actualValue = scaleMin + (value / 100) * (scaleMax - scaleMin);
@@ -264,16 +264,16 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                     dataKey={group.value}
                     stroke={group.color}
                     fill={group.color}
-                    fillOpacity={0.1}
-                    strokeWidth={3}
-                    dot={{ fill: group.color, strokeWidth: 2, r: 5 }}
+                    fillOpacity={0.08}
+                    strokeWidth={2.5}
+                    dot={{ fill: group.color, strokeWidth: 2, r: 4 }}
                   />
                 ))}
                 
                 <Legend 
                   wrapperStyle={{
-                    paddingTop: '30px',
-                    fontSize: '14px',
+                    paddingTop: '20px',
+                    fontSize: '12px',
                     fontWeight: '500'
                   }}
                 />
@@ -281,34 +281,34 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </ResponsiveContainer>
           </div>
 
-          {/* Domain Rankings - Improved layout */}
-          <div className="bg-gray-50 rounded-xl p-6">
-            <h4 className="text-lg font-semibold text-gray-800 mb-6">{t('ui.domainPerformanceRankings')}</h4>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-              {populationGroups.map(group => {
+          {/* Domain Rankings - Compact for side-by-side */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h4 className="text-base font-semibold text-gray-800 mb-4">{t('ui.domainPerformanceRankings')}</h4>
+            <div className="grid grid-cols-1 gap-3">
+              {populationGroups.slice(0, 3).map(group => {
                 const groupScores = chartData.map(d => ({
                   domain: d.domain,
                   score: d[group.value] || 0
                 })).sort((a, b) => b.score - a.score);
 
                 return (
-                  <div key={group.value} className="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
-                    <div className="flex items-center mb-4">
+                  <div key={group.value} className="bg-white rounded-md p-3 shadow-sm border border-gray-100">
+                    <div className="flex items-center mb-2">
                       <div 
-                        className="w-4 h-4 rounded-full mr-3 flex-shrink-0" 
+                        className="w-3 h-3 rounded-full mr-2 flex-shrink-0" 
                         style={{ backgroundColor: group.color }}
                       ></div>
-                      <h5 className="font-semibold text-gray-800 text-base">{t(`populationGroups.${group.value}`)}</h5>
+                      <h5 className="font-medium text-gray-800 text-sm">{t(`populationGroups.${group.value}`)}</h5>
                     </div>
-                    <div className="space-y-3">
-                      {groupScores.map((item, index) => (
+                    <div className="space-y-1">
+                      {groupScores.slice(0, 3).map((item, index) => (
                         <div key={item.domain} className="flex justify-between items-center">
-                          <span className={`text-sm font-medium ${
-                            index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
+                          <span className={`text-xs font-medium ${
+                            index === 0 ? 'text-green-700' : index === 2 ? 'text-red-600' : 'text-gray-700'
                           }`}>
-                            {index + 1}. {item.domain}
+                            {index + 1}. {item.domain.length > 15 ? item.domain.substring(0, 15) + '...' : item.domain}
                           </span>
-                          <span className="font-bold text-gray-900 text-sm">{item.score.toFixed(1)}%</span>
+                          <span className="font-semibold text-gray-900 text-xs">{item.score.toFixed(1)}%</span>
                         </div>
                       ))}
                     </div>
@@ -318,17 +318,17 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </div>
           </div>
 
-          {/* Chart Legend */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          {/* Chart Legend - Compact */}
+          <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
             <div className="flex items-start space-x-2">
               <div className="flex-shrink-0 mt-0.5">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-blue-900 mb-1">{t('ui.howToRead')}:</p>
-                <p className="text-sm text-blue-800 leading-relaxed">{t('ui.spiderChartInstructions')}</p>
+                <p className="text-xs font-medium text-blue-900 mb-1">{t('ui.howToRead')}:</p>
+                <p className="text-xs text-blue-800 leading-relaxed">{t('ui.spiderChartInstructions')}</p>
               </div>
             </div>
           </div>

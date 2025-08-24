@@ -282,7 +282,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Header with better spacing and visual hierarchy */}
       <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center py-8">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold text-gray-900">{t('appTitle')}</h1>
@@ -300,8 +300,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Main Content with increased spacing */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+      {/* Main Content with reduced max width for less empty space */}
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-10">
         
         {/* Navigation Tabs with better styling */}
         <div className="mb-10">
@@ -407,11 +407,11 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Overview Mode with better balanced layout */}
+            {/* Overview Mode - Side by side with wider components */}
             {viewMode === 'overview' && (
-              <div className="space-y-10">
-                {/* Spider Chart - Full width for better space utilization */}
-                <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Spider Chart - Wider */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                   <PopulationGroupSpiderChart 
                     selectedDomain={selectedDomain}
                     selectedDistrict={selectedDistrict}
@@ -419,11 +419,11 @@ const Dashboard = () => {
                   />
                 </div>
 
-                {/* Map - Full width */}
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
-                  <div className="p-6 border-b border-gray-100">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Bangkok District Map</h3>
-                    <p className="text-gray-600">Interactive map showing health equity scores by district</p>
+                {/* Map - Wider */}
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '700px' }}>
+                  <div className="p-4 border-b border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Bangkok District Map</h3>
+                    <p className="text-sm text-gray-600">Interactive map showing health equity scores by district</p>
                   </div>
                   <div className="h-full">
                     <BangkokMap
