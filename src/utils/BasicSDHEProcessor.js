@@ -342,38 +342,31 @@ class BasicSDHEProcessor {
       economic_security: {
         unemployment_rate: { 
           field: 'occupation_status', 
-          condition: (val) => val === 0,
-          label: 'Unemployment Rate'
+          condition: (val) => val === 0
         },
         employment_rate: { 
           field: 'occupation_status', 
-          condition: (val) => val === 1,
-          label: 'Employment Rate'
+          condition: (val) => val === 1
         },
         vulnerable_employment: { 
           fields: ['occupation_status', 'occupation_contract'], 
-          condition: (r) => r.occupation_status === 1 && r.occupation_contract === 0,
-          label: 'Vulnerable Employment'
+          condition: (r) => r.occupation_status === 1 && r.occupation_contract === 0
         },
         food_insecurity_moderate: { 
           field: 'food_insecurity_1', 
-          condition: (val) => val === 1,
-          label: 'Food Insecurity (Moderate)'
+          condition: (val) => val === 1
         },
         food_insecurity_severe: { 
           field: 'food_insecurity_2', 
-          condition: (val) => val === 1,
-          label: 'Food Insecurity (Severe)'
+          condition: (val) => val === 1
         },
         work_injury_fatal: { 
           field: 'occupation_injury', 
-          condition: (val) => val === 1,
-          label: 'Work Injury (Fatal/Serious)'
+          condition: (val) => val === 1
         },
         work_injury_non_fatal: { 
           field: 'occupation_small_injury', 
-          condition: (val) => val === 1,
-          label: 'Work Injury (Non-Fatal)'
+          condition: (val) => val === 1
         },
         catastrophic_health_spending_household: {
           calculation: (records) => {
@@ -394,8 +387,7 @@ class BasicSDHEProcessor {
             });
             
             return (catastrophicHouseholds.length / validRecords.length) * 100;
-          },
-          label: 'Catastrophic Health Spending (Household)'
+          }
         },
         health_spending_over_10_percent: {
           calculation: (records) => {
@@ -416,8 +408,7 @@ class BasicSDHEProcessor {
             });
             
             return (highSpenders.length / validRecords.length) * 100;
-          },
-          label: 'Health Spending >10% Income'
+          }
         },
         health_spending_over_25_percent: {
           calculation: (records) => {
@@ -438,8 +429,7 @@ class BasicSDHEProcessor {
             });
             
             return (veryHighSpenders.length / validRecords.length) * 100;
-          },
-          label: 'Health Spending >25% Income'
+          }
         }
       },
 
@@ -447,28 +437,23 @@ class BasicSDHEProcessor {
       education: {
         functional_literacy: { 
           fields: ['speak', 'read', 'write', 'math'],
-          condition: (r) => r.speak === 1 && r.read === 1 && r.write === 1 && r.math === 1,
-          label: 'Functional Literacy'
+          condition: (r) => r.speak === 1 && r.read === 1 && r.write === 1 && r.math === 1
         },
         primary_completion: { 
           field: 'education', 
-          condition: (val) => val >= 2,
-          label: 'Primary Education Completion'
+          condition: (val) => val >= 2
         },
         secondary_completion: { 
           field: 'education', 
-          condition: (val) => val >= 4,
-          label: 'Secondary Education Completion'
+          condition: (val) => val >= 4
         },
         tertiary_completion: { 
           field: 'education', 
-          condition: (val) => val >= 7,
-          label: 'Tertiary Education Completion'
+          condition: (val) => val >= 7
         },
         training_participation: { 
           field: 'training', 
-          condition: (val) => val === 1,
-          label: 'Training Participation'
+          condition: (val) => val === 1
         }
       },
 
@@ -476,53 +461,42 @@ class BasicSDHEProcessor {
       healthcare_access: {
         health_coverage: { 
           field: 'welfare', 
-          condition: (val) => val !== null && val !== undefined && val !== 'other' && val !== 'Other',
-          label: 'Health Coverage'
+          condition: (val) => val !== null && val !== undefined && val !== 'other' && val !== 'Other'
         },
         medical_consultation_skip_cost: { 
           field: 'medical_skip_1', 
-          condition: (val) => val === 1,
-          label: 'Skipped Medical Consultation (Cost)'
+          condition: (val) => val === 1
         },
         medical_treatment_skip_cost: { 
           field: 'medical_skip_2', 
-          condition: (val) => val === 1,
-          label: 'Skipped Medical Treatment (Cost)'
+          condition: (val) => val === 1
         },
         prescribed_medicine_skip_cost: { 
           field: 'medical_skip_3', 
-          condition: (val) => val === 1,
-          label: 'Skipped Medicine Purchase (Cost)'
+          condition: (val) => val === 1
         },
         dental_access: {
           fields: ['oral_health', 'oral_health_access'],
-          condition: (r) => r.oral_health === 1 && r.oral_health_access === 1,
-          label: 'Dental Access (Among Those with Oral Health Problems)'
+          condition: (r) => r.oral_health === 1 && r.oral_health_access === 1
         },
         // NEW HEALTHCARE SUPPLY INDICATORS
         doctor_per_population: {
-          isSupplyIndicator: true,
-          label: 'Doctors per 1,000 Population'
+          isSupplyIndicator: true
         },
         nurse_per_population: {
-          isSupplyIndicator: true,
-          label: 'Nurses per 1,000 Population'
+          isSupplyIndicator: true
         },
         healthworker_per_population: {
-          isSupplyIndicator: true,
-          label: 'Health Workers per 10,000 Population'
+          isSupplyIndicator: true
         },
         community_healthworker_per_population: {
-          isSupplyIndicator: true,
-          label: 'Community Health Workers per 1,000 Community Population'
+          isSupplyIndicator: true
         },
         health_service_access: {
-        isSupplyIndicator: true,
-        label: 'Health Facilities per 10,000 Population'
+          isSupplyIndicator: true
         },
         bed_per_population: {
-        isSupplyIndicator: true,
-        label: 'Hospital Beds per 10,000 Population'
+          isSupplyIndicator: true
         }
       },
 
@@ -530,39 +504,32 @@ class BasicSDHEProcessor {
       physical_environment: {
         electricity_access: { 
           field: 'community_environment_4', 
-          condition: (val) => val !== 1,
-          label: 'Electricity Access'
+          condition: (val) => val !== 1
         },
         clean_water_access: { 
           field: 'community_environment_3', 
-          condition: (val) => val !== 1,
-          label: 'Clean Water Access'
+          condition: (val) => val !== 1
         },
         sanitation_facilities: { 
           field: 'house_sink', 
-          condition: (val) => val === 1,
-          label: 'Sanitation Facilities'
+          condition: (val) => val === 1
         },
         waste_management: { 
           field: 'community_environment_5', 
-          condition: (val) => val !== 1,
-          label: 'Waste Management'
+          condition: (val) => val !== 1
         },
         housing_overcrowding: { 
           fields: ['community_environment_1', 'community_environment_2'],
-          condition: (r) => r.community_environment_1 === 1 || r.community_environment_2 === 1,
-          label: 'Housing Overcrowding'
+          condition: (r) => r.community_environment_1 === 1 || r.community_environment_2 === 1
         },
         home_ownership: { 
           field: 'house_status', 
-          condition: (val) => val === 1,
-          label: 'Home Ownership'
+          condition: (val) => val === 1
         },
         disaster_experience: {
           fields: ['community_disaster_1', 'community_disaster_2', 'community_disaster_3', 'community_disaster_4'],
           condition: (r) => r.community_disaster_1 === 1 || r.community_disaster_2 === 1 || 
-                           r.community_disaster_3 === 1 || r.community_disaster_4 === 1,
-          label: 'Disaster Experience'
+                           r.community_disaster_3 === 1 || r.community_disaster_4 === 1
         }
       },
 
@@ -594,39 +561,32 @@ class BasicSDHEProcessor {
             
             const averageScore = totalScore / safetyResponses.length;
             return averageScore;
-          },
-          label: 'Community Safety'
+          }
         },
         violence_physical: { 
           field: 'physical_violence', 
-          condition: (val) => val === 1,
-          label: 'Physical Violence'
+          condition: (val) => val === 1
         },
         violence_psychological: { 
           field: 'psychological_violence', 
-          condition: (val) => val === 1,
-          label: 'Psychological Violence'
+          condition: (val) => val === 1
         },
         violence_sexual: { 
           field: 'sexual_violence', 
-          condition: (val) => val === 1,
-          label: 'Sexual Violence'
+          condition: (val) => val === 1
         },
         discrimination_experience: {
           fields: ['discrimination_1', 'discrimination_2', 'discrimination_3', 'discrimination_4', 'discrimination_5'],
           condition: (r) => r.discrimination_1 === 1 || r.discrimination_2 === 1 || r.discrimination_3 === 1 || 
-                           r.discrimination_4 === 1 || r.discrimination_5 === 1,
-          label: 'Discrimination Experience'
+                           r.discrimination_4 === 1 || r.discrimination_5 === 1
         },
         social_support: { 
           field: 'helper', 
-          condition: (val) => val === 1,
-          label: 'Social Support'
+          condition: (val) => val === 1
         },
         community_murder: { 
           field: 'community_murder', 
-          condition: (val) => val === 1,
-          label: 'Community Murder'
+          condition: (val) => val === 1
         }
       },
 
@@ -634,19 +594,16 @@ class BasicSDHEProcessor {
       health_behaviors: {
         alcohol_consumption: { 
           fields: ['drink_status', 'drink_rate'],
-          condition: (r) => r.drink_status === 1 && (r.drink_rate === 1 || r.drink_rate === 2),
-          label: 'Alcohol Consumption'
+          condition: (r) => r.drink_status === 1 && (r.drink_rate === 1 || r.drink_rate === 2)
         },
         tobacco_use: { 
           field: 'smoke_status', 
           condition: (val) => val === 2 || val === 3,
-          ageFilter: (age) => age >= 15,
-          label: 'Tobacco Use'
+          ageFilter: (age) => age >= 15
         },
         physical_activity: { 
           field: 'exercise_status', 
-          condition: (val) => val >= 2,
-          label: 'Physical Activity'
+          condition: (val) => val >= 2
         },
         obesity: {
           calculation: (records) => {
@@ -659,8 +616,7 @@ class BasicSDHEProcessor {
             });
             
             return (obese.length / validBMI.length) * 100;
-          },
-          label: 'Obesity'
+          }
         }
       },
 
@@ -669,115 +625,94 @@ class BasicSDHEProcessor {
         // Overall chronic disease burden
         any_chronic_disease: {
           field: 'diseases_status',
-          condition: (val) => val === 1,
-          label: 'Any Chronic Disease'
+          condition: (val) => val === 1
         },
         
         // Individual disease prevalence
         diabetes: {
           fields: ['diseases_status', 'diseases_type/1'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/1'] === 1,
-          label: 'เบาหวาน (Diabetes)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/1'] === 1
         },
         hypertension: {
           fields: ['diseases_status', 'diseases_type/2'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/2'] === 1,
-          label: 'ความดันโลหิตสูง (Hypertension)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/2'] === 1
         },
         gout: {
           fields: ['diseases_status', 'diseases_type/3'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/3'] === 1,
-          label: 'โรคเกาต์ (Gout)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/3'] === 1
         },
         chronic_kidney_disease: {
           fields: ['diseases_status', 'diseases_type/4'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/4'] === 1,
-          label: 'ไตวายเรื้อรัง (Chronic Kidney Disease)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/4'] === 1
+        },
         },
         cancer: {
           fields: ['diseases_status', 'diseases_type/5'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/5'] === 1,
-          label: 'มะเร็ง (Cancer)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/5'] === 1
         },
         high_cholesterol: {
           fields: ['diseases_status', 'diseases_type/6'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/6'] === 1,
-          label: 'ไขมันในเลือดสูง (High Cholesterol)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/6'] === 1
         },
         ischemic_heart_disease: {
           fields: ['diseases_status', 'diseases_type/7'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/7'] === 1,
-          label: 'กล้ามเนื้อหัวใจขาดเลือด (Ischemic Heart Disease)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/7'] === 1
         },
         liver_disease: {
           fields: ['diseases_status', 'diseases_type/8'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/8'] === 1,
-          label: 'โรคตับ (Liver Disease)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/8'] === 1
         },
         stroke: {
           fields: ['diseases_status', 'diseases_type/9'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/9'] === 1,
-          label: 'หลอดเลือดสมอง (Stroke)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/9'] === 1
         },
         hiv: {
           fields: ['diseases_status', 'diseases_type/10'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/10'] === 1,
-          label: 'เอชไอวี (HIV)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/10'] === 1
         },
         mental_health: {
           fields: ['diseases_status', 'diseases_type/11'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/11'] === 1,
-          label: 'โรคทางจิตเวช (Mental Health Disorders)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/11'] === 1
         },
         allergies: {
           fields: ['diseases_status', 'diseases_type/12'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/12'] === 1,
-          label: 'ภูมิแพ้ (Allergies)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/12'] === 1
         },
         bone_joint_disease: {
           fields: ['diseases_status', 'diseases_type/13'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/13'] === 1,
-          label: 'โรคกระดูกและข้อ (Bone and Joint Disease)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/13'] === 1
         },
         respiratory_disease: {
           fields: ['diseases_status', 'diseases_type/14'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/14'] === 1,
-          label: 'โรคระบบทางเดินหายใจ (Respiratory Disease)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/14'] === 1
         },
         emphysema: {
           fields: ['diseases_status', 'diseases_type/15'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/15'] === 1,
-          label: 'ถุงลมโป่งพอง (Emphysema)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/15'] === 1
         },
         anemia: {
           fields: ['diseases_status', 'diseases_type/16'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/16'] === 1,
-          label: 'โลหิตจาง (Anemia)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/16'] === 1
         },
         stomach_ulcer: {
           fields: ['diseases_status', 'diseases_type/17'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/17'] === 1,
-          label: 'กระเพาะอาหาร (Stomach Ulcer)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/17'] === 1
         },
         epilepsy: {
           fields: ['diseases_status', 'diseases_type/18'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/18'] === 1,
-          label: 'ลมชัก (Epilepsy)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/18'] === 1
         },
         intestinal_disease: {
           fields: ['diseases_status', 'diseases_type/19'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/19'] === 1,
-          label: 'ลำไส้ (Intestinal Disease)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/19'] === 1
         },
         paralysis: {
           fields: ['diseases_status', 'diseases_type/20'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/20'] === 1,
-          label: 'อัมพาต (Paralysis)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/20'] === 1
         },
         dementia: {
           fields: ['diseases_status', 'diseases_type/21'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/21'] === 1,
-          label: 'อัมพฤกษ์ (Dementia)'
+          condition: (r) => r.diseases_status === 1 && r['diseases_type/21'] === 1
         },
 
         // Disease burden calculations
@@ -794,8 +729,7 @@ class BasicSDHEProcessor {
             );
             
             return (cvdCases.length / records.length) * 100;
-          },
-          label: 'Cardiovascular Disease Burden'
+          }
         },
         
         metabolic_diseases: {
@@ -810,8 +744,7 @@ class BasicSDHEProcessor {
             );
             
             return (metabolicCases.length / records.length) * 100;
-          },
-          label: 'Metabolic Disease Burden'
+          }
         },
 
         multiple_chronic_conditions: {
@@ -829,8 +762,7 @@ class BasicSDHEProcessor {
             });
             
             return (multipleCCCases.length / records.length) * 100;
-          },
-          label: 'Multiple Chronic Conditions (2+)'
+          }
         }
       }
     };
@@ -951,7 +883,6 @@ class BasicSDHEProcessor {
           if (supplyData[indicator]) {
             results[indicator] = {
               value: supplyData[indicator].value,
-              label: mapping.label,
               sample_size: supplyData[indicator].sample_size,
               population: supplyData[indicator].population,
               absolute_count: supplyData[indicator].absolute_count
@@ -999,7 +930,6 @@ class BasicSDHEProcessor {
               
               results[indicator] = {
                 value: parseFloat(overallRate.toFixed(2)),
-                label: mapping.label,
                 sample_size: validDistricts,
                 population: totalPopulation,
                 absolute_count: totalAbsoluteCount
@@ -1007,7 +937,6 @@ class BasicSDHEProcessor {
             } else {
               results[indicator] = {
                 value: 0,
-                label: mapping.label,
                 sample_size: 0,
                 population: 0,
                 absolute_count: 0
@@ -1144,7 +1073,6 @@ class BasicSDHEProcessor {
           // No data available
           results[indicator] = {
             value: null,
-            label: mapping.label,
             sample_size: records.length,
             noData: true,
             insufficientSample: !hasMinimumSample
@@ -1155,7 +1083,6 @@ class BasicSDHEProcessor {
         // Store the result with metadata
         results[indicator] = {
           value: parseFloat(finalValue.toFixed(2)),
-          label: mapping.label,
           sample_size: finalSampleSize,
           isPreCalculated: isPreCalculated,
           isCombined: isCombined,
@@ -1174,7 +1101,6 @@ class BasicSDHEProcessor {
         // Insufficient sample size for regular survey-based indicators
         results[indicator] = {
           value: null,
-          label: mapping.label,
           sample_size: records.length,
           noData: true,
           insufficientSample: true
@@ -1184,7 +1110,6 @@ class BasicSDHEProcessor {
         const calculatedValue = mapping.calculation(records);
         results[indicator] = {
           value: parseFloat(calculatedValue.toFixed(2)),
-          label: mapping.label,
           sample_size: records.length
         };
         
@@ -1202,7 +1127,6 @@ class BasicSDHEProcessor {
           if (validRecords.length < this.MINIMUM_SAMPLE_SIZE) {
             results[indicator] = {
               value: null,
-              label: mapping.label,
               sample_size: validRecords.length,
               noData: true,
               insufficientSample: true
@@ -1224,7 +1148,6 @@ class BasicSDHEProcessor {
         if (filteredRecords.length < this.MINIMUM_SAMPLE_SIZE) {
           results[indicator] = {
             value: null,
-            label: mapping.label,
             sample_size: filteredRecords.length,
             noData: true,
             insufficientSample: true
@@ -1243,7 +1166,6 @@ class BasicSDHEProcessor {
           
           results[indicator] = {
             value: parseFloat(rate.toFixed(2)),
-            label: mapping.label,
             sample_size: mapping.ageFilter ? filteredRecords.length : records.length
           };
         }
@@ -1316,7 +1238,6 @@ class BasicSDHEProcessor {
       const domainScore = goodnessScores.reduce((sum, score) => sum + score, 0) / goodnessScores.length;
       results['_domain_score'] = {
         value: parseFloat(domainScore.toFixed(1)),
-        label: `${domain.replace('_', ' ')} Score`,
         sample_size: records.length,
         validIndicators: goodnessScores.length,
         totalIndicators: indicators.length
@@ -1324,7 +1245,6 @@ class BasicSDHEProcessor {
     } else {
       results['_domain_score'] = {
         value: null,
-        label: `${domain.replace('_', ' ')} Score`,
         sample_size: records.length,
         noData: true,
         insufficientSample: !hasMinimumSample,
@@ -1341,8 +1261,6 @@ class BasicSDHEProcessor {
     const domains = Object.keys(this.indicatorMappings);
     const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
     const districts = [...new Set(this.surveyData.map(r => r.district_name))];
-
-    console.log(`🔧 Calculating indicators with minimum sample size: ${this.MINIMUM_SAMPLE_SIZE}`);
 
     // Initialize results structure for districts
     domains.forEach(domain => {
@@ -1385,11 +1303,6 @@ class BasicSDHEProcessor {
             r.district_name === district && r.population_group === group
           );
 
-          // Log sample sizes for debugging
-          if (records.length > 0 && records.length < this.MINIMUM_SAMPLE_SIZE) {
-            console.log(`⚠️ Small sample: ${district} - ${group} (${records.length} records)`);
-          }
-
           if (records.length > 0 || (group === 'normal_population' && district !== 'Bangkok Overall')) {
             results[domain][district][group] = this.calculateIndicatorsForRecords(
               records, 
@@ -1425,7 +1338,6 @@ class BasicSDHEProcessor {
     return Object.keys(data).map(indicator => ({
       indicator,
       value: data[indicator].value,
-      label: data[indicator].label,
       sample_size: data[indicator].sample_size,
       population: data[indicator].population || null,
       absolute_count: data[indicator].absolute_count || null,
@@ -1497,8 +1409,6 @@ class BasicSDHEProcessor {
       
       // Calculate all indicators
       const results = this.calculateIndicators();
-      
-      console.log(`✅ Processing complete with minimum sample size: ${this.MINIMUM_SAMPLE_SIZE}`);
       
       return {
         results,
