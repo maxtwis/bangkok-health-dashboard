@@ -1,4 +1,4 @@
-// Updated PopulationGroupSpiderChart with better spacing and layout
+// Updated PopulationGroupSpiderChart with filter checkboxes
 import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -15,6 +15,25 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     { value: 'lgbtq', color: '#f59e0b' },
     { value: 'normal_population', color: '#8b5cf6' } // Added normal population
   ];
+
+  // State for checkbox filters - all enabled by default
+  const [visibleGroups, setVisibleGroups] = useState(
+    populationGroups.reduce((acc, group) => {
+      acc[group.value] = true;
+      return acc;
+    }, {})
+  );
+
+  // Handler for checkbox changes
+  const handleGroupToggle = (groupValue) => {
+    setVisibleGroups(prev => ({
+      ...prev,
+      [groupValue]: !prev[groupValue]
+    }));
+  };
+
+  // Get only visible groups for rendering
+  const activeGroups = populationGroups.filter(group => visibleGroups[group.value]);
 
   const domains = [
     'economic_security',
@@ -63,9 +82,9 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     return dataPoint;
   });
 
-  // Calculate dynamic scale range
+  // Calculate dynamic scale range - use only active groups
   const allValues = chartData.flatMap(d => 
-    populationGroups.map(group => d[group.value] || 0)
+    activeGroups.map(group => d[group.value] || 0)
   ).filter(val => !isNaN(val) && isFinite(val));
   
   const minValue = allValues.length > 0 ? Math.min(...allValues) : 0;
@@ -92,11 +111,11 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
     scaleMax = 100;
   }
 
-  // Transform data for dynamic scaling
+  // Transform data for dynamic scaling - use only active groups
   const transformedData = chartData.map(d => {
     const transformed = { ...d };
     if (scaleMode === 'dynamic') {
-      populationGroups.forEach(group => {
+      activeGroups.forEach(group => {
         // Map the value to the 0-100 range for display
         const originalValue = d[group.value] || 0;
         const scaledValue = scaleMax > scaleMin ? 
@@ -105,7 +124,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
         transformed[`${group.value}_original`] = originalValue; // Keep original for tooltips
       });
     } else {
-      populationGroups.forEach(group => {
+      activeGroups.forEach(group => {
         transformed[group.value] = d[group.value] || 0;
         transformed[`${group.value}_original`] = d[group.value] || 0;
       });
@@ -166,7 +185,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
 
   return (
     <div className="w-full">
-      {/* Header Section - Compact for side-by-side */}
+      {/* Header Section with Population Group Filter */}
       <div className="mb-6">
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1 pr-4">
@@ -204,6 +223,32 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             >
               {t('ui.fullScale')}
             </button>
+          </div>
+        </div>
+        
+        {/* Population Group Filter Checkboxes */}
+        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+          <h4 className="text-sm font-medium text-gray-700 mb-3">
+            {language === 'th' ? 'แสดงกลุ่มประชากร:' : 'Show Population Groups:'}
+          </h4>
+          <div className="grid grid-cols-2 gap-2">
+            {populationGroups.map(group => (
+              <label key={group.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white rounded p-2 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={visibleGroups[group.value]}
+                  onChange={() => handleGroupToggle(group.value)}
+                  className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                />
+                <div 
+                  className="w-3 h-3 rounded-full flex-shrink-0" 
+                  style={{ backgroundColor: group.color }}
+                ></div>
+                <span className="text-sm font-medium text-gray-700">
+                  {t(`populationGroups.${group.value}`)}
+                </span>
+              </label>
+            ))}
           </div>
         </div>
       </div>
@@ -257,7 +302,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
                   }}
                 />
                 
-                {populationGroups.map(group => (
+                {activeGroups.map(group => (
                   <Radar
                     key={group.value}
                     name={t(`populationGroups.${group.value}`)}
@@ -285,7 +330,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
           <div className="bg-gray-50 rounded-lg p-4">
             <h4 className="text-base font-semibold text-gray-800 mb-3">{t('ui.domainPerformanceRankings')}</h4>
             <div className="grid grid-cols-1 gap-3">
-              {populationGroups.map(group => {
+              {activeGroups.map(group => {
                 const groupScores = chartData.map(d => ({
                   domain: d.domain,
                   score: d[group.value] || 0
