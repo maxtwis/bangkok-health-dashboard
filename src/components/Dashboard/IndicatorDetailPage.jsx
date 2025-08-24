@@ -1300,7 +1300,7 @@ class BasicSDHEProcessor {
     
     // Filter out sample_size and other metadata fields, only return actual indicators
     return Object.keys(data)
-      .filter(key => key !== 'sample_size') // Remove sample_size from indicators
+      .filter(key => key !== 'sample_size')
       .map(indicator => ({
         indicator,
         value: data[indicator].value,
