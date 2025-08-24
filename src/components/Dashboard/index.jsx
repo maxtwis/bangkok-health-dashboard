@@ -407,14 +407,28 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Overview Mode - Exact layout as requested */}
+            {/* Overview Mode - UPDATED LAYOUT */}
             {viewMode === 'overview' && (
               <div className="space-y-6">
                 {/* Spider Chart and Map - Side by side with wider containers */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Spider Chart - Left side, with checkboxes inside */}
+                  {/* Spider Chart - Left side, with title and checkboxes INSIDE */}
                   <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                    {/* Population Group Checkboxes - Inside spider chart box */}
+                    {/* TITLE MOVED TO TOP INSIDE SPIDER CHART BOX */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        {t('ui.spiderChartTitle')}
+                      </h3>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {t('ui.spiderChartDescription')} {
+                          selectedDistrict === 'Bangkok Overall' && language === 'th'
+                            ? t('ui.bangkokOverall') 
+                            : selectedDistrict
+                        }
+                      </p>
+                    </div>
+
+                    {/* POPULATION GROUP CHECKBOXES - MOVED ABOVE SPIDER CHART */}
                     <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
                         {/* Checkboxes in single row - more compact */}
@@ -450,7 +464,7 @@ const Dashboard = () => {
                       </div>
                     </div>
 
-                    {/* Spider Chart Component */}
+                    {/* Spider Chart Component - Now with hideCheckboxes=true since we handle them above */}
                     <PopulationGroupSpiderChart 
                       selectedDomain={selectedDomain}
                       selectedDistrict={selectedDistrict}
