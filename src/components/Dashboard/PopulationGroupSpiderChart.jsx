@@ -1,4 +1,4 @@
-// Updated PopulationGroupSpiderChart with Language Support and Normal Population - FIXED
+// Updated PopulationGroupSpiderChart with better spacing and layout
 import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -116,10 +116,29 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
   // Custom tick formatter to wrap long labels
   const formatTick = (value) => {
     if (typeof value !== 'string') return value;
-    if (value.length > 12) {
-      const words = value.split(' ');
-      if (words.length > 1) {
-        return words[0] + '\n' + words.slice(1).join(' ');
+    
+    // For Thai text, split at spaces or after certain characters
+    if (language === 'th') {
+      if (value.length > 10) {
+        const words = value.split(' ');
+        if (words.length > 1) {
+          const mid = Math.ceil(words.length / 2);
+          return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+        }
+        // If no spaces, try to break at reasonable points
+        if (value.length > 15) {
+          const breakPoint = Math.floor(value.length / 2);
+          return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
+        }
+      }
+    } else {
+      // For English text
+      if (value.length > 12) {
+        const words = value.split(' ');
+        if (words.length > 1) {
+          const mid = Math.ceil(words.length / 2);
+          return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+        }
       }
     }
     return value;
@@ -129,13 +148,13 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-          <p className="font-medium mb-2">{label}</p>
+        <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-lg max-w-xs">
+          <p className="font-semibold mb-3 text-gray-800">{label}</p>
           {payload.map((entry, index) => {
             const originalValue = transformedData.find(d => d.domain === label)?.[`${entry.dataKey}_original`] || 0;
             return (
-              <p key={index} style={{ color: entry.color }} className="text-sm">
-                {t(`populationGroups.${entry.dataKey}`)}: {originalValue.toFixed(1)}%
+              <p key={index} style={{ color: entry.color }} className="text-sm mb-1">
+                <span className="font-medium">{t(`populationGroups.${entry.dataKey}`)}</span>: <span className="font-semibold">{originalValue.toFixed(1)}%</span>
               </p>
             );
           })}
@@ -146,14 +165,15 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <div className="mb-6">
-        <div className="flex justify-between items-start mb-2">
-          <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+    <div className="w-full">
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex-1 pr-4">
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">
               {t('ui.spiderChartTitle')}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-gray-600 leading-relaxed">
               {t('ui.spiderChartDescription')} {
                 selectedDistrict === 'Bangkok Overall' && language === 'th'
                   ? t('ui.bangkokOverall') 
@@ -163,12 +183,12 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
           </div>
           
           {/* Scale Toggle */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
+          <div className="flex bg-gray-100 rounded-xl p-1 flex-shrink-0">
             <button
               onClick={() => setScaleMode('dynamic')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                 scaleMode === 'dynamic' 
-                  ? 'bg-white text-gray-900 shadow-sm' 
+                  ? 'bg-white text-gray-900 shadow-md' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -176,9 +196,9 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
             </button>
             <button
               onClick={() => setScaleMode('full')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                 scaleMode === 'full' 
-                  ? 'bg-white text-gray-900 shadow-sm' 
+                  ? 'bg-white text-gray-900 shadow-md' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -192,103 +212,128 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict }) => {
       {allValues.length === 0 || allValues.every(val => val === 0) ? (
         <div className="h-96 flex items-center justify-center text-gray-500">
           <div className="text-center">
-            <p className="text-lg mb-2">
+            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <p className="text-lg font-medium mb-2">
               {language === 'th' ? 'ไม่มีข้อมูลสำหรับการแสดงผล' : 'No data available for visualization'}
             </p>
-            <p className="text-sm">
+            <p className="text-sm text-gray-400">
               {language === 'th' ? 'กรุณาเลือกเขตหรือกลุ่มประชากรอื่น' : 'Please select a different district or population group'}
             </p>
           </div>
         </div>
       ) : (
-        <div className="h-96 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={transformedData} margin={{ top: 20, right: 80, bottom: 20, left: 80 }}>
-              <PolarGrid gridType="polygon" />
-              <PolarAngleAxis 
-                dataKey="domain" 
-                className="text-xs"
-                tick={{ fontSize: 11, fill: '#374151' }}
-                tickFormatter={formatTick}
-              />
-              <PolarRadiusAxis 
-                angle={90} 
-                domain={[0, 100]} 
-                className="text-xs"
-                tick={{ fontSize: 10, fill: '#6b7280' }}
-                tickCount={6}
-                tickFormatter={(value) => {
-                  if (scaleMode === 'dynamic' && scaleMax > scaleMin) {
-                    const actualValue = scaleMin + (value / 100) * (scaleMax - scaleMin);
-                    return actualValue.toFixed(0);
-                  }
-                  return value;
-                }}
-              />
-              
-              {populationGroups.map(group => (
-                <Radar
-                  key={group.value}
-                  name={t(`populationGroups.${group.value}`)}
-                  dataKey={group.value}
-                  stroke={group.color}
-                  fill={group.color}
-                  fillOpacity={0.15}
-                  strokeWidth={3}
-                  dot={{ fill: group.color, strokeWidth: 2, r: 4 }}
+        <div className="space-y-8">
+          {/* Spider Chart - Increased size */}
+          <div className="h-[500px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart data={transformedData} margin={{ top: 40, right: 120, bottom: 40, left: 120 }}>
+                <PolarGrid gridType="polygon" />
+                <PolarAngleAxis 
+                  dataKey="domain" 
+                  className="text-sm font-medium"
+                  tick={{ 
+                    fontSize: 13, 
+                    fill: '#374151',
+                    fontWeight: 500
+                  }}
+                  tickFormatter={formatTick}
                 />
-              ))}
-              
-              <Legend 
-                wrapperStyle={{
-                  paddingTop: '20px',
-                  fontSize: '12px'
-                }}
-              />
-            </RadarChart>
-          </ResponsiveContainer>
+                <PolarRadiusAxis 
+                  angle={90} 
+                  domain={[0, 100]} 
+                  className="text-xs"
+                  tick={{ fontSize: 11, fill: '#6b7280' }}
+                  tickCount={6}
+                  tickFormatter={(value) => {
+                    if (scaleMode === 'dynamic' && scaleMax > scaleMin) {
+                      const actualValue = scaleMin + (value / 100) * (scaleMax - scaleMin);
+                      return actualValue.toFixed(0);
+                    }
+                    return value;
+                  }}
+                />
+                
+                {populationGroups.map(group => (
+                  <Radar
+                    key={group.value}
+                    name={t(`populationGroups.${group.value}`)}
+                    dataKey={group.value}
+                    stroke={group.color}
+                    fill={group.color}
+                    fillOpacity={0.1}
+                    strokeWidth={3}
+                    dot={{ fill: group.color, strokeWidth: 2, r: 5 }}
+                  />
+                ))}
+                
+                <Legend 
+                  wrapperStyle={{
+                    paddingTop: '30px',
+                    fontSize: '14px',
+                    fontWeight: '500'
+                  }}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Domain Rankings - Improved layout */}
+          <div className="bg-gray-50 rounded-xl p-6">
+            <h4 className="text-lg font-semibold text-gray-800 mb-6">{t('ui.domainPerformanceRankings')}</h4>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {populationGroups.map(group => {
+                const groupScores = chartData.map(d => ({
+                  domain: d.domain,
+                  score: d[group.value] || 0
+                })).sort((a, b) => b.score - a.score);
+
+                return (
+                  <div key={group.value} className="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+                    <div className="flex items-center mb-4">
+                      <div 
+                        className="w-4 h-4 rounded-full mr-3 flex-shrink-0" 
+                        style={{ backgroundColor: group.color }}
+                      ></div>
+                      <h5 className="font-semibold text-gray-800 text-base">{t(`populationGroups.${group.value}`)}</h5>
+                    </div>
+                    <div className="space-y-3">
+                      {groupScores.map((item, index) => (
+                        <div key={item.domain} className="flex justify-between items-center">
+                          <span className={`text-sm font-medium ${
+                            index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
+                          }`}>
+                            {index + 1}. {item.domain}
+                          </span>
+                          <span className="font-bold text-gray-900 text-sm">{item.score.toFixed(1)}%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Chart Legend */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-start space-x-2">
+              <div className="flex-shrink-0 mt-0.5">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-blue-900 mb-1">{t('ui.howToRead')}:</p>
+                <p className="text-sm text-blue-800 leading-relaxed">{t('ui.spiderChartInstructions')}</p>
+              </div>
+            </div>
+          </div>
         </div>
       )}
-
-      {/* Domain Rankings */}
-      <div className="mt-6">
-        <h4 className="font-medium text-gray-800 mb-3">{t('ui.domainPerformanceRankings')}</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {populationGroups.map(group => {
-            const groupScores = chartData.map(d => ({
-              domain: d.domain,
-              score: d[group.value] || 0
-            })).sort((a, b) => b.score - a.score);
-
-            return (
-              <div key={group.value} className="bg-gray-50 p-3 rounded">
-                <div className="flex items-center mb-2">
-                  <div 
-                    className="w-3 h-3 rounded-full mr-2" 
-                    style={{ backgroundColor: group.color }}
-                  ></div>
-                  <h5 className="font-medium text-sm">{t(`populationGroups.${group.value}`)}</h5>
-                </div>
-                <div className="space-y-1">
-                  {groupScores.map((item, index) => (
-                    <div key={item.domain} className="flex justify-between text-xs">
-                      <span className={index < 2 ? 'text-green-600' : index >= 4 ? 'text-red-600' : 'text-gray-600'}>
-                        {index + 1}. {item.domain}
-                      </span>
-                      <span className="font-medium">{item.score.toFixed(1)}%</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Chart Legend */}
-      <div className="mt-4 bg-blue-50 p-3 rounded text-xs text-gray-600">
-        <p><strong>{t('ui.howToRead')}:</strong> {t('ui.spiderChartInstructions')}</p>
-      </div>
     </div>
   );
 };
