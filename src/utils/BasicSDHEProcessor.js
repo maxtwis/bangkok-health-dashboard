@@ -756,7 +756,7 @@ class BasicSDHEProcessor {
 
   calculateIndicatorsForRecords(records, domain, districtName = null, populationGroup = null) {
     const domainMapping = this.indicatorMappings[domain];
-    const results = { sample_size: records.length };
+    const results = {};
 
     const hasMinimumSample = records.length >= this.MINIMUM_SAMPLE_SIZE;
 
