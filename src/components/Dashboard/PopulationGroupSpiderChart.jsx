@@ -1,22 +1,19 @@
-// Updated PopulationGroupSpiderChart with reordered layout
 import React, { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
 
 const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCheckboxes = false }) => {
   const { t, language } = useLanguage();
-  const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
+  const [scaleMode, setScaleMode] = useState('dynamic'); 
   
-  // Updated to include normal_population with purple color
   const populationGroups = [
     { value: 'informal_workers', color: '#ef4444' },
     { value: 'elderly', color: '#3b82f6' },
     { value: 'disabled', color: '#10b981' },
     { value: 'lgbtq', color: '#f59e0b' },
-    { value: 'normal_population', color: '#8b5cf6' } // Added normal population
+    { value: 'normal_population', color: '#8b5cf6' }
   ];
 
-  // State for checkbox filters - all enabled by default
   const [visibleGroups, setVisibleGroups] = useState(
     populationGroups.reduce((acc, group) => {
       acc[group.value] = true;
@@ -24,7 +21,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
     }, {})
   );
 
-  // Listen for external checkbox changes when hideCheckboxes is true
   React.useEffect(() => {
     if (hideCheckboxes) {
       const handleToggle = (event) => {
@@ -40,7 +36,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
     }
   }, [hideCheckboxes]);
 
-  // Handler for checkbox changes
   const handleGroupToggle = (groupValue) => {
     setVisibleGroups(prev => ({
       ...prev,
@@ -48,7 +43,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
     }));
   };
 
-  // Get only visible groups for rendering
   const activeGroups = populationGroups.filter(group => visibleGroups[group.value]);
 
   const domains = [
@@ -71,18 +65,15 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
       try {
         const indicatorData = getIndicatorData(domain, selectedDistrict, group.value);
         
-        // Find domain score, handle both old and new data structures
         const domainScore = indicatorData.find(item => 
           item.isDomainScore || 
           item.indicator === '_domain_score' || 
           item.label?.toLowerCase().includes('score')
         );
         
-        // Set the value, ensuring it's a valid number
         let scoreValue = 0;
         if (domainScore && domainScore.value !== null && domainScore.value !== undefined) {
           scoreValue = parseFloat(domainScore.value);
-          // Ensure it's a valid number
           if (isNaN(scoreValue) || !isFinite(scoreValue)) {
             scoreValue = 0;
           }
@@ -118,22 +109,19 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
       scaleMax = Math.min(100, center + 10);
     }
   } else {
-    // Full 0-100 scale
     scaleMin = 0;
     scaleMax = 100;
   }
 
-  // Transform data for dynamic scaling - use only active groups
   const transformedData = chartData.map(d => {
     const transformed = { ...d };
     if (scaleMode === 'dynamic') {
       activeGroups.forEach(group => {
-        // Map the value to the 0-100 range for display
         const originalValue = d[group.value] || 0;
         const scaledValue = scaleMax > scaleMin ? 
           ((originalValue - scaleMin) / (scaleMax - scaleMin)) * 100 : 0;
         transformed[group.value] = Math.max(0, Math.min(100, scaledValue));
-        transformed[`${group.value}_original`] = originalValue; // Keep original for tooltips
+        transformed[`${group.value}_original`] = originalValue; 
       });
     } else {
       activeGroups.forEach(group => {
@@ -144,11 +132,9 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
     return transformed;
   });
 
-  // Custom tick formatter to wrap long labels
   const formatTick = (value) => {
     if (typeof value !== 'string') return value;
     
-    // For Thai text, split at spaces or after certain characters
     if (language === 'th') {
       if (value.length > 10) {
         const words = value.split(' ');
@@ -156,14 +142,12 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
           const mid = Math.ceil(words.length / 2);
           return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
         }
-        // If no spaces, try to break at reasonable points
         if (value.length > 15) {
           const breakPoint = Math.floor(value.length / 2);
           return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
         }
       }
     } else {
-      // For English text
       if (value.length > 12) {
         const words = value.split(' ');
         if (words.length > 1) {
@@ -175,7 +159,6 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
     return value;
   };
 
-  // Custom tooltip to show original values
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -213,18 +196,8 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
         </div>
       )}
 
-      {/* Checkboxes are handled in parent component (index.jsx) */}
-
       {/* SCALE TOGGLE - Now positioned above chart */}
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-sm text-gray-600">
-          {scaleMode === 'dynamic' && allValues.length > 0 && (
-            <span>
-              {t('ui.dynamicScaleNote')} {scaleMin.toFixed(0)} {t('ui.to')} {scaleMax.toFixed(0)} {t('ui.toHighlightDifferences')}
-            </span>
-          )}
-        </div>
-        
+      <div className="flex justify-end items-center mb-4">
         <div className="flex bg-gray-100 rounded-lg p-1 flex-shrink-0">
           <button
             onClick={() => setScaleMode('dynamic')}
