@@ -197,19 +197,21 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
 
   return (
     <div className="w-full">
-      {/* MOVED TITLE TO TOP */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          {t('ui.spiderChartTitle')}
-        </h3>
-        <p className="text-sm text-gray-600 leading-relaxed">
-          {t('ui.spiderChartDescription')} {
-            selectedDistrict === 'Bangkok Overall' && language === 'th'
-              ? t('ui.bangkokOverall') 
-              : selectedDistrict
-          }
-        </p>
-      </div>
+      {/* Title is now handled in parent component (index.jsx), so we don't show it here when hideCheckboxes=true */}
+      {!hideCheckboxes && (
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {t('ui.spiderChartTitle')}
+          </h3>
+          <p className="text-sm text-gray-600 leading-relaxed">
+            {t('ui.spiderChartDescription')} {
+              selectedDistrict === 'Bangkok Overall' && language === 'th'
+                ? t('ui.bangkokOverall') 
+                : selectedDistrict
+            }
+          </p>
+        </div>
+      )}
 
       {/* Checkboxes are handled in parent component (index.jsx) */}
 
