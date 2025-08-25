@@ -488,8 +488,8 @@ class BasicSDHEProcessor {
           condition: (val) => val !== 1
         },
         housing_overcrowding: { 
-          field: 'community_environment_2', 
-          condition: (val) => val !== 1
+          fields: ['community_environment_1', 'community_environment_2'],
+          condition: (r) => r.community_environment_1 === 1 && r.community_environment_2 === 1
         },
         home_ownership: { 
           field: 'house_status', 
