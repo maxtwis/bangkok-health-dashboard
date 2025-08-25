@@ -169,10 +169,20 @@ const IndicatorDetailPage = ({
 
     // For regular survey indicators, calculate full disaggregation
     if (surveyData && Array.isArray(surveyData)) {
-      let filteredData = surveyData.filter(record => {
-        if (district !== 'Bangkok Overall' && record.district_name !== district) return false;
-        if (record.population_group !== populationGroup) return false;
-        return true;
+    let filteredData = surveyData.filter(record => {
+       if (populationGroup === 'elderly') {
+          return record.age >= 60; 
+        } else if (populationGroup === 'disabled') {
+          return record.disable_status === 1; 
+        } else if (populationGroup === 'informal_workers') {
+          return record.occupation_status === 1 && record.occupation_contract === 0; 
+        } else if (populationGroup === 'lgbtq') {
+          return record.sex === 'lgbt'; 
+        } else if (populationGroup === 'normal_population') {
+          return true; 
+        }
+        
+        return false;
       });
 
       return calculateDemographicDisaggregation(filteredData);
