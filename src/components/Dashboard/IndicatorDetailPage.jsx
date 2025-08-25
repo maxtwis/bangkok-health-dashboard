@@ -277,6 +277,9 @@ const IndicatorDetailPage = ({
       return '60+';
     };
 
+    // FIXED: Order age groups in ascending order
+    const ageGroupOrder = ['< 18', '18-29', '30-44', '45-59', '60+'];
+
     const getSexGroup = (sex) => {
       if (sex === 'lgbt') return 'LGBTQ+';
       if (sex === 'male' || sex === 'M' || sex === 1) return language === 'th' ? 'ชาย' : 'Male';
@@ -284,22 +287,24 @@ const IndicatorDetailPage = ({
       return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
     };
 
+    // FIXED: Improved occupation group classification with proper mapping
     const getOccupationGroup = (occupationStatus, occupationType) => {
       if (occupationStatus === 0) {
         return language === 'th' ? 'ว่างงาน' : 'Unemployed';
       }
       
       if (occupationStatus === 1) {
-        if (occupationType && occupationType.includes && occupationType.includes('เกษตร')) {
-          return language === 'th' ? 'เกษตรกรรม' : 'Agriculture';
-        } else if (occupationType && occupationType.includes && (occupationType.includes('ค้าขาย') || occupationType.includes('ธุรกิจ'))) {
-          return language === 'th' ? 'ค้าขาย/ธุรกิจ' : 'Trade/Business';
-        } else if (occupationType && occupationType.includes && occupationType.includes('รับจ้าง')) {
-          return language === 'th' ? 'รับจ้าง' : 'Daily Labor';
-        } else if (occupationType && occupationType.includes && occupationType.includes('ข้าราชการ')) {
-          return language === 'th' ? 'ข้าราชการ' : 'Government';
-        } else if (occupationType && occupationType.includes && occupationType.includes('พนักงานบริษัท')) {
-          return language === 'th' ? 'พนักงานบริษัท' : 'Company Employee';
+        // Map occupation_type values properly
+        if (occupationType === 1) {
+          return language === 'th' ? 'รับราชการ' : 'Government Employee';
+        } else if (occupationType === 2) {
+          return language === 'th' ? 'รัฐวิสาหกิจ' : 'State Enterprise';
+        } else if (occupationType === 3) {
+          return language === 'th' ? 'พนักงานบริษัท/ลูกจ้าง' : 'Company Employee';
+        } else if (occupationType === 5) {
+          return language === 'th' ? 'ธุรกิจส่วนตัว' : 'Private Business';
+        } else if (occupationType === 6) {
+          return language === 'th' ? 'อาชีพอิสระ' : 'Freelance';
         } else {
           return language === 'th' ? 'อื่นๆ' : 'Others';
         }
@@ -308,20 +313,23 @@ const IndicatorDetailPage = ({
       return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
     };
 
+    // FIXED: Improved welfare group with proper mapping
     const getWelfareGroup = (welfare) => {
-      const welfareMap = {
-        'สปสช.': language === 'th' ? 'สปสช.' : 'NHSO',
-        'สปส.': language === 'th' ? 'สปส.' : 'SSO', 
-        'ข้าราชการ': language === 'th' ? 'ข้าราชการ' : 'Civil Servant',
-        'จ่ายเอง': language === 'th' ? 'จ่ายเอง' : 'Self-pay',
-        'อื่นๆ': language === 'th' ? 'อื่นๆ' : 'Others'
-      };
-      
-      return welfareMap[welfare] || welfare || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+      if (welfare === 1) {
+        return language === 'th' ? 'สิทธิสวัสดิการข้าราชการ/รัฐวิสาหกิจ' : 'Civil Servant Welfare';
+      } else if (welfare === 2) {
+        return language === 'th' ? 'สิทธิประกันสังคม' : 'Social Security';
+      } else if (welfare === 3) {
+        return language === 'th' ? 'สิทธิหลักประกันสุขภาพ 30 บาท (บัตรทอง)' : 'Universal Health Coverage (30 Baht)';
+      } else if (welfare === 'other' || welfare === 'Other') {
+        return language === 'th' ? 'อื่น ๆ' : 'Others';
+      } else {
+        return language === 'th' ? 'ไม่ระบุ' : 'Not specified';
+      }
     };
 
     // Calculate rates for each demographic group
-    const calculateGroupedRates = (groupFunction, records) => {
+    const calculateGroupedRates = (groupFunction, records, customOrder = null) => {
       const groups = {};
       
       records.forEach(record => {
@@ -339,17 +347,31 @@ const IndicatorDetailPage = ({
         }
       });
 
-      return Object.keys(groups).map((group, index) => ({
+      let result = Object.keys(groups).map((group, index) => ({
         name: group,
         value: groups[group].total > 0 ? (groups[group].positive / groups[group].total) * 100 : 0,
         count: groups[group].positive,
         total: groups[group].total,
         fill: COLORS[index % COLORS.length]
       }));
+
+      // Apply custom ordering if provided
+      if (customOrder) {
+        result = result.sort((a, b) => {
+          const aIndex = customOrder.indexOf(a.name);
+          const bIndex = customOrder.indexOf(b.name);
+          if (aIndex === -1 && bIndex === -1) return 0;
+          if (aIndex === -1) return 1;
+          if (bIndex === -1) return -1;
+          return aIndex - bIndex;
+        });
+      }
+
+      return result;
     };
 
     return {
-      age: calculateGroupedRates(record => getAgeGroup(record.age), records),
+      age: calculateGroupedRates(record => getAgeGroup(record.age), records, ageGroupOrder),
       sex: calculateGroupedRates(record => getSexGroup(record.sex), records),
       occupation: calculateGroupedRates(record => getOccupationGroup(record.occupation_status, record.occupation_type), records),
       welfare: calculateGroupedRates(record => getWelfareGroup(record.welfare), records)
@@ -417,6 +439,10 @@ const IndicatorDetailPage = ({
         return record['discrimination/1'] === 1 || record['discrimination/2'] === 1 || 
                record['discrimination/3'] === 1 || record['discrimination/4'] === 1 || 
                record['discrimination/5'] === 1;
+      // FIXED: Add community_safety calculation
+      case 'community_safety':
+        // For community_safety, we consider it "positive" if safety score >= 3 (safe/very safe)
+        return record.community_safety >= 3;
       default:
         return false;
     }
