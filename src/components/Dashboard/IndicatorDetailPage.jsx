@@ -383,6 +383,7 @@ const IndicatorDetailPage = ({
     if (!record) return false;
     
     switch (indicator) {
+      // Economic Security Indicators
       case 'unemployment_rate':
         return record.occupation_status === 0;
       case 'employment_rate':
@@ -397,6 +398,8 @@ const IndicatorDetailPage = ({
         return record.occupation_injury === 1;
       case 'work_injury_non_fatal':
         return record.occupation_small_injury === 1;
+
+      // Healthcare Access Indicators
       case 'health_coverage':
         return record.welfare !== null && record.welfare !== undefined && record.welfare !== 'other';
       case 'medical_consultation_skip_cost':
@@ -407,6 +410,8 @@ const IndicatorDetailPage = ({
         return record.medical_skip_3 === 1;
       case 'dental_access':
         return record.oral_health_access === 1;
+
+      // Education Indicators
       case 'functional_literacy':
         return record.speak === 1 && record.read === 1 && record.write === 1 && record.math === 1;
       case 'primary_completion':
@@ -417,18 +422,28 @@ const IndicatorDetailPage = ({
         return record.education >= 7;
       case 'training_participation':
         return record.training === 1;
-      case 'alcohol_consumption':
-        return record.drink_status === 1 || record.drink_status === 2;
-      case 'tobacco_use':
-        return record.smoke_status === 1;
-      case 'exercise_regular':
-        return record.exercise_status === 1;
-      case 'any_chronic_disease':
-        return record.diseases_status === 1;
-      case 'diabetes':
-        return record['diseases_type/1'] === 1;
-      case 'hypertension':
-        return record['diseases_type/2'] === 1;
+
+      // Physical Environment Indicators
+      case 'electricity_access':
+        return record.community_environment_4 !== 1;
+      case 'clean_water_access':
+        return record.community_environment_3 !== 1;
+      case 'sanitation_facilities':
+        return record.house_sink === 1;
+      case 'waste_management':
+        return record.community_environment_5 !== 1;
+      case 'housing_overcrowding':
+        return record.community_environment_1 === 1 || record.community_environment_2 === 1;
+      case 'home_ownership':
+        return record.house_status === 1;
+      case 'disaster_experience':
+        return record.community_disaster_1 === 1 || record.community_disaster_2 === 1 || 
+               record.community_disaster_3 === 1 || record.community_disaster_4 === 1;
+
+      // Social Context Indicators
+      case 'community_safety':
+        // For community_safety, we consider it "positive" if safety score >= 3 (safe/very safe)
+        return record.community_safety >= 3;
       case 'violence_physical':
         return record.physical_violence === 1;
       case 'violence_psychological':
@@ -439,10 +454,100 @@ const IndicatorDetailPage = ({
         return record['discrimination/1'] === 1 || record['discrimination/2'] === 1 || 
                record['discrimination/3'] === 1 || record['discrimination/4'] === 1 || 
                record['discrimination/5'] === 1;
-      // FIXED: Add community_safety calculation
-      case 'community_safety':
-        // For community_safety, we consider it "positive" if safety score >= 3 (safe/very safe)
-        return record.community_safety >= 3;
+      case 'social_support':
+        return record.helper === 1;
+      case 'community_murder':
+        return record.community_murder === 1;
+
+      // Health Behaviors Indicators
+      case 'alcohol_consumption':
+        return record.drink_status === 1 || record.drink_status === 2;
+      case 'tobacco_use':
+        return record.smoke_status === 1;
+      case 'exercise_regular':
+        return record.exercise_status === 1;
+      case 'physical_activity':
+        // Insufficient physical activity (exercise_status 0 or 1 = insufficient)
+        return record.exercise_status === 0 || record.exercise_status === 1;
+      case 'obesity':
+        // Calculate BMI and check if >= 30
+        if (record.height > 0 && record.weight > 0) {
+          const bmi = record.weight / Math.pow(record.height / 100, 2);
+          return !isNaN(bmi) && isFinite(bmi) && bmi >= 30;
+        }
+        return false;
+
+      // Health Outcomes Indicators (All diseases)
+      case 'any_chronic_disease':
+        return record.diseases_status === 1;
+      case 'diabetes':
+        return record.diseases_status === 1 && record['diseases_type/1'] === 1;
+      case 'hypertension':
+        return record.diseases_status === 1 && record['diseases_type/2'] === 1;
+      case 'gout':
+        return record.diseases_status === 1 && record['diseases_type/3'] === 1;
+      case 'chronic_kidney_disease':
+        return record.diseases_status === 1 && record['diseases_type/4'] === 1;
+      case 'cancer':
+        return record.diseases_status === 1 && record['diseases_type/5'] === 1;
+      case 'high_cholesterol':
+        return record.diseases_status === 1 && record['diseases_type/6'] === 1;
+      case 'ischemic_heart_disease':
+        return record.diseases_status === 1 && record['diseases_type/7'] === 1;
+      case 'liver_disease':
+        return record.diseases_status === 1 && record['diseases_type/8'] === 1;
+      case 'stroke':
+        return record.diseases_status === 1 && record['diseases_type/9'] === 1;
+      case 'hiv':
+        return record.diseases_status === 1 && record['diseases_type/10'] === 1;
+      case 'mental_health':
+        return record.diseases_status === 1 && record['diseases_type/11'] === 1;
+      case 'allergies':
+        return record.diseases_status === 1 && record['diseases_type/12'] === 1;
+      case 'bone_joint_disease':
+        return record.diseases_status === 1 && record['diseases_type/13'] === 1;
+      case 'respiratory_disease':
+        return record.diseases_status === 1 && record['diseases_type/14'] === 1;
+      case 'emphysema':
+        return record.diseases_status === 1 && record['diseases_type/15'] === 1;
+      case 'anemia':
+        return record.diseases_status === 1 && record['diseases_type/16'] === 1;
+      case 'stomach_ulcer':
+        return record.diseases_status === 1 && record['diseases_type/17'] === 1;
+      case 'epilepsy':
+        return record.diseases_status === 1 && record['diseases_type/18'] === 1;
+      case 'intestinal_disease':
+        return record.diseases_status === 1 && record['diseases_type/19'] === 1;
+      case 'paralysis':
+        return record.diseases_status === 1 && record['diseases_type/20'] === 1;
+      case 'dementia':
+        return record.diseases_status === 1 && record['diseases_type/21'] === 1;
+
+      // Complex Health Outcomes (calculated indicators)
+      case 'cardiovascular_diseases':
+        return record.diseases_status === 1 && (
+          record['diseases_type/2'] === 1 || // Hypertension
+          record['diseases_type/6'] === 1 || // High cholesterol
+          record['diseases_type/7'] === 1 || // Ischemic heart disease
+          record['diseases_type/9'] === 1    // Stroke
+        );
+      case 'metabolic_diseases':
+        return record.diseases_status === 1 && (
+          record['diseases_type/1'] === 1 || // Diabetes
+          record['diseases_type/3'] === 1 || // Gout
+          record['diseases_type/6'] === 1    // High cholesterol
+        );
+      case 'multiple_chronic_conditions':
+        if (record.diseases_status === 1) {
+          const diseaseCount = Object.keys(record)
+            .filter(key => key.startsWith('diseases_type/') && 
+                          key !== 'diseases_type/other' && 
+                          record[key] === 1)
+            .length;
+          return diseaseCount >= 2;
+        }
+        return false;
+
       default:
         return false;
     }
