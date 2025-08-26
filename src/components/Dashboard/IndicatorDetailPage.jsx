@@ -341,27 +341,25 @@ const IndicatorDetailPage = ({
     // Calculate rates for each demographic group
     const calculateGroupedRates = (groupFunction, records, customOrder = null) => {
       const groups = {};
+      const totalRecords = records.length;
       
+      // Count how many people belong to each demographic group
       records.forEach(record => {
         if (record) {
           const group = groupFunction(record);
           if (!groups[group]) {
-            groups[group] = { total: 0, positive: 0 };
+            groups[group] = { count: 0 };
           }
-          groups[group].total++;
-          
-          // Calculate positive cases based on indicator
-          if (calculateIndicatorPositive(record, indicator)) {
-            groups[group].positive++;
-          }
+          groups[group].count++;
         }
       });
 
+      // Calculate composition percentages
       let result = Object.keys(groups).map((group, index) => ({
         name: group,
-        value: groups[group].total > 0 ? (groups[group].positive / groups[group].total) * 100 : 0,
-        count: groups[group].positive,
-        total: groups[group].total,
+        value: totalRecords > 0 ? (groups[group].count / totalRecords) * 100 : 0, // Composition percentage
+        count: groups[group].count, // Actual count
+        total: totalRecords, // Total population being analyzed
         fill: COLORS[index % COLORS.length]
       }));
 
@@ -896,7 +894,7 @@ const IndicatorDetailPage = ({
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'สัดส่วน' : 'Composition']} />
                             <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                               {disaggregationData.age.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={ageColors[index % ageColors.length]} />
