@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useSDHEData from '../../hooks/useSDHEData';
 import useIndicators from '../../hooks/useIndicators';
@@ -6,7 +6,22 @@ import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 import IndicatorAnalysis from './IndicatorAnalysis';
 import IndicatorDetail from './IndicatorDetail';
 import BangkokMap from './BangkokMap';
-import Papa from 'papaparse';
+import { LoadingScreen, LoadingCard } from '../Loading/LoadingSpinner';
+import { 
+  REVERSE_INDICATORS, 
+  HEALTHCARE_SUPPLY_BENCHMARKS,
+  POPULATION_GROUPS,
+  DOMAINS,
+  VIEW_TABS 
+} from '../../constants/dashboardConstants';
+import { 
+  getPerformanceColor,
+  getHealthcareSupplyColor,
+  calculateDomainScore,
+  formatNumber,
+  getTopIndicators,
+  getDataState
+} from '../../utils/dashboardUtils';
 
 const Dashboard = () => {
   const { language, toggleLanguage, t } = useLanguage();
@@ -32,115 +47,51 @@ const Dashboard = () => {
   const [showDetailPage, setShowDetailPage] = useState(false);
   const [selectedIndicator, setSelectedIndicator] = useState(null);
 
-  // Define which indicators are "reverse" (bad when high)
-  const reverseIndicators = {
-    // Economic Security - mostly reverse (bad when high)
-    unemployment_rate: true,
-    vulnerable_employment: true,
-    food_insecurity_moderate: true,
-    food_insecurity_severe: true,
-    work_injury_fatal: true,
-    work_injury_non_fatal: true,
-    catastrophic_health_spending_household: true,
-    health_spending_over_10_percent: true,
-    health_spending_over_25_percent: true,
-    
-    // Healthcare Access - mixed
-    medical_consultation_skip_cost: true,
-    medical_treatment_skip_cost: true,
-    prescribed_medicine_skip_cost: true,
-    
-    // Physical Environment - mixed
-    housing_overcrowding: true,
-    disaster_experience: true,
-    
-    // Social Context - mostly reverse
-    violence_physical: true,
-    violence_psychological: true,
-    violence_sexual: true,
-    discrimination_experience: true,
-    community_murder: true,
-    
-    // Health Behaviors - mixed
-    alcohol_consumption: true,
-    tobacco_use: true,
-    obesity: true,
+  // Data state helpers
+  const dataState = useMemo(() => 
+    getDataState(isLoading, error, data), 
+    [isLoading, error, data]
+  );
 
-    // Health Outcomes - ALL REVERSE (diseases are bad when high)
-    any_chronic_disease: true,
-    diabetes: true,
-    hypertension: true,
-    gout: true,
-    chronic_kidney_disease: true,
-    cancer: true,
-    high_cholesterol: true,
-    ischemic_heart_disease: true,
-    liver_disease: true,
-    stroke: true,
-    hiv: true,
-    mental_health: true,
-    allergies: true,
-    bone_joint_disease: true,
-    respiratory_disease: true,
-    emphysema: true,
-    anemia: true,
-    stomach_ulcer: true,
-    epilepsy: true,
-    intestinal_disease: true,
-    paralysis: true,
-    dementia: true,
-    cardiovascular_diseases: true,
-    metabolic_diseases: true,
-    multiple_chronic_conditions: true
-  };
-
-  // WHO Benchmarks for Healthcare Supply Indicators
-  const getHealthcareSupplyColor = (value, indicator) => {
-    const benchmarks = {
-      doctor_per_population: { good: 2.5, fair: 1.0, poor: 0.5 },
-      nurse_per_population: { good: 8.0, fair: 3.0, poor: 1.5 },
-      healthworker_per_population: { good: 40, fair: 20, poor: 10 },
-      community_healthworker_per_population: { good: 5.0, fair: 2.0, poor: 1.0 },
-      health_service_access: { good: 50, fair: 20, poor: 10 },
-      bed_per_population: { good: 30, fair: 15, poor: 10 }
-    };
-    
-    const benchmark = benchmarks[indicator];
-    if (!benchmark) return 'bg-gray-100 text-gray-600';
-    
-    if (value >= benchmark.good) return 'bg-green-100 text-green-800';
-    if (value >= benchmark.fair) return 'bg-yellow-100 text-yellow-800';  
-    if (value >= benchmark.poor) return 'bg-orange-100 text-orange-800';
-    return 'bg-red-100 text-red-800';
-  };
-
-  // Handle map district click
-  const handleMapDistrictClick = (districtName) => {
-    setSelectedDistrict(districtName);
-  };
-
-  // Handle indicator click
-  const handleIndicatorClick = (indicator) => {
-    setSelectedIndicator(indicator);
+  // Memoized handlers to prevent unnecessary re-renders
+  const handleIndicatorClick = useCallback((indicatorName) => {
+    setSelectedIndicator(indicatorName);
     setShowDetailPage(true);
-  };
+  }, []);
 
-  // Handle back from detail page
-  const handleBackFromDetail = () => {
+  const handleBackFromDetail = useCallback(() => {
     setShowDetailPage(false);
     setSelectedIndicator(null);
-  };
+  }, []);
 
-  // Safe function to format sample size
-  const formatSampleSize = (sampleSize) => {
-    if (sampleSize === null || sampleSize === undefined || isNaN(sampleSize)) {
-      return 'N/A';
-    }
-    return Number(sampleSize).toLocaleString();
-  };
+  const handleTabChange = useCallback((tab) => {
+    setActiveTab(tab);
+  }, []);
 
-  // Safe function to format value - Updated for healthcare supply indicators
-  const formatValue = (value, indicator) => {
+  const handlePopulationGroupChange = useCallback((group) => {
+    setSelectedPopulationGroup(group);
+  }, []);
+
+  const handleDistrictChange = useCallback((district) => {
+    setSelectedDistrict(district);
+  }, []);
+
+  const handleDomainChange = useCallback((domain) => {
+    setSelectedDomain(domain);
+  }, []);
+
+  const handleMapDistrictClick = useCallback((districtName) => {
+    setSelectedDistrict(districtName);
+  }, []);
+
+  // Utility functions
+  const formatSampleSize = useCallback((sampleSize) => {
+    return formatNumber(sampleSize, 0);
+  }, []);
+
+
+  // Utility function for formatting values
+  const formatValue = useCallback((value, indicator) => {
     if (value === null || value === undefined || isNaN(value)) {
       return 'N/A';
     }
@@ -173,7 +124,7 @@ const Dashboard = () => {
 
     // Regular percentage formatting for other indicators
     return `${Number(value).toFixed(1)}%`;
-  };
+  }, []);
 
   const getScoreColor = (value, indicator) => {
     // Handle healthcare supply indicators with WHO benchmarks
@@ -191,7 +142,7 @@ const Dashboard = () => {
     }
     
     // Original logic for other indicators
-    const isReverse = reverseIndicators[indicator];
+    const isReverse = REVERSE_INDICATORS[indicator];
     
     if (isReverse) {
       if (value <= 20) return 'bg-green-100 text-green-800';
@@ -207,7 +158,7 @@ const Dashboard = () => {
   };
 
   const getPerformanceBarColor = (value, indicator) => {
-    const isReverse = reverseIndicators[indicator];
+    const isReverse = REVERSE_INDICATORS[indicator];
     
     if (isReverse) {
       if (value <= 20) return 'bg-green-500';
@@ -223,36 +174,38 @@ const Dashboard = () => {
   };
 
   // Loading state
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center bg-white rounded-2xl p-12 shadow-xl">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-6"></div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">{t('ui.loading')}</h2>
-          <p className="text-gray-600">{t('ui.loadingDescription')}</p>
-        </div>
-      </div>
-    );
+  if (dataState.isLoading) {
+    return <LoadingScreen message={t('ui.loading')} />;
   }
 
-  // Error state
-  if (error) {
+  // Error state  
+  if (dataState.hasError) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 flex items-center justify-center p-6">
-        <div className="text-center bg-white p-12 rounded-2xl shadow-xl max-w-md">
-          <div className="text-red-500 mb-6">
-            <svg className="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="mb-4">
+            <div className="mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-red-100">
+              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">{t('ui.error')}</h2>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg transition-colors font-medium"
-          >
-            {t('ui.retry')}
-          </button>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{t('ui.error')}</h3>
+          <p className="text-sm text-gray-500 mb-6">{error}</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={retry}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              {t('ui.retry')}
+            </button>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+            >
+              Reload Page
+            </button>
+          </div>
         </div>
       </div>
     );

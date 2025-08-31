@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useIndicators from '../../hooks/useIndicators';
+import { REVERSE_INDICATORS } from '../../constants/dashboardConstants';
 
 const IndicatorDetail = ({ 
   indicator, 
@@ -18,55 +19,6 @@ const IndicatorDetail = ({
   const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicators();
   const [activeTab, setActiveTab] = useState('overview');
 
-  const reverseIndicators = {
-    'unemployment_rate': true,
-    'vulnerable_employment': true,
-    'food_insecurity_moderate': true,
-    'food_insecurity_severe': true,
-    'work_injury_fatal': true,
-    'work_injury_non_fatal': true,
-    'catastrophic_health_spending_household': true,
-    'health_spending_over_10_percent': true,
-    'health_spending_over_25_percent': true,
-    'medical_consultation_skip_cost': true,
-    'medical_treatment_skip_cost': true,
-    'prescribed_medicine_skip_cost': true,
-    'housing_overcrowding': true,
-    'disaster_experience': true,
-    'violence_physical': true,
-    'violence_psychological': true,
-    'violence_sexual': true,
-    'discrimination_experience': true,
-    'community_murder': true,
-    'alcohol_consumption': true,
-    'tobacco_use': true,
-    'obesity': true,
-    'any_chronic_disease': true,
-    'diabetes': true,
-    'hypertension': true,
-    'gout': true,
-    'chronic_kidney_disease': true,
-    'cancer': true,
-    'high_cholesterol': true,
-    'ischemic_heart_disease': true,
-    'liver_disease': true,
-    'stroke': true,
-    'hiv': true,
-    'mental_health': true,
-    'allergies': true,
-    'bone_joint_disease': true,
-    'respiratory_disease': true,
-    'emphysema': true,
-    'anemia': true,
-    'stomach_ulcer': true,
-    'epilepsy': true,
-    'intestinal_disease': true,
-    'paralysis': true,
-    'dementia': true,
-    'cardiovascular_diseases': true,
-    'metabolic_diseases': true,
-    'multiple_chronic_conditions': true
-  };
 
   // Get indicator metadata from CSV via hook
   const indicatorInfo = useMemo(() => {
@@ -87,7 +39,7 @@ const IndicatorDetail = ({
       name: csvInfo.name,
       description: csvInfo.description,
       calculation: csvInfo.calculation,
-      interpretation: reverseIndicators[indicator]
+      interpretation: REVERSE_INDICATORS[indicator]
         ? (language === 'th' 
             ? 'ค่าที่ต่ำกว่าแสดงถึงผลลัพธ์ที่ดีกว่า (ปัญหาน้อยกว่า)'
             : 'Lower values indicate better outcomes (fewer problems)')
@@ -95,9 +47,9 @@ const IndicatorDetail = ({
             ? 'ค่าที่สูงกว่าแสดงถึงผลลัพธ์ที่ดีกว่า'
             : 'Higher values indicate better outcomes'),
       target: csvInfo.target || (language === 'th' ? 'ไม่ระบุ' : 'Not specified'),
-      reverse: Boolean(reverseIndicators[indicator])
+      reverse: Boolean(REVERSE_INDICATORS[indicator])
     };
-  }, [indicator, language, indicatorDetailsLoading, getIndicatorInfo, reverseIndicators]);
+  }, [indicator, language, indicatorDetailsLoading, getIndicatorInfo]);
 
   // Function to format healthcare supply indicator values with proper units
   const formatHealthcareSupplyValue = (value, indicator) => {

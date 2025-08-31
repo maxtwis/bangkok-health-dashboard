@@ -1,5 +1,5 @@
-// src/hooks/useIndicatorDetails.js
-import { useState, useEffect } from 'react';
+// Optimized Indicators Hook with better caching and error handling
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Papa from 'papaparse';
 
 const useIndicators = () => {
@@ -45,35 +45,33 @@ const useIndicators = () => {
     loadIndicatorDetails();
   }, []);
 
-  // Helper function to get indicator name in specified language
-  const getIndicatorName = (indicatorKey, language = 'en') => {
+  // Memoized helper functions to prevent unnecessary re-renders
+  const getIndicatorName = useCallback((indicatorKey, language = 'en') => {
     if (!indicatorDetails || !indicatorDetails[indicatorKey]) {
       return indicatorKey; // fallback to key if not found
     }
     
     const details = indicatorDetails[indicatorKey];
     return language === 'th' ? details.indicator_THA : details.indicator_ENG;
-  };
+  }, [indicatorDetails]);
 
-  // Helper function to get indicator description in specified language
-  const getIndicatorDescription = (indicatorKey, language = 'en') => {
+  const getIndicatorDescription = useCallback((indicatorKey, language = 'en') => {
     if (!indicatorDetails || !indicatorDetails[indicatorKey]) {
       return language === 'th' ? 'ไม่มีคำอธิบาย' : 'No description available';
     }
     
     const details = indicatorDetails[indicatorKey];
     return language === 'th' ? details.detail_THA : details.detail_ENG;
-  };
+  }, [indicatorDetails]);
 
-  // Helper function to get calculation method in specified language
-  const getCalculationMethod = (indicatorKey, language = 'en') => {
+  const getCalculationMethod = useCallback((indicatorKey, language = 'en') => {
     if (!indicatorDetails || !indicatorDetails[indicatorKey]) {
       return language === 'th' ? 'ไม่ระบุวิธีการคำนวณ' : 'Calculation method not specified';
     }
     
     const details = indicatorDetails[indicatorKey];
     return language === 'th' ? details.calculation_method_THA : details.calculation_method_ENG;
-  };
+  }, [indicatorDetails]);
 
   // Helper function to get full indicator details
   const getIndicatorInfo = (indicatorKey, language = 'en') => {
