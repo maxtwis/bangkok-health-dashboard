@@ -236,7 +236,7 @@ const Dashboard = () => {
         <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6 text-center">
           <div className="mb-4">
             <div className="mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-red-100">
-              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="Error icon">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -284,6 +284,10 @@ const Dashboard = () => {
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Skip to main content for keyboard navigation */}
+      <a href="#main-content" className="skip-to-main">
+        Skip to main content
+      </a>
       {/* Header with better spacing and visual hierarchy */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-[1600px] mx-auto px-4 lg:px-6">
@@ -305,7 +309,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content with increased max width for less empty space */}
-      <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-10">
+      <main id="main-content" className="max-w-[1600px] mx-auto px-4 lg:px-6 py-10">
         
         {/* Navigation Tabs with better styling */}
         <div className="mb-10">
@@ -347,13 +351,15 @@ const Dashboard = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 {/* Population Group */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  <label htmlFor="population-group-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     {t('ui.populationGroup')}
                   </label>
                   <select
+                    id="population-group-select"
                     value={selectedPopulationGroup}
                     onChange={(e) => setSelectedPopulationGroup(e.target.value)}
                     className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    aria-describedby="population-group-description"
                   >
                     <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
                     <option value="elderly">{t('populationGroups.elderly')}</option>
@@ -365,13 +371,15 @@ const Dashboard = () => {
 
                 {/* District */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  <label htmlFor="district-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     {t('ui.district')}
                   </label>
                   <select
+                    id="district-select"
                     value={selectedDistrict}
                     onChange={(e) => setSelectedDistrict(e.target.value)}
                     className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    aria-describedby="district-description"
                   >
                     {availableDistricts.map(district => (
                       <option key={district} value={district}>{district}</option>
@@ -381,13 +389,15 @@ const Dashboard = () => {
 
                 {/* Domain */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  <label htmlFor="domain-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     {t('ui.indicator')} Domain
                   </label>
                   <select
+                    id="domain-select"
                     value={selectedDomain}
                     onChange={(e) => setSelectedDomain(e.target.value)}
                     className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    aria-describedby="domain-description"
                   >
                     {availableDomains.map(domain => (
                       <option key={domain} value={domain}>
@@ -399,10 +409,11 @@ const Dashboard = () => {
 
                 {/* View Mode */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  <label htmlFor="view-mode-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
                     View Mode
                   </label>
                   <select
+                    id="view-mode-select"
                     value={viewMode}
                     onChange={(e) => {
                       setViewMode(e.target.value);
@@ -413,6 +424,7 @@ const Dashboard = () => {
                       }
                     }}
                     className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    aria-describedby="view-mode-description"
                   >
                     <option value="overview">Overview</option>
                     <option value="indicators">Indicators</option>
@@ -455,6 +467,7 @@ const Dashboard = () => {
                         ].map(group => (
                           <label key={group.value} className="flex items-center space-x-1.5 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors flex-shrink-0">
                             <input
+                              id={`population-group-${group.value}`}
                               type="checkbox"
                               defaultChecked={true}
                               className="w-3.5 h-3.5 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-1"
@@ -462,6 +475,7 @@ const Dashboard = () => {
                                 accentColor: group.color,
                                 backgroundColor: group.color 
                               }}
+                              aria-describedby={`population-group-${group.value}-description`}
                               onChange={(e) => {
                                 // This will be handled by the spider chart component
                                 const event = new CustomEvent('populationGroupToggle', {
@@ -621,7 +635,7 @@ const Dashboard = () => {
                                         <span className="font-medium text-gray-900 hover:text-blue-600 transition-colors duration-200">
                                           {getIndicatorName(indicator, language) || item.label}
                                         </span>
-                                        <svg className="w-5 h-5 ml-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-5 h-5 ml-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="View details arrow">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
                                       </div>
@@ -675,7 +689,7 @@ const Dashboard = () => {
                     ) : (
                       <div className="text-center py-16 text-gray-500">
                         <div className="mb-4">
-                          <svg className="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="No data available icon">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
                         </div>
@@ -755,7 +769,7 @@ const Dashboard = () => {
             <IndicatorAnalysis />
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 };

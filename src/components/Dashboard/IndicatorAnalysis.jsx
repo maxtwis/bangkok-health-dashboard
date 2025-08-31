@@ -374,7 +374,7 @@ const IndicatorAnalysis = () => {
 
             {/* Chart */}
             {groupData.chartData.length > 0 ? (
-              <div className="h-80 -mb-4">
+              <div className="h-80 -mb-4" role="img" aria-label={`Hot issues analysis chart for ${groupData.groupLabel}`}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart 
                     data={groupData.chartData} 

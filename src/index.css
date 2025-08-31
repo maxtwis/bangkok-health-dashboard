@@ -48,3 +48,62 @@
 .leaflet-bar a {
   font-family: 'Noto Sans Thai Looped', sans-serif !important;
 }
+
+/* Accessibility improvements for charts and SVG elements */
+@layer base {
+  /* Add screen reader only text for chart SVG elements */
+  .recharts-wrapper svg:not([role]) {
+    role: img;
+  }
+  
+  /* Improve focus visibility */
+  button:focus,
+  select:focus,
+  input:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  /* Skip to main content link */
+  .skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+  }
+  
+  .skip-to-main:focus {
+    top: 6px;
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .bg-gray-50 {
+      background-color: white;
+    }
+    
+    .text-gray-600 {
+      color: black;
+    }
+    
+    .border-gray-200 {
+      border-color: black;
+    }
+  }
+  
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

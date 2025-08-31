@@ -43,6 +43,8 @@ class ErrorBoundary extends React.Component {
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
+                  role="img"
+                  aria-label="Application error warning icon"
                 >
                   <path 
                     strokeLinecap="round" 

@@ -1,5 +1,5 @@
 // Updated PopulationGroupSpiderChart with reordered layout
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
 
@@ -15,6 +15,25 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
     { value: 'lgbtq', color: '#f59e0b' },
     { value: 'normal_population', color: '#8b5cf6' } // Added normal population
   ];
+
+  // Add accessibility attributes to chart SVG elements after component mounts
+  useEffect(() => {
+    const addAccessibilityToCharts = () => {
+      // Add role and aria-label to SVG elements that don't have them
+      const svgElements = document.querySelectorAll('svg:not([role])');
+      svgElements.forEach((svg, index) => {
+        if (svg.closest('.recharts-wrapper')) {
+          svg.setAttribute('role', 'img');
+          svg.setAttribute('aria-label', `Health data radar chart showing domain scores for different population groups`);
+        }
+      });
+    };
+    
+    // Run after a short delay to ensure charts are rendered
+    const timeoutId = setTimeout(addAccessibilityToCharts, 1000);
+    
+    return () => clearTimeout(timeoutId);
+  }, [selectedDistrict]);
 
   // State for checkbox filters - all enabled by default
   const [visibleGroups, setVisibleGroups] = useState(
@@ -246,7 +265,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
         <div className="h-96 flex items-center justify-center text-gray-500">
           <div className="text-center">
             <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="No chart data available icon">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
@@ -261,9 +280,16 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
       ) : (
         <div className="space-y-8">
           {/* Spider Chart - Optimized for side-by-side layout */}
-          <div className="h-[600px] w-full">
+          <div className="h-[600px] w-full" role="img" aria-label="Population group health domains comparison radar chart">
             <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={transformedData} margin={{ top: 20, right: 80, bottom: 40, left: 80 }}>
+              <RadarChart 
+                data={transformedData} 
+                margin={{ top: 20, right: 80, bottom: 40, left: 80 }}
+                accessibilityLayer={{
+                  title: "Population Groups Health Domain Comparison",
+                  description: "Radar chart comparing health domain scores across different population groups"
+                }}
+              >
                 <PolarGrid gridType="polygon" />
                 <PolarAngleAxis 
                   dataKey="domain" 
@@ -322,7 +348,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
             <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
               <div className="flex items-start space-x-2">
                 <div className="flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="Information icon">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -379,7 +405,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
               <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
                 <div className="flex items-start space-x-2">
                   <div className="flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="Chart instructions icon">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
