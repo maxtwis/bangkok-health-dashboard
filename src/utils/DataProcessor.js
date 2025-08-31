@@ -3,7 +3,7 @@
 import Papa from 'papaparse';
 import _ from 'lodash';
 
-class BasicSDHEProcessor {
+class DataProcessor {
   constructor() {
     this.surveyData = [];
     this.healthSupplyData = [];
@@ -1381,4 +1381,4 @@ class BasicSDHEProcessor {
   }
 }
 
-export default BasicSDHEProcessor;
+export default DataProcessor;

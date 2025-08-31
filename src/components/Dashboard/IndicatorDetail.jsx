@@ -2,9 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import useIndicatorDetails from '../../hooks/useIndicatorDetails';
+import useIndicators from '../../hooks/useIndicators';
 
-const IndicatorDetailPage = ({ 
+const IndicatorDetail = ({ 
   indicator, 
   domain, 
   district, 
@@ -15,7 +15,7 @@ const IndicatorDetailPage = ({
   healthFacilitiesData
 }) => {
   const { t, language } = useLanguage();
-  const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicatorDetails();
+  const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicators();
   const [activeTab, setActiveTab] = useState('overview');
 
   const reverseIndicators = {
@@ -1219,4 +1219,4 @@ const IndicatorDetailPage = ({
   );
 };
 
-export default IndicatorDetailPage;
+export default IndicatorDetail;

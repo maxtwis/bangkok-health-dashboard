@@ -1,6 +1,6 @@
 // src/contexts/LanguageContext.jsx - Updated with CSV integration
 import React, { createContext, useContext, useState } from 'react';
-import useIndicatorDetails from '../hooks/useIndicatorDetails';
+import useIndicators from '../hooks/useIndicators';
 
 const LanguageContext = createContext();
 
@@ -189,7 +189,7 @@ export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState('en');
   
   // Use the CSV indicator details hook
-  const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicatorDetails();
+  const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicators();
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'th' : 'en');

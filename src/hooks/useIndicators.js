@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 
-const useIndicatorDetails = () => {
+const useIndicators = () => {
   const [indicatorDetails, setIndicatorDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -105,4 +105,4 @@ const useIndicatorDetails = () => {
   };
 };
 
-export default useIndicatorDetails;
+export default useIndicators;

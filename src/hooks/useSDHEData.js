@@ -1,8 +1,8 @@
 // useBasicSDHEData Hook - Fixed version with healthFacilitiesData exposure
 import { useState, useEffect, useRef } from 'react';
-import BasicSDHEProcessor from '../utils/BasicSDHEProcessor';
+import DataProcessor from '../utils/DataProcessor';
 
-const useBasicSDHEData = () => {
+const useSDHEData = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -25,7 +25,7 @@ const useBasicSDHEData = () => {
         const csvContent = await response.text();
         
         // Process with SDHE processor
-        const processor = new BasicSDHEProcessor();
+        const processor = new DataProcessor();
         processorRef.current = processor;
         
         const results = await processor.processSurveyData(csvContent);
@@ -70,4 +70,4 @@ const useBasicSDHEData = () => {
   };
 };
 
-export default useBasicSDHEData;
+export default useSDHEData;

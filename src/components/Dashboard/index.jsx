@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import useBasicSDHEData from '../../hooks/useBasicSDHEData';
-import useIndicatorDetails from '../../hooks/useIndicatorDetails';
+import useSDHEData from '../../hooks/useSDHEData';
+import useIndicators from '../../hooks/useIndicators';
 import PopulationGroupSpiderChart from './PopulationGroupSpiderChart';
 import IndicatorAnalysis from './IndicatorAnalysis';
-import IndicatorDetailPage from './IndicatorDetailPage';
+import IndicatorDetail from './IndicatorDetail';
 import BangkokMap from './BangkokMap';
 import Papa from 'papaparse';
 
@@ -19,8 +19,8 @@ const Dashboard = () => {
     getAvailableDistricts, 
     getAvailableDomains, 
     getIndicatorData 
-  } = useBasicSDHEData();
-  const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicatorDetails();
+  } = useSDHEData();
+  const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicators();
   
   const [activeTab, setActiveTab] = useState('analysis');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
@@ -261,7 +261,7 @@ const Dashboard = () => {
   // Show indicator detail page
   if (showDetailPage) {
     return (
-      <IndicatorDetailPage
+      <IndicatorDetail
         indicator={selectedIndicator}
         domain={selectedDomain}
         district={selectedDistrict}
