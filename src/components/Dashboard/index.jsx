@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useSDHEData from '../../hooks/useSDHEData';
 import useIndicators from '../../hooks/useIndicators';
@@ -24,6 +25,8 @@ import {
 } from '../../utils/dashboardUtils';
 
 const Dashboard = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { language, toggleLanguage, t } = useLanguage();
   const { 
     isLoading, 
@@ -47,6 +50,38 @@ const Dashboard = () => {
   const [showDetailPage, setShowDetailPage] = useState(false);
   const [selectedIndicator, setSelectedIndicator] = useState(null);
 
+  // Handle URL-based routing
+  useEffect(() => {
+    const pathname = location.pathname;
+    const searchParams = new URLSearchParams(location.search);
+    
+    if (pathname === '/detail') {
+      setShowDetailPage(true);
+      setViewMode('indicators');
+      const indicator = searchParams.get('indicator');
+      if (indicator) {
+        setSelectedIndicator(indicator);
+      }
+    } else if (pathname === '/analysis') {
+      setShowDetailPage(false);
+      setActiveTab('analysis');
+      setViewMode('indicators');
+    } else if (pathname === '/main' || pathname === '/') {
+      setShowDetailPage(false);
+      setActiveTab('analysis');
+      setViewMode('overview');
+    }
+    
+    // Update state from URL parameters
+    const domain = searchParams.get('domain');
+    const district = searchParams.get('district');
+    const group = searchParams.get('group');
+    
+    if (domain) setSelectedDomain(domain);
+    if (district) setSelectedDistrict(district);
+    if (group) setSelectedPopulationGroup(group);
+  }, [location]);
+
   // Data state helpers
   const dataState = useMemo(() => 
     getDataState(isLoading, error, data), 
@@ -55,14 +90,21 @@ const Dashboard = () => {
 
   // Memoized handlers to prevent unnecessary re-renders
   const handleIndicatorClick = useCallback((indicatorName) => {
-    setSelectedIndicator(indicatorName);
-    setShowDetailPage(true);
-  }, []);
+    const params = new URLSearchParams();
+    params.set('indicator', indicatorName);
+    params.set('domain', selectedDomain);
+    params.set('district', selectedDistrict);
+    params.set('group', selectedPopulationGroup);
+    navigate(`/detail?${params.toString()}`);
+  }, [navigate, selectedDomain, selectedDistrict, selectedPopulationGroup]);
 
   const handleBackFromDetail = useCallback(() => {
-    setShowDetailPage(false);
-    setSelectedIndicator(null);
-  }, []);
+    const params = new URLSearchParams();
+    params.set('domain', selectedDomain);
+    params.set('district', selectedDistrict);
+    params.set('group', selectedPopulationGroup);
+    navigate(`/analysis?${params.toString()}`);
+  }, [navigate, selectedDomain, selectedDistrict, selectedPopulationGroup]);
 
   const handleTabChange = useCallback((tab) => {
     setActiveTab(tab);
@@ -70,15 +112,24 @@ const Dashboard = () => {
 
   const handlePopulationGroupChange = useCallback((group) => {
     setSelectedPopulationGroup(group);
-  }, []);
+    const params = new URLSearchParams(location.search);
+    params.set('group', group);
+    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+  }, [navigate, location]);
 
   const handleDistrictChange = useCallback((district) => {
     setSelectedDistrict(district);
-  }, []);
+    const params = new URLSearchParams(location.search);
+    params.set('district', district);
+    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+  }, [navigate, location]);
 
   const handleDomainChange = useCallback((domain) => {
     setSelectedDomain(domain);
-  }, []);
+    const params = new URLSearchParams(location.search);
+    params.set('domain', domain);
+    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+  }, [navigate, location]);
 
   const handleMapDistrictClick = useCallback((districtName) => {
     setSelectedDistrict(districtName);
@@ -261,7 +312,10 @@ const Dashboard = () => {
           <div className="border-b border-gray-200">
             <nav className="-mb-px flex space-x-12">
               <button
-                onClick={() => setActiveTab('analysis')}
+                onClick={() => {
+                  setActiveTab('analysis');
+                  navigate('/main');
+                }}
                 className={`py-4 px-2 border-b-3 font-semibold text-lg whitespace-nowrap transition-all duration-200 ${
                   activeTab === 'analysis'
                     ? 'border-blue-500 text-blue-600'
@@ -350,7 +404,14 @@ const Dashboard = () => {
                   </label>
                   <select
                     value={viewMode}
-                    onChange={(e) => setViewMode(e.target.value)}
+                    onChange={(e) => {
+                      setViewMode(e.target.value);
+                      if (e.target.value === 'overview') {
+                        navigate('/main');
+                      } else if (e.target.value === 'indicators') {
+                        navigate('/analysis');
+                      }
+                    }}
                     className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
                   >
                     <option value="overview">Overview</option>

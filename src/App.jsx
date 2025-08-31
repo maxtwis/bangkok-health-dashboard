@@ -1,13 +1,9 @@
-// src/App.jsx - Updated with React Router, Error Boundary and Language Provider
+// src/App.jsx - Simple routing with original dashboard structure
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import MainMenu from './pages/MainMenu';
-import AnalysisPage from './pages/AnalysisPage';
-import IndicatorDetailPage from './pages/IndicatorDetailPage';
-import GeographicPage from './pages/GeographicPage';
-import ComparisonPage from './pages/ComparisonPage';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -16,11 +12,10 @@ function App() {
         <Router>
           <div className="App">
             <Routes>
-              <Route path="/" element={<MainMenu />} />
-              <Route path="/analysis" element={<AnalysisPage />} />
-              <Route path="/detail/:indicator" element={<IndicatorDetailPage />} />
-              <Route path="/geographic" element={<GeographicPage />} />
-              <Route path="/comparison" element={<ComparisonPage />} />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/main" element={<Dashboard />} />
+              <Route path="/detail" element={<Dashboard />} />
+              <Route path="/analysis" element={<Dashboard />} />
             </Routes>
           </div>
         </Router>
