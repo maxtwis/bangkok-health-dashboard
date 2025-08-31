@@ -106,17 +106,8 @@ const IndicatorAnalysis = () => {
         }));
 
         setSurveyData(processedData);
-        console.log('Loaded survey data:', processedData.length, 'records');
-        
-        // Debug population groups
-        const groupCounts = {};
-        processedData.forEach(record => {
-          groupCounts[record.population_group] = (groupCounts[record.population_group] || 0) + 1;
-        });
-        console.log('Population groups:', groupCounts);
         
       } catch (error) {
-        console.error('Error loading data:', error);
       } finally {
         setLoading(false);
       }
@@ -134,7 +125,6 @@ const IndicatorAnalysis = () => {
 
     // Validate records array
     if (!Array.isArray(records)) {
-      console.error('Records is not an array:', records);
       return 0;
     }
 
@@ -222,19 +212,12 @@ const IndicatorAnalysis = () => {
       
       // Final validation
       if (isNaN(percentage) || !isFinite(percentage) || percentage < 0) {
-        console.warn(`Invalid percentage calculated for ${indicator}:`, {
-          matchCount,
-          totalCount,
-          percentage,
-          sampleRecord: records[0]
-        });
         return 0;
       }
 
       return Math.min(100, percentage); // Cap at 100%
       
     } catch (error) {
-      console.error(`Error calculating percentage for ${indicator}:`, error);
       return 0;
     }
   };
@@ -297,16 +280,8 @@ const IndicatorAnalysis = () => {
         if (records.length >= 5) { // Minimum sample size
           const percentage = calculatePercentage(records, selectedIndicator);
           
-          // Debug logging for problematic values
+          // Skip invalid percentages
           if (percentage > 100 || isNaN(percentage) || !isFinite(percentage)) {
-            console.error('Invalid percentage detected:', {
-              district,
-              group: group.value,
-              indicator: selectedIndicator,
-              percentage,
-              recordCount: records.length,
-              sampleRecord: records[0]
-            });
             return; // Skip this district
           }
           

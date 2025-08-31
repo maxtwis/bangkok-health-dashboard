@@ -34,10 +34,8 @@ const useIndicatorDetails = () => {
         });
 
         setIndicatorDetails(detailsLookup);
-        console.log(`✅ Loaded ${Object.keys(detailsLookup).length} indicator details`);
         
       } catch (err) {
-        console.error('Error loading indicator details:', err);
         setError(err.message);
       } finally {
         setLoading(false);

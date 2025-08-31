@@ -1,5 +1,5 @@
 // Updated Basic SDHE Data Processor with Healthcare Supply Indicators - src/utils/BasicSDHEProcessor.js
-// UPDATED: Added minimum sample size requirement of 5 respondents per district, removed console.log and labels
+// UPDATED: Added minimum sample size requirement of 5 respondents per district
 import Papa from 'papaparse';
 import _ from 'lodash';
 

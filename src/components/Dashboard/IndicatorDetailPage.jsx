@@ -269,7 +269,6 @@ const IndicatorDetailPage = ({
       return result;
       
     } catch (error) {
-      console.error('Error calculating facility type data:', error);
       return [];
     }
   }

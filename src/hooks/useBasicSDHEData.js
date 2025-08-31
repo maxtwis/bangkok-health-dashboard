@@ -36,7 +36,6 @@ const useBasicSDHEData = () => {
         setHealthFacilitiesData(processor.healthFacilitiesData);
         
       } catch (err) {
-        console.error('Error loading SDHE data:', err);
         setError(err.message);
       } finally {
         setIsLoading(false);
