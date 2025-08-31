@@ -123,9 +123,9 @@ export const DOMAINS = [
 
 // Tab Configuration
 export const VIEW_TABS = [
-  { id: 'analysis', label: 'Analysis', icon: '📊' },
-  { id: 'comparison', label: 'Comparison', icon: '🔍' },
-  { id: 'map', label: 'Geographic View', icon: '🗺️' }
+  { id: 'analysis', label: 'Analysis' },
+  { id: 'comparison', label: 'Comparison' },
+  { id: 'map', label: 'Geographic View' }
 ];
 
 // Performance thresholds for coloring

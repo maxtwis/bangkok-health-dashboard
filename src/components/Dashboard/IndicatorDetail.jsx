@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye } from 'lucide-react';
+import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye, Building, BarChart3 } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useIndicators from '../../hooks/useIndicators';
 import { REVERSE_INDICATORS } from '../../constants/dashboardConstants';
@@ -584,11 +584,11 @@ const IndicatorDetail = ({
                       {t(`populationGroups.${populationGroup}`)}
                     </span>
                     <span className="flex items-center">
-                      <span className="w-4 h-4 mr-1 text-center">🏢</span>
+                      <Building className="w-4 h-4 mr-1" />
                       {district}
                     </span>
                     <span className="flex items-center">
-                      <span className="w-4 h-4 mr-1 text-center">📊</span>
+                      <BarChart3 className="w-4 h-4 mr-1" />
                       {t(`domains.${domain}`)}
                     </span>
                   </div>
