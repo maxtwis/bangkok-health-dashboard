@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye, Building, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye, Building, BarChart3, Brain } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useIndicators from '../../hooks/useIndicators';
 import { REVERSE_INDICATORS } from '../../constants/dashboardConstants';
+import CorrelationAnalysis from './CorrelationAnalysis';
 
 const IndicatorDetail = ({ 
   indicator, 
@@ -657,7 +658,8 @@ const IndicatorDetail = ({
             <nav className="flex space-x-8 px-6">
               {[
                 { id: 'overview', label: language === 'th' ? 'ภาพรวม' : 'Overview', icon: Eye },
-                { id: 'demographics', label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Demographics', icon: Users }
+                { id: 'demographics', label: language === 'th' ? 'การแยกย่อยข้อมูล' : 'Demographics', icon: Users },
+                { id: 'correlations', label: language === 'th' ? 'ความสัมพันธ์' : 'Correlations', icon: Brain }
               ].map(tab => (
                 <button
                   key={tab.id}
@@ -948,6 +950,41 @@ const IndicatorDetail = ({
                       </p>
                     </div>
                   </div>
+                )}
+              </div>
+            )}
+
+            {/* Correlations Tab */}
+            {activeTab === 'correlations' && (
+              <div>
+                {/* Check if this is a healthcare supply indicator */}
+                {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                  'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) ? (
+                  <div className="text-center py-8">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto">
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="bg-blue-100 rounded-full p-3">
+                          <Brain className="w-6 h-6 text-blue-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-lg font-medium text-blue-900 mb-2">
+                        {language === 'th' ? 'การวิเคราะห์ความสัมพันธ์ไม่พร้อมใช้งาน' : 'Correlation Analysis Not Available'}
+                      </h3>
+                      <p className="text-blue-800">
+                        {language === 'th' 
+                          ? 'ตัวชี้วัดทรัพยากรสุขภาพไม่มีข้อมูลระดับบุคคล จึงไม่สามารถคำนวณความสัมพันธ์กับตัวชี้วัดอื่นได้'
+                          : 'Healthcare supply indicators do not have individual-level data, so correlations with other indicators cannot be calculated.'}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <CorrelationAnalysis 
+                    currentIndicator={indicator}
+                    surveyData={surveyData}
+                    district={district}
+                    populationGroup={populationGroup}
+                    calculateIndicatorPositive={calculateIndicatorPositive}
+                  />
                 )}
               </div>
             )}

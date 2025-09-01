@@ -594,88 +594,88 @@ class DataProcessor {
         },
         
         diabetes: {
-          fields: ['diseases_status', 'diseases_type/1'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/1'] === 1
+          fields: ['diseases_status', 'diseases_type_1'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_1 === 1
         },
         hypertension: {
-          fields: ['diseases_status', 'diseases_type/2'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/2'] === 1
+          fields: ['diseases_status', 'diseases_type_2'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_2 === 1
         },
         gout: {
-          fields: ['diseases_status', 'diseases_type/3'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/3'] === 1
+          fields: ['diseases_status', 'diseases_type_3'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_3 === 1
         },
         chronic_kidney_disease: {
-          fields: ['diseases_status', 'diseases_type/4'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/4'] === 1
+          fields: ['diseases_status', 'diseases_type_4'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_4 === 1
         },
         cancer: {
-          fields: ['diseases_status', 'diseases_type/5'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/5'] === 1
+          fields: ['diseases_status', 'diseases_type_5'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_5 === 1
         },
         high_cholesterol: {
-          fields: ['diseases_status', 'diseases_type/6'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/6'] === 1
+          fields: ['diseases_status', 'diseases_type_6'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_6 === 1
         },
         ischemic_heart_disease: {
-          fields: ['diseases_status', 'diseases_type/7'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/7'] === 1
+          fields: ['diseases_status', 'diseases_type_7'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_7 === 1
         },
         liver_disease: {
-          fields: ['diseases_status', 'diseases_type/8'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/8'] === 1
+          fields: ['diseases_status', 'diseases_type_8'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_8 === 1
         },
         stroke: {
-          fields: ['diseases_status', 'diseases_type/9'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/9'] === 1
+          fields: ['diseases_status', 'diseases_type_9'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_9 === 1
         },
         hiv: {
-          fields: ['diseases_status', 'diseases_type/10'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/10'] === 1
+          fields: ['diseases_status', 'diseases_type_10'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_10 === 1
         },
         mental_health: {
-          fields: ['diseases_status', 'diseases_type/11'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/11'] === 1
+          fields: ['diseases_status', 'diseases_type_11'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_11 === 1
         },
         allergies: {
-          fields: ['diseases_status', 'diseases_type/12'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/12'] === 1
+          fields: ['diseases_status', 'diseases_type_12'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_12 === 1
         },
         bone_joint_disease: {
-          fields: ['diseases_status', 'diseases_type/13'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/13'] === 1
+          fields: ['diseases_status', 'diseases_type_13'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_13 === 1
         },
         respiratory_disease: {
-          fields: ['diseases_status', 'diseases_type/14'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/14'] === 1
+          fields: ['diseases_status', 'diseases_type_14'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_14 === 1
         },
         emphysema: {
-          fields: ['diseases_status', 'diseases_type/15'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/15'] === 1
+          fields: ['diseases_status', 'diseases_type_15'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_15 === 1
         },
         anemia: {
-          fields: ['diseases_status', 'diseases_type/16'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/16'] === 1
+          fields: ['diseases_status', 'diseases_type_16'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_16 === 1
         },
         stomach_ulcer: {
-          fields: ['diseases_status', 'diseases_type/17'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/17'] === 1
+          fields: ['diseases_status', 'diseases_type_17'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_17 === 1
         },
         epilepsy: {
-          fields: ['diseases_status', 'diseases_type/18'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/18'] === 1
+          fields: ['diseases_status', 'diseases_type_18'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_18 === 1
         },
         intestinal_disease: {
-          fields: ['diseases_status', 'diseases_type/19'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/19'] === 1
+          fields: ['diseases_status', 'diseases_type_19'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_19 === 1
         },
         paralysis: {
-          fields: ['diseases_status', 'diseases_type/20'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/20'] === 1
+          fields: ['diseases_status', 'diseases_type_20'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_20 === 1
         },
         dementia: {
-          fields: ['diseases_status', 'diseases_type/21'],
-          condition: (r) => r.diseases_status === 1 && r['diseases_type/21'] === 1
+          fields: ['diseases_status', 'diseases_type_21'],
+          condition: (r) => r.diseases_status === 1 && r.diseases_type_21 === 1
         },
 
         cardiovascular_diseases: {
@@ -684,10 +684,10 @@ class DataProcessor {
             if (diseaseRecords.length === 0) return 0;
             
             const cvdCases = diseaseRecords.filter(r => 
-              r['diseases_type/2'] === 1 || // Hypertension
-              r['diseases_type/6'] === 1 || // High cholesterol
-              r['diseases_type/7'] === 1 || // Ischemic heart disease
-              r['diseases_type/9'] === 1    // Stroke
+              r.diseases_type_2 === 1 || // Hypertension
+              r.diseases_type_6 === 1 || // High cholesterol
+              r.diseases_type_7 === 1 || // Ischemic heart disease
+              r.diseases_type_9 === 1    // Stroke
             );
             
             return (cvdCases.length / records.length) * 100;
@@ -700,9 +700,9 @@ class DataProcessor {
             if (diseaseRecords.length === 0) return 0;
             
             const metabolicCases = diseaseRecords.filter(r => 
-              r['diseases_type/1'] === 1 || // Diabetes
-              r['diseases_type/3'] === 1 || // Gout
-              r['diseases_type/6'] === 1    // High cholesterol
+              r.diseases_type_1 === 1 || // Diabetes
+              r.diseases_type_3 === 1 || // Gout
+              r.diseases_type_6 === 1    // High cholesterol
             );
             
             return (metabolicCases.length / records.length) * 100;
@@ -716,8 +716,8 @@ class DataProcessor {
             
             const multipleCCCases = diseaseRecords.filter(r => {
               const diseaseCount = Object.keys(r)
-                .filter(key => key.startsWith('diseases_type/') && 
-                              key !== 'diseases_type/other' && 
+                .filter(key => key.startsWith('diseases_type_') && 
+                              key !== 'diseases_type_other' && 
                               r[key] === 1)
                 .length;
               return diseaseCount >= 2;
