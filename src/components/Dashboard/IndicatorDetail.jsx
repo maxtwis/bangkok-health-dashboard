@@ -122,8 +122,17 @@ const IndicatorDetail = ({
 
     // For regular survey indicators, calculate full disaggregation
     if (surveyData && Array.isArray(surveyData)) {
-    let filteredData = surveyData.filter(record => {
-       if (populationGroup === 'elderly') {
+      // Filter by district first
+      let filteredData = surveyData.filter(record => {
+        if (district === 'Bangkok Overall') {
+          return true;
+        }
+        return record.district === district;
+      });
+
+      // Filter by population group
+      filteredData = filteredData.filter(record => {
+        if (populationGroup === 'elderly') {
           return record.age >= 60; 
         } else if (populationGroup === 'disabled') {
           return record.disable_status === 1; 
@@ -138,7 +147,18 @@ const IndicatorDetail = ({
         return false;
       });
 
-      return calculateDemographicDisaggregation(filteredData);
+      // Filter further to only include people who have the indicator
+      const indicatorPositiveData = filteredData.filter(record => 
+        calculateIndicatorPositive(record, indicator)
+      );
+
+      // Only show demographic breakdown if there are people with the indicator
+      if (indicatorPositiveData.length > 0) {
+        return calculateDemographicDisaggregation(indicatorPositiveData);
+      } else {
+        // Return null to show "No Data" message
+        return null;
+      }
     }
 
     return null;
@@ -290,7 +310,7 @@ const IndicatorDetail = ({
       }
     };
 
-    // Calculate rates for each demographic group
+    // Calculate demographic composition (population distribution) for each group
     const calculateGroupedRates = (groupFunction, records, customOrder = null) => {
       const groups = {};
       const totalRecords = records.length;
@@ -370,6 +390,18 @@ const IndicatorDetail = ({
         return record.medical_skip_3 === 1;
       case 'dental_access':
         return record.oral_health_access === 1;
+      case 'catastrophic_health_spending_household':
+        // Spending >40% of capacity to pay (using hh_health_expense for household level)
+        return record.hh_health_expense && record.income && 
+               (record.hh_health_expense / record.income) > 0.40;
+      case 'health_spending_over_10_percent':
+        // Individual spending >10% of income
+        return record.health_expense && record.income && 
+               (record.health_expense / record.income) > 0.10;
+      case 'health_spending_over_25_percent':
+        // Individual spending >25% of income
+        return record.health_expense && record.income && 
+               (record.health_expense / record.income) > 0.25;
 
       // Education Indicators
       case 'functional_literacy':
@@ -614,11 +646,6 @@ const IndicatorDetail = ({
                 <div className="text-sm text-gray-500 mb-1">
                   {language === 'th' ? 'คะแนน' : 'Score'}
                 </div>
-                {currentIndicator.sample_size && (
-                  <div className="text-xs text-gray-400">
-                    n = {currentIndicator.sample_size.toLocaleString()}
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -830,7 +857,7 @@ const IndicatorDetail = ({
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'สัดส่วน' : 'Composition']} />
                             <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                               {disaggregationData.sex.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={sexColors[index % sexColors.length]} />
@@ -859,7 +886,7 @@ const IndicatorDetail = ({
                               interval={0}
                             />
                             <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                            <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'สัดส่วน' : 'Composition']} />
                             <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                               {disaggregationData.occupation.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={occupationColors[index % occupationColors.length]} />
@@ -889,7 +916,7 @@ const IndicatorDetail = ({
                                 interval={0}
                               />
                               <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
-                              <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
+                              <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'สัดส่วน' : 'Composition']} />
                               <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                                 {disaggregationData.welfare.map((entry, index) => (
                                   <Cell key={`cell-${index}`} fill={welfareColors[index % welfareColors.length]} />
