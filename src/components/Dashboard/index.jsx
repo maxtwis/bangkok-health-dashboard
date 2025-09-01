@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useSDHEData from '../../hooks/useSDHEData';
@@ -24,6 +24,47 @@ import {
   getDataState
 } from '../../utils/dashboardUtils';
 
+// Icon mapping for population groups
+const getPopulationIcon = (iconKey) => {
+  const icons = {
+    work: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
+      </svg>
+    ),
+    elderly: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+      </svg>
+    ),
+    accessible: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+      </svg>
+    ),
+    diversity: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+      </svg>
+    ),
+    population: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+      </svg>
+    )
+  };
+  return icons[iconKey] || null;
+};
+
+// Flag components using flag-icons
+const ThaiFlag = ({ className = "w-5 h-5" }) => (
+  <span className={`fi fi-th inline-block ${className} rounded border border-gray-200`}></span>
+);
+
+const UKFlag = ({ className = "w-5 h-5" }) => (
+  <span className={`fi fi-gb inline-block ${className} rounded border border-gray-200`}></span>
+);
+
 const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,11 +81,36 @@ const Dashboard = () => {
   } = useSDHEData();
   const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicators();
   
-  const [activeTab, setActiveTab] = useState('analysis');
+  const [activeTab, setActiveTab] = useState('overview');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
   const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall');
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
   const [viewMode, setViewMode] = useState('overview');
+  
+  // Sync viewMode with activeTab
+  useEffect(() => {
+    if (activeTab === 'overview' || activeTab === 'indicators') {
+      setViewMode(activeTab);
+    }
+  }, [activeTab]);
+  
+  // Language dropdown state
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const languageDropdownRef = useRef(null);
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
+        setIsLanguageDropdownOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   
   // States for indicator detail page
   const [showDetailPage, setShowDetailPage] = useState(false);
@@ -64,12 +130,20 @@ const Dashboard = () => {
       }
     } else if (pathname === '/analysis') {
       setShowDetailPage(false);
-      setActiveTab('analysis');
+      setActiveTab('indicators');
       setViewMode('indicators');
     } else if (pathname === '/main' || pathname === '/') {
       setShowDetailPage(false);
-      setActiveTab('analysis');
-      setViewMode('overview');
+      
+      // Check for tab parameter in URL, default to overview
+      const tabParam = searchParams.get('tab');
+      if (tabParam === 'indicators') {
+        setActiveTab('indicators');
+        setViewMode('indicators');
+      } else {
+        setActiveTab('overview');
+        setViewMode('overview');
+      }
     }
     
     // Update state from URL parameters
@@ -245,7 +319,7 @@ const Dashboard = () => {
           <p className="text-sm text-gray-500 mb-6">{error}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
-              onClick={retry}
+              onClick={() => window.location.reload()}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
               {t('ui.retry')}
@@ -288,21 +362,88 @@ const Dashboard = () => {
       <a href="#main-content" className="skip-to-main">
         Skip to main content
       </a>
-      {/* Header with better spacing and visual hierarchy */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-[1600px] mx-auto px-4 lg:px-6">
+      {/* Modern Header with Gradient */}
+      <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 shadow-xl relative">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10"></div>
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-4 right-4 w-16 h-16 bg-white/10 rounded-full"></div>
+          <div className="absolute top-8 right-16 w-8 h-8 bg-white/5 rounded-full"></div>
+          <div className="absolute top-16 right-8 w-12 h-12 bg-white/8 rounded-full"></div>
+        </div>
+        
+        <div className="relative max-w-[1600px] mx-auto px-4 lg:px-6">
           <div className="flex justify-between items-center py-8">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-gray-900">{t('appTitle')}</h1>
-              <p className="text-lg text-gray-600 font-medium">{t('appSubtitle')}</p>
+            <div className="space-y-3">
+              <h1 className="text-4xl font-bold text-white tracking-tight">
+                {t('appTitle')}
+              </h1>
+              <p className="text-blue-100 text-lg font-medium max-w-2xl">
+                {t('appSubtitle')}
+              </p>
             </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleLanguage}
-                className="px-6 py-3 text-base font-medium bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg shadow-md transition-all duration-200 transform hover:scale-105"
-              >
-                {language === 'en' ? 'ไทย' : 'EN'}
-              </button>
+            <div className="flex items-center gap-4">
+              {/* Language Dropdown */}
+              <div className="relative z-[9999]" ref={languageDropdownRef}>
+                <button
+                  onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-white/20 backdrop-blur text-white rounded-xl hover:bg-white/30 transition-all duration-200 font-medium border border-white/30 shadow-lg hover:shadow-xl"
+                >
+                  {language === 'th' ? <ThaiFlag /> : <UKFlag />}
+                  <span className="text-sm">
+                    {language === 'th' ? 'ไทย' : 'English'}
+                  </span>
+                  <svg className={`w-4 h-4 transition-transform duration-200 ${isLanguageDropdownOpen ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                {isLanguageDropdownOpen && (
+                  <div className="fixed top-20 right-4 w-48 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden z-[9999]">
+                    <button
+                      onClick={() => {
+                        if (language !== 'th') toggleLanguage();
+                        setIsLanguageDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 ${
+                        language === 'th' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                      }`}
+                    >
+                      <ThaiFlag />
+                      <div>
+                        <div className="font-medium">ไทย</div>
+                        <div className="text-sm text-gray-500">Thai</div>
+                      </div>
+                      {language === 'th' && (
+                        <svg className="w-4 h-4 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (language !== 'en') toggleLanguage();
+                        setIsLanguageDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 ${
+                        language === 'en' ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                      }`}
+                    >
+                      <UKFlag />
+                      <div>
+                        <div className="font-medium">English</div>
+                        <div className="text-sm text-gray-500">EN</div>
+                      </div>
+                      {language === 'en' && (
+                        <svg className="w-4 h-4 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -317,16 +458,31 @@ const Dashboard = () => {
             <nav className="-mb-px flex space-x-12">
               <button
                 onClick={() => {
-                  setActiveTab('analysis');
+                  setActiveTab('overview');
+                  setViewMode('overview');
                   navigate('/main');
                 }}
                 className={`py-4 px-2 border-b-3 font-semibold text-lg whitespace-nowrap transition-all duration-200 ${
-                  activeTab === 'analysis'
+                  activeTab === 'overview'
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                {t('sdheAnalysis')}
+                {language === 'th' ? 'ภาพรวม' : 'Overview'}
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab('indicators');
+                  setViewMode('indicators');
+                  navigate('/main?tab=indicators');
+                }}
+                className={`py-4 px-2 border-b-3 font-semibold text-lg whitespace-nowrap transition-all duration-200 ${
+                  activeTab === 'indicators'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                {language === 'th' ? 'ตัวชี้วัด' : 'Indicators'}
               </button>
               <button
                 onClick={() => setActiveTab('hot-issues')}
@@ -343,22 +499,40 @@ const Dashboard = () => {
         </div>
 
         {/* Tab Content */}
-        {activeTab === 'analysis' && (
+        {(activeTab === 'overview' || activeTab === 'indicators') && (
           <>
-            {/* Control Panel with better spacing and visual design */}
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-10 border border-gray-100">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6">Dashboard Controls</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {/* Enhanced Filter Panel */}
+            <div className="bg-white rounded-2xl shadow-xl p-8 mb-10 border border-gray-100 relative overflow-hidden">
+              {/* Subtle background pattern */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
+              
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800">Dashboard Controls</h3>
+                </div>
+                <p className="text-gray-600 mb-8">Customize your view to explore health indicators across Bangkok's communities</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                 {/* Population Group */}
-                <div className="space-y-3">
-                  <label htmlFor="population-group-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                    {t('ui.populationGroup')}
-                  </label>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+                    </svg>
+                    <label htmlFor="population-group-select" className="block text-sm font-bold text-gray-700 uppercase tracking-wide">
+                      {t('ui.populationGroup')}
+                    </label>
+                  </div>
                   <select
                     id="population-group-select"
                     value={selectedPopulationGroup}
                     onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-4 bg-gradient-to-r from-white to-gray-50 text-base focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-sm hover:shadow-md font-medium"
                     aria-describedby="population-group-description"
                   >
                     <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
@@ -407,45 +581,39 @@ const Dashboard = () => {
                   </select>
                 </div>
 
-                {/* View Mode */}
-                <div className="space-y-3">
-                  <label htmlFor="view-mode-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                    View Mode
-                  </label>
-                  <select
-                    id="view-mode-select"
-                    value={viewMode}
-                    onChange={(e) => {
-                      setViewMode(e.target.value);
-                      if (e.target.value === 'overview') {
-                        navigate('/main');
-                      } else if (e.target.value === 'indicators') {
-                        navigate('/analysis');
-                      }
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-gray-100">
+                  <button 
+                    onClick={() => {
+                      setSelectedDistrict('Bangkok Overall');
+                      setSelectedDomain('economic_security');
+                      setSelectedPopulationGroup('normal_population');
+                      setViewMode('overview');
                     }}
-                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
-                    aria-describedby="view-mode-description"
+                    className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
                   >
-                    <option value="overview">Overview</option>
-                    <option value="indicators">Indicators</option>
-                  </select>
+Reset Filters
+                  </button>
+                  <div className="flex-1"></div>
                 </div>
               </div>
             </div>
 
-            {/* Overview Mode - UPDATED LAYOUT */}
-            {viewMode === 'overview' && (
+            {/* Overview Mode - Compact Layout */}
+            {activeTab === 'overview' && (
               <div className="space-y-6">
-                {/* Spider Chart and Map - Side by side with wider containers */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Spider Chart - Left side, with title and checkboxes INSIDE */}
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                    {/* TITLE MOVED TO TOP INSIDE SPIDER CHART BOX */}
-                    <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {/* Spider Chart and Map - Side by side with compact styling */}
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  {/* Spider Chart - Compact Container */}
+                  <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 relative overflow-hidden">
+                    {/* Compact Title Section */}
+                    <div className="relative mb-4">
+                      <h3 className="text-xl font-bold text-gray-900 mb-1">
                         {t('ui.spiderChartTitle')}
                       </h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className="text-sm text-gray-600">
                         {t('ui.spiderChartDescription')} {
                           selectedDistrict === 'Bangkok Overall' && language === 'th'
                             ? t('ui.bangkokOverall') 
@@ -454,36 +622,39 @@ const Dashboard = () => {
                       </p>
                     </div>
 
-                    {/* POPULATION GROUP CHECKBOXES - MOVED ABOVE SPIDER CHART */}
-                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-4">
+                    {/* Compact Population Group Selector */}
+                    <div className="bg-white rounded-lg border border-gray-200 p-3 mb-4">
+                      <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Population Groups</h4>
                       <div className="flex items-center gap-2 flex-wrap">
-                        {/* Checkboxes in single row - more compact */}
+                        {/* Enhanced Checkboxes */}
                         {[
-                          { value: 'informal_workers', color: '#ef4444' },
-                          { value: 'elderly', color: '#3b82f6' },
-                          { value: 'disabled', color: '#10b981' },
-                          { value: 'lgbtq', color: '#f59e0b' },
-                          { value: 'normal_population', color: '#8b5cf6' }
+                          { value: 'informal_workers', color: '#ef4444', icon: 'work' },
+                          { value: 'elderly', color: '#3b82f6', icon: 'elderly' },
+                          { value: 'disabled', color: '#10b981', icon: 'accessible' },
+                          { value: 'lgbtq', color: '#f59e0b', icon: 'diversity' },
+                          { value: 'normal_population', color: '#6b7280', icon: 'population' }
                         ].map(group => (
-                          <label key={group.value} className="flex items-center space-x-1.5 cursor-pointer hover:bg-white rounded px-2 py-1 transition-colors flex-shrink-0">
+                          <label key={group.value} className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 rounded px-2 py-1 transition-colors duration-200">
                             <input
                               id={`population-group-${group.value}`}
                               type="checkbox"
                               defaultChecked={true}
-                              className="w-3.5 h-3.5 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-1"
+                              className="w-3.5 h-3.5 rounded border border-gray-300 focus:ring-1 focus:ring-offset-0 transition-all"
                               style={{ 
-                                accentColor: group.color,
-                                backgroundColor: group.color 
+                                accentColor: group.color
                               }}
                               aria-describedby={`population-group-${group.value}-description`}
                               onChange={(e) => {
-                                // This will be handled by the spider chart component
                                 const event = new CustomEvent('populationGroupToggle', {
                                   detail: { group: group.value, checked: e.target.checked }
                                 });
                                 window.dispatchEvent(event);
                               }}
                             />
+                            <div 
+                              className="w-2 h-2 rounded-full flex-shrink-0" 
+                              style={{ backgroundColor: group.color }}
+                            ></div>
                             <span className="text-xs font-medium text-gray-700 whitespace-nowrap">
                               {t(`populationGroups.${group.value}`)}
                             </span>
@@ -501,9 +672,25 @@ const Dashboard = () => {
                     />
                   </div>
 
-                  {/* Map - Right side, full height */}
-                  <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '700px' }}>
-                    <div className="h-full">
+                  {/* Enhanced Map Container */}
+                  <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 relative" style={{ height: '700px' }}>
+                    {/* Map Header */}
+                    <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-r from-white/95 to-white/90 backdrop-blur-sm border-b border-gray-100 p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-green-100 rounded-xl">
+                          <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-gray-900">Bangkok Districts</h3>
+                          <p className="text-sm text-gray-600">{t(`domains.${selectedDomain}`)} - {t(`populationGroups.${selectedPopulationGroup}`)}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Map with top padding for header */}
+                    <div className="h-full pt-20">
                       <BangkokMap
                         selectedDomain={selectedDomain}
                         selectedPopulationGroup={selectedPopulationGroup}
@@ -515,16 +702,31 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {/* Domain Performance Rankings - Full width bottom */}
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <h4 className="text-base font-semibold text-gray-800 mb-4">Domain Performance Rankings</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {/* Enhanced Domain Performance Rankings */}
+                <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 relative overflow-hidden">
+                  {/* Background decoration */}
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-indigo-50 to-purple-50 rounded-full -translate-y-20 translate-x-20 opacity-60"></div>
+                  
+                  <div className="relative">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-2 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-xl">
+                        <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-2xl font-bold text-gray-800">Domain Performance Rankings</h4>
+                        <p className="text-gray-600">Top performing health domains by population group</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
                     {[
-                      { value: 'informal_workers', color: '#ef4444' },
-                      { value: 'elderly', color: '#3b82f6' },
-                      { value: 'disabled', color: '#10b981' },
-                      { value: 'lgbtq', color: '#f59e0b' },
-                      { value: 'normal_population', color: '#8b5cf6' }
+                      { value: 'informal_workers', color: '#ef4444', icon: 'work', bgColor: 'from-red-50 to-red-100' },
+                      { value: 'elderly', color: '#3b82f6', icon: 'elderly', bgColor: 'from-blue-50 to-blue-100' },
+                      { value: 'disabled', color: '#10b981', icon: 'accessible', bgColor: 'from-green-50 to-green-100' },
+                      { value: 'lgbtq', color: '#f59e0b', icon: 'diversity', bgColor: 'from-amber-50 to-amber-100' },
+                      { value: 'normal_population', color: '#6b7280', icon: 'population', bgColor: 'from-gray-50 to-gray-100' }
                     ].map(group => {
                       // Calculate scores for this group across all domains
                       const domains = [
@@ -553,47 +755,67 @@ const Dashboard = () => {
                       }).sort((a, b) => b.score - a.score);
 
                       return (
-                        <div key={group.value} className="bg-white rounded-md p-3 shadow-sm border border-gray-100">
-                          <div className="flex items-center mb-2">
-                            <div 
-                              className="w-3 h-3 rounded-full mr-2 flex-shrink-0" 
-                              style={{ backgroundColor: group.color }}
-                            ></div>
-                            <h5 className="font-medium text-gray-800 text-sm">
+                        <div key={group.value} className="bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                          <div className="flex items-center justify-between mb-3">
+                            <h5 className="font-semibold text-gray-800 text-sm">
                               {t(`populationGroups.${group.value}`)}
                             </h5>
+                            <div 
+                              className="w-3 h-3 rounded-full" 
+                              style={{ backgroundColor: group.color }}
+                            ></div>
                           </div>
-                          <div className="space-y-1">
+                          <div className="space-y-1.5">
                             {groupScores.map((item, index) => (
-                              <div key={item.domain} className="flex items-center text-xs">
-                                <span className={`font-medium ${
-                                  index < 2 ? 'text-green-700' : index >= 4 ? 'text-red-600' : 'text-gray-700'
-                                }`} title={item.domain}>
+                              <div key={item.domain} className="flex items-center justify-between text-xs">
+                                <span className="text-gray-600 flex-1" title={item.domain}>
                                   {index + 1}. {item.domain}
                                 </span>
-                                <span className="font-semibold text-gray-900 ml-3">{item.score.toFixed(0)}%</span>
+                                <span className="font-semibold text-gray-900 ml-2 flex-shrink-0">{item.score.toFixed(0)}%</span>
                               </div>
                             ))}
                           </div>
                         </div>
                       );
                     })}
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Indicators Mode with better spacing */}
-            {viewMode === 'indicators' && (
-              <div className="space-y-10">
-                {/* Indicators Table */}
-                <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-                  <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                      {t(`domains.${selectedDomain}`)} - {t(`populationGroups.${selectedPopulationGroup}`)} 
-                      {selectedDistrict !== 'Bangkok Overall' && ` - ${selectedDistrict}`}
-                    </h3>
-                    <p className="text-gray-600">Detailed indicator breakdown for the selected parameters</p>
+            {/* Enhanced Indicators Mode */}
+            {activeTab === 'indicators' && (
+              <div className="space-y-6">
+                {/* Enhanced Indicators Table */}
+                <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                  <div className="px-8 py-8 border-b border-gray-200 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+                    {/* Background decoration */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/30 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
+                    
+                    <div className="relative flex items-start gap-4">
+                      <div className="p-3 bg-white rounded-xl shadow-sm">
+                        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                          {t(`domains.${selectedDomain}`)}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-3 text-sm">
+                          <span className="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full font-semibold">
+                            {t(`populationGroups.${selectedPopulationGroup}`)}
+                          </span>
+                          {selectedDistrict !== 'Bangkok Overall' && (
+                            <span className="px-3 py-1.5 bg-green-100 text-green-800 rounded-full font-semibold">
+{selectedDistrict}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-600 mt-2">Detailed indicator breakdown and performance metrics</p>
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="overflow-x-auto">
@@ -703,7 +925,7 @@ const Dashboard = () => {
             )}
 
             {/* Full-width Map for indicators view */}
-            {viewMode === 'indicators' && (
+            {activeTab === 'indicators' && (
               <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
                 <div className="h-full">
                   <BangkokMap

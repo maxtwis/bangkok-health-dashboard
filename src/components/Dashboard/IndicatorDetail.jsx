@@ -82,6 +82,7 @@ const IndicatorDetail = ({
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
   const occupationColors = ['#dc2626', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16'];
   const welfareColors = ['#2563eb', '#16a34a', '#eab308', '#dc2626', '#6b7280'];
+  const facilityColors = ['#0ea5e9', '#06b6d4', '#14b8a6', '#10b981', '#22c55e', '#65a30d', '#84cc16', '#eab308'];
 
   // Calculate disaggregation data
   const disaggregationData = useMemo(() => {
@@ -714,67 +715,29 @@ const IndicatorDetail = ({
                 {indicator === 'health_service_access' && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                      {language === 'th' ? 'ประเภทสถานพยาบาล' : 'Health Facility Types'}
+                      {language === 'th' ? 'ตามประเภทสถานพยาบาล' : 'By Health Facility Type'}
                     </h3>
-                    
-                    {/* Custom Horizontal Bar Chart */}
-                    <div className="bg-gray-50 rounded-lg p-6 mb-4">
-                      <div className="space-y-4">
-                        {disaggregationData.facilityType
-                          .sort((a, b) => b.value - a.value) // Sort by value descending
-                          .map((item, index) => {
-                            const maxValue = Math.max(...disaggregationData.facilityType.map(i => i.value));
-                            const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
-                            const total = disaggregationData.facilityType.reduce((sum, i) => sum + i.value, 0);
-                            const sharePercentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
-                            
-                            return (
-                              <div key={index} className="flex items-center">
-                                {/* Label */}
-                                <div className="w-64 text-right pr-4 text-sm text-gray-700 flex-shrink-0">
-                                  {item.name}
-                                </div>
-                                
-                                {/* Bar Container */}
-                                <div className="flex-1 relative">
-                                  <div className="bg-gray-200 rounded-full h-8 relative overflow-hidden">
-                                    {/* Bar */}
-                                    <div 
-                                      className="h-full rounded-full transition-all duration-500 ease-out flex items-center justify-end pr-3"
-                                      style={{ 
-                                        width: `${percentage}%`,
-                                        backgroundColor: COLORS[index % COLORS.length],
-                                        minWidth: item.value > 0 ? '40px' : '0px'
-                                      }}
-                                    >
-                                      {/* Value label inside bar */}
-                                      <span className="text-white text-sm font-semibold">
-                                        {item.value.toLocaleString()}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  
-                                  {/* Percentage label outside bar */}
-                                  <div className="absolute right-0 top-0 h-8 flex items-center pl-3">
-                                    <span className="text-sm text-gray-600 font-medium">
-                                      {sharePercentage}%
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                      </div>
-                      
-                      {/* Scale indicator */}
-                      <div className="mt-4 pt-4 border-t border-gray-300">
-                        <div className="flex justify-between text-xs text-gray-500">
-                          <span>0</span>
-                          <span>
-                            Max: {Math.max(...disaggregationData.facilityType.map(i => i.value)).toLocaleString()} facilities
-                          </span>
-                        </div>
-                      </div>
+                    <div className="h-64">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={disaggregationData.facilityType.sort((a, b) => b.value - a.value)}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            dataKey="name" 
+                            angle={-15}
+                            textAnchor="end"
+                            height={100}
+                            tick={{ fontSize: 11 }}
+                            interval={0}
+                          />
+                          <YAxis tickFormatter={(value) => `${value.toLocaleString()}`} />
+                          <Tooltip formatter={(value) => [`${value.toLocaleString()} facilities`, language === 'th' ? 'จำนวนสถานพยาบาล' : 'Facilities']} />
+                          <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                            {disaggregationData.facilityType.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={facilityColors[index % facilityColors.length]} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
                     </div>
                     
                     {/* Summary Statistics */}
@@ -889,10 +852,11 @@ const IndicatorDetail = ({
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis 
                               dataKey="name" 
-                              angle={-45}
+                              angle={-15}
                               textAnchor="end"
-                              height={80}
-                              tick={{ fontSize: 10 }}
+                              height={100}
+                              tick={{ fontSize: 11 }}
+                              interval={0}
                             />
                             <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
                             <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />
@@ -918,10 +882,11 @@ const IndicatorDetail = ({
                               <CartesianGrid strokeDasharray="3 3" />
                               <XAxis 
                                 dataKey="name" 
-                                angle={-45}
+                                angle={-15}
                                 textAnchor="end"
-                                height={80}
-                                tick={{ fontSize: 10 }}
+                                height={100}
+                                tick={{ fontSize: 11 }}
+                                interval={0}
                               />
                               <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
                               <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, language === 'th' ? 'อัตรา' : 'Rate']} />

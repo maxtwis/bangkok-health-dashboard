@@ -7,13 +7,13 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
   const { t, language } = useLanguage();
   const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
   
-  // Updated to include normal_population with purple color
+  // Updated to include normal_population with grey color
   const populationGroups = [
     { value: 'informal_workers', color: '#ef4444' },
     { value: 'elderly', color: '#3b82f6' },
     { value: 'disabled', color: '#10b981' },
     { value: 'lgbtq', color: '#f59e0b' },
-    { value: 'normal_population', color: '#8b5cf6' } // Added normal population
+    { value: 'normal_population', color: '#6b7280' } // Added normal population with grey color
   ];
 
   // Add accessibility attributes to chart SVG elements after component mounts

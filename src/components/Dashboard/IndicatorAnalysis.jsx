@@ -382,10 +382,10 @@ const IndicatorAnalysis = () => {
                   >
                     <XAxis 
                       dataKey="district" 
-                      angle={-45}
+                      angle={-15}
                       textAnchor="end"
-                      height={60}
-                      tick={{ fontSize: 12 }}
+                      height={80}
+                      tick={{ fontSize: 11 }}
                       interval={0}
                     />
                     <YAxis 

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: background-color 0.2s;
+        }
+        .test-link:hover {
+            background-color: #2563eb;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .info {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bangkok Health Dashboard - Navigation Test</h1>
+    
+    <div class="status info">
+        <strong>Development server should be running on:</strong> http://localhost:5173
+    </div>
+
+    <div class="test-section">
+        <h2>Test Navigation URLs</h2>
+        <p>Click each link below to test the navigation behavior:</p>
+        
+        <a href="http://localhost:5173/main" class="test-link" target="_blank">
+            1. Overview Tab (/main)
+        </a>
+        
+        <a href="http://localhost:5173/main?tab=indicators" class="test-link" target="_blank">
+            2. Indicators Tab (/main?tab=indicators)
+        </a>
+        
+        <a href="http://localhost:5173/" class="test-link" target="_blank">
+            3. Root Path (/) - Should default to Overview
+        </a>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Behavior</h2>
+        <div class="status success">
+            <h3>Overview Tab (/main):</h3>
+            <ul>
+                <li>✅ Shows spider chart and map side by side</li>
+                <li>✅ "Overview" tab is highlighted in blue</li>
+                <li>✅ URL shows: <code>http://localhost:5173/main</code></li>
+                <li>✅ Domain performance rankings section visible</li>
+            </ul>
+        </div>
+        
+        <div class="status success">
+            <h3>Indicators Tab (/main?tab=indicators):</h3>
+            <ul>
+                <li>✅ Shows indicators table with detailed metrics</li>
+                <li>✅ "Indicators" tab is highlighted in blue</li>
+                <li>✅ URL shows: <code>http://localhost:5173/main?tab=indicators</code></li>
+                <li>✅ Full-width map below the indicators table</li>
+                <li>✅ No spider chart visible</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Manual Test Checklist</h2>
+        <p>For each URL, verify the following:</p>
+        <ol>
+            <li><strong>Tab highlighting:</strong> Correct tab should be highlighted in blue</li>
+            <li><strong>Content display:</strong> Appropriate content for the selected tab</li>
+            <li><strong>URL consistency:</strong> URL matches the tab state</li>
+            <li><strong>Navigation:</strong> Clicking tabs updates URL correctly</li>
+            <li><strong>No errors:</strong> No console errors or blank content</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>Implementation Details</h2>
+        <p><strong>Navigation Fix Implemented:</strong></p>
+        <ul>
+            <li>✅ URL parameter-based tab switching</li>
+            <li>✅ Overview tab: <code>navigate('/main')</code></li>
+            <li>✅ Indicators tab: <code>navigate('/main?tab=indicators')</code></li>
+            <li>✅ URL parameter detection for <code>tab=indicators</code></li>
+            <li>✅ State synchronization between URL and activeTab</li>
+        </ul>
+    </div>
+
+    <script>
+        // Add timestamp
+        document.addEventListener('DOMContentLoaded', function() {
+            const timestamp = document.createElement('p');
+            timestamp.style.textAlign = 'center';
+            timestamp.style.color = '#666';
+            timestamp.style.fontSize = '14px';
+            timestamp.textContent = 'Test generated on: ' + new Date().toLocaleString();
+            document.body.appendChild(timestamp);
+        });
+    </script>
+</body>
+</html>

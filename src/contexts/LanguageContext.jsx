@@ -186,7 +186,7 @@ const baseTranslations = {
 };
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('th');
   
   // Use the CSV indicator details hook
   const { getIndicatorName, loading: indicatorDetailsLoading } = useIndicators();
