@@ -1,19 +1,16 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter, ZAxis, Legend } from 'recharts';
-import { TrendingUp, TrendingDown, Activity, Info, Filter, ChevronDown, AlertCircle, Brain } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { TrendingUp, TrendingDown, Info, ChevronDown, AlertCircle, Brain } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useIndicators from '../../hooks/useIndicators';
 import { 
   calculateCorrelationMatrix, 
-  getTopCorrelations, 
-  interpretCorrelation,
+  getTopCorrelations,
   groupCorrelationsByDomain,
   calculateSignificance,
-  getCorrelationStrength,
   getBasicCorrelationDescription
 } from '../../utils/correlationUtils';
 import { REVERSE_INDICATORS } from '../../constants/dashboardConstants';
-import { INDICATOR_DOMAIN_MAP, getIndicatorDomain, getIndicatorsByDomain } from '../../utils/indicatorDomainMapping';
+import { INDICATOR_DOMAIN_MAP, getIndicatorDomain } from '../../utils/indicatorDomainMapping';
 
 const CorrelationAnalysis = ({ 
   currentIndicator,
@@ -27,17 +24,17 @@ const CorrelationAnalysis = ({
   const [selectedDomain, setSelectedDomain] = useState('all');
   const [minCorrelation, setMinCorrelation] = useState(0.0);
   const [showOnlySignificant, setShowOnlySignificant] = useState(false);
-  const [viewMode, setViewMode] = useState('bars'); // 'bars', 'list'
 
   // Get filtered survey data based on district and population group
   const filteredData = useMemo(() => {
     if (!surveyData || !Array.isArray(surveyData)) return [];
     
     let filtered = surveyData.filter(record => {
-      // District filter
-      if (district !== 'Bangkok Overall' && record.district !== district) {
-        return false;
-      }
+      // District filter - REMOVED for correlation analysis
+      // We want to use all Bangkok data for better statistical significance
+      // if (district !== 'Bangkok Overall' && record.district !== district) {
+      //   return false;
+      // }
       
       // Population group filter
       if (populationGroup === 'elderly') {
@@ -54,7 +51,7 @@ const CorrelationAnalysis = ({
     });
     
     return filtered;
-  }, [surveyData, district, populationGroup]);
+  }, [surveyData, populationGroup]); // Removed district from dependencies
 
   // Get all available indicators for correlation analysis
   const availableIndicators = useMemo(() => {
@@ -171,21 +168,7 @@ const CorrelationAnalysis = ({
     t
   ]);
 
-  // Color scale for correlation strength
-  const getCorrelationColor = (correlation) => {
-    const absCorr = Math.abs(correlation);
-    if (correlation > 0) {
-      if (absCorr >= 0.7) return '#059669'; // Emerald-600
-      if (absCorr >= 0.5) return '#10b981'; // Emerald-500
-      if (absCorr >= 0.3) return '#34d399'; // Emerald-400
-      return '#86efac'; // Emerald-300
-    } else {
-      if (absCorr >= 0.7) return '#dc2626'; // Red-600
-      if (absCorr >= 0.5) return '#ef4444'; // Red-500
-      if (absCorr >= 0.3) return '#f87171'; // Red-400
-      return '#fca5a5'; // Red-300
-    }
-  };
+
 
   // Strength labels
   const strengthLabels = {
@@ -239,11 +222,25 @@ const CorrelationAnalysis = ({
             <Info className="w-4 h-4" />
             <span>
               {language === 'th' 
-                ? `ขนาดตัวอย่าง: ${correlationData.sampleSize} คน`
-                : `Sample size: ${correlationData.sampleSize} people`}
+                ? `ขนาดตัวอย่าง: ${correlationData.sampleSize} คน (ข้อมูลทั้งกรุงเทพฯ)`
+                : `Sample size: ${correlationData.sampleSize} people (Bangkok-wide data)`}
             </span>
           </div>
         </div>
+
+        {/* District note when filtered */}
+        {district && district !== 'Bangkok Overall' && (
+          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start">
+              <Info className="w-4 h-4 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-blue-800">
+                {language === 'th' 
+                  ? `กำลังดูข้อมูลของ ${district} แต่การคำนวณความสัมพันธ์ใช้ข้อมูลทั้งกรุงเทพฯ เพื่อความน่าเชื่อถือทางสถิติ`
+                  : `Viewing data for ${district}, but correlations are calculated using Bangkok-wide data for statistical reliability.`}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Filters */}
         <div className="flex flex-wrap gap-3">
@@ -295,106 +292,10 @@ const CorrelationAnalysis = ({
             {showOnlySignificant && ' ✓'}
           </button>
 
-          {/* View mode selector */}
-          <div className="flex bg-gray-50 rounded-lg border border-gray-300">
-            <button
-              onClick={() => setViewMode('bars')}
-              className={`px-3 py-2 text-sm font-medium rounded-l-lg transition-colors ${
-                viewMode === 'bars' ? 'bg-white shadow-sm' : ''
-              }`}
-            >
-              {language === 'th' ? 'แท่งกราฟ' : 'Bars'}
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`px-3 py-2 text-sm font-medium rounded-r-lg transition-colors ${
-                viewMode === 'list' ? 'bg-white shadow-sm' : ''
-              }`}
-            >
-              {language === 'th' ? 'รายการ' : 'List'}
-            </button>
-          </div>
         </div>
       </div>
 
-      {/* Correlation visualization */}
-      {viewMode === 'bars' && (
-        <div className="space-y-6">
-          {/* Bar chart of correlations */}
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart 
-                data={correlationData.correlations.slice(0, 10).map(item => ({
-                  ...item,
-                  displayValue: Math.abs(item.correlation) < 0.01 ? (item.correlation >= 0 ? 0.01 : -0.01) : item.correlation
-                }))}
-                layout="horizontal"
-                margin={{ top: 5, right: 30, left: 200, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  type="number" 
-                  domain={[-1, 1]}
-                  tickFormatter={(value) => value.toFixed(1)}
-                />
-                <YAxis 
-                  type="category" 
-                  dataKey="name" 
-                  width={180}
-                  tick={{ fontSize: 10 }}
-                />
-                <Tooltip 
-                  content={({ active, payload, label }) => {
-                    if (active && payload && payload[0]) {
-                      const data = payload[0].payload;
-                      const currentIndicatorInfo = getIndicatorInfo(currentIndicator, language);
-                      const targetIndicatorInfo = getIndicatorInfo(data.indicator, language);
-                      const basicDescription = getBasicCorrelationDescription(
-                        data.correlation, 
-                        language, 
-                        currentIndicatorInfo.name, 
-                        targetIndicatorInfo.name
-                      );
-                      
-                      return (
-                        <div className="bg-white p-3 border rounded-lg shadow-lg max-w-sm">
-                          <p className="font-medium text-gray-800 mb-1">{data.name}</p>
-                          <p className="text-sm text-blue-600 mb-2">
-                            r = {data.correlation.toFixed(3)}{data.stars || ''} ({basicDescription.strength})
-                          </p>
-                          <p className="text-xs text-gray-600">
-                            {basicDescription.description}
-                          </p>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Bar dataKey="displayValue" radius={[0, 4, 4, 0]} minPointSize={2}>
-                  {correlationData.correlations.slice(0, 10).map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={getCorrelationColor(entry.correlation)} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Legend */}
-          <div className="flex items-center justify-center space-x-6 text-sm">
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-emerald-500 rounded mr-2"></div>
-              <span>{language === 'th' ? 'ความสัมพันธ์เชิงบวก' : 'Positive Correlation'}</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-red-500 rounded mr-2"></div>
-              <span>{language === 'th' ? 'ความสัมพันธ์เชิงลบ' : 'Negative Correlation'}</span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {viewMode === 'list' && (
+      {/* Correlation List */}
         <div className="space-y-4">
           {/* Group by domain */}
           {Object.entries(correlationData.grouped).map(([domain, correlations]) => (
@@ -456,7 +357,6 @@ const CorrelationAnalysis = ({
             </div>
           ))}
         </div>
-      )}
 
       {/* Statistical note */}
       <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">

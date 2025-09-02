@@ -298,10 +298,10 @@ const Dashboard = () => {
     }
   };
 
-  // Loading state
-  if (dataState.isLoading) {
-    return <LoadingScreen message={t('ui.loading')} />;
-  }
+  // Skip loading screen - data will load in background
+  // if (dataState.isLoading) {
+  //   return <LoadingScreen message={t('ui.loading')} />;
+  // }
 
   // Error state  
   if (dataState.hasError) {
@@ -352,9 +352,9 @@ const Dashboard = () => {
     );
   }
 
-  const availableDistricts = getAvailableDistricts();
-  const availableDomains = getAvailableDomains();
-  const currentIndicatorData = getIndicatorData(selectedDomain, selectedDistrict, selectedPopulationGroup);
+  const availableDistricts = dataState.isLoading ? [] : getAvailableDistricts();
+  const availableDomains = dataState.isLoading ? [] : getAvailableDomains();
+  const currentIndicatorData = dataState.isLoading ? [] : getIndicatorData(selectedDomain, selectedDistrict, selectedPopulationGroup);
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -691,13 +691,19 @@ Reset Filters
                     
                     {/* Map with top padding for header */}
                     <div className="h-full pt-20">
-                      <BangkokMap
-                        selectedDomain={selectedDomain}
-                        selectedPopulationGroup={selectedPopulationGroup}
-                        selectedDistrict={selectedDistrict}
-                        onDistrictClick={handleMapDistrictClick}
-                        getIndicatorData={getIndicatorData}
-                      />
+                      {dataState.isLoading ? (
+                        <div className="h-full flex items-center justify-center">
+                          <LoadingCard message={t('ui.loading')} />
+                        </div>
+                      ) : (
+                        <BangkokMap
+                          selectedDomain={selectedDomain}
+                          selectedPopulationGroup={selectedPopulationGroup}
+                          selectedDistrict={selectedDistrict}
+                          onDistrictClick={handleMapDistrictClick}
+                          getIndicatorData={getIndicatorData}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -819,7 +825,11 @@ Reset Filters
                   </div>
                   
                   <div className="overflow-x-auto">
-                    {currentIndicatorData && currentIndicatorData.length > 0 ? (
+                    {dataState.isLoading ? (
+                      <div className="p-8">
+                        <LoadingCard message={t('ui.loading')} />
+                      </div>
+                    ) : currentIndicatorData && currentIndicatorData.length > 0 ? (
                       <div className="p-8">
                         <table className="w-full text-base">
                           <thead>
@@ -928,13 +938,19 @@ Reset Filters
             {activeTab === 'indicators' && (
               <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
                 <div className="h-full">
-                  <BangkokMap
-                    selectedDomain={selectedDomain}
-                    selectedPopulationGroup={selectedPopulationGroup}
-                    selectedDistrict={selectedDistrict}
-                    onDistrictClick={handleMapDistrictClick}
-                    getIndicatorData={getIndicatorData}
-                  />
+                  {dataState.isLoading ? (
+                    <div className="h-full flex items-center justify-center">
+                      <LoadingCard message={t('ui.loading')} />
+                    </div>
+                  ) : (
+                    <BangkokMap
+                      selectedDomain={selectedDomain}
+                      selectedPopulationGroup={selectedPopulationGroup}
+                      selectedDistrict={selectedDistrict}
+                      onDistrictClick={handleMapDistrictClick}
+                      getIndicatorData={getIndicatorData}
+                    />
+                  )}
                 </div>
               </div>
             )}
