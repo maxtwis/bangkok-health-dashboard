@@ -457,11 +457,9 @@ const IndicatorDetail = ({
         return record.drink_status === 1 || record.drink_status === 2;
       case 'tobacco_use':
         return record.smoke_status === 1;
-      case 'exercise_regular':
-        return record.exercise_status === 1;
       case 'physical_activity':
-        // Insufficient physical activity (exercise_status 0 or 1 = insufficient)
-        return record.exercise_status === 0 || record.exercise_status === 1;
+        // Regular exercise (exercise_status 1 = regular exercise)
+        return record.exercise_status === 1;
       case 'obesity':
         // Calculate BMI and check if >= 30
         if (record.height > 0 && record.weight > 0) {

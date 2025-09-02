@@ -57,7 +57,6 @@ export const INDICATOR_DOMAIN_MAP = {
   // Health Behaviors
   alcohol_consumption: 'health_behaviors',
   tobacco_use: 'health_behaviors',
-  exercise_regular: 'health_behaviors',
   physical_activity: 'health_behaviors',
   obesity: 'health_behaviors',
 
