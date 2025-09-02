@@ -8,6 +8,7 @@ export const INDICATOR_DOMAIN_MAP = {
   unemployment_rate: 'economic_security',
   employment_rate: 'economic_security',
   vulnerable_employment: 'economic_security',
+  non_vulnerable_employment: 'economic_security',
   food_insecurity_moderate: 'economic_security',
   food_insecurity_severe: 'economic_security',
   work_injury_fatal: 'economic_security',

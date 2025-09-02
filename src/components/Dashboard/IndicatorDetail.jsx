@@ -142,7 +142,12 @@ const IndicatorDetail = ({
         } else if (populationGroup === 'lgbtq') {
           return record.sex === 'lgbt'; 
         } else if (populationGroup === 'normal_population') {
-          return true; 
+          // Only include people who are actually classified as normal_population
+          // (not LGBTQ, not elderly, not disabled, not informal workers)
+          return record.sex !== 'lgbt' && 
+                 record.age < 60 && 
+                 record.disable_status !== 1 && 
+                 !(record.occupation_status === 1 && record.occupation_contract === 0);
         }
         
         return false;
@@ -371,6 +376,8 @@ const IndicatorDetail = ({
         return record.occupation_status === 1;
       case 'vulnerable_employment':
         return record.occupation_status === 1 && record.occupation_contract === 0;
+      case 'non_vulnerable_employment':
+        return record.occupation_contract === 1;
       case 'food_insecurity_moderate':
         return record.food_insecurity_1 === 1;
       case 'food_insecurity_severe':
