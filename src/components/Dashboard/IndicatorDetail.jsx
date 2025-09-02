@@ -128,7 +128,7 @@ const IndicatorDetail = ({
         if (district === 'Bangkok Overall') {
           return true;
         }
-        return record.district === district;
+        return record.district_name === district;
       });
 
       // Filter by population group

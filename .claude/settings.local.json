@@ -19,7 +19,8 @@
       "Bash(start http://localhost:5174)",
       "Bash(npm run lint)",
       "Bash(npm run build:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(claude mcp:*)"
     ],
     "deny": [],
     "ask": []
