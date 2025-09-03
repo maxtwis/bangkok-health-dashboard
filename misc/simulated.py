@@ -592,10 +592,11 @@ class BangkokUrbanHealthSurveySimulator:
         # Education - MUST BE SET BEFORE OCCUPATION (adjusted by district)
         edu_weight = district_profile.get('edu_weight', 1.0)
         
-        record['speak'] = 1  # In Bangkok, essentially everyone can speak Thai
-        record['read'] = 1 if random.random() > max(0.01, 0.03 / edu_weight) else 0
-        record['write'] = 1 if random.random() > max(0.02, 0.05 / edu_weight) else 0
-        record['math'] = 1 if random.random() > max(0.03, 0.08 / edu_weight) else 0
+        # In Bangkok, essentially everyone can speak, read, write, and do basic math
+        record['speak'] = 1  # 100% can speak Thai
+        record['read'] = 1   # 100% literacy in Bangkok
+        record['write'] = 1  # 100% can write in Bangkok
+        record['math'] = 1   # 100% basic math skills in Bangkok
         
         # Education levels adjusted for district characteristics
         if age < 18:
@@ -852,11 +853,11 @@ class BangkokUrbanHealthSurveySimulator:
             if record['oral_health_access'] == 0:
                 record['oral_health_access_reason'] = random.choice(["ไม่มีเวลา", "ค่าใช้จ่ายสูง", "กลัวหมอฟัน"])
         
-        # Education
-        record['speak'] = 1  # In Bangkok, essentially everyone can speak Thai
-        record['read'] = 1 if random.random() > 0.03 else 0  # 97% literacy in Bangkok
-        record['write'] = 1 if random.random() > 0.05 else 0  # 95% can write
-        record['math'] = 1 if random.random() > 0.08 else 0  # 92% basic math
+        # Education - In Bangkok, everyone has basic literacy and numeracy skills
+        record['speak'] = 1  # 100% can speak Thai
+        record['read'] = 1   # 100% literacy in Bangkok
+        record['write'] = 1  # 100% can write in Bangkok
+        record['math'] = 1   # 100% basic math skills in Bangkok
         
         # Education levels adjusted for Bangkok urban middle-class context
         # 0=never, 1=primary1-3, 2=primary4-6, 3=secondary1-3, 4=secondary4-6, 

@@ -20,7 +20,11 @@
       "Bash(npm run lint)",
       "Bash(npm run build:*)",
       "Bash(node:*)",
-      "Bash(claude mcp:*)"
+      "Bash(claude mcp:*)",
+      "Bash(python test:*)",
+      "Bash(python:*)",
+      "Bash(copy survey_sampling_enhanced.csv survey_sampling.csv)",
+      "Bash(copy:*)"
     ],
     "deny": [],
     "ask": []
