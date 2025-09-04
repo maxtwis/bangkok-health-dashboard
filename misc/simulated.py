@@ -844,8 +844,23 @@ class BangkokUrbanHealthSurveySimulator:
         record['medical_skip_2'] = 1 if random.random() < (0.20 if is_lgbt else 0.12) else 0
         record['medical_skip_3'] = 1 if random.random() < (0.18 if is_lgbt else 0.10) else 0
         
-        record['hh_health_expense'] = random.randint(0, 5000)
-        record['health_expense'] = random.randint(0, 3000)
+        # Health expenses - very low due to Thailand's healthcare system
+        # Most people only pay for travel costs (100-500 baht) or small co-pays
+        # Rare cases might have higher expenses for private care or non-covered treatments
+        
+        # 80% have very low expenses (travel costs only)
+        # 15% have moderate expenses (some private care)
+        # 5% have high expenses (major private treatment, not covered by insurance)
+        
+        if random.random() < 0.80:  # 80% - just travel costs
+            record['hh_health_expense'] = random.choice([0, 0, 100, 200, 300, 500, 500, 1000])
+            record['health_expense'] = random.choice([0, 0, 0, 100, 200, 300, 500])
+        elif random.random() < 0.95:  # 15% - some private care
+            record['hh_health_expense'] = random.choice([1000, 2000, 3000, 5000])
+            record['health_expense'] = random.choice([500, 1000, 1000, 2000])
+        else:  # 5% - high expenses (private hospital, special treatments)
+            record['hh_health_expense'] = random.choice([5000, 8000, 10000, 15000, 20000])
+            record['health_expense'] = random.choice([3000, 5000, 8000, 10000])
         
         record['oral_health'] = random.choices([0, 1], weights=[0.65, 0.35])[0]
         if record['oral_health'] == 1:
@@ -1102,38 +1117,98 @@ class BangkokUrbanHealthSurveySimulator:
             else:
                 record['house_status'] = random.choices([1, 2, 3, 4, 5], weights=[0.25, 0.45, 0.20, 0.05, 0.05])[0]
         
-        # Rent prices vary significantly by district
-        if record['house_status'] == 2:
-            base_rent = 5000  # Base rent
-            
-            if district_profile['type'] in ['cbd', 'cbd_shopping', 'upscale_expat']:
-                # Very expensive areas
-                rent_mult = 3.0
-            elif district_profile['type'] in ['young_professional', 'mixed_commercial']:
-                # Expensive areas
-                rent_mult = 2.0
-            elif district_profile['type'] in ['university', 'transport_hub']:
-                # Moderate-expensive areas
-                rent_mult = 1.5
-            elif district_profile['type'] in ['traditional', 'chinatown', 'historical']:
-                # Cheaper old town areas
-                rent_mult = 0.8
-            else:
-                # Standard suburban areas
-                rent_mult = 1.0
-            
-            # Also consider income
-            if record.get('income'):
-                if record['income'] < 15000:
-                    record['rent_price'] = random.randint(int(2000 * rent_mult), int(4000 * rent_mult))
-                elif record['income'] < 25000:
-                    record['rent_price'] = random.randint(int(3500 * rent_mult), int(7000 * rent_mult))
-                elif record['income'] < 40000:
-                    record['rent_price'] = random.randint(int(5000 * rent_mult), int(12000 * rent_mult))
+        # Rent prices based on Urban Mosaic district characteristics
+        if record['house_status'] == 2:  # Renting
+            # District-specific rent ranges based on Urban Mosaic data
+            if district_profile['type'] in ['cbd', 'cbd_shopping']:
+                # Central Economic Engine (Pathum Wan, Sathon, etc.)
+                # Studios: 15,000-23,000, 1BR: 27,000-45,000, 2BR: 70,000-125,000
+                if record.get('income'):
+                    if record['income'] < 20000:
+                        record['rent_price'] = random.choice([8000, 10000, 12000, 15000])  # Studio/shared
+                    elif record['income'] < 35000:
+                        record['rent_price'] = random.choice([15000, 18000, 20000, 23000, 25000])  # Studio
+                    elif record['income'] < 60000:
+                        record['rent_price'] = random.choice([25000, 30000, 35000, 40000, 45000])  # 1BR
+                    else:
+                        record['rent_price'] = random.choice([40000, 50000, 60000, 70000, 80000, 100000])  # 2BR+
                 else:
-                    record['rent_price'] = random.randint(int(8000 * rent_mult), int(20000 * rent_mult))
+                    record['rent_price'] = random.choice([15000, 20000, 25000, 30000])
+                    
+            elif district_profile['type'] == 'upscale_expat':
+                # Bang Rak (diverse), Ratchathewi (more affordable than pure CBD)
+                # More varied: 2,500-50,000 range
+                if record.get('income'):
+                    if record['income'] < 20000:
+                        record['rent_price'] = random.choice([3000, 5000, 8000, 10000])  # Old apartments
+                    elif record['income'] < 35000:
+                        record['rent_price'] = random.choice([10000, 12000, 15000, 18000, 20000])
+                    elif record['income'] < 60000:
+                        record['rent_price'] = random.choice([18000, 22000, 25000, 30000, 35000])
+                    else:
+                        record['rent_price'] = random.choice([35000, 40000, 50000, 60000])
+                else:
+                    record['rent_price'] = random.choice([10000, 15000, 20000, 25000])
+                    
+            elif district_profile['type'] in ['historical', 'chinatown', 'traditional']:
+                # Historic Core (Phra Nakhon, Dusit, Samphanthawong)
+                # Affordable: 2,500-30,000, many under 8,000
+                if record.get('income'):
+                    if record['income'] < 15000:
+                        record['rent_price'] = random.choice([2500, 3000, 3500, 4000, 5000])
+                    elif record['income'] < 25000:
+                        record['rent_price'] = random.choice([4000, 5000, 6000, 8000, 10000])
+                    elif record['income'] < 40000:
+                        record['rent_price'] = random.choice([8000, 10000, 12000, 15000, 18000])
+                    else:
+                        record['rent_price'] = random.choice([15000, 20000, 25000, 30000])
+                else:
+                    record['rent_price'] = random.choice([3000, 5000, 8000, 10000])
+                    
+            elif district_profile['type'] in ['port_mixed', 'industrial_developing']:
+                # Zones of Transition (Khlong Toei, Din Daeng)
+                # Wide range due to disparity
+                if record.get('income'):
+                    if record['income'] < 15000:
+                        record['rent_price'] = random.choice([2000, 2500, 3000, 4000])
+                    elif record['income'] < 25000:
+                        record['rent_price'] = random.choice([3500, 4500, 5500, 7000])
+                    elif record['income'] < 40000:
+                        record['rent_price'] = random.choice([6000, 8000, 10000, 12000])
+                    else:
+                        record['rent_price'] = random.choice([10000, 15000, 20000, 25000])
+                else:
+                    record['rent_price'] = random.choice([3000, 5000, 7000, 10000])
+                    
+            elif district_profile['type'] in ['young_professional', 'mixed_commercial']:
+                # Ascendant Residential Belt
+                # Middle class areas, good transport
+                if record.get('income'):
+                    if record['income'] < 20000:
+                        record['rent_price'] = random.choice([5000, 6000, 8000, 10000])
+                    elif record['income'] < 35000:
+                        record['rent_price'] = random.choice([8000, 10000, 12000, 15000])
+                    elif record['income'] < 50000:
+                        record['rent_price'] = random.choice([12000, 15000, 18000, 22000, 25000])
+                    else:
+                        record['rent_price'] = random.choice([20000, 25000, 30000, 35000, 40000])
+                else:
+                    record['rent_price'] = random.choice([8000, 10000, 12000, 15000])
+                    
             else:
-                record['rent_price'] = random.randint(int(3000 * rent_mult), int(6000 * rent_mult))
+                # Suburban/Industrial Periphery/Green Fringe
+                # More affordable suburban areas
+                if record.get('income'):
+                    if record['income'] < 15000:
+                        record['rent_price'] = random.choice([2000, 3000, 3500, 4000])
+                    elif record['income'] < 25000:
+                        record['rent_price'] = random.choice([3500, 4500, 5500, 7000])
+                    elif record['income'] < 40000:
+                        record['rent_price'] = random.choice([6000, 8000, 10000, 12000])
+                    else:
+                        record['rent_price'] = random.choice([10000, 12000, 15000, 20000])
+                else:
+                    record['rent_price'] = random.choice([3000, 4000, 5000, 7000])
         
         # In Bangkok, everyone has access to basic utilities - this is non-negotiable
         record['house_sink'] = 1  # 100% have water for handwashing
@@ -1208,6 +1283,15 @@ class BangkokUrbanHealthSurveySimulator:
         
         # Create DataFrame
         df = pd.DataFrame(records)
+        
+        # Process community_safety to extract just the first number (e.g., "4_1" -> 4, "3_1" -> 3)
+        df['community_safety'] = df['community_safety'].apply(lambda x: int(x.split('_')[0]) if pd.notna(x) and isinstance(x, str) else x)
+        
+        # Round income, health expenses, and rent to nearest thousand
+        df['income'] = df['income'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)
+        df['hh_health_expense'] = df['hh_health_expense'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)
+        df['health_expense'] = df['health_expense'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)
+        df['rent_price'] = df['rent_price'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)
         
         # Ensure column order matches the provided format
         column_order = [
@@ -1305,7 +1389,7 @@ if __name__ == "__main__":
         level_names = {
             0: "Never studied", 1: "Primary 1-3", 2: "Primary 4-6", 
             3: "Secondary 1-3", 4: "Secondary 4-6", 5: "Vocational Cert",
-            6: "Diploma/ปวส.", 7: "Bachelor's", 8: "Postgraduate"
+            6: "Diploma/High Vocational", 7: "Bachelor's", 8: "Postgraduate"
         }
         print(f"  Level {level} ({level_names.get(level, 'Unknown')}): {count} ({count/len(df)*100:.1f}%)")
     
@@ -1350,4 +1434,4 @@ if __name__ == "__main__":
     # Save to CSV
     output_file = "bangkok_survey_simulated_exact_format.csv"
     df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print(f"\n✓ Dataset saved to: {output_file}")
+    print(f"\n[DONE] Dataset saved to: {output_file}")

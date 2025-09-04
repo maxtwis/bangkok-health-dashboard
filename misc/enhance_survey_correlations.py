@@ -97,10 +97,10 @@ class SurveyCorrelationEnhancer:
                 current_occ = df.loc[idx, 'occupation_type']
                 
                 # Higher education → more likely to have "better" occupation types
-                if edu_score > 0.75 and current_occ in [5, 6] and self.random_state.random() < self.strength:
+                if edu_score > 0.7 and current_occ in [5, 6] and self.random_state.random() < self.strength * 1.15:
                     # Sometimes upgrade informal/freelance to company employee
                     df.loc[idx, 'occupation_type'] = 3  # Company employee
-                elif edu_score > 0.875 and current_occ == 6 and self.random_state.random() < self.strength * 0.7:
+                elif edu_score > 0.85 and current_occ == 6 and self.random_state.random() < self.strength * 0.85:
                     # Very high education → government or state enterprise
                     df.loc[idx, 'occupation_type'] = self.random_state.choice([1, 2])
         
@@ -111,8 +111,8 @@ class SurveyCorrelationEnhancer:
                 current_income = df.loc[idx, 'income']
                 
                 # Higher education should correlate with higher income (subtle boost)
-                if edu_score > 0.75 and self.random_state.random() < self.strength:
-                    income_boost = 1 + (edu_score - 0.5) * 0.2  # Up to 10% boost
+                if edu_score > 0.7 and self.random_state.random() < self.strength * 1.2:
+                    income_boost = 1 + (edu_score - 0.5) * 0.25  # Up to 12.5% boost
                     df.loc[idx, 'income'] = int(current_income * income_boost)
                     
                 # Round to nearest thousand (like the enhanced simulator)
@@ -140,18 +140,18 @@ class SurveyCorrelationEnhancer:
                 if current_income < income_25th:
                     # Low income - increase chance of skipping care
                     for skip_col in ['medical_skip_1', 'medical_skip_2', 'medical_skip_3']:
-                        if df.loc[idx, skip_col] == 0 and self.random_state.random() < self.strength * 0.4:
+                        if df.loc[idx, skip_col] == 0 and self.random_state.random() < self.strength * 0.5:
                             df.loc[idx, skip_col] = 1
                     
                     # Also increase health expenses (burden despite skipping care)
-                    if self.random_state.random() < self.strength * 0.3:
+                    if self.random_state.random() < self.strength * 0.4:
                         df.loc[idx, 'hh_health_expense'] = int(df.loc[idx, 'hh_health_expense'] * 1.2)
                         df.loc[idx, 'health_expense'] = int(df.loc[idx, 'health_expense'] * 1.15)
                 
                 elif current_income > income_75th:
                     # High income - reduce chance of skipping care
                     for skip_col in ['medical_skip_1', 'medical_skip_2', 'medical_skip_3']:
-                        if df.loc[idx, skip_col] == 1 and self.random_state.random() < self.strength * 0.3:
+                        if df.loc[idx, skip_col] == 1 and self.random_state.random() < self.strength * 0.35:
                             df.loc[idx, skip_col] = 0
         
         # Healthcare barriers should cluster together
@@ -161,7 +161,7 @@ class SurveyCorrelationEnhancer:
             # If already skipping some care, more likely to skip others
             if skip_count >= 1:
                 for skip_col in ['medical_skip_1', 'medical_skip_2', 'medical_skip_3']:
-                    if df.loc[idx, skip_col] == 0 and self.random_state.random() < self.strength * 0.5:
+                    if df.loc[idx, skip_col] == 0 and self.random_state.random() < self.strength * 0.65:
                         df.loc[idx, skip_col] = 1
         
         return df
@@ -186,7 +186,7 @@ class SurveyCorrelationEnhancer:
                 if metabolic_count >= 1:
                     for disease_col in metabolic_diseases:
                         if disease_col in df.columns and df.loc[idx, disease_col] == 0:
-                            if self.random_state.random() < self.strength * 0.4:
+                            if self.random_state.random() < self.strength * 0.55:
                                 df.loc[idx, disease_col] = 1
                 
                 # Cardiovascular disease clustering  
@@ -194,7 +194,7 @@ class SurveyCorrelationEnhancer:
                 if cardio_count >= 1:
                     for disease_col in cardiovascular_diseases:
                         if disease_col in df.columns and df.loc[idx, disease_col] == 0:
-                            if self.random_state.random() < self.strength * 0.35:
+                            if self.random_state.random() < self.strength * 0.45:
                                 df.loc[idx, disease_col] = 1
                 
                 # Age-related disease progression
@@ -203,7 +203,7 @@ class SurveyCorrelationEnhancer:
                     total_diseases = sum([df.loc[idx, f'diseases_type_{i}'] for i in range(1, 22) 
                                         if f'diseases_type_{i}' in df.columns])
                     
-                    if total_diseases >= 1 and self.random_state.random() < self.strength * 0.3:
+                    if total_diseases >= 1 and self.random_state.random() < self.strength * 0.4:
                         # Add another disease occasionally
                         available_diseases = [f'diseases_type_{i}' for i in range(1, 22) 
                                             if f'diseases_type_{i}' in df.columns and df.loc[idx, f'diseases_type_{i}'] == 0]
@@ -235,7 +235,7 @@ class SurveyCorrelationEnhancer:
             # If experiencing discrimination, increase chance of mental health issues
             if discrimination_count > 0:
                 if 'diseases_type_11' in df.columns and df.loc[idx, 'diseases_type_11'] == 0:
-                    mental_health_prob = discrimination_count * self.strength * 0.4
+                    mental_health_prob = discrimination_count * self.strength * 0.5
                     if self.random_state.random() < mental_health_prob:
                         df.loc[idx, 'diseases_type_11'] = 1
                         # Also set diseases_status to 1 if it wasn't already
@@ -243,7 +243,7 @@ class SurveyCorrelationEnhancer:
                 
                 # Also increase psychological violence correlation
                 if 'psychological_violence' in df.columns and df.loc[idx, 'psychological_violence'] == 0:
-                    if self.random_state.random() < discrimination_count * self.strength * 0.3:
+                    if self.random_state.random() < discrimination_count * self.strength * 0.4:
                         df.loc[idx, 'psychological_violence'] = 1
         
         return df
@@ -274,7 +274,7 @@ class SurveyCorrelationEnhancer:
             
             # Economic stress → increased smoking
             if economic_stress >= 2 and df.loc[idx, 'smoke_status'] in [0, 1]:  # Non-smoker or quit
-                if self.random_state.random() < self.strength * 0.3:
+                if self.random_state.random() < self.strength * 0.4:
                     df.loc[idx, 'smoke_status'] = self.random_state.choice([2, 3])  # Occasional or regular
                     if df.loc[idx, 'smoke_status'] in [2, 3]:
                         df.loc[idx, 'smoke_amount'] = self.random_state.randint(1, 15)
@@ -282,7 +282,7 @@ class SurveyCorrelationEnhancer:
             
             # Economic stress → increased drinking (but more moderate correlation)
             if economic_stress >= 1 and df.loc[idx, 'drink_status'] == 0:  # Non-drinker
-                if self.random_state.random() < self.strength * 0.2:
+                if self.random_state.random() < self.strength * 0.3:
                     df.loc[idx, 'drink_status'] = 1  # Current drinker
                     df.loc[idx, 'drink_rate'] = self.random_state.choice([1, 2])
                     df.loc[idx, 'drink_amount'] = self.random_state.randint(1, 8)
@@ -308,13 +308,13 @@ class SurveyCorrelationEnhancer:
             if env_problems >= 2:
                 # More environmental problems → higher chance of respiratory disease
                 if 'diseases_type_7' in df.columns and df.loc[idx, 'diseases_type_7'] == 0:  # Respiratory
-                    if self.random_state.random() < env_problems * self.strength * 0.2:
+                    if self.random_state.random() < env_problems * self.strength * 0.3:
                         df.loc[idx, 'diseases_type_7'] = 1
                         df.loc[idx, 'diseases_status'] = 1
             
             # Poor housing → health impacts
             if df.loc[idx, 'house_status'] in [4, 5]:  # Informal housing
-                if self.random_state.random() < self.strength * 0.3:
+                if self.random_state.random() < self.strength * 0.45:
                     # More likely to have health problems
                     if df.loc[idx, 'diseases_status'] == 0:
                         df.loc[idx, 'diseases_status'] = 1
@@ -392,10 +392,14 @@ class SurveyCorrelationEnhancer:
         return df
 
 def main():
-    # File paths
-    input_file = Path("../public/data/survey_sampling.csv")
-    output_file = Path("../public/data/survey_sampling_enhanced.csv")
-    backup_file = Path("../public/data/survey_sampling_original.csv")
+    # File paths - use absolute paths relative to script location
+    script_dir = Path(__file__).parent
+    project_root = script_dir.parent
+    data_dir = project_root / "public" / "data"
+    
+    input_file = data_dir / "survey_sampling.csv"
+    output_file = data_dir / "survey_sampling_enhanced.csv"
+    backup_file = data_dir / "survey_sampling_original.csv"
     
     # Create backup of original
     if input_file.exists() and not backup_file.exists():
@@ -404,7 +408,7 @@ def main():
         print(f"Created backup: {backup_file}")
     
     # Enhance correlations (subtle strength)
-    enhancer = SurveyCorrelationEnhancer(correlation_strength=0.25)  # Subtle but meaningful
+    enhancer = SurveyCorrelationEnhancer(correlation_strength=0.32)  # Slightly stronger but still subtle
     enhanced_df = enhancer.enhance_survey_data(input_file, output_file)
     
     print(f"\\n--- Enhancement Complete ---")
@@ -412,14 +416,22 @@ def main():
     print(f"Enhanced file: {output_file}")
     print(f"Records processed: {len(enhanced_df)}")
     
-    # Option to replace original file
-    replace_original = input("\\nReplace original survey_sampling.csv with enhanced version? (y/N): ")
-    if replace_original.lower() == 'y':
-        import shutil
-        shutil.copy2(output_file, input_file)
-        print(f"Replaced {input_file} with enhanced version")
+    # Option to replace original file (check if interactive)
+    import sys
+    if sys.stdin.isatty():
+        try:
+            replace_original = input("\\nReplace original survey_sampling.csv with enhanced version? (y/N): ")
+            if replace_original.lower() == 'y':
+                import shutil
+                shutil.copy2(output_file, input_file)
+                print(f"Replaced {input_file} with enhanced version")
+            else:
+                print(f"Enhanced version available at {output_file}")
+        except EOFError:
+            print(f"\\nEnhanced version available at {output_file}")
     else:
-        print(f"Enhanced version available at {output_file}")
+        print(f"\\nEnhanced version available at {output_file}")
+        print("Run with interactive terminal to replace original file")
 
 if __name__ == "__main__":
     main()
