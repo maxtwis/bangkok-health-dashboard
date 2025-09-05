@@ -25,7 +25,9 @@
       "Bash(python:*)",
       "Bash(copy survey_sampling_enhanced.csv survey_sampling.csv)",
       "Bash(copy:*)",
-      "Read(\\/**)"
+      "Read(\\/**)",
+      "Bash(start http://localhost:5179)",
+      "WebFetch(domain:localhost)"
     ],
     "deny": [],
     "ask": []

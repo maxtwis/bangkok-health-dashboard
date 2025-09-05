@@ -335,11 +335,19 @@ const Dashboard = () => {
       'healthworker_per_population', 
       'community_healthworker_per_population',
       'health_service_access',
-      'bed_per_population'
+      'bed_per_population',
+      'market_per_population',
+      'sportfield_per_population'
     ];
     
     if (healthcareSupplyIndicators.includes(indicator)) {
-      return getHealthcareSupplyColor(value, indicator);
+      const color = getHealthcareSupplyColor(value, indicator);
+      // Convert hex to Tailwind badge classes
+      if (color === '#10B981') return 'bg-green-100 text-green-800';
+      if (color === '#F59E0B') return 'bg-yellow-100 text-yellow-800';
+      if (color === '#FB923C') return 'bg-orange-100 text-orange-800';
+      if (color === '#EF4444') return 'bg-red-100 text-red-800';
+      return 'bg-red-100 text-red-800'; // default
     }
     
     // Original logic for other indicators
@@ -359,6 +367,31 @@ const Dashboard = () => {
   };
 
   const getPerformanceBarColor = (value, indicator) => {
+    // Handle healthcare supply indicators with WHO benchmarks
+    const healthcareSupplyIndicators = [
+      'doctor_per_population', 
+      'nurse_per_population', 
+      'healthworker_per_population', 
+      'community_healthworker_per_population',
+      'health_service_access',
+      'bed_per_population',
+      'market_per_population',
+      'sportfield_per_population'
+    ];
+    
+    if (healthcareSupplyIndicators.includes(indicator)) {
+      const color = getHealthcareSupplyColor(value, indicator);
+      
+      // Convert hex color to Tailwind class
+      if (color === '#10B981') return 'bg-green-500';   // green
+      if (color === '#F59E0B') return 'bg-yellow-500';  // yellow
+      if (color === '#FB923C') return 'bg-orange-500';  // orange
+      if (color === '#EF4444') return 'bg-red-500';     // red
+      
+      // Default fallback
+      return 'bg-red-500';
+    }
+    
     const isReverse = REVERSE_INDICATORS[indicator];
     
     if (isReverse) {
@@ -1041,7 +1074,32 @@ Reset Filters
                                         <div className="w-full bg-gray-200 rounded-full h-3">
                                           <div 
                                             className={`h-3 rounded-full ${getPerformanceBarColor(value, indicator)} transition-all duration-500`}
-                                            style={{ width: `${Math.min(100, Math.max(0, parseFloat(value) || 0))}%` }}
+                                            style={{ width: `${(() => {
+                                              // For healthcare supply indicators, calculate width based on benchmarks
+                                              const healthcareSupplyIndicators = [
+                                                'doctor_per_population', 
+                                                'nurse_per_population', 
+                                                'healthworker_per_population', 
+                                                'community_healthworker_per_population',
+                                                'health_service_access',
+                                                'bed_per_population',
+                                                'market_per_population',
+                                                'sportfield_per_population'
+                                              ];
+                                              
+                                              if (healthcareSupplyIndicators.includes(indicator)) {
+                                                // Scale based on good benchmark (100% = good threshold)
+                                                const benchmarks = HEALTHCARE_SUPPLY_BENCHMARKS[indicator];
+                                                if (benchmarks && benchmarks.good) {
+                                                  // Scale to percentage where 100% = good benchmark
+                                                  const percentage = (value / benchmarks.good) * 100;
+                                                  return Math.min(100, Math.max(0, percentage));
+                                                }
+                                              }
+                                              
+                                              // Default for non-supply indicators (already percentages)
+                                              return Math.min(100, Math.max(0, parseFloat(value) || 0));
+                                            })()}%` }}
                                           ></div>
                                         </div>
                                       )}

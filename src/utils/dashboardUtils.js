@@ -2,6 +2,7 @@
 
 import { REVERSE_INDICATORS, HEALTHCARE_SUPPLY_BENCHMARKS, PERFORMANCE_THRESHOLDS } from '../constants/dashboardConstants';
 
+
 /**
  * Get performance color based on score and indicator type
  * @param {number} score - The score value (0-100)
@@ -10,7 +11,7 @@ import { REVERSE_INDICATORS, HEALTHCARE_SUPPLY_BENCHMARKS, PERFORMANCE_THRESHOLD
  */
 export const getPerformanceColor = (score, indicator = '') => {
   if (score === null || score === undefined || isNaN(score)) {
-    return '#6B7280'; // gray for no data
+    return '#EF4444'; // red for no data
   }
 
   const isReverse = REVERSE_INDICATORS[indicator];
@@ -19,9 +20,9 @@ export const getPerformanceColor = (score, indicator = '') => {
   if (adjustedScore >= PERFORMANCE_THRESHOLDS.excellent) {
     return '#10B981'; // green - excellent
   } else if (adjustedScore >= PERFORMANCE_THRESHOLDS.good) {
-    return '#3B82F6'; // blue - good
+    return '#F59E0B'; // yellow - good
   } else if (adjustedScore >= PERFORMANCE_THRESHOLDS.fair) {
-    return '#F59E0B'; // yellow - fair
+    return '#FB923C'; // orange - fair
   } else {
     return '#EF4444'; // red - poor
   }
@@ -60,8 +61,9 @@ export const getPerformanceLabel = (score, indicator = '') => {
  */
 export const getHealthcareSupplyColor = (value, indicator) => {
   const benchmark = HEALTHCARE_SUPPLY_BENCHMARKS[indicator];
+  
   if (!benchmark || value === null || value === undefined) {
-    return '#6B7280'; // gray
+    return '#EF4444'; // red for no data
   }
 
   if (value >= benchmark.good) {
@@ -69,9 +71,9 @@ export const getHealthcareSupplyColor = (value, indicator) => {
   } else if (value >= benchmark.fair) {
     return '#F59E0B'; // yellow
   } else if (value >= benchmark.poor) {
-    return '#EF4444'; // red
+    return '#FB923C'; // orange
   } else {
-    return '#7F1D1D'; // dark red
+    return '#EF4444'; // red
   }
 };
 

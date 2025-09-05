@@ -68,7 +68,11 @@ export const HEALTHCARE_SUPPLY_BENCHMARKS = {
   nurse_per_population: { good: 2.5, fair: 1.5, poor: 1.0 },
   hospital_per_population: { good: 3.5, fair: 2.5, poor: 1.5 },
   clinic_per_population: { good: 5.0, fair: 3.0, poor: 1.5 },
-  pharmacy_per_population: { good: 10.0, fair: 5.0, poor: 2.0 }
+  pharmacy_per_population: { good: 10.0, fair: 5.0, poor: 2.0 },
+  
+  // Community Infrastructure Benchmarks
+  market_per_population: { good: 1.5, fair: 0.8, poor: 0.3 }, // per 10,000 population
+  sportfield_per_population: { good: 2.0, fair: 1.0, poor: 0.4 } // per 1,000 population
 };
 
 // Population Groups Configuration

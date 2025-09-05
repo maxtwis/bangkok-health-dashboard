@@ -621,10 +621,12 @@ const IndicatorDetail = ({
                     {indicatorInfo.name}
                   </h1>
                   <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
-                    <span className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" />
-                      {t(`populationGroups.${populationGroup}`)}
-                    </span>
+                    {getIndicatorType(indicator) !== INDICATOR_TYPES.IMD && (
+                      <span className="flex items-center">
+                        <Users className="w-4 h-4 mr-1" />
+                        {t(`populationGroups.${populationGroup}`)}
+                      </span>
+                    )}
                     <span className="flex items-center">
                       <Building className="w-4 h-4 mr-1" />
                       {district}

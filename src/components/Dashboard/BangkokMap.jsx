@@ -3,6 +3,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { INDICATOR_TYPES } from '../../constants/indicatorTypes';
+import { getHealthcareSupplyColor } from '../../utils/dashboardUtils';
 
 // Fix for default markers in Leaflet with bundlers
 delete L.Icon.Default.prototype._getIconUrl;
@@ -219,7 +220,7 @@ const BangkokMap = ({
     };
   }, []);
 
-  // FIXED: Get color based on score with proper handling of combined data
+  // Get color based on score with proper handling of combined data and healthcare supply indicators
   const getDistrictColor = (districtName) => {
     if (!getIndicatorData || districtName === 'Bangkok Overall') {
       return '#94a3b8';
@@ -230,43 +231,90 @@ const BangkokMap = ({
       const indicatorData = getIndicatorData(selectedDomain, districtName, effectivePopulationGroup, selectedIndicatorType);
       const domainScore = indicatorData.find(item => item.isDomainScore);
       
-      // FIXED: Check for valid domain score with more lenient conditions
+      // Check for valid domain score
       if (!domainScore) {
         return '#e2e8f0'; // Light grey for no domain score
       }
 
-      // FIXED: Handle all types of data including combined and pre-calculated
+      // Handle all types of data including combined and pre-calculated
       const score = domainScore.value;
       const sampleSize = domainScore.sample_size;
       
-      // FIXED: Accept data if we have a valid score, regardless of sample size type
+      // Accept data if we have a valid score, regardless of sample size type
       if (score === null || score === undefined || isNaN(score)) {
         return '#e2e8f0'; // Light grey for no valid score
       }
 
-      // FIXED: For normal population, accept combined data and pre-calculated data
+      // For IMD healthcare supply indicators, use healthcare supply color system
+      if (selectedIndicatorType === INDICATOR_TYPES.IMD) {
+        // Map domain names to their actual indicator names
+        const domainToIndicatorMap = {
+          'healthcare_infrastructure': null, // This domain has multiple indicators
+          'food_access': 'market_per_population',
+          'sports_recreation': 'sportfield_per_population'
+        };
+        
+        // Get the actual indicator name for single-indicator domains
+        const actualIndicator = domainToIndicatorMap[selectedDomain];
+        
+        // List of all healthcare supply indicators
+        const healthcareSupplyIndicators = [
+          'health_clinic_per_population',
+          'hospital_per_population', 
+          'pharmacy_per_population',
+          'market_per_population',
+          'sportfield_per_population'
+        ];
+        
+        // Check if this is a single-indicator IMD domain (food_access or sports_recreation)
+        if (actualIndicator && healthcareSupplyIndicators.includes(actualIndicator)) {
+          // Find the indicator data by its actual name
+          const indicatorItem = indicatorData.find(item => 
+            item.name === actualIndicator || 
+            item.indicator === actualIndicator
+          );
+          
+          if (indicatorItem && indicatorItem.value !== null && indicatorItem.value !== undefined) {
+            const color = getHealthcareSupplyColor(indicatorItem.value, actualIndicator);
+            return color;
+          }
+        }
+        // For healthcare_infrastructure domain with multiple indicators
+        else if (selectedDomain === 'healthcare_infrastructure') {
+          // Use domain score for healthcare infrastructure
+          if (domainScore && domainScore.value !== null && domainScore.value !== undefined) {
+            // For domain scores, use regular percentage-based colors
+            if (domainScore.value >= 80) return '#10b981'; // Green
+            if (domainScore.value >= 60) return '#f59e0b'; // Yellow
+            if (domainScore.value >= 40) return '#fb923c'; // Orange
+            return '#ef4444'; // Red
+          }
+        }
+      }
+
+      // For normal population, accept combined data and pre-calculated data
       if (selectedPopulationGroup === 'normal_population') {
         // Accept any valid score for normal population (survey + combined + pre-calculated)
         if (score >= 0) {
           if (score >= 80) return '#10b981'; // Green
           if (score >= 60) return '#f59e0b'; // Yellow
-          if (score >= 40) return '#f97316'; // Orange
+          if (score >= 40) return '#fb923c'; // Orange
           return '#ef4444'; // Red
         }
       } else {
-        // FIXED: For other population groups, be more lenient with sample size
+        // For other population groups, be more lenient with sample size
         // Accept data if we have at least 1 person (was 5 before)
         if (typeof sampleSize === 'number' && sampleSize >= 1) {
           if (score >= 80) return '#10b981'; // Green
           if (score >= 60) return '#f59e0b'; // Yellow
-          if (score >= 40) return '#f97316'; // Orange
+          if (score >= 40) return '#fb923c'; // Orange
           return '#ef4444'; // Red
         }
         // Also handle string sample sizes (like "Bangkok-wide")
         else if (typeof sampleSize === 'string' && sampleSize !== 'N/A') {
           if (score >= 80) return '#10b981'; // Green
           if (score >= 60) return '#f59e0b'; // Yellow
-          if (score >= 40) return '#f97316'; // Orange
+          if (score >= 40) return '#fb923c'; // Orange
           return '#ef4444'; // Red
         }
       }
@@ -478,19 +526,19 @@ const BangkokMap = ({
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-green-500 rounded"></div>
-              <span>Good (≥80%)</span>
+              <span>Excellent (≥80%)</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-yellow-500 rounded"></div>
-              <span>Fair (60-79%)</span>
+              <span>Good (60-79%)</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-orange-500 rounded"></div>
-              <span>Poor (40-59%)</span>
+              <span>Fair (40-59%)</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-red-500 rounded"></div>
-              <span>Very Poor (&lt;40%)</span>
+              <span>Poor (&lt;40%)</span>
             </div>
           </div>
         </div>
