@@ -549,7 +549,9 @@ const BangkokMap = ({
         <div className="absolute top-4 right-4 bg-white bg-opacity-95 backdrop-blur rounded-lg shadow-lg p-3 text-xs z-[1000]">
           <div className="font-medium mb-1">Current Selection</div>
           <div>District: {selectedDistrict === 'Bangkok Overall' && language === 'th' ? 'ภาพรวม 50 เขต' : selectedDistrict}</div>
-          <div>Group: {t(`populationGroups.${selectedPopulationGroup}`)}</div>
+          {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
+            <div>Group: {t(`populationGroups.${selectedPopulationGroup}`)}</div>
+          )}
         </div>
       )}
     </div>

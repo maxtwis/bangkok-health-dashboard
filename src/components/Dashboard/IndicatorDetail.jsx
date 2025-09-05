@@ -16,11 +16,29 @@ const IndicatorDetail = ({
   onBack, 
   surveyData,
   getIndicatorData,
-  healthFacilitiesData
+  healthFacilitiesData,
+  healthSupplyData
 }) => {
   const { t, language } = useLanguage();
   const { getIndicatorInfo, loading: indicatorDetailsLoading } = useIndicators();
   const [activeTab, setActiveTab] = useState('overview');
+  
+  // District code mapping for health supply data
+  const districtCodeMap = {
+    1001: "พระนคร", 1002: "ดุสิต", 1003: "หนองจอก", 1004: "บางรัก",
+    1005: "บางเขน", 1006: "บางกะปิ", 1007: "ปทุมวัน", 1008: "ป้อมปราบศัตรูพ่าย",
+    1009: "พระโขนง", 1010: "มีนบุรี", 1011: "ลาดกระบัง", 1012: "ยานนาวา",
+    1013: "สัมพันธวงศ์", 1014: "พญาไท", 1015: "ธนบุรี", 1016: "บางกอกใหญ่",
+    1017: "ห้วยขวาง", 1018: "คลองสาน", 1019: "ตลิ่งชัน", 1020: "บางกอกน้อย",
+    1021: "บางขุนเทียน", 1022: "ภาษีเจริญ", 1023: "หนองแขม", 1024: "ราษฎร์บูรณะ",
+    1025: "บางพลัด", 1026: "ดินแดง", 1027: "บึงกุ่ม", 1028: "สาทร",
+    1029: "บางซื่อ", 1030: "จตุจักร", 1031: "บางคอแหลม", 1032: "ประเวศ",
+    1033: "คลองเตย", 1034: "สวนหลวง", 1035: "จอมทอง", 1036: "ดอนเมือง",
+    1037: "ราชเทวี", 1038: "ลาดพร้าว", 1039: "วัฒนา", 1040: "บางแค",
+    1041: "หลักสี่", 1042: "สายไหม", 1043: "คันนายาว", 1044: "สะพานสูง",
+    1045: "วังทองหลาง", 1046: "คลองสามวา", 1047: "บางนา", 1048: "ทวีวัฒนา",
+    1049: "ทุ่งครุ", 1050: "บางบอน"
+  };
 
 
   // Get indicator metadata from CSV via hook
@@ -173,8 +191,87 @@ const IndicatorDetail = ({
     return null;
   }, [surveyData, indicator, district, populationGroup, healthFacilitiesData, language]);
 
-  // Calculate facility type breakdown for health_service_access
+  // Calculate facility type breakdown for healthcare indicators
   function calculateFacilityTypeData() {
+    // For personnel indicators, use health supply data
+    const personnelIndicators = ['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 'bed_per_population'];
+    
+    if (personnelIndicators.includes(indicator)) {
+      // Use health supply data for personnel distribution
+      if (!healthSupplyData || !Array.isArray(healthSupplyData)) {
+        return [];
+      }
+
+      try {
+        // Filter facilities for current district
+        let facilitiesForDistrict;
+        if (district === 'Bangkok Overall') {
+          facilitiesForDistrict = healthSupplyData;
+        } else {
+          facilitiesForDistrict = healthSupplyData.filter(facility => {
+            return facility && districtCodeMap[facility.dcode] === district;
+          });
+        }
+
+        if (!facilitiesForDistrict || facilitiesForDistrict.length === 0) {
+          return [];
+        }
+
+        // Map indicator to corresponding field in health supply data
+        const fieldMap = {
+          'doctor_per_population': 'doctor_count',
+          'nurse_per_population': 'nurse_count',
+          'healthworker_per_population': 'healthworker_count',
+          'bed_per_population': 'bed_count'
+        };
+        const countField = fieldMap[indicator];
+
+        // Group by facility type and sum personnel counts
+        const typeGroups = {};
+        facilitiesForDistrict.forEach((facility) => {
+          if (facility && facility.HTYPE) {
+            const type = facility.HTYPE;
+            if (!typeGroups[type]) {
+              typeGroups[type] = 0;
+            }
+            const count = parseInt(facility[countField]) || 0;
+            typeGroups[type] += count;
+          }
+        });
+
+        // Convert to chart data
+        const facilityTypeMap = {
+          'โรงพยาบาลทั่วไป': language === 'th' ? 'โรงพยาบาลทั่วไป' : 'General Hospital',
+          'โรงพยาบาลศูนย์': language === 'th' ? 'โรงพยาบาลศูนย์' : 'Regional Hospital',
+          'โรงพยาบาลชุมชน': language === 'th' ? 'โรงพยาบาลชุมชน' : 'Community Hospital',
+          'ศูนย์บริการสาธารณสุข': language === 'th' ? 'ศูนย์บริการสาธารณสุข' : 'Public Health Service Center',
+          'คลินิก': language === 'th' ? 'คลินิก' : 'Clinic',
+          'สถานพยาบาลเอกชน': language === 'th' ? 'สถานพยาบาลเอกชน' : 'Private Healthcare Facility',
+          'โรงพยาบาลเอกชน': language === 'th' ? 'โรงพยาบาลเอกชน' : 'Private Hospital'
+        };
+
+        const totalCount = Object.values(typeGroups).reduce((sum, count) => sum + count, 0);
+
+        const result = Object.keys(typeGroups).map((type, index) => {
+          const count = typeGroups[type];
+          const percentage = totalCount > 0 ? (count / totalCount) * 100 : 0;
+          
+          return {
+            name: facilityTypeMap[type] || type,
+            value: count,
+            percentage: percentage,
+            fill: COLORS[index % COLORS.length]
+          };
+        }).sort((a, b) => b.value - a.value);
+
+        return result;
+      } catch (err) {
+        console.error('Error calculating personnel facility type data:', err);
+        return [];
+      }
+    }
+    
+    // For regular facility indicators, use existing logic
     if (!healthFacilitiesData || !Array.isArray(healthFacilitiesData)) {
       return [];
     }
@@ -748,7 +845,19 @@ const IndicatorDetail = ({
                             interval={0}
                           />
                           <YAxis tickFormatter={(value) => `${value.toLocaleString()}`} />
-                          <Tooltip formatter={(value) => [`${value.toLocaleString()} facilities`, language === 'th' ? 'จำนวนสถานพยาบาล' : 'Facilities']} />
+                          <Tooltip formatter={(value) => {
+                            const personnelIndicators = ['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 'bed_per_population'];
+                            if (personnelIndicators.includes(indicator)) {
+                              const labelMap = {
+                                'doctor_per_population': language === 'th' ? 'แพทย์' : 'Doctors',
+                                'nurse_per_population': language === 'th' ? 'พยาบาล' : 'Nurses',
+                                'healthworker_per_population': language === 'th' ? 'บุคลากรสุขภาพ' : 'Health Workers',
+                                'bed_per_population': language === 'th' ? 'เตียง' : 'Beds'
+                              };
+                              return [`${value.toLocaleString()}`, labelMap[indicator]];
+                            }
+                            return [`${value.toLocaleString()} facilities`, language === 'th' ? 'จำนวนสถานพยาบาล' : 'Facilities'];
+                          }} />
                           <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                             {disaggregationData.facilityType.map((entry, index) => (
                               <Cell key={`cell-${index}`} fill={facilityColors[index % facilityColors.length]} />
@@ -756,58 +865,6 @@ const IndicatorDetail = ({
                           </Bar>
                         </BarChart>
                       </ResponsiveContainer>
-                    </div>
-                    
-                    {/* Summary Statistics */}
-                    <div className="bg-white border rounded-lg p-4">
-                      <h4 className="text-sm font-medium text-gray-800 mb-4">
-                        {language === 'th' ? 'สรุปข้อมูลสถานพยาบาล' : 'Health Facility Summary'}
-                      </h4>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        {disaggregationData.facilityType.map((item, index) => {
-                          const total = disaggregationData.facilityType.reduce((sum, i) => sum + i.value, 0);
-                          const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
-                          return (
-                            <div key={index} className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                              <div className="flex items-center mb-2">
-                                <div 
-                                  className="w-4 h-4 rounded mr-3 flex-shrink-0" 
-                                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                                ></div>
-                                <span className="text-sm font-medium text-gray-800 truncate" title={item.name}>
-                                  {item.name}
-                                </span>
-                              </div>
-                              <div className="ml-7">
-                                <div className="text-lg font-bold text-gray-900">{item.value.toLocaleString()}</div>
-                                <div className="text-sm text-gray-500">{percentage}% of total</div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      
-                      <div className="border-t border-gray-200 pt-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-base font-semibold text-gray-800">
-                            {language === 'th' ? 'รวมสถานพยาบาลทั้งหมด' : 'Total Health Facilities'}:
-                          </span>
-                          <span className="text-xl font-bold text-blue-600">
-                            {disaggregationData.facilityType.reduce((sum, item) => sum + item.value, 0).toLocaleString()} 
-                            <span className="text-sm text-gray-500 ml-1">
-                              {language === 'th' ? 'แห่ง' : 'facilities'}
-                            </span>
-                          </span>
-                        </div>
-                        {district !== 'Bangkok Overall' && (
-                          <div className="mt-1">
-                            <span className="text-sm text-gray-500">
-                              {language === 'th' ? 'ใน' : 'in'} {district}
-                            </span>
-                          </div>
-                        )}
-                      </div>
                     </div>
                   </div>
                 )}

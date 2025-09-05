@@ -8,6 +8,7 @@ const useSDHEData = () => {
   const [data, setData] = useState(null);
   const [surveyData, setSurveyData] = useState(null);
   const [healthFacilitiesData, setHealthFacilitiesData] = useState(null);
+  const [healthSupplyData, setHealthSupplyData] = useState(null);
   const processorRef = useRef(null);
   const retryCountRef = useRef(0);
   const maxRetries = 3;
@@ -51,6 +52,7 @@ const useSDHEData = () => {
       setData(results);
       setSurveyData(processor.surveyData);
       setHealthFacilitiesData(processor.healthFacilitiesData);
+      setHealthSupplyData(processor.healthSupplyData);
       retryCountRef.current = 0; // Reset retry count on success
       
     } catch (err) {
@@ -100,6 +102,7 @@ const useSDHEData = () => {
     data,
     surveyData,
     healthFacilitiesData,
+    healthSupplyData,
     getAvailableDistricts,
     getAvailableDomains,
     getIndicatorData,

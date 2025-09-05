@@ -76,7 +76,8 @@ const Dashboard = () => {
     error, 
     data, 
     surveyData, 
-    healthFacilitiesData, 
+    healthFacilitiesData,
+    healthSupplyData, 
     getAvailableDistricts, 
     getAvailableDomains, 
     getIndicatorData 
@@ -458,6 +459,7 @@ const Dashboard = () => {
         getIndicatorData={getIndicatorData}
         surveyData={surveyData}
         healthFacilitiesData={healthFacilitiesData}
+        healthSupplyData={healthSupplyData}
       />
     );
   }
@@ -652,7 +654,7 @@ const Dashboard = () => {
                       {language === 'th' ? 'SDHE (ข้อมูลสำรวจ)' : 'SDHE (Survey Data)'}
                     </option>
                     <option value={INDICATOR_TYPES.IMD}>
-                      {language === 'th' ? 'IMD (ข้อมูลสถานพยาบาล)' : 'IMD (Facility Data)'}
+                      {language === 'th' ? 'IMD (การเข้าถึงสถานบริการ)' : 'IMD (Service Access)'}
                     </option>
                   </select>
                 </div>
