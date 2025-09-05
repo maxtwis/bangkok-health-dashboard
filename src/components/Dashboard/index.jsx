@@ -23,6 +23,8 @@ import {
   getTopIndicators,
   getDataState
 } from '../../utils/dashboardUtils';
+import { INDICATOR_TYPES, getDomainsByType, getIndicatorType } from '../../constants/indicatorTypes';
+import { getDomainsByIndicatorType } from '../../utils/indicatorDomainMapping';
 
 // Icon mapping for population groups
 const getPopulationIcon = (iconKey) => {
@@ -84,6 +86,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedPopulationGroup, setSelectedPopulationGroup] = useState('informal_workers');
   const [selectedDistrict, setSelectedDistrict] = useState('Bangkok Overall');
+  const [selectedIndicatorType, setSelectedIndicatorType] = useState(INDICATOR_TYPES.SDHE);
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
   const [viewMode, setViewMode] = useState('overview');
   
@@ -93,6 +96,18 @@ const Dashboard = () => {
       setViewMode(activeTab);
     }
   }, [activeTab]);
+  
+  // Update domain when indicator type changes
+  useEffect(() => {
+    const availableDomains = getDomainsByIndicatorType(selectedIndicatorType);
+    // Use functional update to get current domain value without adding it to dependencies
+    setSelectedDomain(currentDomain => {
+      if (availableDomains.length > 0 && !availableDomains.includes(currentDomain)) {
+        return availableDomains[0];
+      }
+      return currentDomain;
+    });
+  }, [selectedIndicatorType]);
   
   // Language dropdown state
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
@@ -150,11 +165,37 @@ const Dashboard = () => {
     const domain = searchParams.get('domain');
     const district = searchParams.get('district');
     const group = searchParams.get('group');
+    const type = searchParams.get('type');
     
-    if (domain) setSelectedDomain(domain);
-    if (district) setSelectedDistrict(district);
-    if (group) setSelectedPopulationGroup(group);
-  }, [location]);
+    if (type && (type === INDICATOR_TYPES.SDHE || type === INDICATOR_TYPES.IMD)) {
+      setSelectedIndicatorType(type);
+    }
+    if (domain) {
+      setSelectedDomain(domain);
+    }
+    if (district) {
+      setSelectedDistrict(district);
+    }
+    
+    // Handle population group with IMD indicator correction
+    if (group) {
+      // If we're on detail page with an IMD indicator, correct the population group
+      if (pathname === '/detail') {
+        const indicator = searchParams.get('indicator');
+        if (indicator && getIndicatorType(indicator) === INDICATOR_TYPES.IMD && group !== 'all') {
+          // Redirect with corrected URL
+          const params = new URLSearchParams();
+          params.set('indicator', indicator);
+          params.set('domain', domain || selectedDomain);
+          params.set('district', district || selectedDistrict);
+          params.set('group', 'all');
+          navigate(`/detail?${params.toString()}`, { replace: true });
+          return; // Exit early to prevent setting wrong state
+        }
+      }
+      setSelectedPopulationGroup(group);
+    }
+  }, [location, navigate]);
 
   // Data state helpers
   const dataState = useMemo(() => 
@@ -168,7 +209,12 @@ const Dashboard = () => {
     params.set('indicator', indicatorName);
     params.set('domain', selectedDomain);
     params.set('district', selectedDistrict);
-    params.set('group', selectedPopulationGroup);
+    
+    // For IMD (healthcare supply) indicators, always use 'all' population group
+    const indicatorType = getIndicatorType(indicatorName);
+    const populationGroup = indicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
+    params.set('group', populationGroup);
+    
     navigate(`/detail?${params.toString()}`);
   }, [navigate, selectedDomain, selectedDistrict, selectedPopulationGroup]);
 
@@ -209,6 +255,32 @@ const Dashboard = () => {
     setSelectedDistrict(districtName);
   }, []);
 
+  const handleIndicatorTypeChange = useCallback((newType) => {
+    setSelectedIndicatorType(newType);
+    
+    // Get available domains for the new type and switch to first one if current is not valid
+    const availableDomains = getDomainsByIndicatorType(newType);
+    let newDomain = selectedDomain;
+    if (availableDomains.length > 0 && !availableDomains.includes(selectedDomain)) {
+      newDomain = availableDomains[0];
+      setSelectedDomain(newDomain);
+    }
+    
+    // Handle population group changes
+    let newPopulationGroup = selectedPopulationGroup;
+    if (newType === INDICATOR_TYPES.SDHE && selectedPopulationGroup === 'all') {
+      newPopulationGroup = 'informal_workers';
+      setSelectedPopulationGroup(newPopulationGroup);
+    }
+    
+    // Update URL parameters
+    const params = new URLSearchParams(location.search);
+    params.set('type', newType);
+    params.set('domain', newDomain);
+    params.set('group', newPopulationGroup);
+    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+  }, [navigate, location, selectedPopulationGroup, selectedDomain]);
+
   // Utility functions
   const formatSampleSize = useCallback((sampleSize) => {
     return formatNumber(sampleSize, 0);
@@ -228,7 +300,9 @@ const Dashboard = () => {
       'healthworker_per_population', 
       'community_healthworker_per_population',
       'health_service_access',
-      'bed_per_population'
+      'bed_per_population',
+      'market_per_population',
+      'sportfield_per_population'
     ];
 
     if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {
@@ -241,7 +315,9 @@ const Dashboard = () => {
         'healthworker_per_population': `${valueNum.toFixed(1)} per 10,000`,
         'community_healthworker_per_population': `${valueNum.toFixed(1)} per 1,000`,
         'health_service_access': `${valueNum.toFixed(1)} per 10,000`,
-        'bed_per_population': `${valueNum.toFixed(1)} per 10,000`
+        'bed_per_population': `${valueNum.toFixed(1)} per 10,000`,
+        'market_per_population': `${valueNum.toFixed(1)} per 10,000`,
+        'sportfield_per_population': `${valueNum.toFixed(1)} per 1,000`
       };
 
       return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
@@ -344,6 +420,7 @@ const Dashboard = () => {
         domain={selectedDomain}
         district={selectedDistrict}
         populationGroup={selectedPopulationGroup}
+        indicatorType={selectedIndicatorType}
         onBack={handleBackFromDetail}
         getIndicatorData={getIndicatorData}
         surveyData={surveyData}
@@ -353,8 +430,11 @@ const Dashboard = () => {
   }
 
   const availableDistricts = dataState.isLoading ? [] : getAvailableDistricts();
-  const availableDomains = dataState.isLoading ? [] : getAvailableDomains();
-  const currentIndicatorData = dataState.isLoading ? [] : getIndicatorData(selectedDomain, selectedDistrict, selectedPopulationGroup);
+  // Use getDomainsByIndicatorType instead of getAvailableDomains to filter by indicator type
+  const availableDomains = dataState.isLoading ? [] : getDomainsByIndicatorType(selectedIndicatorType);
+  // Pass 'all' as population group for IMD indicators
+  const effectivePopulationGroup = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
+  const currentIndicatorData = dataState.isLoading ? [] : getIndicatorData(selectedDomain, selectedDistrict, effectivePopulationGroup, selectedIndicatorType);
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -513,33 +593,90 @@ const Dashboard = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-800">Dashboard Controls</h3>
+                  <h3 className="text-2xl font-bold text-gray-800">
+                    {language === 'th' ? 'แผงควบคุม' : 'Dashboard Controls'}
+                  </h3>
                 </div>
-                <p className="text-gray-600 mb-8">Customize your view to explore health indicators across Bangkok's communities</p>
+                <p className="text-gray-600 mb-8">
+                  {language === 'th' 
+                    ? 'ปรับแต่งมุมมองเพื่อสำรวจตัวชี้วัดสุขภาพในชุมชนต่างๆ ของกรุงเทพฯ' 
+                    : 'Customize your view to explore health indicators across Bangkok\'s communities'}
+                </p>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-                {/* Population Group */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
-                    </svg>
-                    <label htmlFor="population-group-select" className="block text-sm font-bold text-gray-700 uppercase tracking-wide">
-                      {t('ui.populationGroup')}
-                    </label>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
+                {/* Indicator Type - NEW FILTER */}
+                <div className="space-y-3">
+                  <label htmlFor="indicator-type-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                    {language === 'th' ? 'ประเภทตัวชี้วัด' : 'Indicator Type'}
+                  </label>
+                  <select
+                    id="indicator-type-select"
+                    value={selectedIndicatorType}
+                    onChange={(e) => handleIndicatorTypeChange(e.target.value)}
+                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                  >
+                    <option value={INDICATOR_TYPES.SDHE}>
+                      {language === 'th' ? 'SDHE (ข้อมูลสำรวจ)' : 'SDHE (Survey Data)'}
+                    </option>
+                    <option value={INDICATOR_TYPES.IMD}>
+                      {language === 'th' ? 'IMD (ข้อมูลสถานพยาบาล)' : 'IMD (Facility Data)'}
+                    </option>
+                  </select>
+                </div>
+
+                {/* Domain */}
+                <div className="space-y-3">
+                  <label htmlFor="domain-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                    {language === 'th' ? 'ประเด็นตัวชี้วัด' : 'Domain'}
+                  </label>
+                  <select
+                    id="domain-select"
+                    value={selectedDomain}
+                    onChange={(e) => handleDomainChange(e.target.value)}
+                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    aria-describedby="domain-description"
+                  >
+                    {getDomainsByIndicatorType(selectedIndicatorType).map(domain => (
+                      <option key={domain} value={domain}>
+                        {t(`domains.${domain}`)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Population Group - Disabled for IMD */}
+                <div className="space-y-3">
+                  <label htmlFor="population-group-select" className={`block text-sm font-semibold uppercase tracking-wide ${selectedIndicatorType === INDICATOR_TYPES.IMD ? 'text-gray-400' : 'text-gray-700'}`}>
+                    {t('ui.populationGroup')}
+                    {selectedIndicatorType === INDICATOR_TYPES.IMD && (
+                      <span className="ml-2 text-xs font-normal normal-case whitespace-nowrap">
+                        ({language === 'th' ? 'ไม่ใช้กับ IMD' : 'N/A for IMD'})
+                      </span>
+                    )}
+                  </label>
                   <select
                     id="population-group-select"
-                    value={selectedPopulationGroup}
+                    value={selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup}
                     onChange={(e) => setSelectedPopulationGroup(e.target.value)}
-                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-4 bg-gradient-to-r from-white to-gray-50 text-base focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-sm hover:shadow-md font-medium"
+                    disabled={selectedIndicatorType === INDICATOR_TYPES.IMD}
+                    className={`w-full border-2 rounded-lg px-4 py-3 text-base focus:outline-none transition-all duration-200 ${
+                      selectedIndicatorType === INDICATOR_TYPES.IMD 
+                        ? 'border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed' 
+                        : 'border-gray-200 bg-white focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500'
+                    }`}
                     aria-describedby="population-group-description"
                   >
-                    <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
-                    <option value="elderly">{t('populationGroups.elderly')}</option>
-                    <option value="disabled">{t('populationGroups.disabled')}</option>
-                    <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
-                    <option value="normal_population">{t('populationGroups.normal_population')}</option>
+                    {selectedIndicatorType === INDICATOR_TYPES.IMD ? (
+                      <option value="all">{language === 'th' ? 'ทุกกลุ่มประชากร' : 'All Population Groups'}</option>
+                    ) : (
+                      <>
+                        <option value="informal_workers">{t('populationGroups.informal_workers')}</option>
+                        <option value="elderly">{t('populationGroups.elderly')}</option>
+                        <option value="disabled">{t('populationGroups.disabled')}</option>
+                        <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
+                        <option value="normal_population">{t('populationGroups.normal_population')}</option>
+                      </>
+                    )}
                   </select>
                 </div>
 
@@ -556,26 +693,8 @@ const Dashboard = () => {
                     aria-describedby="district-description"
                   >
                     {availableDistricts.map(district => (
-                      <option key={district} value={district}>{district}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Domain */}
-                <div className="space-y-3">
-                  <label htmlFor="domain-select" className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                    {t('ui.indicator')} Domain
-                  </label>
-                  <select
-                    id="domain-select"
-                    value={selectedDomain}
-                    onChange={(e) => setSelectedDomain(e.target.value)}
-                    className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-3 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
-                    aria-describedby="domain-description"
-                  >
-                    {availableDomains.map(domain => (
-                      <option key={domain} value={domain}>
-                        {t(`domains.${domain}`)}
+                      <option key={district} value={district}>
+                        {district === 'Bangkok Overall' && language === 'th' ? 'ภาพรวมทั้งหมด' : district}
                       </option>
                     ))}
                   </select>
@@ -605,9 +724,10 @@ Reset Filters
             {activeTab === 'overview' && (
               <div className="space-y-6">
                 {/* Spider Chart and Map - Side by side with compact styling */}
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                  {/* Spider Chart - Compact Container */}
-                  <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 relative overflow-hidden">
+                <div className={`grid grid-cols-1 gap-6 ${selectedIndicatorType !== INDICATOR_TYPES.IMD ? 'xl:grid-cols-2' : ''}`}>
+                  {/* Spider Chart - Compact Container (hidden for IMD) */}
+                  {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 relative overflow-hidden">
                     {/* Compact Title Section */}
                     <div className="relative mb-4">
                       <h3 className="text-xl font-bold text-gray-900 mb-1">
@@ -667,10 +787,12 @@ Reset Filters
                     <PopulationGroupSpiderChart 
                       selectedDomain={selectedDomain}
                       selectedDistrict={selectedDistrict}
+                      selectedIndicatorType={selectedIndicatorType}
                       getIndicatorData={getIndicatorData}
                       hideCheckboxes={true}
                     />
                   </div>
+                  )}
 
                   {/* Enhanced Map Container */}
                   <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 relative" style={{ height: '700px' }}>
@@ -684,7 +806,12 @@ Reset Filters
                         </div>
                         <div>
                           <h3 className="text-lg font-bold text-gray-900">Bangkok Districts</h3>
-                          <p className="text-sm text-gray-600">{t(`domains.${selectedDomain}`)} - {t(`populationGroups.${selectedPopulationGroup}`)}</p>
+                          <p className="text-sm text-gray-600">
+                            {t(`domains.${selectedDomain}`)}
+                            {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
+                              <> - {t(`populationGroups.${selectedPopulationGroup}`)}</>
+                            )}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -700,6 +827,7 @@ Reset Filters
                           selectedDomain={selectedDomain}
                           selectedPopulationGroup={selectedPopulationGroup}
                           selectedDistrict={selectedDistrict}
+                          selectedIndicatorType={selectedIndicatorType}
                           onDistrictClick={handleMapDistrictClick}
                           getIndicatorData={getIndicatorData}
                         />
@@ -708,8 +836,9 @@ Reset Filters
                   </div>
                 </div>
 
-                {/* Enhanced Domain Performance Rankings */}
-                <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 relative overflow-hidden">
+                {/* Enhanced Domain Performance Rankings (hidden for IMD) */}
+                {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
+                  <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 relative overflow-hidden">
                   {/* Background decoration */}
                   <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-indigo-50 to-purple-50 rounded-full -translate-y-20 translate-x-20 opacity-60"></div>
                   
@@ -734,15 +863,12 @@ Reset Filters
                       { value: 'lgbtq', color: '#f59e0b', icon: 'diversity', bgColor: 'from-amber-50 to-amber-100' },
                       { value: 'normal_population', color: '#6b7280', icon: 'population', bgColor: 'from-gray-50 to-gray-100' }
                     ].map(group => {
-                      // Calculate scores for this group across all domains
-                      const domains = [
-                        'economic_security', 'education', 'healthcare_access',
-                        'physical_environment', 'social_context', 'health_behaviors'
-                      ];
+                      // Calculate scores for this group across filtered domains based on indicator type
+                      const domains = getDomainsByIndicatorType(selectedIndicatorType);
                       
                       const groupScores = domains.map(domain => {
                         try {
-                          const indicatorData = getIndicatorData(domain, selectedDistrict, group.value);
+                          const indicatorData = getIndicatorData(domain, selectedDistrict, group.value, selectedIndicatorType);
                           const domainScore = indicatorData.find(item => 
                             item.isDomainScore || 
                             item.indicator === '_domain_score' || 
@@ -787,6 +913,7 @@ Reset Filters
                     </div>
                   </div>
                 </div>
+                )}
               </div>
             )}
 
@@ -810,9 +937,11 @@ Reset Filters
                           {t(`domains.${selectedDomain}`)}
                         </h3>
                         <div className="flex flex-wrap items-center gap-3 text-sm">
-                          <span className="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full font-semibold">
-                            {t(`populationGroups.${selectedPopulationGroup}`)}
-                          </span>
+                          {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
+                            <span className="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full font-semibold">
+                              {t(`populationGroups.${selectedPopulationGroup}`)}
+                            </span>
+                          )}
                           {selectedDistrict !== 'Bangkok Overall' && (
                             <span className="px-3 py-1.5 bg-green-100 text-green-800 rounded-full font-semibold">
 {selectedDistrict}
@@ -840,9 +969,12 @@ Reset Filters
                               <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.score')}
                               </th>
-                              <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
-                                {t('ui.sampleSize')}
-                              </th>
+                              {/* Hide sample size column for IMD */}
+                              {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
+                                <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
+                                  {t('ui.sampleSize')}
+                                </th>
+                              )}
                               <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.performance')}
                               </th>
@@ -886,16 +1018,18 @@ Reset Filters
                                       )}
                                     </td>
 
-                                    {/* Sample Size Column */}
-                                    <td className="text-center py-4 px-6 text-gray-600">
-                                      {(() => {
-                                        if (item.noData) {
-                                          return language === 'th' ? 'ไม่มีข้อมูล' : 'No data';
-                                        }
-                                        
-                                        return formatSampleSize(item.sample_size);
-                                      })()}
-                                    </td>
+                                    {/* Sample Size Column - Hidden for IMD */}
+                                    {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
+                                      <td className="text-center py-4 px-6 text-gray-600">
+                                        {(() => {
+                                          if (item.noData) {
+                                            return language === 'th' ? 'ไม่มีข้อมูล' : 'No data';
+                                          }
+                                          
+                                          return formatSampleSize(item.sample_size);
+                                        })()}
+                                      </td>
+                                    )}
 
                                     {/* Performance Bar Column */}
                                     <td className="text-center py-4 px-6">
@@ -947,6 +1081,7 @@ Reset Filters
                       selectedDomain={selectedDomain}
                       selectedPopulationGroup={selectedPopulationGroup}
                       selectedDistrict={selectedDistrict}
+                      selectedIndicatorType={selectedIndicatorType}
                       onDistrictClick={handleMapDistrictClick}
                       getIndicatorData={getIndicatorData}
                     />

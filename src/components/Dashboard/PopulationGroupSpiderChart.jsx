@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { getDomainsByIndicatorType } from '../../utils/indicatorDomainMapping';
+import { INDICATOR_TYPES } from '../../constants/indicatorTypes';
 
-const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCheckboxes = false }) => {
+const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, selectedIndicatorType, hideCheckboxes = false }) => {
   const { t, language } = useLanguage();
   const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
   
@@ -70,14 +72,8 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
   // Get only visible groups for rendering
   const activeGroups = populationGroups.filter(group => visibleGroups[group.value]);
 
-  const domains = [
-    'economic_security',
-    'education', 
-    'healthcare_access',
-    'physical_environment',
-    'social_context',
-    'health_behaviors'
-  ];
+  // Get domains based on selected indicator type
+  const domains = getDomainsByIndicatorType(selectedIndicatorType || INDICATOR_TYPES.SDHE);
 
   // Prepare data for the spider chart
   const chartData = domains.map(domain => {
@@ -88,7 +84,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, hideCh
 
     populationGroups.forEach(group => {
       try {
-        const indicatorData = getIndicatorData(domain, selectedDistrict, group.value);
+        const indicatorData = getIndicatorData(domain, selectedDistrict, group.value, selectedIndicatorType);
         
         // Find domain score, handle both old and new data structures
         const domainScore = indicatorData.find(item => 

@@ -4,6 +4,7 @@ import { ArrowLeft, Users, TrendingUp, Calculator, Info, Eye, Building, BarChart
 import { useLanguage } from '../../contexts/LanguageContext';
 import useIndicators from '../../hooks/useIndicators';
 import { REVERSE_INDICATORS } from '../../constants/dashboardConstants';
+import { INDICATOR_TYPES, getIndicatorType } from '../../constants/indicatorTypes';
 import CorrelationAnalysis from './CorrelationAnalysis';
 
 const IndicatorDetail = ({ 
@@ -11,6 +12,7 @@ const IndicatorDetail = ({
   domain, 
   district, 
   populationGroup, 
+  indicatorType,
   onBack, 
   surveyData,
   getIndicatorData,
@@ -67,14 +69,17 @@ const IndicatorDetail = ({
       'healthworker_per_population': `${valueNum.toFixed(1)} per 10,000`,
       'community_healthworker_per_population': `${valueNum.toFixed(1)} per 1,000`,
       'health_service_access': `${valueNum.toFixed(1)} per 10,000`,
-      'bed_per_population': `${valueNum.toFixed(1)} per 10,000`
+      'bed_per_population': `${valueNum.toFixed(1)} per 10,000`,
+      'market_per_population': `${valueNum.toFixed(1)} per 10,000`,
+      'sportfield_per_population': `${valueNum.toFixed(1)} per 1,000`
     };
 
     return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
   };
 
-  // Get current indicator data
-  const indicatorData = getIndicatorData(domain, district, populationGroup);
+  // Get current indicator data - use 'all' for IMD indicators
+  const effectivePopulationGroup = getIndicatorType(indicator) === INDICATOR_TYPES.IMD ? 'all' : populationGroup;
+  const indicatorData = getIndicatorData(domain, district, effectivePopulationGroup, indicatorType);
   const currentIndicator = indicatorData ? indicatorData.find(item => item.indicator === indicator) : null;
 
   // Color schemes for charts
@@ -96,22 +101,20 @@ const IndicatorDetail = ({
     ];
 
     if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {
-      // Show facility type data for health_service_access (health facilities per capita)
-      if (indicator === 'health_service_access') {
-        if (healthFacilitiesData && Array.isArray(healthFacilitiesData) && healthFacilitiesData.length > 0) {
-          const facilityTypeData = calculateFacilityTypeData();
-          
-          return {
-            age: [],
-            sex: [],
-            occupation: [],
-            welfare: [],
-            facilityType: facilityTypeData
-          };
-        }
+      // Show facility type data for all healthcare supply indicators
+      if (healthFacilitiesData && Array.isArray(healthFacilitiesData) && healthFacilitiesData.length > 0) {
+        const facilityTypeData = calculateFacilityTypeData();
+        
+        return {
+          age: [],
+          sex: [],
+          occupation: [],
+          welfare: [],
+          facilityType: facilityTypeData
+        };
       }
       
-      // For other supply indicators, no disaggregation available
+      // If no facility data available
       return {
         age: [],
         sex: [],
@@ -722,30 +725,10 @@ const IndicatorDetail = ({
             {/* Demographics Tab */}
             {activeTab === 'demographics' && (
               <div className="space-y-8">
-                {/* Healthcare Supply Indicators Message */}
-                {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-                  'community_healthworker_per_population', 'bed_per_population'].includes(indicator) && (
-                  <div className="text-center py-8">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto">
-                      <div className="flex items-center justify-center mb-4">
-                        <div className="bg-blue-100 rounded-full p-3">
-                          <TrendingUp className="w-6 h-6 text-blue-600" />
-                        </div>
-                      </div>
-                      <h3 className="text-lg font-medium text-blue-900 mb-2">
-                        {language === 'th' ? 'ตัวชี้วัดทรัพยากรสุขภาพ' : 'Healthcare Supply Indicator'}
-                      </h3>
-                      <p className="text-blue-800">
-                        {language === 'th' 
-                          ? 'ตัวชี้วัดนี้คำนวณจากข้อมูลสถานพยาบาลและประชากรรวม ไม่สามารถแยกย่อยตามลักษณะประชากรได้'
-                          : 'This indicator is calculated from health facility data and total population. Demographic disaggregation is not available.'}
-                      </p>
-                    </div>
-                  </div>
-                )}
 
-                {/* Health Service Access - Custom Horizontal Bar Chart */}
-                {indicator === 'health_service_access' && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
+                {/* Healthcare Supply Indicators - Facility Type Chart */}
+                {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
+                  'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">
                       {language === 'th' ? 'ตามประเภทสถานพยาบาล' : 'By Health Facility Type'}
@@ -964,7 +947,7 @@ const IndicatorDetail = ({
               <div>
                 {/* Check if this is a healthcare supply indicator */}
                 {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-                  'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) ? (
+                  'community_healthworker_per_population', 'health_service_access', 'bed_per_population', 'market_per_population', 'sportfield_per_population'].includes(indicator) ? (
                   <div className="text-center py-8">
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto">
                       <div className="flex items-center justify-center mb-4">

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { INDICATOR_TYPES } from '../../constants/indicatorTypes';
 
 // Fix for default markers in Leaflet with bundlers
 delete L.Icon.Default.prototype._getIconUrl;
@@ -15,6 +16,7 @@ const BangkokMap = ({
   selectedDomain, 
   selectedPopulationGroup, 
   selectedDistrict,
+  selectedIndicatorType,
   onDistrictClick,
   getIndicatorData 
 }) => {
@@ -224,7 +226,8 @@ const BangkokMap = ({
     }
 
     try {
-      const indicatorData = getIndicatorData(selectedDomain, districtName, selectedPopulationGroup);
+      const effectivePopulationGroup = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
+      const indicatorData = getIndicatorData(selectedDomain, districtName, effectivePopulationGroup, selectedIndicatorType);
       const domainScore = indicatorData.find(item => item.isDomainScore);
       
       // FIXED: Check for valid domain score with more lenient conditions
@@ -307,7 +310,8 @@ const BangkokMap = ({
           
           if (districtName) {
             // FIXED: Show more informative popup with data details
-            const indicatorData = getIndicatorData ? getIndicatorData(selectedDomain, districtName, selectedPopulationGroup) : [];
+            const effectivePopulationGroup2 = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
+            const indicatorData = getIndicatorData ? getIndicatorData(selectedDomain, districtName, effectivePopulationGroup2, selectedIndicatorType) : [];
             const domainScore = indicatorData.find(item => item.isDomainScore);
             
             let popupContent = `<strong>${districtName}</strong><br/>`;
@@ -315,11 +319,13 @@ const BangkokMap = ({
             if (domainScore && domainScore.value !== null && domainScore.value !== undefined) {
               popupContent += `${t(`domains.${selectedDomain}`)}: ${domainScore.value.toFixed(1)}%<br/>`;
               
-              // Show sample size info
-              if (typeof domainScore.sample_size === 'string') {
-                popupContent += `Sample: ${domainScore.sample_size}<br/>`;
-              } else if (typeof domainScore.sample_size === 'number') {
-                popupContent += `Sample: ${domainScore.sample_size} people<br/>`;
+              // Show sample size info only for SDHE (not for IMD)
+              if (selectedIndicatorType !== INDICATOR_TYPES.IMD) {
+                if (typeof domainScore.sample_size === 'string') {
+                  popupContent += `Sample: ${domainScore.sample_size}<br/>`;
+                } else if (typeof domainScore.sample_size === 'number') {
+                  popupContent += `Sample: ${domainScore.sample_size} people<br/>`;
+                }
               }
               
               // Show combination method for normal population

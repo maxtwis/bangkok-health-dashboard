@@ -1,7 +1,10 @@
 /**
  * Mapping of indicators to their domains
  * Based on the structure in DataProcessor.js
+ * Now separated into SDHE (survey data) and IMD (facility data)
  */
+
+import { INDICATOR_TYPES, getIndicatorType } from '../constants/indicatorTypes';
 
 export const INDICATOR_DOMAIN_MAP = {
   // Economic Security
@@ -24,18 +27,26 @@ export const INDICATOR_DOMAIN_MAP = {
   tertiary_completion: 'education',
   training_participation: 'education',
 
-  // Healthcare Access
+  // Healthcare Access (Survey-based SDHE indicators)
   health_coverage: 'healthcare_access',
   medical_consultation_skip_cost: 'healthcare_access',
   medical_treatment_skip_cost: 'healthcare_access',
   prescribed_medicine_skip_cost: 'healthcare_access',
   dental_access: 'healthcare_access',
-  doctor_per_population: 'healthcare_access',
-  nurse_per_population: 'healthcare_access',
-  healthworker_per_population: 'healthcare_access',
-  community_healthworker_per_population: 'healthcare_access',
-  health_service_access: 'healthcare_access',
-  bed_per_population: 'healthcare_access',
+  
+  // Healthcare Infrastructure (Facility-based IMD indicators)
+  doctor_per_population: 'healthcare_infrastructure',
+  nurse_per_population: 'healthcare_infrastructure',
+  healthworker_per_population: 'healthcare_infrastructure',
+  community_healthworker_per_population: 'healthcare_infrastructure',
+  health_service_access: 'healthcare_infrastructure',
+  bed_per_population: 'healthcare_infrastructure',
+  
+  // Food Access (Facility-based IMD indicators)
+  market_per_population: 'food_access',
+  
+  // Sports & Recreation (Facility-based IMD indicators) 
+  sportfield_per_population: 'sports_recreation',
 
   // Physical Environment
   electricity_access: 'physical_environment',
@@ -114,4 +125,33 @@ export function getIndicatorsByDomain(domain) {
  */
 export function getAllDomains() {
   return [...new Set(Object.values(INDICATOR_DOMAIN_MAP))];
+}
+
+/**
+ * Get domains for a specific indicator type
+ * @param {string} indicatorType - SDHE or IMD
+ * @returns {string[]} Array of domain names for that type
+ */
+export function getDomainsByIndicatorType(indicatorType) {
+  const indicators = Object.keys(INDICATOR_DOMAIN_MAP);
+  const domains = new Set();
+  
+  indicators.forEach(indicator => {
+    const type = getIndicatorType(indicator);
+    if (type === indicatorType) {
+      domains.add(INDICATOR_DOMAIN_MAP[indicator]);
+    }
+  });
+  
+  return Array.from(domains);
+}
+
+/**
+ * Check if an indicator belongs to a specific type
+ * @param {string} indicator - The indicator key
+ * @param {string} indicatorType - SDHE or IMD
+ * @returns {boolean}
+ */
+export function isIndicatorOfType(indicator, indicatorType) {
+  return getIndicatorType(indicator) === indicatorType;
 }

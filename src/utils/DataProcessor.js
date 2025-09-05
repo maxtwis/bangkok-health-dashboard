@@ -1,13 +1,17 @@
 // Updated Basic SDHE Data Processor with Healthcare Supply Indicators - src/utils/BasicSDHEProcessor.js
 // UPDATED: Added minimum sample size requirement of 5 respondents per district
+// UPDATED: Separated SDHE (survey) and IMD (facility) indicators
 import Papa from 'papaparse';
 import _ from 'lodash';
+import { getIndicatorType, INDICATOR_TYPES } from '../constants/indicatorTypes';
 
 class DataProcessor {
   constructor() {
     this.surveyData = [];
     this.healthSupplyData = [];
     this.healthFacilitiesData = [];
+    this.marketData = [];
+    this.sportfieldData = [];
     this.districtPopulationData = [];
     this.communityHealthWorkerData = [];
     this.communityPopulationData = [];
@@ -101,6 +105,31 @@ class DataProcessor {
       });
       this.communityPopulationData = commPopParsed.data;
 
+      // Load market data
+      const marketResponse = await fetch('/data/market.csv');
+      if (!marketResponse.ok) {
+        throw new Error('Could not load market.csv');
+      }
+      const marketCsv = await marketResponse.text();
+      const marketParsed = Papa.parse(marketCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.marketData = marketParsed.data;
+
+      // Load sportfield data
+      const sportfieldResponse = await fetch('/data/sportfield.csv');
+      if (!sportfieldResponse.ok) {
+        throw new Error('Could not load sportfield.csv');
+      }
+      const sportfieldCsv = await sportfieldResponse.text();
+      const sportfieldParsed = Papa.parse(sportfieldCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.sportfieldData = sportfieldParsed.data;
 
     } catch (error) {
       throw error;
@@ -231,6 +260,61 @@ class DataProcessor {
     }
   }
 
+  calculateMarketAccess(districtCode, districtName) {
+    try {
+      const districtPopulation = this.districtPopulationData
+        .filter(record => record.dcode === districtCode)
+        .reduce((sum, record) => sum + (record.population || 0), 0);
+
+      if (districtPopulation === 0) {
+        return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
+      }
+
+      const districtMarkets = this.marketData.filter(market => 
+        market.dcode === districtCode
+      );
+
+      const marketsPer10k = parseFloat(((districtMarkets.length / districtPopulation) * 10000).toFixed(2));
+
+      return {
+        value: marketsPer10k,
+        sample_size: districtMarkets.length,
+        population: districtPopulation,
+        absolute_count: districtMarkets.length
+      };
+
+    } catch (error) {
+      return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
+    }
+  }
+
+  calculateSportfieldAccess(districtCode, districtName) {
+    try {
+      const districtPopulation = this.districtPopulationData
+        .filter(record => record.dcode === districtCode)
+        .reduce((sum, record) => sum + (record.population || 0), 0);
+
+      if (districtPopulation === 0) {
+        return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
+      }
+
+      const districtSportfields = this.sportfieldData.filter(sportfield => 
+        sportfield.dcode === districtCode
+      );
+
+      const sportfieldsPer1k = parseFloat(((districtSportfields.length / districtPopulation) * 1000).toFixed(2));
+
+      return {
+        value: sportfieldsPer1k,
+        sample_size: districtSportfields.length,
+        population: districtPopulation,
+        absolute_count: districtSportfields.length
+      };
+
+    } catch (error) {
+      return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
+    }
+  }
 
   createIndicatorMappings() {
     return {
@@ -375,7 +459,11 @@ class DataProcessor {
         dental_access: {
           fields: ['oral_health', 'oral_health_access'],
           condition: (r) => r.oral_health === 1 && r.oral_health_access === 1
-        },
+        }
+      },
+      
+      // Healthcare Infrastructure (facility-based IMD indicators)
+      healthcare_infrastructure: {
         doctor_per_population: {
           isSupplyIndicator: true
         },
@@ -392,6 +480,20 @@ class DataProcessor {
           isSupplyIndicator: true
         },
         bed_per_population: {
+          isSupplyIndicator: true
+        }
+      },
+
+      // Food Access (facility-based IMD indicators)
+      food_access: {
+        market_per_population: {
+          isSupplyIndicator: true
+        }
+      },
+
+      // Sports & Recreation (facility-based IMD indicators)
+      sports_recreation: {
+        sportfield_per_population: {
           isSupplyIndicator: true
         }
       },
@@ -757,7 +859,19 @@ class DataProcessor {
             supplyData = { 
               [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
             };
-          } 
+          }
+          // Handle market access indicator (uses market.csv)
+          else if (indicator === 'market_per_population') {
+            supplyData = { 
+              [indicator]: this.calculateMarketAccess(parseInt(districtCode), districtName) 
+            };
+          }
+          // Handle sportfield access indicator (uses sportfield.csv)
+          else if (indicator === 'sportfield_per_population') {
+            supplyData = { 
+              [indicator]: this.calculateSportfieldAccess(parseInt(districtCode), districtName) 
+            };
+          }
           // Handle healthcare worker indicators (uses health_supply.csv)
           else {
             supplyData = this.calculateHealthcareSupplyIndicators(
@@ -790,6 +904,14 @@ class DataProcessor {
                 supplyData = { 
                   [indicator]: this.calculateHealthServiceAccess(dcode, dname) 
                 };
+              } else if (indicator === 'market_per_population') {
+                supplyData = { 
+                  [indicator]: this.calculateMarketAccess(dcode, dname) 
+                };
+              } else if (indicator === 'sportfield_per_population') {
+                supplyData = { 
+                  [indicator]: this.calculateSportfieldAccess(dcode, dname) 
+                };
               } else {
                 supplyData = this.calculateHealthcareSupplyIndicators(dcode, dname);
               }
@@ -808,8 +930,12 @@ class DataProcessor {
                 overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
               } else if (indicator === 'health_service_access') {
                 overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
+              } else if (indicator === 'market_per_population') {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
               } else if (indicator === 'bed_per_population') {
                 overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
+              } else if (indicator === 'sportfield_per_population') {
+                overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
               } else {
                 overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
               }
@@ -1003,51 +1129,87 @@ class DataProcessor {
       
       // Initialize Bangkok Overall
       results[domain]['Bangkok Overall'] = {};
-      populationGroups.forEach(group => {
-        results[domain]['Bangkok Overall'][group] = {};
-      });
       
-      // Initialize individual districts
-      districts.forEach(district => {
-        results[domain][district] = {};
-        populationGroups.forEach(group => {
-          results[domain][district][group] = {};
+      // For IMD domains (healthcare_infrastructure, food_access, sports_recreation), only use 'all' population group
+      if (domain === 'healthcare_infrastructure' || domain === 'food_access' || domain === 'sports_recreation') {
+        results[domain]['Bangkok Overall']['all'] = {};
+        
+        // Initialize individual districts with 'all' group
+        districts.forEach(district => {
+          results[domain][district] = {};
+          results[domain][district]['all'] = {};
         });
-      });
+      } else {
+        // For SDHE domains, use specific population groups
+        populationGroups.forEach(group => {
+          results[domain]['Bangkok Overall'][group] = {};
+        });
+        
+        // Initialize individual districts
+        districts.forEach(district => {
+          results[domain][district] = {};
+          populationGroups.forEach(group => {
+            results[domain][district][group] = {};
+          });
+        });
+      }
     });
 
     // Calculate indicators for each combination
     domains.forEach(domain => {
-      // Calculate Bangkok Overall first (using all data)
-      populationGroups.forEach(group => {
-        const allRecords = this.surveyData.filter(r => r.population_group === group);
-        if (allRecords.length > 0) {
-          results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
-            allRecords, 
+      if (domain === 'healthcare_infrastructure' || domain === 'food_access' || domain === 'sports_recreation') {
+        // For IMD domains, calculate for all population combined
+        // Bangkok Overall
+        results[domain]['Bangkok Overall']['all'] = this.calculateIndicatorsForRecords(
+          this.surveyData, // Use all records
+          domain, 
+          'Bangkok Overall',
+          'all'
+        );
+        
+        // Individual districts
+        districts.forEach(district => {
+          const records = this.surveyData.filter(r => r.district_name === district);
+          results[domain][district]['all'] = this.calculateIndicatorsForRecords(
+            records, 
             domain, 
-            'Bangkok Overall',
-            group
+            district,
+            'all'
           );
-        }
-      });
-      
-      // Calculate individual districts
-      districts.forEach(district => {
+        });
+      } else {
+        // For SDHE domains, calculate per population group
+        // Calculate Bangkok Overall first (using all data)
         populationGroups.forEach(group => {
-          const records = this.surveyData.filter(r => 
-            r.district_name === district && r.population_group === group
-          );
-
-          if (records.length > 0) {
-            results[domain][district][group] = this.calculateIndicatorsForRecords(
-              records, 
+          const allRecords = this.surveyData.filter(r => r.population_group === group);
+          if (allRecords.length > 0) {
+            results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
+              allRecords, 
               domain, 
-              district,
+              'Bangkok Overall',
               group
             );
           }
         });
-      });
+        
+        // Calculate individual districts
+        districts.forEach(district => {
+          populationGroups.forEach(group => {
+            const records = this.surveyData.filter(r => 
+              r.district_name === district && r.population_group === group
+            );
+
+            if (records.length > 0) {
+              results[domain][district][group] = this.calculateIndicatorsForRecords(
+                records, 
+                domain, 
+                district,
+                group
+              );
+            }
+          });
+        });
+      }
     });
 
     this.sdheResults = results;
@@ -1060,17 +1222,41 @@ class DataProcessor {
     return ['Bangkok Overall', ...districts];
   }
 
-  getAvailableDomains() {
-    return Object.keys(this.indicatorMappings);
+  getAvailableDomains(indicatorType = null) {
+    const allDomains = Object.keys(this.indicatorMappings);
+    
+    // If no indicator type specified, return all domains
+    if (!indicatorType) {
+      return allDomains;
+    }
+    
+    // Filter domains based on indicator type
+    if (indicatorType === INDICATOR_TYPES.IMD) {
+      // For IMD, return healthcare_infrastructure, food_access, and sports_recreation
+      return allDomains.filter(domain => domain === 'healthcare_infrastructure' || domain === 'food_access' || domain === 'sports_recreation');
+    } else if (indicatorType === INDICATOR_TYPES.SDHE) {
+      // For SDHE, return all domains except IMD domains
+      return allDomains.filter(domain => domain !== 'healthcare_infrastructure' && domain !== 'food_access' && domain !== 'sports_recreation');
+    }
+    
+    return allDomains;
   }
 
-  getIndicatorData(domain, district, populationGroup) {
+  getIndicatorData(domain, district, populationGroup, indicatorType = null) {
     if (!this.sdheResults[domain] || !this.sdheResults[domain][district] || !this.sdheResults[domain][district][populationGroup]) {
       return [];
     }
 
     const data = this.sdheResults[domain][district][populationGroup];
-    return Object.keys(data).map(indicator => ({
+    return Object.keys(data)
+      .filter(indicator => {
+        // If indicator type is specified, filter by it
+        if (indicatorType) {
+          return getIndicatorType(indicator) === indicatorType;
+        }
+        return true;
+      })
+      .map(indicator => ({
       indicator,
       value: data[indicator].value,
       sample_size: data[indicator].sample_size,
