@@ -12,6 +12,11 @@ Based on key correlations from the analysis:
 3. Health behaviors → Chronic disease clustering
 4. Social determinants → Mental health outcomes
 5. Environmental factors → Health outcomes
+
+IMPORTANT: Income Storage Convention (Real Survey Pattern)
+- income_type=1: Daily wage earners store ACTUAL DAILY WAGE (e.g., 300-1500 baht/day)
+- income_type=2: Monthly salary earners store ACTUAL MONTHLY SALARY (e.g., 15000-50000 baht/month)
+- This matches how people actually report income in surveys
 """
 
 import pandas as pd
@@ -104,19 +109,27 @@ class SurveyCorrelationEnhancer:
                     # Very high education → government or state enterprise
                     df.loc[idx, 'occupation_type'] = self.random_state.choice([1, 2])
         
-        # Enhance income based on education and occupation type
+        # Validate income ranges (no artificial enhancement, just ensure realistic bounds)
         for idx in df.index:
             if pd.notna(df.loc[idx, 'income']) and df.loc[idx, 'income'] > 0:
-                edu_score = edu_scores[idx]
-                current_income = df.loc[idx, 'income']
+                income_type = df.loc[idx, 'income_type'] if pd.notna(df.loc[idx, 'income_type']) else 2
                 
-                # Higher education should correlate with higher income (subtle boost)
-                if edu_score > 0.7 and self.random_state.random() < self.strength * 1.2:
-                    income_boost = 1 + (edu_score - 0.5) * 0.25  # Up to 12.5% boost
-                    df.loc[idx, 'income'] = int(current_income * income_boost)
-                    
-                # Round to nearest thousand (like the enhanced simulator)
-                df.loc[idx, 'income'] = round(df.loc[idx, 'income'] / 1000) * 1000
+                # IMPORTANT: Income values stored as actual reported amounts
+                # income_type=1 means daily wage (e.g., 300-1500 baht per day)
+                # income_type=2 means monthly salary (e.g., 15000-50000 baht per month)
+                
+                # Only validate ranges, don't artificially boost income
+                if income_type == 1:  # Daily wage earners
+                    # Ensure daily wage is reasonable (150-1500 baht/day typical)
+                    if df.loc[idx, 'income'] < 150:
+                        df.loc[idx, 'income'] = random.randint(200, 300)  # Realistic minimum
+                    elif df.loc[idx, 'income'] > 1500:
+                        df.loc[idx, 'income'] = random.randint(1200, 1500)  # Cap with variation
+                else:  # Monthly salary earners (income_type == 2)
+                    # Ensure monthly salary is reasonable (12,000 - 100,000)
+                    if df.loc[idx, 'income'] < 12000:
+                        df.loc[idx, 'income'] = 12000  # Minimum monthly salary
+                    # Monthly salaries are already properly rounded in the original data
         
         return df
     

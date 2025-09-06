@@ -758,32 +758,113 @@ class BangkokUrbanHealthSurveySimulator:
                 # Income - adjusted by district wealth level
                 income_mult = district_profile.get('income_mult', 1.0)
                 
-                income_ranges = {
-                    1: (20000, 45000),  # Government - decent salaries
-                    2: (25000, 50000),  # State enterprise - good benefits
-                    3: (18000, 40000),  # Company employee - varies widely
-                    4: (25000, 80000),  # Private business - can be very successful
-                    5: (15000, 45000),  # Freelance - high variation
-                    6: (12000, 25000),  # Informal sector - lower but still livable
-                }
+                # Determine income type first based on occupation type
+                if record['occupation_type'] in [1, 2, 3]:  # Government, state enterprise, company
+                    # Mostly monthly salary
+                    record['income_type'] = random.choices([1, 2], weights=[0.05, 0.95])[0]
+                elif record['occupation_type'] == 5:  # Private business
+                    # Mixed daily/monthly
+                    record['income_type'] = random.choices([1, 2], weights=[0.3, 0.7])[0]
+                else:  # Freelance (6) and informal sector
+                    # More likely to be daily wage
+                    record['income_type'] = random.choices([1, 2], weights=[0.7, 0.3])[0]
+                
+                # Set income based on type (daily vs monthly) and occupation
+                if record['income_type'] == 1:  # Daily income
+                    daily_income_ranges = {
+                        1: (600, 1200),    # Government - rarely daily
+                        2: (700, 1500),    # State enterprise - rarely daily
+                        3: (500, 1000),    # Company employee - rarely daily
+                        5: (400, 1500),    # Private business - varies widely
+                        6: (300, 800),     # Freelance - common daily wage
+                    }
+                    income_range = daily_income_ranges.get(record['occupation_type'], (300, 800))
+                else:  # Monthly income (income_type == 2)
+                    monthly_income_ranges = {
+                        1: (20000, 45000),  # Government - decent salaries
+                        2: (25000, 50000),  # State enterprise - good benefits
+                        3: (15000, 40000),  # Company employee - varies widely
+                        5: (20000, 80000),  # Private business - can be very successful
+                        6: (12000, 25000),  # Freelance - lower monthly average
+                    }
+                    income_range = monthly_income_ranges.get(record['occupation_type'], (12000, 25000))
                 
                 # Adjust income ranges by district
-                income_range = income_ranges[record['occupation_type']]
-                adjusted_min = int(income_range[0] * income_mult)
-                adjusted_max = int(income_range[1] * income_mult)
+                # For daily wages, apply smaller district adjustments
+                if record['income_type'] == 1:
+                    # Daily wages - apply smaller district adjustment
+                    adjusted_min = int(income_range[0] * min(income_mult, 1.2))
+                    adjusted_max = int(income_range[1] * min(income_mult, 1.2))
+                else:
+                    # Monthly salaries - apply full district adjustment
+                    adjusted_min = int(income_range[0] * income_mult)
+                    adjusted_max = int(income_range[1] * income_mult)
                 
                 # Special adjustments for elite districts
-                if district_profile['type'] in ['cbd', 'upscale_expat'] and record['occupation_type'] in [3, 4]:
-                    adjusted_min = int(adjusted_min * 1.2)
-                    adjusted_max = int(adjusted_max * 1.3)
+                if district_profile['type'] in ['cbd', 'upscale_expat', 'cbd_shopping']:
+                    if record['occupation_type'] in [3, 5] and record['income_type'] == 2:  # Monthly salary in CBD
+                        adjusted_min = int(adjusted_min * 1.3)
+                        adjusted_max = int(adjusted_max * 1.5)
+                    elif record['income_type'] == 1:  # Daily wage in CBD
+                        # Smaller boost for daily wages in CBD
+                        adjusted_min = int(adjusted_min * 1.1)
+                        adjusted_max = int(adjusted_max * 1.1)
                 
+                # Generate income based on actual survey response patterns
+                base_income = random.randint(adjusted_min, adjusted_max)
+                
+                # Apply LGBT income penalty (wage gap)
                 if is_lgbt:
-                    record['income'] = random.randint(int(adjusted_min * 0.9), int(adjusted_max * 0.95))
-                else:
-                    record['income'] = random.randint(adjusted_min, adjusted_max)
+                    base_income = int(base_income * 0.9)
                 
-                record['income_type'] = random.choices([1, 2], weights=[0.3, 0.7])[0]
-                record['working_hours'] = random.randint(6, 12)
+                # Store actual values as people would report them
+                if record['income_type'] == 1:
+                    # Daily wage - store actual daily amount with realistic variation
+                    # Soft cap at reasonable daily wage maximum
+                    if base_income > 1500:
+                        base_income = random.randint(1000, 1500)
+                    elif base_income < 300:
+                        base_income = 300
+                    
+                    # Apply realistic rounding patterns that people actually use
+                    # Small amounts: often rounded to 50s (150, 200, 250, 300)
+                    # Medium amounts: often rounded to 50s or 100s (350, 400, 500, 600)  
+                    # Large amounts: often rounded to 100s or nice numbers (800, 1000, 1200)
+                    if base_income < 400:
+                        # Small wages - round to nearest 50, with some variation
+                        if random.random() < 0.7:  # 70% rounded to 50s
+                            record['income'] = round(base_income / 50) * 50
+                        else:  # 30% with small random variation
+                            record['income'] = base_income + random.randint(-20, 20)
+                    elif base_income < 800:
+                        # Medium wages - only rounding patterns
+                        if random.random() < 0.6:  # 60% rounded to 50s 
+                            record['income'] = round(base_income / 50) * 50
+                        else:  # 40% rounded to 100s
+                            record['income'] = round(base_income / 100) * 100
+                    else:
+                        # High wages - only round numbers
+                        if random.random() < 0.65:  # 65% rounded to 100s
+                            record['income'] = round(base_income / 100) * 100
+                        else:  # 35% nice round numbers
+                            nice_numbers = [800, 900, 1000, 1100, 1200, 1300, 1400, 1500]
+                            closest = min(nice_numbers, key=lambda x: abs(x - base_income))
+                            record['income'] = closest
+                    
+                    # Ensure minimum wage and clean up negatives
+                    record['income'] = max(150, record['income'])
+                else:
+                    # Monthly salary - store actual monthly amount
+                    # Round to nearest thousand for monthly salaries
+                    record['income'] = round(base_income / 1000) * 1000
+                
+                # Working hours - varies by occupation type
+                if record['occupation_type'] in [1, 2, 3]:  # Formal employment
+                    record['working_hours'] = random.choices([8, 9, 10], weights=[0.5, 0.3, 0.2])[0]
+                elif record['occupation_type'] == 5:  # Private business
+                    record['working_hours'] = random.choices([8, 10, 12, 14], weights=[0.2, 0.3, 0.3, 0.2])[0]
+                else:  # Freelance/informal
+                    record['working_hours'] = random.choices([6, 8, 10, 12], weights=[0.3, 0.3, 0.2, 0.2])[0]
                 
                 # Contract and welfare benefits
                 if record['occupation_type'] in [1, 2]:
@@ -977,24 +1058,8 @@ class BangkokUrbanHealthSurveySimulator:
                 if record['occupation_type'] == 6:
                     record['occupation_freelance_type'] = random.randint(1, 6)
                 
-                # Income ranges by occupation type - adjusted for Bangkok middle class
-                income_ranges = {
-                    1: (20000, 45000),  # Government - decent salaries
-                    2: (25000, 50000),  # State enterprise - good benefits
-                    3: (18000, 40000),  # Company employee - varies widely
-                    4: (25000, 80000),  # Private business - can be very successful
-                    5: (15000, 45000),  # Freelance - high variation
-                    6: (12000, 25000),  # Informal sector - lower but still livable
-                }
-                
-                income_range = income_ranges[record['occupation_type']]
-                if is_lgbt:
-                    record['income'] = random.randint(int(income_range[0] * 0.9), int(income_range[1] * 0.95))
-                else:
-                    record['income'] = random.randint(income_range[0], income_range[1])
-                
-                record['income_type'] = random.choices([1, 2], weights=[0.3, 0.7])[0]
-                record['working_hours'] = random.randint(6, 12)
+                # Income and working hours are already set above based on occupation and income type
+                # No need to regenerate them here
                 
                 # Contract and welfare benefits
                 if record['occupation_type'] in [1, 2]:
@@ -1287,8 +1352,17 @@ class BangkokUrbanHealthSurveySimulator:
         # Process community_safety to extract just the first number (e.g., "4_1" -> 4, "3_1" -> 3)
         df['community_safety'] = df['community_safety'].apply(lambda x: int(x.split('_')[0]) if pd.notna(x) and isinstance(x, str) else x)
         
-        # Round income, health expenses, and rent to nearest thousand
-        df['income'] = df['income'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)
+        # Round income based on income_type - monthly to nearest thousand, daily already rounded
+        # Don't re-round daily wages as they are already properly rounded to nearest 10
+        def round_income_by_type(row):
+            if pd.notna(row['income']) and row['income'] > 0:
+                if row['income_type'] == 2:  # Monthly salary
+                    return round(row['income'] / 1000) * 1000
+                else:  # Daily wage - keep as is (already rounded to nearest 10)
+                    return row['income']
+            return row['income']
+        
+        df['income'] = df.apply(round_income_by_type, axis=1)
         df['hh_health_expense'] = df['hh_health_expense'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)
         df['health_expense'] = df['health_expense'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)
         df['rent_price'] = df['rent_price'].apply(lambda x: round(x / 1000) * 1000 if pd.notna(x) and x > 0 else x)

@@ -368,6 +368,31 @@ const IndicatorDetail = ({
     // FIXED: Order age groups in ascending order
     const ageGroupOrder = ['< 18', '18-29', '30-44', '45-59', '60+'];
 
+    // Add freelance type classification for vulnerable_employment indicator
+    const getFreelanceType = (occupationFreelanceType) => {
+      const freelanceTypes = {
+        1: language === 'th' ? 'รับจ้างทั่วไป' : 'General Labor',
+        2: language === 'th' ? 'ขายของออนไลน์' : 'Online Seller',
+        3: language === 'th' ? 'ไรเดอร์' : 'Rider',
+        4: language === 'th' ? 'วินมอเตอร์ไซต์' : 'Motorcycle Taxi',
+        5: language === 'th' ? 'ค้าขาย' : 'Trading',
+        6: language === 'th' ? 'ผู้ค้าหาบเร่แผงลอย' : 'Street Vendor'
+      };
+      return freelanceTypes[occupationFreelanceType] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+    };
+
+    const getDiscriminationType = (discriminationValue) => {
+      const discriminationTypes = {
+        1: language === 'th' ? 'เชื้อชาติ' : 'Race/Ethnicity',
+        2: language === 'th' ? 'ศาสนา' : 'Religion',
+        3: language === 'th' ? 'เพศ' : 'Gender',
+        4: language === 'th' ? 'อายุ' : 'Age',
+        5: language === 'th' ? 'สถานะทางเศรษฐกิจ' : 'Economic Status',
+        6: language === 'th' ? 'อื่น ๆ' : 'Others'
+      };
+      return discriminationTypes[discriminationValue] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+    };
+
     const getSexGroup = (sex) => {
       if (sex === 'lgbt') return 'LGBTQ+';
       if (sex === 'male' || sex === 'M' || sex === 1) return language === 'th' ? 'ชาย' : 'Male';
@@ -456,11 +481,120 @@ const IndicatorDetail = ({
       return result;
     };
 
+    // For vulnerable_employment, also calculate freelance type distribution
+    let freelanceType = null;
+    if (indicator === 'vulnerable_employment') {
+      // Filter only freelance workers (occupation_type === 6) who meet vulnerable employment criteria
+      const freelanceRecords = records.filter(record => 
+        record.occupation_status === 1 && 
+        record.occupation_type === 6 &&
+        record.occupation_contract === 0
+      );
+      
+      if (freelanceRecords.length > 0) {
+        freelanceType = calculateGroupedRates(
+          record => getFreelanceType(record.occupation_freelance_type),
+          freelanceRecords
+        );
+      }
+    }
+
+    // For employment indicators, calculate income and working hours
+    let incomeData = null;
+    let workingHoursData = null;
+    
+    if (indicator === 'vulnerable_employment' || indicator === 'non_vulnerable_employment') {
+      // Calculate average income by type (daily vs monthly)
+      // IMPORTANT: income_type=1 stores actual daily wage, income_type=2 stores actual monthly salary
+      const dailyIncomeRecords = records.filter(record => record.income_type === 1 && record.income > 0);
+      const monthlyIncomeRecords = records.filter(record => record.income_type === 2 && record.income > 0);
+      const totalIncomeRecords = dailyIncomeRecords.length + monthlyIncomeRecords.length;
+      
+      incomeData = {
+        daily: dailyIncomeRecords.length > 0 ? {
+          average: dailyIncomeRecords.reduce((sum, r) => sum + r.income, 0) / dailyIncomeRecords.length,
+          count: dailyIncomeRecords.length,
+          percentage: totalIncomeRecords > 0 ? (dailyIncomeRecords.length / totalIncomeRecords * 100).toFixed(1) : 0,
+          min: Math.min(...dailyIncomeRecords.map(r => r.income)),
+          max: Math.max(...dailyIncomeRecords.map(r => r.income)),
+          // Calculate monthly equivalent for comparison
+          monthlyEquivalent: (dailyIncomeRecords.reduce((sum, r) => sum + r.income, 0) / dailyIncomeRecords.length) * 25
+        } : null,
+        monthly: monthlyIncomeRecords.length > 0 ? {
+          average: monthlyIncomeRecords.reduce((sum, r) => sum + r.income, 0) / monthlyIncomeRecords.length,
+          count: monthlyIncomeRecords.length,
+          percentage: totalIncomeRecords > 0 ? (monthlyIncomeRecords.length / totalIncomeRecords * 100).toFixed(1) : 0,
+          min: Math.min(...monthlyIncomeRecords.map(r => r.income)),
+          max: Math.max(...monthlyIncomeRecords.map(r => r.income))
+        } : null,
+        totalCount: totalIncomeRecords
+      };
+      
+      // Calculate average working hours
+      const workingHoursRecords = records.filter(record => record.working_hours > 0);
+      if (workingHoursRecords.length > 0) {
+        workingHoursData = {
+          average: workingHoursRecords.reduce((sum, r) => sum + r.working_hours, 0) / workingHoursRecords.length,
+          count: workingHoursRecords.length,
+          min: Math.min(...workingHoursRecords.map(r => r.working_hours)),
+          max: Math.max(...workingHoursRecords.map(r => r.working_hours)),
+          distribution: [
+            { range: '< 6 hours', count: workingHoursRecords.filter(r => r.working_hours < 6).length },
+            { range: '6-8 hours', count: workingHoursRecords.filter(r => r.working_hours >= 6 && r.working_hours <= 8).length },
+            { range: '9-10 hours', count: workingHoursRecords.filter(r => r.working_hours >= 9 && r.working_hours <= 10).length },
+            { range: '> 10 hours', count: workingHoursRecords.filter(r => r.working_hours > 10).length }
+          ]
+        };
+      }
+    }
+
+    // For discrimination indicator, calculate discrimination type distribution
+    let discriminationType = null;
+    if (indicator === 'discrimination_experience') {
+      // Filter only people who experienced discrimination
+      const discriminationRecords = records.filter(record => 
+        record.discrimination_1 === 1 || record.discrimination_2 === 1 || 
+        record.discrimination_3 === 1 || record.discrimination_4 === 1 || 
+        record.discrimination_5 === 1 || record.discrimination_other === 1
+      );
+      
+      if (discriminationRecords.length > 0) {
+        // Count each type of discrimination
+        const discriminationCounts = [];
+        for (let type = 1; type <= 5; type++) {
+          const count = discriminationRecords.filter(record => record[`discrimination_${type}`] === 1).length;
+          if (count > 0) {
+            discriminationCounts.push({
+              name: getDiscriminationType(type),
+              value: count,
+              rate: (count / discriminationRecords.length * 100).toFixed(1)
+            });
+          }
+        }
+        
+        // Check for "other" discrimination type
+        const otherCount = discriminationRecords.filter(record => record.discrimination_other === 1).length;
+        if (otherCount > 0) {
+          discriminationCounts.push({
+            name: getDiscriminationType(6),
+            value: otherCount,
+            rate: (otherCount / discriminationRecords.length * 100).toFixed(1)
+          });
+        }
+        
+        discriminationType = discriminationCounts.sort((a, b) => b.value - a.value);
+      }
+    }
+
     return {
       age: calculateGroupedRates(record => getAgeGroup(record.age), records, ageGroupOrder),
       sex: calculateGroupedRates(record => getSexGroup(record.sex), records),
       occupation: calculateGroupedRates(record => getOccupationGroup(record.occupation_status, record.occupation_type), records),
-      welfare: calculateGroupedRates(record => getWelfareGroup(record.welfare), records)
+      welfare: calculateGroupedRates(record => getWelfareGroup(record.welfare), records),
+      freelanceType: freelanceType,
+      income: incomeData,
+      workingHours: workingHoursData,
+      discriminationType: discriminationType
     };
   }
 
@@ -551,9 +685,9 @@ const IndicatorDetail = ({
       case 'violence_sexual':
         return record.sexual_violence === 1;
       case 'discrimination_experience':
-        return record['discrimination/1'] === 1 || record['discrimination/2'] === 1 || 
-               record['discrimination/3'] === 1 || record['discrimination/4'] === 1 || 
-               record['discrimination/5'] === 1;
+        return record.discrimination_1 === 1 || record.discrimination_2 === 1 || 
+               record.discrimination_3 === 1 || record.discrimination_4 === 1 || 
+               record.discrimination_5 === 1 || record.discrimination_other === 1;
       case 'social_support':
         return record.helper === 1;
       case 'community_murder':
@@ -973,6 +1107,232 @@ const IndicatorDetail = ({
                             </BarChart>
                           </ResponsiveContainer>
                         </div>
+                      </div>
+                    )}
+
+                    {/* Freelance Type Distribution - Only for vulnerable_employment indicator */}
+                    {indicator === 'vulnerable_employment' && disaggregationData.freelanceType && disaggregationData.freelanceType.length > 0 && (
+                      <div className="lg:col-span-2">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                          {language === 'th' ? 'ประเภทอาชีพอิสระ (เฉพาะผู้ที่อยู่ในการจ้างงานเปราะบาง)' : 'Freelance Job Types (Among Vulnerable Employment)'}
+                        </h3>
+                        <div className="h-64">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={disaggregationData.freelanceType.sort((a, b) => b.value - a.value)}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis 
+                                dataKey="name" 
+                                angle={-15}
+                                textAnchor="end"
+                                height={100}
+                                tick={{ fontSize: 11 }}
+                                interval={0}
+                              />
+                              <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                              <Tooltip 
+                                formatter={(value, name, props) => [
+                                  `${value.toFixed(1)}% (${props.payload.count} ${language === 'th' ? 'คน' : 'people'})`,
+                                  language === 'th' ? 'สัดส่วน' : 'Proportion'
+                                ]}
+                              />
+                              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                {disaggregationData.freelanceType.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={['#10B981', '#3B82F6', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'][index % 6]} />
+                                ))}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+                        <div className="mt-4 text-sm text-gray-600">
+                          <p className="font-medium">
+                            {language === 'th' 
+                              ? `จากผู้ที่อยู่ในการจ้างงานเปราะบางทั้งหมด มีผู้ประกอบอาชีพอิสระ ${disaggregationData.freelanceType.reduce((sum, item) => sum + item.count, 0)} คน`
+                              : `Among all vulnerable employment, ${disaggregationData.freelanceType.reduce((sum, item) => sum + item.count, 0)} are freelance workers`}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Discrimination Type Distribution - For discrimination_experience indicator */}
+                    {indicator === 'discrimination_experience' && disaggregationData.discriminationType && disaggregationData.discriminationType.length > 0 && (
+                      <div className="lg:col-span-2">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                          {language === 'th' ? 'ประเภทการเลือกปฏิบัติ (เฉพาะผู้ที่ประสบการเลือกปฏิบัติ)' : 'Types of Discrimination (Among Those Who Experienced Discrimination)'}
+                        </h3>
+                        <div className="h-64">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={disaggregationData.discriminationType}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis 
+                                dataKey="name" 
+                                angle={-15}
+                                textAnchor="end"
+                                height={100}
+                                tick={{ fontSize: 11 }}
+                                interval={0}
+                              />
+                              <YAxis />
+                              <Tooltip formatter={(value, name, props) => [
+                                `${value} คน (${props.payload.rate}%)`, 
+                                language === 'th' ? 'จำนวนคน' : 'Number of People'
+                              ]} />
+                              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                {disaggregationData.discriminationType.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899'][index % 6]} />
+                                ))}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+                        <div className="mt-4">
+                          <p className="text-sm text-gray-600">
+                            {language === 'th' 
+                              ? `จากผู้ที่ประสบการเลือกปฏิบัติทั้งหมด ${disaggregationData.discriminationType.reduce((sum, item) => sum + item.value, 0)} คน สามารถแบ่งตามประเภทการเลือกปฏิบัติได้ดังนี้`
+                              : `Among all ${disaggregationData.discriminationType.reduce((sum, item) => sum + item.value, 0)} people who experienced discrimination, types of discrimination are as follows`}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Income and Working Hours - For employment indicators */}
+                    {(indicator === 'vulnerable_employment' || indicator === 'non_vulnerable_employment') && 
+                     (disaggregationData.income || disaggregationData.workingHours) && (
+                      <div className="lg:col-span-2 space-y-6">
+                        
+                        {/* Income Statistics */}
+                        {disaggregationData.income && (
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                              {language === 'th' ? 'รายได้เฉลี่ย' : 'Average Income'}
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              
+                              {/* Daily Income */}
+                              {disaggregationData.income.daily && (
+                                <div className="border rounded-lg p-4">
+                                  <h4 className="font-medium text-gray-800 mb-3">
+                                    {language === 'th' ? 'รายได้รายวัน' : 'Daily Income'} ({disaggregationData.income.daily.percentage}%)
+                                  </h4>
+                                  <div className="space-y-2">
+                                    <div className="flex justify-between">
+                                      <span className="text-sm text-gray-600">{language === 'th' ? 'ค่าเฉลี่ย:' : 'Average:'}</span>
+                                      <span className="font-semibold">฿{disaggregationData.income.daily.average.toFixed(0).toLocaleString()}/วัน</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-sm text-gray-600">{language === 'th' ? 'ต่ำสุด:' : 'Min:'}</span>
+                                      <span>฿{disaggregationData.income.daily.min.toFixed(0).toLocaleString()}/วัน</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-sm text-gray-600">{language === 'th' ? 'สูงสุด:' : 'Max:'}</span>
+                                      <span>฿{disaggregationData.income.daily.max.toFixed(0).toLocaleString()}/วัน</span>
+                                    </div>
+                                    <div className="pt-2 border-t border-blue-200">
+                                      <div className="text-xs text-gray-500">
+                                        {language === 'th' 
+                                          ? `เทียบเท่ารายเดือน: ฿${(disaggregationData.income.daily.monthlyEquivalent || 0).toFixed(0).toLocaleString()}`
+                                          : `Monthly equivalent: ฿${(disaggregationData.income.daily.monthlyEquivalent || 0).toFixed(0).toLocaleString()}`}
+                                      </div>
+                                    </div>
+                                    <div className="pt-2 border-t border-blue-200">
+                                      <span className="text-xs text-gray-500">
+                                        {language === 'th' 
+                                          ? `จำนวนตัวอย่าง: ${disaggregationData.income.daily.count} คน`
+                                          : `Sample size: ${disaggregationData.income.daily.count} people`}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Monthly Income */}
+                              {disaggregationData.income.monthly && (
+                                <div className="border rounded-lg p-4">
+                                  <h4 className="font-medium text-gray-800 mb-3">
+                                    {language === 'th' ? 'รายได้รายเดือน' : 'Monthly Income'} ({disaggregationData.income.monthly.percentage}%)
+                                  </h4>
+                                  <div className="space-y-2">
+                                    <div className="flex justify-between">
+                                      <span className="text-sm text-gray-600">{language === 'th' ? 'ค่าเฉลี่ย:' : 'Average:'}</span>
+                                      <span className="font-semibold">฿{disaggregationData.income.monthly.average.toFixed(0).toLocaleString()}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-sm text-gray-600">{language === 'th' ? 'ต่ำสุด:' : 'Min:'}</span>
+                                      <span>฿{disaggregationData.income.monthly.min.toFixed(0).toLocaleString()}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-sm text-gray-600">{language === 'th' ? 'สูงสุด:' : 'Max:'}</span>
+                                      <span>฿{disaggregationData.income.monthly.max.toFixed(0).toLocaleString()}</span>
+                                    </div>
+                                    <div className="pt-2 border-t border-green-200">
+                                      <span className="text-xs text-gray-500">
+                                        {language === 'th' 
+                                          ? `จำนวนตัวอย่าง: ${disaggregationData.income.monthly.count} คน`
+                                          : `Sample size: ${disaggregationData.income.monthly.count} people`}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Working Hours Statistics */}
+                        {disaggregationData.workingHours && (
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                              {language === 'th' ? 'ชั่วโมงการทำงาน' : 'Working Hours'}
+                            </h3>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {/* Average Working Hours */}
+                              <div className="border rounded-lg p-4">
+                                <h4 className="font-medium text-gray-800 mb-3">
+                                  {language === 'th' ? 'สถิติชั่วโมงทำงาน' : 'Working Hours Statistics'}
+                                </h4>
+                                <div className="space-y-2">
+                                  <div className="flex justify-between">
+                                    <span className="text-sm text-gray-600">{language === 'th' ? 'ค่าเฉลี่ย:' : 'Average:'}</span>
+                                    <span className="font-semibold">{disaggregationData.workingHours.average.toFixed(1)} {language === 'th' ? 'ชั่วโมง/วัน' : 'hours/day'}</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-sm text-gray-600">{language === 'th' ? 'ต่ำสุด:' : 'Min:'}</span>
+                                    <span>{disaggregationData.workingHours.min} {language === 'th' ? 'ชั่วโมง' : 'hours'}</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-sm text-gray-600">{language === 'th' ? 'สูงสุด:' : 'Max:'}</span>
+                                    <span>{disaggregationData.workingHours.max} {language === 'th' ? 'ชั่วโมง' : 'hours'}</span>
+                                  </div>
+                                  <div className="pt-2 border-t border-purple-200">
+                                    <span className="text-xs text-gray-500">
+                                      {language === 'th' 
+                                        ? `จำนวนตัวอย่าง: ${disaggregationData.workingHours.count} คน`
+                                        : `Sample size: ${disaggregationData.workingHours.count} people`}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Working Hours Distribution */}
+                              <div className="border rounded-lg p-4">
+                                <h4 className="font-medium text-gray-800 mb-3">
+                                  {language === 'th' ? 'การกระจายชั่วโมงทำงาน' : 'Working Hours Distribution'}
+                                </h4>
+                                <div className="space-y-2">
+                                  {disaggregationData.workingHours.distribution.map((item, index) => (
+                                    <div key={index} className="flex justify-between">
+                                      <span className="text-sm text-gray-600">{item.range}:</span>
+                                      <span className="font-medium">
+                                        {item.count} {language === 'th' ? 'คน' : 'people'} 
+                                        ({((item.count / disaggregationData.workingHours.count) * 100).toFixed(1)}%)
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
