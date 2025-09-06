@@ -393,6 +393,20 @@ const IndicatorDetail = ({
       return discriminationTypes[discriminationValue] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
     };
 
+    const getDisasterType = (disasterValue) => {
+      const disasterTypes = {
+        1: language === 'th' ? 'น้ำท่วม' : 'Flooding',
+        2: language === 'th' ? 'อากาศร้อนจัด' : 'Extreme Heat',
+        3: language === 'th' ? 'อากาศเย็นจัด' : 'Extreme Cold',
+        4: language === 'th' ? 'ไฟไหม้' : 'Fire',
+        5: language === 'th' ? 'แผ่นดินไหว' : 'Earthquake',
+        6: language === 'th' ? 'โรคระบาด' : 'Epidemic',
+        7: language === 'th' ? 'หลุมยุบ' : 'Sinkhole',
+        8: language === 'th' ? 'มลพิษ (ฝุ่น)' : 'Pollution (Dust)'
+      };
+      return disasterTypes[disasterValue] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+    };
+
     const getSexGroup = (sex) => {
       if (sex === 'lgbt') return 'LGBTQ+';
       if (sex === 'male' || sex === 'M' || sex === 1) return language === 'th' ? 'ชาย' : 'Male';
@@ -586,6 +600,35 @@ const IndicatorDetail = ({
       }
     }
 
+    // For disaster experience indicator, calculate disaster type distribution
+    let disasterType = null;
+    if (indicator === 'disaster_experience') {
+      // Filter only people who experienced disasters
+      const disasterRecords = records.filter(record => 
+        record.community_disaster_1 === 1 || record.community_disaster_2 === 1 || 
+        record.community_disaster_3 === 1 || record.community_disaster_4 === 1 || 
+        record.community_disaster_5 === 1 || record.community_disaster_6 === 1 || 
+        record.community_disaster_7 === 1 || record.community_disaster_8 === 1
+      );
+      
+      if (disasterRecords.length > 0) {
+        // Count each type of disaster
+        const disasterCounts = [];
+        for (let type = 1; type <= 8; type++) {
+          const count = disasterRecords.filter(record => record[`community_disaster_${type}`] === 1).length;
+          if (count > 0) {
+            disasterCounts.push({
+              name: getDisasterType(type),
+              value: count,
+              rate: (count / disasterRecords.length * 100).toFixed(1)
+            });
+          }
+        }
+        
+        disasterType = disasterCounts.sort((a, b) => b.value - a.value);
+      }
+    }
+
     return {
       age: calculateGroupedRates(record => getAgeGroup(record.age), records, ageGroupOrder),
       sex: calculateGroupedRates(record => getSexGroup(record.sex), records),
@@ -594,7 +637,8 @@ const IndicatorDetail = ({
       freelanceType: freelanceType,
       income: incomeData,
       workingHours: workingHoursData,
-      discriminationType: discriminationType
+      discriminationType: discriminationType,
+      disasterType: disasterType
     };
   }
 
@@ -672,7 +716,9 @@ const IndicatorDetail = ({
         return record.house_status === 1;
       case 'disaster_experience':
         return record.community_disaster_1 === 1 || record.community_disaster_2 === 1 || 
-               record.community_disaster_3 === 1 || record.community_disaster_4 === 1;
+               record.community_disaster_3 === 1 || record.community_disaster_4 === 1 ||
+               record.community_disaster_5 === 1 || record.community_disaster_6 === 1 ||
+               record.community_disaster_7 === 1 || record.community_disaster_8 === 1;
 
       // Social Context Indicators
       case 'community_safety':
@@ -1189,6 +1235,47 @@ const IndicatorDetail = ({
                             {language === 'th' 
                               ? `จากผู้ที่ประสบการเลือกปฏิบัติทั้งหมด ${disaggregationData.discriminationType.reduce((sum, item) => sum + item.value, 0)} คน สามารถแบ่งตามประเภทการเลือกปฏิบัติได้ดังนี้`
                               : `Among all ${disaggregationData.discriminationType.reduce((sum, item) => sum + item.value, 0)} people who experienced discrimination, types of discrimination are as follows`}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Disaster Type Distribution - For disaster_experience indicator */}
+                    {indicator === 'disaster_experience' && disaggregationData.disasterType && disaggregationData.disasterType.length > 0 && (
+                      <div className="lg:col-span-2">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                          {language === 'th' ? 'ประเภทภัยพิบัติ (เฉพาะผู้ที่ประสบภัยพิบัติ)' : 'Types of Disasters (Among Those Who Experienced Disasters)'}
+                        </h3>
+                        <div className="h-64">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={disaggregationData.disasterType}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis 
+                                dataKey="name" 
+                                angle={-15}
+                                textAnchor="end"
+                                height={100}
+                                tick={{ fontSize: 11 }}
+                                interval={0}
+                              />
+                              <YAxis />
+                              <Tooltip formatter={(value, name, props) => [
+                                `${value} คน (${props.payload.rate}%)`, 
+                                language === 'th' ? 'จำนวนคน' : 'Number of People'
+                              ]} />
+                              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                {disaggregationData.disasterType.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={['#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#6B7280', '#FB923C'][index % 8]} />
+                                ))}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+                        <div className="mt-4">
+                          <p className="text-sm text-gray-600">
+                            {language === 'th' 
+                              ? `จากผู้ที่ประสบภัยพิบัติทั้งหมด ${disaggregationData.disasterType.reduce((sum, item) => sum + item.value, 0)} คน สามารถแบ่งตามประเภทภัยพิบัติได้ดังนี้`
+                              : `Among all ${disaggregationData.disasterType.reduce((sum, item) => sum + item.value, 0)} people who experienced disasters, types of disasters are as follows`}
                           </p>
                         </div>
                       </div>
