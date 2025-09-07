@@ -91,6 +91,9 @@ const Dashboard = () => {
   const [selectedDomain, setSelectedDomain] = useState('economic_security');
   const [viewMode, setViewMode] = useState('overview');
   
+  // Sorting state for indicators table
+  const [sortDirection, setSortDirection] = useState('desc'); // 'asc' or 'desc'
+  
   // Sync viewMode with activeTab
   useEffect(() => {
     if (activeTab === 'overview' || activeTab === 'indicators') {
@@ -287,6 +290,11 @@ const Dashboard = () => {
     return formatNumber(sampleSize, 0);
   }, []);
 
+  // Handle sorting of indicators
+  const handleScoreSort = useCallback(() => {
+    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+  }, []);
+
 
   // Utility function for formatting values
   const formatValue = useCallback((value, indicator) => {
@@ -470,6 +478,25 @@ const Dashboard = () => {
   // Pass 'all' as population group for IMD indicators
   const effectivePopulationGroup = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
   const currentIndicatorData = dataState.isLoading ? [] : getIndicatorData(selectedDomain, selectedDistrict, effectivePopulationGroup, selectedIndicatorType);
+  
+  // Sort indicator data based on score
+  const sortedIndicatorData = useMemo(() => {
+    if (!currentIndicatorData || currentIndicatorData.length === 0) return [];
+    
+    const dataToSort = [...currentIndicatorData.filter(item => !item.isDomainScore)];
+    
+    return dataToSort.sort((a, b) => {
+      // Handle null/undefined values
+      const aValue = a.value ?? -1;
+      const bValue = b.value ?? -1;
+      
+      if (sortDirection === 'asc') {
+        return aValue - bValue;
+      } else {
+        return bValue - aValue;
+      }
+    });
+  }, [currentIndicatorData, sortDirection]);
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -1001,8 +1028,29 @@ Reset Filters
                               <th className="text-left py-4 px-6 font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.indicator')}
                               </th>
-                              <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
-                                {t('ui.score')}
+                              <th 
+                                className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                                onClick={handleScoreSort}
+                              >
+                                <div className="flex items-center justify-center gap-1">
+                                  <span>{t('ui.score')}</span>
+                                  <div className="flex flex-col">
+                                    <svg 
+                                      className={`w-3 h-3 ${sortDirection === 'asc' ? 'text-blue-600' : 'text-gray-400'}`} 
+                                      fill="currentColor" 
+                                      viewBox="0 0 20 20"
+                                    >
+                                      <path d="M10 7l-7 7h14l-7-7z" transform="rotate(180 10 10)" />
+                                    </svg>
+                                    <svg 
+                                      className={`w-3 h-3 -mt-1 ${sortDirection === 'desc' ? 'text-blue-600' : 'text-gray-400'}`} 
+                                      fill="currentColor" 
+                                      viewBox="0 0 20 20"
+                                    >
+                                      <path d="M10 13l-7-7h14l-7 7z" />
+                                    </svg>
+                                  </div>
+                                </div>
                               </th>
                               {/* Hide sample size column for IMD */}
                               {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
@@ -1016,8 +1064,7 @@ Reset Filters
                             </tr>
                           </thead>
                           <tbody>
-                            {currentIndicatorData
-                              .filter(item => !item.isDomainScore)
+                            {sortedIndicatorData
                               .map((item, index) => {
                                 const indicator = item.indicator;
                                 const value = item.value;
