@@ -171,31 +171,59 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
     return transformed;
   });
 
-  // Custom tick formatter to wrap long labels
+  // Custom tick formatter to wrap long labels - optimized for mobile
   const formatTick = (value) => {
     if (typeof value !== 'string') return value;
     
-    // For Thai text, split at spaces or after certain characters
-    if (language === 'th') {
-      if (value.length > 10) {
-        const words = value.split(' ');
-        if (words.length > 1) {
-          const mid = Math.ceil(words.length / 2);
-          return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+    // More aggressive wrapping on mobile
+    if (isMobile) {
+      // For Thai text on mobile
+      if (language === 'th') {
+        if (value.length > 8) {
+          const words = value.split(' ');
+          if (words.length > 1) {
+            const mid = Math.ceil(words.length / 2);
+            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+          }
+          // If no spaces, break at reasonable points
+          if (value.length > 12) {
+            const breakPoint = Math.floor(value.length / 2);
+            return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
+          }
         }
-        // If no spaces, try to break at reasonable points
-        if (value.length > 15) {
-          const breakPoint = Math.floor(value.length / 2);
-          return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
+      } else {
+        // For English text on mobile
+        if (value.length > 10) {
+          const words = value.split(' ');
+          if (words.length > 1) {
+            const mid = Math.ceil(words.length / 2);
+            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+          }
         }
       }
     } else {
-      // For English text
-      if (value.length > 12) {
-        const words = value.split(' ');
-        if (words.length > 1) {
-          const mid = Math.ceil(words.length / 2);
-          return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+      // Desktop formatting
+      if (language === 'th') {
+        if (value.length > 10) {
+          const words = value.split(' ');
+          if (words.length > 1) {
+            const mid = Math.ceil(words.length / 2);
+            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+          }
+          // If no spaces, try to break at reasonable points
+          if (value.length > 15) {
+            const breakPoint = Math.floor(value.length / 2);
+            return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
+          }
+        }
+      } else {
+        // For English text on desktop
+        if (value.length > 12) {
+          const words = value.split(' ');
+          if (words.length > 1) {
+            const mid = Math.ceil(words.length / 2);
+            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+          }
         }
       }
     }
@@ -293,10 +321,10 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
               <RadarChart 
                 data={transformedData} 
                 margin={isMobile ? { 
-                  top: 10, 
-                  right: 40, 
-                  bottom: 20, 
-                  left: 40
+                  top: 20, 
+                  right: 50, 
+                  bottom: 30, 
+                  left: 50
                 } : { 
                   top: 20, 
                   right: 80, 
