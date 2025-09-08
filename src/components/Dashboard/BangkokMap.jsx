@@ -22,6 +22,9 @@ const BangkokMap = ({
   getIndicatorData 
 }) => {
   const { t, language } = useLanguage();
+  
+  // Helper function to detect mobile devices
+  const isMobileDevice = () => window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const geoJsonLayerRef = useRef(null);
@@ -72,9 +75,11 @@ const BangkokMap = ({
     loadGeoJSON();
   }, []);
 
-  // Retry mechanism for map initialization
+  // Retry mechanism for map initialization with better mobile handling
   const retryInitialization = useCallback(() => {
-    if (retryCount < 3) {
+    const maxRetries = isMobileDevice() ? 5 : 3; // More retries on mobile
+    
+    if (retryCount < maxRetries) {
       setRetryCount(prev => prev + 1);
       setError(null);
       setMapReady(false);
@@ -100,8 +105,8 @@ const BangkokMap = ({
         return false;
       }
       
-      // Check if container is visible in viewport
-      if (rect.top < -window.innerHeight || rect.top > window.innerHeight * 2) {
+      // Check if container is visible in viewport (more lenient for mobile)
+      if (rect.top < -window.innerHeight * 2 || rect.top > window.innerHeight * 3) {
         return false;
       }
       
@@ -109,15 +114,25 @@ const BangkokMap = ({
     };
 
     if (!checkContainerReady()) {
-      // Wait longer and try again
+      // Wait longer on mobile devices and try again
+      const waitTime = isMobileDevice() ? 300 : 100;
+      
       initializationTimeoutRef.current = setTimeout(() => {
         if (checkContainerReady()) {
           initializeMap();
-        } else {
+        } else if (retryCount < 5) { // Increased retry limit for mobile
           retryInitialization();
+        } else {
+          // Final attempt - force initialization even with sub-optimal conditions
+          console.warn('Map initialization: forcing initialization after retries');
+          // Continue with initialization
         }
-      }, 100);
-      return;
+      }, waitTime);
+      
+      // Don't return immediately if we've exhausted retries - try to initialize anyway
+      if (retryCount < 5) {
+        return;
+      }
     }
 
     try {
@@ -127,19 +142,30 @@ const BangkokMap = ({
         mapInstanceRef.current = null;
       }
 
-      // Ensure container has explicit dimensions
+      // Ensure container has explicit dimensions and proper mobile handling
       container.style.height = '100%';
       container.style.width = '100%';
       container.style.position = 'relative';
+      container.style.minHeight = '400px';
+      container.style.minWidth = '300px';
+      container.style.touchAction = 'pan-x pan-y'; // Enable proper touch handling
+      
+      // Force a reflow to ensure dimensions are applied
+      container.offsetHeight;
 
-      // Create map with error handling
+      // Create map with mobile-optimized settings
       const map = L.map(container, {
         center: [13.7563, 100.5018],
-        zoom: 10,
+        zoom: isMobileDevice() ? 9 : 10, // Slightly zoomed out on mobile
         zoomControl: true,
-        attributionControl: true,
+        attributionControl: !isMobileDevice(), // Hide attribution on mobile to save space
         preferCanvas: false,
-        renderer: L.svg() // Force SVG renderer
+        renderer: L.svg(), // Force SVG renderer
+        tap: true, // Enable tap detection
+        tapTolerance: 15, // Increase tap tolerance for mobile
+        touchZoom: true,
+        bounceAtZoomLimits: false,
+        maxBoundsViscosity: isMobileDevice() ? 0.5 : 1.0 // Smoother bounds on mobile
       });
 
       // Add error handler for the map
@@ -165,14 +191,33 @@ const BangkokMap = ({
         // Store map reference
         mapInstanceRef.current = map;
         
-        // Invalidate size to ensure proper rendering
+        // Invalidate size to ensure proper rendering - longer delay for mobile
+        const delay = isMobileDevice() ? 150 : 50;
+        
         setTimeout(() => {
           if (mapInstanceRef.current) {
-            mapInstanceRef.current.invalidateSize(true);
-            setMapReady(true);
-            setRetryCount(0); // Reset retry count on success
+            try {
+              mapInstanceRef.current.invalidateSize(true);
+              
+              // Additional mobile-specific invalidation
+              if (isMobileDevice()) {
+                setTimeout(() => {
+                  if (mapInstanceRef.current) {
+                    mapInstanceRef.current.invalidateSize(true);
+                  }
+                }, 100);
+              }
+              
+              setMapReady(true);
+              setRetryCount(0); // Reset retry count on success
+            } catch (invalidateError) {
+              console.warn('Map invalidateSize error:', invalidateError);
+              // Still mark as ready even if invalidateSize fails
+              setMapReady(true);
+              setRetryCount(0);
+            }
           }
-        }, 50);
+        }, delay);
       };
 
       tileLayer.on('load', () => {
@@ -185,23 +230,53 @@ const BangkokMap = ({
 
       tileLayer.addTo(map);
 
-      // Fallback: proceed even if tiles don't load completely
-      setTimeout(proceedWithMapSetup, 2000);
+      // Fallback: proceed even if tiles don't load completely - longer timeout for mobile
+      setTimeout(proceedWithMapSetup, isMobileDevice ? 4000 : 2000);
 
     } catch (err) {
       retryInitialization();
     }
   }, [loading, error, retryInitialization, retryCount]);
 
-  // Initialize map when data is ready
+  // Initialize map when data is ready with mobile-optimized timing
   useEffect(() => {
     if (!loading && !error && geoJsonData) {
       // Use requestAnimationFrame to ensure DOM is fully rendered
       requestAnimationFrame(() => {
-        setTimeout(initializeMap, 100);
+        // Longer delay for mobile devices to allow for layout completion
+        const delay = isMobileDevice() ? 300 : 100;
+        
+        setTimeout(initializeMap, delay);
       });
     }
   }, [loading, error, geoJsonData, initializeMap]);
+
+  // Additional effect to handle window resize on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (mapInstanceRef.current && mapReady) {
+        // Debounced resize handler for mobile
+        clearTimeout(initializationTimeoutRef.current);
+        initializationTimeoutRef.current = setTimeout(() => {
+          if (mapInstanceRef.current) {
+            try {
+              mapInstanceRef.current.invalidateSize(true);
+            } catch (e) {
+              console.warn('Resize invalidateSize error:', e);
+            }
+          }
+        }, 200);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, [mapReady]);
 
   // Cleanup on unmount
   useEffect(() => {
