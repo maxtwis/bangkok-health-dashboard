@@ -179,9 +179,13 @@ const IndicatorDetail = ({
         calculateIndicatorPositive(record, indicator)
       );
 
-      // Only show demographic breakdown if there are people with the indicator
-      if (indicatorPositiveData.length > 0) {
-        return calculateDemographicDisaggregation(indicatorPositiveData);
+      // For dental_access, we need to pass all filtered data to analyze those WITHOUT access
+      // For other indicators, pass only positive data
+      if (indicator === 'dental_access') {
+        // Pass all filtered data for dental_access to analyze reasons for no access
+        return calculateDemographicDisaggregation(filteredData, indicator);
+      } else if (indicatorPositiveData.length > 0) {
+        return calculateDemographicDisaggregation(indicatorPositiveData, indicator);
       } else {
         // Return null to show "No Data" message
         return null;
@@ -353,7 +357,7 @@ const IndicatorDetail = ({
   }
 
   // Calculate demographic disaggregation for survey indicators
-  function calculateDemographicDisaggregation(records) {
+  function calculateDemographicDisaggregation(records, indicatorName = indicator) {
     if (!records || records.length === 0) return null;
 
     // Classification functions
@@ -405,6 +409,43 @@ const IndicatorDetail = ({
         8: language === 'th' ? 'มลพิษ (ฝุ่น)' : 'Pollution (Dust)'
       };
       return disasterTypes[disasterValue] || (language === 'th' ? 'ไม่ระบุ' : 'Not specified');
+    };
+
+    // Add oral health access reason classification
+    const getOralHealthReason = (reasonText) => {
+      if (!reasonText || reasonText === '') {
+        return language === 'th' ? 'ไม่ระบุเหตุผล' : 'No reason specified';
+      }
+      
+      const textLower = reasonText.toString().toLowerCase();
+      
+      // Check for "too expensive" keywords (แพง, สูง, ค่า, เงิน)
+      if (textLower.includes('แพง') || textLower.includes('สูง') || textLower.includes('ค่า') || textLower.includes('เงิน')) {
+        return language === 'th' ? 'ค่าใช้จ่ายสูง/ไม่มีเงิน' : 'Too expensive/No money';
+      }
+      
+      // Check for "fear of dentist" keywords (กลัว)
+      if (textLower.includes('กลัว')) {
+        return language === 'th' ? 'กลัวหมอฟัน' : 'Fear of dentist';
+      }
+      
+      // Check for "distance/far" keywords (เดิน, ไกล)
+      if (textLower.includes('เดิน') || textLower.includes('ไกล')) {
+        return language === 'th' ? 'ระยะทางไกล' : 'Too far/Distance';
+      }
+      
+      // Check for "long wait time" keywords (รอ, นาน, คิว)
+      if (textLower.includes('รอ') || textLower.includes('นาน') || textLower.includes('คิว')) {
+        return language === 'th' ? 'รอนาน/คิวยาว' : 'Long wait time';
+      }
+      
+      // Check for "self-treatment" keywords (หาย, ยา, เอง)
+      if (textLower.includes('หาย') || textLower.includes('ยา') || textLower.includes('เอง')) {
+        return language === 'th' ? 'รักษาเอง/รอหายเอง' : 'Self-treatment';
+      }
+      
+      // Other reasons
+      return language === 'th' ? 'เหตุผลอื่นๆ' : 'Other reasons';
     };
 
     const getSexGroup = (sex) => {
@@ -497,7 +538,7 @@ const IndicatorDetail = ({
 
     // For vulnerable_employment, also calculate freelance type distribution
     let freelanceType = null;
-    if (indicator === 'vulnerable_employment') {
+    if (indicatorName === 'vulnerable_employment') {
       // Filter only freelance workers (occupation_type === 6) who meet vulnerable employment criteria
       const freelanceRecords = records.filter(record => 
         record.occupation_status === 1 && 
@@ -517,7 +558,7 @@ const IndicatorDetail = ({
     let incomeData = null;
     let workingHoursData = null;
     
-    if (indicator === 'vulnerable_employment' || indicator === 'non_vulnerable_employment') {
+    if (indicatorName === 'vulnerable_employment' || indicatorName === 'non_vulnerable_employment') {
       // Calculate average income by type (daily vs monthly)
       // IMPORTANT: income_type=1 stores actual daily wage, income_type=2 stores actual monthly salary
       const dailyIncomeRecords = records.filter(record => record.income_type === 1 && record.income > 0);
@@ -564,7 +605,7 @@ const IndicatorDetail = ({
 
     // For discrimination indicator, calculate discrimination type distribution
     let discriminationType = null;
-    if (indicator === 'discrimination_experience') {
+    if (indicatorName === 'discrimination_experience') {
       // Filter only people who experienced discrimination
       const discriminationRecords = records.filter(record => 
         record.discrimination_1 === 1 || record.discrimination_2 === 1 || 
@@ -602,7 +643,7 @@ const IndicatorDetail = ({
 
     // For disaster experience indicator, calculate disaster type distribution
     let disasterType = null;
-    if (indicator === 'disaster_experience') {
+    if (indicatorName === 'disaster_experience') {
       // Filter only people who experienced disasters
       const disasterRecords = records.filter(record => 
         record.community_disaster_1 === 1 || record.community_disaster_2 === 1 || 
@@ -629,6 +670,34 @@ const IndicatorDetail = ({
       }
     }
 
+    // For dental_access indicator, calculate oral health access reason distribution
+    let oralHealthReason = null;
+    if (indicatorName === 'dental_access') {
+      // Filter only people who DON'T have access to dental care (oral_health_access === 0)
+      const noAccessRecords = records.filter(record => 
+        record.oral_health === 1 && record.oral_health_access === 0
+      );
+      
+      if (noAccessRecords.length > 0) {
+        // Group by reason classification
+        const reasonGroups = {};
+        noAccessRecords.forEach(record => {
+          const reason = getOralHealthReason(record.oral_health_access_reason);
+          if (!reasonGroups[reason]) {
+            reasonGroups[reason] = 0;
+          }
+          reasonGroups[reason]++;
+        });
+        
+        // Convert to array format for chart
+        oralHealthReason = Object.entries(reasonGroups).map(([reason, count]) => ({
+          name: reason,
+          value: count,
+          percentage: (count / noAccessRecords.length * 100).toFixed(1)
+        })).sort((a, b) => b.value - a.value);
+      }
+    }
+
     return {
       age: calculateGroupedRates(record => getAgeGroup(record.age), records, ageGroupOrder),
       sex: calculateGroupedRates(record => getSexGroup(record.sex), records),
@@ -638,7 +707,8 @@ const IndicatorDetail = ({
       income: incomeData,
       workingHours: workingHoursData,
       discriminationType: discriminationType,
-      disasterType: disasterType
+      disasterType: disasterType,
+      oralHealthReason: oralHealthReason
     };
   }
 
@@ -1235,6 +1305,47 @@ const IndicatorDetail = ({
                             {language === 'th' 
                               ? `จากผู้ที่ประสบการเลือกปฏิบัติทั้งหมด ${disaggregationData.discriminationType.reduce((sum, item) => sum + item.value, 0)} คน สามารถแบ่งตามประเภทการเลือกปฏิบัติได้ดังนี้`
                               : `Among all ${disaggregationData.discriminationType.reduce((sum, item) => sum + item.value, 0)} people who experienced discrimination, types of discrimination are as follows`}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Oral Health Access Reason Distribution - For dental_access indicator */}
+                    {indicator === 'dental_access' && disaggregationData.oralHealthReason && disaggregationData.oralHealthReason.length > 0 && (
+                      <div className="lg:col-span-2">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                          {language === 'th' ? 'เหตุผลที่ไม่เข้าถึงบริการทันตกรรม (เฉพาะผู้ที่ไม่สามารถเข้าถึง)' : 'Reasons for Not Accessing Dental Care (Among Those Without Access)'}
+                        </h3>
+                        <div className="h-64">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={disaggregationData.oralHealthReason}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis 
+                                dataKey="name" 
+                                angle={-15}
+                                textAnchor="end"
+                                height={100}
+                                tick={{ fontSize: 11 }}
+                                interval={0}
+                              />
+                              <YAxis />
+                              <Tooltip formatter={(value, name, props) => [
+                                `${value} คน (${props.payload.percentage}%)`,
+                                language === 'th' ? 'จำนวนคน' : 'Number of People'
+                              ]} />
+                              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                {disaggregationData.oralHealthReason.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#14B8A6'][index % 7]} />
+                                ))}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+                        <div className="mt-4">
+                          <p className="text-sm text-gray-600">
+                            {language === 'th' 
+                              ? `จากผู้ที่ต้องการบริการทันตกรรมแต่ไม่สามารถเข้าถึงได้ ${disaggregationData.oralHealthReason.reduce((sum, item) => sum + item.value, 0)} คน แบ่งตามเหตุผลหลักได้ดังนี้`
+                              : `Among ${disaggregationData.oralHealthReason.reduce((sum, item) => sum + item.value, 0)} people who needed but couldn't access dental care, the main reasons are as follows`}
                           </p>
                         </div>
                       </div>
