@@ -8,6 +8,18 @@ import { INDICATOR_TYPES } from '../../constants/indicatorTypes';
 const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, selectedIndicatorType, hideCheckboxes = false }) => {
   const { t, language } = useLanguage();
   const [scaleMode, setScaleMode] = useState('dynamic'); // 'full' or 'dynamic'
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if mobile on mount and window resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   // Updated to include normal_population with grey color
   const populationGroups = [
@@ -190,16 +202,16 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
     return value;
   };
 
-  // Custom tooltip to show original values
+  // Custom tooltip to show original values - optimized for mobile
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-lg max-w-xs">
-          <p className="font-semibold mb-3 text-gray-800">{label}</p>
+        <div className="bg-white p-2 md:p-4 border border-gray-200 rounded-lg shadow-lg max-w-[200px] md:max-w-xs">
+          <p className="font-semibold mb-2 md:mb-3 text-xs md:text-base text-gray-800">{label}</p>
           {payload.map((entry, index) => {
             const originalValue = transformedData.find(d => d.domain === label)?.[`${entry.dataKey}_original`] || 0;
             return (
-              <p key={index} style={{ color: entry.color }} className="text-sm mb-1">
+              <p key={index} style={{ color: entry.color }} className="text-[10px] md:text-sm mb-0.5 md:mb-1">
                 <span className="font-medium">{t(`populationGroups.${entry.dataKey}`)}</span>: <span className="font-semibold">{originalValue.toFixed(1)}%</span>
               </p>
             );
@@ -214,11 +226,11 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
     <div className="w-full">
       {/* Title is now handled in parent component (index.jsx), so we don't show it here when hideCheckboxes=true */}
       {!hideCheckboxes && (
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+        <div className="mb-4 md:mb-6">
+          <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
             {t('ui.spiderChartTitle')}
           </h3>
-          <p className="text-sm text-gray-600 leading-relaxed">
+          <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
             {t('ui.spiderChartDescription')} {
               selectedDistrict === 'Bangkok Overall' && language === 'th'
                 ? t('ui.bangkokOverall') 
@@ -231,11 +243,11 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
       {/* Checkboxes are handled in parent component (index.jsx) */}
 
       {/* SCALE TOGGLE - Now positioned above chart */}
-      <div className="flex justify-end items-center mb-4">
-        <div className="flex bg-gray-100 rounded-lg p-1 flex-shrink-0">
+      <div className="flex justify-end items-center mb-2 md:mb-4">
+        <div className="flex bg-gray-100 rounded-lg p-0.5 md:p-1 flex-shrink-0">
           <button
             onClick={() => setScaleMode('dynamic')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+            className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium rounded-md transition-all duration-200 ${
               scaleMode === 'dynamic' 
                 ? 'bg-white text-gray-900 shadow-sm' 
                 : 'text-gray-600 hover:text-gray-900'
@@ -245,7 +257,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
           </button>
           <button
             onClick={() => setScaleMode('full')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+            className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium rounded-md transition-all duration-200 ${
               scaleMode === 'full' 
                 ? 'bg-white text-gray-900 shadow-sm' 
                 : 'text-gray-600 hover:text-gray-900'
@@ -274,13 +286,23 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
           </div>
         </div>
       ) : (
-        <div className="space-y-8">
-          {/* Spider Chart - Optimized for side-by-side layout */}
-          <div className="h-[600px] w-full" role="img" aria-label="Population group health domains comparison radar chart">
+        <div className="space-y-4 md:space-y-8">
+          {/* Spider Chart - Optimized for mobile and desktop */}
+          <div className="h-[450px] md:h-[600px] w-full" role="img" aria-label="Population group health domains comparison radar chart">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart 
                 data={transformedData} 
-                margin={{ top: 20, right: 80, bottom: 40, left: 80 }}
+                margin={isMobile ? { 
+                  top: 10, 
+                  right: 40, 
+                  bottom: 20, 
+                  left: 40
+                } : { 
+                  top: 20, 
+                  right: 80, 
+                  bottom: 40, 
+                  left: 80 
+                }}
                 accessibilityLayer={{
                   title: "Population Groups Health Domain Comparison",
                   description: "Radar chart comparing health domain scores across different population groups"
@@ -291,7 +313,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
                   dataKey="domain" 
                   className="text-xs font-medium"
                   tick={{ 
-                    fontSize: 11, 
+                    fontSize: isMobile ? 9 : 11, 
                     fill: '#374151',
                     fontWeight: 500
                   }}
@@ -301,7 +323,10 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
                   angle={90} 
                   domain={[0, 100]} 
                   className="text-xs"
-                  tick={{ fontSize: 10, fill: '#6b7280' }}
+                  tick={{ 
+                    fontSize: isMobile ? 8 : 10, 
+                    fill: '#6b7280' 
+                  }}
                   tickCount={5}
                   tickFormatter={(value) => {
                     if (scaleMode === 'dynamic' && scaleMax > scaleMin) {
@@ -323,15 +348,19 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
                     stroke={group.color}
                     fill={group.color}
                     fillOpacity={0.08}
-                    strokeWidth={2.5}
-                    dot={{ fill: group.color, strokeWidth: 2, r: 4 }}
+                    strokeWidth={isMobile ? 2 : 2.5}
+                    dot={{ 
+                      fill: group.color, 
+                      strokeWidth: isMobile ? 1.5 : 2, 
+                      r: isMobile ? 3 : 4 
+                    }}
                   />
                 ))}
                 
                 <Legend 
                   wrapperStyle={{
-                    paddingTop: '20px',
-                    fontSize: '12px',
+                    paddingTop: isMobile ? '10px' : '20px',
+                    fontSize: isMobile ? '10px' : '12px',
                     fontWeight: '500'
                   }}
                 />

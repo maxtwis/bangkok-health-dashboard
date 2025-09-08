@@ -28,7 +28,8 @@
       "Read(\\/**)",
       "Bash(start http://localhost:5179)",
       "WebFetch(domain:localhost)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "mcp__playwright__browser_resize"
     ],
     "deny": [],
     "ask": []
