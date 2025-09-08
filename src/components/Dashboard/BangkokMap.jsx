@@ -526,19 +526,19 @@ const BangkokMap = ({
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-green-500 rounded"></div>
-              <span>Excellent (≥80%)</span>
+              <span>{language === 'th' ? 'ดีเยี่ยม (≥80%)' : 'Excellent (≥80%)'}</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-yellow-500 rounded"></div>
-              <span>Good (60-79%)</span>
+              <span>{language === 'th' ? 'ดี (60-79%)' : 'Good (60-79%)'}</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-orange-500 rounded"></div>
-              <span>Fair (40-59%)</span>
+              <span>{language === 'th' ? 'พอใช้ (40-59%)' : 'Fair (40-59%)'}</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-red-500 rounded"></div>
-              <span>Poor (&lt;40%)</span>
+              <span>{language === 'th' ? 'ต้องปรับปรุง (<40%)' : 'Poor (<40%)'}</span>
             </div>
           </div>
         </div>

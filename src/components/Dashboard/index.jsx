@@ -316,15 +316,23 @@ const Dashboard = () => {
       const valueNum = Number(value);
       
       // Define units for each healthcare supply indicator
+      const getUnit = (number) => {
+        if (language === 'th') {
+          return number === '1,000' ? 'ต่อ 1,000 คน' : 'ต่อ 10,000 คน';
+        } else {
+          return `per ${number}`;
+        }
+      };
+      
       const unitMap = {
-        'doctor_per_population': `${valueNum.toFixed(1)} per 1,000`,
-        'nurse_per_population': `${valueNum.toFixed(1)} per 1,000`, 
-        'healthworker_per_population': `${valueNum.toFixed(1)} per 10,000`,
-        'community_healthworker_per_population': `${valueNum.toFixed(1)} per 1,000`,
-        'health_service_access': `${valueNum.toFixed(1)} per 10,000`,
-        'bed_per_population': `${valueNum.toFixed(1)} per 10,000`,
-        'market_per_population': `${valueNum.toFixed(1)} per 10,000`,
-        'sportfield_per_population': `${valueNum.toFixed(1)} per 1,000`
+        'doctor_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
+        'nurse_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`, 
+        'healthworker_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+        'community_healthworker_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
+        'health_service_access': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+        'bed_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+        'market_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+        'sportfield_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`
       };
 
       return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
