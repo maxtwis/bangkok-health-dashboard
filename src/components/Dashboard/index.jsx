@@ -243,15 +243,19 @@ const Dashboard = () => {
     setSelectedDistrict(district);
     const params = new URLSearchParams(location.search);
     params.set('district', district);
+    // Preserve the population group in URL
+    params.set('group', selectedPopulationGroup);
     navigate(`${location.pathname}?${params.toString()}`, { replace: true });
-  }, [navigate, location]);
+  }, [navigate, location, selectedPopulationGroup]);
 
   const handleDomainChange = useCallback((domain) => {
     setSelectedDomain(domain);
     const params = new URLSearchParams(location.search);
     params.set('domain', domain);
+    // Preserve the population group in URL
+    params.set('group', selectedPopulationGroup);
     navigate(`${location.pathname}?${params.toString()}`, { replace: true });
-  }, [navigate, location]);
+  }, [navigate, location, selectedPopulationGroup]);
 
   const handleMapDistrictClick = useCallback((districtName) => {
     setSelectedDistrict(districtName);
