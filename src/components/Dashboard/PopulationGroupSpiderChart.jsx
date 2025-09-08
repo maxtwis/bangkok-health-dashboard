@@ -177,12 +177,25 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
     
     // Only wrap text on mobile
     if (isMobile) {
-      // For Thai text on mobile - always wrap if there's a space
       if (language === 'th') {
-        // Split on spaces first
+        // Specific wrapping rules for Thai health domain labels
+        const wrappingRules = {
+          'ความมั่นคงทางเศรษฐกิจ': 'ความมั่นคง\nทางเศรษฐกิจ',
+          'การเข้าถึงบริการสุขภาพ': 'การเข้าถึง\nบริการสุขภาพ',
+          'สภาพแวดล้อมทางกายภาพ': 'สภาพแวดล้อม\nทางกายภาพ',
+          'บริบททางสังคม': 'บริบททาง\nสังคม',
+          'พฤติกรรมสุขภาพ': 'พฤติกรรม\nสุขภาพ',
+          'ผลลัพธ์ด้านสุขภาพ': 'ผลลัพธ์ด้าน\nสุขภาพ'
+        };
+        
+        // Check if we have a specific rule for this text
+        if (wrappingRules[value]) {
+          return wrappingRules[value];
+        }
+        
+        // Fallback to general Thai wrapping logic
         const words = value.split(' ');
         if (words.length >= 2) {
-          // Always wrap at spaces for Thai text on mobile
           const mid = Math.ceil(words.length / 2);
           return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
         }
