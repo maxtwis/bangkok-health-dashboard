@@ -27,7 +27,8 @@
       "Bash(copy:*)",
       "Read(\\/**)",
       "Bash(start http://localhost:5179)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "ask": []
