@@ -301,15 +301,15 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
               <RadarChart 
                 data={transformedData} 
                 margin={isMobile ? { 
-                  top: 20, 
-                  right: 50, 
-                  bottom: 30, 
-                  left: 50
-                } : { 
-                  top: 20, 
-                  right: 80, 
+                  top: 30, 
+                  right: 60, 
                   bottom: 40, 
-                  left: 80 
+                  left: 60
+                } : { 
+                  top: 30, 
+                  right: 90, 
+                  bottom: 50, 
+                  left: 90 
                 }}
                 accessibilityLayer={{
                   title: "Population Groups Health Domain Comparison",
@@ -321,15 +321,21 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
                   dataKey="domain" 
                   className="text-xs font-medium"
                   tick={isMobile ? (props) => {
-                    const { x, y, payload } = props;
+                    const { x, y, payload, cx, cy } = props;
                     const lines = formatTick(payload.value).split('\n');
                     const fontSize = 8;
                     const lineHeight = 10;
                     
+                    // Calculate offset to push labels further out
+                    const angle = Math.atan2(y - cy, x - cx);
+                    const offset = 15; // pixels to push out
+                    const adjustedX = x + Math.cos(angle) * offset;
+                    const adjustedY = y + Math.sin(angle) * offset;
+                    
                     return (
                       <text
-                        x={x}
-                        y={y}
+                        x={adjustedX}
+                        y={adjustedY}
                         fill="#374151"
                         fontSize={fontSize}
                         fontWeight={500}
@@ -338,7 +344,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
                         {lines.map((line, index) => (
                           <tspan
                             key={index}
-                            x={x}
+                            x={adjustedX}
                             dy={index === 0 ? -((lines.length - 1) * lineHeight) / 2 : lineHeight}
                           >
                             {line}
@@ -346,10 +352,26 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
                         ))}
                       </text>
                     );
-                  } : { 
-                    fontSize: 11, 
-                    fill: '#374151',
-                    fontWeight: 500
+                  } : (props) => {
+                    const { x, y, payload, cx, cy } = props;
+                    // Calculate offset to push labels further out on desktop too
+                    const angle = Math.atan2(y - cy, x - cx);
+                    const offset = 10; // smaller offset for desktop
+                    const adjustedX = x + Math.cos(angle) * offset;
+                    const adjustedY = y + Math.sin(angle) * offset;
+                    
+                    return (
+                      <text
+                        x={adjustedX}
+                        y={adjustedY}
+                        fill="#374151"
+                        fontSize={11}
+                        fontWeight={500}
+                        textAnchor="middle"
+                      >
+                        {payload.value}
+                      </text>
+                    );
                   }}
                 />
                 <PolarRadiusAxis 
