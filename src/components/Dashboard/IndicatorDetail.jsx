@@ -563,7 +563,7 @@ const IndicatorDetail = ({
     let incomeData = null;
     let workingHoursData = null;
     
-    if (indicatorName === 'vulnerable_employment' || indicatorName === 'non_vulnerable_employment') {
+    if (indicatorName === 'vulnerable_employment' || indicatorName === 'non_vulnerable_employment' || indicatorName === 'employment_rate') {
       // Calculate average income by type (daily vs monthly)
       // IMPORTANT: income_type=1 stores actual daily wage, income_type=2 stores actual monthly salary
       const dailyIncomeRecords = records.filter(record => record.income_type === 1 && record.income > 0);
@@ -1398,7 +1398,7 @@ const IndicatorDetail = ({
                     )}
 
                     {/* Income and Working Hours - For employment indicators */}
-                    {(indicator === 'vulnerable_employment' || indicator === 'non_vulnerable_employment') && 
+                    {(indicator === 'vulnerable_employment' || indicator === 'non_vulnerable_employment' || indicator === 'employment_rate') && 
                      (disaggregationData.income || disaggregationData.workingHours) && (
                       <div className="lg:col-span-2 space-y-6">
                         
