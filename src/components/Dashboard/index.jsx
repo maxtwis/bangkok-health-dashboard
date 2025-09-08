@@ -838,28 +838,8 @@ Reset Filters
 
                   {/* Enhanced Map Container */}
                   <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 relative" style={{ height: '700px' }}>
-                    {/* Map Header */}
-                    <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-r from-white/95 to-white/90 backdrop-blur-sm border-b border-gray-100 p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-green-100 rounded-xl">
-                          <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-bold text-gray-900">Bangkok Districts</h3>
-                          <p className="text-sm text-gray-600">
-                            {t(`domains.${selectedDomain}`)}
-                            {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
-                              <> - {t(`populationGroups.${selectedPopulationGroup}`)}</>
-                            )}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Map with top padding for header */}
-                    <div className="h-full pt-20">
+                    {/* Map without header */}
+                    <div className="h-full">
                       {dataState.isLoading ? (
                         <div className="h-full flex items-center justify-center">
                           <LoadingCard message={t('ui.loading')} />
