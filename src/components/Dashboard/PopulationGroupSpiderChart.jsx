@@ -171,62 +171,42 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
     return transformed;
   });
 
-  // Custom tick formatter to wrap long labels - optimized for mobile
+  // Custom tick formatter to wrap long labels - only on mobile
   const formatTick = (value) => {
     if (typeof value !== 'string') return value;
     
-    // More aggressive wrapping on mobile
+    // Only wrap text on mobile
     if (isMobile) {
-      // For Thai text on mobile
+      // For Thai text on mobile - always wrap if there's a space
       if (language === 'th') {
+        // Split on spaces first
+        const words = value.split(' ');
+        if (words.length >= 2) {
+          // Always wrap at spaces for Thai text on mobile
+          const mid = Math.ceil(words.length / 2);
+          return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
+        }
+        // If no spaces but long, force break
         if (value.length > 8) {
-          const words = value.split(' ');
-          if (words.length > 1) {
-            const mid = Math.ceil(words.length / 2);
-            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
-          }
-          // If no spaces, break at reasonable points
-          if (value.length > 12) {
-            const breakPoint = Math.floor(value.length / 2);
-            return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
-          }
+          const breakPoint = Math.ceil(value.length / 2);
+          return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
         }
       } else {
         // For English text on mobile
-        if (value.length > 10) {
-          const words = value.split(' ');
-          if (words.length > 1) {
-            const mid = Math.ceil(words.length / 2);
-            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
-          }
+        const words = value.split(' ');
+        if (words.length >= 2) {
+          const mid = Math.ceil(words.length / 2);
+          return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
         }
-      }
-    } else {
-      // Desktop formatting
-      if (language === 'th') {
+        // Force break long single words
         if (value.length > 10) {
-          const words = value.split(' ');
-          if (words.length > 1) {
-            const mid = Math.ceil(words.length / 2);
-            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
-          }
-          // If no spaces, try to break at reasonable points
-          if (value.length > 15) {
-            const breakPoint = Math.floor(value.length / 2);
-            return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
-          }
-        }
-      } else {
-        // For English text on desktop
-        if (value.length > 12) {
-          const words = value.split(' ');
-          if (words.length > 1) {
-            const mid = Math.ceil(words.length / 2);
-            return words.slice(0, mid).join(' ') + '\n' + words.slice(mid).join(' ');
-          }
+          const breakPoint = Math.ceil(value.length / 2);
+          return value.substring(0, breakPoint) + '\n' + value.substring(breakPoint);
         }
       }
     }
+    
+    // Desktop - return as is, no wrapping
     return value;
   };
 
@@ -340,12 +320,37 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
                 <PolarAngleAxis 
                   dataKey="domain" 
                   className="text-xs font-medium"
-                  tick={{ 
-                    fontSize: isMobile ? 9 : 11, 
+                  tick={isMobile ? (props) => {
+                    const { x, y, payload } = props;
+                    const lines = formatTick(payload.value).split('\n');
+                    const fontSize = 8;
+                    const lineHeight = 10;
+                    
+                    return (
+                      <text
+                        x={x}
+                        y={y}
+                        fill="#374151"
+                        fontSize={fontSize}
+                        fontWeight={500}
+                        textAnchor="middle"
+                      >
+                        {lines.map((line, index) => (
+                          <tspan
+                            key={index}
+                            x={x}
+                            dy={index === 0 ? -((lines.length - 1) * lineHeight) / 2 : lineHeight}
+                          >
+                            {line}
+                          </tspan>
+                        ))}
+                      </text>
+                    );
+                  } : { 
+                    fontSize: 11, 
                     fill: '#374151',
                     fontWeight: 500
                   }}
-                  tickFormatter={formatTick}
                 />
                 <PolarRadiusAxis 
                   angle={90} 
