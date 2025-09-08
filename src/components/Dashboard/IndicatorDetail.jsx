@@ -434,6 +434,11 @@ const IndicatorDetail = ({
         return language === 'th' ? 'ระยะทางไกล' : 'Too far/Distance';
       }
       
+      // Check for "no time" keywords (ไม่มีเวลา)
+      if (textLower.includes('ไม่มีเวลา') || textLower.includes('เวลา')) {
+        return language === 'th' ? 'ไม่มีเวลา' : 'No time';
+      }
+      
       // Check for "long wait time" keywords (รอ, นาน, คิว)
       if (textLower.includes('รอ') || textLower.includes('นาน') || textLower.includes('คิว')) {
         return language === 'th' ? 'รอนาน/คิวยาว' : 'Long wait time';
