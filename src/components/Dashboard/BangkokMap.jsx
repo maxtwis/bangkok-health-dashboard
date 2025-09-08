@@ -28,6 +28,7 @@ const BangkokMap = ({
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const geoJsonLayerRef = useRef(null);
+  const labelsLayerRef = useRef(null);
   const initializationTimeoutRef = useRef(null);
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -401,6 +402,107 @@ const BangkokMap = ({
     }
   };
 
+  // Create district labels
+  const createDistrictLabels = useCallback(() => {
+    if (!mapInstanceRef.current || !geoJsonData) {
+      return null;
+    }
+
+    const labels = [];
+    const currentZoom = mapInstanceRef.current.getZoom();
+    const isMobile = isMobileDevice();
+    
+    // Hide labels when zoomed out too far to prevent clustering
+    const minZoomForLabels = isMobile ? 9.5 : 10;
+    if (currentZoom < minZoomForLabels) {
+      return [];
+    }
+    
+    // Adjust font size and opacity based on zoom level and device
+    let fontSize = Math.max(8, Math.min(14, currentZoom * 1.2));
+    let opacity = Math.min(1, (currentZoom - minZoomForLabels + 1) * 0.8);
+    
+    if (isMobile) {
+      fontSize = Math.max(6, Math.min(12, currentZoom * 1.1));
+    }
+    
+    // At higher zoom levels, show larger districts first to reduce clustering
+    const districtPriority = {
+      // Large districts (show first)
+      'หนองจอก': 1, 'บางแค': 1, 'ทุ่งครุ': 1, 'ลาดกระบัง': 1,
+      'บางขุนเทียน': 1, 'มีนบุรี': 1, 'คลองสามวา': 1, 'ประเวศ': 1,
+      // Medium districts  
+      'บึงกุ่ม': 2, 'สะพานสูง': 2, 'วังทองหลาง': 2, 'ลาดพร้าว': 2,
+      'บางกะปิ': 2, 'ห้วยขวาง': 2, 'บางเขน': 2, 'คันนายาว': 2,
+      // Small districts (show last)
+      'ปทุมวัน': 3, 'บางรัก': 3, 'สาทร': 3, 'วัฒนา': 3
+    };
+    
+    // Show labels progressively based on zoom level
+    let maxPriority = 3;
+    if (currentZoom < 11) maxPriority = 1;
+    else if (currentZoom < 12) maxPriority = 2;
+
+    geoJsonData.features.forEach((feature) => {
+      const dcode = feature.properties.dcode;
+      const districtName = districtCodeMap[dcode];
+      
+      if (districtName && feature.geometry.type === 'Polygon') {
+        // Check if this district should be shown at current zoom level
+        const priority = districtPriority[districtName] || 2; // Default to medium priority
+        if (priority > maxPriority) {
+          return; // Skip this district at current zoom level
+        }
+        // Calculate centroid of the polygon
+        const coordinates = feature.geometry.coordinates[0];
+        let centroidLat = 0;
+        let centroidLng = 0;
+        let signedArea = 0;
+        
+        for (let i = 0; i < coordinates.length - 1; i++) {
+          const x0 = coordinates[i][0];
+          const y0 = coordinates[i][1];
+          const x1 = coordinates[i + 1][0];
+          const y1 = coordinates[i + 1][1];
+          const a = x0 * y1 - x1 * y0;
+          signedArea += a;
+          centroidLng += (x0 + x1) * a;
+          centroidLat += (y0 + y1) * a;
+        }
+        
+        signedArea *= 0.5;
+        centroidLng /= (6.0 * signedArea);
+        centroidLat /= (6.0 * signedArea);
+        
+        // Create label with appropriate styling
+        const label = L.marker([centroidLat, centroidLng], {
+          icon: L.divIcon({
+            className: 'district-label',
+            html: `<div style="
+              font-size: ${fontSize}px;
+              font-weight: 600;
+              color: #1f2937;
+              text-align: center;
+              text-shadow: 1px 1px 3px rgba(255,255,255,0.9), -1px -1px 1px rgba(255,255,255,0.9);
+              pointer-events: none;
+              white-space: nowrap;
+              line-height: 1.1;
+              opacity: ${opacity};
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              transition: opacity 0.3s ease;
+            ">${districtName}</div>`,
+            iconSize: [100, 20],
+            iconAnchor: [50, 10]
+          })
+        });
+        
+        labels.push(label);
+      }
+    });
+
+    return labels;
+  }, [geoJsonData, districtCodeMap]);
+
   // Update map layers when data changes
   useEffect(() => {
     if (!mapInstanceRef.current || !geoJsonData || !mapReady) {
@@ -408,9 +510,12 @@ const BangkokMap = ({
     }
 
     try {
-      // Remove old layer
+      // Remove old layers
       if (geoJsonLayerRef.current) {
         mapInstanceRef.current.removeLayer(geoJsonLayerRef.current);
+      }
+      if (labelsLayerRef.current) {
+        mapInstanceRef.current.removeLayer(labelsLayerRef.current);
       }
 
       // Create districts layer
@@ -508,6 +613,14 @@ const BangkokMap = ({
 
       layer.addTo(mapInstanceRef.current);
       geoJsonLayerRef.current = layer;
+
+      // Add district labels
+      const labels = createDistrictLabels();
+      if (labels && labels.length > 0) {
+        const labelsGroup = L.layerGroup(labels);
+        labelsGroup.addTo(mapInstanceRef.current);
+        labelsLayerRef.current = labelsGroup;
+      }
       
       // Fit bounds with error handling
       try {
@@ -522,7 +635,34 @@ const BangkokMap = ({
     } catch (err) {
       // Ignore layer update errors
     }
-  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, mapReady, t, language]);
+  }, [geoJsonData, selectedDomain, selectedPopulationGroup, selectedDistrict, getIndicatorData, onDistrictClick, mapReady, t, language, createDistrictLabels]);
+
+  // Add zoom event handler to update label sizes
+  useEffect(() => {
+    if (!mapInstanceRef.current || !mapReady) return;
+
+    const handleZoomEnd = () => {
+      // Recreate labels with new font sizes based on zoom level
+      if (labelsLayerRef.current) {
+        mapInstanceRef.current.removeLayer(labelsLayerRef.current);
+      }
+      
+      const labels = createDistrictLabels();
+      if (labels && labels.length > 0) {
+        const labelsGroup = L.layerGroup(labels);
+        labelsGroup.addTo(mapInstanceRef.current);
+        labelsLayerRef.current = labelsGroup;
+      }
+    };
+
+    mapInstanceRef.current.on('zoomend', handleZoomEnd);
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.off('zoomend', handleZoomEnd);
+      }
+    };
+  }, [mapReady, createDistrictLabels]);
 
   // Show loading state
   if (loading) {
