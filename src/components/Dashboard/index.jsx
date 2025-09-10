@@ -132,6 +132,9 @@ const Dashboard = () => {
   // States for indicator detail page
   const [showDetailPage, setShowDetailPage] = useState(false);
   const [selectedIndicator, setSelectedIndicator] = useState(null);
+  
+  // State for map indicator selection
+  const [selectedMapIndicator, setSelectedMapIndicator] = useState(null);
 
   // Handle URL-based routing
   useEffect(() => {
@@ -343,7 +346,7 @@ const Dashboard = () => {
   }, []);
 
   const getScoreColor = (value, indicator) => {
-    // Handle healthcare supply indicators with WHO benchmarks
+    // Handle healthcare supply indicators with min-max scaling for IMD
     const healthcareSupplyIndicators = [
       'doctor_per_population', 
       'nurse_per_population', 
@@ -355,6 +358,37 @@ const Dashboard = () => {
       'sportfield_per_population'
     ];
     
+    if (healthcareSupplyIndicators.includes(indicator) && selectedIndicatorType === INDICATOR_TYPES.IMD) {
+      // Use min-max scaling for IMD indicators
+      // Get all values for this indicator to calculate relative position
+      const allDistricts = getAvailableDistricts().filter(d => d !== 'Bangkok Overall');
+      const allValues = allDistricts.map(district => {
+        try {
+          const data = getIndicatorData(selectedDomain, district, 'all', selectedIndicatorType);
+          const item = data.find(d => d.indicator === indicator);
+          return item?.value || 0;
+        } catch {
+          return 0;
+        }
+      }).filter(v => v > 0);
+      
+      if (allValues.length > 0) {
+        const min = Math.min(...allValues);
+        const max = Math.max(...allValues);
+        const range = max - min;
+        const relativeScore = range > 0 ? ((value - min) / range) * 100 : 50;
+        
+        // Wider intervals for more distinct colors: highest values = green, lowest = red
+        if (relativeScore >= 80) return 'bg-green-100 text-green-800'; // Top 20%
+        if (relativeScore >= 40) return 'bg-yellow-100 text-yellow-800'; // Middle 40%
+        if (relativeScore >= 20) return 'bg-orange-100 text-orange-800'; // Low 20%
+        return 'bg-red-100 text-red-800'; // Bottom 20%
+      }
+      
+      return 'bg-gray-100 text-gray-800'; // No data fallback
+    }
+    
+    // Use WHO benchmarks for SDHE healthcare supply indicators
     if (healthcareSupplyIndicators.includes(indicator)) {
       const color = getHealthcareSupplyColor(value, indicator);
       // Convert hex to Tailwind badge classes
@@ -381,46 +415,6 @@ const Dashboard = () => {
     }
   };
 
-  const getPerformanceBarColor = (value, indicator) => {
-    // Handle healthcare supply indicators with WHO benchmarks
-    const healthcareSupplyIndicators = [
-      'doctor_per_population', 
-      'nurse_per_population', 
-      'healthworker_per_population', 
-      'community_healthworker_per_population',
-      'health_service_access',
-      'bed_per_population',
-      'market_per_population',
-      'sportfield_per_population'
-    ];
-    
-    if (healthcareSupplyIndicators.includes(indicator)) {
-      const color = getHealthcareSupplyColor(value, indicator);
-      
-      // Convert hex color to Tailwind class
-      if (color === '#10B981') return 'bg-green-500';   // green
-      if (color === '#F59E0B') return 'bg-yellow-500';  // yellow
-      if (color === '#FB923C') return 'bg-orange-500';  // orange
-      if (color === '#EF4444') return 'bg-red-500';     // red
-      
-      // Default fallback
-      return 'bg-red-500';
-    }
-    
-    const isReverse = REVERSE_INDICATORS[indicator];
-    
-    if (isReverse) {
-      if (value <= 20) return 'bg-green-500';
-      if (value <= 40) return 'bg-yellow-500';
-      if (value <= 60) return 'bg-orange-500';
-      return 'bg-red-500';
-    } else {
-      if (value >= 80) return 'bg-green-500';
-      if (value >= 60) return 'bg-yellow-500';
-      if (value >= 40) return 'bg-orange-500';
-      return 'bg-red-500';
-    }
-  };
 
   // Skip loading screen - data will load in background
   // if (dataState.isLoading) {
@@ -860,6 +854,8 @@ Reset Filters
                           selectedIndicatorType={selectedIndicatorType}
                           onDistrictClick={handleMapDistrictClick}
                           getIndicatorData={getIndicatorData}
+                          selectedIndicator={selectedMapIndicator}
+                          mapMode={selectedMapIndicator ? "indicator" : "domain"}
                         />
                       )}
                     </div>
@@ -949,7 +945,7 @@ Reset Filters
 
             {/* Enhanced Indicators Mode */}
             {activeTab === 'indicators' && (
-              <div className="space-y-6">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 {/* Enhanced Indicators Table */}
                 <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                   <div className="px-8 py-8 border-b border-gray-200 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
@@ -978,7 +974,6 @@ Reset Filters
                             </span>
                           )}
                         </div>
-                        <p className="text-gray-600 mt-2">Detailed indicator breakdown and performance metrics</p>
                       </div>
                     </div>
                   </div>
@@ -1005,9 +1000,6 @@ Reset Filters
                                   {t('ui.sampleSize')}
                                 </th>
                               )}
-                              <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
-                                {t('ui.performance')}
-                              </th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1020,16 +1012,39 @@ Reset Filters
                                 return (
                                   <tr 
                                     key={indicator} 
-                                    className="border-b border-gray-100 hover:bg-blue-50/50 cursor-pointer transition-colors duration-200"
-                                    onClick={() => handleIndicatorClick(indicator)}
+                                    className={`border-b border-gray-100 hover:bg-blue-50/50 transition-colors duration-200 ${
+                                      selectedMapIndicator === indicator ? 'bg-blue-100 border-blue-200' : ''
+                                    }`}
                                   >
                                     {/* Indicator Name Column */}
                                     <td className="py-4 px-6">
                                       <div className="flex items-center">
-                                        <span className="font-medium text-gray-900 hover:text-blue-600 transition-colors duration-200">
+                                        <span 
+                                          className={`font-medium text-gray-900 hover:text-blue-600 transition-colors duration-200 cursor-pointer flex-1 ${
+                                            selectedMapIndicator === indicator ? 'text-blue-600 font-semibold' : ''
+                                          }`}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            // Toggle the selected map indicator
+                                            setSelectedMapIndicator(selectedMapIndicator === indicator ? null : indicator);
+                                          }}
+                                          title="Click to view on map"
+                                        >
                                           {getIndicatorName(indicator, language) || item.label}
                                         </span>
-                                        <svg className="w-5 h-5 ml-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="View details arrow">
+                                        <svg 
+                                          className="w-5 h-5 ml-3 text-gray-400 hover:text-gray-600 cursor-pointer" 
+                                          fill="none" 
+                                          stroke="currentColor" 
+                                          viewBox="0 0 24 24" 
+                                          role="img" 
+                                          aria-label="View details arrow"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleIndicatorClick(indicator);
+                                          }}
+                                          title="Click for detailed analysis"
+                                        >
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
                                       </div>
@@ -1060,47 +1075,6 @@ Reset Filters
                                         })()}
                                       </td>
                                     )}
-
-                                    {/* Performance Bar Column */}
-                                    <td className="text-center py-4 px-6">
-                                      {item.noData || value === null || value === undefined ? (
-                                        <div className="w-full bg-gray-200 rounded-full h-3">
-                                          <div className="h-3 rounded-full bg-gray-300" style={{ width: '0%' }}></div>
-                                        </div>
-                                      ) : (
-                                        <div className="w-full bg-gray-200 rounded-full h-3">
-                                          <div 
-                                            className={`h-3 rounded-full ${getPerformanceBarColor(value, indicator)} transition-all duration-500`}
-                                            style={{ width: `${(() => {
-                                              // For healthcare supply indicators, calculate width based on benchmarks
-                                              const healthcareSupplyIndicators = [
-                                                'doctor_per_population', 
-                                                'nurse_per_population', 
-                                                'healthworker_per_population', 
-                                                'community_healthworker_per_population',
-                                                'health_service_access',
-                                                'bed_per_population',
-                                                'market_per_population',
-                                                'sportfield_per_population'
-                                              ];
-                                              
-                                              if (healthcareSupplyIndicators.includes(indicator)) {
-                                                // Scale based on good benchmark (100% = good threshold)
-                                                const benchmarks = HEALTHCARE_SUPPLY_BENCHMARKS[indicator];
-                                                if (benchmarks && benchmarks.good) {
-                                                  // Scale to percentage where 100% = good benchmark
-                                                  const percentage = (value / benchmarks.good) * 100;
-                                                  return Math.min(100, Math.max(0, percentage));
-                                                }
-                                              }
-                                              
-                                              // Default for non-supply indicators (already percentages)
-                                              return Math.min(100, Math.max(0, parseFloat(value) || 0));
-                                            })()}%` }}
-                                          ></div>
-                                        </div>
-                                      )}
-                                    </td>
                                   </tr>
                                 );
                               })}
@@ -1120,27 +1094,27 @@ Reset Filters
                     )}
                   </div>
                 </div>
-              </div>
-            )}
 
-            {/* Full-width Map for indicators view */}
-            {activeTab === 'indicators' && (
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '600px' }}>
-                <div className="h-full">
-                  {dataState.isLoading ? (
-                    <div className="h-full flex items-center justify-center">
-                      <LoadingCard message={t('ui.loading')} />
-                    </div>
-                  ) : (
-                    <BangkokMap
-                      selectedDomain={selectedDomain}
-                      selectedPopulationGroup={selectedPopulationGroup}
-                      selectedDistrict={selectedDistrict}
-                      selectedIndicatorType={selectedIndicatorType}
-                      onDistrictClick={handleMapDistrictClick}
-                      getIndicatorData={getIndicatorData}
-                    />
-                  )}
+                {/* Map for indicators view */}
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" style={{ height: '700px' }}>
+                  <div className="h-full">
+                    {dataState.isLoading ? (
+                      <div className="h-full flex items-center justify-center">
+                        <LoadingCard message={t('ui.loading')} />
+                      </div>
+                    ) : (
+                      <BangkokMap
+                        selectedDomain={selectedDomain}
+                        selectedPopulationGroup={selectedPopulationGroup}
+                        selectedDistrict={selectedDistrict}
+                        selectedIndicatorType={selectedIndicatorType}
+                        onDistrictClick={handleMapDistrictClick}
+                        getIndicatorData={getIndicatorData}
+                        selectedIndicator={selectedMapIndicator}
+                        mapMode={selectedMapIndicator ? "indicator" : "domain"}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             )}

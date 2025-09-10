@@ -1033,8 +1033,10 @@ class DataProcessor {
       }
     });
 
-    // Calculate domain score with proper reverse indicator handling
+    // Calculate domain score with separate logic for IMD vs SDHE
     const indicators = Object.keys(domainMapping);
+    const isIMDDomain = domain === 'healthcare_infrastructure' || domain === 'food_access' || domain === 'sports_recreation';
+    
     const goodnessScores = indicators.filter(indicator => {
       // Exclude indicators with no data or insufficient sample from domain score calculation
       return results[indicator] && 
@@ -1044,48 +1046,45 @@ class DataProcessor {
     }).map(indicator => {
       const rawValue = results[indicator].value;
       
-      // Handle healthcare supply indicators with normalized scoring
-      const healthcareSupplyIndicators = [
-        'doctor_per_population', 
-        'nurse_per_population', 
-        'healthworker_per_population', 
-        'community_healthworker_per_population',
-        'health_service_access',
-        'bed_per_population'
-      ];
-      
-      if (healthcareSupplyIndicators.includes(indicator)) {
-        // Convert healthcare supply indicators to 0-100 scale using WHO benchmarks
-        const benchmarks = {
-          doctor_per_population: { excellent: 2.5, good: 1.0, poor: 0.5 },
-          nurse_per_population: { excellent: 8.0, good: 3.0, poor: 1.5 },
-          healthworker_per_population: { excellent: 40, good: 20, poor: 10 },
-          community_healthworker_per_population: { excellent: 5.0, good: 2.0, poor: 1.0 },
-          health_service_access: { excellent: 50, good: 20, poor: 10 },
-          bed_per_population: { excellent: 30, good: 15, poor: 10 }
-        };
+      // Handle IMD indicators with min-max normalization for domain scoring
+      if (isIMDDomain) {
+        // For IMD domain score calculation, normalize raw values to 0-100 scale
+        // This ensures IMD domain scores are comparable and meaningful
         
-        const benchmark = benchmarks[indicator];
-        if (!benchmark) return 50; // Default middle score
+        // Get all values for this indicator across all districts for normalization
+        const allDistrictValues = [];
+        const districtNames = [...new Set(this.surveyData.map(r => r.district_name))];
         
-        // Convert to 0-100 scale
-        if (rawValue >= benchmark.excellent) return 100;
-        if (rawValue >= benchmark.good) {
-          // Linear interpolation between good and excellent
-          const ratio = (rawValue - benchmark.good) / (benchmark.excellent - benchmark.good);
-          return 75 + (25 * ratio);
+        districtNames.forEach(districtName => {
+          try {
+            // Calculate indicator for each district to get raw values
+            const districtRecords = this.surveyData.filter(r => r.district_name === districtName);
+            if (districtRecords.length >= this.minimumSampleSize) {
+              const districtResult = this.calculateIndicatorsForRecords(districtRecords, domain, reverseIndicators);
+              if (districtResult[indicator] && districtResult[indicator].value !== null) {
+                allDistrictValues.push(districtResult[indicator].value);
+              }
+            }
+          } catch (error) {
+            // Ignore errors for individual districts
+          }
+        });
+        
+        if (allDistrictValues.length > 0) {
+          const min = Math.min(...allDistrictValues);
+          const max = Math.max(...allDistrictValues);
+          const range = max - min;
+          
+          // Normalize to 0-100 scale (min-max scaling)
+          const normalizedScore = range > 0 ? ((rawValue - min) / range) * 100 : 50;
+          return Math.max(0, Math.min(100, normalizedScore));
         }
-        if (rawValue >= benchmark.poor) {
-          // Linear interpolation between poor and good
-          const ratio = (rawValue - benchmark.poor) / (benchmark.good - benchmark.poor);
-          return 25 + (50 * ratio);
-        }
-        // Below poor threshold
-        const ratio = Math.min(1, rawValue / benchmark.poor);
-        return 25 * ratio;
+        
+        // Fallback if no comparison data available
+        return 50;
       }
       
-      // Handle regular indicators
+      // Handle SDHE indicators (original logic)
       if (reverseIndicators[indicator]) {
         // Convert reverse indicator to "goodness score" (0% bad becomes 100% good)
         return 100 - rawValue;
@@ -1101,7 +1100,8 @@ class DataProcessor {
         value: parseFloat(domainScore.toFixed(1)),
         sample_size: records.length,
         validIndicators: goodnessScores.length,
-        totalIndicators: indicators.length
+        totalIndicators: indicators.length,
+        isIMDDomain: isIMDDomain // Flag to identify IMD domains
       };
     } else {
       results['_domain_score'] = {
@@ -1110,7 +1110,8 @@ class DataProcessor {
         noData: true,
         insufficientSample: !hasMinimumSample,
         validIndicators: 0,
-        totalIndicators: indicators.length
+        totalIndicators: indicators.length,
+        isIMDDomain: isIMDDomain // Flag to identify IMD domains
       };
     }
 

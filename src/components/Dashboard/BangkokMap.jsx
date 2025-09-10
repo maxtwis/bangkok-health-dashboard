@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { INDICATOR_TYPES } from '../../constants/indicatorTypes';
 import { getHealthcareSupplyColor } from '../../utils/dashboardUtils';
+import { REVERSE_INDICATORS } from '../../constants/dashboardConstants';
 
 // Fix for default markers in Leaflet with bundlers
 delete L.Icon.Default.prototype._getIconUrl;
@@ -19,7 +20,9 @@ const BangkokMap = ({
   selectedDistrict,
   selectedIndicatorType,
   onDistrictClick,
-  getIndicatorData 
+  getIndicatorData,
+  selectedIndicator = null, // New prop for individual indicator selection
+  mapMode = 'domain' // New prop: 'domain' or 'indicator'
 }) => {
   const { t, language } = useLanguage();
   
@@ -296,6 +299,100 @@ const BangkokMap = ({
     };
   }, []);
 
+  // Helper function to get min-max scaled score for IMD indicators
+  const getIMDRelativeScore = (currentValue, indicatorName) => {
+    if (!getIndicatorData || !geoJsonData) return null;
+    
+    try {
+      const allValues = [];
+      const effectivePopulationGroup = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
+      
+      // Collect all district values for this indicator
+      geoJsonData.features.forEach((feature) => {
+        const dcode = feature.properties.dcode;
+        const districtName = districtCodeMap[dcode];
+        
+        if (districtName && districtName !== 'Bangkok Overall') {
+          try {
+            const indicatorData = getIndicatorData(selectedDomain, districtName, effectivePopulationGroup, selectedIndicatorType);
+            const targetItem = indicatorData.find(item => 
+              item.indicator === indicatorName || 
+              item.name === indicatorName ||
+              item.label === indicatorName
+            );
+            
+            if (targetItem && targetItem.value !== null && targetItem.value !== undefined && !isNaN(targetItem.value)) {
+              allValues.push(Number(targetItem.value));
+            }
+          } catch (e) {
+            // Skip districts with no data
+          }
+        }
+      });
+      
+      if (allValues.length < 2) return null; // Need at least 2 values for min-max scaling
+      
+      const minValue = Math.min(...allValues);
+      const maxValue = Math.max(...allValues);
+      
+      // Log values for debugging
+      if (indicatorName === 'จำนวนบุคลากรทางการแพทย์ต่อประชากร') {
+        console.log(`Health workers - Min: ${minValue}, Max: ${maxValue}, Current (${currentValue}): ${((currentValue - minValue) / (maxValue - minValue)) * 100}%`);
+        console.log('All values:', allValues.sort((a,b) => b-a)); // Show top values
+      }
+      
+      if (minValue === maxValue) return 50; // If all values are the same, return middle value
+      
+      // Scale to 0-100 range
+      const scaledScore = ((currentValue - minValue) / (maxValue - minValue)) * 100;
+      return scaledScore;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  // Helper function to get min-max scaled domain score for IMD domains
+  const getIMDRelativeDomainScore = (currentDomainScore, domainName) => {
+    if (!getIndicatorData || !geoJsonData) return null;
+    
+    try {
+      const allDomainScores = [];
+      const effectivePopulationGroup = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
+      
+      // Collect all district domain scores
+      geoJsonData.features.forEach((feature) => {
+        const dcode = feature.properties.dcode;
+        const districtName = districtCodeMap[dcode];
+        
+        if (districtName && districtName !== 'Bangkok Overall') {
+          try {
+            const indicatorData = getIndicatorData(domainName, districtName, effectivePopulationGroup, selectedIndicatorType);
+            const domainScoreItem = indicatorData.find(item => item.isDomainScore);
+            
+            if (domainScoreItem && domainScoreItem.value !== null && domainScoreItem.value !== undefined && !isNaN(domainScoreItem.value)) {
+              allDomainScores.push(Number(domainScoreItem.value));
+            }
+          } catch (e) {
+            // Skip districts with no data
+          }
+        }
+      });
+      
+      if (allDomainScores.length < 2) return null; // Need at least 2 values for min-max scaling
+      
+      const minValue = Math.min(...allDomainScores);
+      const maxValue = Math.max(...allDomainScores);
+      
+      if (minValue === maxValue) return 50; // If all values are the same, return middle value
+      
+      // Scale to 0-100 range
+      const scaledScore = ((currentDomainScore - minValue) / (maxValue - minValue)) * 100;
+      return scaledScore;
+    } catch (e) {
+      return null;
+    }
+  };
+
   // Get color based on score with proper handling of combined data and healthcare supply indicators
   const getDistrictColor = (districtName) => {
     if (!getIndicatorData || districtName === 'Bangkok Overall') {
@@ -305,69 +402,155 @@ const BangkokMap = ({
     try {
       const effectivePopulationGroup = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
       const indicatorData = getIndicatorData(selectedDomain, districtName, effectivePopulationGroup, selectedIndicatorType);
-      const domainScore = indicatorData.find(item => item.isDomainScore);
       
-      // Check for valid domain score
-      if (!domainScore) {
-        return '#e2e8f0'; // Light grey for no domain score
+      // Choose the data item based on map mode
+      let targetItem;
+      if (mapMode === 'indicator' && selectedIndicator) {
+        // Find specific indicator in the data
+        targetItem = indicatorData.find(item => 
+          item.indicator === selectedIndicator || 
+          item.name === selectedIndicator ||
+          item.label === selectedIndicator
+        );
+      } else {
+        // Use domain score (default behavior)
+        targetItem = indicatorData.find(item => item.isDomainScore);
+      }
+      
+      // Check for valid data item
+      if (!targetItem) {
+        return '#e2e8f0'; // Light grey for no data
       }
 
       // Handle all types of data including combined and pre-calculated
-      const score = domainScore.value;
-      const sampleSize = domainScore.sample_size;
+      const score = targetItem.value;
+      const sampleSize = targetItem.sample_size;
       
       // Accept data if we have a valid score, regardless of sample size type
       if (score === null || score === undefined || isNaN(score)) {
         return '#e2e8f0'; // Light grey for no valid score
       }
 
-      // For IMD healthcare supply indicators, use healthcare supply color system
+      // For IMD indicators, use min-max scaling with raw values
       if (selectedIndicatorType === INDICATOR_TYPES.IMD) {
-        // Map domain names to their actual indicator names
-        const domainToIndicatorMap = {
-          'healthcare_infrastructure': null, // This domain has multiple indicators
-          'food_access': 'market_per_population',
-          'sports_recreation': 'sportfield_per_population'
-        };
-        
-        // Get the actual indicator name for single-indicator domains
-        const actualIndicator = domainToIndicatorMap[selectedDomain];
-        
-        // List of all healthcare supply indicators
-        const healthcareSupplyIndicators = [
-          'health_clinic_per_population',
-          'hospital_per_population', 
-          'pharmacy_per_population',
-          'market_per_population',
-          'sportfield_per_population'
-        ];
-        
-        // Check if this is a single-indicator IMD domain (food_access or sports_recreation)
-        if (actualIndicator && healthcareSupplyIndicators.includes(actualIndicator)) {
-          // Find the indicator data by its actual name
-          const indicatorItem = indicatorData.find(item => 
-            item.name === actualIndicator || 
-            item.indicator === actualIndicator
-          );
+        // If in indicator mode, use the selected indicator directly
+        if (mapMode === 'indicator' && selectedIndicator) {
+          // Use min-max scaling for proper GIS interval grouping
+          const relativeScore = getIMDRelativeScore(score, selectedIndicator);
           
-          if (indicatorItem && indicatorItem.value !== null && indicatorItem.value !== undefined) {
-            const color = getHealthcareSupplyColor(indicatorItem.value, actualIndicator);
-            return color;
+          if (relativeScore !== null) {
+            // Wider intervals for more distinct colors: highest values = green, lowest = red
+            if (relativeScore >= 80) return '#10b981'; // Green (top 20%)
+            if (relativeScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+            if (relativeScore >= 20) return '#fb923c'; // Orange (low 20%)
+            return '#ef4444'; // Red (bottom 20%)
+          } else {
+            // Fallback to grey if scaling fails
+            return '#e2e8f0'; // Light grey
           }
         }
-        // For healthcare_infrastructure domain with multiple indicators
-        else if (selectedDomain === 'healthcare_infrastructure') {
-          // Use domain score for healthcare infrastructure
-          if (domainScore && domainScore.value !== null && domainScore.value !== undefined) {
-            // For domain scores, use regular percentage-based colors
-            if (domainScore.value >= 80) return '#10b981'; // Green
-            if (domainScore.value >= 60) return '#f59e0b'; // Yellow
-            if (domainScore.value >= 40) return '#fb923c'; // Orange
-            return '#ef4444'; // Red
+        // Domain mode logic (original)
+        else {
+          // Map domain names to their actual indicator names
+          const domainToIndicatorMap = {
+            'healthcare_infrastructure': null, // This domain has multiple indicators
+            'food_access': 'market_per_population',
+            'sports_recreation': 'sportfield_per_population'
+          };
+          
+          // Get the actual indicator name for single-indicator domains
+          const actualIndicator = domainToIndicatorMap[selectedDomain];
+          
+          // List of all healthcare supply indicators
+          const healthcareSupplyIndicators = [
+            'health_clinic_per_population',
+            'hospital_per_population', 
+            'pharmacy_per_population',
+            'market_per_population',
+            'sportfield_per_population'
+          ];
+          
+          // For single-indicator IMD domains, use min-max scaling
+          if (actualIndicator) {
+            // Find the indicator data by its actual name
+            const indicatorItem = indicatorData.find(item => 
+              item.name === actualIndicator || 
+              item.indicator === actualIndicator
+            );
+            
+            if (indicatorItem && indicatorItem.value !== null && indicatorItem.value !== undefined) {
+              // Use min-max scaling for proper GIS interval grouping  
+              const relativeScore = getIMDRelativeScore(indicatorItem.value, actualIndicator);
+              
+              if (relativeScore !== null) {
+                // Wider intervals for more distinct colors: highest values = green, lowest = red
+                if (relativeScore >= 80) return '#10b981'; // Green (top 20%)
+                if (relativeScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+                if (relativeScore >= 20) return '#fb923c'; // Orange (low 20%)
+                return '#ef4444'; // Red (bottom 20%)
+              } else {
+                // Fallback to grey if scaling fails
+                return '#e2e8f0'; // Light grey
+              }
+            }
+          }
+          // For healthcare_infrastructure domain with multiple indicators
+          else if (selectedDomain === 'healthcare_infrastructure') {
+            // Use domain score for healthcare infrastructure with min-max scaling
+            if (targetItem && targetItem.value !== null && targetItem.value !== undefined) {
+              // Apply min-max scaling to IMD domain scores for better color distribution
+              const relativeDomainScore = getIMDRelativeDomainScore(targetItem.value, selectedDomain);
+              
+              if (relativeDomainScore !== null) {
+                // Wider intervals for more distinct colors
+                if (relativeDomainScore >= 80) return '#10b981'; // Green (top 20%)
+                if (relativeDomainScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+                if (relativeDomainScore >= 20) return '#fb923c'; // Orange (low 20%)
+                return '#ef4444'; // Red (bottom 20%)
+              } else {
+                // Fallback to grey if scaling fails
+                return '#e2e8f0'; // Light grey
+              }
+            }
           }
         }
       }
 
+      // For SDHE indicators in indicator mode, use standard percentage-based coloring
+      if (selectedIndicatorType !== INDICATOR_TYPES.IMD && mapMode === 'indicator' && selectedIndicator) {
+        // Check if we need to handle reverse indicators
+        const isReverse = REVERSE_INDICATORS[selectedIndicator];
+        
+        if (isReverse) {
+          if (score <= 20) return '#10b981'; // Green (good - low percentage)
+          if (score <= 40) return '#f59e0b'; // Yellow
+          if (score <= 60) return '#fb923c'; // Orange
+          return '#ef4444'; // Red (bad - high percentage)
+        } else {
+          if (score >= 80) return '#10b981'; // Green (good - high percentage)
+          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 40) return '#fb923c'; // Orange
+          return '#ef4444'; // Red (bad - low percentage)
+        }
+      }
+
+      // Check if this is an IMD domain score and apply min-max scaling
+      const isIMDDomain = selectedIndicatorType === INDICATOR_TYPES.IMD;
+      
+      if (isIMDDomain && targetItem && targetItem.isDomainScore) {
+        // Apply min-max scaling to IMD domain scores
+        const relativeDomainScore = getIMDRelativeDomainScore(score, selectedDomain);
+        
+        if (relativeDomainScore !== null) {
+          // Wider intervals for more distinct colors
+          if (relativeDomainScore >= 80) return '#10b981'; // Green (top 20%)
+          if (relativeDomainScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+          if (relativeDomainScore >= 20) return '#fb923c'; // Orange (low 20%)
+          return '#ef4444'; // Red (bottom 20%)
+        }
+      }
+
+      // For SDHE indicators - use fixed percentage thresholds
       // For normal population, accept combined data and pre-calculated data
       if (selectedPopulationGroup === 'normal_population') {
         // Accept any valid score for normal population (survey + combined + pre-calculated)
@@ -537,28 +720,108 @@ const BangkokMap = ({
           const districtName = districtCodeMap[dcode];
           
           if (districtName) {
-            // FIXED: Show more informative popup with data details
+            // Show more informative popup with data details
             const effectivePopulationGroup2 = selectedIndicatorType === INDICATOR_TYPES.IMD ? 'all' : selectedPopulationGroup;
             const indicatorData = getIndicatorData ? getIndicatorData(selectedDomain, districtName, effectivePopulationGroup2, selectedIndicatorType) : [];
-            const domainScore = indicatorData.find(item => item.isDomainScore);
+            
+            // Choose the data item based on map mode
+            let targetPopupItem;
+            let popupTitle = '';
+            if (mapMode === 'indicator' && selectedIndicator) {
+              // Find specific indicator in the data
+              targetPopupItem = indicatorData.find(item => 
+                item.indicator === selectedIndicator || 
+                item.name === selectedIndicator ||
+                item.label === selectedIndicator
+              );
+              popupTitle = targetPopupItem?.label || selectedIndicator;
+            } else {
+              // Use domain score (default behavior)
+              targetPopupItem = indicatorData.find(item => item.isDomainScore);
+              popupTitle = t(`domains.${selectedDomain}`);
+            }
             
             let popupContent = `<strong>${districtName}</strong><br/>`;
             
-            if (domainScore && domainScore.value !== null && domainScore.value !== undefined) {
-              popupContent += `${t(`domains.${selectedDomain}`)}: ${domainScore.value.toFixed(1)}%<br/>`;
+            if (targetPopupItem && targetPopupItem.value !== null && targetPopupItem.value !== undefined) {
+              // Format value appropriately
+              let formattedValue = '';
+              if (mapMode === 'indicator' && selectedIndicator) {
+                // Healthcare supply indicators with proper units
+                const healthcareSupplyIndicators = [
+                  'doctor_per_population', 
+                  'nurse_per_population', 
+                  'healthworker_per_population', 
+                  'community_healthworker_per_population',
+                  'health_service_access',
+                  'bed_per_population',
+                  'market_per_population',
+                  'sportfield_per_population'
+                ];
+
+                if (healthcareSupplyIndicators.includes(selectedIndicator)) {
+                  const valueNum = Number(targetPopupItem.value);
+                  
+                  // Define units for each healthcare supply indicator
+                  const getUnit = (number) => {
+                    if (language === 'th') {
+                      return number === '1,000' ? 'ต่อ 1,000 คน' : 'ต่อ 10,000 คน';
+                    } else {
+                      return `per ${number}`;
+                    }
+                  };
+                  
+                  const unitMap = {
+                    'doctor_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
+                    'nurse_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`, 
+                    'healthworker_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+                    'community_healthworker_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
+                    'health_service_access': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+                    'bed_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+                    'market_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+                    'sportfield_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`
+                  };
+
+                  formattedValue = unitMap[selectedIndicator] || `${valueNum.toFixed(1)}%`;
+                  
+                  // For IMD indicators, also show relative ranking
+                  if (selectedIndicatorType === INDICATOR_TYPES.IMD && healthcareSupplyIndicators.includes(selectedIndicator)) {
+                    // Get ranking information
+                    const relativeScore = getIMDRelativeScore(valueNum, selectedIndicator);
+                    if (relativeScore !== null) {
+                      const rankText = language === 'th' ? 
+                        (relativeScore >= 75 ? ' (อันดับต้น)' : 
+                         relativeScore >= 50 ? ' (อันดับกลาง-บน)' : 
+                         relativeScore >= 25 ? ' (อันดับกลาง-ล่าง)' : 
+                         ' (อันดับท้าย)') :
+                        (relativeScore >= 75 ? ' (Top quartile)' : 
+                         relativeScore >= 50 ? ' (Upper middle)' : 
+                         relativeScore >= 25 ? ' (Lower middle)' : 
+                         ' (Bottom quartile)');
+                      formattedValue += rankText;
+                    }
+                  }
+                } else {
+                  formattedValue = `${Number(targetPopupItem.value).toFixed(1)}%`;
+                }
+              } else {
+                formattedValue = `${targetPopupItem.value.toFixed(1)}%`;
+              }
+              
+              popupContent += `${popupTitle}: ${formattedValue}<br/>`;
               
               // Show sample size info only for SDHE (not for IMD)
               if (selectedIndicatorType !== INDICATOR_TYPES.IMD) {
-                if (typeof domainScore.sample_size === 'string') {
-                  popupContent += `Sample: ${domainScore.sample_size}<br/>`;
-                } else if (typeof domainScore.sample_size === 'number') {
-                  popupContent += `Sample: ${domainScore.sample_size} people<br/>`;
+                if (typeof targetPopupItem.sample_size === 'string') {
+                  popupContent += `Sample: ${targetPopupItem.sample_size}<br/>`;
+                } else if (typeof targetPopupItem.sample_size === 'number') {
+                  popupContent += `Sample: ${targetPopupItem.sample_size} people<br/>`;
                 }
               }
               
               // Show combination method for normal population
-              if (selectedPopulationGroup === 'normal_population' && domainScore.isCombined) {
-                const method = domainScore.combinationMethod;
+              if (selectedPopulationGroup === 'normal_population' && targetPopupItem.isCombined) {
+                const method = targetPopupItem.combinationMethod;
                 let methodText = '';
                 switch (method) {
                   case 'small_sample_fallback':
@@ -737,7 +1000,12 @@ const BangkokMap = ({
       {/* Legend (only show when ready) */}
       {mapReady && (
         <div className="absolute bottom-4 left-4 bg-white bg-opacity-95 backdrop-blur rounded-lg shadow-lg p-3 text-xs z-[1000]">
-          <div className="font-medium mb-2">{t(`domains.${selectedDomain}`)}</div>
+          <div className="font-medium mb-2">
+            {mapMode === 'indicator' && selectedIndicator 
+              ? (t(`indicators.${selectedIndicator}`) || selectedIndicator)
+              : t(`domains.${selectedDomain}`)
+            }
+          </div>
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <div className="w-4 h-3 bg-green-500 rounded"></div>
