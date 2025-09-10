@@ -1046,42 +1046,11 @@ class DataProcessor {
     }).map(indicator => {
       const rawValue = results[indicator].value;
       
-      // Handle IMD indicators with min-max normalization for domain scoring
+      // Handle IMD indicators - use raw values for domain score calculation
       if (isIMDDomain) {
-        // For IMD domain score calculation, normalize raw values to 0-100 scale
-        // This ensures IMD domain scores are comparable and meaningful
-        
-        // Get all values for this indicator across all districts for normalization
-        const allDistrictValues = [];
-        const districtNames = [...new Set(this.surveyData.map(r => r.district_name))];
-        
-        districtNames.forEach(districtName => {
-          try {
-            // Calculate indicator for each district to get raw values
-            const districtRecords = this.surveyData.filter(r => r.district_name === districtName);
-            if (districtRecords.length >= this.minimumSampleSize) {
-              const districtResult = this.calculateIndicatorsForRecords(districtRecords, domain, reverseIndicators);
-              if (districtResult[indicator] && districtResult[indicator].value !== null) {
-                allDistrictValues.push(districtResult[indicator].value);
-              }
-            }
-          } catch (error) {
-            // Ignore errors for individual districts
-          }
-        });
-        
-        if (allDistrictValues.length > 0) {
-          const min = Math.min(...allDistrictValues);
-          const max = Math.max(...allDistrictValues);
-          const range = max - min;
-          
-          // Normalize to 0-100 scale (min-max scaling)
-          const normalizedScore = range > 0 ? ((rawValue - min) / range) * 100 : 50;
-          return Math.max(0, Math.min(100, normalizedScore));
-        }
-        
-        // Fallback if no comparison data available
-        return 50;
+        // For IMD indicators, return raw values directly
+        // Min-max scaling will be applied to final domain scores for color assignment
+        return rawValue;
       }
       
       // Handle SDHE indicators (original logic)
