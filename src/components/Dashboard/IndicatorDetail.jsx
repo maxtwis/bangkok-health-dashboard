@@ -96,8 +96,10 @@ const IndicatorDetail = ({
       'community_healthworker_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
       'health_service_access': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
       'bed_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+      'lgbt_service_access': `${Math.round(valueNum)} ${language === 'th' ? 'แห่ง' : 'facilities'}`,
       'market_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
-      'sportfield_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`
+      'sportfield_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
+      'park_access': `${valueNum.toFixed(1)} ${language === 'th' ? 'ตร.ม./คน' : 'sq.m/person'}`
     };
 
     return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
@@ -123,7 +125,8 @@ const IndicatorDetail = ({
     // Healthcare supply indicators - limited disaggregation
     const healthcareSupplyIndicators = [
       'doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
-      'community_healthworker_per_population', 'health_service_access', 'bed_per_population'
+      'community_healthworker_per_population', 'health_service_access', 'bed_per_population',
+      'lgbt_service_access', 'park_access'
     ];
 
     if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {

@@ -16,8 +16,10 @@ export const IMD_INDICATORS = [
   'community_healthworker_per_population',
   'health_service_access',
   'bed_per_population',
+  'lgbt_service_access',
   'market_per_population',
-  'sportfield_per_population'
+  'sportfield_per_population',
+  'park_access'
 ];
 
 // All other indicators are from survey data (SDHE)

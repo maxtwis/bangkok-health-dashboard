@@ -12,6 +12,7 @@ class DataProcessor {
     this.healthFacilitiesData = [];
     this.marketData = [];
     this.sportfieldData = [];
+    this.parkData = [];
     this.districtPopulationData = [];
     this.communityHealthWorkerData = [];
     this.communityPopulationData = [];
@@ -130,6 +131,19 @@ class DataProcessor {
         skipEmptyLines: true
       });
       this.sportfieldData = sportfieldParsed.data;
+
+      // Load public park data
+      const parkResponse = await fetch('/data/public_park.csv');
+      if (!parkResponse.ok) {
+        throw new Error('Could not load public_park.csv');
+      }
+      const parkCsv = await parkResponse.text();
+      const parkParsed = Papa.parse(parkCsv, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      this.parkData = parkParsed.data;
 
     } catch (error) {
       throw error;
@@ -260,6 +274,44 @@ class DataProcessor {
     }
   }
 
+  calculateLGBTServiceAccess(districtCode, districtName) {
+    try {
+      // Count LGBT clinics in the district (facilities with lgbt_clinic = 1)
+      const lgbtFacilities = this.healthFacilitiesData.filter(facility => 
+        facility.dcode === districtCode && facility.lgbt_clinic === 1
+      );
+
+      // Return the absolute count (density) as requested by user, not per population
+      return {
+        value: lgbtFacilities.length,
+        sample_size: lgbtFacilities.length,
+        population: null, // Not using population for this indicator
+        absolute_count: lgbtFacilities.length
+      };
+
+    } catch (error) {
+      return { value: 0, sample_size: 0, population: null, absolute_count: 0 };
+    }
+  }
+
+  calculateParkAccess(districtCode, districtName) {
+    try {
+      // Count public parks in the district (simple density like LGBT clinics and sportfields)
+      const districtParks = this.parkData.filter(park => park.dcode === districtCode);
+
+      // Return the absolute count (density) like LGBT service access and sportfields
+      return {
+        value: districtParks.length,
+        sample_size: districtParks.length,
+        population: null, // Not using population for this indicator
+        absolute_count: districtParks.length
+      };
+
+    } catch (error) {
+      return { value: 0, sample_size: 0, population: null, absolute_count: 0 };
+    }
+  }
+
   calculateMarketAccess(districtCode, districtName) {
     try {
       const districtPopulation = this.districtPopulationData
@@ -290,29 +342,21 @@ class DataProcessor {
 
   calculateSportfieldAccess(districtCode, districtName) {
     try {
-      const districtPopulation = this.districtPopulationData
-        .filter(record => record.dcode === districtCode)
-        .reduce((sum, record) => sum + (record.population || 0), 0);
-
-      if (districtPopulation === 0) {
-        return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
-      }
-
+      // Count sportfields in the district (simple density like LGBT clinics)
       const districtSportfields = this.sportfieldData.filter(sportfield => 
         sportfield.dcode === districtCode
       );
 
-      const sportfieldsPer1k = parseFloat(((districtSportfields.length / districtPopulation) * 1000).toFixed(2));
-
+      // Return the absolute count (density) like LGBT service access
       return {
-        value: sportfieldsPer1k,
+        value: districtSportfields.length,
         sample_size: districtSportfields.length,
-        population: districtPopulation,
+        population: null, // Not using population for this indicator
         absolute_count: districtSportfields.length
       };
 
     } catch (error) {
-      return { value: 0, sample_size: 0, population: 0, absolute_count: 0 };
+      return { value: 0, sample_size: 0, population: null, absolute_count: 0 };
     }
   }
 
@@ -481,6 +525,9 @@ class DataProcessor {
         },
         bed_per_population: {
           isSupplyIndicator: true
+        },
+        lgbt_service_access: {
+          isSupplyIndicator: true
         }
       },
 
@@ -494,6 +541,9 @@ class DataProcessor {
       // Sports & Recreation (facility-based IMD indicators)
       sports_recreation: {
         sportfield_per_population: {
+          isSupplyIndicator: true
+        },
+        park_access: {
           isSupplyIndicator: true
         }
       },
@@ -860,6 +910,12 @@ class DataProcessor {
               [indicator]: this.calculateHealthServiceAccess(parseInt(districtCode), districtName) 
             };
           }
+          // Handle LGBT service access indicator (uses health_facilities.csv)
+          else if (indicator === 'lgbt_service_access') {
+            supplyData = { 
+              [indicator]: this.calculateLGBTServiceAccess(parseInt(districtCode), districtName) 
+            };
+          }
           // Handle market access indicator (uses market.csv)
           else if (indicator === 'market_per_population') {
             supplyData = { 
@@ -870,6 +926,12 @@ class DataProcessor {
           else if (indicator === 'sportfield_per_population') {
             supplyData = { 
               [indicator]: this.calculateSportfieldAccess(parseInt(districtCode), districtName) 
+            };
+          }
+          // Handle park access indicator (uses public_park.csv)
+          else if (indicator === 'park_access') {
+            supplyData = { 
+              [indicator]: this.calculateParkAccess(parseInt(districtCode), districtName) 
             };
           }
           // Handle healthcare worker indicators (uses health_supply.csv)
@@ -904,6 +966,10 @@ class DataProcessor {
                 supplyData = { 
                   [indicator]: this.calculateHealthServiceAccess(dcode, dname) 
                 };
+              } else if (indicator === 'lgbt_service_access') {
+                supplyData = { 
+                  [indicator]: this.calculateLGBTServiceAccess(dcode, dname) 
+                };
               } else if (indicator === 'market_per_population') {
                 supplyData = { 
                   [indicator]: this.calculateMarketAccess(dcode, dname) 
@@ -912,18 +978,36 @@ class DataProcessor {
                 supplyData = { 
                   [indicator]: this.calculateSportfieldAccess(dcode, dname) 
                 };
+              } else if (indicator === 'park_access') {
+                supplyData = { 
+                  [indicator]: this.calculateParkAccess(dcode, dname) 
+                };
               } else {
                 supplyData = this.calculateHealthcareSupplyIndicators(dcode, dname);
               }
               
-              if (supplyData[indicator] && supplyData[indicator].population > 0) {
-                totalPopulation += supplyData[indicator].population;
-                totalAbsoluteCount += supplyData[indicator].absolute_count;
-                validDistricts++;
+              if (supplyData[indicator]) {
+                // Density indicators don't use population, handle them like LGBT service access
+                if (indicator === 'lgbt_service_access' || indicator === 'sportfield_per_population' || indicator === 'park_access') {
+                  totalAbsoluteCount += supplyData[indicator].absolute_count;
+                  validDistricts++;
+                } else if (supplyData[indicator].population > 0) {
+                  totalPopulation += supplyData[indicator].population;
+                  totalAbsoluteCount += supplyData[indicator].absolute_count;
+                  validDistricts++;
+                }
               }
             });
             
-            if (totalPopulation > 0) {
+            // Handle density indicators (LGBT, sportfield, park) - no population calculation needed
+            if (indicator === 'lgbt_service_access' || indicator === 'sportfield_per_population' || indicator === 'park_access') {
+              results[indicator] = {
+                value: totalAbsoluteCount, // Total count across all districts
+                sample_size: validDistricts,
+                population: null,
+                absolute_count: totalAbsoluteCount
+              };
+            } else if (totalPopulation > 0) {
               // Calculate overall rate for Bangkok
               let overallRate = 0;
               if (indicator === 'healthworker_per_population') {
@@ -936,6 +1020,8 @@ class DataProcessor {
                 overallRate = (totalAbsoluteCount / totalPopulation) * 10000;
               } else if (indicator === 'sportfield_per_population') {
                 overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
+              } else if (indicator === 'park_access') {
+                overallRate = totalAbsoluteCount / totalPopulation; // sq.m per person
               } else {
                 overallRate = (totalAbsoluteCount / totalPopulation) * 1000;
               }

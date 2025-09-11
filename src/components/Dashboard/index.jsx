@@ -136,6 +136,11 @@ const Dashboard = () => {
   // State for map indicator selection
   const [selectedMapIndicator, setSelectedMapIndicator] = useState(null);
 
+  // Reset selected map indicator when domain or indicator type changes
+  useEffect(() => {
+    setSelectedMapIndicator(null);
+  }, [selectedDomain, selectedIndicatorType]);
+
   // Handle URL-based routing
   useEffect(() => {
     const pathname = location.pathname;
@@ -311,8 +316,10 @@ const Dashboard = () => {
       'community_healthworker_per_population',
       'health_service_access',
       'bed_per_population',
+      'lgbt_service_access',
       'market_per_population',
-      'sportfield_per_population'
+      'sportfield_per_population',
+      'park_access'
     ];
 
     if (healthcareSupplyIndicators.indexOf(indicator) >= 0) {
@@ -334,8 +341,10 @@ const Dashboard = () => {
         'community_healthworker_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
         'health_service_access': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
         'bed_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+        'lgbt_service_access': `${Math.round(valueNum)} ${language === 'th' ? 'แห่ง' : 'facilities'}`,
         'market_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
-        'sportfield_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`
+        'sportfield_per_population': `${Math.round(valueNum)} ${language === 'th' ? 'สนาม' : 'fields'}`,
+        'park_access': `${Math.round(valueNum)} ${language === 'th' ? 'สวน' : 'parks'}`
       };
 
       return unitMap[indicator] || `${valueNum.toFixed(1)}%`;
@@ -354,8 +363,10 @@ const Dashboard = () => {
       'community_healthworker_per_population',
       'health_service_access',
       'bed_per_population',
+      'lgbt_service_access',
       'market_per_population',
-      'sportfield_per_population'
+      'sportfield_per_population',
+      'park_access'
     ];
     
     if (healthcareSupplyIndicators.includes(indicator) && selectedIndicatorType === INDICATOR_TYPES.IMD) {
@@ -378,7 +389,16 @@ const Dashboard = () => {
         const range = max - min;
         const relativeScore = range > 0 ? ((value - min) / range) * 100 : 50;
         
-        // Wider intervals for more distinct colors: highest values = green, lowest = red
+        // More generous green thresholds for sports_recreation domain
+        if (indicator === 'park_access' || indicator === 'sportfield_per_population') {
+          // More generous thresholds for sports & recreation indicators  
+          if (relativeScore >= 60) return 'bg-green-100 text-green-800'; // Top 40%
+          if (relativeScore >= 35) return 'bg-yellow-100 text-yellow-800'; // Middle 25%
+          if (relativeScore >= 15) return 'bg-orange-100 text-orange-800'; // Low 20%
+          return 'bg-red-100 text-red-800'; // Bottom 15%
+        }
+        
+        // Standard thresholds for other IMD indicators
         if (relativeScore >= 80) return 'bg-green-100 text-green-800'; // Top 20%
         if (relativeScore >= 40) return 'bg-yellow-100 text-yellow-800'; // Middle 40%
         if (relativeScore >= 20) return 'bg-orange-100 text-orange-800'; // Low 20%
@@ -856,6 +876,8 @@ Reset Filters
                           getIndicatorData={getIndicatorData}
                           selectedIndicator={selectedMapIndicator}
                           mapMode={selectedMapIndicator ? "indicator" : "domain"}
+                          // Debug: add key to force re-render when mapMode changes
+                          key={`map-${selectedDomain}-${selectedMapIndicator || 'domain'}`}
                         />
                       )}
                     </div>
@@ -1112,6 +1134,8 @@ Reset Filters
                         getIndicatorData={getIndicatorData}
                         selectedIndicator={selectedMapIndicator}
                         mapMode={selectedMapIndicator ? "indicator" : "domain"}
+                        // Debug: add key to force re-render when mapMode changes
+                        key={`map-${selectedDomain}-${selectedMapIndicator || 'domain'}`}
                       />
                     )}
                   </div>

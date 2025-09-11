@@ -26,6 +26,87 @@ const BangkokMap = ({
 }) => {
   const { t, language } = useLanguage();
   
+  // Fullscreen state
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const mapContainerRef = useRef(null);
+  
+  // Fullscreen functionality
+  const enterFullscreen = async () => {
+    try {
+      if (mapContainerRef.current) {
+        if (mapContainerRef.current.requestFullscreen) {
+          await mapContainerRef.current.requestFullscreen();
+        } else if (mapContainerRef.current.webkitRequestFullscreen) {
+          await mapContainerRef.current.webkitRequestFullscreen();
+        } else if (mapContainerRef.current.mozRequestFullScreen) {
+          await mapContainerRef.current.mozRequestFullScreen();
+        } else if (mapContainerRef.current.msRequestFullscreen) {
+          await mapContainerRef.current.msRequestFullscreen();
+        }
+        setIsFullscreen(true);
+      }
+    } catch (error) {
+      console.warn('Fullscreen request failed:', error);
+    }
+  };
+
+  const exitFullscreen = async () => {
+    try {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        await document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        await document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        await document.msExitFullscreen();
+      }
+      setIsFullscreen(false);
+    } catch (error) {
+      console.warn('Exit fullscreen failed:', error);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      enterFullscreen();
+    }
+  };
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isCurrentlyFullscreen = !!(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      );
+      setIsFullscreen(isCurrentlyFullscreen);
+      
+      // Trigger map resize when entering/exiting fullscreen
+      if (mapInstanceRef.current) {
+        setTimeout(() => {
+          mapInstanceRef.current.invalidateSize();
+        }, 100);
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
+  
   // Helper function to detect mobile devices
   const isMobileDevice = () => window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const mapRef = useRef(null);
@@ -455,7 +536,7 @@ const BangkokMap = ({
           const domainToIndicatorMap = {
             'healthcare_infrastructure': null, // This domain has multiple indicators
             'food_access': 'market_per_population',
-            'sports_recreation': 'sportfield_per_population'
+            'sports_recreation': null // This domain has multiple indicators (sportfield + park)
           };
           
           // Get the actual indicator name for single-indicator domains
@@ -507,6 +588,25 @@ const BangkokMap = ({
                 if (relativeDomainScore >= 40) return '#fbbf24'; // Yellow (middle 40%) - brighter
                 if (relativeDomainScore >= 20) return '#fb923c'; // Orange (low 20%)
                 return '#ef4444'; // Red (bottom 20%)
+              } else {
+                // Fallback to grey if scaling fails
+                return '#e2e8f0'; // Light grey
+              }
+            }
+          }
+          // For sports_recreation domain with multiple indicators (sportfield + park)
+          else if (selectedDomain === 'sports_recreation') {
+            // Use domain score for sports recreation with min-max scaling
+            if (targetItem && targetItem.value !== null && targetItem.value !== undefined) {
+              // Apply min-max scaling to IMD domain scores for better color distribution
+              const relativeDomainScore = getIMDRelativeDomainScore(targetItem.value, selectedDomain);
+              
+              if (relativeDomainScore !== null) {
+                // More generous thresholds for sports & recreation (consistent with dashboard)
+                if (relativeDomainScore >= 60) return '#10b981'; // Green (top 40%)
+                if (relativeDomainScore >= 35) return '#fbbf24'; // Yellow (middle 25%) - brighter
+                if (relativeDomainScore >= 15) return '#fb923c'; // Orange (low 20%)
+                return '#ef4444'; // Red (bottom 15%)
               } else {
                 // Fallback to grey if scaling fails
                 return '#e2e8f0'; // Light grey
@@ -755,8 +855,10 @@ const BangkokMap = ({
                   'community_healthworker_per_population',
                   'health_service_access',
                   'bed_per_population',
+                  'lgbt_service_access',
                   'market_per_population',
-                  'sportfield_per_population'
+                  'sportfield_per_population',
+                  'park_access'
                 ];
 
                 if (healthcareSupplyIndicators.includes(selectedIndicator)) {
@@ -778,8 +880,10 @@ const BangkokMap = ({
                     'community_healthworker_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`,
                     'health_service_access': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
                     'bed_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
+                    'lgbt_service_access': `${Math.round(valueNum)} ${language === 'th' ? 'แห่ง' : 'facilities'}`,
                     'market_per_population': `${valueNum.toFixed(1)} ${getUnit('10,000')}`,
-                    'sportfield_per_population': `${valueNum.toFixed(1)} ${getUnit('1,000')}`
+                    'sportfield_per_population': `${Math.round(valueNum)} ${language === 'th' ? 'สนาม' : 'fields'}`,
+                    'park_access': `${Math.round(valueNum)} ${language === 'th' ? 'สวน' : 'parks'}`
                   };
 
                   formattedValue = unitMap[selectedIndicator] || `${valueNum.toFixed(1)}%`;
@@ -972,7 +1076,10 @@ const BangkokMap = ({
   }
 
   return (
-    <div className="relative w-full h-full bg-white rounded-lg shadow-sm overflow-hidden">
+    <div 
+      ref={mapContainerRef}
+      className="relative w-full h-full bg-white rounded-lg shadow-sm overflow-hidden"
+    >
       {/* Map container with explicit sizing and better positioning */}
       <div 
         ref={mapRef} 
@@ -1036,6 +1143,25 @@ const BangkokMap = ({
             <div>Group: {t(`populationGroups.${selectedPopulationGroup}`)}</div>
           )}
         </div>
+      )}
+      
+      {/* Fullscreen button (only show when ready) */}
+      {mapReady && (
+        <button
+          onClick={toggleFullscreen}
+          className="absolute top-4 right-48 bg-white bg-opacity-95 backdrop-blur rounded-lg shadow-lg p-2 hover:bg-opacity-100 transition-all duration-200 z-[1000] group"
+          title={isFullscreen ? (language === 'th' ? 'ออกจากเต็มจอ' : 'Exit fullscreen') : (language === 'th' ? 'ดูแบบเต็มจอ' : 'Enter fullscreen')}
+        >
+          {isFullscreen ? (
+            <svg className="w-5 h-5 text-gray-600 group-hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-gray-600 group-hover:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+          )}
+        </button>
       )}
     </div>
   );

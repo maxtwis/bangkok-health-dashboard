@@ -41,12 +41,14 @@ export const INDICATOR_DOMAIN_MAP = {
   community_healthworker_per_population: 'healthcare_infrastructure',
   health_service_access: 'healthcare_infrastructure',
   bed_per_population: 'healthcare_infrastructure',
+  lgbt_service_access: 'healthcare_infrastructure',
   
   // Food Access (Facility-based IMD indicators)
   market_per_population: 'food_access',
   
   // Sports & Recreation (Facility-based IMD indicators) 
   sportfield_per_population: 'sports_recreation',
+  park_access: 'sports_recreation',
 
   // Physical Environment
   electricity_access: 'physical_environment',
