@@ -26,7 +26,7 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
     { value: 'informal_workers', color: '#ef4444' },
     { value: 'elderly', color: '#3b82f6' },
     { value: 'disabled', color: '#10b981' },
-    { value: 'lgbtq', color: '#f59e0b' },
+    { value: 'lgbtq', color: '#fbbf24' },
     { value: 'normal_population', color: '#6b7280' } // Added normal population with grey color
   ];
 

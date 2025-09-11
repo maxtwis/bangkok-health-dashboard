@@ -112,7 +112,7 @@ const IndicatorDetail = ({
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658'];
   const ageColors = ['#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc'];
   const sexColors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
-  const occupationColors = ['#dc2626', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16'];
+  const occupationColors = ['#dc2626', '#10b981', '#fbbf24', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16'];
   const welfareColors = ['#2563eb', '#16a34a', '#eab308', '#dc2626', '#6b7280'];
   const facilityColors = ['#0ea5e9', '#06b6d4', '#14b8a6', '#10b981', '#22c55e', '#65a30d', '#84cc16', '#eab308'];
 

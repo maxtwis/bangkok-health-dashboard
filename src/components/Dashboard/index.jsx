@@ -795,7 +795,7 @@ Reset Filters
                           { value: 'informal_workers', color: '#ef4444', icon: 'work' },
                           { value: 'elderly', color: '#3b82f6', icon: 'elderly' },
                           { value: 'disabled', color: '#10b981', icon: 'accessible' },
-                          { value: 'lgbtq', color: '#f59e0b', icon: 'diversity' },
+                          { value: 'lgbtq', color: '#fbbf24', icon: 'diversity' },
                           { value: 'normal_population', color: '#6b7280', icon: 'population' }
                         ].map(group => (
                           <label key={group.value} className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 rounded px-2 py-1 transition-colors duration-200">
@@ -886,7 +886,7 @@ Reset Filters
                       { value: 'informal_workers', color: '#ef4444', icon: 'work', bgColor: 'from-red-50 to-red-100' },
                       { value: 'elderly', color: '#3b82f6', icon: 'elderly', bgColor: 'from-blue-50 to-blue-100' },
                       { value: 'disabled', color: '#10b981', icon: 'accessible', bgColor: 'from-green-50 to-green-100' },
-                      { value: 'lgbtq', color: '#f59e0b', icon: 'diversity', bgColor: 'from-amber-50 to-amber-100' },
+                      { value: 'lgbtq', color: '#fbbf24', icon: 'diversity', bgColor: 'from-amber-50 to-amber-100' },
                       { value: 'normal_population', color: '#6b7280', icon: 'population', bgColor: 'from-gray-50 to-gray-100' }
                     ].map(group => {
                       // Calculate scores for this group across filtered domains based on indicator type

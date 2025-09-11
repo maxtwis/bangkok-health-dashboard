@@ -441,7 +441,7 @@ const BangkokMap = ({
           if (relativeScore !== null) {
             // Wider intervals for more distinct colors: highest values = green, lowest = red
             if (relativeScore >= 80) return '#10b981'; // Green (top 20%)
-            if (relativeScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+            if (relativeScore >= 40) return '#fbbf24'; // Yellow (middle 40%) - brighter
             if (relativeScore >= 20) return '#fb923c'; // Orange (low 20%)
             return '#ef4444'; // Red (bottom 20%)
           } else {
@@ -485,7 +485,7 @@ const BangkokMap = ({
               if (relativeScore !== null) {
                 // Wider intervals for more distinct colors: highest values = green, lowest = red
                 if (relativeScore >= 80) return '#10b981'; // Green (top 20%)
-                if (relativeScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+                if (relativeScore >= 40) return '#fbbf24'; // Yellow (middle 40%) - brighter
                 if (relativeScore >= 20) return '#fb923c'; // Orange (low 20%)
                 return '#ef4444'; // Red (bottom 20%)
               } else {
@@ -504,7 +504,7 @@ const BangkokMap = ({
               if (relativeDomainScore !== null) {
                 // Wider intervals for more distinct colors
                 if (relativeDomainScore >= 80) return '#10b981'; // Green (top 20%)
-                if (relativeDomainScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+                if (relativeDomainScore >= 40) return '#fbbf24'; // Yellow (middle 40%) - brighter
                 if (relativeDomainScore >= 20) return '#fb923c'; // Orange (low 20%)
                 return '#ef4444'; // Red (bottom 20%)
               } else {
@@ -523,12 +523,12 @@ const BangkokMap = ({
         
         if (isReverse) {
           if (score <= 20) return '#10b981'; // Green (good - low percentage)
-          if (score <= 40) return '#f59e0b'; // Yellow
+          if (score <= 40) return '#fbbf24'; // Yellow - brighter
           if (score <= 60) return '#fb923c'; // Orange
           return '#ef4444'; // Red (bad - high percentage)
         } else {
           if (score >= 80) return '#10b981'; // Green (good - high percentage)
-          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 60) return '#fbbf24'; // Yellow - brighter
           if (score >= 40) return '#fb923c'; // Orange
           return '#ef4444'; // Red (bad - low percentage)
         }
@@ -544,7 +544,7 @@ const BangkokMap = ({
         if (relativeDomainScore !== null) {
           // Wider intervals for more distinct colors
           if (relativeDomainScore >= 80) return '#10b981'; // Green (top 20%)
-          if (relativeDomainScore >= 40) return '#f59e0b'; // Yellow (middle 40%)
+          if (relativeDomainScore >= 40) return '#fbbf24'; // Yellow (middle 40%) - brighter
           if (relativeDomainScore >= 20) return '#fb923c'; // Orange (low 20%)
           return '#ef4444'; // Red (bottom 20%)
         }
@@ -556,7 +556,7 @@ const BangkokMap = ({
         // Accept any valid score for normal population (survey + combined + pre-calculated)
         if (score >= 0) {
           if (score >= 80) return '#10b981'; // Green
-          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 60) return '#fbbf24'; // Yellow - brighter
           if (score >= 40) return '#fb923c'; // Orange
           return '#ef4444'; // Red
         }
@@ -565,14 +565,14 @@ const BangkokMap = ({
         // Accept data if we have at least 1 person (was 5 before)
         if (typeof sampleSize === 'number' && sampleSize >= 1) {
           if (score >= 80) return '#10b981'; // Green
-          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 60) return '#fbbf24'; // Yellow - brighter
           if (score >= 40) return '#fb923c'; // Orange
           return '#ef4444'; // Red
         }
         // Also handle string sample sizes (like "Bangkok-wide")
         else if (typeof sampleSize === 'string' && sampleSize !== 'N/A') {
           if (score >= 80) return '#10b981'; // Green
-          if (score >= 60) return '#f59e0b'; // Yellow
+          if (score >= 60) return '#fbbf24'; // Yellow - brighter
           if (score >= 40) return '#fb923c'; // Orange
           return '#ef4444'; // Red
         }
@@ -1012,7 +1012,7 @@ const BangkokMap = ({
               <span>{language === 'th' ? 'ดีเยี่ยม (≥80%)' : 'Excellent (≥80%)'}</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-3 bg-yellow-500 rounded"></div>
+              <div className="w-4 h-3 rounded" style={{backgroundColor: '#fbbf24'}}></div>
               <span>{language === 'th' ? 'ดี (60-79%)' : 'Good (60-79%)'}</span>
             </div>
             <div className="flex items-center space-x-2">
