@@ -25,12 +25,15 @@ All data files are stored in `/public/data/` for client-side access:
 - **Purpose**: Main SDHE survey responses
 - **Records**: ~50,000+ individual survey responses
 - **Key Fields**:
-  - `district`: Bangkok district (1-50)
-  - `population_group`: Target demographic categories
-  - `indicator_code`: Health indicator identifier
-  - `response_value`: Survey response (0-1 scale)
-  - `weight`: Statistical sampling weight
-  - `timestamp`: Data collection date
+  - `dname`: District code (1001-1050 corresponding to Bangkok's 50 districts)
+  - `age`: Respondent age (14-60+ years)
+  - `sex`: Gender/sexuality ('male', 'female', 'lgbt')
+  - `disable_status`: Disability status (0=no disability, 1=has disability)
+  - `disable_work_status`: Work impact of disability (0=no impact, 1=affects work)
+  - `occupation_status`: Employment status
+  - `occupation_type`: Type of work/occupation
+  - `occupation_freelance_type`: Specific informal work type
+  - Various health, social, economic, and environmental indicators
 
 ### Population Demographics
 **Files**:
@@ -40,8 +43,8 @@ All data files are stored in `/public/data/` for client-side access:
 
 **Schema**:
 ```csv
-district_id,district_name,total_population,working_age,elderly,children,informal_workers
-1,"Phra Nakhon",140000,85000,25000,20000,35000
+district_id,district_name,total_population,working_age,elderly,lgbt,disabled,informal_workers
+1,"Phra Nakhon",140000,85000,25000,3500,7000,35000
 ```
 
 ### Healthcare Infrastructure
@@ -293,46 +296,85 @@ calculateCompositeIndicator(subIndicators) {
 ### Target Population Groups
 **Defined in**: `dashboardConstants.js`
 
+The Bangkok Health Dashboard focuses on four key vulnerable population groups based on the actual survey data structure:
+
 1. **Informal Workers**
-   - Street vendors, day laborers, gig workers
-   - Economic vulnerability focus
-   - Healthcare access barriers
+   - Identified by occupation type and employment status in survey data
+   - Street vendors, day laborers, gig workers, freelance workers
+   - Economic vulnerability and job insecurity focus
+   - Limited access to formal healthcare benefits
+   - Higher exposure to occupational health risks
 
-2. **Elderly (65+)**
-   - Age-related health challenges
-   - Social isolation risks
-   - Healthcare utilization patterns
+2. **LGBT Community**
+   - Identified by `sex = 'lgbt'` field in survey data
+   - Faces unique healthcare access barriers
+   - Higher rates of discrimination in healthcare settings
+   - Mental health and social support challenges
+   - Age distribution typically younger (concentrated in 18-45 age range)
 
-3. **Children & Adolescents (0-18)**
-   - Developmental health indicators
-   - Educational environment factors
-   - Family socioeconomic impact
+3. **Elderly (60+)**
+   - Identified by `age >= 60` in survey data
+   - Age-related health challenges and chronic conditions
+   - Social isolation and mobility limitations
+   - Healthcare utilization and affordability concerns
+   - Higher vulnerability to environmental health risks
 
-4. **Women of Reproductive Age (15-49)**
-   - Maternal health access
-   - Gender-specific health barriers
-   - Economic participation
-
-5. **Migrant Workers**
-   - Language barriers
-   - Legal status health impacts
-   - Cultural competency of care
-
-6. **Low-Income Households**
-   - Economic determinants of health
-   - Healthcare affordability
-   - Housing and nutrition security
+4. **People with Disabilities**
+   - Identified by `disable_status = 1` in survey data
+   - Physical, sensory, intellectual, or multiple disabilities
+   - Accessibility barriers to healthcare facilities
+   - Employment discrimination and economic challenges
+   - Need for specialized healthcare services and support
 
 ### Population Group Weighting
 ```javascript
 calculateGroupWeights() {
-  // Population-proportional weighting
+  // Population-proportional weighting with vulnerability adjustments
   const totalPopulation = this.getTotalPopulation();
-  return POPULATION_GROUPS.map(group => ({
+  const groups = [
+    { key: 'informal_workers', vulnerabilityMultiplier: 1.2 },
+    { key: 'lgbt', vulnerabilityMultiplier: 1.3 },
+    { key: 'elderly', vulnerabilityMultiplier: 1.1 },
+    { key: 'disabled', vulnerabilityMultiplier: 1.4 }
+  ];
+
+  return groups.map(group => ({
     group: group.key,
-    weight: group.population / totalPopulation,
-    adjustmentFactor: group.vulnerabilityMultiplier || 1.0
+    population: this.getGroupPopulation(group.key),
+    weight: this.getGroupPopulation(group.key) / totalPopulation,
+    adjustmentFactor: group.vulnerabilityMultiplier
   }));
+}
+```
+
+### Population Group Identification Logic
+```javascript
+identifyPopulationGroups(respondent) {
+  const groups = [];
+
+  // Informal Workers - based on occupation type
+  if (respondent.occupation_freelance_type ||
+      respondent.occupation_type === 'informal' ||
+      respondent.occupation_contract === 0) {
+    groups.push('informal_workers');
+  }
+
+  // LGBT Community - based on gender/sexuality
+  if (respondent.sex === 'lgbt') {
+    groups.push('lgbt');
+  }
+
+  // Elderly - based on age threshold
+  if (respondent.age >= 60) {
+    groups.push('elderly');
+  }
+
+  // People with Disabilities - based on disability status
+  if (respondent.disable_status === 1) {
+    groups.push('disabled');
+  }
+
+  return groups.length > 0 ? groups : ['general_population'];
 }
 ```
 
