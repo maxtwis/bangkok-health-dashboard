@@ -1037,7 +1037,7 @@ const IndicatorDetail = ({
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
+                  className={`flex items-center py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'border-blue-500 text-blue-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -1095,7 +1095,7 @@ const IndicatorDetail = ({
                 {['doctor_per_population', 'nurse_per_population', 'healthworker_per_population', 
                   'community_healthworker_per_population', 'health_service_access', 'bed_per_population'].includes(indicator) && disaggregationData?.facilityType && disaggregationData.facilityType.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                       {language === 'th' ? 'ตามประเภทสถานพยาบาล' : 'By Health Facility Type'}
                     </h3>
                     <div className="h-64">
@@ -1140,7 +1140,7 @@ const IndicatorDetail = ({
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Age Groups */}
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                         {language === 'th' ? 'ตามกลุ่มอายุ' : 'By Age Group'}
                       </h3>
                       <div className="h-64">
@@ -1162,7 +1162,7 @@ const IndicatorDetail = ({
 
                     {/* Sex */}
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                         {language === 'th' ? 'ตามเพศ' : 'By Sex'}
                       </h3>
                       <div className="h-64">
@@ -1184,7 +1184,7 @@ const IndicatorDetail = ({
 
                     {/* Occupation */}
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                         {language === 'th' ? 'ตามสถานะการทำงาน' : 'By Employment Status'}
                       </h3>
                       <div className="h-64">
@@ -1214,7 +1214,7 @@ const IndicatorDetail = ({
                     {/* Welfare/Insurance */}
                     {disaggregationData.welfare && disaggregationData.welfare.length > 0 && (
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                           {language === 'th' ? 'ตามประเภทสิทธิประกันสุขภาพ' : 'By Health Insurance Type'}
                         </h3>
                         <div className="h-64">
@@ -1245,7 +1245,7 @@ const IndicatorDetail = ({
                     {/* Freelance Type Distribution - Only for vulnerable_employment indicator */}
                     {indicator === 'vulnerable_employment' && disaggregationData.freelanceType && disaggregationData.freelanceType.length > 0 && (
                       <div className="lg:col-span-2">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                           {language === 'th' ? 'ประเภทอาชีพอิสระ (เฉพาะผู้ที่อยู่ในการจ้างงานเปราะบาง)' : 'Freelance Job Types (Among Vulnerable Employment)'}
                         </h3>
                         <div className="h-64">
@@ -1288,7 +1288,7 @@ const IndicatorDetail = ({
                     {/* Discrimination Type Distribution - For discrimination_experience indicator */}
                     {indicator === 'discrimination_experience' && disaggregationData.discriminationType && disaggregationData.discriminationType.length > 0 && (
                       <div className="lg:col-span-2">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                           {language === 'th' ? 'ประเภทการเลือกปฏิบัติ (เฉพาะผู้ที่ประสบการเลือกปฏิบัติ)' : 'Types of Discrimination (Among Those Who Experienced Discrimination)'}
                         </h3>
                         <div className="h-64">
@@ -1329,7 +1329,7 @@ const IndicatorDetail = ({
                     {/* Oral Health Access Reason Distribution - For dental_access indicator */}
                     {indicator === 'dental_access' && disaggregationData.oralHealthReason && disaggregationData.oralHealthReason.length > 0 && (
                       <div className="lg:col-span-2">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                           {language === 'th' ? 'เหตุผลที่ไม่เข้าถึงบริการทันตกรรม (เฉพาะผู้ที่ไม่สามารถเข้าถึง)' : 'Reasons for Not Accessing Dental Care (Among Those Without Access)'}
                         </h3>
                         <div className="h-64">
@@ -1370,7 +1370,7 @@ const IndicatorDetail = ({
                     {/* Disaster Type Distribution - For disaster_experience indicator */}
                     {indicator === 'disaster_experience' && disaggregationData.disasterType && disaggregationData.disasterType.length > 0 && (
                       <div className="lg:col-span-2">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                           {language === 'th' ? 'ประเภทภัยพิบัติ (เฉพาะผู้ที่ประสบภัยพิบัติ)' : 'Types of Disasters (Among Those Who Experienced Disasters)'}
                         </h3>
                         <div className="h-64">
@@ -1416,7 +1416,7 @@ const IndicatorDetail = ({
                         {/* Income Statistics */}
                         {disaggregationData.income && (
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                            <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                               {language === 'th' ? 'รายได้เฉลี่ย' : 'Average Income'}
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1494,7 +1494,7 @@ const IndicatorDetail = ({
                         {/* Working Hours Statistics */}
                         {disaggregationData.workingHours && (
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                            <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-4">
                               {language === 'th' ? 'ชั่วโมงการทำงาน' : 'Working Hours'}
                             </h3>
                             
@@ -1561,7 +1561,7 @@ const IndicatorDetail = ({
                       <div className="text-gray-400 mb-4">
                         <Users className="w-12 h-12 mx-auto" />
                       </div>
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      <h3 className="text-sm sm:text-lg font-medium text-gray-900 mb-2">
                         {language === 'th' ? 'ไม่มีข้อมูลการแยกย่อย' : 'No Disaggregation Data'}
                       </h3>
                       <p className="text-gray-600">
@@ -1588,7 +1588,7 @@ const IndicatorDetail = ({
                           <Brain className="w-6 h-6 text-blue-600" />
                         </div>
                       </div>
-                      <h3 className="text-lg font-medium text-blue-900 mb-2">
+                      <h3 className="text-sm sm:text-lg font-medium text-blue-900 mb-2">
                         {language === 'th' ? 'การวิเคราะห์ความสัมพันธ์ไม่พร้อมใช้งาน' : 'Correlation Analysis Not Available'}
                       </h3>
                       <p className="text-blue-800">

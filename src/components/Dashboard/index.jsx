@@ -1020,16 +1020,16 @@ Reset Filters
                               <th className="text-left py-2 px-2 md:py-4 md:px-6 text-xs md:text-sm font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.indicator')}
                               </th>
-                              <th className="text-center py-2 px-2 md:py-4 md:px-6 text-xs md:text-sm font-semibold text-gray-700 bg-gray-50 w-20 md:w-auto">
+                              <th className="text-center py-2 px-1 md:py-4 md:px-6 text-xs md:text-sm font-semibold text-gray-700 bg-gray-50 w-20 md:w-auto">
                                 {t('ui.score')}
                               </th>
                               {/* Hide sample size column for IMD */}
                               {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
-                                <th className="text-center py-2 px-2 md:py-4 md:px-6 text-xs md:text-sm font-semibold text-gray-700 bg-gray-50 w-16 md:w-auto">
+                                <th className="text-center py-2 px-1 md:py-4 md:px-6 text-xs md:text-sm font-semibold text-gray-700 bg-gray-50 w-16 md:w-auto">
                                   {language === 'th' ? 'ขนาด' : 'Size'}
                                 </th>
                               )}
-                              <th className="text-right py-2 px-2 md:py-4 md:px-6 text-xs md:text-sm font-semibold text-gray-700 bg-gray-50 w-20 md:w-auto">
+                              <th className="text-right py-2 px-1 md:py-4 md:px-6 text-xs md:text-sm font-semibold text-gray-700 bg-gray-50 w-20 md:w-auto">
                                 {/* Empty header for details button */}
                               </th>
                             </tr>
@@ -1068,11 +1068,11 @@ Reset Filters
                                     {/* Score Column */}
                                     <td className="text-center py-2 px-1 md:py-4 md:px-6">
                                       {item.noData || value === null || value === undefined ? (
-                                        <span className="inline-flex px-1 py-1 md:px-3 md:py-2 text-xs md:text-sm font-medium bg-gray-100 text-gray-600 rounded-full">
+                                        <span className="inline-flex px-1 py-1 md:px-3 md:py-2 text-[10px] md:text-sm font-medium bg-gray-100 text-gray-600 rounded-full">
                                           N/A
                                         </span>
                                       ) : (
-                                        <span className={`inline-flex px-1 py-1 md:px-3 md:py-2 text-xs md:text-sm font-medium rounded-full ${getScoreColor(value, indicator)}`}>
+                                        <span className={`inline-flex px-1 py-1 md:px-3 md:py-2 text-[10px] md:text-sm font-medium rounded-full ${getScoreColor(value, indicator)}`}>
                                           {formatValue(value, indicator)}
                                         </span>
                                       )}

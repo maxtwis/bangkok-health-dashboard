@@ -209,21 +209,21 @@ const CorrelationAnalysis = ({
   }
 
   return (
-    <div className="bg-white rounded-lg p-6">
+    <div className="bg-white rounded-lg p-3 sm:p-6">
       {/* Header with controls */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800 flex items-center">
-            <Brain className="w-5 h-5 mr-2 text-purple-600" />
+      <div className="mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 flex items-center">
+            <Brain className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-purple-600" />
             {language === 'th' ? 'การวิเคราะห์ความสัมพันธ์' : 'Correlation Analysis'}
           </h3>
-          
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Info className="w-4 h-4" />
+
+          <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600">
+            <Info className="w-3 h-3 sm:w-4 sm:h-4" />
             <span>
-              {language === 'th' 
-                ? `ขนาดตัวอย่าง: ${correlationData.sampleSize} คน (ข้อมูลทั้งกรุงเทพฯ)`
-                : `Sample size: ${correlationData.sampleSize} people (Bangkok-wide data)`}
+              {language === 'th'
+                ? `ตัวอย่าง: ${correlationData.sampleSize.toLocaleString()} คน`
+                : `Sample: ${correlationData.sampleSize.toLocaleString()} people`}
             </span>
           </div>
         </div>
@@ -243,13 +243,13 @@ const CorrelationAnalysis = ({
         )}
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
           {/* Domain filter */}
-          <div className="relative">
+          <div className="relative flex-1 sm:flex-none">
             <select
               value={selectedDomain}
               onChange={(e) => setSelectedDomain(e.target.value)}
-              className="appearance-none bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="appearance-none bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 pr-8 text-xs sm:text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">{language === 'th' ? 'ทุกมิติ' : 'All Domains'}</option>
               <option value="economic_security">{t('domains.economic_security')}</option>
@@ -264,17 +264,17 @@ const CorrelationAnalysis = ({
           </div>
 
           {/* Minimum correlation filter */}
-          <div className="relative">
+          <div className="relative flex-1 sm:flex-none">
             <select
               value={minCorrelation}
               onChange={(e) => setMinCorrelation(parseFloat(e.target.value))}
-              className="appearance-none bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="appearance-none bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 pr-8 text-xs sm:text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="0.0">{language === 'th' ? 'ทั้งหมด (r ≥ 0.0)' : 'All (r ≥ 0.0)'}</option>
-              <option value="0.1">{language === 'th' ? 'มีความสัมพันธ์เล็กน้อยขึ้นไป (r ≥ 0.1)' : 'Negligible+ (r ≥ 0.1)'}</option>
-              <option value="0.2">{language === 'th' ? 'มีความสัมพันธ์น้อยขึ้นไป (r ≥ 0.2)' : 'Weak+ (r ≥ 0.2)'}</option>
-              <option value="0.3">{language === 'th' ? 'มีความสัมพันธ์ปานกลางขึ้นไป (r ≥ 0.3)' : 'Moderate+ (r ≥ 0.3)'}</option>
-              <option value="0.5">{language === 'th' ? 'ความสัมพันธ์สูงขึ้นไป (r ≥ 0.5)' : 'Strong+ (r ≥ 0.5)'}</option>
+              <option value="0.1">{language === 'th' ? 'เล็กน้อย+ (r ≥ 0.1)' : 'Negligible+ (r ≥ 0.1)'}</option>
+              <option value="0.2">{language === 'th' ? 'น้อย+ (r ≥ 0.2)' : 'Weak+ (r ≥ 0.2)'}</option>
+              <option value="0.3">{language === 'th' ? 'ปานกลาง+ (r ≥ 0.3)' : 'Moderate+ (r ≥ 0.3)'}</option>
+              <option value="0.5">{language === 'th' ? 'สูง+ (r ≥ 0.5)' : 'Strong+ (r ≥ 0.5)'}</option>
             </select>
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           </div>
@@ -282,13 +282,13 @@ const CorrelationAnalysis = ({
           {/* Significance filter */}
           <button
             onClick={() => setShowOnlySignificant(!showOnlySignificant)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              showOnlySignificant 
+            className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
+              showOnlySignificant
                 ? 'bg-blue-100 text-blue-700 border border-blue-300'
                 : 'bg-gray-50 text-gray-700 border border-gray-300'
             }`}
           >
-            {language === 'th' ? 'เฉพาะที่มีนัยสำคัญ' : 'Significant Only'}
+            {language === 'th' ? 'มีนัยสำคัญ' : 'Significant'}
             {showOnlySignificant && ' ✓'}
           </button>
 
@@ -296,11 +296,11 @@ const CorrelationAnalysis = ({
       </div>
 
       {/* Correlation List */}
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {/* Group by domain */}
           {Object.entries(correlationData.grouped).map(([domain, correlations]) => (
-            <div key={domain} className="border rounded-lg p-4">
-              <h4 className="font-medium text-gray-700 mb-3">
+            <div key={domain} className="border rounded-lg p-3 sm:p-4">
+              <h4 className="font-medium text-gray-700 mb-2 sm:mb-3 text-sm sm:text-base">
                 {domain === 'unknown' ? 'Other' : t(`domains.${domain}`)}
               </h4>
               
@@ -309,47 +309,47 @@ const CorrelationAnalysis = ({
                   const currentIndicatorInfo = getIndicatorInfo(currentIndicator, language);
                   const targetIndicatorInfo = getIndicatorInfo(corr.indicator, language);
                   const basicDescription = getBasicCorrelationDescription(
-                    corr.correlation, 
-                    language, 
-                    currentIndicatorInfo.name, 
+                    corr.correlation,
+                    language,
+                    currentIndicatorInfo.name,
                     targetIndicatorInfo.name
                   );
-                  
+
                   return (
-                    <div key={index} className="bg-gray-50 rounded-lg p-3">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <div className="flex items-center">
+                    <div key={index} className="bg-gray-50 rounded-lg p-2 sm:p-3">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 mb-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center flex-wrap gap-1">
                             {corr.direction === 'positive' ? (
-                              <TrendingUp className="w-4 h-4 text-emerald-600 mr-2" />
+                              <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600 flex-shrink-0" />
                             ) : (
-                              <TrendingDown className="w-4 h-4 text-red-600 mr-2" />
+                              <TrendingDown className="w-3 h-3 sm:w-4 sm:h-4 text-red-600 flex-shrink-0" />
                             )}
-                            <span className="font-medium text-gray-800">
+                            <span className="font-medium text-gray-800 text-xs sm:text-sm leading-tight">
                               {corr.name}
                             </span>
                             {corr.isReverse && (
-                              <span className="ml-2 text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded">
-                                {language === 'th' ? 'ตัวชี้วัดแบบย้อนกลับ' : 'Reverse'}
+                              <span className="text-[10px] sm:text-xs bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded whitespace-nowrap">
+                                {language === 'th' ? 'ย้อนกลับ' : 'Reverse'}
                               </span>
                             )}
                           </div>
                         </div>
-                        
-                        <div className="text-right ml-4">
-                          <div className="font-mono text-sm font-medium">
+
+                        <div className="text-left sm:text-right flex-shrink-0">
+                          <div className="font-mono text-xs sm:text-sm font-medium">
                             r = {corr.correlation.toFixed(3)}{corr.stars}
                           </div>
-                          <div className={`text-xs ${strengthLabels[corr.strength].color}`}>
+                          <div className={`text-[10px] sm:text-xs ${strengthLabels[corr.strength].color}`}>
                             {strengthLabels[corr.strength][language === 'th' ? 'th' : 'en']}
                           </div>
                         </div>
                       </div>
-                      
-                      <p className="text-xs text-gray-600 mt-1">
+
+                      <p className="text-[10px] sm:text-xs text-gray-600 leading-tight">
                         {basicDescription.description}
                       </p>
-                      
+
                     </div>
                   );
                 })}
