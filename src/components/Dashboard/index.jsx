@@ -1010,18 +1010,21 @@ Reset Filters
                         <table className="w-full text-base">
                           <thead>
                             <tr className="border-b-2 border-gray-200">
-                              <th className="text-left py-4 px-6 font-semibold text-gray-700 bg-gray-50">
+                              <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.indicator')}
                               </th>
-                              <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
+                              <th className="text-center py-4 px-6 text-sm font-semibold text-gray-700 bg-gray-50">
                                 {t('ui.score')}
                               </th>
                               {/* Hide sample size column for IMD */}
                               {selectedIndicatorType !== INDICATOR_TYPES.IMD && (
-                                <th className="text-center py-4 px-6 font-semibold text-gray-700 bg-gray-50">
+                                <th className="text-center py-4 px-6 text-sm font-semibold text-gray-700 bg-gray-50">
                                   {t('ui.sampleSize')}
                                 </th>
                               )}
+                              <th className="text-right py-4 px-6 text-sm font-semibold text-gray-700 bg-gray-50">
+                                {/* Empty header for details button */}
+                              </th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1032,44 +1035,27 @@ Reset Filters
                                 const value = item.value;
                                 
                                 return (
-                                  <tr 
-                                    key={indicator} 
+                                  <tr
+                                    key={indicator}
                                     className={`border-b border-gray-100 hover:bg-blue-50/50 transition-colors duration-200 ${
                                       selectedMapIndicator === indicator ? 'bg-blue-100 border-blue-200' : ''
                                     }`}
                                   >
                                     {/* Indicator Name Column */}
                                     <td className="py-4 px-6">
-                                      <div className="flex items-center">
-                                        <span 
-                                          className={`font-medium text-gray-900 hover:text-blue-600 transition-colors duration-200 cursor-pointer flex-1 ${
-                                            selectedMapIndicator === indicator ? 'text-blue-600 font-semibold' : ''
-                                          }`}
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            // Toggle the selected map indicator
-                                            setSelectedMapIndicator(selectedMapIndicator === indicator ? null : indicator);
-                                          }}
-                                          title="Click to view on map"
-                                        >
-                                          {getIndicatorName(indicator, language) || item.label}
-                                        </span>
-                                        <svg 
-                                          className="w-5 h-5 ml-3 text-gray-400 hover:text-gray-600 cursor-pointer" 
-                                          fill="none" 
-                                          stroke="currentColor" 
-                                          viewBox="0 0 24 24" 
-                                          role="img" 
-                                          aria-label="View details arrow"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleIndicatorClick(indicator);
-                                          }}
-                                          title="Click for detailed analysis"
-                                        >
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                        </svg>
-                                      </div>
+                                      <span
+                                        className={`font-medium text-gray-900 hover:text-blue-600 transition-colors duration-200 cursor-pointer ${
+                                          selectedMapIndicator === indicator ? 'text-blue-600 font-semibold' : ''
+                                        }`}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          // Toggle the selected map indicator
+                                          setSelectedMapIndicator(selectedMapIndicator === indicator ? null : indicator);
+                                        }}
+                                        title="Click to view on map"
+                                      >
+                                        {getIndicatorName(indicator, language) || item.label}
+                                      </span>
                                     </td>
 
                                     {/* Score Column */}
@@ -1092,11 +1078,28 @@ Reset Filters
                                           if (item.noData) {
                                             return language === 'th' ? 'ไม่มีข้อมูล' : 'No data';
                                           }
-                                          
+
                                           return formatSampleSize(item.sample_size);
                                         })()}
                                       </td>
                                     )}
+
+                                    {/* View Details Column */}
+                                    <td className="text-right py-4 px-6">
+                                      <button
+                                        className="inline-flex items-center gap-1 px-2 py-1 text-[10px] text-blue-600 hover:text-white bg-blue-50 hover:bg-blue-600 border border-blue-200 hover:border-blue-600 rounded-md font-medium transition-all duration-200 whitespace-nowrap"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleIndicatorClick(indicator);
+                                        }}
+                                        title="Click for detailed analysis"
+                                      >
+                                        {language === 'th' ? 'รายละเอียด' : 'Details'}
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                      </button>
+                                    </td>
                                   </tr>
                                 );
                               })}
