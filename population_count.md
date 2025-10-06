@@ -1,25 +1,25 @@
 # Bangkok Health Survey Population Demographics
 
 ## Overview
-This document provides a comprehensive demographic breakdown of the Bangkok Health Dashboard survey dataset, containing **6,442 survey responses** collected across all 50 Bangkok districts.
+This document provides a comprehensive demographic breakdown of the Bangkok Health Dashboard survey dataset, containing **6,523 survey responses** collected across all 50 Bangkok districts.
 
 ## Gender and Sexuality Distribution
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Female | 3,285 | 51.0% |
-| Male | 2,475 | 38.4% |
-| LGBT+ | 682 | 10.6% |
-| **Total** | **6,442** | **100.0%** |
+| Female | 3,332 | 51.1% |
+| Male | 2,506 | 38.4% |
+| LGBT+ | 685 | 10.5% |
+| **Total** | **6,523** | **100.0%** |
 
 ## Age Group Distribution
 
 | Age Group | Count | Percentage |
 |-----------|-------|------------|
-| Young Adults (18-29) | 907 | 14.3% |
-| Adults (30-59) | 2,517 | 39.7% |
-| Elderly (60+) | 2,922 | 46.0% |
-| **Total** | **6,346** | **100.0%** |
+| Young Adults (18-29) | 909 | 14.1% |
+| Adults (30-59) | 2,532 | 39.4% |
+| Elderly (60+) | 2,986 | 46.5% |
+| **Total** | **6,427** | **100.0%** |
 
 *Note: 96 records had missing or invalid age data*
 
@@ -27,17 +27,17 @@ This document provides a comprehensive demographic breakdown of the Bangkok Heal
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| Without Disabilities | 5,821 | 90.4% |
-| With Disabilities | 621 | 9.6% |
-| **Total** | **6,442** | **100.0%** |
+| Without Disabilities | 5,885 | 90.2% |
+| With Disabilities | 638 | 9.8% |
+| **Total** | **6,523** | **100.0%** |
 
 ## Employment Status
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| Employed | 4,070 | 63.2% |
-| Unemployed | 2,365 | 36.8% |
-| **Total** | **6,435** | **100.0%** |
+| Employed | 4,102 | 63.0% |
+| Unemployed | 2,414 | 37.0% |
+| **Total** | **6,516** | **100.0%** |
 
 *Note: 7 records had missing employment status data*
 
@@ -45,9 +45,9 @@ This document provides a comprehensive demographic breakdown of the Bangkok Heal
 
 | Employment Type | Count | Percentage of Employed | Percentage of Total Sample |
 |----------------|-------|----------------------|---------------------------|
-| Informal Workers | 2,612 | 64.2% | 40.5% |
-| Formal Employment | 1,457 | 35.8% | 22.6% |
-| **Total Employed** | **4,069** | **100.0%** | **63.2%** |
+| Informal Workers | 2,641 | 64.4% | 40.5% |
+| Formal Employment | 1,460 | 35.6% | 22.4% |
+| **Total Employed** | **4,101** | **100.0%** | **62.9%** |
 
 *Note: 1 employed person had missing contract status data*
 
@@ -57,58 +57,58 @@ This document provides a comprehensive demographic breakdown of the Bangkok Heal
 
 | Population Group | Count | Percentage of Total |
 |------------------|-------|-------------------|
-| **LGBT+ Community** | 682 | 10.6% |
-| **Elderly (60+)** | 2,922 | 46.0% |
-| **People with Disabilities** | 621 | 9.6% |
-| **Informal Workers** | 2,612 | 40.5% |
+| **LGBT+ Community** | 685 | 10.5% |
+| **Elderly (60+)** | 2,986 | 45.8% |
+| **People with Disabilities** | 638 | 9.8% |
+| **Informal Workers** | 2,641 | 40.5% |
 
 ### Comprehensive Intersectional Analysis
 
 #### Primary Population Groups (Baseline)
 | Population Group | Count | Percentage of Total |
 |------------------|-------|-------------------|
-| **Elderly (60+)** | 2,922 | 45.4% |
-| **LGBT+ Community** | 682 | 10.6% |
-| **People with Disabilities** | 621 | 9.6% |
-| **Informal Workers** | 2,612 | 40.5% |
+| **Elderly (60+)** | 2,986 | 45.8% |
+| **LGBT+ Community** | 685 | 10.5% |
+| **People with Disabilities** | 638 | 9.8% |
+| **Informal Workers** | 2,641 | 40.5% |
 
 #### Two-Way Intersections
 
 ##### Elderly-Focused Intersections
 | Intersection Group | Count | % of Total | % of Elderly | % of Other Group |
 |-------------------|-------|------------|--------------|------------------|
-| **Elderly + LGBT+** | 21 | 0.3% | 0.7% | 3.1% of LGBT+ |
-| **Elderly + Disabled** | 367 | 5.7% | 12.6% | 59.1% of disabled |
-| **Elderly + Informal Workers** | 1,027 | 15.9% | 35.1% | 39.3% of informal |
+| **Elderly + LGBT+** | 22 | 0.3% | 0.7% | 3.2% of LGBT+ |
+| **Elderly + Disabled** | 380 | 5.8% | 12.7% | 59.6% of disabled |
+| **Elderly + Informal Workers** | 1,048 | 16.1% | 35.1% | 39.7% of informal |
 
 ##### LGBT+-Focused Intersections
 | Intersection Group | Count | % of Total | % of LGBT+ | % of Other Group |
 |-------------------|-------|------------|-------------|------------------|
-| **LGBT+ + Elderly** | 21 | 0.3% | 3.1% | 0.7% of elderly |
-| **LGBT+ + Disabled** | 29 | 0.5% | 4.3% | 4.7% of disabled |
-| **LGBT+ + Informal Workers** | 237 | 3.7% | 34.8% | 9.1% of informal |
+| **LGBT+ + Elderly** | 22 | 0.3% | 3.2% | 0.7% of elderly |
+| **LGBT+ + Disabled** | 29 | 0.4% | 4.2% | 4.5% of disabled |
+| **LGBT+ + Informal Workers** | 238 | 3.6% | 34.7% | 9.0% of informal |
 
 ##### Disability-Focused Intersections
 | Intersection Group | Count | % of Total | % of Disabled | % of Other Group |
 |-------------------|-------|------------|---------------|------------------|
-| **Disabled + Elderly** | 367 | 5.7% | 59.1% | 12.6% of elderly |
-| **Disabled + LGBT+** | 29 | 0.5% | 4.7% | 4.3% of LGBT+ |
-| **Disabled + Informal Workers** | 88 | 1.4% | 14.2% | 3.4% of informal |
+| **Disabled + Elderly** | 380 | 5.8% | 59.6% | 12.7% of elderly |
+| **Disabled + LGBT+** | 29 | 0.4% | 4.5% | 4.2% of LGBT+ |
+| **Disabled + Informal Workers** | 90 | 1.4% | 14.1% | 3.4% of informal |
 
 ##### Informal Worker-Focused Intersections
 | Intersection Group | Count | % of Total | % of Informal | % of Other Group |
 |-------------------|-------|------------|---------------|------------------|
-| **Informal + Elderly** | 1,027 | 15.9% | 39.3% | 35.1% of elderly |
-| **Informal + LGBT+** | 237 | 3.7% | 9.1% | 34.8% of LGBT+ |
-| **Informal + Disabled** | 88 | 1.4% | 3.4% | 14.2% of disabled |
+| **Informal + Elderly** | 1,048 | 16.1% | 39.7% | 35.1% of elderly |
+| **Informal + LGBT+** | 238 | 3.6% | 9.0% | 34.7% of LGBT+ |
+| **Informal + Disabled** | 90 | 1.4% | 3.4% | 14.1% of disabled |
 
 #### Three-Way Intersections
 
 | Triple Intersection | Count | % of Total | Key Insights |
 |--------------------|-------|------------|--------------|
 | **Elderly + LGBT+ + Disabled** | 0 | 0.0% | No overlap found in current sample |
-| **Elderly + LGBT+ + Informal Workers** | 13 | 0.2% | Small but significant vulnerable group |
-| **Elderly + Disabled + Informal Workers** | 43 | 0.7% | High-priority for social services |
+| **Elderly + LGBT+ + Informal Workers** | 14 | 0.2% | Small but significant vulnerable group |
+| **Elderly + Disabled + Informal Workers** | 45 | 0.7% | High-priority for social services |
 | **LGBT+ + Disabled + Informal Workers** | 5 | 0.1% | Multiple marginalization factors |
 
 #### Four-Way Intersection
@@ -120,39 +120,39 @@ This document provides a comprehensive demographic breakdown of the Bangkok Heal
 #### Key Intersectional Insights
 
 ##### Most Vulnerable Combinations
-1. **Elderly + Disabled + Informal Workers** (43 people, 0.7%)
+1. **Elderly + Disabled + Informal Workers** (45 people, 0.7%)
    - Face employment insecurity, health challenges, and age discrimination
    - Priority for integrated social services
 
-2. **Elderly + Informal Workers** (1,027 people, 15.9%)
+2. **Elderly + Informal Workers** (1,048 people, 16.1%)
    - Largest intersectional group
    - Economic vulnerability in later life
    - Limited retirement security
 
-3. **LGBT+ + Informal Workers** (237 people, 3.7%)
+3. **LGBT+ + Informal Workers** (238 people, 3.6%)
    - Face both employment and social discrimination
    - Limited workplace protections
 
 ##### Service Planning Priorities
 
 **High-Impact Intersections:**
-- **Elderly + Disabled** (367 people): Need integrated geriatric and disability services
-- **Elderly + Informal Workers** (1,027 people): Require economic security and healthcare access
-- **LGBT+ + Informal Workers** (237 people): Need discrimination protection and economic support
+- **Elderly + Disabled** (380 people): Need integrated geriatric and disability services
+- **Elderly + Informal Workers** (1,048 people): Require economic security and healthcare access
+- **LGBT+ + Informal Workers** (238 people): Need discrimination protection and economic support
 
 **Specialized Services Needed:**
-- **Elderly + LGBT+** (21 people): Culturally competent elder care
-- **Disabled + Informal Workers** (88 people): Accessible employment support
+- **Elderly + LGBT+** (22 people): Culturally competent elder care
+- **Disabled + Informal Workers** (90 people): Accessible employment support
 - **LGBT+ + Disabled** (29 people): Inclusive disability services
 
 ##### Statistical Observations
 
 **Disability Patterns:**
-- 59.1% of people with disabilities are elderly
+- 59.6% of people with disabilities are elderly
 - Disability is most concentrated among older adults
 
 **LGBT+ Economic Patterns:**
-- 34.8% of LGBT+ individuals work informally
+- 34.7% of LGBT+ individuals work informally
 - Higher informal employment rate than general population
 
 **Elderly Employment Patterns:**
@@ -245,19 +245,19 @@ This document provides a comprehensive demographic breakdown of the Bangkok Heal
 #### Lower Response Districts (<110 surveys)
 | District Code | District Name | Total | LGBT+ | Elderly (60+) | Disabled | LGBT% | Elderly% | Disabled% |
 |---------------|---------------|-------|-------|---------------|----------|-------|----------|----------|
+| 1001 | เขตพระนคร | 108 | 8 | 64 | 19 | 7.4% | 59.3% | 17.6% |
 | 1013 | เขตสัมพันธวงศ์ | 107 | 15 | 46 | 3 | 14.0% | 43.0% | 2.8% |
 | 1015 | เขตธนบุรี | 85 | 14 | 21 | 4 | 16.5% | 24.7% | 4.7% |
-| 1001 | เขตพระนคร | 27 | 5 | 0 | 2 | 18.5% | 0.0% | 7.4% |
 
 ### Key District-Level Observations
 
 #### LGBT+ Representation Hotspots
 **Highest LGBT+ Percentages:**
-1. เขตพระนคร (18.5%) - Historic center
-2. เขตลาดกระบัง (19.4%) - Eastern district
-3. เขตบางนา (19.4%) - Southern commercial area
-4. เขตบางรัก (17.6%) - Central business district
-5. เขตคลองเตย (17.4%) - Port area
+1. เขตลาดกระบัง (19.4%) - Eastern district
+2. เขตบางนา (19.4%) - Southern commercial area
+3. เขตบางรัก (17.6%) - Central business district
+4. เขตคลองเตย (17.4%) - Port area
+5. เขตธนบุรี (16.5%) - Thonburi area
 
 #### Elderly Population Concentrations
 **Highest Elderly Percentages (>60%):**
