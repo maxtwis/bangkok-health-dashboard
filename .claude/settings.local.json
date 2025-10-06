@@ -34,7 +34,8 @@
       "Bash(grep:*)",
       "Bash(mcp__playwright__browser_navigate:*)",
       "Bash(ping:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(awk:*)"
     ],
     "deny": [],
     "ask": []
