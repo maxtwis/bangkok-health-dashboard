@@ -62,15 +62,106 @@ This document provides a comprehensive demographic breakdown of the Bangkok Heal
 | **People with Disabilities** | 621 | 9.6% |
 | **Informal Workers** | 2,612 | 40.5% |
 
-### Intersectional Analysis
+### Comprehensive Intersectional Analysis
 
-| Combined Categories | Estimated Count* | Notes |
-|---------------------|------------------|-------|
-| Elderly with Disabilities | ~280 | Based on typical prevalence rates |
-| LGBT+ Informal Workers | ~272 | Based on employment patterns |
-| Young Adult LGBT+ | ~96 | Based on age distribution |
+#### Primary Population Groups (Baseline)
+| Population Group | Count | Percentage of Total |
+|------------------|-------|-------------------|
+| **Elderly (60+)** | 2,922 | 45.4% |
+| **LGBT+ Community** | 682 | 10.6% |
+| **People with Disabilities** | 621 | 9.6% |
+| **Informal Workers** | 2,612 | 40.5% |
 
-*Estimates based on statistical modeling; actual intersectional data requires cross-tabulation analysis*
+#### Two-Way Intersections
+
+##### Elderly-Focused Intersections
+| Intersection Group | Count | % of Total | % of Elderly | % of Other Group |
+|-------------------|-------|------------|--------------|------------------|
+| **Elderly + LGBT+** | 21 | 0.3% | 0.7% | 3.1% of LGBT+ |
+| **Elderly + Disabled** | 367 | 5.7% | 12.6% | 59.1% of disabled |
+| **Elderly + Informal Workers** | 1,027 | 15.9% | 35.1% | 39.3% of informal |
+
+##### LGBT+-Focused Intersections
+| Intersection Group | Count | % of Total | % of LGBT+ | % of Other Group |
+|-------------------|-------|------------|-------------|------------------|
+| **LGBT+ + Elderly** | 21 | 0.3% | 3.1% | 0.7% of elderly |
+| **LGBT+ + Disabled** | 29 | 0.5% | 4.3% | 4.7% of disabled |
+| **LGBT+ + Informal Workers** | 237 | 3.7% | 34.8% | 9.1% of informal |
+
+##### Disability-Focused Intersections
+| Intersection Group | Count | % of Total | % of Disabled | % of Other Group |
+|-------------------|-------|------------|---------------|------------------|
+| **Disabled + Elderly** | 367 | 5.7% | 59.1% | 12.6% of elderly |
+| **Disabled + LGBT+** | 29 | 0.5% | 4.7% | 4.3% of LGBT+ |
+| **Disabled + Informal Workers** | 88 | 1.4% | 14.2% | 3.4% of informal |
+
+##### Informal Worker-Focused Intersections
+| Intersection Group | Count | % of Total | % of Informal | % of Other Group |
+|-------------------|-------|------------|---------------|------------------|
+| **Informal + Elderly** | 1,027 | 15.9% | 39.3% | 35.1% of elderly |
+| **Informal + LGBT+** | 237 | 3.7% | 9.1% | 34.8% of LGBT+ |
+| **Informal + Disabled** | 88 | 1.4% | 3.4% | 14.2% of disabled |
+
+#### Three-Way Intersections
+
+| Triple Intersection | Count | % of Total | Key Insights |
+|--------------------|-------|------------|--------------|
+| **Elderly + LGBT+ + Disabled** | 0 | 0.0% | No overlap found in current sample |
+| **Elderly + LGBT+ + Informal Workers** | 13 | 0.2% | Small but significant vulnerable group |
+| **Elderly + Disabled + Informal Workers** | 43 | 0.7% | High-priority for social services |
+| **LGBT+ + Disabled + Informal Workers** | 5 | 0.1% | Multiple marginalization factors |
+
+#### Four-Way Intersection
+
+| Complete Intersection | Count | % of Total | Policy Implications |
+|----------------------|-------|------------|-------------------|
+| **Elderly + LGBT+ + Disabled + Informal Workers** | 0 | 0.0% | No individuals with all four characteristics in sample |
+
+#### Key Intersectional Insights
+
+##### Most Vulnerable Combinations
+1. **Elderly + Disabled + Informal Workers** (43 people, 0.7%)
+   - Face employment insecurity, health challenges, and age discrimination
+   - Priority for integrated social services
+
+2. **Elderly + Informal Workers** (1,027 people, 15.9%)
+   - Largest intersectional group
+   - Economic vulnerability in later life
+   - Limited retirement security
+
+3. **LGBT+ + Informal Workers** (237 people, 3.7%)
+   - Face both employment and social discrimination
+   - Limited workplace protections
+
+##### Service Planning Priorities
+
+**High-Impact Intersections:**
+- **Elderly + Disabled** (367 people): Need integrated geriatric and disability services
+- **Elderly + Informal Workers** (1,027 people): Require economic security and healthcare access
+- **LGBT+ + Informal Workers** (237 people): Need discrimination protection and economic support
+
+**Specialized Services Needed:**
+- **Elderly + LGBT+** (21 people): Culturally competent elder care
+- **Disabled + Informal Workers** (88 people): Accessible employment support
+- **LGBT+ + Disabled** (29 people): Inclusive disability services
+
+##### Statistical Observations
+
+**Disability Patterns:**
+- 59.1% of people with disabilities are elderly
+- Disability is most concentrated among older adults
+
+**LGBT+ Economic Patterns:**
+- 34.8% of LGBT+ individuals work informally
+- Higher informal employment rate than general population
+
+**Elderly Employment Patterns:**
+- 35.1% of elderly still work, mostly informally
+- Indicates economic necessity or choice to remain active
+
+**Low Triple/Quadruple Overlaps:**
+- Complex intersections are rare but represent extremely vulnerable populations
+- Small numbers require targeted, individualized support approaches
 
 ## Data Quality Indicators
 
@@ -88,10 +179,101 @@ This document provides a comprehensive demographic breakdown of the Bangkok Heal
 
 ## Geographic Distribution
 
-### District Coverage
-- **Urban Core Districts**: Well-represented across all socioeconomic levels
-- **Suburban Districts**: Comprehensive coverage through community networks
-- **Peri-urban Areas**: Strong representation via NGO partnerships
+### District Coverage Summary
+- **Total Districts Covered**: 50/50 (100%)
+- **Average Responses per District**: 129 surveys
+- **Response Range**: 27-222 surveys per district
+- **Standard Distribution**: Most districts (40/50) have 110-180 responses
+
+### District-Level Population Breakdown
+
+#### High Response Districts (>150 surveys)
+| District Code | District Name | Total | LGBT+ | Elderly (60+) | Disabled | LGBT% | Elderly% | Disabled% |
+|---------------|---------------|-------|-------|---------------|----------|-------|----------|----------|
+| 1009 | เขตพระโขนง | 222 | 10 | 111 | 16 | 4.5% | 50.0% | 7.2% |
+| 1038 | เขตลาดพร้าว | 176 | 11 | 89 | 9 | 6.3% | 50.6% | 5.1% |
+| 1028 | เขตสาทร | 153 | 14 | 65 | 12 | 9.2% | 42.5% | 7.8% |
+| 1019 | เขตตลิ่งชัน | 153 | 8 | 43 | 17 | 5.2% | 28.1% | 11.1% |
+| 1004 | เขตบางรัก | 153 | 27 | 57 | 9 | 17.6% | 37.3% | 5.9% |
+| 1045 | เขตวังทองหลาง | 151 | 8 | 90 | 18 | 5.3% | 59.6% | 11.9% |
+
+#### Medium Response Districts (110-150 surveys)
+| District Code | District Name | Total | LGBT+ | Elderly (60+) | Disabled | LGBT% | Elderly% | Disabled% |
+|---------------|---------------|-------|-------|---------------|----------|-------|----------|----------|
+| 1049 | เขตทุ่งครุ | 148 | 12 | 66 | 15 | 8.1% | 44.6% | 10.1% |
+| 1039 | เขตวัฒนา | 147 | 20 | 43 | 10 | 13.6% | 29.3% | 6.8% |
+| 1008 | เขตป้อมปราบศัตรูพ่าย | 146 | 15 | 61 | 12 | 10.3% | 41.8% | 8.2% |
+| 1037 | เขตราชเทวี | 145 | 18 | 55 | 21 | 12.4% | 37.9% | 14.5% |
+| 1036 | เขตดอนเมือง | 136 | 17 | 52 | 12 | 12.5% | 38.2% | 8.8% |
+| 1025 | เขตบางพลัด | 136 | 20 | 68 | 10 | 14.7% | 50.0% | 7.4% |
+| 1017 | เขตห้วยขวาง | 135 | 12 | 70 | 18 | 8.9% | 51.9% | 13.3% |
+| 1030 | เขตจตุจักร | 134 | 19 | 70 | 12 | 14.2% | 52.2% | 9.0% |
+| 1044 | เขตสะพานสูง | 131 | 9 | 43 | 3 | 6.9% | 32.8% | 2.3% |
+| 1040 | เขตบางแค | 131 | 21 | 47 | 9 | 16.0% | 35.9% | 6.9% |
+| 1007 | เขตปทุมวัน | 131 | 12 | 47 | 5 | 9.2% | 35.9% | 3.8% |
+| 1002 | เขตดุสิต | 129 | 15 | 62 | 11 | 11.6% | 48.1% | 8.5% |
+| 1014 | เขตพญาไท | 129 | 14 | 71 | 14 | 10.9% | 55.0% | 10.9% |
+| 1006 | เขตบางกะปิ | 129 | 12 | 53 | 17 | 9.3% | 41.1% | 13.2% |
+| 1047 | เขตบางนา | 129 | 25 | 60 | 9 | 19.4% | 46.5% | 7.0% |
+| 1003 | เขตหนองจอก | 127 | 9 | 60 | 20 | 7.1% | 47.2% | 15.7% |
+| 1050 | เขตบางบอน | 126 | 9 | 38 | 9 | 7.1% | 30.2% | 7.1% |
+| 1043 | เขตคันนายาว | 126 | 17 | 61 | 14 | 13.5% | 48.4% | 11.1% |
+| 1022 | เขตภาษีเจริญ | 126 | 11 | 52 | 8 | 8.7% | 41.3% | 6.3% |
+| 1005 | เขตบางเขน | 126 | 15 | 57 | 32 | 11.9% | 45.2% | 25.4% |
+| 1035 | เขตจอมทอง | 125 | 8 | 67 | 10 | 6.4% | 53.6% | 8.0% |
+| 1032 | เขตประเวศ | 125 | 9 | 39 | 7 | 7.2% | 31.2% | 5.6% |
+| 1026 | เขตดินแดง | 125 | 19 | 63 | 7 | 15.2% | 50.4% | 5.6% |
+| 1021 | เขตบางขุนเทียน | 125 | 13 | 59 | 20 | 10.4% | 47.2% | 16.0% |
+| 1018 | เขตคลองสาน | 125 | 12 | 52 | 12 | 9.6% | 41.6% | 9.6% |
+| 1012 | เขตยานนาวา | 125 | 8 | 54 | 11 | 6.4% | 43.2% | 8.8% |
+| 1041 | เขตหลักสี่ | 124 | 9 | 71 | 20 | 7.3% | 57.3% | 16.1% |
+| 1031 | เขตบางคอแหลม | 124 | 11 | 47 | 8 | 8.9% | 37.9% | 6.5% |
+| 1029 | เขตบางซื่อ | 124 | 12 | 74 | 13 | 9.7% | 59.7% | 10.5% |
+| 1011 | เขตลาดกระบัง | 124 | 24 | 45 | 8 | 19.4% | 36.3% | 6.5% |
+| 1010 | เขตมีนบุรี | 124 | 17 | 78 | 16 | 13.7% | 62.9% | 12.9% |
+| 1048 | เขตทวีวัฒนา | 123 | 10 | 61 | 7 | 8.1% | 49.6% | 5.7% |
+| 1024 | เขตราษฏร์บูรณะ | 123 | 13 | 65 | 12 | 10.6% | 52.8% | 9.8% |
+| 1046 | เขตคลองสามวา | 122 | 10 | 53 | 29 | 8.2% | 43.4% | 23.8% |
+| 1033 | เขตคลองเตย | 121 | 21 | 52 | 21 | 17.4% | 43.0% | 17.4% |
+| 1020 | เขตบางกอกน้อย | 119 | 11 | 58 | 18 | 9.2% | 48.7% | 15.1% |
+| 1027 | เขตบึงกุ่ม | 118 | 18 | 37 | 7 | 15.3% | 31.4% | 5.9% |
+| 1034 | เขตสวนหลวง | 116 | 16 | 85 | 10 | 13.8% | 73.3% | 8.6% |
+| 1023 | เขตหนองแขม | 114 | 11 | 65 | 9 | 9.6% | 57.0% | 7.9% |
+| 1042 | เขตสายไหม | 112 | 3 | 70 | 9 | 2.7% | 62.5% | 8.0% |
+| 1016 | เขตบางกอกใหญ่ | 110 | 13 | 69 | 16 | 11.8% | 62.7% | 14.5% |
+
+#### Lower Response Districts (<110 surveys)
+| District Code | District Name | Total | LGBT+ | Elderly (60+) | Disabled | LGBT% | Elderly% | Disabled% |
+|---------------|---------------|-------|-------|---------------|----------|-------|----------|----------|
+| 1013 | เขตสัมพันธวงศ์ | 107 | 15 | 46 | 3 | 14.0% | 43.0% | 2.8% |
+| 1015 | เขตธนบุรี | 85 | 14 | 21 | 4 | 16.5% | 24.7% | 4.7% |
+| 1001 | เขตพระนคร | 27 | 5 | 0 | 2 | 18.5% | 0.0% | 7.4% |
+
+### Key District-Level Observations
+
+#### LGBT+ Representation Hotspots
+**Highest LGBT+ Percentages:**
+1. เขตพระนคร (18.5%) - Historic center
+2. เขตลาดกระบัง (19.4%) - Eastern district
+3. เขตบางนา (19.4%) - Southern commercial area
+4. เขตบางรัก (17.6%) - Central business district
+5. เขตคลองเตย (17.4%) - Port area
+
+#### Elderly Population Concentrations
+**Highest Elderly Percentages (>60%):**
+1. เขตสวนหลวง (73.3%)
+2. เขตมีนบุรี (62.9%)
+3. เขตบางกอกใหญ่ (62.7%)
+4. เขตสายไหม (62.5%)
+5. เขตบางซื่อ (59.7%)
+
+#### Disability Services Priority Areas
+**Highest Disability Percentages:**
+1. เขตบางเขน (25.4%)
+2. เขตคลองสามวา (23.8%)
+3. เขตคลองเตย (17.4%)
+4. เขตหลักสี่ (16.1%)
+5. เขตบางขุนเทียน (16.0%)
 
 ### Community Representation
 - **Traditional Communities**: 67% of sample via volunteer networks
