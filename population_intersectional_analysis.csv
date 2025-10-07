@@ -1,0 +1,12 @@
+﻿intersection_type,count,percentage_of_total
+Elderly + LGBT+,22,0.34
+Elderly + Disabled,380,5.83
+Elderly + Informal Workers,1051,16.11
+LGBT+ + Disabled,29,0.44
+LGBT+ + Informal Workers,279,4.28
+Disabled + Informal Workers,95,1.46
+Elderly + LGBT+ + Disabled,0,0.0
+Elderly + LGBT+ + Informal Workers,14,0.21
+Elderly + Disabled + Informal Workers,45,0.69
+LGBT+ + Disabled + Informal Workers,7,0.11
+All Four Categories,0,0.0
