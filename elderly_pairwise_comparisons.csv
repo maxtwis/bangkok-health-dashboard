@@ -1,0 +1,1226 @@
+﻿district_a,district_b,population_group,n_a,n_b,proportion_a,proportion_b,difference,test_used,chi2_statistic,p_value,statistically_significant,cohens_h,effect_size,interpretation
+1001,1002,elderly,108,129,59.3,48.1,11.2,Chi-Square,2.527,0.1119,No,0.225,Medium,No statistically significant difference detected
+1001,1003,elderly,108,127,59.3,47.2,12.0,Chi-Square,2.916,0.0877,No,0.241,Medium,No statistically significant difference detected
+1001,1004,elderly,108,153,59.3,37.3,22.0,Chi-Square,11.458,0.0007,Yes,0.444,Medium,Statistically significant with moderate practical difference
+1001,1005,elderly,108,126,59.3,45.2,14.0,Chi-Square,4.034,0.0446,Yes,0.282,Medium,Statistically significant with moderate practical difference
+1001,1006,elderly,108,129,59.3,41.1,18.2,Chi-Square,7.058,0.0079,Yes,0.366,Medium,Statistically significant with moderate practical difference
+1001,1007,elderly,108,131,59.3,35.9,23.4,Chi-Square,12.088,0.0005,Yes,0.473,Medium,Statistically significant with moderate practical difference
+1001,1008,elderly,108,146,59.3,41.8,17.5,Chi-Square,6.905,0.0086,Yes,0.351,Medium,Statistically significant with moderate practical difference
+1001,1009,elderly,108,222,59.3,50.0,9.3,Chi-Square,2.143,0.1432,No,0.186,Small,No statistically significant difference detected
+1001,1010,elderly,108,124,59.3,62.9,-3.6,Chi-Square,0.188,0.6649,No,-0.075,Small,No statistically significant difference detected
+1001,1011,elderly,108,124,59.3,36.3,23.0,Chi-Square,11.321,0.0008,Yes,0.464,Medium,Statistically significant with moderate practical difference
+1001,1012,elderly,108,125,59.3,43.2,16.1,Chi-Square,5.353,0.0207,Yes,0.323,Medium,Statistically significant with moderate practical difference
+1001,1013,elderly,108,107,59.3,43.0,16.3,Chi-Square,5.061,0.0245,Yes,0.327,Medium,Statistically significant with moderate practical difference
+1001,1014,elderly,108,129,59.3,55.0,4.2,Chi-Square,0.272,0.6018,No,0.085,Small,No statistically significant difference detected
+1001,1015,elderly,108,85,59.3,24.7,34.6,Chi-Square,21.662,0.0,Yes,0.717,Large,Statistically significant with large practical difference
+1001,1016,elderly,108,110,59.3,62.7,-3.5,Chi-Square,0.149,0.6995,No,-0.071,Small,No statistically significant difference detected
+1001,1017,elderly,108,135,59.3,51.9,7.4,Chi-Square,1.048,0.3059,No,0.149,Small,No statistically significant difference detected
+1001,1018,elderly,108,125,59.3,41.6,17.7,Chi-Square,6.538,0.0106,Yes,0.355,Medium,Statistically significant with moderate practical difference
+1001,1019,elderly,108,153,59.3,28.1,31.2,Chi-Square,24.132,0.0,Yes,0.64,Large,Statistically significant with large practical difference
+1001,1020,elderly,108,119,59.3,48.7,10.5,Chi-Square,2.115,0.1459,No,0.211,Medium,No statistically significant difference detected
+1001,1021,elderly,108,125,59.3,47.2,12.1,Chi-Square,2.914,0.0878,No,0.242,Medium,No statistically significant difference detected
+1001,1022,elderly,108,126,59.3,41.3,18.0,Chi-Square,6.826,0.009,Yes,0.362,Medium,Statistically significant with moderate practical difference
+1001,1023,elderly,108,114,59.3,57.0,2.2,Chi-Square,0.041,0.8397,No,0.045,Small,No statistically significant difference detected
+1001,1024,elderly,108,123,59.3,52.8,6.4,Chi-Square,0.717,0.3972,No,0.129,Small,No statistically significant difference detected
+1001,1025,elderly,108,136,59.3,50.0,9.3,Chi-Square,1.722,0.1894,No,0.186,Small,No statistically significant difference detected
+1001,1026,elderly,108,125,59.3,50.4,8.9,Chi-Square,1.494,0.2216,No,0.178,Small,No statistically significant difference detected
+1001,1027,elderly,108,118,59.3,31.4,27.9,Chi-Square,16.651,0.0,Yes,0.568,Large,Statistically significant with large practical difference
+1001,1028,elderly,108,153,59.3,42.5,16.8,Chi-Square,6.472,0.011,Yes,0.337,Medium,Statistically significant with moderate practical difference
+1001,1029,elderly,108,124,59.3,59.7,-0.4,Chi-Square,,1.0,No,-0.009,Small,No statistically significant difference detected
+1001,1030,elderly,108,134,59.3,52.2,7.0,Chi-Square,0.926,0.336,No,0.141,Small,No statistically significant difference detected
+1001,1031,elderly,108,124,59.3,37.9,21.4,Chi-Square,9.712,0.0018,Yes,0.431,Medium,Statistically significant with moderate practical difference
+1001,1032,elderly,108,125,59.3,31.2,28.1,Chi-Square,17.375,0.0,Yes,0.572,Large,Statistically significant with large practical difference
+1001,1033,elderly,108,121,59.3,43.0,16.3,Chi-Square,5.42,0.0199,Yes,0.327,Medium,Statistically significant with moderate practical difference
+1001,1034,elderly,108,116,59.3,73.3,-14.0,Chi-Square,4.324,0.0376,Yes,-0.298,Medium,Statistically significant with moderate practical difference
+1001,1035,elderly,108,125,59.3,53.6,5.7,Chi-Square,0.542,0.4618,No,0.114,Small,No statistically significant difference detected
+1001,1036,elderly,108,136,59.3,38.2,21.0,Chi-Square,9.842,0.0017,Yes,0.424,Medium,Statistically significant with moderate practical difference
+1001,1037,elderly,108,145,59.3,37.9,21.3,Chi-Square,10.462,0.0012,Yes,0.43,Medium,Statistically significant with moderate practical difference
+1001,1038,elderly,108,176,59.3,50.6,8.7,Chi-Square,1.7,0.1923,No,0.175,Small,No statistically significant difference detected
+1001,1039,elderly,108,147,59.3,29.3,30.0,Chi-Square,21.804,0.0,Yes,0.614,Large,Statistically significant with large practical difference
+1001,1040,elderly,108,131,59.3,35.9,23.4,Chi-Square,12.088,0.0005,Yes,0.473,Medium,Statistically significant with moderate practical difference
+1001,1041,elderly,108,124,59.3,57.3,2.0,Chi-Square,0.031,0.8612,No,0.041,Small,No statistically significant difference detected
+1001,1042,elderly,108,112,59.3,62.5,-3.2,Chi-Square,0.126,0.7231,No,-0.066,Small,No statistically significant difference detected
+1001,1043,elderly,108,126,59.3,48.4,10.8,Chi-Square,2.331,0.1268,No,0.218,Medium,No statistically significant difference detected
+1001,1044,elderly,108,131,59.3,32.8,26.4,Chi-Square,15.678,0.0001,Yes,0.537,Large,Statistically significant with large practical difference
+1001,1045,elderly,108,151,59.3,59.6,-0.3,Chi-Square,,1.0,No,-0.007,Small,No statistically significant difference detected
+1001,1046,elderly,108,122,59.3,43.4,15.8,Chi-Square,5.119,0.0237,Yes,0.318,Medium,Statistically significant with moderate practical difference
+1001,1047,elderly,108,129,59.3,46.5,12.7,Chi-Square,3.335,0.0678,No,0.256,Medium,No statistically significant difference detected
+1001,1048,elderly,108,123,59.3,49.6,9.7,Chi-Square,1.792,0.1807,No,0.194,Small,No statistically significant difference detected
+1001,1049,elderly,108,148,59.3,44.6,14.7,Chi-Square,4.802,0.0284,Yes,0.295,Medium,Statistically significant with moderate practical difference
+1001,1050,elderly,108,126,59.3,30.2,29.1,Chi-Square,18.862,0.0,Yes,0.594,Large,Statistically significant with large practical difference
+1002,1003,elderly,129,127,48.1,47.2,0.8,Chi-Square,0.0,0.9953,No,0.016,Small,No statistically significant difference detected
+1002,1004,elderly,129,153,48.1,37.3,10.8,Chi-Square,2.923,0.0873,No,0.219,Medium,No statistically significant difference detected
+1002,1005,elderly,129,126,48.1,45.2,2.8,Chi-Square,0.107,0.7441,No,0.057,Small,No statistically significant difference detected
+1002,1006,elderly,129,129,48.1,41.1,7.0,Chi-Square,1.004,0.3163,No,0.14,Small,No statistically significant difference detected
+1002,1007,elderly,129,131,48.1,35.9,12.2,Chi-Square,3.478,0.0622,No,0.248,Medium,No statistically significant difference detected
+1002,1008,elderly,129,146,48.1,41.8,6.3,Chi-Square,0.854,0.3555,No,0.126,Small,No statistically significant difference detected
+1002,1009,elderly,129,222,48.1,50.0,-1.9,Chi-Square,0.057,0.8108,No,-0.039,Small,No statistically significant difference detected
+1002,1010,elderly,129,124,48.1,62.9,-14.8,Chi-Square,5.05,0.0246,Yes,-0.3,Medium,Statistically significant with moderate practical difference
+1002,1011,elderly,129,124,48.1,36.3,11.8,Chi-Square,3.124,0.0772,No,0.239,Medium,No statistically significant difference detected
+1002,1012,elderly,129,125,48.1,43.2,4.9,Chi-Square,0.425,0.5146,No,0.098,Small,No statistically significant difference detected
+1002,1013,elderly,129,107,48.1,43.0,5.1,Chi-Square,0.419,0.5175,No,0.102,Small,No statistically significant difference detected
+1002,1014,elderly,129,129,48.1,55.0,-7.0,Chi-Square,0.993,0.319,No,-0.14,Small,No statistically significant difference detected
+1002,1015,elderly,129,85,48.1,24.7,23.4,Chi-Square,10.809,0.001,Yes,0.492,Medium,Statistically significant with moderate practical difference
+1002,1016,elderly,129,110,48.1,62.7,-14.7,Chi-Square,4.58,0.0323,Yes,-0.296,Medium,Statistically significant with moderate practical difference
+1002,1017,elderly,129,135,48.1,51.9,-3.8,Chi-Square,0.243,0.6224,No,-0.076,Small,No statistically significant difference detected
+1002,1018,elderly,129,125,48.1,41.6,6.5,Chi-Square,0.826,0.3633,No,0.13,Small,No statistically significant difference detected
+1002,1019,elderly,129,153,48.1,28.1,20.0,Chi-Square,11.09,0.0009,Yes,0.415,Medium,Statistically significant with moderate practical difference
+1002,1020,elderly,129,119,48.1,48.7,-0.7,Chi-Square,,1.0,No,-0.014,Small,No statistically significant difference detected
+1002,1021,elderly,129,125,48.1,47.2,0.9,Chi-Square,0.0,0.9905,No,0.017,Small,No statistically significant difference detected
+1002,1022,elderly,129,126,48.1,41.3,6.8,Chi-Square,0.931,0.3347,No,0.137,Small,No statistically significant difference detected
+1002,1023,elderly,129,114,48.1,57.0,-9.0,Chi-Square,1.603,0.2055,No,-0.18,Small,No statistically significant difference detected
+1002,1024,elderly,129,123,48.1,52.8,-4.8,Chi-Square,0.401,0.5266,No,-0.096,Small,No statistically significant difference detected
+1002,1025,elderly,129,136,48.1,50.0,-1.9,Chi-Square,0.037,0.8473,No,-0.039,Small,No statistically significant difference detected
+1002,1026,elderly,129,125,48.1,50.4,-2.3,Chi-Square,0.061,0.8048,No,-0.047,Small,No statistically significant difference detected
+1002,1027,elderly,129,118,48.1,31.4,16.7,Chi-Square,6.483,0.0109,Yes,0.343,Medium,Statistically significant with moderate practical difference
+1002,1028,elderly,129,153,48.1,42.5,5.6,Chi-Square,0.669,0.4134,No,0.112,Small,No statistically significant difference detected
+1002,1029,elderly,129,124,48.1,59.7,-11.6,Chi-Square,2.98,0.0843,No,-0.234,Medium,No statistically significant difference detected
+1002,1030,elderly,129,134,48.1,52.2,-4.2,Chi-Square,0.307,0.5797,No,-0.084,Small,No statistically significant difference detected
+1002,1031,elderly,129,124,48.1,37.9,10.2,Chi-Square,2.263,0.1325,No,0.206,Medium,No statistically significant difference detected
+1002,1032,elderly,129,125,48.1,31.2,16.9,Chi-Square,6.848,0.0089,Yes,0.347,Medium,Statistically significant with moderate practical difference
+1002,1033,elderly,129,121,48.1,43.0,5.1,Chi-Square,0.462,0.4965,No,0.102,Small,No statistically significant difference detected
+1002,1034,elderly,129,116,48.1,73.3,-25.2,Chi-Square,15.145,0.0001,Yes,-0.523,Large,Statistically significant with large practical difference
+1002,1035,elderly,129,125,48.1,53.6,-5.5,Chi-Square,0.573,0.449,No,-0.111,Small,No statistically significant difference detected
+1002,1036,elderly,129,136,48.1,38.2,9.8,Chi-Square,2.223,0.136,No,0.199,Small,No statistically significant difference detected
+1002,1037,elderly,129,145,48.1,37.9,10.1,Chi-Square,2.465,0.1164,No,0.205,Medium,No statistically significant difference detected
+1002,1038,elderly,129,176,48.1,50.6,-2.5,Chi-Square,0.1,0.7516,No,-0.05,Small,No statistically significant difference detected
+1002,1039,elderly,129,147,48.1,29.3,18.8,Chi-Square,9.531,0.002,Yes,0.389,Medium,Statistically significant with moderate practical difference
+1002,1040,elderly,129,131,48.1,35.9,12.2,Chi-Square,3.478,0.0622,No,0.248,Medium,No statistically significant difference detected
+1002,1041,elderly,129,124,48.1,57.3,-9.2,Chi-Square,1.791,0.1808,No,-0.184,Small,No statistically significant difference detected
+1002,1042,elderly,129,112,48.1,62.5,-14.4,Chi-Square,4.479,0.0343,Yes,-0.291,Medium,Statistically significant with moderate practical difference
+1002,1043,elderly,129,126,48.1,48.4,-0.4,Chi-Square,,1.0,No,-0.007,Small,No statistically significant difference detected
+1002,1044,elderly,129,131,48.1,32.8,15.2,Chi-Square,5.651,0.0174,Yes,0.312,Medium,Statistically significant with moderate practical difference
+1002,1045,elderly,129,151,48.1,59.6,-11.5,Chi-Square,3.283,0.07,No,-0.232,Medium,No statistically significant difference detected
+1002,1046,elderly,129,122,48.1,43.4,4.6,Chi-Square,0.369,0.5436,No,0.093,Small,No statistically significant difference detected
+1002,1047,elderly,129,129,48.1,46.5,1.6,Chi-Square,0.016,0.9008,No,0.031,Small,No statistically significant difference detected
+1002,1048,elderly,129,123,48.1,49.6,-1.5,Chi-Square,0.014,0.9068,No,-0.031,Small,No statistically significant difference detected
+1002,1049,elderly,129,148,48.1,44.6,3.5,Chi-Square,0.208,0.648,No,0.07,Small,No statistically significant difference detected
+1002,1050,elderly,129,126,48.1,30.2,17.9,Chi-Square,7.836,0.0051,Yes,0.369,Medium,Statistically significant with moderate practical difference
+1003,1004,elderly,127,153,47.2,37.3,10.0,Chi-Square,2.451,0.1175,No,0.203,Medium,No statistically significant difference detected
+1003,1005,elderly,127,126,47.2,45.2,2.0,Chi-Square,0.038,0.8463,No,0.04,Small,No statistically significant difference detected
+1003,1006,elderly,127,129,47.2,41.1,6.2,Chi-Square,0.751,0.3863,No,0.124,Small,No statistically significant difference detected
+1003,1007,elderly,127,131,47.2,35.9,11.4,Chi-Square,2.98,0.0843,No,0.231,Medium,No statistically significant difference detected
+1003,1008,elderly,127,146,47.2,41.8,5.5,Chi-Square,0.615,0.4329,No,0.11,Small,No statistically significant difference detected
+1003,1009,elderly,127,222,47.2,50.0,-2.8,Chi-Square,0.148,0.7008,No,-0.055,Small,No statistically significant difference detected
+1003,1010,elderly,127,124,47.2,62.9,-15.7,Chi-Square,5.599,0.018,Yes,-0.316,Medium,Statistically significant with moderate practical difference
+1003,1011,elderly,127,124,47.2,36.3,11.0,Chi-Square,2.66,0.1029,No,0.223,Medium,No statistically significant difference detected
+1003,1012,elderly,127,125,47.2,43.2,4.0,Chi-Square,0.269,0.6042,No,0.081,Small,No statistically significant difference detected
+1003,1013,elderly,127,107,47.2,43.0,4.3,Chi-Square,0.27,0.6035,No,0.086,Small,No statistically significant difference detected
+1003,1014,elderly,127,129,47.2,55.0,-7.8,Chi-Square,1.26,0.2617,No,-0.156,Small,No statistically significant difference detected
+1003,1015,elderly,127,85,47.2,24.7,22.5,Chi-Square,10.022,0.0015,Yes,0.475,Medium,Statistically significant with moderate practical difference
+1003,1016,elderly,127,110,47.2,62.7,-15.5,Chi-Square,5.09,0.0241,Yes,-0.313,Medium,Statistically significant with moderate practical difference
+1003,1017,elderly,127,135,47.2,51.9,-4.6,Chi-Square,0.387,0.534,No,-0.092,Small,No statistically significant difference detected
+1003,1018,elderly,127,125,47.2,41.6,5.6,Chi-Square,0.6,0.4385,No,0.114,Small,No statistically significant difference detected
+1003,1019,elderly,127,153,47.2,28.1,19.1,Chi-Square,10.125,0.0015,Yes,0.398,Medium,Statistically significant with moderate practical difference
+1003,1020,elderly,127,119,47.2,48.7,-1.5,Chi-Square,0.011,0.9148,No,-0.03,Small,No statistically significant difference detected
+1003,1021,elderly,127,125,47.2,47.2,0.0,Chi-Square,,1.0,No,0.001,Small,No statistically significant difference detected
+1003,1022,elderly,127,126,47.2,41.3,6.0,Chi-Square,0.689,0.4065,No,0.12,Small,No statistically significant difference detected
+1003,1023,elderly,127,114,47.2,57.0,-9.8,Chi-Square,1.924,0.1654,No,-0.196,Small,No statistically significant difference detected
+1003,1024,elderly,127,123,47.2,52.8,-5.6,Chi-Square,0.576,0.4478,No,-0.112,Small,No statistically significant difference detected
+1003,1025,elderly,127,136,47.2,50.0,-2.8,Chi-Square,0.105,0.7464,No,-0.055,Small,No statistically significant difference detected
+1003,1026,elderly,127,125,47.2,50.4,-3.2,Chi-Square,0.141,0.7076,No,-0.063,Small,No statistically significant difference detected
+1003,1027,elderly,127,118,47.2,31.4,15.9,Chi-Square,5.809,0.0159,Yes,0.327,Medium,Statistically significant with moderate practical difference
+1003,1028,elderly,127,153,47.2,42.5,4.8,Chi-Square,0.458,0.4984,No,0.096,Small,No statistically significant difference detected
+1003,1029,elderly,127,124,47.2,59.7,-12.4,Chi-Square,3.414,0.0647,No,-0.25,Medium,No statistically significant difference detected
+1003,1030,elderly,127,134,47.2,52.2,-5.0,Chi-Square,0.466,0.4947,No,-0.1,Small,No statistically significant difference detected
+1003,1031,elderly,127,124,47.2,37.9,9.3,Chi-Square,1.873,0.1712,No,0.189,Small,No statistically significant difference detected
+1003,1032,elderly,127,125,47.2,31.2,16.0,Chi-Square,6.143,0.0132,Yes,0.33,Medium,Statistically significant with moderate practical difference
+1003,1033,elderly,127,121,47.2,43.0,4.3,Chi-Square,0.3,0.584,No,0.086,Small,No statistically significant difference detected
+1003,1034,elderly,127,116,47.2,73.3,-26.0,Chi-Square,16.007,0.0001,Yes,-0.539,Large,Statistically significant with large practical difference
+1003,1035,elderly,127,125,47.2,53.6,-6.4,Chi-Square,0.78,0.3773,No,-0.127,Small,No statistically significant difference detected
+1003,1036,elderly,127,136,47.2,38.2,9.0,Chi-Square,1.827,0.1765,No,0.182,Small,No statistically significant difference detected
+1003,1037,elderly,127,145,47.2,37.9,9.3,Chi-Square,2.04,0.1532,No,0.189,Small,No statistically significant difference detected
+1003,1038,elderly,127,176,47.2,50.6,-3.3,Chi-Square,0.207,0.6494,No,-0.067,Small,No statistically significant difference detected
+1003,1039,elderly,127,147,47.2,29.3,18.0,Chi-Square,8.651,0.0033,Yes,0.373,Medium,Statistically significant with moderate practical difference
+1003,1040,elderly,127,131,47.2,35.9,11.4,Chi-Square,2.98,0.0843,No,0.231,Medium,No statistically significant difference detected
+1003,1041,elderly,127,124,47.2,57.3,-10.0,Chi-Square,2.136,0.1439,No,-0.201,Medium,No statistically significant difference detected
+1003,1042,elderly,127,112,47.2,62.5,-15.3,Chi-Square,4.986,0.0256,Yes,-0.308,Medium,Statistically significant with moderate practical difference
+1003,1043,elderly,127,126,47.2,48.4,-1.2,Chi-Square,0.004,0.952,No,-0.023,Small,No statistically significant difference detected
+1003,1044,elderly,127,131,47.2,32.8,14.4,Chi-Square,5.005,0.0253,Yes,0.296,Medium,Statistically significant with moderate practical difference
+1003,1045,elderly,127,151,47.2,59.6,-12.4,Chi-Square,3.758,0.0526,No,-0.248,Medium,No statistically significant difference detected
+1003,1046,elderly,127,122,47.2,43.4,3.8,Chi-Square,0.226,0.6348,No,0.076,Small,No statistically significant difference detected
+1003,1047,elderly,127,129,47.2,46.5,0.7,Chi-Square,,1.0,No,0.015,Small,No statistically significant difference detected
+1003,1048,elderly,127,123,47.2,49.6,-2.3,Chi-Square,0.06,0.8064,No,-0.047,Small,No statistically significant difference detected
+1003,1049,elderly,127,148,47.2,44.6,2.6,Chi-Square,0.101,0.7503,No,0.053,Small,No statistically significant difference detected
+1003,1050,elderly,127,126,47.2,30.2,17.1,Chi-Square,7.077,0.0078,Yes,0.353,Medium,Statistically significant with moderate practical difference
+1004,1005,elderly,153,126,37.3,45.2,-8.0,Chi-Square,1.507,0.2196,No,-0.162,Small,No statistically significant difference detected
+1004,1006,elderly,153,129,37.3,41.1,-3.8,Chi-Square,0.286,0.593,No,-0.078,Small,No statistically significant difference detected
+1004,1007,elderly,153,131,37.3,35.9,1.4,Chi-Square,0.014,0.9072,No,0.029,Small,No statistically significant difference detected
+1004,1008,elderly,153,146,37.3,41.8,-4.5,Chi-Square,0.465,0.4952,No,-0.093,Small,No statistically significant difference detected
+1004,1009,elderly,153,222,37.3,50.0,-12.7,Chi-Square,5.445,0.0196,Yes,-0.258,Medium,Statistically significant with moderate practical difference
+1004,1010,elderly,153,124,37.3,62.9,-25.6,Chi-Square,17.022,0.0,Yes,-0.519,Large,Statistically significant with large practical difference
+1004,1011,elderly,153,124,37.3,36.3,1.0,Chi-Square,0.002,0.9679,No,0.02,Small,No statistically significant difference detected
+1004,1012,elderly,153,125,37.3,43.2,-5.9,Chi-Square,0.781,0.3768,No,-0.121,Small,No statistically significant difference detected
+1004,1013,elderly,153,107,37.3,43.0,-5.7,Chi-Square,0.643,0.4227,No,-0.117,Small,No statistically significant difference detected
+1004,1014,elderly,153,129,37.3,55.0,-17.8,Chi-Square,8.227,0.0041,Yes,-0.359,Medium,Statistically significant with moderate practical difference
+1004,1015,elderly,153,85,37.3,24.7,12.5,Chi-Square,3.357,0.0669,No,0.273,Medium,No statistically significant difference detected
+1004,1016,elderly,153,110,37.3,62.7,-25.5,Chi-Square,15.632,0.0001,Yes,-0.515,Large,Statistically significant with large practical difference
+1004,1017,elderly,153,135,37.3,51.9,-14.6,Chi-Square,5.621,0.0177,Yes,-0.295,Medium,Statistically significant with moderate practical difference
+1004,1018,elderly,153,125,37.3,41.6,-4.3,Chi-Square,0.378,0.5387,No,-0.089,Small,No statistically significant difference detected
+1004,1019,elderly,153,153,37.3,28.1,9.2,Chi-Square,2.51,0.1131,No,0.196,Small,No statistically significant difference detected
+1004,1020,elderly,153,119,37.3,48.7,-11.5,Chi-Square,3.162,0.0753,No,-0.233,Medium,No statistically significant difference detected
+1004,1021,elderly,153,125,37.3,47.2,-9.9,Chi-Square,2.404,0.121,No,-0.202,Medium,No statistically significant difference detected
+1004,1022,elderly,153,126,37.3,41.3,-4.0,Chi-Square,0.314,0.575,No,-0.082,Small,No statistically significant difference detected
+1004,1023,elderly,153,114,37.3,57.0,-19.8,Chi-Square,9.501,0.0021,Yes,-0.399,Medium,Statistically significant with moderate practical difference
+1004,1024,elderly,153,123,37.3,52.8,-15.6,Chi-Square,6.102,0.0135,Yes,-0.315,Medium,Statistically significant with moderate practical difference
+1004,1025,elderly,153,136,37.3,50.0,-12.7,Chi-Square,4.26,0.039,Yes,-0.258,Medium,Statistically significant with moderate practical difference
+1004,1026,elderly,153,125,37.3,50.4,-13.1,Chi-Square,4.324,0.0376,Yes,-0.266,Medium,Statistically significant with moderate practical difference
+1004,1027,elderly,153,118,37.3,31.4,5.9,Chi-Square,0.779,0.3773,No,0.124,Small,No statistically significant difference detected
+1004,1028,elderly,153,153,37.3,42.5,-5.2,Chi-Square,0.668,0.4138,No,-0.107,Small,No statistically significant difference detected
+1004,1029,elderly,153,124,37.3,59.7,-22.4,Chi-Square,12.93,0.0003,Yes,-0.453,Medium,Statistically significant with moderate practical difference
+1004,1030,elderly,153,134,37.3,52.2,-15.0,Chi-Square,5.908,0.0151,Yes,-0.303,Medium,Statistically significant with moderate practical difference
+1004,1031,elderly,153,124,37.3,37.9,-0.6,Chi-Square,,1.0,No,-0.013,Small,No statistically significant difference detected
+1004,1032,elderly,153,125,37.3,31.2,6.1,Chi-Square,0.864,0.3527,No,0.128,Small,No statistically significant difference detected
+1004,1033,elderly,153,121,37.3,43.0,-5.7,Chi-Square,0.7,0.4029,No,-0.117,Small,No statistically significant difference detected
+1004,1034,elderly,153,116,37.3,73.3,-36.0,Chi-Square,32.919,0.0,Yes,-0.742,Large,Statistically significant with large practical difference
+1004,1035,elderly,153,125,37.3,53.6,-16.3,Chi-Square,6.792,0.0092,Yes,-0.33,Medium,Statistically significant with moderate practical difference
+1004,1036,elderly,153,136,37.3,38.2,-1.0,Chi-Square,0.003,0.9601,No,-0.02,Small,No statistically significant difference detected
+1004,1037,elderly,153,145,37.3,37.9,-0.7,Chi-Square,0.0,0.9994,No,-0.014,Small,No statistically significant difference detected
+1004,1038,elderly,153,176,37.3,50.6,-13.3,Chi-Square,5.35,0.0207,Yes,-0.269,Medium,Statistically significant with moderate practical difference
+1004,1039,elderly,153,147,37.3,29.3,8.0,Chi-Square,1.816,0.1778,No,0.17,Small,No statistically significant difference detected
+1004,1040,elderly,153,131,37.3,35.9,1.4,Chi-Square,0.014,0.9072,No,0.029,Small,No statistically significant difference detected
+1004,1041,elderly,153,124,37.3,57.3,-20.0,Chi-Square,10.235,0.0014,Yes,-0.403,Medium,Statistically significant with moderate practical difference
+1004,1042,elderly,153,112,37.3,62.5,-25.2,Chi-Square,15.517,0.0001,Yes,-0.51,Large,Statistically significant with large practical difference
+1004,1043,elderly,153,126,37.3,48.4,-11.2,Chi-Square,3.082,0.0791,No,-0.226,Medium,No statistically significant difference detected
+1004,1044,elderly,153,131,37.3,32.8,4.4,Chi-Square,0.429,0.5127,No,0.093,Small,No statistically significant difference detected
+1004,1045,elderly,153,151,37.3,59.6,-22.3,Chi-Square,14.317,0.0002,Yes,-0.451,Medium,Statistically significant with moderate practical difference
+1004,1046,elderly,153,122,37.3,43.4,-6.2,Chi-Square,0.84,0.3593,No,-0.126,Small,No statistically significant difference detected
+1004,1047,elderly,153,129,37.3,46.5,-9.3,Chi-Square,2.104,0.1469,No,-0.188,Small,No statistically significant difference detected
+1004,1048,elderly,153,123,37.3,49.6,-12.3,Chi-Square,3.752,0.0527,No,-0.25,Medium,No statistically significant difference detected
+1004,1049,elderly,153,148,37.3,44.6,-7.3,Chi-Square,1.387,0.2389,No,-0.149,Small,No statistically significant difference detected
+1004,1050,elderly,153,126,37.3,30.2,7.1,Chi-Square,1.25,0.2636,No,0.15,Small,No statistically significant difference detected
+1005,1006,elderly,126,129,45.2,41.1,4.2,Chi-Square,0.295,0.5871,No,0.084,Small,No statistically significant difference detected
+1005,1007,elderly,126,131,45.2,35.9,9.4,Chi-Square,1.963,0.1612,No,0.191,Small,No statistically significant difference detected
+1005,1008,elderly,126,146,45.2,41.8,3.5,Chi-Square,0.203,0.652,No,0.07,Small,No statistically significant difference detected
+1005,1009,elderly,126,222,45.2,50.0,-4.8,Chi-Square,0.552,0.4576,No,-0.095,Small,No statistically significant difference detected
+1005,1010,elderly,126,124,45.2,62.9,-17.7,Chi-Square,7.156,0.0075,Yes,-0.356,Medium,Statistically significant with moderate practical difference
+1005,1011,elderly,126,124,45.2,36.3,8.9,Chi-Square,1.718,0.19,No,0.182,Small,No statistically significant difference detected
+1005,1012,elderly,126,125,45.2,43.2,2.0,Chi-Square,0.039,0.8431,No,0.041,Small,No statistically significant difference detected
+1005,1013,elderly,126,107,45.2,43.0,2.2,Chi-Square,0.045,0.8322,No,0.045,Small,No statistically significant difference detected
+1005,1014,elderly,126,129,45.2,55.0,-9.8,Chi-Square,2.073,0.15,No,-0.196,Small,No statistically significant difference detected
+1005,1015,elderly,126,85,45.2,24.7,20.5,Chi-Square,8.323,0.0039,Yes,0.435,Medium,Statistically significant with moderate practical difference
+1005,1016,elderly,126,110,45.2,62.7,-17.5,Chi-Square,6.533,0.0106,Yes,-0.353,Medium,Statistically significant with moderate practical difference
+1005,1017,elderly,126,135,45.2,51.9,-6.6,Chi-Square,0.892,0.345,No,-0.132,Small,No statistically significant difference detected
+1005,1018,elderly,126,125,45.2,41.6,3.6,Chi-Square,0.206,0.6498,No,0.073,Small,No statistically significant difference detected
+1005,1019,elderly,126,153,45.2,28.1,17.1,Chi-Square,8.091,0.0044,Yes,0.358,Medium,Statistically significant with moderate practical difference
+1005,1020,elderly,126,119,45.2,48.7,-3.5,Chi-Square,0.177,0.6739,No,-0.07,Small,No statistically significant difference detected
+1005,1021,elderly,126,125,45.2,47.2,-2.0,Chi-Square,0.034,0.8531,No,-0.039,Small,No statistically significant difference detected
+1005,1022,elderly,126,126,45.2,41.3,4.0,Chi-Square,0.259,0.611,No,0.08,Small,No statistically significant difference detected
+1005,1023,elderly,126,114,45.2,57.0,-11.8,Chi-Square,2.868,0.0903,No,-0.236,Medium,No statistically significant difference detected
+1005,1024,elderly,126,123,45.2,52.8,-7.6,Chi-Square,1.153,0.2829,No,-0.152,Small,No statistically significant difference detected
+1005,1025,elderly,126,136,45.2,50.0,-4.8,Chi-Square,0.419,0.5175,No,-0.095,Small,No statistically significant difference detected
+1005,1026,elderly,126,125,45.2,50.4,-5.2,Chi-Square,0.479,0.4888,No,-0.103,Small,No statistically significant difference detected
+1005,1027,elderly,126,118,45.2,31.4,13.9,Chi-Square,4.39,0.0362,Yes,0.287,Medium,Statistically significant with moderate practical difference
+1005,1028,elderly,126,153,45.2,42.5,2.8,Chi-Square,0.116,0.7336,No,0.056,Small,No statistically significant difference detected
+1005,1029,elderly,126,124,45.2,59.7,-14.4,Chi-Square,4.661,0.0309,Yes,-0.29,Medium,Statistically significant with moderate practical difference
+1005,1030,elderly,126,134,45.2,52.2,-7.0,Chi-Square,1.009,0.3152,No,-0.14,Small,No statistically significant difference detected
+1005,1031,elderly,126,124,45.2,37.9,7.3,Chi-Square,1.099,0.2946,No,0.149,Small,No statistically significant difference detected
+1005,1032,elderly,126,125,45.2,31.2,14.0,Chi-Square,4.658,0.0309,Yes,0.29,Medium,Statistically significant with moderate practical difference
+1005,1033,elderly,126,121,45.2,43.0,2.3,Chi-Square,0.053,0.8182,No,0.046,Small,No statistically significant difference detected
+1005,1034,elderly,126,116,45.2,73.3,-28.0,Chi-Square,18.442,0.0,Yes,-0.58,Large,Statistically significant with large practical difference
+1005,1035,elderly,126,125,45.2,53.6,-8.4,Chi-Square,1.437,0.2307,No,-0.167,Small,No statistically significant difference detected
+1005,1036,elderly,126,136,45.2,38.2,7.0,Chi-Square,1.048,0.306,No,0.142,Small,No statistically significant difference detected
+1005,1037,elderly,126,145,45.2,37.9,7.3,Chi-Square,1.198,0.2736,No,0.148,Small,No statistically significant difference detected
+1005,1038,elderly,126,176,45.2,50.6,-5.3,Chi-Square,0.636,0.4253,No,-0.107,Small,No statistically significant difference detected
+1005,1039,elderly,126,147,45.2,29.3,16.0,Chi-Square,6.797,0.0091,Yes,0.333,Medium,Statistically significant with moderate practical difference
+1005,1040,elderly,126,131,45.2,35.9,9.4,Chi-Square,1.963,0.1612,No,0.191,Small,No statistically significant difference detected
+1005,1041,elderly,126,124,45.2,57.3,-12.0,Chi-Square,3.149,0.076,No,-0.241,Medium,No statistically significant difference detected
+1005,1042,elderly,126,112,45.2,62.5,-17.3,Chi-Square,6.423,0.0113,Yes,-0.348,Medium,Statistically significant with moderate practical difference
+1005,1043,elderly,126,126,45.2,48.4,-3.2,Chi-Square,0.143,0.7049,No,-0.064,Small,No statistically significant difference detected
+1005,1044,elderly,126,131,45.2,32.8,12.4,Chi-Square,3.658,0.0558,No,0.255,Medium,No statistically significant difference detected
+1005,1045,elderly,126,151,45.2,59.6,-14.4,Chi-Square,5.128,0.0235,Yes,-0.289,Medium,Statistically significant with moderate practical difference
+1005,1046,elderly,126,122,45.2,43.4,1.8,Chi-Square,0.025,0.8755,No,0.036,Small,No statistically significant difference detected
+1005,1047,elderly,126,129,45.2,46.5,-1.3,Chi-Square,0.006,0.9375,No,-0.026,Small,No statistically significant difference detected
+1005,1048,elderly,126,123,45.2,49.6,-4.4,Chi-Square,0.315,0.5746,No,-0.087,Small,No statistically significant difference detected
+1005,1049,elderly,126,148,45.2,44.6,0.6,Chi-Square,,1.0,No,0.013,Small,No statistically significant difference detected
+1005,1050,elderly,126,126,45.2,30.2,15.1,Chi-Square,5.474,0.0193,Yes,0.313,Medium,Statistically significant with moderate practical difference
+1006,1007,elderly,129,131,41.1,35.9,5.2,Chi-Square,0.541,0.4621,No,0.107,Small,No statistically significant difference detected
+1006,1008,elderly,129,146,41.1,41.8,-0.7,Chi-Square,,1.0,No,-0.014,Small,No statistically significant difference detected
+1006,1009,elderly,129,222,41.1,50.0,-8.9,Chi-Square,2.259,0.1328,No,-0.179,Small,No statistically significant difference detected
+1006,1010,elderly,129,124,41.1,62.9,-21.8,Chi-Square,11.196,0.0008,Yes,-0.44,Medium,Statistically significant with moderate practical difference
+1006,1011,elderly,129,124,41.1,36.3,4.8,Chi-Square,0.427,0.5134,No,0.098,Small,No statistically significant difference detected
+1006,1012,elderly,129,125,41.1,43.2,-2.1,Chi-Square,0.046,0.8304,No,-0.043,Small,No statistically significant difference detected
+1006,1013,elderly,129,107,41.1,43.0,-1.9,Chi-Square,0.027,0.8707,No,-0.039,Small,No statistically significant difference detected
+1006,1014,elderly,129,129,41.1,55.0,-14.0,Chi-Square,4.487,0.0341,Yes,-0.28,Medium,Statistically significant with moderate practical difference
+1006,1015,elderly,129,85,41.1,24.7,16.4,Chi-Square,5.374,0.0204,Yes,0.351,Medium,Statistically significant with moderate practical difference
+1006,1016,elderly,129,110,41.1,62.7,-21.6,Chi-Square,10.279,0.0013,Yes,-0.437,Medium,Statistically significant with moderate practical difference
+1006,1017,elderly,129,135,41.1,51.9,-10.8,Chi-Square,2.656,0.1032,No,-0.216,Medium,No statistically significant difference detected
+1006,1018,elderly,129,125,41.1,41.6,-0.5,Chi-Square,,1.0,No,-0.01,Small,No statistically significant difference detected
+1006,1019,elderly,129,153,41.1,28.1,13.0,Chi-Square,4.69,0.0303,Yes,0.274,Medium,Statistically significant with moderate practical difference
+1006,1020,elderly,129,119,41.1,48.7,-7.7,Chi-Square,1.173,0.2787,No,-0.154,Small,No statistically significant difference detected
+1006,1021,elderly,129,125,41.1,47.2,-6.1,Chi-Square,0.731,0.3926,No,-0.123,Small,No statistically significant difference detected
+1006,1022,elderly,129,126,41.1,41.3,-0.2,Chi-Square,,1.0,No,-0.004,Small,No statistically significant difference detected
+1006,1023,elderly,129,114,41.1,57.0,-15.9,Chi-Square,5.529,0.0187,Yes,-0.32,Medium,Statistically significant with moderate practical difference
+1006,1024,elderly,129,123,41.1,52.8,-11.8,Chi-Square,3.041,0.0812,No,-0.236,Medium,No statistically significant difference detected
+1006,1025,elderly,129,136,41.1,50.0,-8.9,Chi-Square,1.776,0.1826,No,-0.179,Small,No statistically significant difference detected
+1006,1026,elderly,129,125,41.1,50.4,-9.3,Chi-Square,1.86,0.1726,No,-0.187,Small,No statistically significant difference detected
+1006,1027,elderly,129,118,41.1,31.4,9.7,Chi-Square,2.116,0.1457,No,0.203,Medium,No statistically significant difference detected
+1006,1028,elderly,129,153,41.1,42.5,-1.4,Chi-Square,0.013,0.9077,No,-0.028,Small,No statistically significant difference detected
+1006,1029,elderly,129,124,41.1,59.7,-18.6,Chi-Square,8.014,0.0046,Yes,-0.374,Medium,Statistically significant with moderate practical difference
+1006,1030,elderly,129,134,41.1,52.2,-11.2,Chi-Square,2.852,0.0913,No,-0.224,Medium,No statistically significant difference detected
+1006,1031,elderly,129,124,41.1,37.9,3.2,Chi-Square,0.151,0.6973,No,0.065,Small,No statistically significant difference detected
+1006,1032,elderly,129,125,41.1,31.2,9.9,Chi-Square,2.275,0.1315,No,0.206,Medium,No statistically significant difference detected
+1006,1033,elderly,129,121,41.1,43.0,-1.9,Chi-Square,0.03,0.8616,No,-0.038,Small,No statistically significant difference detected
+1006,1034,elderly,129,116,41.1,73.3,-32.2,Chi-Square,24.436,0.0,Yes,-0.663,Large,Statistically significant with large practical difference
+1006,1035,elderly,129,125,41.1,53.6,-12.5,Chi-Square,3.503,0.0613,No,-0.251,Medium,No statistically significant difference detected
+1006,1036,elderly,129,136,41.1,38.2,2.8,Chi-Square,0.121,0.7275,No,0.058,Small,No statistically significant difference detected
+1006,1037,elderly,129,145,41.1,37.9,3.2,Chi-Square,0.168,0.6822,No,0.065,Small,No statistically significant difference detected
+1006,1038,elderly,129,176,41.1,50.6,-9.5,Chi-Square,2.323,0.1275,No,-0.191,Small,No statistically significant difference detected
+1006,1039,elderly,129,147,41.1,29.3,11.8,Chi-Square,3.736,0.0533,No,0.249,Medium,No statistically significant difference detected
+1006,1040,elderly,129,131,41.1,35.9,5.2,Chi-Square,0.541,0.4621,No,0.107,Small,No statistically significant difference detected
+1006,1041,elderly,129,124,41.1,57.3,-16.2,Chi-Square,5.986,0.0144,Yes,-0.325,Medium,Statistically significant with moderate practical difference
+1006,1042,elderly,129,112,41.1,62.5,-21.4,Chi-Square,10.162,0.0014,Yes,-0.432,Medium,Statistically significant with moderate practical difference
+1006,1043,elderly,129,126,41.1,48.4,-7.3,Chi-Square,1.104,0.2934,No,-0.148,Small,No statistically significant difference detected
+1006,1044,elderly,129,131,41.1,32.8,8.3,Chi-Square,1.566,0.2108,No,0.171,Small,No statistically significant difference detected
+1006,1045,elderly,129,151,41.1,59.6,-18.5,Chi-Square,8.819,0.003,Yes,-0.373,Medium,Statistically significant with moderate practical difference
+1006,1046,elderly,129,122,41.1,43.4,-2.4,Chi-Square,0.063,0.8025,No,-0.048,Small,No statistically significant difference detected
+1006,1047,elderly,129,129,41.1,46.5,-5.4,Chi-Square,0.567,0.4515,No,-0.109,Small,No statistically significant difference detected
+1006,1048,elderly,129,123,41.1,49.6,-8.5,Chi-Square,1.512,0.2188,No,-0.171,Small,No statistically significant difference detected
+1006,1049,elderly,129,148,41.1,44.6,-3.5,Chi-Square,0.218,0.6406,No,-0.071,Small,No statistically significant difference detected
+1006,1050,elderly,129,126,41.1,30.2,10.9,Chi-Square,2.857,0.091,No,0.229,Medium,No statistically significant difference detected
+1007,1008,elderly,131,146,35.9,41.8,-5.9,Chi-Square,0.778,0.3776,No,-0.121,Small,No statistically significant difference detected
+1007,1009,elderly,131,222,35.9,50.0,-14.1,Chi-Square,6.086,0.0136,Yes,-0.286,Medium,Statistically significant with moderate practical difference
+1007,1010,elderly,131,124,35.9,62.9,-27.0,Chi-Square,17.552,0.0,Yes,-0.547,Large,Statistically significant with large practical difference
+1007,1011,elderly,131,124,35.9,36.3,-0.4,Chi-Square,,1.0,No,-0.009,Small,No statistically significant difference detected
+1007,1012,elderly,131,125,35.9,43.2,-7.3,Chi-Square,1.145,0.2845,No,-0.15,Small,No statistically significant difference detected
+1007,1013,elderly,131,107,35.9,43.0,-7.1,Chi-Square,0.971,0.3245,No,-0.146,Small,No statistically significant difference detected
+1007,1014,elderly,131,129,35.9,55.0,-19.2,Chi-Square,8.87,0.0029,Yes,-0.387,Medium,Statistically significant with moderate practical difference
+1007,1015,elderly,131,85,35.9,24.7,11.2,Chi-Square,2.487,0.1148,No,0.244,Medium,No statistically significant difference detected
+1007,1016,elderly,131,110,35.9,62.7,-26.8,Chi-Square,16.207,0.0001,Yes,-0.544,Large,Statistically significant with large practical difference
+1007,1017,elderly,131,135,35.9,51.9,-16.0,Chi-Square,6.253,0.0124,Yes,-0.323,Medium,Statistically significant with moderate practical difference
+1007,1018,elderly,131,125,35.9,41.6,-5.7,Chi-Square,0.658,0.4172,No,-0.118,Small,No statistically significant difference detected
+1007,1019,elderly,131,153,35.9,28.1,7.8,Chi-Square,1.627,0.2021,No,0.167,Small,No statistically significant difference detected
+1007,1020,elderly,131,119,35.9,48.7,-12.9,Chi-Square,3.723,0.0537,No,-0.261,Medium,No statistically significant difference detected
+1007,1021,elderly,131,125,35.9,47.2,-11.3,Chi-Square,2.929,0.087,No,-0.23,Medium,No statistically significant difference detected
+1007,1022,elderly,131,126,35.9,41.3,-5.4,Chi-Square,0.577,0.4474,No,-0.111,Small,No statistically significant difference detected
+1007,1023,elderly,131,114,35.9,57.0,-21.1,Chi-Square,10.141,0.0014,Yes,-0.427,Medium,Statistically significant with moderate practical difference
+1007,1024,elderly,131,123,35.9,52.8,-17.0,Chi-Square,6.736,0.0094,Yes,-0.343,Medium,Statistically significant with moderate practical difference
+1007,1025,elderly,131,136,35.9,50.0,-14.1,Chi-Square,4.867,0.0274,Yes,-0.286,Medium,Statistically significant with moderate practical difference
+1007,1026,elderly,131,125,35.9,50.4,-14.5,Chi-Square,4.928,0.0264,Yes,-0.294,Medium,Statistically significant with moderate practical difference
+1007,1027,elderly,131,118,35.9,31.4,4.5,Chi-Square,0.384,0.5357,No,0.096,Small,No statistically significant difference detected
+1007,1028,elderly,131,153,35.9,42.5,-6.6,Chi-Square,1.028,0.3107,No,-0.135,Small,No statistically significant difference detected
+1007,1029,elderly,131,124,35.9,59.7,-23.8,Chi-Square,13.532,0.0002,Yes,-0.481,Medium,Statistically significant with moderate practical difference
+1007,1030,elderly,131,134,35.9,52.2,-16.4,Chi-Square,6.543,0.0105,Yes,-0.331,Medium,Statistically significant with moderate practical difference
+1007,1031,elderly,131,124,35.9,37.9,-2.0,Chi-Square,0.042,0.8374,No,-0.042,Small,No statistically significant difference detected
+1007,1032,elderly,131,125,35.9,31.2,4.7,Chi-Square,0.435,0.5094,No,0.099,Small,No statistically significant difference detected
+1007,1033,elderly,131,121,35.9,43.0,-7.1,Chi-Square,1.047,0.3061,No,-0.145,Small,No statistically significant difference detected
+1007,1034,elderly,131,116,35.9,73.3,-37.4,Chi-Square,33.095,0.0,Yes,-0.771,Large,Statistically significant with large practical difference
+1007,1035,elderly,131,125,35.9,53.6,-17.7,Chi-Square,7.432,0.0064,Yes,-0.358,Medium,Statistically significant with moderate practical difference
+1007,1036,elderly,131,136,35.9,38.2,-2.4,Chi-Square,0.074,0.7857,No,-0.049,Small,No statistically significant difference detected
+1007,1037,elderly,131,145,35.9,37.9,-2.1,Chi-Square,0.052,0.8196,No,-0.043,Small,No statistically significant difference detected
+1007,1038,elderly,131,176,35.9,50.6,-14.7,Chi-Square,5.986,0.0144,Yes,-0.298,Medium,Statistically significant with moderate practical difference
+1007,1039,elderly,131,147,35.9,29.3,6.6,Chi-Square,1.103,0.2936,No,0.142,Small,No statistically significant difference detected
+1007,1040,elderly,131,131,35.9,35.9,0.0,Chi-Square,,1.0,No,0.0,Small,No statistically significant difference detected
+1007,1041,elderly,131,124,35.9,57.3,-21.4,Chi-Square,10.868,0.001,Yes,-0.432,Medium,Statistically significant with moderate practical difference
+1007,1042,elderly,131,112,35.9,62.5,-26.6,Chi-Square,16.091,0.0001,Yes,-0.539,Large,Statistically significant with large practical difference
+1007,1043,elderly,131,126,35.9,48.4,-12.5,Chi-Square,3.643,0.0563,No,-0.255,Medium,No statistically significant difference detected
+1007,1044,elderly,131,131,35.9,32.8,3.1,Chi-Square,0.152,0.6963,No,0.064,Small,No statistically significant difference detected
+1007,1045,elderly,131,151,35.9,59.6,-23.7,Chi-Square,14.87,0.0001,Yes,-0.48,Medium,Statistically significant with moderate practical difference
+1007,1046,elderly,131,122,35.9,43.4,-7.6,Chi-Square,1.212,0.2709,No,-0.155,Small,No statistically significant difference detected
+1007,1047,elderly,131,129,35.9,46.5,-10.6,Chi-Square,2.612,0.1061,No,-0.217,Medium,No statistically significant difference detected
+1007,1048,elderly,131,123,35.9,49.6,-13.7,Chi-Square,4.338,0.0373,Yes,-0.278,Medium,Statistically significant with moderate practical difference
+1007,1049,elderly,131,148,35.9,44.6,-8.7,Chi-Square,1.844,0.1744,No,-0.178,Small,No statistically significant difference detected
+1007,1050,elderly,131,126,35.9,30.2,5.7,Chi-Square,0.708,0.4,No,0.122,Small,No statistically significant difference detected
+1008,1009,elderly,146,222,41.8,50.0,-8.2,Chi-Square,2.071,0.1501,No,-0.165,Small,No statistically significant difference detected
+1008,1010,elderly,146,124,41.8,62.9,-21.1,Chi-Square,11.146,0.0008,Yes,-0.426,Medium,Statistically significant with moderate practical difference
+1008,1011,elderly,146,124,41.8,36.3,5.5,Chi-Square,0.633,0.4262,No,0.113,Small,No statistically significant difference detected
+1008,1012,elderly,146,125,41.8,43.2,-1.4,Chi-Square,0.013,0.9105,No,-0.029,Small,No statistically significant difference detected
+1008,1013,elderly,146,107,41.8,43.0,-1.2,Chi-Square,0.004,0.9493,No,-0.024,Small,No statistically significant difference detected
+1008,1014,elderly,146,129,41.8,55.0,-13.3,Chi-Square,4.306,0.038,Yes,-0.266,Medium,Statistically significant with moderate practical difference
+1008,1015,elderly,146,85,41.8,24.7,17.1,Chi-Square,6.115,0.0134,Yes,0.365,Medium,Statistically significant with moderate practical difference
+1008,1016,elderly,146,110,41.8,62.7,-20.9,Chi-Square,10.191,0.0014,Yes,-0.423,Medium,Statistically significant with moderate practical difference
+1008,1017,elderly,146,135,41.8,51.9,-10.1,Chi-Square,2.468,0.1162,No,-0.202,Medium,No statistically significant difference detected
+1008,1018,elderly,146,125,41.8,41.6,0.2,Chi-Square,,1.0,No,0.004,Small,No statistically significant difference detected
+1008,1019,elderly,146,153,41.8,28.1,13.7,Chi-Square,5.572,0.0183,Yes,0.288,Medium,Statistically significant with moderate practical difference
+1008,1020,elderly,146,119,41.8,48.7,-7.0,Chi-Square,1.017,0.3131,No,-0.14,Small,No statistically significant difference detected
+1008,1021,elderly,146,125,41.8,47.2,-5.4,Chi-Square,0.597,0.4397,No,-0.109,Small,No statistically significant difference detected
+1008,1022,elderly,146,126,41.8,41.3,0.5,Chi-Square,,1.0,No,0.01,Small,No statistically significant difference detected
+1008,1023,elderly,146,114,41.8,57.0,-15.2,Chi-Square,5.356,0.0207,Yes,-0.306,Medium,Statistically significant with moderate practical difference
+1008,1024,elderly,146,123,41.8,52.8,-11.1,Chi-Square,2.853,0.0912,No,-0.222,Medium,No statistically significant difference detected
+1008,1025,elderly,146,136,41.8,50.0,-8.2,Chi-Square,1.6,0.2059,No,-0.165,Small,No statistically significant difference detected
+1008,1026,elderly,146,125,41.8,50.4,-8.6,Chi-Square,1.683,0.1945,No,-0.173,Small,No statistically significant difference detected
+1008,1027,elderly,146,118,41.8,31.4,10.4,Chi-Square,2.608,0.1063,No,0.217,Medium,No statistically significant difference detected
+1008,1028,elderly,146,153,41.8,42.5,-0.7,Chi-Square,0.0,0.9953,No,-0.014,Small,No statistically significant difference detected
+1008,1029,elderly,146,124,41.8,59.7,-17.9,Chi-Square,7.889,0.005,Yes,-0.36,Medium,Statistically significant with moderate practical difference
+1008,1030,elderly,146,134,41.8,52.2,-10.5,Chi-Square,2.664,0.1027,No,-0.21,Medium,No statistically significant difference detected
+1008,1031,elderly,146,124,41.8,37.9,3.9,Chi-Square,0.274,0.6006,No,0.079,Small,No statistically significant difference detected
+1008,1032,elderly,146,125,41.8,31.2,10.6,Chi-Square,2.8,0.0943,No,0.22,Medium,No statistically significant difference detected
+1008,1033,elderly,146,121,41.8,43.0,-1.2,Chi-Square,0.005,0.9424,No,-0.024,Small,No statistically significant difference detected
+1008,1034,elderly,146,116,41.8,73.3,-31.5,Chi-Square,24.728,0.0,Yes,-0.649,Large,Statistically significant with large practical difference
+1008,1035,elderly,146,125,41.8,53.6,-11.8,Chi-Square,3.315,0.0686,No,-0.237,Medium,No statistically significant difference detected
+1008,1036,elderly,146,136,41.8,38.2,3.5,Chi-Square,0.236,0.6273,No,0.072,Small,No statistically significant difference detected
+1008,1037,elderly,146,145,41.8,37.9,3.8,Chi-Square,0.304,0.5817,No,0.079,Small,No statistically significant difference detected
+1008,1038,elderly,146,176,41.8,50.6,-8.8,Chi-Square,2.136,0.1439,No,-0.176,Small,No statistically significant difference detected
+1008,1039,elderly,146,147,41.8,29.3,12.5,Chi-Square,4.49,0.0341,Yes,0.263,Medium,Statistically significant with moderate practical difference
+1008,1040,elderly,146,131,41.8,35.9,5.9,Chi-Square,0.778,0.3776,No,0.121,Small,No statistically significant difference detected
+1008,1041,elderly,146,124,41.8,57.3,-15.5,Chi-Square,5.823,0.0158,Yes,-0.311,Medium,Statistically significant with moderate practical difference
+1008,1042,elderly,146,112,41.8,62.5,-20.7,Chi-Square,10.073,0.0015,Yes,-0.418,Medium,Statistically significant with moderate practical difference
+1008,1043,elderly,146,126,41.8,48.4,-6.6,Chi-Square,0.949,0.3299,No,-0.133,Small,No statistically significant difference detected
+1008,1044,elderly,146,131,41.8,32.8,9.0,Chi-Square,1.996,0.1578,No,0.186,Small,No statistically significant difference detected
+1008,1045,elderly,146,151,41.8,59.6,-17.8,Chi-Square,8.734,0.0031,Yes,-0.358,Medium,Statistically significant with moderate practical difference
+1008,1046,elderly,146,122,41.8,43.4,-1.7,Chi-Square,0.022,0.8808,No,-0.034,Small,No statistically significant difference detected
+1008,1047,elderly,146,129,41.8,46.5,-4.7,Chi-Square,0.445,0.5048,No,-0.095,Small,No statistically significant difference detected
+1008,1048,elderly,146,123,41.8,49.6,-7.8,Chi-Square,1.344,0.2463,No,-0.157,Small,No statistically significant difference detected
+1008,1049,elderly,146,148,41.8,44.6,-2.8,Chi-Square,0.136,0.7119,No,-0.057,Small,No statistically significant difference detected
+1008,1050,elderly,146,126,41.8,30.2,11.6,Chi-Square,3.46,0.0629,No,0.243,Medium,No statistically significant difference detected
+1009,1010,elderly,222,124,50.0,62.9,-12.9,Chi-Square,4.836,0.0279,Yes,-0.261,Medium,Statistically significant with moderate practical difference
+1009,1011,elderly,222,124,50.0,36.3,13.7,Chi-Square,5.499,0.019,Yes,0.278,Medium,Statistically significant with moderate practical difference
+1009,1012,elderly,222,125,50.0,43.2,6.8,Chi-Square,1.223,0.2689,No,0.136,Small,No statistically significant difference detected
+1009,1013,elderly,222,107,50.0,43.0,7.0,Chi-Square,1.155,0.2825,No,0.141,Small,No statistically significant difference detected
+1009,1014,elderly,222,129,50.0,55.0,-5.0,Chi-Square,0.64,0.4236,No,-0.101,Small,No statistically significant difference detected
+1009,1015,elderly,222,85,50.0,24.7,25.3,Chi-Square,15.029,0.0001,Yes,0.53,Large,Statistically significant with large practical difference
+1009,1016,elderly,222,110,50.0,62.7,-12.7,Chi-Square,4.301,0.0381,Yes,-0.257,Medium,Statistically significant with moderate practical difference
+1009,1017,elderly,222,135,50.0,51.9,-1.9,Chi-Square,0.053,0.8179,No,-0.037,Small,No statistically significant difference detected
+1009,1018,elderly,222,125,50.0,41.6,8.4,Chi-Square,1.941,0.1636,No,0.169,Small,No statistically significant difference detected
+1009,1019,elderly,222,153,50.0,28.1,21.9,Chi-Square,17.049,0.0,Yes,0.453,Medium,Statistically significant with moderate practical difference
+1009,1020,elderly,222,119,50.0,48.7,1.3,Chi-Square,0.012,0.9138,No,0.025,Small,No statistically significant difference detected
+1009,1021,elderly,222,125,50.0,47.2,2.8,Chi-Square,0.151,0.6972,No,0.056,Small,No statistically significant difference detected
+1009,1022,elderly,222,126,50.0,41.3,8.7,Chi-Square,2.122,0.1452,No,0.176,Small,No statistically significant difference detected
+1009,1023,elderly,222,114,50.0,57.0,-7.0,Chi-Square,1.219,0.2695,No,-0.141,Small,No statistically significant difference detected
+1009,1024,elderly,222,123,50.0,52.8,-2.8,Chi-Square,0.155,0.6936,No,-0.057,Small,No statistically significant difference detected
+1009,1025,elderly,222,136,50.0,50.0,0.0,Chi-Square,,1.0,No,0.0,Small,No statistically significant difference detected
+1009,1026,elderly,222,125,50.0,50.4,-0.4,Chi-Square,,1.0,No,-0.008,Small,No statistically significant difference detected
+1009,1027,elderly,222,118,50.0,31.4,18.6,Chi-Square,10.15,0.0014,Yes,0.382,Medium,Statistically significant with moderate practical difference
+1009,1028,elderly,222,153,50.0,42.5,7.5,Chi-Square,1.764,0.1841,No,0.151,Small,No statistically significant difference detected
+1009,1029,elderly,222,124,50.0,59.7,-9.7,Chi-Square,2.618,0.1056,No,-0.195,Small,No statistically significant difference detected
+1009,1030,elderly,222,134,50.0,52.2,-2.2,Chi-Square,0.09,0.7642,No,-0.045,Small,No statistically significant difference detected
+1009,1031,elderly,222,124,50.0,37.9,12.1,Chi-Square,4.217,0.04,Yes,0.244,Medium,Statistically significant with moderate practical difference
+1009,1032,elderly,222,125,50.0,31.2,18.8,Chi-Square,10.764,0.001,Yes,0.385,Medium,Statistically significant with moderate practical difference
+1009,1033,elderly,222,121,50.0,43.0,7.0,Chi-Square,1.281,0.2578,No,0.141,Small,No statistically significant difference detected
+1009,1034,elderly,222,116,50.0,73.3,-23.3,Chi-Square,16.001,0.0001,Yes,-0.484,Medium,Statistically significant with moderate practical difference
+1009,1035,elderly,222,125,50.0,53.6,-3.6,Chi-Square,0.283,0.5946,No,-0.072,Small,No statistically significant difference detected
+1009,1036,elderly,222,136,50.0,38.2,11.8,Chi-Square,4.244,0.0394,Yes,0.238,Medium,Statistically significant with moderate practical difference
+1009,1037,elderly,222,145,50.0,37.9,12.1,Chi-Square,4.682,0.0305,Yes,0.244,Medium,Statistically significant with moderate practical difference
+1009,1038,elderly,222,176,50.0,50.6,-0.6,Chi-Square,0.0,0.9907,No,-0.011,Small,No statistically significant difference detected
+1009,1039,elderly,222,147,50.0,29.3,20.7,Chi-Square,14.815,0.0001,Yes,0.428,Medium,Statistically significant with moderate practical difference
+1009,1040,elderly,222,131,50.0,35.9,14.1,Chi-Square,6.086,0.0136,Yes,0.286,Medium,Statistically significant with moderate practical difference
+1009,1041,elderly,222,124,50.0,57.3,-7.3,Chi-Square,1.403,0.2363,No,-0.146,Small,No statistically significant difference detected
+1009,1042,elderly,222,112,50.0,62.5,-12.5,Chi-Square,4.196,0.0405,Yes,-0.253,Medium,Statistically significant with moderate practical difference
+1009,1043,elderly,222,126,50.0,48.4,1.6,Chi-Square,0.03,0.8626,No,0.032,Small,No statistically significant difference detected
+1009,1044,elderly,222,131,50.0,32.8,17.2,Chi-Square,9.196,0.0024,Yes,0.351,Medium,Statistically significant with moderate practical difference
+1009,1045,elderly,222,151,50.0,59.6,-9.6,Chi-Square,2.96,0.0854,No,-0.193,Small,No statistically significant difference detected
+1009,1046,elderly,222,122,50.0,43.4,6.6,Chi-Square,1.107,0.2927,No,0.132,Small,No statistically significant difference detected
+1009,1047,elderly,222,129,50.0,46.5,3.5,Chi-Square,0.27,0.6033,No,0.07,Small,No statistically significant difference detected
+1009,1048,elderly,222,123,50.0,49.6,0.4,Chi-Square,,1.0,No,0.008,Small,No statistically significant difference detected
+1009,1049,elderly,222,148,50.0,44.6,5.4,Chi-Square,0.834,0.361,No,0.108,Small,No statistically significant difference detected
+1009,1050,elderly,222,126,50.0,30.2,19.8,Chi-Square,12.126,0.0005,Yes,0.408,Medium,Statistically significant with moderate practical difference
+1010,1011,elderly,124,124,62.9,36.3,26.6,Chi-Square,16.517,0.0,Yes,0.539,Large,Statistically significant with large practical difference
+1010,1012,elderly,124,125,62.9,43.2,19.7,Chi-Square,8.927,0.0028,Yes,0.397,Medium,Statistically significant with moderate practical difference
+1010,1013,elderly,124,107,62.9,43.0,19.9,Chi-Square,8.376,0.0038,Yes,0.402,Medium,Statistically significant with moderate practical difference
+1010,1014,elderly,124,129,62.9,55.0,7.9,Chi-Square,1.307,0.253,No,0.16,Small,No statistically significant difference detected
+1010,1015,elderly,124,85,62.9,24.7,38.2,Chi-Square,28.002,0.0,Yes,0.791,Large,Statistically significant with large practical difference
+1010,1016,elderly,124,110,62.9,62.7,0.2,Chi-Square,,1.0,No,0.004,Small,No statistically significant difference detected
+1010,1017,elderly,124,135,62.9,51.9,11.1,Chi-Square,2.788,0.095,No,0.224,Medium,No statistically significant difference detected
+1010,1018,elderly,124,125,62.9,41.6,21.3,Chi-Square,10.485,0.0012,Yes,0.43,Medium,Statistically significant with moderate practical difference
+1010,1019,elderly,124,153,62.9,28.1,34.8,Chi-Square,32.314,0.0,Yes,0.714,Large,Statistically significant with large practical difference
+1010,1020,elderly,124,119,62.9,48.7,14.2,Chi-Square,4.385,0.0363,Yes,0.286,Medium,Statistically significant with moderate practical difference
+1010,1021,elderly,124,125,62.9,47.2,15.7,Chi-Square,5.584,0.0181,Yes,0.317,Medium,Statistically significant with moderate practical difference
+1010,1022,elderly,124,126,62.9,41.3,21.6,Chi-Square,10.867,0.001,Yes,0.437,Medium,Statistically significant with moderate practical difference
+1010,1023,elderly,124,114,62.9,57.0,5.9,Chi-Square,0.63,0.4273,No,0.12,Small,No statistically significant difference detected
+1010,1024,elderly,124,123,62.9,52.8,10.1,Chi-Square,2.166,0.1411,No,0.204,Medium,No statistically significant difference detected
+1010,1025,elderly,124,136,62.9,50.0,12.9,Chi-Square,3.878,0.0489,Yes,0.261,Medium,Statistically significant with moderate practical difference
+1010,1026,elderly,124,125,62.9,50.4,12.5,Chi-Square,3.469,0.0625,No,0.253,Medium,No statistically significant difference detected
+1010,1027,elderly,124,118,62.9,31.4,31.5,Chi-Square,22.881,0.0,Yes,0.643,Large,Statistically significant with large practical difference
+1010,1028,elderly,124,153,62.9,42.5,20.4,Chi-Square,10.632,0.0011,Yes,0.412,Medium,Statistically significant with moderate practical difference
+1010,1029,elderly,124,124,62.9,59.7,3.2,Chi-Square,0.153,0.6957,No,0.066,Small,No statistically significant difference detected
+1010,1030,elderly,124,134,62.9,52.2,10.7,Chi-Square,2.575,0.1086,No,0.216,Medium,No statistically significant difference detected
+1010,1031,elderly,124,124,62.9,37.9,25.0,Chi-Square,14.517,0.0001,Yes,0.505,Large,Statistically significant with large practical difference
+1010,1032,elderly,124,125,62.9,31.2,31.7,Chi-Square,23.861,0.0,Yes,0.646,Large,Statistically significant with large practical difference
+1010,1033,elderly,124,121,62.9,43.0,19.9,Chi-Square,8.981,0.0027,Yes,0.402,Medium,Statistically significant with moderate practical difference
+1010,1034,elderly,124,116,62.9,73.3,-10.4,Chi-Square,2.502,0.1137,No,-0.223,Medium,No statistically significant difference detected
+1010,1035,elderly,124,125,62.9,53.6,9.3,Chi-Square,1.849,0.1739,No,0.189,Small,No statistically significant difference detected
+1010,1036,elderly,124,136,62.9,38.2,24.7,Chi-Square,14.816,0.0001,Yes,0.499,Medium,Statistically significant with moderate practical difference
+1010,1037,elderly,124,145,62.9,37.9,25.0,Chi-Square,15.691,0.0001,Yes,0.505,Large,Statistically significant with large practical difference
+1010,1038,elderly,124,176,62.9,50.6,12.3,Chi-Square,3.999,0.0455,Yes,0.25,Medium,Statistically significant with moderate practical difference
+1010,1039,elderly,124,147,62.9,29.3,33.7,Chi-Square,29.474,0.0,Yes,0.689,Large,Statistically significant with large practical difference
+1010,1040,elderly,124,131,62.9,35.9,27.0,Chi-Square,17.552,0.0,Yes,0.547,Large,Statistically significant with large practical difference
+1010,1041,elderly,124,124,62.9,57.3,5.6,Chi-Square,0.605,0.4366,No,0.115,Small,No statistically significant difference detected
+1010,1042,elderly,124,112,62.9,62.5,0.4,Chi-Square,,1.0,No,0.008,Small,No statistically significant difference detected
+1010,1043,elderly,124,126,62.9,48.4,14.5,Chi-Square,4.745,0.0294,Yes,0.293,Medium,Statistically significant with moderate practical difference
+1010,1044,elderly,124,131,62.9,32.8,30.1,Chi-Square,21.923,0.0,Yes,0.612,Large,Statistically significant with large practical difference
+1010,1045,elderly,124,151,62.9,59.6,3.3,Chi-Square,0.189,0.6641,No,0.068,Small,No statistically significant difference detected
+1010,1046,elderly,124,122,62.9,43.4,19.5,Chi-Square,8.59,0.0034,Yes,0.393,Medium,Statistically significant with moderate practical difference
+1010,1047,elderly,124,129,62.9,46.5,16.4,Chi-Square,6.207,0.0127,Yes,0.331,Medium,Statistically significant with moderate practical difference
+1010,1048,elderly,124,123,62.9,49.6,13.3,Chi-Square,3.921,0.0477,Yes,0.269,Medium,Statistically significant with moderate practical difference
+1010,1049,elderly,124,148,62.9,44.6,18.3,Chi-Square,8.358,0.0038,Yes,0.369,Medium,Statistically significant with moderate practical difference
+1010,1050,elderly,124,126,62.9,30.2,32.7,Chi-Square,25.642,0.0,Yes,0.669,Large,Statistically significant with large practical difference
+1011,1012,elderly,124,125,36.3,43.2,-6.9,Chi-Square,0.969,0.3249,No,-0.141,Small,No statistically significant difference detected
+1011,1013,elderly,124,107,36.3,43.0,-6.7,Chi-Square,0.818,0.3659,No,-0.137,Small,No statistically significant difference detected
+1011,1014,elderly,124,129,36.3,55.0,-18.7,Chi-Square,8.212,0.0042,Yes,-0.379,Medium,Statistically significant with moderate practical difference
+1011,1015,elderly,124,85,36.3,24.7,11.6,Chi-Square,2.619,0.1056,No,0.253,Medium,No statistically significant difference detected
+1011,1016,elderly,124,110,36.3,62.7,-26.4,Chi-Square,15.266,0.0001,Yes,-0.535,Large,Statistically significant with large practical difference
+1011,1017,elderly,124,135,36.3,51.9,-15.6,Chi-Square,5.725,0.0167,Yes,-0.315,Medium,Statistically significant with moderate practical difference
+1011,1018,elderly,124,125,36.3,41.6,-5.3,Chi-Square,0.532,0.4659,No,-0.109,Small,No statistically significant difference detected
+1011,1019,elderly,124,153,36.3,28.1,8.2,Chi-Square,1.756,0.1851,No,0.176,Small,No statistically significant difference detected
+1011,1020,elderly,124,119,36.3,48.7,-12.4,Chi-Square,3.361,0.0668,No,-0.253,Medium,No statistically significant difference detected
+1011,1021,elderly,124,125,36.3,47.2,-10.9,Chi-Square,2.614,0.1059,No,-0.222,Medium,No statistically significant difference detected
+1011,1022,elderly,124,126,36.3,41.3,-5.0,Chi-Square,0.46,0.4977,No,-0.102,Small,No statistically significant difference detected
+1011,1023,elderly,124,114,36.3,57.0,-20.7,Chi-Square,9.449,0.0021,Yes,-0.419,Medium,Statistically significant with moderate practical difference
+1011,1024,elderly,124,123,36.3,52.8,-16.6,Chi-Square,6.198,0.0128,Yes,-0.335,Medium,Statistically significant with moderate practical difference
+1011,1025,elderly,124,136,36.3,50.0,-13.7,Chi-Square,4.419,0.0355,Yes,-0.278,Medium,Statistically significant with moderate practical difference
+1011,1026,elderly,124,125,36.3,50.4,-14.1,Chi-Square,4.488,0.0341,Yes,-0.286,Medium,Statistically significant with moderate practical difference
+1011,1027,elderly,124,118,36.3,31.4,4.9,Chi-Square,0.455,0.4998,No,0.104,Small,No statistically significant difference detected
+1011,1028,elderly,124,153,36.3,42.5,-6.2,Chi-Square,0.854,0.3555,No,-0.127,Small,No statistically significant difference detected
+1011,1029,elderly,124,124,36.3,59.7,-23.4,Chi-Square,12.666,0.0004,Yes,-0.473,Medium,Statistically significant with moderate practical difference
+1011,1030,elderly,124,134,36.3,52.2,-15.9,Chi-Square,6.001,0.0143,Yes,-0.323,Medium,Statistically significant with moderate practical difference
+1011,1031,elderly,124,124,36.3,37.9,-1.6,Chi-Square,0.017,0.8954,No,-0.033,Small,No statistically significant difference detected
+1011,1032,elderly,124,125,36.3,31.2,5.1,Chi-Square,0.512,0.4744,No,0.108,Small,No statistically significant difference detected
+1011,1033,elderly,124,121,36.3,43.0,-6.7,Chi-Square,0.882,0.3477,No,-0.137,Small,No statistically significant difference detected
+1011,1034,elderly,124,116,36.3,73.3,-37.0,Chi-Square,31.55,0.0,Yes,-0.762,Large,Statistically significant with large practical difference
+1011,1035,elderly,124,125,36.3,53.6,-17.3,Chi-Square,6.853,0.0088,Yes,-0.35,Medium,Statistically significant with moderate practical difference
+1011,1036,elderly,124,136,36.3,38.2,-1.9,Chi-Square,0.038,0.845,No,-0.04,Small,No statistically significant difference detected
+1011,1037,elderly,124,145,36.3,37.9,-1.6,Chi-Square,0.023,0.88,No,-0.034,Small,No statistically significant difference detected
+1011,1038,elderly,124,176,36.3,50.6,-14.3,Chi-Square,5.436,0.0197,Yes,-0.289,Medium,Statistically significant with moderate practical difference
+1011,1039,elderly,124,147,36.3,29.3,7.0,Chi-Square,1.216,0.2702,No,0.15,Small,No statistically significant difference detected
+1011,1040,elderly,124,131,36.3,35.9,0.4,Chi-Square,,1.0,No,0.009,Small,No statistically significant difference detected
+1011,1041,elderly,124,124,36.3,57.3,-21.0,Chi-Square,10.123,0.0015,Yes,-0.423,Medium,Statistically significant with moderate practical difference
+1011,1042,elderly,124,112,36.3,62.5,-26.2,Chi-Square,15.148,0.0001,Yes,-0.53,Large,Statistically significant with large practical difference
+1011,1043,elderly,124,126,36.3,48.4,-12.1,Chi-Square,3.28,0.0701,No,-0.246,Medium,No statistically significant difference detected
+1011,1044,elderly,124,131,36.3,32.8,3.5,Chi-Square,0.203,0.6526,No,0.073,Small,No statistically significant difference detected
+1011,1045,elderly,124,151,36.3,59.6,-23.3,Chi-Square,13.888,0.0002,Yes,-0.471,Medium,Statistically significant with moderate practical difference
+1011,1046,elderly,124,122,36.3,43.4,-7.2,Chi-Square,1.031,0.3099,No,-0.146,Small,No statistically significant difference detected
+1011,1047,elderly,124,129,36.3,46.5,-10.2,Chi-Square,2.316,0.128,No,-0.208,Medium,No statistically significant difference detected
+1011,1048,elderly,124,123,36.3,49.6,-13.3,Chi-Square,3.934,0.0473,Yes,-0.27,Medium,Statistically significant with moderate practical difference
+1011,1049,elderly,124,148,36.3,44.6,-8.3,Chi-Square,1.598,0.2062,No,-0.169,Small,No statistically significant difference detected
+1011,1050,elderly,124,126,36.3,30.2,6.1,Chi-Square,0.801,0.3708,No,0.13,Small,No statistically significant difference detected
+1012,1013,elderly,125,107,43.2,43.0,0.2,Chi-Square,,1.0,No,0.004,Small,No statistically significant difference detected
+1012,1014,elderly,125,129,43.2,55.0,-11.8,Chi-Square,3.102,0.0782,No,-0.237,Medium,No statistically significant difference detected
+1012,1015,elderly,125,85,43.2,24.7,18.5,Chi-Square,6.753,0.0094,Yes,0.394,Medium,Statistically significant with moderate practical difference
+1012,1016,elderly,125,110,43.2,62.7,-19.5,Chi-Square,8.178,0.0042,Yes,-0.394,Medium,Statistically significant with moderate practical difference
+1012,1017,elderly,125,135,43.2,51.9,-8.7,Chi-Square,1.616,0.2036,No,-0.173,Small,No statistically significant difference detected
+1012,1018,elderly,125,125,43.2,41.6,1.6,Chi-Square,0.016,0.8982,No,0.032,Small,No statistically significant difference detected
+1012,1019,elderly,125,153,43.2,28.1,15.1,Chi-Square,6.252,0.0124,Yes,0.317,Medium,Statistically significant with moderate practical difference
+1012,1020,elderly,125,119,43.2,48.7,-5.5,Chi-Square,0.547,0.4596,No,-0.111,Small,No statistically significant difference detected
+1012,1021,elderly,125,125,43.2,47.2,-4.0,Chi-Square,0.258,0.6112,No,-0.08,Small,No statistically significant difference detected
+1012,1022,elderly,125,126,43.2,41.3,1.9,Chi-Square,0.033,0.8558,No,0.039,Small,No statistically significant difference detected
+1012,1023,elderly,125,114,43.2,57.0,-13.8,Chi-Square,4.018,0.045,Yes,-0.277,Medium,Statistically significant with moderate practical difference
+1012,1024,elderly,125,123,43.2,52.8,-9.6,Chi-Square,1.941,0.1636,No,-0.193,Small,No statistically significant difference detected
+1012,1025,elderly,125,136,43.2,50.0,-6.8,Chi-Square,0.952,0.3292,No,-0.136,Small,No statistically significant difference detected
+1012,1026,elderly,125,125,43.2,50.4,-7.2,Chi-Square,1.028,0.3106,No,-0.144,Small,No statistically significant difference detected
+1012,1027,elderly,125,118,43.2,31.4,11.8,Chi-Square,3.147,0.0761,No,0.246,Medium,No statistically significant difference detected
+1012,1028,elderly,125,153,43.2,42.5,0.7,Chi-Square,,1.0,No,0.014,Small,No statistically significant difference detected
+1012,1029,elderly,125,124,43.2,59.7,-16.5,Chi-Square,6.122,0.0133,Yes,-0.331,Medium,Statistically significant with moderate practical difference
+1012,1030,elderly,125,134,43.2,52.2,-9.0,Chi-Square,1.771,0.1833,No,-0.181,Small,No statistically significant difference detected
+1012,1031,elderly,125,124,43.2,37.9,5.3,Chi-Square,0.521,0.4703,No,0.108,Small,No statistically significant difference detected
+1012,1032,elderly,125,125,43.2,31.2,12.0,Chi-Square,3.356,0.067,No,0.249,Medium,No statistically significant difference detected
+1012,1033,elderly,125,121,43.2,43.0,0.2,Chi-Square,,1.0,No,0.005,Small,No statistically significant difference detected
+1012,1034,elderly,125,116,43.2,73.3,-30.1,Chi-Square,21.08,0.0,Yes,-0.621,Large,Statistically significant with large practical difference
+1012,1035,elderly,125,125,43.2,53.6,-10.4,Chi-Square,2.306,0.1288,No,-0.208,Medium,No statistically significant difference detected
+1012,1036,elderly,125,136,43.2,38.2,5.0,Chi-Square,0.476,0.4904,No,0.101,Small,No statistically significant difference detected
+1012,1037,elderly,125,145,43.2,37.9,5.3,Chi-Square,0.571,0.45,No,0.107,Small,No statistically significant difference detected
+1012,1038,elderly,125,176,43.2,50.6,-7.4,Chi-Square,1.309,0.2525,No,-0.148,Small,No statistically significant difference detected
+1012,1039,elderly,125,147,43.2,29.3,13.9,Chi-Square,5.137,0.0234,Yes,0.291,Medium,Statistically significant with moderate practical difference
+1012,1040,elderly,125,131,43.2,35.9,7.3,Chi-Square,1.145,0.2845,No,0.15,Small,No statistically significant difference detected
+1012,1041,elderly,125,124,43.2,57.3,-14.1,Chi-Square,4.375,0.0365,Yes,-0.282,Medium,Statistically significant with moderate practical difference
+1012,1042,elderly,125,112,43.2,62.5,-19.3,Chi-Square,8.064,0.0045,Yes,-0.389,Medium,Statistically significant with moderate practical difference
+1012,1043,elderly,125,126,43.2,48.4,-5.2,Chi-Square,0.493,0.4826,No,-0.105,Small,No statistically significant difference detected
+1012,1044,elderly,125,131,43.2,32.8,10.4,Chi-Square,2.502,0.1137,No,0.214,Medium,No statistically significant difference detected
+1012,1045,elderly,125,151,43.2,59.6,-16.4,Chi-Square,6.731,0.0095,Yes,-0.33,Medium,Statistically significant with moderate practical difference
+1012,1046,elderly,125,122,43.2,43.4,-0.2,Chi-Square,,1.0,No,-0.005,Small,No statistically significant difference detected
+1012,1047,elderly,125,129,43.2,46.5,-3.3,Chi-Square,0.163,0.686,No,-0.067,Small,No statistically significant difference detected
+1012,1048,elderly,125,123,43.2,49.6,-6.4,Chi-Square,0.778,0.3777,No,-0.128,Small,No statistically significant difference detected
+1012,1049,elderly,125,148,43.2,44.6,-1.4,Chi-Square,0.012,0.9133,No,-0.028,Small,No statistically significant difference detected
+1012,1050,elderly,125,126,43.2,30.2,13.0,Chi-Square,4.052,0.0441,Yes,0.272,Medium,Statistically significant with moderate practical difference
+1013,1014,elderly,107,129,43.0,55.0,-12.0,Chi-Square,2.931,0.0869,No,-0.242,Medium,No statistically significant difference detected
+1013,1015,elderly,107,85,43.0,24.7,18.3,Chi-Square,6.189,0.0129,Yes,0.39,Medium,Statistically significant with moderate practical difference
+1013,1016,elderly,107,110,43.0,62.7,-19.7,Chi-Square,7.708,0.0055,Yes,-0.398,Medium,Statistically significant with moderate practical difference
+1013,1017,elderly,107,135,43.0,51.9,-8.9,Chi-Square,1.54,0.2147,No,-0.178,Small,No statistically significant difference detected
+1013,1018,elderly,107,125,43.0,41.6,1.4,Chi-Square,0.006,0.9359,No,0.028,Small,No statistically significant difference detected
+1013,1019,elderly,107,153,43.0,28.1,14.9,Chi-Square,5.554,0.0184,Yes,0.313,Medium,Statistically significant with moderate practical difference
+1013,1020,elderly,107,119,43.0,48.7,-5.7,Chi-Square,0.536,0.4641,No,-0.115,Small,No statistically significant difference detected
+1013,1021,elderly,107,125,43.0,47.2,-4.2,Chi-Square,0.26,0.6102,No,-0.085,Small,No statistically significant difference detected
+1013,1022,elderly,107,126,43.0,41.3,1.7,Chi-Square,0.017,0.895,No,0.035,Small,No statistically significant difference detected
+1013,1023,elderly,107,114,43.0,57.0,-14.0,Chi-Square,3.801,0.0512,No,-0.281,Medium,No statistically significant difference detected
+1013,1024,elderly,107,123,43.0,52.8,-9.9,Chi-Square,1.848,0.174,No,-0.198,Small,No statistically significant difference detected
+1013,1025,elderly,107,136,43.0,50.0,-7.0,Chi-Square,0.917,0.3383,No,-0.141,Small,No statistically significant difference detected
+1013,1026,elderly,107,125,43.0,50.4,-7.4,Chi-Square,0.991,0.3196,No,-0.149,Small,No statistically significant difference detected
+1013,1027,elderly,107,118,43.0,31.4,11.6,Chi-Square,2.782,0.0953,No,0.241,Medium,No statistically significant difference detected
+1013,1028,elderly,107,153,43.0,42.5,0.5,Chi-Square,,1.0,No,0.01,Small,No statistically significant difference detected
+1013,1029,elderly,107,124,43.0,59.7,-16.7,Chi-Square,5.756,0.0164,Yes,-0.335,Medium,Statistically significant with moderate practical difference
+1013,1030,elderly,107,134,43.0,52.2,-9.2,Chi-Square,1.685,0.1943,No,-0.185,Small,No statistically significant difference detected
+1013,1031,elderly,107,124,43.0,37.9,5.1,Chi-Square,0.425,0.5146,No,0.104,Small,No statistically significant difference detected
+1013,1032,elderly,107,125,43.0,31.2,11.8,Chi-Square,2.963,0.0852,No,0.245,Medium,No statistically significant difference detected
+1013,1033,elderly,107,121,43.0,43.0,0.0,Chi-Square,,1.0,No,0.0,Small,No statistically significant difference detected
+1013,1034,elderly,107,116,43.0,73.3,-30.3,Chi-Square,19.833,0.0,Yes,-0.625,Large,Statistically significant with large practical difference
+1013,1035,elderly,107,125,43.0,53.6,-10.6,Chi-Square,2.19,0.1389,No,-0.213,Medium,No statistically significant difference detected
+1013,1036,elderly,107,136,43.0,38.2,4.8,Chi-Square,0.382,0.5363,No,0.097,Small,No statistically significant difference detected
+1013,1037,elderly,107,145,43.0,37.9,5.1,Chi-Square,0.463,0.4965,No,0.103,Small,No statistically significant difference detected
+1013,1038,elderly,107,176,43.0,50.6,-7.6,Chi-Square,1.243,0.2649,No,-0.152,Small,No statistically significant difference detected
+1013,1039,elderly,107,147,43.0,29.3,13.7,Chi-Square,4.549,0.0329,Yes,0.287,Medium,Statistically significant with moderate practical difference
+1013,1040,elderly,107,131,43.0,35.9,7.1,Chi-Square,0.971,0.3245,No,0.146,Small,No statistically significant difference detected
+1013,1041,elderly,107,124,43.0,57.3,-14.3,Chi-Square,4.124,0.0423,Yes,-0.286,Medium,Statistically significant with moderate practical difference
+1013,1042,elderly,107,112,43.0,62.5,-19.5,Chi-Square,7.596,0.0059,Yes,-0.393,Medium,Statistically significant with moderate practical difference
+1013,1043,elderly,107,126,43.0,48.4,-5.4,Chi-Square,0.484,0.4866,No,-0.109,Small,No statistically significant difference detected
+1013,1044,elderly,107,131,43.0,32.8,10.2,Chi-Square,2.184,0.1395,No,0.21,Medium,No statistically significant difference detected
+1013,1045,elderly,107,151,43.0,59.6,-16.6,Chi-Square,6.283,0.0122,Yes,-0.334,Medium,Statistically significant with moderate practical difference
+1013,1046,elderly,107,122,43.0,43.4,-0.5,Chi-Square,,1.0,No,-0.009,Small,No statistically significant difference detected
+1013,1047,elderly,107,129,43.0,46.5,-3.5,Chi-Square,0.168,0.6819,No,-0.071,Small,No statistically significant difference detected
+1013,1048,elderly,107,123,43.0,49.6,-6.6,Chi-Square,0.755,0.3849,No,-0.133,Small,No statistically significant difference detected
+1013,1049,elderly,107,148,43.0,44.6,-1.6,Chi-Square,0.016,0.8991,No,-0.032,Small,No statistically significant difference detected
+1013,1050,elderly,107,126,43.0,30.2,12.8,Chi-Square,3.595,0.058,No,0.267,Medium,No statistically significant difference detected
+1014,1015,elderly,129,85,55.0,24.7,30.3,Chi-Square,18.018,0.0,Yes,0.631,Large,Statistically significant with large practical difference
+1014,1016,elderly,129,110,55.0,62.7,-7.7,Chi-Square,1.147,0.2842,No,-0.156,Small,No statistically significant difference detected
+1014,1017,elderly,129,135,55.0,51.9,3.2,Chi-Square,0.156,0.6925,No,0.064,Small,No statistically significant difference detected
+1014,1018,elderly,129,125,55.0,41.6,13.4,Chi-Square,4.068,0.0437,Yes,0.27,Medium,Statistically significant with moderate practical difference
+1014,1019,elderly,129,153,55.0,28.1,26.9,Chi-Square,19.979,0.0,Yes,0.554,Large,Statistically significant with large practical difference
+1014,1020,elderly,129,119,55.0,48.7,6.3,Chi-Square,0.748,0.3871,No,0.126,Small,No statistically significant difference detected
+1014,1021,elderly,129,125,55.0,47.2,7.8,Chi-Square,1.263,0.261,No,0.157,Small,No statistically significant difference detected
+1014,1022,elderly,129,126,55.0,41.3,13.8,Chi-Square,4.304,0.038,Yes,0.276,Medium,Statistically significant with moderate practical difference
+1014,1023,elderly,129,114,55.0,57.0,-2.0,Chi-Square,0.033,0.8567,No,-0.04,Small,No statistically significant difference detected
+1014,1024,elderly,129,123,55.0,52.8,2.2,Chi-Square,0.05,0.8237,No,0.044,Small,No statistically significant difference detected
+1014,1025,elderly,129,136,55.0,50.0,5.0,Chi-Square,0.487,0.4852,No,0.101,Small,No statistically significant difference detected
+1014,1026,elderly,129,125,55.0,50.4,4.6,Chi-Square,0.378,0.5388,No,0.093,Small,No statistically significant difference detected
+1014,1027,elderly,129,118,55.0,31.4,23.7,Chi-Square,13.101,0.0003,Yes,0.483,Medium,Statistically significant with moderate practical difference
+1014,1028,elderly,129,153,55.0,42.5,12.6,Chi-Square,3.93,0.0474,Yes,0.252,Medium,Statistically significant with moderate practical difference
+1014,1029,elderly,129,124,55.0,59.7,-4.6,Chi-Square,0.383,0.5362,No,-0.094,Small,No statistically significant difference detected
+1014,1030,elderly,129,134,55.0,52.2,2.8,Chi-Square,0.11,0.7403,No,0.056,Small,No statistically significant difference detected
+1014,1031,elderly,129,124,55.0,37.9,17.1,Chi-Square,6.787,0.0092,Yes,0.345,Medium,Statistically significant with moderate practical difference
+1014,1032,elderly,129,125,55.0,31.2,23.8,Chi-Square,13.739,0.0002,Yes,0.486,Medium,Statistically significant with moderate practical difference
+1014,1033,elderly,129,121,55.0,43.0,12.1,Chi-Square,3.169,0.0751,No,0.242,Medium,No statistically significant difference detected
+1014,1034,elderly,129,116,55.0,73.3,-18.2,Chi-Square,8.012,0.0046,Yes,-0.383,Medium,Statistically significant with moderate practical difference
+1014,1035,elderly,129,125,55.0,53.6,1.4,Chi-Square,0.011,0.917,No,0.029,Small,No statistically significant difference detected
+1014,1036,elderly,129,136,55.0,38.2,16.8,Chi-Square,6.855,0.0088,Yes,0.338,Medium,Statistically significant with moderate practical difference
+1014,1037,elderly,129,145,55.0,37.9,17.1,Chi-Square,7.37,0.0066,Yes,0.345,Medium,Statistically significant with moderate practical difference
+1014,1038,elderly,129,176,55.0,50.6,4.5,Chi-Square,0.431,0.5116,No,0.09,Small,No statistically significant difference detected
+1014,1039,elderly,129,147,55.0,29.3,25.8,Chi-Square,17.797,0.0,Yes,0.529,Large,Statistically significant with large practical difference
+1014,1040,elderly,129,131,55.0,35.9,19.2,Chi-Square,8.87,0.0029,Yes,0.387,Medium,Statistically significant with moderate practical difference
+1014,1041,elderly,129,124,55.0,57.3,-2.2,Chi-Square,0.052,0.819,No,-0.045,Small,No statistically significant difference detected
+1014,1042,elderly,129,112,55.0,62.5,-7.5,Chi-Square,1.085,0.2977,No,-0.152,Small,No statistically significant difference detected
+1014,1043,elderly,129,126,55.0,48.4,6.6,Chi-Square,0.871,0.3506,No,0.133,Small,No statistically significant difference detected
+1014,1044,elderly,129,131,55.0,32.8,22.2,Chi-Square,12.14,0.0005,Yes,0.452,Medium,Statistically significant with moderate practical difference
+1014,1045,elderly,129,151,55.0,59.6,-4.6,Chi-Square,0.421,0.5165,No,-0.092,Small,No statistically significant difference detected
+1014,1046,elderly,129,122,55.0,43.4,11.6,Chi-Square,2.925,0.0872,No,0.232,Medium,No statistically significant difference detected
+1014,1047,elderly,129,129,55.0,46.5,8.5,Chi-Square,1.551,0.213,No,0.171,Small,No statistically significant difference detected
+1014,1048,elderly,129,123,55.0,49.6,5.4,Chi-Square,0.546,0.4599,No,0.109,Small,No statistically significant difference detected
+1014,1049,elderly,129,148,55.0,44.6,10.4,Chi-Square,2.604,0.1066,No,0.209,Medium,No statistically significant difference detected
+1014,1050,elderly,129,126,55.0,30.2,24.9,Chi-Square,15.122,0.0001,Yes,0.509,Large,Statistically significant with large practical difference
+1015,1016,elderly,85,110,24.7,62.7,-38.0,Chi-Square,26.382,0.0,Yes,-0.788,Large,Statistically significant with large practical difference
+1015,1017,elderly,85,135,24.7,51.9,-27.1,Chi-Square,14.748,0.0001,Yes,-0.567,Large,Statistically significant with large practical difference
+1015,1018,elderly,85,125,24.7,41.6,-16.9,Chi-Square,5.644,0.0175,Yes,-0.362,Medium,Statistically significant with moderate practical difference
+1015,1019,elderly,85,153,24.7,28.1,-3.4,Chi-Square,0.171,0.6788,No,-0.077,Small,No statistically significant difference detected
+1015,1020,elderly,85,119,24.7,48.7,-24.0,Chi-Square,11.078,0.0009,Yes,-0.505,Large,Statistically significant with large practical difference
+1015,1021,elderly,85,125,24.7,47.2,-22.5,Chi-Square,9.923,0.0016,Yes,-0.474,Medium,Statistically significant with moderate practical difference
+1015,1022,elderly,85,126,24.7,41.3,-16.6,Chi-Square,5.444,0.0196,Yes,-0.355,Medium,Statistically significant with moderate practical difference
+1015,1023,elderly,85,114,24.7,57.0,-32.3,Chi-Square,19.421,0.0,Yes,-0.671,Large,Statistically significant with large practical difference
+1015,1024,elderly,85,123,24.7,52.8,-28.1,Chi-Square,15.272,0.0001,Yes,-0.587,Large,Statistically significant with large practical difference
+1015,1025,elderly,85,136,24.7,50.0,-25.3,Chi-Square,12.881,0.0003,Yes,-0.53,Large,Statistically significant with large practical difference
+1015,1026,elderly,85,125,24.7,50.4,-25.7,Chi-Square,12.868,0.0003,Yes,-0.538,Large,Statistically significant with large practical difference
+1015,1027,elderly,85,118,24.7,31.4,-6.7,Chi-Square,0.77,0.3803,No,-0.148,Small,No statistically significant difference detected
+1015,1028,elderly,85,153,24.7,42.5,-17.8,Chi-Square,6.733,0.0095,Yes,-0.38,Medium,Statistically significant with moderate practical difference
+1015,1029,elderly,85,124,24.7,59.7,-35.0,Chi-Square,23.486,0.0,Yes,-0.725,Large,Statistically significant with large practical difference
+1015,1030,elderly,85,134,24.7,52.2,-27.5,Chi-Square,15.12,0.0001,Yes,-0.575,Large,Statistically significant with large practical difference
+1015,1031,elderly,85,124,24.7,37.9,-13.2,Chi-Square,3.423,0.0643,No,-0.286,Medium,No statistically significant difference detected
+1015,1032,elderly,85,125,24.7,31.2,-6.5,Chi-Square,0.752,0.386,No,-0.145,Small,No statistically significant difference detected
+1015,1033,elderly,85,121,24.7,43.0,-18.3,Chi-Square,6.507,0.0107,Yes,-0.389,Medium,Statistically significant with moderate practical difference
+1015,1034,elderly,85,116,24.7,73.3,-48.6,Chi-Square,44.5,0.0,Yes,-1.015,Large,Statistically significant with large practical difference
+1015,1035,elderly,85,125,24.7,53.6,-28.9,Chi-Square,16.184,0.0001,Yes,-0.602,Large,Statistically significant with large practical difference
+1015,1036,elderly,85,136,24.7,38.2,-13.5,Chi-Square,3.738,0.0532,No,-0.293,Medium,No statistically significant difference detected
+1015,1037,elderly,85,145,24.7,37.9,-13.2,Chi-Square,3.66,0.0557,No,-0.287,Medium,No statistically significant difference detected
+1015,1038,elderly,85,176,24.7,50.6,-25.9,Chi-Square,14.68,0.0001,Yes,-0.542,Large,Statistically significant with large practical difference
+1015,1039,elderly,85,147,24.7,29.3,-4.5,Chi-Square,0.353,0.5525,No,-0.102,Small,No statistically significant difference detected
+1015,1040,elderly,85,131,24.7,35.9,-11.2,Chi-Square,2.487,0.1148,No,-0.244,Medium,No statistically significant difference detected
+1015,1041,elderly,85,124,24.7,57.3,-32.6,Chi-Square,20.385,0.0,Yes,-0.676,Large,Statistically significant with large practical difference
+1015,1042,elderly,85,112,24.7,62.5,-37.8,Chi-Square,26.272,0.0,Yes,-0.783,Large,Statistically significant with large practical difference
+1015,1043,elderly,85,126,24.7,48.4,-23.7,Chi-Square,11.029,0.0009,Yes,-0.499,Medium,Statistically significant with moderate practical difference
+1015,1044,elderly,85,131,24.7,32.8,-8.1,Chi-Square,1.263,0.261,No,-0.18,Small,No statistically significant difference detected
+1015,1045,elderly,85,151,24.7,59.6,-34.9,Chi-Square,25.203,0.0,Yes,-0.724,Large,Statistically significant with large practical difference
+1015,1046,elderly,85,122,24.7,43.4,-18.7,Chi-Square,6.863,0.0088,Yes,-0.399,Medium,Statistically significant with moderate practical difference
+1015,1047,elderly,85,129,24.7,46.5,-21.8,Chi-Square,9.451,0.0021,Yes,-0.461,Medium,Statistically significant with moderate practical difference
+1015,1048,elderly,85,123,24.7,49.6,-24.9,Chi-Square,12.015,0.0005,Yes,-0.522,Large,Statistically significant with large practical difference
+1015,1049,elderly,85,148,24.7,44.6,-19.9,Chi-Square,8.298,0.004,Yes,-0.422,Medium,Statistically significant with moderate practical difference
+1015,1050,elderly,85,126,24.7,30.2,-5.5,Chi-Square,0.503,0.4782,No,-0.122,Small,No statistically significant difference detected
+1016,1017,elderly,110,135,62.7,51.9,10.9,Chi-Square,2.494,0.1143,No,0.22,Medium,No statistically significant difference detected
+1016,1018,elderly,110,125,62.7,41.6,21.1,Chi-Square,9.627,0.0019,Yes,0.426,Medium,Statistically significant with moderate practical difference
+1016,1019,elderly,110,153,62.7,28.1,34.6,Chi-Square,29.974,0.0,Yes,0.711,Large,Statistically significant with large practical difference
+1016,1020,elderly,110,119,62.7,48.7,14.0,Chi-Square,3.979,0.0461,Yes,0.283,Medium,Statistically significant with moderate practical difference
+1016,1021,elderly,110,125,62.7,47.2,15.5,Chi-Square,5.079,0.0242,Yes,0.313,Medium,Statistically significant with moderate practical difference
+1016,1022,elderly,110,126,62.7,41.3,21.5,Chi-Square,9.981,0.0016,Yes,0.433,Medium,Statistically significant with moderate practical difference
+1016,1023,elderly,110,114,62.7,57.0,5.7,Chi-Square,0.54,0.4623,No,0.117,Small,No statistically significant difference detected
+1016,1024,elderly,110,123,62.7,52.8,9.9,Chi-Square,1.934,0.1644,No,0.2,Medium,No statistically significant difference detected
+1016,1025,elderly,110,136,62.7,50.0,12.7,Chi-Square,3.493,0.0616,No,0.257,Medium,No statistically significant difference detected
+1016,1026,elderly,110,125,62.7,50.4,12.3,Chi-Square,3.128,0.0769,No,0.249,Medium,No statistically significant difference detected
+1016,1027,elderly,110,118,62.7,31.4,31.4,Chi-Square,21.279,0.0,Yes,0.639,Large,Statistically significant with large practical difference
+1016,1028,elderly,110,153,62.7,42.5,20.2,Chi-Square,9.699,0.0018,Yes,0.408,Medium,Statistically significant with moderate practical difference
+1016,1029,elderly,110,124,62.7,59.7,3.0,Chi-Square,0.118,0.7314,No,0.063,Small,No statistically significant difference detected
+1016,1030,elderly,110,134,62.7,52.2,10.5,Chi-Square,2.3,0.1294,No,0.213,Medium,No statistically significant difference detected
+1016,1031,elderly,110,124,62.7,37.9,24.8,Chi-Square,13.393,0.0003,Yes,0.502,Large,Statistically significant with large practical difference
+1016,1032,elderly,110,125,62.7,31.2,31.5,Chi-Square,22.164,0.0,Yes,0.643,Large,Statistically significant with large practical difference
+1016,1033,elderly,110,121,62.7,43.0,19.8,Chi-Square,8.238,0.0041,Yes,0.398,Medium,Statistically significant with moderate practical difference
+1016,1034,elderly,110,116,62.7,73.3,-10.5,Chi-Square,2.428,0.1192,No,-0.227,Medium,No statistically significant difference detected
+1016,1035,elderly,110,125,62.7,53.6,9.1,Chi-Square,1.642,0.2,No,0.185,Small,No statistically significant difference detected
+1016,1036,elderly,110,136,62.7,38.2,24.5,Chi-Square,13.632,0.0002,Yes,0.495,Medium,Statistically significant with moderate practical difference
+1016,1037,elderly,110,145,62.7,37.9,24.8,Chi-Square,14.418,0.0001,Yes,0.501,Large,Statistically significant with large practical difference
+1016,1038,elderly,110,176,62.7,50.6,12.2,Chi-Square,3.571,0.0588,No,0.246,Medium,No statistically significant difference detected
+1016,1039,elderly,110,147,62.7,29.3,33.5,Chi-Square,27.33,0.0,Yes,0.685,Large,Statistically significant with large practical difference
+1016,1040,elderly,110,131,62.7,35.9,26.8,Chi-Square,16.207,0.0001,Yes,0.544,Large,Statistically significant with large practical difference
+1016,1041,elderly,110,124,62.7,57.3,5.5,Chi-Square,0.516,0.4727,No,0.112,Small,No statistically significant difference detected
+1016,1042,elderly,110,112,62.7,62.5,0.2,Chi-Square,,1.0,No,0.005,Small,No statistically significant difference detected
+1016,1043,elderly,110,126,62.7,48.4,14.3,Chi-Square,4.303,0.0381,Yes,0.289,Medium,Statistically significant with moderate practical difference
+1016,1044,elderly,110,131,62.7,32.8,29.9,Chi-Square,20.308,0.0,Yes,0.608,Large,Statistically significant with large practical difference
+1016,1045,elderly,110,151,62.7,59.6,3.1,Chi-Square,0.146,0.7022,No,0.064,Small,No statistically significant difference detected
+1016,1046,elderly,110,122,62.7,43.4,19.3,Chi-Square,7.872,0.005,Yes,0.389,Medium,Statistically significant with moderate practical difference
+1016,1047,elderly,110,129,62.7,46.5,16.2,Chi-Square,5.649,0.0175,Yes,0.327,Medium,Statistically significant with moderate practical difference
+1016,1048,elderly,110,123,62.7,49.6,13.1,Chi-Square,3.546,0.0597,No,0.266,Medium,No statistically significant difference detected
+1016,1049,elderly,110,148,62.7,44.6,18.1,Chi-Square,7.606,0.0058,Yes,0.366,Medium,Statistically significant with moderate practical difference
+1016,1050,elderly,110,126,62.7,30.2,32.6,Chi-Square,23.839,0.0,Yes,0.665,Large,Statistically significant with large practical difference
+1017,1018,elderly,135,125,51.9,41.6,10.3,Chi-Square,2.343,0.1259,No,0.206,Medium,No statistically significant difference detected
+1017,1019,elderly,135,153,51.9,28.1,23.7,Chi-Square,15.983,0.0001,Yes,0.49,Medium,Statistically significant with moderate practical difference
+1017,1020,elderly,135,119,51.9,48.7,3.1,Chi-Square,0.136,0.7119,No,0.062,Small,No statistically significant difference detected
+1017,1021,elderly,135,125,51.9,47.2,4.7,Chi-Square,0.391,0.5317,No,0.093,Small,No statistically significant difference detected
+1017,1022,elderly,135,126,51.9,41.3,10.6,Chi-Square,2.522,0.1123,No,0.213,Medium,No statistically significant difference detected
+1017,1023,elderly,135,114,51.9,57.0,-5.2,Chi-Square,0.473,0.4918,No,-0.104,Small,No statistically significant difference detected
+1017,1024,elderly,135,123,51.9,52.8,-1.0,Chi-Square,0.001,0.9722,No,-0.02,Small,No statistically significant difference detected
+1017,1025,elderly,135,136,51.9,50.0,1.9,Chi-Square,0.034,0.8545,No,0.037,Small,No statistically significant difference detected
+1017,1026,elderly,135,125,51.9,50.4,1.5,Chi-Square,0.012,0.9125,No,0.029,Small,No statistically significant difference detected
+1017,1027,elderly,135,118,51.9,31.4,20.5,Chi-Square,10.014,0.0016,Yes,0.419,Medium,Statistically significant with moderate practical difference
+1017,1028,elderly,135,153,51.9,42.5,9.4,Chi-Square,2.165,0.1412,No,0.188,Small,No statistically significant difference detected
+1017,1029,elderly,135,124,51.9,59.7,-7.8,Chi-Square,1.302,0.2538,No,-0.158,Small,No statistically significant difference detected
+1017,1030,elderly,135,134,51.9,52.2,-0.4,Chi-Square,,1.0,No,-0.008,Small,No statistically significant difference detected
+1017,1031,elderly,135,124,51.9,37.9,13.9,Chi-Square,4.53,0.0333,Yes,0.281,Medium,Statistically significant with moderate practical difference
+1017,1032,elderly,135,125,51.9,31.2,20.7,Chi-Square,10.537,0.0012,Yes,0.423,Medium,Statistically significant with moderate practical difference
+1017,1033,elderly,135,121,51.9,43.0,8.9,Chi-Square,1.675,0.1955,No,0.178,Small,No statistically significant difference detected
+1017,1034,elderly,135,116,51.9,73.3,-21.4,Chi-Square,11.234,0.0008,Yes,-0.447,Medium,Statistically significant with moderate practical difference
+1017,1035,elderly,135,125,51.9,53.6,-1.7,Chi-Square,0.025,0.8746,No,-0.035,Small,No statistically significant difference detected
+1017,1036,elderly,135,136,51.9,38.2,13.6,Chi-Square,4.54,0.0331,Yes,0.275,Medium,Statistically significant with moderate practical difference
+1017,1037,elderly,135,145,51.9,37.9,13.9,Chi-Square,4.933,0.0263,Yes,0.281,Medium,Statistically significant with moderate practical difference
+1017,1038,elderly,135,176,51.9,50.6,1.3,Chi-Square,0.012,0.9124,No,0.026,Small,No statistically significant difference detected
+1017,1039,elderly,135,147,51.9,29.3,22.6,Chi-Square,14.041,0.0002,Yes,0.465,Medium,Statistically significant with moderate practical difference
+1017,1040,elderly,135,131,51.9,35.9,16.0,Chi-Square,6.253,0.0124,Yes,0.323,Medium,Statistically significant with moderate practical difference
+1017,1041,elderly,135,124,51.9,57.3,-5.4,Chi-Square,0.559,0.4546,No,-0.109,Small,No statistically significant difference detected
+1017,1042,elderly,135,112,51.9,62.5,-10.6,Chi-Square,2.41,0.1206,No,-0.216,Medium,No statistically significant difference detected
+1017,1043,elderly,135,126,51.9,48.4,3.4,Chi-Square,0.186,0.6662,No,0.069,Small,No statistically significant difference detected
+1017,1044,elderly,135,131,51.9,32.8,19.0,Chi-Square,9.088,0.0026,Yes,0.388,Medium,Statistically significant with moderate practical difference
+1017,1045,elderly,135,151,51.9,59.6,-7.8,Chi-Square,1.437,0.2306,No,-0.156,Small,No statistically significant difference detected
+1017,1046,elderly,135,122,51.9,43.4,8.4,Chi-Square,1.495,0.2215,No,0.169,Small,No statistically significant difference detected
+1017,1047,elderly,135,129,51.9,46.5,5.3,Chi-Square,0.554,0.4566,No,0.107,Small,No statistically significant difference detected
+1017,1048,elderly,135,123,51.9,49.6,2.3,Chi-Square,0.057,0.8121,No,0.045,Small,No statistically significant difference detected
+1017,1049,elderly,135,148,51.9,44.6,7.3,Chi-Square,1.213,0.2707,No,0.145,Small,No statistically significant difference detected
+1017,1050,elderly,135,126,51.9,30.2,21.7,Chi-Square,11.765,0.0006,Yes,0.445,Medium,Statistically significant with moderate practical difference
+1018,1019,elderly,125,153,41.6,28.1,13.5,Chi-Square,4.986,0.0256,Yes,0.284,Medium,Statistically significant with moderate practical difference
+1018,1020,elderly,125,119,41.6,48.7,-7.1,Chi-Square,0.983,0.3214,No,-0.144,Small,No statistically significant difference detected
+1018,1021,elderly,125,125,41.6,47.2,-5.6,Chi-Square,0.583,0.445,No,-0.113,Small,No statistically significant difference detected
+1018,1022,elderly,125,126,41.6,41.3,0.3,Chi-Square,,1.0,No,0.007,Small,No statistically significant difference detected
+1018,1023,elderly,125,114,41.6,57.0,-15.4,Chi-Square,5.071,0.0243,Yes,-0.31,Medium,Statistically significant with moderate practical difference
+1018,1024,elderly,125,123,41.6,52.8,-11.2,Chi-Square,2.711,0.0997,No,-0.226,Medium,No statistically significant difference detected
+1018,1025,elderly,125,136,41.6,50.0,-8.4,Chi-Square,1.528,0.2165,No,-0.169,Small,No statistically significant difference detected
+1018,1026,elderly,125,125,41.6,50.4,-8.8,Chi-Square,1.61,0.2044,No,-0.177,Small,No statistically significant difference detected
+1018,1027,elderly,125,118,41.6,31.4,10.2,Chi-Square,2.321,0.1277,No,0.213,Medium,No statistically significant difference detected
+1018,1028,elderly,125,153,41.6,42.5,-0.9,Chi-Square,0.001,0.979,No,-0.018,Small,No statistically significant difference detected
+1018,1029,elderly,125,124,41.6,59.7,-18.1,Chi-Square,7.431,0.0064,Yes,-0.364,Medium,Statistically significant with moderate practical difference
+1018,1030,elderly,125,134,41.6,52.2,-10.6,Chi-Square,2.526,0.112,No,-0.214,Medium,No statistically significant difference detected
+1018,1031,elderly,125,124,41.6,37.9,3.7,Chi-Square,0.218,0.6409,No,0.076,Small,No statistically significant difference detected
+1018,1032,elderly,125,125,41.6,31.2,10.4,Chi-Square,2.488,0.1147,No,0.217,Medium,No statistically significant difference detected
+1018,1033,elderly,125,121,41.6,43.0,-1.4,Chi-Square,0.008,0.9289,No,-0.028,Small,No statistically significant difference detected
+1018,1034,elderly,125,116,41.6,73.3,-31.7,Chi-Square,23.334,0.0,Yes,-0.653,Large,Statistically significant with large practical difference
+1018,1035,elderly,125,125,41.6,53.6,-12.0,Chi-Square,3.143,0.0762,No,-0.241,Medium,No statistically significant difference detected
+1018,1036,elderly,125,136,41.6,38.2,3.4,Chi-Square,0.183,0.6686,No,0.069,Small,No statistically significant difference detected
+1018,1037,elderly,125,145,41.6,37.9,3.7,Chi-Square,0.24,0.6243,No,0.075,Small,No statistically significant difference detected
+1018,1038,elderly,125,176,41.6,50.6,-9.0,Chi-Square,2.014,0.1558,No,-0.18,Small,No statistically significant difference detected
+1018,1039,elderly,125,147,41.6,29.3,12.3,Chi-Square,4.005,0.0454,Yes,0.259,Medium,Statistically significant with moderate practical difference
+1018,1040,elderly,125,131,41.6,35.9,5.7,Chi-Square,0.658,0.4172,No,0.118,Small,No statistically significant difference detected
+1018,1041,elderly,125,124,41.6,57.3,-15.7,Chi-Square,5.495,0.0191,Yes,-0.314,Medium,Statistically significant with moderate practical difference
+1018,1042,elderly,125,112,41.6,62.5,-20.9,Chi-Square,9.51,0.002,Yes,-0.421,Medium,Statistically significant with moderate practical difference
+1018,1043,elderly,125,126,41.6,48.4,-6.8,Chi-Square,0.917,0.3381,No,-0.137,Small,No statistically significant difference detected
+1018,1044,elderly,125,131,41.6,32.8,8.8,Chi-Square,1.751,0.1857,No,0.182,Small,No statistically significant difference detected
+1018,1045,elderly,125,151,41.6,59.6,-18.0,Chi-Square,8.167,0.0043,Yes,-0.362,Medium,Statistically significant with moderate practical difference
+1018,1046,elderly,125,122,41.6,43.4,-1.8,Chi-Square,0.027,0.8696,No,-0.037,Small,No statistically significant difference detected
+1018,1047,elderly,125,129,41.6,46.5,-4.9,Chi-Square,0.438,0.5081,No,-0.099,Small,No statistically significant difference detected
+1018,1048,elderly,125,123,41.6,49.6,-8.0,Chi-Square,1.291,0.2559,No,-0.161,Small,No statistically significant difference detected
+1018,1049,elderly,125,148,41.6,44.6,-3.0,Chi-Square,0.141,0.7077,No,-0.06,Small,No statistically significant difference detected
+1018,1050,elderly,125,126,41.6,30.2,11.4,Chi-Square,3.091,0.0787,No,0.239,Medium,No statistically significant difference detected
+1019,1020,elderly,153,119,28.1,48.7,-20.6,Chi-Square,11.341,0.0008,Yes,-0.428,Medium,Statistically significant with moderate practical difference
+1019,1021,elderly,153,125,28.1,47.2,-19.1,Chi-Square,9.993,0.0016,Yes,-0.397,Medium,Statistically significant with moderate practical difference
+1019,1022,elderly,153,126,28.1,41.3,-13.2,Chi-Square,4.763,0.0291,Yes,-0.278,Medium,Statistically significant with moderate practical difference
+1019,1023,elderly,153,114,28.1,57.0,-28.9,Chi-Square,21.487,0.0,Yes,-0.594,Large,Statistically significant with large practical difference
+1019,1024,elderly,153,123,28.1,52.8,-24.7,Chi-Square,16.5,0.0,Yes,-0.51,Large,Statistically significant with large practical difference
+1019,1025,elderly,153,136,28.1,50.0,-21.9,Chi-Square,13.68,0.0002,Yes,-0.453,Medium,Statistically significant with moderate practical difference
+1019,1026,elderly,153,125,28.1,50.4,-22.3,Chi-Square,13.566,0.0002,Yes,-0.461,Medium,Statistically significant with moderate practical difference
+1019,1027,elderly,153,118,28.1,31.4,-3.3,Chi-Square,0.2,0.6545,No,-0.071,Small,No statistically significant difference detected
+1019,1028,elderly,153,153,28.1,42.5,-14.4,Chi-Square,6.311,0.012,Yes,-0.302,Medium,Statistically significant with moderate practical difference
+1019,1029,elderly,153,124,28.1,59.7,-31.6,Chi-Square,26.705,0.0,Yes,-0.648,Large,Statistically significant with large practical difference
+1019,1030,elderly,153,134,28.1,52.2,-24.1,Chi-Square,16.434,0.0001,Yes,-0.498,Medium,Statistically significant with moderate practical difference
+1019,1031,elderly,153,124,28.1,37.9,-9.8,Chi-Square,2.568,0.109,No,-0.209,Medium,No statistically significant difference detected
+1019,1032,elderly,153,125,28.1,31.2,-3.1,Chi-Square,0.186,0.6666,No,-0.068,Small,No statistically significant difference detected
+1019,1033,elderly,153,121,28.1,43.0,-14.9,Chi-Square,5.956,0.0147,Yes,-0.312,Medium,Statistically significant with moderate practical difference
+1019,1034,elderly,153,116,28.1,73.3,-45.2,Chi-Square,52.18,0.0,Yes,-0.937,Large,Statistically significant with large practical difference
+1019,1035,elderly,153,125,28.1,53.6,-25.5,Chi-Square,17.65,0.0,Yes,-0.525,Large,Statistically significant with large practical difference
+1019,1036,elderly,153,136,28.1,38.2,-10.1,Chi-Square,2.905,0.0883,No,-0.216,Medium,No statistically significant difference detected
+1019,1037,elderly,153,145,28.1,37.9,-9.8,Chi-Square,2.827,0.0927,No,-0.209,Medium,No statistically significant difference detected
+1019,1038,elderly,153,176,28.1,50.6,-22.5,Chi-Square,16.269,0.0001,Yes,-0.465,Medium,Statistically significant with moderate practical difference
+1019,1039,elderly,153,147,28.1,29.3,-1.1,Chi-Square,0.008,0.9267,No,-0.025,Small,No statistically significant difference detected
+1019,1040,elderly,153,131,28.1,35.9,-7.8,Chi-Square,1.627,0.2021,No,-0.167,Small,No statistically significant difference detected
+1019,1041,elderly,153,124,28.1,57.3,-29.2,Chi-Square,22.848,0.0,Yes,-0.599,Large,Statistically significant with large practical difference
+1019,1042,elderly,153,112,28.1,62.5,-34.4,Chi-Square,29.887,0.0,Yes,-0.706,Large,Statistically significant with large practical difference
+1019,1043,elderly,153,126,28.1,48.4,-20.3,Chi-Square,11.335,0.0008,Yes,-0.422,Medium,Statistically significant with moderate practical difference
+1019,1044,elderly,153,131,28.1,32.8,-4.7,Chi-Square,0.538,0.4633,No,-0.103,Small,No statistically significant difference detected
+1019,1045,elderly,153,151,28.1,59.6,-31.5,Chi-Square,29.372,0.0,Yes,-0.647,Large,Statistically significant with large practical difference
+1019,1046,elderly,153,122,28.1,43.4,-15.3,Chi-Square,6.369,0.0116,Yes,-0.322,Medium,Statistically significant with moderate practical difference
+1019,1047,elderly,153,129,28.1,46.5,-18.4,Chi-Square,9.45,0.0021,Yes,-0.383,Medium,Statistically significant with moderate practical difference
+1019,1048,elderly,153,123,28.1,49.6,-21.5,Chi-Square,12.509,0.0004,Yes,-0.445,Medium,Statistically significant with moderate practical difference
+1019,1049,elderly,153,148,28.1,44.6,-16.5,Chi-Square,8.156,0.0043,Yes,-0.345,Medium,Statistically significant with moderate practical difference
+1019,1050,elderly,153,126,28.1,30.2,-2.1,Chi-Square,0.059,0.8075,No,-0.045,Small,No statistically significant difference detected
+1020,1021,elderly,119,125,48.7,47.2,1.5,Chi-Square,0.013,0.9105,No,0.031,Small,No statistically significant difference detected
+1020,1022,elderly,119,126,48.7,41.3,7.5,Chi-Square,1.095,0.2954,No,0.15,Small,No statistically significant difference detected
+1020,1023,elderly,119,114,48.7,57.0,-8.3,Chi-Square,1.286,0.2568,No,-0.166,Small,No statistically significant difference detected
+1020,1024,elderly,119,123,48.7,52.8,-4.1,Chi-Square,0.26,0.6099,No,-0.082,Small,No statistically significant difference detected
+1020,1025,elderly,119,136,48.7,50.0,-1.3,Chi-Square,0.006,0.94,No,-0.025,Small,No statistically significant difference detected
+1020,1026,elderly,119,125,48.7,50.4,-1.7,Chi-Square,0.017,0.8956,No,-0.033,Small,No statistically significant difference detected
+1020,1027,elderly,119,118,48.7,31.4,17.4,Chi-Square,6.749,0.0094,Yes,0.357,Medium,Statistically significant with moderate practical difference
+1020,1028,elderly,119,153,48.7,42.5,6.3,Chi-Square,0.82,0.3652,No,0.126,Small,No statistically significant difference detected
+1020,1029,elderly,119,124,48.7,59.7,-10.9,Chi-Square,2.504,0.1136,No,-0.22,Medium,No statistically significant difference detected
+1020,1030,elderly,119,134,48.7,52.2,-3.5,Chi-Square,0.185,0.6674,No,-0.07,Small,No statistically significant difference detected
+1020,1031,elderly,119,124,48.7,37.9,10.8,Chi-Square,2.481,0.1152,No,0.219,Medium,No statistically significant difference detected
+1020,1032,elderly,119,125,48.7,31.2,17.5,Chi-Square,7.115,0.0076,Yes,0.36,Medium,Statistically significant with moderate practical difference
+1020,1033,elderly,119,121,48.7,43.0,5.8,Chi-Square,0.588,0.4434,No,0.116,Small,No statistically significant difference detected
+1020,1034,elderly,119,116,48.7,73.3,-24.5,Chi-Square,13.833,0.0002,Yes,-0.509,Large,Statistically significant with large practical difference
+1020,1035,elderly,119,125,48.7,53.6,-4.9,Chi-Square,0.398,0.528,No,-0.097,Small,No statistically significant difference detected
+1020,1036,elderly,119,136,48.7,38.2,10.5,Chi-Square,2.443,0.1181,No,0.212,Medium,No statistically significant difference detected
+1020,1037,elderly,119,145,48.7,37.9,10.8,Chi-Square,2.693,0.1008,No,0.219,Medium,No statistically significant difference detected
+1020,1038,elderly,119,176,48.7,50.6,-1.8,Chi-Square,0.036,0.8497,No,-0.037,Small,No statistically significant difference detected
+1020,1039,elderly,119,147,48.7,29.3,19.5,Chi-Square,9.793,0.0018,Yes,0.403,Medium,Statistically significant with moderate practical difference
+1020,1040,elderly,119,131,48.7,35.9,12.9,Chi-Square,3.723,0.0537,No,0.261,Medium,No statistically significant difference detected
+1020,1041,elderly,119,124,48.7,57.3,-8.5,Chi-Square,1.444,0.2295,No,-0.171,Small,No statistically significant difference detected
+1020,1042,elderly,119,112,48.7,62.5,-13.8,Chi-Square,3.882,0.0488,Yes,-0.278,Medium,Statistically significant with moderate practical difference
+1020,1043,elderly,119,126,48.7,48.4,0.3,Chi-Square,,1.0,No,0.007,Small,No statistically significant difference detected
+1020,1044,elderly,119,131,48.7,32.8,15.9,Chi-Square,5.915,0.015,Yes,0.325,Medium,Statistically significant with moderate practical difference
+1020,1045,elderly,119,151,48.7,59.6,-10.9,Chi-Square,2.747,0.0974,No,-0.218,Medium,No statistically significant difference detected
+1020,1046,elderly,119,122,48.7,43.4,5.3,Chi-Square,0.484,0.4867,No,0.106,Small,No statistically significant difference detected
+1020,1047,elderly,119,129,48.7,46.5,2.2,Chi-Square,0.05,0.823,No,0.045,Small,No statistically significant difference detected
+1020,1048,elderly,119,123,48.7,49.6,-0.9,Chi-Square,0.0,0.9966,No,-0.017,Small,No statistically significant difference detected
+1020,1049,elderly,119,148,48.7,44.6,4.1,Chi-Square,0.304,0.5813,No,0.083,Small,No statistically significant difference detected
+1020,1050,elderly,119,126,48.7,30.2,18.6,Chi-Square,8.104,0.0044,Yes,0.383,Medium,Statistically significant with moderate practical difference
+1021,1022,elderly,125,126,47.2,41.3,5.9,Chi-Square,0.67,0.4129,No,0.119,Small,No statistically significant difference detected
+1021,1023,elderly,125,114,47.2,57.0,-9.8,Chi-Square,1.926,0.1653,No,-0.197,Small,No statistically significant difference detected
+1021,1024,elderly,125,123,47.2,52.8,-5.6,Chi-Square,0.581,0.446,No,-0.113,Small,No statistically significant difference detected
+1021,1025,elderly,125,136,47.2,50.0,-2.8,Chi-Square,0.108,0.7428,No,-0.056,Small,No statistically significant difference detected
+1021,1026,elderly,125,125,47.2,50.4,-3.2,Chi-Square,0.144,0.7043,No,-0.064,Small,No statistically significant difference detected
+1021,1027,elderly,125,118,47.2,31.4,15.8,Chi-Square,5.73,0.0167,Yes,0.326,Medium,Statistically significant with moderate practical difference
+1021,1028,elderly,125,153,47.2,42.5,4.7,Chi-Square,0.443,0.5056,No,0.095,Small,No statistically significant difference detected
+1021,1029,elderly,125,124,47.2,59.7,-12.5,Chi-Square,3.409,0.0648,No,-0.251,Medium,No statistically significant difference detected
+1021,1030,elderly,125,134,47.2,52.2,-5.0,Chi-Square,0.471,0.4927,No,-0.101,Small,No statistically significant difference detected
+1021,1031,elderly,125,124,47.2,37.9,9.3,Chi-Square,1.837,0.1753,No,0.188,Small,No statistically significant difference detected
+1021,1032,elderly,125,125,47.2,31.2,16.0,Chi-Square,6.059,0.0138,Yes,0.329,Medium,Statistically significant with moderate practical difference
+1021,1033,elderly,125,121,47.2,43.0,4.2,Chi-Square,0.289,0.5909,No,0.085,Small,No statistically significant difference detected
+1021,1034,elderly,125,116,47.2,73.3,-26.1,Chi-Square,15.944,0.0001,Yes,-0.54,Large,Statistically significant with large practical difference
+1021,1035,elderly,125,125,47.2,53.6,-6.4,Chi-Square,0.784,0.3759,No,-0.128,Small,No statistically significant difference detected
+1021,1036,elderly,125,136,47.2,38.2,9.0,Chi-Square,1.791,0.1809,No,0.181,Small,No statistically significant difference detected
+1021,1037,elderly,125,145,47.2,37.9,9.3,Chi-Square,1.999,0.1574,No,0.188,Small,No statistically significant difference detected
+1021,1038,elderly,125,176,47.2,50.6,-3.4,Chi-Square,0.211,0.6462,No,-0.067,Small,No statistically significant difference detected
+1021,1039,elderly,125,147,47.2,29.3,17.9,Chi-Square,8.535,0.0035,Yes,0.372,Medium,Statistically significant with moderate practical difference
+1021,1040,elderly,125,131,47.2,35.9,11.3,Chi-Square,2.929,0.087,No,0.23,Medium,No statistically significant difference detected
+1021,1041,elderly,125,124,47.2,57.3,-10.1,Chi-Square,2.137,0.1438,No,-0.202,Medium,No statistically significant difference detected
+1021,1042,elderly,125,112,47.2,62.5,-15.3,Chi-Square,4.975,0.0257,Yes,-0.309,Medium,Statistically significant with moderate practical difference
+1021,1043,elderly,125,126,47.2,48.4,-1.2,Chi-Square,0.004,0.9474,No,-0.024,Small,No statistically significant difference detected
+1021,1044,elderly,125,131,47.2,32.8,14.4,Chi-Square,4.932,0.0264,Yes,0.295,Medium,Statistically significant with moderate practical difference
+1021,1045,elderly,125,151,47.2,59.6,-12.4,Chi-Square,3.75,0.0528,No,-0.249,Medium,No statistically significant difference detected
+1021,1046,elderly,125,122,47.2,43.4,3.8,Chi-Square,0.216,0.6418,No,0.075,Small,No statistically significant difference detected
+1021,1047,elderly,125,129,47.2,46.5,0.7,Chi-Square,,1.0,No,0.014,Small,No statistically significant difference detected
+1021,1048,elderly,125,123,47.2,49.6,-2.4,Chi-Square,0.063,0.8026,No,-0.048,Small,No statistically significant difference detected
+1021,1049,elderly,125,148,47.2,44.6,2.6,Chi-Square,0.095,0.7576,No,0.052,Small,No statistically significant difference detected
+1021,1050,elderly,125,126,47.2,30.2,17.0,Chi-Square,6.983,0.0082,Yes,0.352,Medium,Statistically significant with moderate practical difference
+1022,1023,elderly,126,114,41.3,57.0,-15.7,Chi-Square,5.327,0.021,Yes,-0.316,Medium,Statistically significant with moderate practical difference
+1022,1024,elderly,126,123,41.3,52.8,-11.6,Chi-Square,2.9,0.0886,No,-0.232,Medium,No statistically significant difference detected
+1022,1025,elderly,126,136,41.3,50.0,-8.7,Chi-Square,1.672,0.196,No,-0.176,Small,No statistically significant difference detected
+1022,1026,elderly,126,125,41.3,50.4,-9.1,Chi-Square,1.755,0.1852,No,-0.184,Small,No statistically significant difference detected
+1022,1027,elderly,126,118,41.3,31.4,9.9,Chi-Square,2.175,0.1403,No,0.207,Medium,No statistically significant difference detected
+1022,1028,elderly,126,153,41.3,42.5,-1.2,Chi-Square,0.007,0.9342,No,-0.025,Small,No statistically significant difference detected
+1022,1029,elderly,126,124,41.3,59.7,-18.4,Chi-Square,7.751,0.0054,Yes,-0.37,Medium,Statistically significant with moderate practical difference
+1022,1030,elderly,126,134,41.3,52.2,-11.0,Chi-Square,2.712,0.0996,No,-0.22,Medium,No statistically significant difference detected
+1022,1031,elderly,126,124,41.3,37.9,3.4,Chi-Square,0.172,0.6782,No,0.069,Small,No statistically significant difference detected
+1022,1032,elderly,126,125,41.3,31.2,10.1,Chi-Square,2.335,0.1265,No,0.21,Medium,No statistically significant difference detected
+1022,1033,elderly,126,121,41.3,43.0,-1.7,Chi-Square,0.02,0.8867,No,-0.035,Small,No statistically significant difference detected
+1022,1034,elderly,126,116,41.3,73.3,-32.0,Chi-Square,23.902,0.0,Yes,-0.66,Large,Statistically significant with large practical difference
+1022,1035,elderly,126,125,41.3,53.6,-12.3,Chi-Square,3.348,0.0673,No,-0.248,Medium,No statistically significant difference detected
+1022,1036,elderly,126,136,41.3,38.2,3.0,Chi-Square,0.141,0.7075,No,0.062,Small,No statistically significant difference detected
+1022,1037,elderly,126,145,41.3,37.9,3.3,Chi-Square,0.19,0.6627,No,0.068,Small,No statistically significant difference detected
+1022,1038,elderly,126,176,41.3,50.6,-9.3,Chi-Square,2.191,0.1388,No,-0.187,Small,No statistically significant difference detected
+1022,1039,elderly,126,147,41.3,29.3,12.0,Chi-Square,3.806,0.0511,No,0.252,Medium,No statistically significant difference detected
+1022,1040,elderly,126,131,41.3,35.9,5.4,Chi-Square,0.577,0.4474,No,0.111,Small,No statistically significant difference detected
+1022,1041,elderly,126,124,41.3,57.3,-16.0,Chi-Square,5.768,0.0163,Yes,-0.321,Medium,Statistically significant with moderate practical difference
+1022,1042,elderly,126,112,41.3,62.5,-21.2,Chi-Square,9.864,0.0017,Yes,-0.428,Medium,Statistically significant with moderate practical difference
+1022,1043,elderly,126,126,41.3,48.4,-7.1,Chi-Square,1.027,0.3109,No,-0.144,Small,No statistically significant difference detected
+1022,1044,elderly,126,131,41.3,32.8,8.4,Chi-Square,1.62,0.2031,No,0.175,Small,No statistically significant difference detected
+1022,1045,elderly,126,151,41.3,59.6,-18.3,Chi-Square,8.521,0.0035,Yes,-0.369,Medium,Statistically significant with moderate practical difference
+1022,1046,elderly,126,122,41.3,43.4,-2.2,Chi-Square,0.047,0.8277,No,-0.044,Small,No statistically significant difference detected
+1022,1047,elderly,126,129,41.3,46.5,-5.2,Chi-Square,0.514,0.4733,No,-0.106,Small,No statistically significant difference detected
+1022,1048,elderly,126,123,41.3,49.6,-8.3,Chi-Square,1.42,0.2334,No,-0.167,Small,No statistically significant difference detected
+1022,1049,elderly,126,148,41.3,44.6,-3.3,Chi-Square,0.186,0.6661,No,-0.067,Small,No statistically significant difference detected
+1022,1050,elderly,126,126,41.3,30.2,11.1,Chi-Square,2.921,0.0874,No,0.233,Medium,No statistically significant difference detected
+1023,1024,elderly,114,123,57.0,52.8,4.2,Chi-Square,0.264,0.6071,No,0.084,Small,No statistically significant difference detected
+1023,1025,elderly,114,136,57.0,50.0,7.0,Chi-Square,0.961,0.3269,No,0.141,Small,No statistically significant difference detected
+1023,1026,elderly,114,125,57.0,50.4,6.6,Chi-Square,0.801,0.3709,No,0.133,Small,No statistically significant difference detected
+1023,1027,elderly,114,118,57.0,31.4,25.7,Chi-Square,14.475,0.0001,Yes,0.523,Large,Statistically significant with large practical difference
+1023,1028,elderly,114,153,57.0,42.5,14.5,Chi-Square,4.957,0.026,Yes,0.292,Medium,Statistically significant with moderate practical difference
+1023,1029,elderly,114,124,57.0,59.7,-2.7,Chi-Square,0.081,0.7762,No,-0.054,Small,No statistically significant difference detected
+1023,1030,elderly,114,134,57.0,52.2,4.8,Chi-Square,0.391,0.5319,No,0.096,Small,No statistically significant difference detected
+1023,1031,elderly,114,124,57.0,37.9,19.1,Chi-Square,7.96,0.0048,Yes,0.385,Medium,Statistically significant with moderate practical difference
+1023,1032,elderly,114,125,57.0,31.2,25.8,Chi-Square,15.135,0.0001,Yes,0.526,Large,Statistically significant with large practical difference
+1023,1033,elderly,114,121,57.0,43.0,14.0,Chi-Square,4.085,0.0433,Yes,0.282,Medium,Statistically significant with moderate practical difference
+1023,1034,elderly,114,116,57.0,73.3,-16.3,Chi-Square,6.002,0.0143,Yes,-0.343,Medium,Statistically significant with moderate practical difference
+1023,1035,elderly,114,125,57.0,53.6,3.4,Chi-Square,0.16,0.6888,No,0.069,Small,No statistically significant difference detected
+1023,1036,elderly,114,136,57.0,38.2,18.8,Chi-Square,8.049,0.0046,Yes,0.378,Medium,Statistically significant with moderate practical difference
+1023,1037,elderly,114,145,57.0,37.9,19.1,Chi-Square,8.599,0.0034,Yes,0.385,Medium,Statistically significant with moderate practical difference
+1023,1038,elderly,114,176,57.0,50.6,6.4,Chi-Square,0.911,0.3398,No,0.129,Small,No statistically significant difference detected
+1023,1039,elderly,114,147,57.0,29.3,27.8,Chi-Square,19.278,0.0,Yes,0.569,Large,Statistically significant with large practical difference
+1023,1040,elderly,114,131,57.0,35.9,21.1,Chi-Square,10.141,0.0014,Yes,0.427,Medium,Statistically significant with moderate practical difference
+1023,1041,elderly,114,124,57.0,57.3,-0.2,Chi-Square,,1.0,No,-0.005,Small,No statistically significant difference detected
+1023,1042,elderly,114,112,57.0,62.5,-5.5,Chi-Square,0.496,0.4811,No,-0.112,Small,No statistically significant difference detected
+1023,1043,elderly,114,126,57.0,48.4,8.6,Chi-Square,1.449,0.2287,No,0.173,Small,No statistically significant difference detected
+1023,1044,elderly,114,131,57.0,32.8,24.2,Chi-Square,13.509,0.0002,Yes,0.491,Medium,Statistically significant with moderate practical difference
+1023,1045,elderly,114,151,57.0,59.6,-2.6,Chi-Square,0.088,0.7665,No,-0.052,Small,No statistically significant difference detected
+1023,1046,elderly,114,122,57.0,43.4,13.6,Chi-Square,3.818,0.0507,No,0.272,Medium,No statistically significant difference detected
+1023,1047,elderly,114,129,57.0,46.5,10.5,Chi-Square,2.27,0.1319,No,0.211,Medium,No statistically significant difference detected
+1023,1048,elderly,114,123,57.0,49.6,7.4,Chi-Square,1.028,0.3105,No,0.149,Small,No statistically significant difference detected
+1023,1049,elderly,114,148,57.0,44.6,12.4,Chi-Square,3.494,0.0616,No,0.249,Medium,No statistically significant difference detected
+1023,1050,elderly,114,126,57.0,30.2,26.9,Chi-Square,16.545,0.0,Yes,0.549,Large,Statistically significant with large practical difference
+1024,1025,elderly,123,136,52.8,50.0,2.8,Chi-Square,0.111,0.7391,No,0.057,Small,No statistically significant difference detected
+1024,1026,elderly,123,125,52.8,50.4,2.4,Chi-Square,0.067,0.7962,No,0.049,Small,No statistically significant difference detected
+1024,1027,elderly,123,118,52.8,31.4,21.5,Chi-Square,10.53,0.0012,Yes,0.439,Medium,Statistically significant with moderate practical difference
+1024,1028,elderly,123,153,52.8,42.5,10.4,Chi-Square,2.537,0.1112,No,0.208,Medium,No statistically significant difference detected
+1024,1029,elderly,123,124,52.8,59.7,-6.8,Chi-Square,0.91,0.3401,No,-0.138,Small,No statistically significant difference detected
+1024,1030,elderly,123,134,52.8,52.2,0.6,Chi-Square,,1.0,No,0.012,Small,No statistically significant difference detected
+1024,1031,elderly,123,124,52.8,37.9,14.9,Chi-Square,4.976,0.0257,Yes,0.301,Medium,Statistically significant with moderate practical difference
+1024,1032,elderly,123,125,52.8,31.2,21.6,Chi-Square,11.057,0.0009,Yes,0.442,Medium,Statistically significant with moderate practical difference
+1024,1033,elderly,123,121,52.8,43.0,9.9,Chi-Square,2.002,0.1571,No,0.198,Small,No statistically significant difference detected
+1024,1034,elderly,123,116,52.8,73.3,-20.4,Chi-Square,9.806,0.0017,Yes,-0.427,Medium,Statistically significant with moderate practical difference
+1024,1035,elderly,123,125,52.8,53.6,-0.8,Chi-Square,,1.0,No,-0.015,Small,No statistically significant difference detected
+1024,1036,elderly,123,136,52.8,38.2,14.6,Chi-Square,4.992,0.0255,Yes,0.294,Medium,Statistically significant with moderate practical difference
+1024,1037,elderly,123,145,52.8,37.9,14.9,Chi-Square,5.399,0.0202,Yes,0.301,Medium,Statistically significant with moderate practical difference
+1024,1038,elderly,123,176,52.8,50.6,2.3,Chi-Square,0.073,0.787,No,0.046,Small,No statistically significant difference detected
+1024,1039,elderly,123,147,52.8,29.3,23.6,Chi-Square,14.565,0.0001,Yes,0.485,Medium,Statistically significant with moderate practical difference
+1024,1040,elderly,123,131,52.8,35.9,17.0,Chi-Square,6.736,0.0094,Yes,0.343,Medium,Statistically significant with moderate practical difference
+1024,1041,elderly,123,124,52.8,57.3,-4.4,Chi-Square,0.324,0.5693,No,-0.089,Small,No statistically significant difference detected
+1024,1042,elderly,123,112,52.8,62.5,-9.7,Chi-Square,1.858,0.1729,No,-0.196,Small,No statistically significant difference detected
+1024,1043,elderly,123,126,52.8,48.4,4.4,Chi-Square,0.328,0.5668,No,0.089,Small,No statistically significant difference detected
+1024,1044,elderly,123,131,52.8,32.8,20.0,Chi-Square,9.601,0.0019,Yes,0.408,Medium,Statistically significant with moderate practical difference
+1024,1045,elderly,123,151,52.8,59.6,-6.8,Chi-Square,1.0,0.3174,No,-0.136,Small,No statistically significant difference detected
+1024,1046,elderly,123,122,52.8,43.4,9.4,Chi-Square,1.809,0.1787,No,0.188,Small,No statistically significant difference detected
+1024,1047,elderly,123,129,52.8,46.5,6.3,Chi-Square,0.773,0.3793,No,0.127,Small,No statistically significant difference detected
+1024,1048,elderly,123,123,52.8,49.6,3.3,Chi-Square,0.146,0.702,No,0.065,Small,No statistically significant difference detected
+1024,1049,elderly,123,148,52.8,44.6,8.3,Chi-Square,1.516,0.2183,No,0.165,Small,No statistically significant difference detected
+1024,1050,elderly,123,126,52.8,30.2,22.7,Chi-Square,12.289,0.0005,Yes,0.465,Medium,Statistically significant with moderate practical difference
+1025,1026,elderly,136,125,50.0,50.4,-0.4,Chi-Square,,1.0,No,-0.008,Small,No statistically significant difference detected
+1025,1027,elderly,136,118,50.0,31.4,18.6,Chi-Square,8.304,0.004,Yes,0.382,Medium,Statistically significant with moderate practical difference
+1025,1028,elderly,136,153,50.0,42.5,7.5,Chi-Square,1.349,0.2455,No,0.151,Small,No statistically significant difference detected
+1025,1029,elderly,136,124,50.0,59.7,-9.7,Chi-Square,2.076,0.1497,No,-0.195,Small,No statistically significant difference detected
+1025,1030,elderly,136,134,50.0,52.2,-2.2,Chi-Square,0.061,0.8055,No,-0.045,Small,No statistically significant difference detected
+1025,1031,elderly,136,124,50.0,37.9,12.1,Chi-Square,3.373,0.0663,No,0.244,Medium,No statistically significant difference detected
+1025,1032,elderly,136,125,50.0,31.2,18.8,Chi-Square,8.756,0.0031,Yes,0.385,Medium,Statistically significant with moderate practical difference
+1025,1033,elderly,136,121,50.0,43.0,7.0,Chi-Square,1.003,0.3166,No,0.141,Small,No statistically significant difference detected
+1025,1034,elderly,136,116,50.0,73.3,-23.3,Chi-Square,13.26,0.0003,Yes,-0.484,Medium,Statistically significant with moderate practical difference
+1025,1035,elderly,136,125,50.0,53.6,-3.6,Chi-Square,0.209,0.6474,No,-0.072,Small,No statistically significant difference detected
+1025,1036,elderly,136,136,50.0,38.2,11.8,Chi-Square,3.355,0.067,No,0.238,Medium,No statistically significant difference detected
+1025,1037,elderly,136,145,50.0,37.9,12.1,Chi-Square,3.677,0.0552,No,0.244,Medium,No statistically significant difference detected
+1025,1038,elderly,136,176,50.0,50.6,-0.6,Chi-Square,,1.0,No,-0.011,Small,No statistically significant difference detected
+1025,1039,elderly,136,147,50.0,29.3,20.7,Chi-Square,11.902,0.0006,Yes,0.428,Medium,Statistically significant with moderate practical difference
+1025,1040,elderly,136,131,50.0,35.9,14.1,Chi-Square,4.867,0.0274,Yes,0.286,Medium,Statistically significant with moderate practical difference
+1025,1041,elderly,136,124,50.0,57.3,-7.3,Chi-Square,1.097,0.2949,No,-0.146,Small,No statistically significant difference detected
+1025,1042,elderly,136,112,50.0,62.5,-12.5,Chi-Square,3.398,0.0653,No,-0.253,Medium,No statistically significant difference detected
+1025,1043,elderly,136,126,50.0,48.4,1.6,Chi-Square,0.018,0.8941,No,0.032,Small,No statistically significant difference detected
+1025,1044,elderly,136,131,50.0,32.8,17.2,Chi-Square,7.412,0.0065,Yes,0.351,Medium,Statistically significant with moderate practical difference
+1025,1045,elderly,136,151,50.0,59.6,-9.6,Chi-Square,2.292,0.13,No,-0.193,Small,No statistically significant difference detected
+1025,1046,elderly,136,122,50.0,43.4,6.6,Chi-Square,0.863,0.353,No,0.132,Small,No statistically significant difference detected
+1025,1047,elderly,136,129,50.0,46.5,3.5,Chi-Square,0.198,0.6563,No,0.07,Small,No statistically significant difference detected
+1025,1048,elderly,136,123,50.0,49.6,0.4,Chi-Square,,1.0,No,0.008,Small,No statistically significant difference detected
+1025,1049,elderly,136,148,50.0,44.6,5.4,Chi-Square,0.628,0.428,No,0.108,Small,No statistically significant difference detected
+1025,1050,elderly,136,126,50.0,30.2,19.8,Chi-Square,9.881,0.0017,Yes,0.408,Medium,Statistically significant with moderate practical difference
+1026,1027,elderly,125,118,50.4,31.4,19.0,Chi-Square,8.321,0.0039,Yes,0.39,Medium,Statistically significant with moderate practical difference
+1026,1028,elderly,125,153,50.4,42.5,7.9,Chi-Square,1.431,0.2315,No,0.159,Small,No statistically significant difference detected
+1026,1029,elderly,125,124,50.4,59.7,-9.3,Chi-Square,1.806,0.179,No,-0.187,Small,No statistically significant difference detected
+1026,1030,elderly,125,134,50.4,52.2,-1.8,Chi-Square,0.029,0.8639,No,-0.037,Small,No statistically significant difference detected
+1026,1031,elderly,125,124,50.4,37.9,12.5,Chi-Square,3.452,0.0632,No,0.252,Medium,No statistically significant difference detected
+1026,1032,elderly,125,125,50.4,31.2,19.2,Chi-Square,8.761,0.0031,Yes,0.393,Medium,Statistically significant with moderate practical difference
+1026,1033,elderly,125,121,50.4,43.0,7.4,Chi-Square,1.08,0.2988,No,0.149,Small,No statistically significant difference detected
+1026,1034,elderly,125,116,50.4,73.3,-22.9,Chi-Square,12.338,0.0004,Yes,-0.476,Medium,Statistically significant with moderate practical difference
+1026,1035,elderly,125,125,50.4,53.6,-3.2,Chi-Square,0.144,0.7041,No,-0.064,Small,No statistically significant difference detected
+1026,1036,elderly,125,136,50.4,38.2,12.2,Chi-Square,3.433,0.0639,No,0.246,Medium,No statistically significant difference detected
+1026,1037,elderly,125,145,50.4,37.9,12.5,Chi-Square,3.75,0.0528,No,0.252,Medium,No statistically significant difference detected
+1026,1038,elderly,125,176,50.4,50.6,-0.2,Chi-Square,,1.0,No,-0.003,Small,No statistically significant difference detected
+1026,1039,elderly,125,147,50.4,29.3,21.1,Chi-Square,11.83,0.0006,Yes,0.436,Medium,Statistically significant with moderate practical difference
+1026,1040,elderly,125,131,50.4,35.9,14.5,Chi-Square,4.928,0.0264,Yes,0.294,Medium,Statistically significant with moderate practical difference
+1026,1041,elderly,125,124,50.4,57.3,-6.9,Chi-Square,0.918,0.338,No,-0.138,Small,No statistically significant difference detected
+1026,1042,elderly,125,112,50.4,62.5,-12.1,Chi-Square,3.038,0.0813,No,-0.245,Medium,No statistically significant difference detected
+1026,1043,elderly,125,126,50.4,48.4,2.0,Chi-Square,0.036,0.8504,No,0.04,Small,No statistically significant difference detected
+1026,1044,elderly,125,131,50.4,32.8,17.6,Chi-Square,7.436,0.0064,Yes,0.359,Medium,Statistically significant with moderate practical difference
+1026,1045,elderly,125,151,50.4,59.6,-9.2,Chi-Square,1.987,0.1587,No,-0.185,Small,No statistically significant difference detected
+1026,1046,elderly,125,122,50.4,43.4,7.0,Chi-Square,0.937,0.3331,No,0.14,Small,No statistically significant difference detected
+1026,1047,elderly,125,129,50.4,46.5,3.9,Chi-Square,0.244,0.621,No,0.078,Small,No statistically significant difference detected
+1026,1048,elderly,125,123,50.4,49.6,0.8,Chi-Square,,1.0,No,0.016,Small,No statistically significant difference detected
+1026,1049,elderly,125,148,50.4,44.6,5.8,Chi-Square,0.698,0.4034,No,0.116,Small,No statistically significant difference detected
+1026,1050,elderly,125,126,50.4,30.2,20.2,Chi-Square,9.866,0.0017,Yes,0.416,Medium,Statistically significant with moderate practical difference
+1027,1028,elderly,118,153,31.4,42.5,-11.1,Chi-Square,3.056,0.0804,No,-0.231,Medium,No statistically significant difference detected
+1027,1029,elderly,118,124,31.4,59.7,-28.3,Chi-Square,18.408,0.0,Yes,-0.577,Large,Statistically significant with large practical difference
+1027,1030,elderly,118,134,31.4,52.2,-20.9,Chi-Square,10.362,0.0013,Yes,-0.427,Medium,Statistically significant with moderate practical difference
+1027,1031,elderly,118,124,31.4,37.9,-6.5,Chi-Square,0.873,0.3501,No,-0.138,Small,No statistically significant difference detected
+1027,1032,elderly,118,125,31.4,31.2,0.2,Chi-Square,,1.0,No,0.003,Small,No statistically significant difference detected
+1027,1033,elderly,118,121,31.4,43.0,-11.6,Chi-Square,2.972,0.0847,No,-0.241,Medium,No statistically significant difference detected
+1027,1034,elderly,118,116,31.4,73.3,-41.9,Chi-Square,39.53,0.0,Yes,-0.866,Large,Statistically significant with large practical difference
+1027,1035,elderly,118,125,31.4,53.6,-22.2,Chi-Square,11.376,0.0007,Yes,-0.454,Medium,Statistically significant with moderate practical difference
+1027,1036,elderly,118,136,31.4,38.2,-6.9,Chi-Square,1.029,0.3104,No,-0.145,Small,No statistically significant difference detected
+1027,1037,elderly,118,145,31.4,37.9,-6.6,Chi-Square,0.964,0.3261,No,-0.138,Small,No statistically significant difference detected
+1027,1038,elderly,118,176,31.4,50.6,-19.2,Chi-Square,9.877,0.0017,Yes,-0.393,Medium,Statistically significant with moderate practical difference
+1027,1039,elderly,118,147,31.4,29.3,2.1,Chi-Square,0.056,0.8133,No,0.046,Small,No statistically significant difference detected
+1027,1040,elderly,118,131,31.4,35.9,-4.5,Chi-Square,0.384,0.5357,No,-0.096,Small,No statistically significant difference detected
+1027,1041,elderly,118,124,31.4,57.3,-25.9,Chi-Square,15.384,0.0001,Yes,-0.528,Large,Statistically significant with large practical difference
+1027,1042,elderly,118,112,31.4,62.5,-31.1,Chi-Square,21.168,0.0,Yes,-0.635,Large,Statistically significant with large practical difference
+1027,1043,elderly,118,126,31.4,48.4,-17.1,Chi-Square,6.684,0.0097,Yes,-0.35,Medium,Statistically significant with moderate practical difference
+1027,1044,elderly,118,131,31.4,32.8,-1.5,Chi-Square,0.013,0.9109,No,-0.031,Small,No statistically significant difference detected
+1027,1045,elderly,118,151,31.4,59.6,-28.2,Chi-Square,20.088,0.0,Yes,-0.575,Large,Statistically significant with large practical difference
+1027,1046,elderly,118,122,31.4,43.4,-12.1,Chi-Square,3.241,0.0718,No,-0.251,Medium,No statistically significant difference detected
+1027,1047,elderly,118,129,31.4,46.5,-15.2,Chi-Square,5.317,0.0211,Yes,-0.312,Medium,Statistically significant with moderate practical difference
+1027,1048,elderly,118,123,31.4,49.6,-18.2,Chi-Square,7.563,0.006,Yes,-0.374,Medium,Statistically significant with moderate practical difference
+1027,1049,elderly,118,148,31.4,44.6,-13.2,Chi-Square,4.308,0.0379,Yes,-0.274,Medium,Statistically significant with moderate practical difference
+1027,1050,elderly,118,126,31.4,30.2,1.2,Chi-Square,0.004,0.9492,No,0.026,Small,No statistically significant difference detected
+1028,1029,elderly,153,124,42.5,59.7,-17.2,Chi-Square,7.426,0.0064,Yes,-0.346,Medium,Statistically significant with moderate practical difference
+1028,1030,elderly,153,134,42.5,52.2,-9.8,Chi-Square,2.351,0.1252,No,-0.196,Small,No statistically significant difference detected
+1028,1031,elderly,153,124,42.5,37.9,4.6,Chi-Square,0.422,0.5161,No,0.093,Small,No statistically significant difference detected
+1028,1032,elderly,153,125,42.5,31.2,11.3,Chi-Square,3.274,0.0704,No,0.235,Medium,No statistically significant difference detected
+1028,1033,elderly,153,121,42.5,43.0,-0.5,Chi-Square,,1.0,No,-0.01,Small,No statistically significant difference detected
+1028,1034,elderly,153,116,42.5,73.3,-30.8,Chi-Square,24.127,0.0,Yes,-0.635,Large,Statistically significant with large practical difference
+1028,1035,elderly,153,125,42.5,53.6,-11.1,Chi-Square,2.978,0.0844,No,-0.223,Medium,No statistically significant difference detected
+1028,1036,elderly,153,136,42.5,38.2,4.2,Chi-Square,0.377,0.539,No,0.087,Small,No statistically significant difference detected
+1028,1037,elderly,153,145,42.5,37.9,4.6,Chi-Square,0.466,0.4947,No,0.093,Small,No statistically significant difference detected
+1028,1038,elderly,153,176,42.5,50.6,-8.1,Chi-Square,1.836,0.1754,No,-0.162,Small,No statistically significant difference detected
+1028,1039,elderly,153,147,42.5,29.3,13.2,Chi-Square,5.137,0.0234,Yes,0.277,Medium,Statistically significant with moderate practical difference
+1028,1040,elderly,153,131,42.5,35.9,6.6,Chi-Square,1.028,0.3107,No,0.135,Small,No statistically significant difference detected
+1028,1041,elderly,153,124,42.5,57.3,-14.8,Chi-Square,5.406,0.0201,Yes,-0.297,Medium,Statistically significant with moderate practical difference
+1028,1042,elderly,153,112,42.5,62.5,-20.0,Chi-Square,9.581,0.002,Yes,-0.404,Medium,Statistically significant with moderate practical difference
+1028,1043,elderly,153,126,42.5,48.4,-5.9,Chi-Square,0.756,0.3846,No,-0.119,Small,No statistically significant difference detected
+1028,1044,elderly,153,131,42.5,32.8,9.7,Chi-Square,2.399,0.1214,No,0.2,Small,No statistically significant difference detected
+1028,1045,elderly,153,151,42.5,59.6,-17.1,Chi-Square,8.24,0.0041,Yes,-0.344,Medium,Statistically significant with moderate practical difference
+1028,1046,elderly,153,122,42.5,43.4,-1.0,Chi-Square,0.001,0.9705,No,-0.019,Small,No statistically significant difference detected
+1028,1047,elderly,153,129,42.5,46.5,-4.0,Chi-Square,0.311,0.5768,No,-0.081,Small,No statistically significant difference detected
+1028,1048,elderly,153,123,42.5,49.6,-7.1,Chi-Square,1.117,0.2905,No,-0.143,Small,No statistically significant difference detected
+1028,1049,elderly,153,148,42.5,44.6,-2.1,Chi-Square,0.064,0.8003,No,-0.043,Small,No statistically significant difference detected
+1028,1050,elderly,153,126,42.5,30.2,12.3,Chi-Square,3.993,0.0457,Yes,0.257,Medium,Statistically significant with moderate practical difference
+1029,1030,elderly,124,134,59.7,52.2,7.4,Chi-Square,1.159,0.2817,No,0.15,Small,No statistically significant difference detected
+1029,1031,elderly,124,124,59.7,37.9,21.8,Chi-Square,10.91,0.001,Yes,0.439,Medium,Statistically significant with moderate practical difference
+1029,1032,elderly,124,125,59.7,31.2,28.5,Chi-Square,19.234,0.0,Yes,0.58,Large,Statistically significant with large practical difference
+1029,1033,elderly,124,121,59.7,43.0,16.7,Chi-Square,6.187,0.0129,Yes,0.336,Medium,Statistically significant with moderate practical difference
+1029,1034,elderly,124,116,59.7,73.3,-13.6,Chi-Square,4.367,0.0366,Yes,-0.289,Medium,Statistically significant with moderate practical difference
+1029,1035,elderly,124,125,59.7,53.6,6.1,Chi-Square,0.705,0.4011,No,0.123,Small,No statistically significant difference detected
+1029,1036,elderly,124,136,59.7,38.2,21.4,Chi-Square,11.097,0.0009,Yes,0.432,Medium,Statistically significant with moderate practical difference
+1029,1037,elderly,124,145,59.7,37.9,21.7,Chi-Square,11.808,0.0006,Yes,0.439,Medium,Statistically significant with moderate practical difference
+1029,1038,elderly,124,176,59.7,50.6,9.1,Chi-Square,2.08,0.1493,No,0.183,Small,No statistically significant difference detected
+1029,1039,elderly,124,147,59.7,29.3,30.4,Chi-Square,24.155,0.0,Yes,0.623,Large,Statistically significant with large practical difference
+1029,1040,elderly,124,131,59.7,35.9,23.8,Chi-Square,13.532,0.0002,Yes,0.481,Medium,Statistically significant with moderate practical difference
+1029,1041,elderly,124,124,59.7,57.3,2.4,Chi-Square,0.066,0.7966,No,0.049,Small,No statistically significant difference detected
+1029,1042,elderly,124,112,59.7,62.5,-2.8,Chi-Square,0.096,0.7563,No,-0.058,Small,No statistically significant difference detected
+1029,1043,elderly,124,126,59.7,48.4,11.3,Chi-Square,2.755,0.0969,No,0.227,Medium,No statistically significant difference detected
+1029,1044,elderly,124,131,59.7,32.8,26.9,Chi-Square,17.434,0.0,Yes,0.545,Large,Statistically significant with large practical difference
+1029,1045,elderly,124,151,59.7,59.6,0.1,Chi-Square,,1.0,No,0.002,Small,No statistically significant difference detected
+1029,1046,elderly,124,122,59.7,43.4,16.2,Chi-Square,5.856,0.0155,Yes,0.326,Medium,Statistically significant with moderate practical difference
+1029,1047,elderly,124,129,59.7,46.5,13.2,Chi-Square,3.887,0.0487,Yes,0.265,Medium,Statistically significant with moderate practical difference
+1029,1048,elderly,124,123,59.7,49.6,10.1,Chi-Square,2.143,0.1432,No,0.203,Medium,No statistically significant difference detected
+1029,1049,elderly,124,148,59.7,44.6,15.1,Chi-Square,5.556,0.0184,Yes,0.303,Medium,Statistically significant with moderate practical difference
+1029,1050,elderly,124,126,59.7,30.2,29.5,Chi-Square,20.843,0.0,Yes,0.603,Large,Statistically significant with large practical difference
+1030,1031,elderly,134,124,52.2,37.9,14.3,Chi-Square,4.778,0.0288,Yes,0.289,Medium,Statistically significant with moderate practical difference
+1030,1032,elderly,134,125,52.2,31.2,21.0,Chi-Square,10.897,0.001,Yes,0.43,Medium,Statistically significant with moderate practical difference
+1030,1033,elderly,134,121,52.2,43.0,9.3,Chi-Square,1.831,0.176,No,0.186,Small,No statistically significant difference detected
+1030,1034,elderly,134,116,52.2,73.3,-21.0,Chi-Square,10.803,0.001,Yes,-0.439,Medium,Statistically significant with moderate practical difference
+1030,1035,elderly,134,125,52.2,53.6,-1.4,Chi-Square,0.009,0.9245,No,-0.027,Small,No statistically significant difference detected
+1030,1036,elderly,134,136,52.2,38.2,14.0,Chi-Square,4.793,0.0286,Yes,0.282,Medium,Statistically significant with moderate practical difference
+1030,1037,elderly,134,145,52.2,37.9,14.3,Chi-Square,5.201,0.0226,Yes,0.289,Medium,Statistically significant with moderate practical difference
+1030,1038,elderly,134,176,52.2,50.6,1.7,Chi-Square,0.031,0.8596,No,0.033,Small,No statistically significant difference detected
+1030,1039,elderly,134,147,52.2,29.3,23.0,Chi-Square,14.465,0.0001,Yes,0.473,Medium,Statistically significant with moderate practical difference
+1030,1040,elderly,134,131,52.2,35.9,16.4,Chi-Square,6.543,0.0105,Yes,0.331,Medium,Statistically significant with moderate practical difference
+1030,1041,elderly,134,124,52.2,57.3,-5.0,Chi-Square,0.468,0.494,No,-0.101,Small,No statistically significant difference detected
+1030,1042,elderly,134,112,52.2,62.5,-10.3,Chi-Square,2.218,0.1364,No,-0.208,Medium,No statistically significant difference detected
+1030,1043,elderly,134,126,52.2,48.4,3.8,Chi-Square,0.243,0.6223,No,0.077,Small,No statistically significant difference detected
+1030,1044,elderly,134,131,52.2,32.8,19.4,Chi-Square,9.43,0.0021,Yes,0.395,Medium,Statistically significant with moderate practical difference
+1030,1045,elderly,134,151,52.2,59.6,-7.4,Chi-Square,1.279,0.2581,No,-0.148,Small,No statistically significant difference detected
+1030,1046,elderly,134,122,52.2,43.4,8.8,Chi-Square,1.643,0.2,No,0.176,Small,No statistically significant difference detected
+1030,1047,elderly,134,129,52.2,46.5,5.7,Chi-Square,0.649,0.4206,No,0.115,Small,No statistically significant difference detected
+1030,1048,elderly,134,123,52.2,49.6,2.6,Chi-Square,0.089,0.765,No,0.053,Small,No statistically significant difference detected
+1030,1049,elderly,134,148,52.2,44.6,7.6,Chi-Square,1.354,0.2446,No,0.153,Small,No statistically significant difference detected
+1030,1050,elderly,134,126,52.2,30.2,22.1,Chi-Square,12.144,0.0005,Yes,0.453,Medium,Statistically significant with moderate practical difference
+1031,1032,elderly,124,125,37.9,31.2,6.7,Chi-Square,0.958,0.3276,No,0.141,Small,No statistically significant difference detected
+1031,1033,elderly,124,121,37.9,43.0,-5.1,Chi-Square,0.461,0.4974,No,-0.103,Small,No statistically significant difference detected
+1031,1034,elderly,124,116,37.9,73.3,-35.4,Chi-Square,28.887,0.0,Yes,-0.729,Large,Statistically significant with large practical difference
+1031,1035,elderly,124,125,37.9,53.6,-15.7,Chi-Square,5.563,0.0183,Yes,-0.316,Medium,Statistically significant with moderate practical difference
+1031,1036,elderly,124,136,37.9,38.2,-0.3,Chi-Square,,1.0,No,-0.007,Small,No statistically significant difference detected
+1031,1037,elderly,124,145,37.9,37.9,-0.0,Chi-Square,,1.0,No,-0.001,Small,No statistically significant difference detected
+1031,1038,elderly,124,176,37.9,50.6,-12.7,Chi-Square,4.211,0.0402,Yes,-0.256,Medium,Statistically significant with moderate practical difference
+1031,1039,elderly,124,147,37.9,29.3,8.7,Chi-Square,1.896,0.1685,No,0.184,Small,No statistically significant difference detected
+1031,1040,elderly,124,131,37.9,35.9,2.0,Chi-Square,0.042,0.8374,No,0.042,Small,No statistically significant difference detected
+1031,1041,elderly,124,124,37.9,57.3,-19.4,Chi-Square,8.552,0.0035,Yes,-0.39,Medium,Statistically significant with moderate practical difference
+1031,1042,elderly,124,112,37.9,62.5,-24.6,Chi-Square,13.275,0.0003,Yes,-0.497,Medium,Statistically significant with moderate practical difference
+1031,1043,elderly,124,126,37.9,48.4,-10.5,Chi-Square,2.401,0.1213,No,-0.213,Medium,No statistically significant difference detected
+1031,1044,elderly,124,131,37.9,32.8,5.1,Chi-Square,0.514,0.4733,No,0.106,Small,No statistically significant difference detected
+1031,1045,elderly,124,151,37.9,59.6,-21.7,Chi-Square,11.971,0.0005,Yes,-0.438,Medium,Statistically significant with moderate practical difference
+1031,1046,elderly,124,122,37.9,43.4,-5.5,Chi-Square,0.569,0.4505,No,-0.113,Small,No statistically significant difference detected
+1031,1047,elderly,124,129,37.9,46.5,-8.6,Chi-Square,1.583,0.2083,No,-0.175,Small,No statistically significant difference detected
+1031,1048,elderly,124,123,37.9,49.6,-11.7,Chi-Square,2.971,0.0848,No,-0.236,Medium,No statistically significant difference detected
+1031,1049,elderly,124,148,37.9,44.6,-6.7,Chi-Square,0.984,0.3213,No,-0.136,Small,No statistically significant difference detected
+1031,1050,elderly,124,126,37.9,30.2,7.7,Chi-Square,1.343,0.2465,No,0.164,Small,No statistically significant difference detected
+1032,1033,elderly,125,121,31.2,43.0,-11.8,Chi-Square,3.17,0.075,No,-0.245,Medium,No statistically significant difference detected
+1032,1034,elderly,125,116,31.2,73.3,-42.1,Chi-Square,40.975,0.0,Yes,-0.87,Large,Statistically significant with large practical difference
+1032,1035,elderly,125,125,31.2,53.6,-22.4,Chi-Square,11.94,0.0005,Yes,-0.458,Medium,Statistically significant with moderate practical difference
+1032,1036,elderly,125,136,31.2,38.2,-7.0,Chi-Square,1.127,0.2885,No,-0.148,Small,No statistically significant difference detected
+1032,1037,elderly,125,145,31.2,37.9,-6.7,Chi-Square,1.06,0.3032,No,-0.142,Small,No statistically significant difference detected
+1032,1038,elderly,125,176,31.2,50.6,-19.4,Chi-Square,10.439,0.0012,Yes,-0.397,Medium,Statistically significant with moderate practical difference
+1032,1039,elderly,125,147,31.2,29.3,1.9,Chi-Square,0.047,0.8287,No,0.042,Small,No statistically significant difference detected
+1032,1040,elderly,125,131,31.2,35.9,-4.7,Chi-Square,0.435,0.5094,No,-0.099,Small,No statistically significant difference detected
+1032,1041,elderly,125,124,31.2,57.3,-26.1,Chi-Square,16.1,0.0001,Yes,-0.531,Large,Statistically significant with large practical difference
+1032,1042,elderly,125,112,31.2,62.5,-31.3,Chi-Square,22.055,0.0,Yes,-0.638,Large,Statistically significant with large practical difference
+1032,1043,elderly,125,126,31.2,48.4,-17.2,Chi-Square,7.055,0.0079,Yes,-0.354,Medium,Statistically significant with moderate practical difference
+1032,1044,elderly,125,131,31.2,32.8,-1.6,Chi-Square,0.021,0.8851,No,-0.035,Small,No statistically significant difference detected
+1032,1045,elderly,125,151,31.2,59.6,-28.4,Chi-Square,21.036,0.0,Yes,-0.579,Large,Statistically significant with large practical difference
+1032,1046,elderly,125,122,31.2,43.4,-12.2,Chi-Square,3.453,0.0632,No,-0.254,Medium,No statistically significant difference detected
+1032,1047,elderly,125,129,31.2,46.5,-15.3,Chi-Square,5.63,0.0177,Yes,-0.316,Medium,Statistically significant with moderate practical difference
+1032,1048,elderly,125,123,31.2,49.6,-18.4,Chi-Square,7.969,0.0048,Yes,-0.377,Medium,Statistically significant with moderate practical difference
+1032,1049,elderly,125,148,31.2,44.6,-13.4,Chi-Square,4.586,0.0322,Yes,-0.277,Medium,Statistically significant with moderate practical difference
+1032,1050,elderly,125,126,31.2,30.2,1.0,Chi-Square,0.002,0.9665,No,0.023,Small,No statistically significant difference detected
+1033,1034,elderly,121,116,43.0,73.3,-30.3,Chi-Square,21.068,0.0,Yes,-0.625,Large,Statistically significant with large practical difference
+1033,1035,elderly,121,125,43.0,53.6,-10.6,Chi-Square,2.37,0.1237,No,-0.213,Medium,No statistically significant difference detected
+1033,1036,elderly,121,136,43.0,38.2,4.7,Chi-Square,0.417,0.5186,No,0.097,Small,No statistically significant difference detected
+1033,1037,elderly,121,145,43.0,37.9,5.0,Chi-Square,0.504,0.4778,No,0.103,Small,No statistically significant difference detected
+1033,1038,elderly,121,176,43.0,50.6,-7.6,Chi-Square,1.367,0.2423,No,-0.152,Small,No statistically significant difference detected
+1033,1039,elderly,121,147,43.0,29.3,13.7,Chi-Square,4.879,0.0272,Yes,0.287,Medium,Statistically significant with moderate practical difference
+1033,1040,elderly,121,131,43.0,35.9,7.1,Chi-Square,1.047,0.3061,No,0.145,Small,No statistically significant difference detected
+1033,1041,elderly,121,124,43.0,57.3,-14.3,Chi-Square,4.442,0.0351,Yes,-0.287,Medium,Statistically significant with moderate practical difference
+1033,1042,elderly,121,112,43.0,62.5,-19.5,Chi-Square,8.123,0.0044,Yes,-0.394,Medium,Statistically significant with moderate practical difference
+1033,1043,elderly,121,126,43.0,48.4,-5.4,Chi-Square,0.533,0.4655,No,-0.109,Small,No statistically significant difference detected
+1033,1044,elderly,121,131,43.0,32.8,10.2,Chi-Square,2.344,0.1257,No,0.21,Medium,No statistically significant difference detected
+1033,1045,elderly,121,151,43.0,59.6,-16.6,Chi-Square,6.792,0.0092,Yes,-0.334,Medium,Statistically significant with moderate practical difference
+1033,1046,elderly,121,122,43.0,43.4,-0.5,Chi-Square,,1.0,No,-0.009,Small,No statistically significant difference detected
+1033,1047,elderly,121,129,43.0,46.5,-3.5,Chi-Square,0.189,0.6638,No,-0.071,Small,No statistically significant difference detected
+1033,1048,elderly,121,123,43.0,49.6,-6.6,Chi-Square,0.825,0.3638,No,-0.133,Small,No statistically significant difference detected
+1033,1049,elderly,121,148,43.0,44.6,-1.6,Chi-Square,0.02,0.8865,No,-0.033,Small,No statistically significant difference detected
+1033,1050,elderly,121,126,43.0,30.2,12.8,Chi-Square,3.842,0.05,Yes,0.267,Medium,Statistically significant with moderate practical difference
+1034,1035,elderly,116,125,73.3,53.6,19.7,Chi-Square,9.174,0.0025,Yes,0.412,Medium,Statistically significant with moderate practical difference
+1034,1036,elderly,116,136,73.3,38.2,35.0,Chi-Square,29.587,0.0,Yes,0.722,Large,Statistically significant with large practical difference
+1034,1037,elderly,116,145,73.3,37.9,35.3,Chi-Square,30.969,0.0,Yes,0.728,Large,Statistically significant with large practical difference
+1034,1038,elderly,116,176,73.3,50.6,22.7,Chi-Square,14.043,0.0002,Yes,0.473,Medium,Statistically significant with moderate practical difference
+1034,1039,elderly,116,147,73.3,29.3,44.0,Chi-Square,48.553,0.0,Yes,0.912,Large,Statistically significant with large practical difference
+1034,1040,elderly,116,131,73.3,35.9,37.4,Chi-Square,33.095,0.0,Yes,0.771,Large,Statistically significant with large practical difference
+1034,1041,elderly,116,124,73.3,57.3,16.0,Chi-Square,6.073,0.0137,Yes,0.339,Medium,Statistically significant with moderate practical difference
+1034,1042,elderly,116,112,73.3,62.5,10.8,Chi-Square,2.565,0.1093,No,0.232,Medium,No statistically significant difference detected
+1034,1043,elderly,116,126,73.3,48.4,24.9,Chi-Square,14.579,0.0001,Yes,0.516,Large,Statistically significant with large practical difference
+1034,1044,elderly,116,131,73.3,32.8,40.5,Chi-Square,38.718,0.0,Yes,0.835,Large,Statistically significant with large practical difference
+1034,1045,elderly,116,151,73.3,59.6,13.7,Chi-Square,4.842,0.0278,Yes,0.291,Medium,Statistically significant with moderate practical difference
+1034,1046,elderly,116,122,73.3,43.4,29.8,Chi-Square,20.516,0.0,Yes,0.616,Large,Statistically significant with large practical difference
+1034,1047,elderly,116,129,73.3,46.5,26.8,Chi-Square,17.021,0.0,Yes,0.554,Large,Statistically significant with large practical difference
+1034,1048,elderly,116,123,73.3,49.6,23.7,Chi-Square,13.107,0.0003,Yes,0.492,Medium,Statistically significant with moderate practical difference
+1034,1049,elderly,116,148,73.3,44.6,28.7,Chi-Square,20.695,0.0,Yes,0.593,Large,Statistically significant with large practical difference
+1034,1050,elderly,116,126,73.3,30.2,43.1,Chi-Square,43.217,0.0,Yes,0.892,Large,Statistically significant with large practical difference
+1035,1036,elderly,125,136,53.6,38.2,15.4,Chi-Square,5.595,0.018,Yes,0.31,Medium,Statistically significant with moderate practical difference
+1035,1037,elderly,125,145,53.6,37.9,15.7,Chi-Square,6.037,0.014,Yes,0.316,Medium,Statistically significant with moderate practical difference
+1035,1038,elderly,125,176,53.6,50.6,3.0,Chi-Square,0.161,0.6879,No,0.061,Small,No statistically significant difference detected
+1035,1039,elderly,125,147,53.6,29.3,24.3,Chi-Square,15.632,0.0001,Yes,0.5,Medium,Statistically significant with moderate practical difference
+1035,1040,elderly,125,131,53.6,35.9,17.7,Chi-Square,7.432,0.0064,Yes,0.358,Medium,Statistically significant with moderate practical difference
+1035,1041,elderly,125,124,53.6,57.3,-3.7,Chi-Square,0.205,0.6504,No,-0.074,Small,No statistically significant difference detected
+1035,1042,elderly,125,112,53.6,62.5,-8.9,Chi-Square,1.571,0.2101,No,-0.181,Small,No statistically significant difference detected
+1035,1043,elderly,125,126,53.6,48.4,5.2,Chi-Square,0.484,0.4866,No,0.104,Small,No statistically significant difference detected
+1035,1044,elderly,125,131,53.6,32.8,20.8,Chi-Square,10.434,0.0012,Yes,0.423,Medium,Statistically significant with moderate practical difference
+1035,1045,elderly,125,151,53.6,59.6,-6.0,Chi-Square,0.775,0.3787,No,-0.121,Small,No statistically significant difference detected
+1035,1046,elderly,125,122,53.6,43.4,10.2,Chi-Square,2.16,0.1417,No,0.204,Medium,No statistically significant difference detected
+1035,1047,elderly,125,129,53.6,46.5,7.1,Chi-Square,1.008,0.3154,No,0.142,Small,No statistically significant difference detected
+1035,1048,elderly,125,123,53.6,49.6,4.0,Chi-Square,0.254,0.6141,No,0.08,Small,No statistically significant difference detected
+1035,1049,elderly,125,148,53.6,44.6,9.0,Chi-Square,1.854,0.1733,No,0.18,Small,No statistically significant difference detected
+1035,1050,elderly,125,126,53.6,30.2,23.4,Chi-Square,13.223,0.0003,Yes,0.48,Medium,Statistically significant with moderate practical difference
+1036,1037,elderly,136,145,38.2,37.9,0.3,Chi-Square,,1.0,No,0.006,Small,No statistically significant difference detected
+1036,1038,elderly,136,176,38.2,50.6,-12.3,Chi-Square,4.226,0.0398,Yes,-0.249,Medium,Statistically significant with moderate practical difference
+1036,1039,elderly,136,147,38.2,29.3,9.0,Chi-Square,2.17,0.1408,No,0.19,Small,No statistically significant difference detected
+1036,1040,elderly,136,131,38.2,35.9,2.4,Chi-Square,0.074,0.7857,No,0.049,Small,No statistically significant difference detected
+1036,1041,elderly,136,124,38.2,57.3,-19.0,Chi-Square,8.668,0.0032,Yes,-0.383,Medium,Statistically significant with moderate practical difference
+1036,1042,elderly,136,112,38.2,62.5,-24.3,Chi-Square,13.514,0.0002,Yes,-0.49,Medium,Statistically significant with moderate practical difference
+1036,1043,elderly,136,126,38.2,48.4,-10.2,Chi-Square,2.363,0.1243,No,-0.206,Medium,No statistically significant difference detected
+1036,1044,elderly,136,131,38.2,32.8,5.4,Chi-Square,0.633,0.4264,No,0.113,Small,No statistically significant difference detected
+1036,1045,elderly,136,151,38.2,59.6,-21.4,Chi-Square,12.228,0.0005,Yes,-0.431,Medium,Statistically significant with moderate practical difference
+1036,1046,elderly,136,122,38.2,43.4,-5.2,Chi-Square,0.523,0.4696,No,-0.106,Small,No statistically significant difference detected
+1036,1047,elderly,136,129,38.2,46.5,-8.3,Chi-Square,1.535,0.2154,No,-0.168,Small,No statistically significant difference detected
+1036,1048,elderly,136,123,38.2,49.6,-11.4,Chi-Square,2.942,0.0863,No,-0.229,Medium,No statistically significant difference detected
+1036,1049,elderly,136,148,38.2,44.6,-6.4,Chi-Square,0.933,0.3341,No,-0.129,Small,No statistically significant difference detected
+1036,1050,elderly,136,126,38.2,30.2,8.1,Chi-Square,1.551,0.213,No,0.171,Small,No statistically significant difference detected
+1037,1038,elderly,145,176,37.9,50.6,-12.6,Chi-Square,4.635,0.0313,Yes,-0.255,Medium,Statistically significant with moderate practical difference
+1037,1039,elderly,145,147,37.9,29.3,8.7,Chi-Square,2.092,0.1481,No,0.184,Small,No statistically significant difference detected
+1037,1040,elderly,145,131,37.9,35.9,2.1,Chi-Square,0.052,0.8196,No,0.043,Small,No statistically significant difference detected
+1037,1041,elderly,145,124,37.9,57.3,-19.3,Chi-Square,9.266,0.0023,Yes,-0.389,Medium,Statistically significant with moderate practical difference
+1037,1042,elderly,145,112,37.9,62.5,-24.6,Chi-Square,14.301,0.0002,Yes,-0.496,Medium,Statistically significant with moderate practical difference
+1037,1043,elderly,145,126,37.9,48.4,-10.5,Chi-Square,2.612,0.106,No,-0.212,Medium,No statistically significant difference detected
+1037,1044,elderly,145,131,37.9,32.8,5.1,Chi-Square,0.577,0.4477,No,0.107,Small,No statistically significant difference detected
+1037,1045,elderly,145,151,37.9,59.6,-21.7,Chi-Square,13.048,0.0003,Yes,-0.437,Medium,Statistically significant with moderate practical difference
+1037,1046,elderly,145,122,37.9,43.4,-5.5,Chi-Square,0.622,0.4302,No,-0.112,Small,No statistically significant difference detected
+1037,1047,elderly,145,129,37.9,46.5,-8.6,Chi-Square,1.726,0.1889,No,-0.174,Small,No statistically significant difference detected
+1037,1048,elderly,145,123,37.9,49.6,-11.7,Chi-Square,3.227,0.0724,No,-0.236,Medium,No statistically significant difference detected
+1037,1049,elderly,145,148,37.9,44.6,-6.7,Chi-Square,1.081,0.2985,No,-0.135,Small,No statistically significant difference detected
+1037,1050,elderly,145,126,37.9,30.2,7.8,Chi-Square,1.478,0.224,No,0.164,Small,No statistically significant difference detected
+1038,1039,elderly,176,147,50.6,29.3,21.3,Chi-Square,14.192,0.0002,Yes,0.439,Medium,Statistically significant with moderate practical difference
+1038,1040,elderly,176,131,50.6,35.9,14.7,Chi-Square,5.986,0.0144,Yes,0.298,Medium,Statistically significant with moderate practical difference
+1038,1041,elderly,176,124,50.6,57.3,-6.7,Chi-Square,1.053,0.3048,No,-0.134,Small,No statistically significant difference detected
+1038,1042,elderly,176,112,50.6,62.5,-11.9,Chi-Square,3.473,0.0624,No,-0.241,Medium,No statistically significant difference detected
+1038,1043,elderly,176,126,50.6,48.4,2.2,Chi-Square,0.064,0.8005,No,0.043,Small,No statistically significant difference detected
+1038,1044,elderly,176,131,50.6,32.8,17.7,Chi-Square,8.937,0.0028,Yes,0.362,Medium,Statistically significant with moderate practical difference
+1038,1045,elderly,176,151,50.6,59.6,-9.0,Chi-Square,2.325,0.1273,No,-0.182,Small,No statistically significant difference detected
+1038,1046,elderly,176,122,50.6,43.4,7.1,Chi-Square,1.195,0.2744,No,0.143,Small,No statistically significant difference detected
+1038,1047,elderly,176,129,50.6,46.5,4.1,Chi-Square,0.341,0.5591,No,0.081,Small,No statistically significant difference detected
+1038,1048,elderly,176,123,50.6,49.6,1.0,Chi-Square,0.002,0.9614,No,0.019,Small,No statistically significant difference detected
+1038,1049,elderly,176,148,50.6,44.6,6.0,Chi-Square,0.923,0.3368,No,0.12,Small,No statistically significant difference detected
+1038,1050,elderly,176,126,50.6,30.2,20.4,Chi-Square,11.728,0.0006,Yes,0.419,Medium,Statistically significant with moderate practical difference
+1039,1040,elderly,147,131,29.3,35.9,-6.6,Chi-Square,1.103,0.2936,No,-0.142,Small,No statistically significant difference detected
+1039,1041,elderly,147,124,29.3,57.3,-28.0,Chi-Square,20.514,0.0,Yes,-0.574,Large,Statistically significant with large practical difference
+1039,1042,elderly,147,112,29.3,62.5,-33.2,Chi-Square,27.236,0.0,Yes,-0.681,Large,Statistically significant with large practical difference
+1039,1043,elderly,147,126,29.3,48.4,-19.2,Chi-Square,9.766,0.0018,Yes,-0.396,Medium,Statistically significant with moderate practical difference
+1039,1044,elderly,147,131,29.3,32.8,-3.6,Chi-Square,0.264,0.6077,No,-0.077,Small,No statistically significant difference detected
+1039,1045,elderly,147,151,29.3,59.6,-30.4,Chi-Square,26.552,0.0,Yes,-0.621,Large,Statistically significant with large practical difference
+1039,1046,elderly,147,122,29.3,43.4,-14.2,Chi-Square,5.248,0.022,Yes,-0.296,Medium,Statistically significant with moderate practical difference
+1039,1047,elderly,147,129,29.3,46.5,-17.3,Chi-Square,8.028,0.0046,Yes,-0.358,Medium,Statistically significant with moderate practical difference
+1039,1048,elderly,147,123,29.3,49.6,-20.3,Chi-Square,10.858,0.001,Yes,-0.42,Medium,Statistically significant with moderate practical difference
+1039,1049,elderly,147,148,29.3,44.6,-15.3,Chi-Square,6.808,0.0091,Yes,-0.32,Medium,Statistically significant with moderate practical difference
+1039,1050,elderly,147,126,29.3,30.2,-0.9,Chi-Square,0.001,0.9755,No,-0.02,Small,No statistically significant difference detected
+1040,1041,elderly,131,124,35.9,57.3,-21.4,Chi-Square,10.868,0.001,Yes,-0.432,Medium,Statistically significant with moderate practical difference
+1040,1042,elderly,131,112,35.9,62.5,-26.6,Chi-Square,16.091,0.0001,Yes,-0.539,Large,Statistically significant with large practical difference
+1040,1043,elderly,131,126,35.9,48.4,-12.5,Chi-Square,3.643,0.0563,No,-0.255,Medium,No statistically significant difference detected
+1040,1044,elderly,131,131,35.9,32.8,3.1,Chi-Square,0.152,0.6963,No,0.064,Small,No statistically significant difference detected
+1040,1045,elderly,131,151,35.9,59.6,-23.7,Chi-Square,14.87,0.0001,Yes,-0.48,Medium,Statistically significant with moderate practical difference
+1040,1046,elderly,131,122,35.9,43.4,-7.6,Chi-Square,1.212,0.2709,No,-0.155,Small,No statistically significant difference detected
+1040,1047,elderly,131,129,35.9,46.5,-10.6,Chi-Square,2.612,0.1061,No,-0.217,Medium,No statistically significant difference detected
+1040,1048,elderly,131,123,35.9,49.6,-13.7,Chi-Square,4.338,0.0373,Yes,-0.278,Medium,Statistically significant with moderate practical difference
+1040,1049,elderly,131,148,35.9,44.6,-8.7,Chi-Square,1.844,0.1744,No,-0.178,Small,No statistically significant difference detected
+1040,1050,elderly,131,126,35.9,30.2,5.7,Chi-Square,0.708,0.4,No,0.122,Small,No statistically significant difference detected
+1041,1042,elderly,124,112,57.3,62.5,-5.2,Chi-Square,0.472,0.492,No,-0.107,Small,No statistically significant difference detected
+1041,1043,elderly,124,126,57.3,48.4,8.8,Chi-Square,1.623,0.2027,No,0.177,Small,No statistically significant difference detected
+1041,1044,elderly,124,131,57.3,32.8,24.4,Chi-Square,14.412,0.0001,Yes,0.496,Medium,Statistically significant with moderate practical difference
+1041,1045,elderly,124,151,57.3,59.6,-2.3,Chi-Square,0.073,0.7874,No,-0.048,Small,No statistically significant difference detected
+1041,1046,elderly,124,122,57.3,43.4,13.8,Chi-Square,4.159,0.0414,Yes,0.277,Medium,Statistically significant with moderate practical difference
+1041,1047,elderly,124,129,57.3,46.5,10.7,Chi-Square,2.51,0.1131,No,0.216,Medium,No statistically significant difference detected
+1041,1048,elderly,124,123,57.3,49.6,7.7,Chi-Square,1.166,0.2802,No,0.154,Small,No statistically significant difference detected
+1041,1049,elderly,124,148,57.3,44.6,12.7,Chi-Square,3.836,0.0502,No,0.254,Medium,No statistically significant difference detected
+1041,1050,elderly,124,126,57.3,30.2,27.1,Chi-Square,17.578,0.0,Yes,0.554,Large,Statistically significant with large practical difference
+1042,1043,elderly,112,126,62.5,48.4,14.1,Chi-Square,4.203,0.0404,Yes,0.284,Medium,Statistically significant with moderate practical difference
+1042,1044,elderly,112,131,62.5,32.8,29.7,Chi-Square,20.197,0.0,Yes,0.603,Large,Statistically significant with large practical difference
+1042,1045,elderly,112,151,62.5,59.6,2.9,Chi-Square,0.121,0.7277,No,0.059,Small,No statistically significant difference detected
+1042,1046,elderly,112,122,62.5,43.4,19.1,Chi-Square,7.758,0.0053,Yes,0.384,Medium,Statistically significant with moderate practical difference
+1042,1047,elderly,112,129,62.5,46.5,16.0,Chi-Square,5.542,0.0186,Yes,0.323,Medium,Statistically significant with moderate practical difference
+1042,1048,elderly,112,123,62.5,49.6,12.9,Chi-Square,3.452,0.0632,No,0.261,Medium,No statistically significant difference detected
+1042,1049,elderly,112,148,62.5,44.6,17.9,Chi-Square,7.491,0.0062,Yes,0.361,Medium,Statistically significant with moderate practical difference
+1042,1050,elderly,112,126,62.5,30.2,32.3,Chi-Square,23.734,0.0,Yes,0.661,Large,Statistically significant with large practical difference
+1043,1044,elderly,126,131,48.4,32.8,15.6,Chi-Square,5.847,0.0156,Yes,0.319,Medium,Statistically significant with moderate practical difference
+1043,1045,elderly,126,151,48.4,59.6,-11.2,Chi-Square,3.032,0.0816,No,-0.225,Medium,No statistically significant difference detected
+1043,1046,elderly,126,122,48.4,43.4,5.0,Chi-Square,0.433,0.5107,No,0.1,Small,No statistically significant difference detected
+1043,1047,elderly,126,129,48.4,46.5,1.9,Chi-Square,0.032,0.8583,No,0.038,Small,No statistically significant difference detected
+1043,1048,elderly,126,123,48.4,49.6,-1.2,Chi-Square,0.004,0.9525,No,-0.024,Small,No statistically significant difference detected
+1043,1049,elderly,126,148,48.4,44.6,3.8,Chi-Square,0.26,0.61,No,0.077,Small,No statistically significant difference detected
+1043,1050,elderly,126,126,48.4,30.2,18.3,Chi-Square,8.052,0.0045,Yes,0.376,Medium,Statistically significant with moderate practical difference
+1044,1045,elderly,131,151,32.8,59.6,-26.8,Chi-Square,19.124,0.0,Yes,-0.544,Large,Statistically significant with large practical difference
+1044,1046,elderly,131,122,32.8,43.4,-10.6,Chi-Square,2.591,0.1075,No,-0.219,Medium,No statistically significant difference detected
+1044,1047,elderly,131,129,32.8,46.5,-13.7,Chi-Square,4.534,0.0332,Yes,-0.281,Medium,Statistically significant with moderate practical difference
+1044,1048,elderly,131,123,32.8,49.6,-16.8,Chi-Square,6.7,0.0096,Yes,-0.343,Medium,Statistically significant with moderate practical difference
+1044,1049,elderly,131,148,32.8,44.6,-11.8,Chi-Square,3.565,0.059,No,-0.242,Medium,No statistically significant difference detected
+1044,1050,elderly,131,126,32.8,30.2,2.7,Chi-Square,0.106,0.7448,No,0.057,Small,No statistically significant difference detected
+1045,1046,elderly,151,122,59.6,43.4,16.2,Chi-Square,6.432,0.0112,Yes,0.325,Medium,Statistically significant with moderate practical difference
+1045,1047,elderly,151,129,59.6,46.5,13.1,Chi-Square,4.281,0.0385,Yes,0.263,Medium,Statistically significant with moderate practical difference
+1045,1048,elderly,151,123,59.6,49.6,10.0,Chi-Square,2.355,0.1249,No,0.201,Medium,No statistically significant difference detected
+1045,1049,elderly,151,148,59.6,44.6,15.0,Chi-Square,6.159,0.0131,Yes,0.302,Medium,Statistically significant with moderate practical difference
+1045,1050,elderly,151,126,59.6,30.2,29.4,Chi-Square,22.787,0.0,Yes,0.601,Large,Statistically significant with large practical difference
+1046,1047,elderly,122,129,43.4,46.5,-3.1,Chi-Square,0.131,0.7177,No,-0.062,Small,No statistically significant difference detected
+1046,1048,elderly,122,123,43.4,49.6,-6.2,Chi-Square,0.701,0.4026,No,-0.123,Small,No statistically significant difference detected
+1046,1049,elderly,122,148,43.4,44.6,-1.2,Chi-Square,0.004,0.9469,No,-0.023,Small,No statistically significant difference detected
+1046,1050,elderly,122,126,43.4,30.2,13.3,Chi-Square,4.154,0.0415,Yes,0.277,Medium,Statistically significant with moderate practical difference
+1047,1048,elderly,129,123,46.5,49.6,-3.1,Chi-Square,0.132,0.7163,No,-0.062,Small,No statistically significant difference detected
+1047,1049,elderly,129,148,46.5,44.6,1.9,Chi-Square,0.039,0.8425,No,0.038,Small,No statistically significant difference detected
+1047,1050,elderly,129,126,46.5,30.2,16.4,Chi-Square,6.529,0.0106,Yes,0.338,Medium,Statistically significant with moderate practical difference
+1048,1049,elderly,123,148,49.6,44.6,5.0,Chi-Square,0.488,0.4847,No,0.1,Small,No statistically significant difference detected
+1048,1050,elderly,123,126,49.6,30.2,19.4,Chi-Square,9.021,0.0027,Yes,0.4,Medium,Statistically significant with moderate practical difference
+1049,1050,elderly,148,126,44.6,30.2,14.4,Chi-Square,5.425,0.0198,Yes,0.3,Medium,Statistically significant with moderate practical difference

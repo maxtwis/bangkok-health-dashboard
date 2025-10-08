@@ -1,0 +1,3473 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:odk="http://www.opendatakit.org/xforms">
+  <h:head>
+    <h:title>โครงการสำรวจสุขภาวะประชากรกลุ่มเฉพาะในเขตเมือง</h:title>
+    <model odk:xforms-version="1.0.0">
+      <itext>
+        <translation lang="Thailand (thai)" default="true()">
+          <text id="jb4if34-0">
+            <value>เขตคลองเตย</value>
+          </text>
+          <text id="jb4if34-1">
+            <value>เขตคลองสามวา</value>
+          </text>
+          <text id="jb4if34-2">
+            <value>เขตคลองสาน</value>
+          </text>
+          <text id="jb4if34-3">
+            <value>เขตคันนายาว</value>
+          </text>
+          <text id="jb4if34-4">
+            <value>เขตจตุจักร</value>
+          </text>
+          <text id="jb4if34-5">
+            <value>เขตจอมทอง</value>
+          </text>
+          <text id="jb4if34-6">
+            <value>เขตดอนเมือง</value>
+          </text>
+          <text id="jb4if34-7">
+            <value>เขตดินแดง</value>
+          </text>
+          <text id="jb4if34-8">
+            <value>เขตดุสิต</value>
+          </text>
+          <text id="jb4if34-9">
+            <value>เขตตลิ่งชัน</value>
+          </text>
+          <text id="jb4if34-10">
+            <value>เขตทวีวัฒนา</value>
+          </text>
+          <text id="jb4if34-11">
+            <value>เขตทุ่งครุ่</value>
+          </text>
+          <text id="jb4if34-12">
+            <value>เขตธนบุรี</value>
+          </text>
+          <text id="jb4if34-13">
+            <value>เขตบางกอกน้อย</value>
+          </text>
+          <text id="jb4if34-14">
+            <value>เขตบางกอกใหญ่</value>
+          </text>
+          <text id="jb4if34-15">
+            <value>เขตบางกะปิ</value>
+          </text>
+          <text id="jb4if34-16">
+            <value>เขตบางขุนเทียน</value>
+          </text>
+          <text id="jb4if34-17">
+            <value>เขตบางเขน</value>
+          </text>
+          <text id="jb4if34-18">
+            <value>เขตบางคอแหลม</value>
+          </text>
+          <text id="jb4if34-19">
+            <value>เขตบางแค</value>
+          </text>
+          <text id="jb4if34-20">
+            <value>เขตบางซื่อ</value>
+          </text>
+          <text id="jb4if34-21">
+            <value>เขตบางนา</value>
+          </text>
+          <text id="jb4if34-22">
+            <value>เขตบางบอน</value>
+          </text>
+          <text id="jb4if34-23">
+            <value>เขตบางพลัด</value>
+          </text>
+          <text id="jb4if34-24">
+            <value>เขตบางรัก</value>
+          </text>
+          <text id="jb4if34-25">
+            <value>เขตบึงกุ่ม</value>
+          </text>
+          <text id="jb4if34-26">
+            <value>เขตปทุมวัน</value>
+          </text>
+          <text id="jb4if34-27">
+            <value>เขตประเวศ</value>
+          </text>
+          <text id="jb4if34-28">
+            <value>เขตป้อมปราบศัตรูพ่าย</value>
+          </text>
+          <text id="jb4if34-29">
+            <value>เขตพญาไท</value>
+          </text>
+          <text id="jb4if34-30">
+            <value>เขตพระโขนง</value>
+          </text>
+          <text id="jb4if34-31">
+            <value>เขตพระนคร</value>
+          </text>
+          <text id="jb4if34-32">
+            <value>เขตภาษีเจริญ</value>
+          </text>
+          <text id="jb4if34-33">
+            <value>เขตมีนบุรี</value>
+          </text>
+          <text id="jb4if34-34">
+            <value>เขตยานนาวา</value>
+          </text>
+          <text id="jb4if34-35">
+            <value>เขตราชเทวี</value>
+          </text>
+          <text id="jb4if34-36">
+            <value>เขตราษฏร์บูรณะ</value>
+          </text>
+          <text id="jb4if34-37">
+            <value>เขตลาดกระบัง</value>
+          </text>
+          <text id="jb4if34-38">
+            <value>เขตลาดพร้าว</value>
+          </text>
+          <text id="jb4if34-39">
+            <value>เขตวังทองหลาง</value>
+          </text>
+          <text id="jb4if34-40">
+            <value>เขตวัฒนา</value>
+          </text>
+          <text id="jb4if34-41">
+            <value>เขตสวนหลวง</value>
+          </text>
+          <text id="jb4if34-42">
+            <value>เขตสะพานสูง</value>
+          </text>
+          <text id="jb4if34-43">
+            <value>เขตสัมพันธวงศ์</value>
+          </text>
+          <text id="jb4if34-44">
+            <value>เขตสาทร</value>
+          </text>
+          <text id="jb4if34-45">
+            <value>เขตสายไหม</value>
+          </text>
+          <text id="jb4if34-46">
+            <value>เขตหนองแขม</value>
+          </text>
+          <text id="jb4if34-47">
+            <value>เขตหนองจอก</value>
+          </text>
+          <text id="jb4if34-48">
+            <value>เขตหลักสี่</value>
+          </text>
+          <text id="jb4if34-49">
+            <value>เขตห้วยขวาง</value>
+          </text>
+          <text id="co6cj78-0">
+            <value>ชาย</value>
+          </text>
+          <text id="co6cj78-1">
+            <value>หญิง</value>
+          </text>
+          <text id="co6cj78-2">
+            <value>ผู้มีความหลากหลายทางเพศ (เช่น กะเทย ทอม เกย์ เลสเบี้ยน ไบ)</value>
+          </text>
+          <text id="vb8ft51-0">
+            <value>เป็น</value>
+          </text>
+          <text id="vb8ft51-1">
+            <value>ไม่เป็น</value>
+          </text>
+          <text id="qz71v81-0">
+            <value>ทำงานได้</value>
+          </text>
+          <text id="qz71v81-1">
+            <value>ทำงานไม่ได้</value>
+          </text>
+          <text id="iv2zz03-0">
+            <value>มี</value>
+          </text>
+          <text id="iv2zz03-1">
+            <value>ไม่มี</value>
+          </text>
+          <text id="hi91b36-0">
+            <value>เบาหวาน</value>
+          </text>
+          <text id="hi91b36-1">
+            <value>ความดันโลหิตสูง</value>
+          </text>
+          <text id="hi91b36-2">
+            <value>โรคเกาต์</value>
+          </text>
+          <text id="hi91b36-3">
+            <value>ไตวายเรื้อรัง</value>
+          </text>
+          <text id="hi91b36-4">
+            <value>มะเร็ง</value>
+          </text>
+          <text id="hi91b36-5">
+            <value>ไขมันในเลือดสูง</value>
+          </text>
+          <text id="hi91b36-6">
+            <value>กล้ามเนื้อหัวใจขาดเลือด</value>
+          </text>
+          <text id="hi91b36-7">
+            <value>โรคตับ</value>
+          </text>
+          <text id="hi91b36-8">
+            <value>หลอดเลือกสมอง</value>
+          </text>
+          <text id="hi91b36-9">
+            <value>เฮชไอวี (HIV)</value>
+          </text>
+          <text id="hi91b36-10">
+            <value>โรคทางจิตเวช (เช่น จิตเภท ซึมเศร้า โรคจิตจากสารเสพติด)</value>
+          </text>
+          <text id="hi91b36-11">
+            <value>ภูมิแพ้</value>
+          </text>
+          <text id="hi91b36-12">
+            <value>โรคกระดูกและข้อ</value>
+          </text>
+          <text id="hi91b36-13">
+            <value>โรคระบบทางเดินหายใจ</value>
+          </text>
+          <text id="hi91b36-14">
+            <value>ถุงลมโป่งพอง</value>
+          </text>
+          <text id="hi91b36-15">
+            <value>โลหิตจาง</value>
+          </text>
+          <text id="hi91b36-16">
+            <value>กระเพราะอาหาร</value>
+          </text>
+          <text id="hi91b36-17">
+            <value>ลมชัก</value>
+          </text>
+          <text id="hi91b36-18">
+            <value>ลำไส้</value>
+          </text>
+          <text id="hi91b36-19">
+            <value>อัมพาต</value>
+          </text>
+          <text id="hi91b36-20">
+            <value>อัมพฤกษ์</value>
+          </text>
+          <text id="hi91b36-21">
+            <value>โรคอื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="bf3ix10-0">
+            <value>ดื่ม</value>
+          </text>
+          <text id="bf3ix10-1">
+            <value>เคยดื่ม แต่เลิกแล้ว</value>
+          </text>
+          <text id="bf3ix10-2">
+            <value>ไม่ดื่ม</value>
+          </text>
+          <text id="jv1ii84-0">
+            <value>ดื่มประจำ</value>
+          </text>
+          <text id="jv1ii84-1">
+            <value>นาน ๆ ดื่มที</value>
+          </text>
+          <text id="sh3yx55-0">
+            <value>แก้ว</value>
+          </text>
+          <text id="sh3yx55-1">
+            <value>เป๊ก</value>
+          </text>
+          <text id="sh3yx55-2">
+            <value>กระป๋อง</value>
+          </text>
+          <text id="sh3yx55-3">
+            <value>ขวด</value>
+          </text>
+          <text id="nn6mv56-0">
+            <value>ไม่เคยสูบ</value>
+          </text>
+          <text id="nn6mv56-1">
+            <value>เคยสูบ แต่เลิกแล้ว</value>
+          </text>
+          <text id="nn6mv56-2">
+            <value>นาน ๆ สูบ</value>
+          </text>
+          <text id="nn6mv56-3">
+            <value>สูบประจำ</value>
+          </text>
+          <text id="jy46l14-0">
+            <value>มวน</value>
+          </text>
+          <text id="jy46l14-1">
+            <value>ซอง</value>
+          </text>
+          <text id="jy46l14-2">
+            <value>หัว (บุหรี่ไฟฟ้า)</value>
+          </text>
+          <text id="qq1gn04-0">
+            <value>ไม่ได้ออกกำลังกาย</value>
+          </text>
+          <text id="qq1gn04-1">
+            <value>ไม่เกิน 3 ครั้งต่อสัปดาห์</value>
+          </text>
+          <text id="qq1gn04-2">
+            <value>3-4 ครั้งต่อสัปดาห์</value>
+          </text>
+          <text id="qq1gn04-3">
+            <value>ตั้งแต่ 5 ครั้งขึ้นไปต่อสัปดาห์</value>
+          </text>
+          <text id="rm2pt51-0">
+            <value>ใช่</value>
+          </text>
+          <text id="rm2pt51-1">
+            <value>ไม่ใช่</value>
+          </text>
+          <text id="ed37j04-0">
+            <value>สิทธิสวัสดิการข้าราชการ/รัฐวิสาหกิจ/องคกร์ของรัฐ/องคกร์ปกครองส่วนท้องถิ่น </value>
+          </text>
+          <text id="ed37j04-1">
+            <value>สิทธิประกันสังคม</value>
+          </text>
+          <text id="ed37j04-2">
+            <value>สิทธิหลักประกันสุขภาพ 30 บาท (บัตรทอง)</value>
+          </text>
+          <text id="ed37j04-3">
+            <value>อื่น ๆ </value>
+          </text>
+          <text id="kz1ln93-0">
+            <value>ใช่</value>
+          </text>
+          <text id="kz1ln93-1">
+            <value>ไม่ใช่ </value>
+          </text>
+          <text id="ez0yx52-0">
+            <value>ใช่</value>
+          </text>
+          <text id="ez0yx52-1">
+            <value>ไม่ใช่</value>
+          </text>
+          <text id="cb2lc91-0">
+            <value>ใช่</value>
+          </text>
+          <text id="cb2lc91-1">
+            <value>ไม่ใช่</value>
+          </text>
+          <text id="tl9qh28-0">
+            <value>เคยมีอาการ</value>
+          </text>
+          <text id="tl9qh28-1">
+            <value>ไม่มีอาการ</value>
+          </text>
+          <text id="fz7kh77-0">
+            <value>ได้ไปรักษา</value>
+          </text>
+          <text id="fz7kh77-1">
+            <value>ไม่ได้รักษา (เพราะอะไร โปรดระบุสาเหตุ)</value>
+          </text>
+          <text id="ua0fa91-0">
+            <value>ได้</value>
+          </text>
+          <text id="ua0fa91-1">
+            <value>ไม่ได้</value>
+          </text>
+          <text id="ky0tl24-0">
+            <value>ได้</value>
+          </text>
+          <text id="ky0tl24-1">
+            <value>ไม่ได้</value>
+          </text>
+          <text id="tr16b37-0">
+            <value>ได้</value>
+          </text>
+          <text id="tr16b37-1">
+            <value>ไม่ได้</value>
+          </text>
+          <text id="uc5ne13-0">
+            <value>ได้</value>
+          </text>
+          <text id="uc5ne13-1">
+            <value>ไม่ได้</value>
+          </text>
+          <text id="mm3sg23-0">
+            <value>ประถมศึกษาตอนต้น (ป.1-3)</value>
+          </text>
+          <text id="mm3sg23-1">
+            <value>ประถมศึกษาตอนปลาย (ป.4-6)</value>
+          </text>
+          <text id="mm3sg23-2">
+            <value>มัธยมศึกษาตอนต้น (ม.1-3)</value>
+          </text>
+          <text id="mm3sg23-3">
+            <value>มัธยมศึกษาตอนปลาย (ม.4-6)</value>
+          </text>
+          <text id="mm3sg23-4">
+            <value>ปวช.</value>
+          </text>
+          <text id="mm3sg23-5">
+            <value>ปวส.</value>
+          </text>
+          <text id="mm3sg23-6">
+            <value>ปริญญาตรี  </value>
+          </text>
+          <text id="mm3sg23-7">
+            <value>สูงกว่าปริญญาตรี </value>
+          </text>
+          <text id="mm3sg23-8">
+            <value>ไม่เคยเรียน</value>
+          </text>
+          <text id="ah4kd76-0">
+            <value>ได้เข้าร่วม</value>
+          </text>
+          <text id="ah4kd76-1">
+            <value>ไม่ได้เข้าร่วม</value>
+          </text>
+          <text id="qg1pp78-0">
+            <value>การศึกษาในระบบ (โรงเรียน/วิทยาลัย/สถาบัน/มหาวิทยาลัย) </value>
+          </text>
+          <text id="qg1pp78-1">
+            <value>การฝึกอบรมนอกระบบ (สัมมนา/อบรม)</value>
+          </text>
+          <text id="qg1pp78-2">
+            <value>อื่น ๆ </value>
+          </text>
+          <text id="xy85l31-0">
+            <value>ได้ประกอบอาชีพ</value>
+          </text>
+          <text id="xy85l31-1">
+            <value>ไม่ได้ประกอบอาชีพ (เพราะอะไร โปรดระบุสาเหตุ)</value>
+          </text>
+          <text id="vi9yk35-0">
+            <value>ไม่สามารถประกอบอาชีพ เนื่องจากเจ็บป่วย หรือพิการ </value>
+          </text>
+          <text id="vi9yk35-1">
+            <value>ไม่สามารถหางานทำได้ (ว่างงาน/ตกงาน/เกษียณ) </value>
+          </text>
+          <text id="vi9yk35-2">
+            <value>ไม่ได้ทำงานเนื่องจากกำลังศึกษาอยู่ </value>
+          </text>
+          <text id="vi9yk35-3">
+            <value>อื่น ๆ </value>
+          </text>
+          <text id="ls7us10-0">
+            <value>รับราชการ </value>
+          </text>
+          <text id="ls7us10-1">
+            <value>รัฐวิสาหกิจ </value>
+          </text>
+          <text id="ls7us10-2">
+            <value>พนักงานบริษัท / ลูกจ้าง</value>
+          </text>
+          <text id="ls7us10-3">
+            <value>ธุรกิจส่วนตัว </value>
+          </text>
+          <text id="ls7us10-4">
+            <value>อาชีพอิสระ (เช่น ค้าขาย รับจ้างทั่วไป ขายของออนไลน์ ไรเดอร์ วินมอเตอร์ไซต์)</value>
+          </text>
+          <text id="ls7us10-5">
+            <value>อื่น ๆ </value>
+          </text>
+          <text id="yw0iz12-0">
+            <value>รับจ้างทั่วไป (งานช่าง, งานบริการ, งานทำความสะอาด, งานด้านการเกษตร, งานก่อสร้าง, งานขนส่ง)</value>
+          </text>
+          <text id="yw0iz12-1">
+            <value>ขายของออนไลน์</value>
+          </text>
+          <text id="yw0iz12-2">
+            <value>ไรเดอร์</value>
+          </text>
+          <text id="yw0iz12-3">
+            <value>วินมอเตอร์ไซต์</value>
+          </text>
+          <text id="yw0iz12-4">
+            <value>ค้าขาย</value>
+          </text>
+          <text id="yw0iz12-5">
+            <value>ผู้ค้าหาบเร่แผงลอย</value>
+          </text>
+          <text id="bf0zk60-0">
+            <value>ต่อวัน</value>
+          </text>
+          <text id="bf0zk60-1">
+            <value>ต่อเดือน</value>
+          </text>
+          <text id="lt3or89-0">
+            <value>มีสัญญาจ้าง</value>
+          </text>
+          <text id="lt3or89-1">
+            <value>ไม่มีสัญญาจ้าง</value>
+          </text>
+          <text id="qr1ic52-0">
+            <value>มี (โปรดระบุสวัสดิการ)</value>
+          </text>
+          <text id="qr1ic52-1">
+            <value>ไม่มี</value>
+          </text>
+          <text id="ce34h33-0">
+            <value>ประกันสังคม ม.40 (นายจ้างหรือบริษัทเป็นผู้ส่ง) </value>
+          </text>
+          <text id="ce34h33-1">
+            <value>ประกันสังคม ม.33 (นายจ้างหรือบริษัทเป็นผู้ส่ง) </value>
+          </text>
+          <text id="ce34h33-2">
+            <value>ประกันสังคม ม.39 (เป็นผู้ส่งเงินเอง)</value>
+          </text>
+          <text id="ce34h33-3">
+            <value>สวัสดิการพนักงาน (เช่น โบนัสหรือการปรับเงินเดือน, วันหยุด-วันลาตามกฎหมาย)</value>
+          </text>
+          <text id="ce34h33-4">
+            <value>อื่น ๆ </value>
+          </text>
+          <text id="ky6kq63-0">
+            <value>เคย</value>
+          </text>
+          <text id="ky6kq63-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="ek8wf65-0">
+            <value>เคย</value>
+          </text>
+          <text id="ek8wf65-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="ze3ih82-0">
+            <value>เคย</value>
+          </text>
+          <text id="ze3ih82-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="om2fq24-0">
+            <value>เคย</value>
+          </text>
+          <text id="om2fq24-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="ap1uz56-0">
+            <value>เคย</value>
+          </text>
+          <text id="ap1uz56-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="gf5ad14-0">
+            <value>เคย</value>
+          </text>
+          <text id="gf5ad14-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="se1rt88-0">
+            <value>เคย</value>
+          </text>
+          <text id="se1rt88-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="vv3fl62-0">
+            <value>เคย</value>
+          </text>
+          <text id="vv3fl62-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="bj4yb59-0">
+            <value>เคย</value>
+          </text>
+          <text id="bj4yb59-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="au1ix28-0">
+            <value>รู้สึกปลอดภัยมาก </value>
+          </text>
+          <text id="au1ix28-1">
+            <value>รู้สึกปลอดภัยปานกลาง </value>
+          </text>
+          <text id="au1ix28-2">
+            <value>รู้สึกปลอดภัยน้อย </value>
+          </text>
+          <text id="au1ix28-3">
+            <value>รู้สึกไม่ปลอดภัย</value>
+          </text>
+          <text id="un1cu46-0">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="un1cu46-1">
+            <value>เชื้อชาติ</value>
+          </text>
+          <text id="un1cu46-2">
+            <value>ศาสนา</value>
+          </text>
+          <text id="un1cu46-3">
+            <value>เพศ</value>
+          </text>
+          <text id="un1cu46-4">
+            <value>อายุ</value>
+          </text>
+          <text id="un1cu46-5">
+            <value>สถานะทางเศรษฐกิจ</value>
+          </text>
+          <text id="un1cu46-6">
+            <value>อื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="ak39r77-0">
+            <value>แต่งงาน</value>
+          </text>
+          <text id="ak39r77-1">
+            <value>อยู่กินแบบไม่ได้แต่งงาน</value>
+          </text>
+          <text id="ak39r77-2">
+            <value>โสด</value>
+          </text>
+          <text id="ak39r77-3">
+            <value>หม่าย</value>
+          </text>
+          <text id="rr89v03-0">
+            <value>ได้</value>
+          </text>
+          <text id="rr89v03-1">
+            <value>ไม่ได้</value>
+          </text>
+          <text id="kp7pz01-0">
+            <value>ความสัมพันธ์ทางเพศ</value>
+          </text>
+          <text id="kp7pz01-1">
+            <value>การคุมกำเนิด</value>
+          </text>
+          <text id="kp7pz01-2">
+            <value>การดูแลสุขภาพอนามัยเจริญพันธุ์ </value>
+          </text>
+          <text id="iq1zl15-0">
+            <value>มี</value>
+          </text>
+          <text id="iq1zl15-1">
+            <value>ไม่มี</value>
+          </text>
+          <text id="ph5ji62-0">
+            <value>ไม่มีสิ่งอำนวยความสะดวก</value>
+          </text>
+          <text id="ph5ji62-1">
+            <value>ทางลาด</value>
+          </text>
+          <text id="ph5ji62-2">
+            <value>ราวจับ</value>
+          </text>
+          <text id="ph5ji62-3">
+            <value>พื้นที่สาธารณะสำหรับพักผ่อน/ออกกำลังกาย (พื้นที่ส่วนกลาง)</value>
+          </text>
+          <text id="ph5ji62-4">
+            <value>สถานบริการด้านสุขภาพ</value>
+          </text>
+          <text id="si23t12-0">
+            <value>มี</value>
+          </text>
+          <text id="si23t12-1">
+            <value>ไม่มี</value>
+          </text>
+          <text id="zy22y16-0">
+            <value>เคย</value>
+          </text>
+          <text id="zy22y16-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="st29f68-0">
+            <value>ไม่เคยประสบภัย</value>
+          </text>
+          <text id="st29f68-1">
+            <value>น้ำท่วม</value>
+          </text>
+          <text id="st29f68-2">
+            <value>อากาศร้อนจัด</value>
+          </text>
+          <text id="st29f68-3">
+            <value>อากาศเย็นจัด</value>
+          </text>
+          <text id="st29f68-4">
+            <value>ไฟไหม้ </value>
+          </text>
+          <text id="st29f68-5">
+            <value>แผ่นดินไหว</value>
+          </text>
+          <text id="st29f68-6">
+            <value>โรคระบาด</value>
+          </text>
+          <text id="st29f68-7">
+            <value>หลุมยุบ พื้นดินทรุด</value>
+          </text>
+          <text id="st29f68-8">
+            <value>มลพิษ (ฝุ่น)</value>
+          </text>
+          <text id="yv36y59-0">
+            <value>ไม่เคยได้รับผลกระทบ</value>
+          </text>
+          <text id="yv36y59-1">
+            <value>น้ำท่วม</value>
+          </text>
+          <text id="yv36y59-2">
+            <value>อากาศร้อนจัด</value>
+          </text>
+          <text id="yv36y59-3">
+            <value>อากาศเย็นจัด</value>
+          </text>
+          <text id="yv36y59-4">
+            <value>ไฟไหม้ </value>
+          </text>
+          <text id="yv36y59-5">
+            <value>แผ่นดินไหว</value>
+          </text>
+          <text id="yv36y59-6">
+            <value>โรคระบาด</value>
+          </text>
+          <text id="yv36y59-7">
+            <value>หลุมยุบ พื้นดินทรุด</value>
+          </text>
+          <text id="yv36y59-8">
+            <value>มลพิษ (ฝุ่น)</value>
+          </text>
+          <text id="db6pa82-0">
+            <value>เป็นเจ้าของ</value>
+          </text>
+          <text id="db6pa82-1">
+            <value>เช่า</value>
+          </text>
+          <text id="db6pa82-2">
+            <value>อยู่อาศัยกับญาติหรือเพื่อน </value>
+          </text>
+          <text id="db6pa82-3">
+            <value>ที่บุกรุก</value>
+          </text>
+          <text id="db6pa82-4">
+            <value>บ้านพักสวัสดิการ</value>
+          </text>
+          <text id="of2nb35-0">
+            <value>มี</value>
+          </text>
+          <text id="of2nb35-1">
+            <value>ไม่มี</value>
+          </text>
+          <text id="pp0qr30-0">
+            <value>น้ำประปา</value>
+          </text>
+          <text id="pp0qr30-1">
+            <value>ซื้อน้ำขวด</value>
+          </text>
+          <text id="pp0qr30-2">
+            <value>น้ำบาดาล</value>
+          </text>
+          <text id="pp0qr30-3">
+            <value>ตู้กดน้ำหยอดเหรียญ</value>
+          </text>
+          <text id="pp0qr30-4">
+            <value>อื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="mm6uh30-0">
+            <value>มี</value>
+          </text>
+          <text id="mm6uh30-1">
+            <value>ไม่มี</value>
+          </text>
+          <text id="ev3cd15-0">
+            <value>ไม่มี</value>
+          </text>
+          <text id="ev3cd15-1">
+            <value>อาคารที่อยู่อาศัยหนาแน่น</value>
+          </text>
+          <text id="ev3cd15-2">
+            <value>บ้านมีพื้นที่แคบ   </value>
+          </text>
+          <text id="ev3cd15-3">
+            <value>ขาดการเข้าถึงน้ำสะอาด </value>
+          </text>
+          <text id="ev3cd15-4">
+            <value>ขาดไฟฟ้า</value>
+          </text>
+          <text id="ev3cd15-5">
+            <value>ขาดการจัดการขยะที่เหมาะสม (ไม่มีที่ทิ้ง/ไม่มีคนเก็บขยะ) </value>
+          </text>
+          <text id="ev3cd15-6">
+            <value>น้ำเสีย</value>
+          </text>
+          <text id="ev3cd15-7">
+            <value>ยาเสพติด</value>
+          </text>
+          <text id="ev3cd15-8">
+            <value>อื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="ju1ke37-0">
+            <value>เคย</value>
+          </text>
+          <text id="ju1ke37-1">
+            <value>ไม่เคย</value>
+          </text>
+          <text id="cq4vf18-0">
+            <value>บาดเจ็บเล็กน้อย</value>
+          </text>
+          <text id="cq4vf18-1">
+            <value>บาดเจ็บสาหัส</value>
+          </text>
+          <text id="cq4vf18-2">
+            <value>เสียชีวิต</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73:label">
+            <value>ข้อมูลผู้สำรวจ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/name:label">
+            <value>ชื่อ-นามสกุล ผู้สำรวจ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/name:hint">
+            <value>เพื้อตรวจสอบและรับเงิน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/phone_number:label">
+            <value>เบอร์โทรศัพท์ผู้สำรวจ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/phone_number:hint">
+            <value>เพื่อตรวจสอบและรับเงิน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/dname:label">
+            <value>เขตที่สำรวจ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/dname:hint">
+            <value>กดเพื่อเลือก</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/community_name:label">
+            <value>ชุมชนที่สำรวจ (ถ้าไม่ได้อยู่ในชุมชน ให้ใส่ชื่อย่านหรือชื่อสถานที่)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/general_group:label">
+            <value>ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม (เริ่มถาม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/general_group/house_number:label">
+            <value>บ้านเลขที่ (หากไม่มีบ้านเลขที่ ไม่ต้องใส่)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/general_group/house_number:hint">
+            <value>เพื่อระบุชุดแบบสอบถาม</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/general_group/age:label">
+            <value>อายุผู้ตอบแบบสอบถาม</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/general_group/sex:label">
+            <value>เพศผู้ตอบแบบสอบถาม</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group:label">
+            <value>สุขภาพและพฤติกรรมสุขภาพ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_status:label">
+            <value>ผู้ตอบแบบสอบถามเป็นคนพิการหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_work_status:label">
+            <value>หากเป็นคนพิการ สามารถทำงานได้หรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_status:label">
+            <value>ผู้ตอบแบบสอบถามมีโรคประจำตัวหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type:label">
+            <value>โรคประจำตัวที่มี (เลือกได้หลายข้อ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type_other:label">
+            <value>โรคประจำตัวอื่น ๆ โปรดระบุ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink:label">
+            <value>พฤติกรรมการดื่มแอลกอฮอล์</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_status:label">
+            <value>ผู้ตอบแบบสอบถามดื่มแอลกอฮล์หรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_rate:label">
+            <value>ความถี่ในการดื่ม</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_amount:label">
+            <value>ปริมาณที่ดื่ม (กี่ แก้ว/เป๊ก/กระป๋อง/ขวด)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_unit:label">
+            <value>หน่วยนับ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke:label">
+            <value>พฤติกรรมการสูบบุหรี่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status:label">
+            <value>ผู้ตอบแบบสอบถามสูบบุหรี่หรือบุหรี่ไฟฟ้าหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_amount:label">
+            <value>ปริมาณในการสูบต่อวัน (กี่ มวน/หัว)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_unit:label">
+            <value>หน่วยนับ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group:label">
+            <value>พฤติกรรมการออกกำลังกาย</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group/exercise_status:label">
+            <value>ในช่วงที่ผ่านมา ผู้ตอบแบบสอบถามได้ออกกำลังกายหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status:label">
+            <value>ผู้ตอบแบบสอบถามอยู่อาศัยกับสมาชิกครอบครัวหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hhsize:label">
+            <value>จำนวนสมาชิกครัวเรือนทั้งหมดกี่คน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count:label">
+            <value>จำนวนสมาชิกเด็กอายุต่ำกว่า 5 ปี กี่คน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_worker_count:label">
+            <value>จำนวนสมาชิกวัยแรงงาน (15-59 ปี) กี่คน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_elder_count:label">
+            <value>จำนวนผู้สูงอายุ (60 ปีขึ้นไป) กี่คน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1:label">
+            <value>สมาชิกเด็กอายุต่ำกว่า 5 ปี คนที่ 1</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_height_1:label">
+            <value>สมาชิกเด็กคนที่ 1 ส่วนสูง (เซนติเมตร)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_weight_1:label">
+            <value>สมาชิกเด็กคนที่ 1 น้ำหนัก (กิโลกรัม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2:label">
+            <value>สมาชิกเด็กอายุต่ำกว่า 5 ปี คนที่ 2</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_height_2:label">
+            <value>สมาชิกเด็กคนที่ 2 ส่วนสูง (เซนติเมตร)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_weight_2:label">
+            <value>สมาชิกเด็กคนที่ 2 น้ำหนัก (กิโลกรัม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3:label">
+            <value>สมาชิกเด็กอายุต่ำกว่า 5 ปี คนที่ 3</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_height_3:label">
+            <value>สมาชิกเด็กคนที่ 3 ส่วนสูง (เซนติเมตร)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_weight_3:label">
+            <value>สมาชิกเด็กคนที่ 3 น้ำหนัก (กิโลกรัม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4:label">
+            <value>สมาชิกเด็กอายุต่ำกว่า 5 ปี คนที่ 4</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_height_4:label">
+            <value>สมาชิกเด็กคนที่ 4 ส่วนสูง (เซนติเมตร)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_weight_4:label">
+            <value>สมาชิกเด็กคนที่ 4 น้ำหนัก (กิโลกรัม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5:label">
+            <value>สมาชิกเด็กอายุต่ำกว่า 5 ปี คนที่ 5</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_height_5:label">
+            <value>สมาชิกเด็กคนที่ 5 ส่วนสูง (เซนติเมตร)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_weight_5:label">
+            <value>สมาชิกเด็กคนที่ 5 น้ำหนัก (กิโลกรัม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33:label">
+            <value>ส่วนสูงและน้ำหนักของผู้ตอบแบบสอบถาม</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/height:label">
+            <value>ผู้ตอบแบบสอบถามมีส่วนสูงเท่าไหร่ (เซนติเมตร)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/weight:label">
+            <value>ผู้ตอบแบบสอบถามมีน้ำหนักเท่าไหร่ (กิโลกรัม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group:label">
+            <value>การเข้าถึงการบริการทางสุขภาพ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare:label">
+            <value>ผู้ตอบแบบสอบถามมีสิทธิการรักษาพยาบาลประเภทใด</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare_other:label">
+            <value>สิทธิการรักษาพยาบาลประเภทอื่น ๆ (ระบุ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_1:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา มีครั้งใดที่ต้องการหาหมอแต่ไม่ไป เนื่องจากปัญหาค่าใช้จ่ายหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_2:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยงดการไปหาหมอ การรักษา หรือการติดตามผลการรักษา เนื่องจากค่าใช้จ่ายหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_3:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยไม่ซื้อยารักษา เนื่องจากปัญหาค่าใช้จ่ายหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/hh_health_expense:label">
+            <value>ครัวเรือนของผู้ตอบแบบสอบถาม ใช้จ่ายเงินส่วนตัวสำหรับค่ารักษาพยาบาล (รวมค่าเดินทาง) ต่อเดือนกี่บาท</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/hh_health_expense:hint">
+            <value>รวมทั้งครอบครัว ไปหาหมอรอบนึงเสียเงินเท่าไหร่ (ไม่เสียเงินให้ใส่ 0)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/health_expense:label">
+            <value>ผู้ตอบแบบสอบถาม ใช้จ่ายเงินส่วนตัวสำหรับค่ารักษาพยาบาล (รวมค่าเดินทาง) ต่อเดือนกี่บาท</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/health_expense:hint">
+            <value>ไปหาหมอรอบนึงเสียเงินเท่าไหร่ (ไม่เสียเงินให้ใส่ 0)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยมีอาการปวดฟัน ฟันโยก เลือดออกตามไรฟัน หรือรู้สึกว่าช่องปากมีปัญหาหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยได้ไปรักษากับทันตแพทย์หรือไม่? (ถ้ามีอาการ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access_reason:label">
+            <value>สาเหตุที่ไม่ได้ไปรักษากับทันตแพทย์</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group:label">
+            <value>การศึกษา</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/speak:label">
+            <value>ผู้ตอบแบบสามารถพูดภาษาไทยได้หรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/read:label">
+            <value>ผู้ตอบแบบสอบถามสามารถอ่านภาษาไทยได้หรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/write:label">
+            <value>ผู้ตอบแบบสอบถามสามารถเขียนภาษาไทยได้หรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/math:label">
+            <value>ผู้ตอบแบบสอบถามสามารถทำการคำนวณพื้นฐานได้หรือไม่ (บวก ลบ คูณ หาร)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/education:label">
+            <value>ระดับการศึกษาสูงสุด</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training:label">
+            <value>ในช่วงเวลา 12 เดือนที่ผ่านมา ได้เข้าร่วมการศึกษาหรือการฝึกอบรมใด ๆ หรือไม่?</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type:label">
+            <value>ถ้าได้เข้าร่วม โปรดระบุประเภท</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type_other:label">
+            <value>โปรดระบุการศึกษาหรือการฝึกอบรมประเภทอื่น ๆ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41:label">
+            <value>ความมั่นคงและความเท่าเทียมทางเศรษฐกิจ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status:label">
+            <value>ปัจจุบันผู้ตอบแบบสอบถามได้ประกอบอาชีพหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/unoccupied_reason:label">
+            <value>ไม่ได้ประกอบอาชีพเพราะ โปรดระบุสาเหตุ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/not_working_other:label">
+            <value>ไม่ได้ทำงานเพราะสาเหตุอื่น ๆ โปรดระบุ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type:label">
+            <value>ประเภทของอาชีพ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_freelance_type:label">
+            <value>ประเภทอาชีพอิสระ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type_other:label">
+            <value>อาชีพอื่น ๆ โปรดระบุ</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income_type:label">
+            <value>มีรายได้เฉลี่ยต่อวันหรือต่อเดือน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income:label">
+            <value>มีรายได้จำนวนกี่บาท (ถ้าไม่สะดวกให้ข้อมูลไม่ต้องใส่) (ใส่แต่ตัวเลขไม่ต้องใส่จุลภาค)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/working_hours:label">
+            <value>มีระยะเวลาในการทำงานกี่ชั่วโมงต่อวัน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_contract:label">
+            <value>ในการทำงาน นายจ้างหรือบริษัทได้มีการทำสัญญาจ้างงานหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare:label">
+            <value>ผู้ตอบแบบสอบถามมีสวัสดิการในการทำงานหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_type:label">
+            <value>ระบุสวัสดิการในการทำงาน (เลือกได้หลายตัวเลือก)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_other:label">
+            <value>สวัสดิการอื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_unpaid:label">
+            <value>ผู้ตอบแบบสอบถามเคยได้รับการจ่ายค่าจ้างไม่สม่ำเสมอ (เบี้ยวเงินเดือนหรือจ่ายเงินไม่ตรงกำหนด) จากการทำงานปัจจุบันหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยประสบอุบัติเหตุหรือบาดเจ็บร้ายแรงจากการทำงานจนต้องได้รับการรักษาหรือต้องหยุดงานหรือไม่?</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury_count:label">
+            <value>หากเคยเกิดขึ้นให้ระบุจำนวนครั้ง</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยมีการบาดเจ็บเล็กน้อยจากการทำงานหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury_count:label">
+            <value>หากเคยเกิดขึ้นให้ระบุจำนวน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_1:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา คุณหรือสมาชิกในครอบครัวเคยลดปริมาณอาหารหรือมื้ออาหารเนื่องจากไม่มีเงินเพียงพอ (อดมื้อกินมื้อ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_2:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา คุณหรือสมาชิกในครอบครัวเคยอดอาหารทั้งวันเนื่องจากไม่มีเงินเพียงพอหรือไม่? (หิวข้าวแต่ไม่มีเงินซื้อ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17:label">
+            <value>สังคมและบริบทชุมชน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_murder:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา ในชุมชนเคยมีเหตุการณ์ฆาตกรรมหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/physical_violence:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยถูกกระทำความรุนแรงทางร่างกายหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/psychological_violence:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยถูกกระทำความรุนแรงทางจิตใจหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/sexual_violence:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยถูกกระทำความรุนแรงทางเพศหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_safety:label">
+            <value>คุณมีความรู้สึกปลอดภัยเมื่อเดินคนเดียวในเวลากลางคืนบริเวณชุมชน หรือบริเวณโดยรอบที่ใกล้เคียงหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_safety:hint">
+            <value>ให้คะแนนความปลอดภัยในชุมชน (ของผู้ตอบแบบสอบถาม)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยรู้สึกว่าถูกเลือกปฏิบัติด้วยสาเหตุใดสาเหตุหนึ่งต่อไปนี้หรือไม่? (สามารถเลือกได้หลายตัวเลือก)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination:hint">
+            <value>การถูกเลือกปฏิบัติ คือ การปฏิบัติที่แตกต่าง การกีดกัน การจำกัด</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination_other:label">
+            <value>เคยถูกเลือกปฏิบัติด้วยสาเหตุอื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status:label">
+            <value>สถานภาพสมรสของผู้ตอบแบบสอบถาม</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status:hint">
+            <value>อยู่กินแบบไม่ได้แต่งงาน คือ การอยู่กินด้วยกันโดยไม่ได้จดทะเบียนสมรส</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_age:label">
+            <value>แต่งงานหรืออยู่กินแบบไม่ได้แต่งงานครั้งแรกเมื่ออายุเท่าไหร่ (ถ้าไม่สะดวกให้ข้อมูลไม่ต้องตอบ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision:label">
+            <value>ผู้ตอบแบบสอบถามสามารถตัดสินใจด้วยตนเองในเรื่องเพศได้หรือไม่ (ถ้าไม่สะดวกให้ข้อมูลไม่ต้องตอบ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision:hint">
+            <value>ตัดสินใจในเรื่องต่างๆ ด้วยตัวเอง โดยไม่ต้องรอคำแนะนำ การชี้นำ และการถูกบังคับจากผู้อื่น</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision_type:label">
+            <value>ตัดสินใจด้วยตนเองได้ในเรืองใด (สามารถเลือกได้หลายตัวเลือก) (ถ้าไม่สะดวกให้ข้อมูลไม่ต้องตอบ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity:label">
+            <value>ชุมชนที่อาศัยอยู่มีสิ่งอำนวยความสะดวกสำหรับผู้สูงอายุหรือไม่? (พื้นที่บ้านหรือพื้นที่ส่วนกลางในชุมชน)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity_type:label">
+            <value>ชุมชนมีสิ่งอำนวยความสะดวกสำหรับผู้สูงอายุอะไรบ้าง (สามารถเลือกได้หลายตัวเลือก)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/helper:label">
+            <value>ในกรณีที่เกิดเหตุฉุกเฉินคุณมีเพื่อนหรือญาติที่สามารถพึ่งพาได้ในยามฉุกเฉินหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59:label">
+            <value>สภาพกายภาพและสิ่งแวดล้อม</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/health_pollution:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา เคยได้รับผลกระทบด้านสุขภาพจากมลพิษทางอากาศหรือไม่? (เช่น ไอ จาม เลือดกำเดาไหล)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_disaster:label">
+            <value>ในช่วง 5 ปีที่ผ่านมา ชุมชนหรือพื้นที่อยู่อาศัยเคยประสบภัยต่อไปนี้หรือไม่? (ตอบได้มากกว่า 1 ข้อ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/self_disaster:label">
+            <value>ในช่วง 5 ปีที่ผ่านมา คุณหรือสมาชิกในครอบครัวเคยได้รับผลกระทบโดยตรง (สูญหาย เสียชีวิต ทรัพย์สินเสียหาย) จากภัยพิบัติทางธรรมชาติหรือไม่? (ตอบได้มากกว่า 1 ข้อ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_status:label">
+            <value>สถานะการครอบครองที่อยู่อาศัยปัจจุบัน</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/rent_price:label">
+            <value>หากมีค่าเช่า เสียค่าเช่ากี่บาทต่อเดือน (ในกรณีที่เช่าบ้านและเช่าที่ดินให้คิดรวมกัน) (ไม่มีค่าเช่าไม่ต้องใส่)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_sink:label">
+            <value>ในบ้านหรือที่อยู่อาศัย มีอุปกรณ์หรือสถานที่สำหรับล้างมือ พร้อมสบู่กับน้ำประปาหรือไม่? (อ่างล้างหน้าพร้อมสบู่)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply:label">
+            <value>แหล่งน้ำดื่มที่ใช้บริโภคภายในครัวเรือนมาจากแหล่งใดเป็นหลัก</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply_other:label">
+            <value>แหล่งน้ำอื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/waste_water_disposal:label">
+            <value>บ้านหรือที่อยู่อาศัยของมีส้วมที่มีระบบระบายน้ำเสียหรือของเสียหรือไม่ (บ่อเกรอะ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment:label">
+            <value>ลักษณะของพื้นที่โดยรอบที่อาศัยอยู่มีลักษณะดังต่อไปนี้หรือไม่ (สังเกตจากลักษณะพื้นที่โดยรอบ) (ตอบได้มากกว่า 1 ข้อ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment_other:label">
+            <value>อื่น ๆ (โปรดระบุ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident:label">
+            <value>ในช่วง 12 เดือนที่ผ่านมา คุณหรือสมาชิกในครอบครัวเคยประสบอุบัติเหตุทางถนนหรือไม่</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident_status:label">
+            <value>หากตนเองหรือสมาชิกในครอบครัวเคยประสบอุบัติเหตุ มีความรุนแรงในระดับใด (เลือกได้หลายคำตอบ)</value>
+          </text>
+          <text id="/ayCGyCFtVFHr8i3bmQVdTR/comment:label">
+            <value>ข้อคิดเห็นหรือข้อเสนอแนะเพิ่มเติม</value>
+          </text>
+        </translation>
+      </itext>
+      <instance>
+        <ayCGyCFtVFHr8i3bmQVdTR id="ayCGyCFtVFHr8i3bmQVdTR">
+          <start/>
+          <end/>
+          <start-geopoint/>
+          <group_kz5rs73>
+            <name/>
+            <phone_number/>
+            <dname/>
+            <community_name/>
+          </group_kz5rs73>
+          <general_group>
+            <house_number/>
+            <age/>
+            <sex/>
+          </general_group>
+          <health_behavior_group>
+            <disable_status/>
+            <disable_work_status/>
+            <diseases_status/>
+            <diseases_type/>
+            <diseases_type_other/>
+            <drink>
+              <drink_status/>
+              <drink_rate/>
+              <drink_amount/>
+              <drink_unit/>
+            </drink>
+            <smoke>
+              <smoke_status/>
+              <smoke_amount/>
+              <smoke_unit/>
+            </smoke>
+            <exercise_group>
+              <exercise_status/>
+            </exercise_group>
+            <family_status/>
+            <hhsize/>
+            <hh_child_count/>
+            <hh_worker_count/>
+            <hh_elder_count/>
+            <child_bmi_1>
+              <child_height_1/>
+              <child_weight_1/>
+            </child_bmi_1>
+            <child_bmi_2>
+              <child_height_2/>
+              <child_weight_2/>
+            </child_bmi_2>
+            <child_bmi_3>
+              <child_height_3/>
+              <child_weight_3/>
+            </child_bmi_3>
+            <child_bmi_4>
+              <child_height_4/>
+              <child_weight_4/>
+            </child_bmi_4>
+            <child_bmi_5>
+              <child_height_5/>
+              <child_weight_5/>
+            </child_bmi_5>
+            <group_hs2yh33>
+              <height/>
+              <weight/>
+            </group_hs2yh33>
+          </health_behavior_group>
+          <health_welfare_group>
+            <welfare/>
+            <welfare_other/>
+            <medical_skip_1/>
+            <medical_skip_2/>
+            <medical_skip_3/>
+            <hh_health_expense/>
+            <health_expense/>
+            <oral_health/>
+            <oral_health_access/>
+            <oral_health_access_reason/>
+          </health_welfare_group>
+          <education_group>
+            <speak/>
+            <read/>
+            <write/>
+            <math/>
+            <education/>
+            <training/>
+            <training_type/>
+            <training_type_other/>
+          </education_group>
+          <group_sa6hy41>
+            <occupation_status/>
+            <unoccupied_reason/>
+            <not_working_other/>
+            <occupation_type/>
+            <occupation_freelance_type/>
+            <occupation_type_other/>
+            <income_type/>
+            <income/>
+            <working_hours/>
+            <occupation_contract/>
+            <occupation_welfare/>
+            <occupation_welfare_type/>
+            <occupation_welfare_other/>
+            <occupation_unpaid/>
+            <occupation_injury/>
+            <occupation_injury_count/>
+            <occupation_small_injury/>
+            <occupation_small_injury_count/>
+            <food_insecurity_1/>
+            <food_insecurity_2/>
+          </group_sa6hy41>
+          <group_fd3yd17>
+            <community_murder/>
+            <physical_violence/>
+            <psychological_violence/>
+            <sexual_violence/>
+            <community_safety/>
+            <discrimination/>
+            <discrimination_other/>
+            <marriage_status/>
+            <marriage_age/>
+            <decision/>
+            <decision_type/>
+            <community_amenity/>
+            <community_amenity_type/>
+            <helper/>
+          </group_fd3yd17>
+          <group_qt2fv59>
+            <health_pollution/>
+            <community_disaster/>
+            <self_disaster/>
+            <house_status/>
+            <rent_price/>
+            <house_sink/>
+            <water_supply/>
+            <water_supply_other/>
+            <waste_water_disposal/>
+            <community_environment/>
+            <community_environment_other/>
+            <accident/>
+            <accident_status/>
+          </group_qt2fv59>
+          <comment/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </ayCGyCFtVFHr8i3bmQVdTR>
+      </instance>
+      <instance id="jb4if34">
+        <root>
+          <item>
+            <itextId>jb4if34-0</itextId>
+            <name>1033</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>jb4if34-1</itextId>
+            <name>1046</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>jb4if34-2</itextId>
+            <name>1018</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>jb4if34-3</itextId>
+            <name>1043</name>
+            <order>3</order>
+          </item>
+          <item>
+            <itextId>jb4if34-4</itextId>
+            <name>1030</name>
+            <order>4</order>
+          </item>
+          <item>
+            <itextId>jb4if34-5</itextId>
+            <name>1035</name>
+            <order>5</order>
+          </item>
+          <item>
+            <itextId>jb4if34-6</itextId>
+            <name>1036</name>
+            <order>6</order>
+          </item>
+          <item>
+            <itextId>jb4if34-7</itextId>
+            <name>1026</name>
+            <order>7</order>
+          </item>
+          <item>
+            <itextId>jb4if34-8</itextId>
+            <name>1002</name>
+            <order>8</order>
+          </item>
+          <item>
+            <itextId>jb4if34-9</itextId>
+            <name>1019</name>
+            <order>9</order>
+          </item>
+          <item>
+            <itextId>jb4if34-10</itextId>
+            <name>1048</name>
+            <order>10</order>
+          </item>
+          <item>
+            <itextId>jb4if34-11</itextId>
+            <name>1049</name>
+            <order>11</order>
+          </item>
+          <item>
+            <itextId>jb4if34-12</itextId>
+            <name>1015</name>
+            <order>12</order>
+          </item>
+          <item>
+            <itextId>jb4if34-13</itextId>
+            <name>1020</name>
+            <order>13</order>
+          </item>
+          <item>
+            <itextId>jb4if34-14</itextId>
+            <name>1016</name>
+            <order>14</order>
+          </item>
+          <item>
+            <itextId>jb4if34-15</itextId>
+            <name>1006</name>
+            <order>15</order>
+          </item>
+          <item>
+            <itextId>jb4if34-16</itextId>
+            <name>1021</name>
+            <order>16</order>
+          </item>
+          <item>
+            <itextId>jb4if34-17</itextId>
+            <name>1005</name>
+            <order>17</order>
+          </item>
+          <item>
+            <itextId>jb4if34-18</itextId>
+            <name>1031</name>
+            <order>18</order>
+          </item>
+          <item>
+            <itextId>jb4if34-19</itextId>
+            <name>1040</name>
+            <order>19</order>
+          </item>
+          <item>
+            <itextId>jb4if34-20</itextId>
+            <name>1029</name>
+            <order>20</order>
+          </item>
+          <item>
+            <itextId>jb4if34-21</itextId>
+            <name>1047</name>
+            <order>21</order>
+          </item>
+          <item>
+            <itextId>jb4if34-22</itextId>
+            <name>1050</name>
+            <order>22</order>
+          </item>
+          <item>
+            <itextId>jb4if34-23</itextId>
+            <name>1025</name>
+            <order>23</order>
+          </item>
+          <item>
+            <itextId>jb4if34-24</itextId>
+            <name>1004</name>
+            <order>24</order>
+          </item>
+          <item>
+            <itextId>jb4if34-25</itextId>
+            <name>1027</name>
+            <order>25</order>
+          </item>
+          <item>
+            <itextId>jb4if34-26</itextId>
+            <name>1007</name>
+            <order>26</order>
+          </item>
+          <item>
+            <itextId>jb4if34-27</itextId>
+            <name>1032</name>
+            <order>27</order>
+          </item>
+          <item>
+            <itextId>jb4if34-28</itextId>
+            <name>1008</name>
+            <order>28</order>
+          </item>
+          <item>
+            <itextId>jb4if34-29</itextId>
+            <name>1014</name>
+            <order>29</order>
+          </item>
+          <item>
+            <itextId>jb4if34-30</itextId>
+            <name>1009</name>
+            <order>30</order>
+          </item>
+          <item>
+            <itextId>jb4if34-31</itextId>
+            <name>1001</name>
+            <order>31</order>
+          </item>
+          <item>
+            <itextId>jb4if34-32</itextId>
+            <name>1022</name>
+            <order>32</order>
+          </item>
+          <item>
+            <itextId>jb4if34-33</itextId>
+            <name>1010</name>
+            <order>33</order>
+          </item>
+          <item>
+            <itextId>jb4if34-34</itextId>
+            <name>1012</name>
+            <order>34</order>
+          </item>
+          <item>
+            <itextId>jb4if34-35</itextId>
+            <name>1037</name>
+            <order>35</order>
+          </item>
+          <item>
+            <itextId>jb4if34-36</itextId>
+            <name>1024</name>
+            <order>36</order>
+          </item>
+          <item>
+            <itextId>jb4if34-37</itextId>
+            <name>1011</name>
+            <order>37</order>
+          </item>
+          <item>
+            <itextId>jb4if34-38</itextId>
+            <name>1038</name>
+            <order>38</order>
+          </item>
+          <item>
+            <itextId>jb4if34-39</itextId>
+            <name>1045</name>
+            <order>39</order>
+          </item>
+          <item>
+            <itextId>jb4if34-40</itextId>
+            <name>1039</name>
+            <order>40</order>
+          </item>
+          <item>
+            <itextId>jb4if34-41</itextId>
+            <name>1034</name>
+            <order>41</order>
+          </item>
+          <item>
+            <itextId>jb4if34-42</itextId>
+            <name>1044</name>
+            <order>42</order>
+          </item>
+          <item>
+            <itextId>jb4if34-43</itextId>
+            <name>1013</name>
+            <order>43</order>
+          </item>
+          <item>
+            <itextId>jb4if34-44</itextId>
+            <name>1028</name>
+            <order>44</order>
+          </item>
+          <item>
+            <itextId>jb4if34-45</itextId>
+            <name>1042</name>
+            <order>45</order>
+          </item>
+          <item>
+            <itextId>jb4if34-46</itextId>
+            <name>1023</name>
+            <order>46</order>
+          </item>
+          <item>
+            <itextId>jb4if34-47</itextId>
+            <name>1003</name>
+            <order>47</order>
+          </item>
+          <item>
+            <itextId>jb4if34-48</itextId>
+            <name>1041</name>
+            <order>48</order>
+          </item>
+          <item>
+            <itextId>jb4if34-49</itextId>
+            <name>1017</name>
+            <order>49</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="co6cj78">
+        <root>
+          <item>
+            <itextId>co6cj78-0</itextId>
+            <name>male</name>
+          </item>
+          <item>
+            <itextId>co6cj78-1</itextId>
+            <name>female</name>
+          </item>
+          <item>
+            <itextId>co6cj78-2</itextId>
+            <name>lgbt</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="vb8ft51">
+        <root>
+          <item>
+            <itextId>vb8ft51-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>vb8ft51-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="qz71v81">
+        <root>
+          <item>
+            <itextId>qz71v81-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>qz71v81-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="iv2zz03">
+        <root>
+          <item>
+            <itextId>iv2zz03-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>iv2zz03-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="hi91b36">
+        <root>
+          <item>
+            <itextId>hi91b36-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>hi91b36-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>hi91b36-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>hi91b36-3</itextId>
+            <name>4</name>
+          </item>
+          <item>
+            <itextId>hi91b36-4</itextId>
+            <name>5</name>
+          </item>
+          <item>
+            <itextId>hi91b36-5</itextId>
+            <name>6</name>
+          </item>
+          <item>
+            <itextId>hi91b36-6</itextId>
+            <name>7</name>
+          </item>
+          <item>
+            <itextId>hi91b36-7</itextId>
+            <name>8</name>
+          </item>
+          <item>
+            <itextId>hi91b36-8</itextId>
+            <name>9</name>
+          </item>
+          <item>
+            <itextId>hi91b36-9</itextId>
+            <name>10</name>
+          </item>
+          <item>
+            <itextId>hi91b36-10</itextId>
+            <name>11</name>
+          </item>
+          <item>
+            <itextId>hi91b36-11</itextId>
+            <name>12</name>
+          </item>
+          <item>
+            <itextId>hi91b36-12</itextId>
+            <name>13</name>
+          </item>
+          <item>
+            <itextId>hi91b36-13</itextId>
+            <name>14</name>
+          </item>
+          <item>
+            <itextId>hi91b36-14</itextId>
+            <name>15</name>
+          </item>
+          <item>
+            <itextId>hi91b36-15</itextId>
+            <name>16</name>
+          </item>
+          <item>
+            <itextId>hi91b36-16</itextId>
+            <name>17</name>
+          </item>
+          <item>
+            <itextId>hi91b36-17</itextId>
+            <name>18</name>
+          </item>
+          <item>
+            <itextId>hi91b36-18</itextId>
+            <name>19</name>
+          </item>
+          <item>
+            <itextId>hi91b36-19</itextId>
+            <name>20</name>
+          </item>
+          <item>
+            <itextId>hi91b36-20</itextId>
+            <name>21</name>
+          </item>
+          <item>
+            <itextId>hi91b36-21</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="bf3ix10">
+        <root>
+          <item>
+            <itextId>bf3ix10-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>bf3ix10-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>bf3ix10-2</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="jv1ii84">
+        <root>
+          <item>
+            <itextId>jv1ii84-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>jv1ii84-1</itextId>
+            <name>2</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="sh3yx55">
+        <root>
+          <item>
+            <itextId>sh3yx55-0</itextId>
+            <name>drink_unit_glass</name>
+          </item>
+          <item>
+            <itextId>sh3yx55-1</itextId>
+            <name>drink_unit_short</name>
+          </item>
+          <item>
+            <itextId>sh3yx55-2</itextId>
+            <name>drink_unit_can</name>
+          </item>
+          <item>
+            <itextId>sh3yx55-3</itextId>
+            <name>drink_unit_bottle</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="nn6mv56">
+        <root>
+          <item>
+            <itextId>nn6mv56-0</itextId>
+            <name>0</name>
+          </item>
+          <item>
+            <itextId>nn6mv56-1</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>nn6mv56-2</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>nn6mv56-3</itextId>
+            <name>3</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="jy46l14">
+        <root>
+          <item>
+            <itextId>jy46l14-0</itextId>
+            <name>smoke_unit_cigarette</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>jy46l14-1</itextId>
+            <name>smoke_unit_pack</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>jy46l14-2</itextId>
+            <name>smoke_unit_head</name>
+            <order>2</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="qq1gn04">
+        <root>
+          <item>
+            <itextId>qq1gn04-0</itextId>
+            <name>0</name>
+          </item>
+          <item>
+            <itextId>qq1gn04-1</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>qq1gn04-2</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>qq1gn04-3</itextId>
+            <name>3</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="rm2pt51">
+        <root>
+          <item>
+            <itextId>rm2pt51-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>rm2pt51-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ed37j04">
+        <root>
+          <item>
+            <itextId>ed37j04-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ed37j04-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>ed37j04-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>ed37j04-3</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="kz1ln93">
+        <root>
+          <item>
+            <itextId>kz1ln93-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>kz1ln93-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ez0yx52">
+        <root>
+          <item>
+            <itextId>ez0yx52-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ez0yx52-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="cb2lc91">
+        <root>
+          <item>
+            <itextId>cb2lc91-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>cb2lc91-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="tl9qh28">
+        <root>
+          <item>
+            <itextId>tl9qh28-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>tl9qh28-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="fz7kh77">
+        <root>
+          <item>
+            <itextId>fz7kh77-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>fz7kh77-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ua0fa91">
+        <root>
+          <item>
+            <itextId>ua0fa91-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ua0fa91-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ky0tl24">
+        <root>
+          <item>
+            <itextId>ky0tl24-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ky0tl24-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="tr16b37">
+        <root>
+          <item>
+            <itextId>tr16b37-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>tr16b37-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="uc5ne13">
+        <root>
+          <item>
+            <itextId>uc5ne13-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>uc5ne13-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="mm3sg23">
+        <root>
+          <item>
+            <itextId>mm3sg23-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-3</itextId>
+            <name>4</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-4</itextId>
+            <name>5</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-5</itextId>
+            <name>6</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-6</itextId>
+            <name>7</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-7</itextId>
+            <name>8</name>
+          </item>
+          <item>
+            <itextId>mm3sg23-8</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ah4kd76">
+        <root>
+          <item>
+            <itextId>ah4kd76-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ah4kd76-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="qg1pp78">
+        <root>
+          <item>
+            <itextId>qg1pp78-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>qg1pp78-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>qg1pp78-2</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="xy85l31">
+        <root>
+          <item>
+            <itextId>xy85l31-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>xy85l31-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="vi9yk35">
+        <root>
+          <item>
+            <itextId>vi9yk35-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>vi9yk35-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>vi9yk35-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>vi9yk35-3</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ls7us10">
+        <root>
+          <item>
+            <itextId>ls7us10-0</itextId>
+            <name>1</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>ls7us10-1</itextId>
+            <name>2</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>ls7us10-2</itextId>
+            <name>3</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>ls7us10-3</itextId>
+            <name>5</name>
+            <order>4</order>
+          </item>
+          <item>
+            <itextId>ls7us10-4</itextId>
+            <name>6</name>
+            <order>5</order>
+          </item>
+          <item>
+            <itextId>ls7us10-5</itextId>
+            <name>other</name>
+            <order>6</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="yw0iz12">
+        <root>
+          <item>
+            <itextId>yw0iz12-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>yw0iz12-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>yw0iz12-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>yw0iz12-3</itextId>
+            <name>4</name>
+          </item>
+          <item>
+            <itextId>yw0iz12-4</itextId>
+            <name>5</name>
+          </item>
+          <item>
+            <itextId>yw0iz12-5</itextId>
+            <name>6</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="bf0zk60">
+        <root>
+          <item>
+            <itextId>bf0zk60-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>bf0zk60-1</itextId>
+            <name>2</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="lt3or89">
+        <root>
+          <item>
+            <itextId>lt3or89-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>lt3or89-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="qr1ic52">
+        <root>
+          <item>
+            <itextId>qr1ic52-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>qr1ic52-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ce34h33">
+        <root>
+          <item>
+            <itextId>ce34h33-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ce34h33-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>ce34h33-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>ce34h33-3</itextId>
+            <name>4</name>
+          </item>
+          <item>
+            <itextId>ce34h33-4</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ky6kq63">
+        <root>
+          <item>
+            <itextId>ky6kq63-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ky6kq63-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ek8wf65">
+        <root>
+          <item>
+            <itextId>ek8wf65-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ek8wf65-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ze3ih82">
+        <root>
+          <item>
+            <itextId>ze3ih82-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ze3ih82-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="om2fq24">
+        <root>
+          <item>
+            <itextId>om2fq24-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>om2fq24-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ap1uz56">
+        <root>
+          <item>
+            <itextId>ap1uz56-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ap1uz56-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="gf5ad14">
+        <root>
+          <item>
+            <itextId>gf5ad14-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>gf5ad14-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="se1rt88">
+        <root>
+          <item>
+            <itextId>se1rt88-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>se1rt88-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="vv3fl62">
+        <root>
+          <item>
+            <itextId>vv3fl62-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>vv3fl62-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="bj4yb59">
+        <root>
+          <item>
+            <itextId>bj4yb59-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>bj4yb59-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="au1ix28">
+        <root>
+          <item>
+            <itextId>au1ix28-0</itextId>
+            <name>4</name>
+          </item>
+          <item>
+            <itextId>au1ix28-1</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>au1ix28-2</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>au1ix28-3</itextId>
+            <name>1</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="un1cu46">
+        <root>
+          <item>
+            <itextId>un1cu46-0</itextId>
+            <name>0</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>un1cu46-1</itextId>
+            <name>1</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>un1cu46-2</itextId>
+            <name>2</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>un1cu46-3</itextId>
+            <name>3</name>
+            <order>3</order>
+          </item>
+          <item>
+            <itextId>un1cu46-4</itextId>
+            <name>4</name>
+            <order>4</order>
+          </item>
+          <item>
+            <itextId>un1cu46-5</itextId>
+            <name>5</name>
+            <order>5</order>
+          </item>
+          <item>
+            <itextId>un1cu46-6</itextId>
+            <name>other</name>
+            <order>6</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="ak39r77">
+        <root>
+          <item>
+            <itextId>ak39r77-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ak39r77-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>ak39r77-2</itextId>
+            <name>0</name>
+          </item>
+          <item>
+            <itextId>ak39r77-3</itextId>
+            <name>3</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="rr89v03">
+        <root>
+          <item>
+            <itextId>rr89v03-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>rr89v03-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="kp7pz01">
+        <root>
+          <item>
+            <itextId>kp7pz01-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>kp7pz01-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>kp7pz01-2</itextId>
+            <name>3</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="iq1zl15">
+        <root>
+          <item>
+            <itextId>iq1zl15-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>iq1zl15-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ph5ji62">
+        <root>
+          <item>
+            <itextId>ph5ji62-0</itextId>
+            <name>0</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>ph5ji62-1</itextId>
+            <name>1</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>ph5ji62-2</itextId>
+            <name>2</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>ph5ji62-3</itextId>
+            <name>3</name>
+            <order>3</order>
+          </item>
+          <item>
+            <itextId>ph5ji62-4</itextId>
+            <name>4</name>
+            <order>4</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="si23t12">
+        <root>
+          <item>
+            <itextId>si23t12-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>si23t12-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="zy22y16">
+        <root>
+          <item>
+            <itextId>zy22y16-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>zy22y16-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="st29f68">
+        <root>
+          <item>
+            <itextId>st29f68-0</itextId>
+            <name>0</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>st29f68-1</itextId>
+            <name>1</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>st29f68-2</itextId>
+            <name>2</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>st29f68-3</itextId>
+            <name>3</name>
+            <order>3</order>
+          </item>
+          <item>
+            <itextId>st29f68-4</itextId>
+            <name>4</name>
+            <order>4</order>
+          </item>
+          <item>
+            <itextId>st29f68-5</itextId>
+            <name>5</name>
+            <order>5</order>
+          </item>
+          <item>
+            <itextId>st29f68-6</itextId>
+            <name>6</name>
+            <order>6</order>
+          </item>
+          <item>
+            <itextId>st29f68-7</itextId>
+            <name>7</name>
+            <order>7</order>
+          </item>
+          <item>
+            <itextId>st29f68-8</itextId>
+            <name>8</name>
+            <order>8</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="yv36y59">
+        <root>
+          <item>
+            <itextId>yv36y59-0</itextId>
+            <name>0</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>yv36y59-1</itextId>
+            <name>1</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>yv36y59-2</itextId>
+            <name>2</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>yv36y59-3</itextId>
+            <name>3</name>
+            <order>3</order>
+          </item>
+          <item>
+            <itextId>yv36y59-4</itextId>
+            <name>4</name>
+            <order>4</order>
+          </item>
+          <item>
+            <itextId>yv36y59-5</itextId>
+            <name>5</name>
+            <order>5</order>
+          </item>
+          <item>
+            <itextId>yv36y59-6</itextId>
+            <name>6</name>
+            <order>6</order>
+          </item>
+          <item>
+            <itextId>yv36y59-7</itextId>
+            <name>7</name>
+            <order>7</order>
+          </item>
+          <item>
+            <itextId>yv36y59-8</itextId>
+            <name>8</name>
+            <order>8</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="db6pa82">
+        <root>
+          <item>
+            <itextId>db6pa82-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>db6pa82-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>db6pa82-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>db6pa82-3</itextId>
+            <name>4</name>
+          </item>
+          <item>
+            <itextId>db6pa82-4</itextId>
+            <name>5</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="of2nb35">
+        <root>
+          <item>
+            <itextId>of2nb35-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>of2nb35-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="pp0qr30">
+        <root>
+          <item>
+            <itextId>pp0qr30-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>pp0qr30-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>pp0qr30-2</itextId>
+            <name>3</name>
+          </item>
+          <item>
+            <itextId>pp0qr30-3</itextId>
+            <name>4</name>
+          </item>
+          <item>
+            <itextId>pp0qr30-4</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="mm6uh30">
+        <root>
+          <item>
+            <itextId>mm6uh30-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>mm6uh30-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="ev3cd15">
+        <root>
+          <item>
+            <itextId>ev3cd15-0</itextId>
+            <name>0</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-1</itextId>
+            <name>1</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-2</itextId>
+            <name>2</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-3</itextId>
+            <name>3</name>
+            <order>3</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-4</itextId>
+            <name>4</name>
+            <order>4</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-5</itextId>
+            <name>5</name>
+            <order>5</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-6</itextId>
+            <name>6</name>
+            <order>6</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-7</itextId>
+            <name>7</name>
+            <order>7</order>
+          </item>
+          <item>
+            <itextId>ev3cd15-8</itextId>
+            <name>other</name>
+            <order>8</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="ju1ke37">
+        <root>
+          <item>
+            <itextId>ju1ke37-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>ju1ke37-1</itextId>
+            <name>0</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="cq4vf18">
+        <root>
+          <item>
+            <itextId>cq4vf18-0</itextId>
+            <name>1</name>
+          </item>
+          <item>
+            <itextId>cq4vf18-1</itextId>
+            <name>2</name>
+          </item>
+          <item>
+            <itextId>cq4vf18-2</itextId>
+            <name>3</name>
+          </item>
+        </root>
+      </instance>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/start" jr:preload="timestamp" type="dateTime" jr:preloadParams="start"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/end" jr:preload="timestamp" type="dateTime" jr:preloadParams="end"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/start-geopoint" type="geopoint"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/name" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/phone_number" type="string" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/dname" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/community_name" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/general_group" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/general_group/house_number" type="string" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/general_group/age" type="int" required="true()" constraint=". &gt;= 1" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/general_group/sex" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_work_status" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type_other" type="string" relevant="selected( /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type , 'other')" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_rate" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_amount" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_status  = '1'" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่จำนวนมากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_unit" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_amount" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status  = '3' or  /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status  = '2'" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่จำนวนมากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_unit" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status  = '3' or  /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status  = '2'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group/exercise_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hhsize" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status  = '1'" required="true()" constraint=". &gt;= 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า -1"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status  = '1'" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_worker_count" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status  = '1'" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_elder_count" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status  = '1'" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count  &gt;= 1" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_height_1" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_weight_1" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count  &gt;= 2" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_height_2" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_weight_2" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count  &gt;= 3" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_height_3" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_weight_3" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count  &gt;= 4" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_height_4" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_weight_4" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count  &gt;= 5" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_height_5" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_weight_5" type="int" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/height" type="int" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/weight" type="int" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare_other" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare  = 'other'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_1" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_2" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_3" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/hh_health_expense" type="int" required="true()" constraint=". &gt;= 0" jr:constraintMsg="ใส่ค่ามากกว่า -1"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/health_expense" type="int" required="true()" constraint=". &gt;= 0" jr:constraintMsg="ใส่ค่ามากกว่า -1"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access_reason" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access  = '0'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/speak" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/read" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/write" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/math" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/education" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/education_group/training  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type_other" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type  = 'other'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/unoccupied_reason" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '0'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/not_working_other" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/unoccupied_reason  = 'other'" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_freelance_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type  = '6'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type_other" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type  = 'other'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income_type  = '1' or  /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income_type  = '2'" required="false()" constraint=". &gt; 0" jr:constraintMsg="ใส่จำนวนเงินมากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/working_hours" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '1'" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่จำนวนชั่วโมงมากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_contract" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare  = '1' and  /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_other" type="string" relevant="selected( /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_type , 'other')" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_unpaid" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury_count" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury  = '1'" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury_count" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury  = '1'" required="true()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_1" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_2" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_murder" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/physical_violence" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/psychological_violence" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/sexual_violence" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_safety" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination_other" type="string" relevant="selected( /ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination , 'other')" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_age" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status  = '1' or  /ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status  = '2'" required="false()" constraint=". &gt; 0" jr:constraintMsg="ให้ใส่ค่ามากกว่า 0"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision" type="string" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision  = '1'" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity_type" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/helper" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/health_pollution" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_disaster" type="string" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/self_disaster" type="string" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_status" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/rent_price" type="int" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_status  = '2' or  /ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_status  = '4'" required="false()" constraint=". &gt; -1" jr:constraintMsg="ให้ใส่ค่ามากกว่า -1"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_sink" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply_other" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply  = 'other'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/waste_water_disposal" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment_other" type="string" relevant="selected( /ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment , 'other')" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident" type="string" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident_status" type="string" relevant=" /ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident  = '1'" required="true()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/comment" type="string" required="false()"/>
+      <bind nodeset="/ayCGyCFtVFHr8i3bmQVdTR/meta/instanceID" type="string" readonly="true()" jr:preload="uid"/>
+      <odk:setgeopoint ref="/ayCGyCFtVFHr8i3bmQVdTR/start-geopoint" event="odk-instance-first-load"/>
+    </model>
+  </h:head>
+  <h:body class="theme-grid no-text-transform">
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73:label')"/>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/name">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/name:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/name:hint')"/>
+      </input>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/phone_number">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/phone_number:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/phone_number:hint')"/>
+      </input>
+      <select1 appearance="minimal" ref="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/dname">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/dname:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/dname:hint')"/>
+        <itemset nodeset="instance('jb4if34')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/community_name">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_kz5rs73/community_name:label')"/>
+      </input>
+    </group>
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/general_group">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/general_group:label')"/>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/general_group/house_number">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/general_group/house_number:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/general_group/house_number:hint')"/>
+      </input>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/general_group/age">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/general_group/age:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/general_group/sex">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/general_group/sex:label')"/>
+        <itemset nodeset="instance('co6cj78')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+    </group>
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group:label')"/>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_status:label')"/>
+        <itemset nodeset="instance('vb8ft51')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_work_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/disable_work_status:label')"/>
+        <itemset nodeset="instance('qz71v81')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_status:label')"/>
+        <itemset nodeset="instance('iv2zz03')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type:label')"/>
+        <itemset nodeset="instance('hi91b36')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/diseases_type_other:label')"/>
+      </input>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink:label')"/>
+        <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_status">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_status:label')"/>
+          <itemset nodeset="instance('bf3ix10')/root/item">
+            <value ref="name"/>
+            <label ref="jr:itext(itextId)"/>
+          </itemset>
+        </select1>
+        <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_rate">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_rate:label')"/>
+          <itemset nodeset="instance('jv1ii84')/root/item">
+            <value ref="name"/>
+            <label ref="jr:itext(itextId)"/>
+          </itemset>
+        </select1>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_amount">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_amount:label')"/>
+        </input>
+        <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_unit">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/drink/drink_unit:label')"/>
+          <itemset nodeset="instance('sh3yx55')/root/item">
+            <value ref="name"/>
+            <label ref="jr:itext(itextId)"/>
+          </itemset>
+        </select1>
+      </group>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke:label')"/>
+        <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_status:label')"/>
+          <itemset nodeset="instance('nn6mv56')/root/item">
+            <value ref="name"/>
+            <label ref="jr:itext(itextId)"/>
+          </itemset>
+        </select1>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_amount">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_amount:label')"/>
+        </input>
+        <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_unit">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/smoke/smoke_unit:label')"/>
+          <itemset nodeset="instance('jy46l14')/root/item">
+            <value ref="name"/>
+            <label ref="jr:itext(itextId)"/>
+          </itemset>
+        </select1>
+      </group>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group:label')"/>
+        <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group/exercise_status">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/exercise_group/exercise_status:label')"/>
+          <itemset nodeset="instance('qq1gn04')/root/item">
+            <value ref="name"/>
+            <label ref="jr:itext(itextId)"/>
+          </itemset>
+        </select1>
+      </group>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/family_status:label')"/>
+        <itemset nodeset="instance('rm2pt51')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hhsize">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hhsize:label')"/>
+      </input>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_child_count:label')"/>
+      </input>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_worker_count">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_worker_count:label')"/>
+      </input>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_elder_count">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/hh_elder_count:label')"/>
+      </input>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1:label')"/>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_height_1">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_height_1:label')"/>
+        </input>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_weight_1">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_1/child_weight_1:label')"/>
+        </input>
+      </group>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2:label')"/>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_height_2">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_height_2:label')"/>
+        </input>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_weight_2">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_2/child_weight_2:label')"/>
+        </input>
+      </group>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3:label')"/>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_height_3">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_height_3:label')"/>
+        </input>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_weight_3">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_3/child_weight_3:label')"/>
+        </input>
+      </group>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4:label')"/>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_height_4">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_height_4:label')"/>
+        </input>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_weight_4">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_4/child_weight_4:label')"/>
+        </input>
+      </group>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5:label')"/>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_height_5">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_height_5:label')"/>
+        </input>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_weight_5">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/child_bmi_5/child_weight_5:label')"/>
+        </input>
+      </group>
+      <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33:label')"/>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/height">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/height:label')"/>
+        </input>
+        <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/weight">
+          <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_behavior_group/group_hs2yh33/weight:label')"/>
+        </input>
+      </group>
+    </group>
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group:label')"/>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare:label')"/>
+        <itemset nodeset="instance('ed37j04')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/welfare_other:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_1">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_1:label')"/>
+        <itemset nodeset="instance('kz1ln93')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_2">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_2:label')"/>
+        <itemset nodeset="instance('ez0yx52')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_3">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/medical_skip_3:label')"/>
+        <itemset nodeset="instance('cb2lc91')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/hh_health_expense">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/hh_health_expense:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/hh_health_expense:hint')"/>
+      </input>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/health_expense">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/health_expense:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/health_expense:hint')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health:label')"/>
+        <itemset nodeset="instance('tl9qh28')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access:label')"/>
+        <itemset nodeset="instance('fz7kh77')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access_reason">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/health_welfare_group/oral_health_access_reason:label')"/>
+      </input>
+    </group>
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group:label')"/>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/speak">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/speak:label')"/>
+        <itemset nodeset="instance('ua0fa91')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/read">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/read:label')"/>
+        <itemset nodeset="instance('ky0tl24')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/write">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/write:label')"/>
+        <itemset nodeset="instance('tr16b37')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/math">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/math:label')"/>
+        <itemset nodeset="instance('uc5ne13')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/education">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/education:label')"/>
+        <itemset nodeset="instance('mm3sg23')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/training:label')"/>
+        <itemset nodeset="instance('ah4kd76')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type:label')"/>
+        <itemset nodeset="instance('qg1pp78')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/education_group/training_type_other:label')"/>
+      </input>
+    </group>
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41:label')"/>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_status:label')"/>
+        <itemset nodeset="instance('xy85l31')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/unoccupied_reason">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/unoccupied_reason:label')"/>
+        <itemset nodeset="instance('vi9yk35')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/not_working_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/not_working_other:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type:label')"/>
+        <itemset nodeset="instance('ls7us10')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_freelance_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_freelance_type:label')"/>
+        <itemset nodeset="instance('yw0iz12')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_type_other:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income_type:label')"/>
+        <itemset nodeset="instance('bf0zk60')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/income:label')"/>
+      </input>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/working_hours">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/working_hours:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_contract">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_contract:label')"/>
+        <itemset nodeset="instance('lt3or89')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare:label')"/>
+        <itemset nodeset="instance('qr1ic52')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_type:label')"/>
+        <itemset nodeset="instance('ce34h33')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_welfare_other:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_unpaid">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_unpaid:label')"/>
+        <itemset nodeset="instance('ky6kq63')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury:label')"/>
+        <itemset nodeset="instance('ek8wf65')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury_count">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_injury_count:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury:label')"/>
+        <itemset nodeset="instance('ze3ih82')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury_count">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/occupation_small_injury_count:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_1">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_1:label')"/>
+        <itemset nodeset="instance('om2fq24')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_2">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_sa6hy41/food_insecurity_2:label')"/>
+        <itemset nodeset="instance('ap1uz56')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+    </group>
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17:label')"/>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_murder">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_murder:label')"/>
+        <itemset nodeset="instance('gf5ad14')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/physical_violence">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/physical_violence:label')"/>
+        <itemset nodeset="instance('se1rt88')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/psychological_violence">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/psychological_violence:label')"/>
+        <itemset nodeset="instance('vv3fl62')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/sexual_violence">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/sexual_violence:label')"/>
+        <itemset nodeset="instance('bj4yb59')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_safety">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_safety:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_safety:hint')"/>
+        <itemset nodeset="instance('au1ix28')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination:hint')"/>
+        <itemset nodeset="instance('un1cu46')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/discrimination_other:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_status:hint')"/>
+        <itemset nodeset="instance('ak39r77')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_age">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/marriage_age:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision:label')"/>
+        <hint ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision:hint')"/>
+        <itemset nodeset="instance('rr89v03')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/decision_type:label')"/>
+        <itemset nodeset="instance('kp7pz01')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity:label')"/>
+        <itemset nodeset="instance('iq1zl15')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity_type">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/community_amenity_type:label')"/>
+        <itemset nodeset="instance('ph5ji62')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/helper">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_fd3yd17/helper:label')"/>
+        <itemset nodeset="instance('si23t12')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+    </group>
+    <group ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59:label')"/>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/health_pollution">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/health_pollution:label')"/>
+        <itemset nodeset="instance('zy22y16')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_disaster">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_disaster:label')"/>
+        <itemset nodeset="instance('st29f68')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/self_disaster">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/self_disaster:label')"/>
+        <itemset nodeset="instance('yv36y59')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_status:label')"/>
+        <itemset nodeset="instance('db6pa82')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/rent_price">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/rent_price:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_sink">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/house_sink:label')"/>
+        <itemset nodeset="instance('of2nb35')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply:label')"/>
+        <itemset nodeset="instance('pp0qr30')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/water_supply_other:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/waste_water_disposal">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/waste_water_disposal:label')"/>
+        <itemset nodeset="instance('mm6uh30')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment:label')"/>
+        <itemset nodeset="instance('ev3cd15')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <input ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment_other">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/community_environment_other:label')"/>
+      </input>
+      <select1 ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident:label')"/>
+        <itemset nodeset="instance('ju1ke37')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <select ref="/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident_status">
+        <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/group_qt2fv59/accident_status:label')"/>
+        <itemset nodeset="instance('cq4vf18')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+    </group>
+    <input ref="/ayCGyCFtVFHr8i3bmQVdTR/comment">
+      <label ref="jr:itext('/ayCGyCFtVFHr8i3bmQVdTR/comment:label')"/>
+    </input>
+  </h:body>
+</h:html>

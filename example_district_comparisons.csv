@@ -1,0 +1,5 @@
+﻿district_a,district_b,population_group,n_a,n_b,proportion_a,proportion_b,difference,test_used,chi2_statistic,p_value,statistically_significant,cohens_h,effect_size,interpretation
+1009,1038,elderly,222,176,50.0,50.6,-0.6,Chi-Square,0.0,0.9907,No,-0.011,Small,No statistically significant difference detected
+1009,1038,lgbt,222,176,4.5,6.2,-1.7,Chi-Square,0.3,0.5838,No,-0.078,Small,No statistically significant difference detected
+1009,1038,disabled,222,176,7.2,5.1,2.1,Chi-Square,0.419,0.5177,No,0.087,Small,No statistically significant difference detected
+1009,1038,informal,222,176,39.2,50.6,-11.4,Chi-Square,4.702,0.0301,Yes,-0.229,Medium,Statistically significant with moderate practical difference

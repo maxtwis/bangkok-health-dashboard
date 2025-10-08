@@ -36,7 +36,9 @@
       "Bash(ping:*)",
       "Bash(taskkill:*)",
       "Bash(awk:*)",
-      "Bash(sort:*)"
+      "Bash(sort:*)",
+      "Bash(pip install:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
