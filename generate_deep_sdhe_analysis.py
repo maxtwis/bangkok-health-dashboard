@@ -868,8 +868,16 @@ class DeepSDHEAnalyzer:
                                 if len(outcome_data) > 0:
                                     f.write(f"- {outcome}: ")
                                     top_finding = outcome_data.nsmallest(1, 'p_value').iloc[0]
-                                    diff_pct = abs(top_finding['difference'] * 100) if abs(top_finding['difference']) < 1 else abs(top_finding['difference'])
-                                    f.write(f"{top_finding['indicator']} ({diff_pct:.1f}% difference, p={top_finding['p_value']:.3f})")
+
+                                    # Handle income (absolute values) vs proportions differently
+                                    if abs(top_finding['difference']) < 1:
+                                        # Proportions: multiply by 100
+                                        diff_pct = abs(top_finding['difference'] * 100)
+                                        f.write(f"{top_finding['indicator']} ({diff_pct:.1f}% difference, p={top_finding['p_value']:.3f})")
+                                    else:
+                                        # Absolute values like income: show THB and relative %
+                                        rel_pct = abs((top_finding['difference'] / top_finding['mean1']) * 100) if top_finding['mean1'] != 0 else 0
+                                        f.write(f"{top_finding['indicator']} ({abs(top_finding['difference']):.1f} THB or {rel_pct:.1f}%, p={top_finding['p_value']:.3f})")
 
                                     if len(outcome_data) > 1:
                                         f.write(f" and {len(outcome_data)-1} other significant differences")
@@ -903,10 +911,18 @@ class DeepSDHEAnalyzer:
                 if len(comp_results) > 0:
                     f.write(f"**{comparison}**\n\n")
                     for _, row in comp_results.iterrows():
-                        diff_pct = abs(row['difference'] * 100) if abs(row['difference']) < 1 else abs(row['difference'])
                         f.write(f"- *{row['indicator']}*: ")
                         f.write(f"{row['group1']} vs {row['group2']}: ")
-                        f.write(f"{diff_pct:.1f}% difference (p={row['p_value']:.3f})\n")
+
+                        # Handle income (absolute values) vs proportions differently
+                        if abs(row['difference']) < 1:
+                            # Proportions: multiply by 100
+                            diff_pct = abs(row['difference'] * 100)
+                            f.write(f"{diff_pct:.1f}% difference (p={row['p_value']:.3f})\n")
+                        else:
+                            # Absolute values like income: show THB and relative %
+                            rel_pct = abs((row['difference'] / row['mean1']) * 100) if row['mean1'] != 0 else 0
+                            f.write(f"{abs(row['difference']):.1f} THB ({rel_pct:.1f}%) difference (p={row['p_value']:.3f})\n")
                     f.write("\n")
 
             # Discussion section

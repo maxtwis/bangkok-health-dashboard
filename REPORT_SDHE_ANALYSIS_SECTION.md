@@ -157,7 +157,7 @@ Within-group stratified analysis revealed significant disparities based on educa
 *Education Level*:
 - Health Outcomes: diseases_status (9.8% difference, p=0.000) and 1 other significant differences
 - Healthcare Access: welfare (43.9% difference, p=0.000) and 2 other significant differences
-- Economic Security: monthly_income (4558.6% difference, p=0.000) and 1 other significant differences
+- Economic Security: monthly_income (4558.6 THB or 33.3%, p=0.000) and 1 other significant differences
 - Quality of Life: community_safety (15.3% difference, p=0.000)
 
 *Housing Status*:
@@ -168,19 +168,19 @@ Within-group stratified analysis revealed significant disparities based on educa
 *Employment Status*:
 - Health Outcomes: diseases_status (12.5% difference, p=0.000) and 1 other significant differences
 - Healthcare Access: welfare (10.8% difference, p=0.000) and 1 other significant differences
-- Economic Security: health_expense (300.5% difference, p=0.006)
+- Economic Security: health_expense (300.5 THB or 38.8%, p=0.006)
 - Quality of Life: discrimination_1 (1.1% difference, p=0.008) and 1 other significant differences
 
 *Income Level*:
 - Healthcare Access: medical_skip_1 (18.2% difference, p=0.000)
-- Economic Security: monthly_income (12050.5% difference, p=0.000) and 1 other significant differences
+- Economic Security: monthly_income (12050.5 THB or 126.8%, p=0.000) and 1 other significant differences
 
 **LGBT+ Community**
 
 *Education Level*:
 - Health Outcomes: diseases_type_2 (14.6% difference, p=0.000) and 2 other significant differences
 - Healthcare Access: welfare (30.7% difference, p=0.000)
-- Economic Security: monthly_income (9223.9% difference, p=0.000)
+- Economic Security: monthly_income (9223.9 THB or 53.8%, p=0.000)
 - Quality of Life: community_safety (20.2% difference, p=0.036)
 
 *Housing Status*:
@@ -188,20 +188,20 @@ Within-group stratified analysis revealed significant disparities based on educa
 - Quality of Life: community_safety (18.7% difference, p=0.033)
 
 *Employment Status*:
-- Economic Security: health_expense (231.0% difference, p=0.003) and 2 other significant differences
+- Economic Security: health_expense (231.0 THB or 132.6%, p=0.003) and 2 other significant differences
 - Quality of Life: psychological_violence (15.2% difference, p=0.000)
 
 *Income Level*:
 - Health Outcomes: diseases_type_2 (10.3% difference, p=0.002)
 - Healthcare Access: welfare (25.8% difference, p=0.000)
-- Economic Security: monthly_income (22940.2% difference, p=0.000)
+- Economic Security: monthly_income (22940.2 THB or 158.2%, p=0.000)
 
 **People with Disabilities**
 
 *Education Level*:
 - Health Outcomes: diseases_type_2 (39.8% difference, p=0.000) and 2 other significant differences
 - Healthcare Access: welfare (38.7% difference, p=0.000)
-- Economic Security: monthly_income (13157.2% difference, p=0.000) and 1 other significant differences
+- Economic Security: monthly_income (13157.2 THB or 115.2%, p=0.000) and 1 other significant differences
 - Quality of Life: psychological_violence (8.2% difference, p=0.001) and 1 other significant differences
 
 *Housing Status*:
@@ -212,13 +212,13 @@ Within-group stratified analysis revealed significant disparities based on educa
 *Employment Status*:
 - Health Outcomes: diseases_status (37.3% difference, p=0.000) and 2 other significant differences
 - Healthcare Access: welfare (26.8% difference, p=0.000) and 1 other significant differences
-- Economic Security: health_expense (443.5% difference, p=0.000)
+- Economic Security: health_expense (443.5 THB or 54.3%, p=0.000)
 - Quality of Life: psychological_violence (9.2% difference, p=0.000) and 2 other significant differences
 
 *Income Level*:
 - Health Outcomes: diseases_type_2 (42.6% difference, p=0.000) and 2 other significant differences
 - Healthcare Access: welfare (42.2% difference, p=0.000)
-- Economic Security: monthly_income (20642.3% difference, p=0.000)
+- Economic Security: monthly_income (20642.3 THB or 197.1%, p=0.000)
 - Quality of Life: psychological_violence (17.5% difference, p=0.006) and 1 other significant differences
 
 **Informal Workers**
@@ -226,7 +226,7 @@ Within-group stratified analysis revealed significant disparities based on educa
 *Education Level*:
 - Health Outcomes: diseases_type_2 (43.0% difference, p=0.000) and 2 other significant differences
 - Healthcare Access: welfare (30.6% difference, p=0.000)
-- Economic Security: monthly_income (9675.1% difference, p=0.000)
+- Economic Security: monthly_income (9675.1 THB or 66.5%, p=0.000)
 - Quality of Life: psychological_violence (6.2% difference, p=0.000) and 2 other significant differences
 
 *Housing Status*:
@@ -238,7 +238,7 @@ Within-group stratified analysis revealed significant disparities based on educa
 *Income Level*:
 - Health Outcomes: diseases_type_2 (35.6% difference, p=0.000) and 2 other significant differences
 - Healthcare Access: welfare (34.5% difference, p=0.000) and 2 other significant differences
-- Economic Security: monthly_income (19317.7% difference, p=0.000)
+- Economic Security: monthly_income (19317.7 THB or 169.6%, p=0.000)
 - Quality of Life: community_safety (19.5% difference, p=0.000) and 1 other significant differences
 
 **Key Cross-Sectional Findings**:
@@ -259,7 +259,7 @@ Targeted comparisons within population groups:
 
 **Income: Elderly vs Elderly+Disabled**
 
-- *monthly_income*: Elderly Only vs Elderly + Disabled: 4320.6% difference (p=0.000)
+- *monthly_income*: Elderly Only vs Elderly + Disabled: 4320.6 THB (28.9%) difference (p=0.000)
 - *occupation_status*: Elderly Only vs Elderly + Disabled: 29.5% difference (p=0.000)
 - *welfare*: Elderly Only vs Elderly + Disabled: 14.0% difference (p=0.000)
 
@@ -269,7 +269,7 @@ Targeted comparisons within population groups:
 
 **Employment: Informal Workers vs Informal+Elderly**
 
-- *monthly_income*: Informal Workers Only vs Informal + Elderly: 7415.6% difference (p=0.000)
+- *monthly_income*: Informal Workers Only vs Informal + Elderly: 7415.6 THB (34.2%) difference (p=0.000)
 - *working_hours*: Informal Workers Only vs Informal + Elderly: 82.8% difference (p=0.000)
 - *occupation_injury*: Informal Workers Only vs Informal + Elderly: 1.9% difference (p=0.049)
 - *occupation_welfare*: Informal Workers Only vs Informal + Elderly: 10.1% difference (p=0.000)
