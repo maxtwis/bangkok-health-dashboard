@@ -1195,7 +1195,7 @@ class DataProcessor {
   calculateIndicators() {
     const results = {};
     const domains = Object.keys(this.indicatorMappings);
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
+    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'no_special_characteristics'];
     const districts = [...new Set(this.surveyData.map(r => r.district_name))];
 
     // Initialize results structure for districts

@@ -652,7 +652,7 @@ const BangkokMap = ({
 
       // For SDHE indicators - use fixed percentage thresholds
       // For normal population, accept combined data and pre-calculated data
-      if (selectedPopulationGroup === 'normal_population') {
+      if (selectedPopulationGroup === 'no_special_characteristics') {
         // Accept any valid score for normal population (survey + combined + pre-calculated)
         if (score >= 0) {
           if (score >= 80) return '#10b981'; // Green
@@ -924,7 +924,7 @@ const BangkokMap = ({
               }
               
               // Show combination method for normal population
-              if (selectedPopulationGroup === 'normal_population' && targetPopupItem.isCombined) {
+              if (selectedPopulationGroup === 'no_special_characteristics' && targetPopupItem.isCombined) {
                 const method = targetPopupItem.combinationMethod;
                 let methodText = '';
                 switch (method) {

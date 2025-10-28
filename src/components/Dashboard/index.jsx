@@ -741,7 +741,7 @@ const Dashboard = () => {
                         <option value="elderly">{t('populationGroups.elderly')}</option>
                         <option value="disabled">{t('populationGroups.disabled')}</option>
                         <option value="lgbtq">{t('populationGroups.lgbtq')}</option>
-                        <option value="normal_population">{t('populationGroups.normal_population')}</option>
+                        <option value="no_special_characteristics">{t('populationGroups.no_special_characteristics')}</option>
                       </>
                     )}
                   </select>
@@ -775,7 +775,7 @@ const Dashboard = () => {
                     onClick={() => {
                       setSelectedDistrict('Bangkok Overall');
                       setSelectedDomain('economic_security');
-                      setSelectedPopulationGroup('normal_population');
+                      setSelectedPopulationGroup('no_special_characteristics');
                       setViewMode('overview');
                     }}
                     className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
@@ -819,7 +819,7 @@ Reset Filters
                           { value: 'elderly', color: '#3b82f6', icon: 'elderly' },
                           { value: 'disabled', color: '#10b981', icon: 'accessible' },
                           { value: 'lgbtq', color: '#fbbf24', icon: 'diversity' },
-                          { value: 'normal_population', color: '#6b7280', icon: 'population' }
+                          { value: 'no_special_characteristics', color: '#6b7280', icon: 'population' }
                         ].map(group => (
                           <label key={group.value} className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 rounded px-2 py-1 transition-colors duration-200">
                             <input
@@ -916,7 +916,7 @@ Reset Filters
                       { value: 'elderly', color: '#3b82f6', icon: 'elderly', bgColor: 'from-blue-50 to-blue-100' },
                       { value: 'disabled', color: '#10b981', icon: 'accessible', bgColor: 'from-green-50 to-green-100' },
                       { value: 'lgbtq', color: '#fbbf24', icon: 'diversity', bgColor: 'from-amber-50 to-amber-100' },
-                      { value: 'normal_population', color: '#6b7280', icon: 'population', bgColor: 'from-gray-50 to-gray-100' }
+                      { value: 'no_special_characteristics', color: '#6b7280', icon: 'population', bgColor: 'from-gray-50 to-gray-100' }
                     ].map(group => {
                       // Calculate scores for this group across filtered domains based on indicator type
                       const domains = getDomainsByIndicatorType(selectedIndicatorType);

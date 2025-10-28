@@ -47,7 +47,7 @@ const CorrelationAnalysis = ({
         return record.sex === 'lgbt';
       }
       
-      return true; // normal_population includes everyone
+      return true; // no_special_characteristics includes everyone
     });
     
     return filtered;

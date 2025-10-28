@@ -173,12 +173,12 @@ const IndicatorDetail = ({
           return record.occupation_status === 1 && record.occupation_contract === 0; 
         } else if (populationGroup === 'lgbtq') {
           return record.sex === 'lgbt'; 
-        } else if (populationGroup === 'normal_population') {
-          // Only include people who are actually classified as normal_population
+        } else if (populationGroup === 'no_special_characteristics') {
+          // Only include people who are actually classified as no_special_characteristics
           // (not LGBTQ, not elderly, not disabled, not informal workers)
-          return record.sex !== 'lgbt' && 
-                 record.age < 60 && 
-                 record.disable_status !== 1 && 
+          return record.sex !== 'lgbt' &&
+                 record.age < 60 &&
+                 record.disable_status !== 1 &&
                  !(record.occupation_status === 1 && record.occupation_contract === 0);
         }
         

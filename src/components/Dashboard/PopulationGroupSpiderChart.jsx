@@ -21,13 +21,13 @@ const PopulationGroupSpiderChart = ({ getIndicatorData, selectedDistrict, select
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
   
-  // Updated to include normal_population with grey color
+  // Updated to include no_special_characteristics with grey color
   const populationGroups = [
     { value: 'informal_workers', color: '#ef4444' },
     { value: 'elderly', color: '#3b82f6' },
     { value: 'disabled', color: '#10b981' },
     { value: 'lgbtq', color: '#fbbf24' },
-    { value: 'normal_population', color: '#6b7280' } // Added normal population with grey color
+    { value: 'no_special_characteristics', color: '#6b7280' } // Added no special characteristics with grey color
   ];
 
   // Add accessibility attributes to chart SVG elements after component mounts
