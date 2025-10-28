@@ -818,18 +818,37 @@ class DataProcessor {
     this.surveyData = parsed.data.map(record => ({
       ...record,
       district_name: this.districtCodeMap[record.dname] || `District_${record.dname}`,
-      population_group: this.classifyPopulationGroup(record)
+      population_groups: this.classifyPopulationGroups(record), // Array of groups (overlapping)
+      population_group: this.classifyPopulationGroup(record) // Primary group for backward compatibility
     }));
 
     return this.surveyData;
   }
 
+  classifyPopulationGroups(record) {
+    // Returns ARRAY of all population groups this record belongs to (overlapping groups)
+    const groups = [];
+
+    if (record.disable_status === 1) groups.push('disabled');
+    if (record.age >= 60) groups.push('elderly');
+    if (record.sex === 'lgbt') groups.push('lgbtq');
+    if (record.occupation_status === 1 && record.occupation_contract === 0) groups.push('informal_workers');
+
+    // If no special characteristics, assign to "no_special_characteristics"
+    if (groups.length === 0) groups.push('no_special_characteristics');
+
+    return groups;
+  }
+
+  // Legacy method for backward compatibility - returns first/primary group
   classifyPopulationGroup(record) {
-    if (record.sex === 'lgbt') return 'lgbtq';
-    if (record.age >= 60) return 'elderly';  
-    if (record.disable_status === 1) return 'disabled';
-    if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
-    return 'normal_population'; // Keep as normal_population for consistency with UI
+    const groups = this.classifyPopulationGroups(record);
+    // Priority order for single-group classification (if needed)
+    const priority = ['lgbtq', 'elderly', 'disabled', 'informal_workers', 'no_special_characteristics'];
+    for (const group of priority) {
+      if (groups.includes(group)) return group;
+    }
+    return 'no_special_characteristics';
   }
 
   calculateIndicatorsForRecords(records, domain, districtName = null, populationGroup = null) {
@@ -1237,28 +1256,28 @@ class DataProcessor {
         // For SDHE domains, calculate per population group
         // Calculate Bangkok Overall first (using all data)
         populationGroups.forEach(group => {
-          const allRecords = this.surveyData.filter(r => r.population_group === group);
+          const allRecords = this.surveyData.filter(r => r.population_groups.includes(group));
           if (allRecords.length > 0) {
             results[domain]['Bangkok Overall'][group] = this.calculateIndicatorsForRecords(
-              allRecords, 
-              domain, 
+              allRecords,
+              domain,
               'Bangkok Overall',
               group
             );
           }
         });
-        
+
         // Calculate individual districts
         districts.forEach(district => {
           populationGroups.forEach(group => {
-            const records = this.surveyData.filter(r => 
-              r.district_name === district && r.population_group === group
+            const records = this.surveyData.filter(r =>
+              r.district_name === district && r.population_groups.includes(group)
             );
 
             if (records.length > 0) {
               results[domain][district][group] = this.calculateIndicatorsForRecords(
-                records, 
-                domain, 
+                records,
+                domain,
                 district,
                 group
               );
@@ -1338,10 +1357,10 @@ class DataProcessor {
       minimum_sample_size: this.MINIMUM_SAMPLE_SIZE
     };
 
-    // Population group breakdown for Bangkok Overall
-    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'normal_population'];
+    // Population group breakdown for Bangkok Overall (using overlapping groups)
+    const populationGroups = ['informal_workers', 'elderly', 'disabled', 'lgbtq', 'no_special_characteristics'];
     populationGroups.forEach(group => {
-      const groupRecords = this.surveyData.filter(r => r.population_group === group);
+      const groupRecords = this.surveyData.filter(r => r.population_groups.includes(group));
       summary.population_groups[group] = {
         count: groupRecords.length,
         percentage: ((groupRecords.length / this.surveyData.length) * 100).toFixed(1),
@@ -1359,10 +1378,10 @@ class DataProcessor {
 
     districts.forEach(district => {
       populationGroups.forEach(group => {
-        const records = this.surveyData.filter(r => 
-          r.district_name === district && r.population_group === group
+        const records = this.surveyData.filter(r =>
+          r.district_name === district && r.population_groups.includes(group)
         );
-        
+
         if (records.length >= this.MINIMUM_SAMPLE_SIZE) {
           districtStats.districts_with_minimum_sample++;
         } else if (records.length > 0) {

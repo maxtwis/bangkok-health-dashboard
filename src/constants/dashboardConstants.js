@@ -78,11 +78,11 @@ export const HEALTHCARE_SUPPLY_BENCHMARKS = {
 // Population Groups Configuration
 export const POPULATION_GROUPS = [
   { value: 'all', label: 'All Population', color: '#4F46E5' },
-  { value: 'informal_workers', label: 'Informal Workers', color: '#059669' },
+  { value: 'disabled', label: 'Disabled', color: '#7C3AED' },
   { value: 'elderly', label: 'Elderly', color: '#DC2626' },
-  { value: 'unemployed', label: 'Unemployed', color: '#D97706' },
-  { value: 'youth', label: 'Youth', color: '#7C3AED' },
-  { value: 'migrants', label: 'Migrants', color: '#DB2777' }
+  { value: 'lgbtq', label: 'LGBTQ+', color: '#DB2777' },
+  { value: 'informal_workers', label: 'Informal Workers', color: '#059669' },
+  { value: 'no_special_characteristics', label: 'No Special Characteristics', color: '#6B7280' }
 ];
 
 // Domain Configuration

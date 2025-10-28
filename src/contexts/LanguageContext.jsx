@@ -29,7 +29,7 @@ const baseTranslations = {
       elderly: 'Elderly',
       disabled: 'People with Disabilities',
       lgbtq: 'LGBTQ+',
-      normal_population: 'General Population'
+      no_special_characteristics: 'No Special Characteristics'
     },
     
     // Domains
@@ -117,7 +117,7 @@ const baseTranslations = {
       elderly: 'ผู้สูงอายุ',
       disabled: 'คนพิการ',
       lgbtq: 'กลุ่มเพศหลากหลาย',
-      normal_population: 'ประชากรทั่วไป'
+      no_special_characteristics: 'ไม่มีลักษณะพิเศษ'
     },
     
     // Domains
