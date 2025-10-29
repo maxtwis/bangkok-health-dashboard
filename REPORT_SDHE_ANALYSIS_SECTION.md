@@ -295,7 +295,9 @@ Targeted comparisons within population groups:
 
 ---
 
-**Note**: All comparisons use chi-square tests or Fisher's exact tests for proportions, and independent t-tests for continuous variables. Effect sizes are reported using Cohen's h for proportions and Cohen's d for means. Statistical significance set at α = 0.05.
+**Note**: All comparisons use chi-square tests or Fisher's exact tests for proportions, and independent t-tests for continuous variables. Effect sizes are reported using Cohen's h for proportions and Cohen's d for means. Statistical significance set at α = 0.05
+
+**Interpretation of p-values**: A p-value of 0.000 shown in this report indicates p < 0.0005 (rounded to 0.000 when displayed to 3 decimal places), representing extremely high statistical significance. This means the probability that the observed difference occurred by random chance is less than 0.05%, or we can be more than 99.95% confident that the difference is real. This aligns with the methodology described in Section 3.2, which sets the significance threshold at α = 0.05 (p < 0.05 = statistically significant).
 
 **Data Source**: Bangkok Health Survey, 6,523 respondents across 50 districts
 
