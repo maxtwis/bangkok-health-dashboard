@@ -1,0 +1,298 @@
+{
+  "unemployment_rate": {
+    "thai": "อัตราการว่างงาน",
+    "eng": "Unemployment Rate"
+  },
+  "employment_rate": {
+    "thai": "อัตราการจ้างงานต่อประชากร",
+    "eng": "Employment Rate"
+  },
+  "vulnerable_employment": {
+    "thai": "อัตราการจ้างงานที่ไม่มั่นคงต่อการจ้างงานทั้งหมด",
+    "eng": "Vulnerable Employment"
+  },
+  "non_vulnerable_employment": {
+    "thai": "อัตราการจ้างงานที่มั่นคงต่อการจ้างงานทั้งหมด",
+    "eng": "Non-Vulnerable Employment"
+  },
+  "food_insecurity_moderate": {
+    "thai": "ความชุกของ ภาวะขาดสารอาหารระดับปานกลาง",
+    "eng": "Food Insecurity (Moderate)"
+  },
+  "food_insecurity_severe": {
+    "thai": "ความชุกของ ภาวะขาดสารอาหารระดับรุนแรง",
+    "eng": "Food Insecurity (Severe)"
+  },
+  "work_injury_fatal": {
+    "thai": "อัตราความถี่ของการบาดเจ็บร้ายแรงจากการทำงาน",
+    "eng": "Work Injury (Fatal/Serious)"
+  },
+  "work_injury_non_fatal": {
+    "thai": "อัตราความถี่ของการบาดเจ็บไม่ร้ายแรงจากการทำงาน",
+    "eng": "Work Injury (Non-Fatal)"
+  },
+  "catastrophic_health_spending_household": {
+    "thai": "ร้อยละของครัวเรือนที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 40 ของความสามารถในการจ่าย",
+    "eng": "Catastrophic Health Spending (Household)"
+  },
+  "health_spending_over_10_percent": {
+    "thai": "ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 10 ของรายได้",
+    "eng": "Health Spending >10% Income"
+  },
+  "health_spending_over_25_percent": {
+    "thai": "ร้อยละของประชากรที่มีค่าใช้จ่ายด้านสุขภาพที่จ่ายเองมากกว่าร้อยละ 25 ของรายได้",
+    "eng": "Health Spending >25% Income"
+  },
+  "functional_literacy": {
+    "thai": "อัตราส่วนประชากรที่มีทักษะในด้านการรู้หนังสือ (ฟัง พูด อ่าน เขียน) และการคำนวณ",
+    "eng": "Functional Literacy"
+  },
+  "primary_completion": {
+    "thai": "อัตราการสำเร็จการศึกษาระดับประถมศึกษา",
+    "eng": "Primary Education Completion"
+  },
+  "secondary_completion": {
+    "thai": "อัตราการสำเร็จการศึกษาระดับมัธยมศึกษา",
+    "eng": "Secondary Education Completion"
+  },
+  "tertiary_completion": {
+    "thai": "อัตราการสำเร็จการศึกษาระดับอุดมศึกษา",
+    "eng": "Tertiary Education Completion"
+  },
+  "training_participation": {
+    "thai": "อัตราการมีส่วนร่วมในการศึกษาและการฝึกอบรมทั้งในระบบและนอกระบบ",
+    "eng": "Training Participation"
+  },
+  "health_coverage": {
+    "thai": "การเข้าถึงความคุ้มครองด้านสุขภาพ",
+    "eng": "Health Coverage"
+  },
+  "medical_consultation_skip_cost": {
+    "thai": "ร้อยละของประชากรที่ต้องงดการปรึกษาแพทย์เนื่องจากค่าใช้จ่าย",
+    "eng": "Skipped Medical Consultation (Cost)"
+  },
+  "medical_treatment_skip_cost": {
+    "thai": "ร้อยละของประชากรที่ต้องงดการตรวจทางการแพทย์ การรักษา หรือการติดตามผลเนื่องจากค่าใช้จ่าย",
+    "eng": "Skipped Medical Treatment (Cost)"
+  },
+  "prescribed_medicine_skip_cost": {
+    "thai": "ร้อยละของประชากรที่ต้องงดการรับยาตามใบสั่งแพทย์เนื่องจากค่าใช้จ่าย",
+    "eng": "Skipped Medicine Purchase (Cost)"
+  },
+  "dental_access": {
+    "thai": "ร้อยละของประชากรที่ได้รับบริการทันตกรรมเมื่อมีอาการ",
+    "eng": "Dental Access"
+  },
+  "electricity_access": {
+    "thai": "อัตราส่วนประชากรที่เข้าถึงไฟฟ้า",
+    "eng": "Electricity Access"
+  },
+  "clean_water_access": {
+    "thai": "อัตราส่วนประชากรที่ใช้บริการน้ำดื่มที่ได้รับการจัดการอย่างปลอดภัย",
+    "eng": "Clean Water Access"
+  },
+  "sanitation_facilities": {
+    "thai": "อัตราส่วนประชากรที่เข้าถึงบริการสุขาภิบาลขั้นพื้นฐาน",
+    "eng": "Sanitation Facilities"
+  },
+  "waste_management": {
+    "thai": "ร้อยละของขยะมูลฝอยชุมชนที่ได้รับการจัดเก็บและจัดการ",
+    "eng": "Waste Management"
+  },
+  "housing_overcrowding": {
+    "thai": "อัตราส่วนครัวเรือนที่อาศัยอยู่ในที่พักอาศัยที่แออัด",
+    "eng": "Housing Overcrowding"
+  },
+  "home_ownership": {
+    "thai": "อัตราส่วนครัวเรือนที่มีที่อยู่อาศัยเป็นของตนเอง",
+    "eng": "Home Ownership"
+  },
+  "disaster_experience": {
+    "thai": "ร้อยละของประชากรที่ได้ผลกระทบจากภัยพิบัติ",
+    "eng": "Disaster Experience"
+  },
+  "community_safety": {
+    "thai": "อัตราส่วนประชากรที่รู้สึกปลอดภัยเมื่อเดินคนเดียวในเวลากลางคืน",
+    "eng": "Community Safety"
+  },
+  "violence_physical": {
+    "thai": "อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางร่างกาย",
+    "eng": "Physical Violence"
+  },
+  "violence_psychological": {
+    "thai": "อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางจิตใจ",
+    "eng": "Psychological Violence"
+  },
+  "violence_sexual": {
+    "thai": "อัตราส่วนประชากรที่ถูกกระทำความรุนแรงทางเพศ",
+    "eng": "Sexual Violence"
+  },
+  "discrimination_experience": {
+    "thai": "อัตราส่วนประชากรที่รายงานว่าเคยถูกเลือกปฏิบัติ",
+    "eng": "Discrimination Experience"
+  },
+  "social_support": {
+    "thai": "อัตราส่วนประชากรที่รายงานว่ามีบุคคลที่สามารถพึ่งพาได้ในยามฉุกเฉิน",
+    "eng": "Social Support"
+  },
+  "community_murder": {
+    "thai": "เหตุความรุนแรงในชุมชน",
+    "eng": "Community Violence"
+  },
+  "alcohol_consumption": {
+    "thai": "อัตราการบริโภคแอลกอฮอล์",
+    "eng": "Alcohol Consumption"
+  },
+  "tobacco_use": {
+    "thai": "อัตราการใช้บุหรี่และบุหรี่ไฟฟ้า",
+    "eng": "Tobacco Use"
+  },
+  "physical_activity": {
+    "thai": "อัตราส่วนประชากรที่มีกิจกรรมทางกายเพียงพอ",
+    "eng": "Physical Activity"
+  },
+  "obesity": {
+    "thai": "อัตราส่วนประชากรที่มีภาวะน้ำหนักเกิน",
+    "eng": "Obesity"
+  },
+  "any_chronic_disease": {
+    "thai": "อัตราส่วนผู้ป่วยโรคไม่ติดต่อเรื้อรัง",
+    "eng": "Any Chronic Disease"
+  },
+  "diabetes": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคเบาหวาน",
+    "eng": "Diabetes"
+  },
+  "hypertension": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคความดันโลหิตสูง",
+    "eng": "Hypertension"
+  },
+  "gout": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคเกาต์",
+    "eng": "Gout"
+  },
+  "chronic_kidney_disease": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคไตวายเรื้อรัง",
+    "eng": "Chronic Kidney Disease"
+  },
+  "cancer": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคมะเร็ง",
+    "eng": "Cancer"
+  },
+  "high_cholesterol": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคไขมันในเลือดสูง",
+    "eng": "High Cholesterol"
+  },
+  "ischemic_heart_disease": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคกล้ามเนื้อหัวใจขาดเลือด",
+    "eng": "Ischemic Heart Disease"
+  },
+  "liver_disease": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคตับ",
+    "eng": "Liver Disease"
+  },
+  "stroke": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคหลอดเลือดสมอง",
+    "eng": "Stroke"
+  },
+  "hiv": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคเอชไอวี",
+    "eng": "HIV"
+  },
+  "mental_health": {
+    "thai": "อัตราความชุกของผู้มีปัญหาทางสุขภาพจิต",
+    "eng": "Mental Health Disorders"
+  },
+  "allergies": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคภูมิแพ้",
+    "eng": "Allergies"
+  },
+  "bone_joint_disease": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคกระดูกและข้อ",
+    "eng": "Bone and Joint Disease"
+  },
+  "respiratory_disease": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคระบบทางเดินหายใจ",
+    "eng": "Respiratory Disease"
+  },
+  "emphysema": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคถุงลมโป่งพอง",
+    "eng": "Emphysema"
+  },
+  "anemia": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคโลหิตจาง",
+    "eng": "Anemia"
+  },
+  "stomach_ulcer": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคกระเพาะอาหาร",
+    "eng": "Stomach Ulcer"
+  },
+  "epilepsy": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคลมชัก",
+    "eng": "Epilepsy"
+  },
+  "intestinal_disease": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคลำไส้",
+    "eng": "Intestinal Disease"
+  },
+  "paralysis": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคอัมพาต",
+    "eng": "Paralysis"
+  },
+  "dementia": {
+    "thai": "อัตราความชุกของผู้ป่วยโรคอัมพฤกษ์",
+    "eng": "Dementia"
+  },
+  "cardiovascular_diseases": {
+    "thai": "ภาระโรคหัวใจและหลอดเลือด",
+    "eng": "Cardiovascular Disease Burden"
+  },
+  "metabolic_diseases": {
+    "thai": "ภาระโรคเมแทบอลิก",
+    "eng": "Metabolic Disease Burden"
+  },
+  "multiple_chronic_conditions": {
+    "thai": "อัตราส่วนผู้ป่วยที่มีโรคไม่ติตต่อเรื้อรังหลายโรค (มีโรค 2 ชนิดขึ้นไป)",
+    "eng": "Multiple Chronic Conditions (2+)"
+  },
+  "doctor_per_population": {
+    "thai": "จำนวนแพทย์ต่อประชากร",
+    "eng": "Physicians per capita"
+  },
+  "nurse_per_population": {
+    "thai": "จำนวนพยาบาลและผดุงครรภ์ต่อประชากร",
+    "eng": "Nurses per capita "
+  },
+  "healthworker_per_population": {
+    "thai": "จำนวนบุคลากรทางการแพทย์ต่อประชากร",
+    "eng": "Health workers per capita"
+  },
+  "community_healthworker_per_population": {
+    "thai": "จำนวนอาสาสมัครสาธารณสุขในชุมชนต่อประชากร",
+    "eng": "Community health workers per capita"
+  },
+  "health_service_access": {
+    "thai": "จำนวนสถานบริการด้านสุขภาพต่อประชากร",
+    "eng": "Health facilities per capita"
+  },
+  "bed_per_population": {
+    "thai": "จำนวนเตียงต่อประชากร",
+    "eng": "Hospital beds per capita"
+  },
+  "sportfield_per_population": {
+    "thai": "จำนวนสนามกีฬาในเขต",
+    "eng": "Sports fields count"
+  },
+  "market_per_population": {
+    "thai": "จำนวนตลาดสดและซูเปอร์มาร์เก็ตต่อประชากร",
+    "eng": "Fresh markets and supermarkets per population"
+  },
+  "lgbt_service_access": {
+    "thai": "จำนวนสถานบริการด้านสุขภาพเพศหลากหลาย",
+    "eng": "LGBTQ+ Health facility distribution"
+  },
+  "park_access": {
+    "thai": "จำนวนสวนสาธารณะในเขต",
+    "eng": "Public parks count"
+  }
+}

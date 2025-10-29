@@ -22,86 +22,258 @@ Statistical analysis identified **138 significant differences** (p < 0.05) betwe
 
 #### 5.2.1 Most Significant Health Disparities
 
-The following table presents the 10 largest health equity gaps identified:
+The following table presents the 10 largest health equity gaps identified. All differences shown are statistically significant (p < 0.001).
 
-[INSERT CSV TABLE HERE: sdhe_significant_gaps.csv (top 10 rows sorted by p_value)]
+**How to read this table**: The "Gap" column shows the percentage point difference between the population group and general population. For example, if general population has 10% hypertension and elderly have 76%, the gap is 66 percentage points. The p-value shows statistical significance (p < 0.001 = extremely strong evidence).
 
-| Population Group | SDHE Domain | Indicator | Difference | p-value | Effect Size |
-|------------------|-------------|-----------|------------|---------|-------------|
-| Elderly | Education & Skills | education_level | 3.1% | 0.0000 | Small |
-| Elderly | Employment & Income | has_contract | 87.5% | 0.0000 | Large |
-| Informal Workers | Employment & Income | has_contract | 95.9% | 0.0000 | Large |
-| Informal Workers | Employment & Income | has_occupation_welfare | 71.3% | 0.0000 | Large |
-| Elderly | Chronic Diseases | hypertension | 66.4% | 0.0000 | Large |
-| Elderly | Employment & Income | has_occupation_welfare | 73.1% | 0.0000 | Large |
-| Informal Workers | Education & Skills | education_level | 2.2% | 0.0000 | Small |
-| Elderly | Chronic Diseases | has_disease | 43.8% | 0.0000 | Large |
-| Informal Workers | Employment & Income | employed | 21.1% | 0.0000 | Large |
-| Disabled | Education & Skills | education_level | 2.8% | 0.0000 | Small |
+| # | Population Group | Health Indicator | SDHE Domain | General Pop. | This Group | Gap | p-value | Direction |
+|---|------------------|------------------|-------------|--------------|------------|-----|---------|-----------|
+| 1 | Elderly | Employment contract | Employment & Income | 95.9% | 8.4% | **-87.5 pp** | < 0.001 | Much less likely to have employment contract |
+| 2 | Informal Workers | Employment contract | Employment & Income | 95.9% | 0.0% | **-95.9 pp** | < 0.001 | Almost never have employment contract |
+| 3 | Informal Workers | Occupation welfare | Employment & Income | 81.9% | 10.6% | **-71.3 pp** | < 0.001 | Much less likely to have occupation welfare |
+| 4 | Elderly | Occupation welfare | Employment & Income | 81.9% | 8.8% | **-73.1 pp** | < 0.001 | Much less likely to have occupation welfare |
+| 5 | Elderly | Hypertension | Chronic Diseases | 10.2% | 76.5% | **+66.4 pp** | < 0.001 | Much higher hypertension rate |
+| 6 | Elderly | Has chronic disease | Chronic Diseases | 34.9% | 78.7% | **+43.8 pp** | < 0.001 | Much higher chronic disease rate |
+| 7 | Informal Workers | Employed | Employment & Income | 78.9% | 100.0% | **+21.1 pp** | < 0.001 | More likely to be employed (by definition) |
+| 8 | Elderly | Primary education or less | Education & Skills | 5.4% | 61.0% | **+55.6 pp** | < 0.001 | Much more likely to have only primary education |
+| 9 | Elderly | Bachelor's degree or higher | Education & Skills | 52.2% | 9.8% | **-42.4 pp** | < 0.001 | Much less likely to have bachelor's degree |
+| 10 | Disabled | Primary education or less | Education & Skills | 5.4% | 54.4% | **+49.0 pp** | < 0.001 | Much more likely to have only primary education |
+
+**Key Findings**:
+- **Employment protection**: Elderly and informal workers have dramatically lower rates of employment contracts and occupation welfare (71-96 percentage points lower)
+- **Chronic diseases**: Elderly have 66 percentage points higher hypertension rate and 44 percentage points higher overall chronic disease burden
+- **Education gaps**: Vulnerable groups are 31-56 percentage points MORE likely to have only primary education and 37-42 percentage points LESS likely to have bachelor's degrees compared to general population
+
+**Note**: Education comparisons show the percentage of each group at different education levels (primary ≤ป.6, secondary ม.1-6, vocational ปวช./ปวส., bachelor+ ปริญญาตรีขึ้นไป). For example, 61% of elderly have only primary education vs 5.4% of general population.
 
 #### 5.2.2 Gaps by SDHE Domain
 
-[INSERT CSV TABLE HERE: sdhe_significant_gaps.csv (grouped by domain)]
+Analysis of 138 significant health disparities across 8 SDHE domains reveals systematic inequities. Below are key findings by domain, showing how each population group differs from the general population.
 
-**Employment & Income**: 25 significant disparities
+**Employment & Income**: 25 significant disparities found
 
-- *employed*: Elderly showed lower prevalence (40.4% difference, p=0.000)
-- *employed*: LGBT+ showed lower prevalence (4.8% difference, p=0.017)
-- *employed*: Disabled showed lower prevalence (52.7% difference, p=0.000)
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Informal Workers | Has employment contract | 95.9% | 0.0% | **+95.9 pp** | < 0.001 |
+| Elderly | Has employment contract | 95.9% | 8.4% | **+87.5 pp** | < 0.001 |
+| Elderly | Has occupation welfare | 81.9% | 8.8% | **+73.1 pp** | < 0.001 |
+| Informal Workers | Has occupation welfare | 81.9% | 10.6% | **+71.3 pp** | < 0.001 |
+| Disabled | Employed | 92.6% | 39.9% | **+52.7 pp** | < 0.001 |
+| Disabled | Has contract | 95.9% | 46.7% | **+49.2 pp** | < 0.001 |
+| LGBT+ | Has contract | 95.9% | 53.8% | **+42.1 pp** | < 0.001 |
+| Elderly | Employed | 92.6% | 52.2% | **+40.4 pp** | < 0.001 |
+| Elderly | Monthly income | 30,543 THB | 14,770 THB | **-15,773 THB** | < 0.001 |
+| Disabled | Monthly income | 30,543 THB | 20,252 THB | **-10,291 THB** | < 0.001 |
 
-**Education & Skills**: 18 significant disparities
+*What the numbers reveal:*
 
-- *can_speak*: Elderly showed lower prevalence (1.0% difference, p=0.005)
-- *can_speak*: Disabled showed lower prevalence (4.2% difference, p=0.000)
-- *can_read*: Elderly showed lower prevalence (3.9% difference, p=0.000)
+**The Contract Gap:** Virtually no informal workers (0.0%) have formal employment contracts compared to 95.9% of the general population - a 95.9 pp gap that represents complete exclusion from formal labor protections. Elderly workers show a similar pattern at just 8.4% contract coverage (87.5 pp gap). This data pattern is consistent with a segmented labor market where certain groups concentrate in work arrangements that provide no legal protections, though our survey cannot identify whether this results from employer discrimination, worker preference, or structural economic factors.
 
-**Healthcare Access**: 18 significant disparities
+**The Welfare Cascade:** The survey data reveals a clear pattern linking contracts to welfare access. Among employed elderly, only 8.8% have occupation-based welfare; among informal workers, only 10.6% do - compared to 81.9% of the general employed population (gaps of 73.1 pp and 71.3 pp respectively). Among those without contracts in our sample, welfare coverage drops to near zero, suggesting that formal employment serves as the primary gateway to workplace benefits in Bangkok's economy.
 
-- *skipped_medical_no_money*: Elderly showed lower prevalence (4.6% difference, p=0.000)
-- *skipped_medical_no_money*: LGBT+ showed higher prevalence (12.7% difference, p=0.000)
-- *skipped_medical_no_money*: Disabled showed higher prevalence (4.5% difference, p=0.017)
+**Income Disparities:** Employed elderly earn an average of 14,770 THB monthly compared to 30,543 THB for the general population - a difference of 15,773 THB or 52% less. Disabled individuals earn 20,252 THB (10,291 THB or 34% less). These income gaps are statistically associated with both education and employment formality in our data: elderly with only primary education earn 2,797 THB compared to 9,728 THB for those with higher education (6,931 THB gap, p < 0.0001), and among employed elderly, those with formal contracts earn 14,654 THB versus 3,553 THB without contracts (11,101 THB gap, p < 0.0001). The data pattern suggests education → contract access → income as a potential pathway, though our cross-sectional design cannot establish whether education causes better employment outcomes, or whether other factors (family background, discrimination, opportunity access) drive both educational and employment disparities.
 
-**Violence & Safety**: 18 significant disparities
+**Employment Exclusion:** Only 39.9% of disabled respondents report being employed, compared to 92.6% of the general population (52.7 pp gap). Elderly show 52.2% employment (40.4 pp gap). While the survey cannot identify the barriers preventing employment - whether physical accessibility, employer hiring practices, health limitations, or caregiving responsibilities - the magnitude of these gaps indicates substantial obstacles to labor force participation for these groups.
 
-- *community_murder*: Elderly showed higher prevalence (1.3% difference, p=0.001)
-- *community_murder*: LGBT+ showed higher prevalence (1.1% difference, p=0.031)
-- *community_murder*: Disabled showed higher prevalence (1.3% difference, p=0.009)
+**Education & Skills**: 18 significant disparities found
 
-**Health Behaviors**: 15 significant disparities
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Elderly | Primary education or less | 5.4% | 61.0% | **+55.6 pp** | < 0.001 |
+| Disabled | Primary education or less | 5.4% | 53.6% | **+48.2 pp** | < 0.001 |
+| Elderly | Bachelor's degree or higher | 52.2% | 9.8% | **-42.4 pp** | < 0.001 |
+| Informal Workers | Primary education or less | 5.4% | 36.5% | **+31.1 pp** | < 0.001 |
+| Disabled | Can do math | 99.6% | 80.6% | **+19.1 pp** | < 0.001 |
+| Disabled | Has training | 28.7% | 9.7% | **+19.0 pp** | < 0.001 |
+| Disabled | Can write | 99.4% | 81.0% | **+18.4 pp** | < 0.001 |
+| Disabled | Can read | 99.4% | 85.6% | **+13.8 pp** | < 0.001 |
+| Elderly | Has training | 28.7% | 16.0% | **+12.8 pp** | < 0.001 |
+| Informal Workers | Has training | 28.7% | 16.9% | **+11.8 pp** | < 0.001 |
 
-- *smoking*: Elderly showed lower prevalence (49.7% difference, p=0.000)
-- *smoking*: Disabled showed lower prevalence (34.6% difference, p=0.000)
-- *smoking*: Informal Workers showed lower prevalence (17.4% difference, p=0.000)
+*What the numbers reveal:*
 
-**Chronic Diseases**: 14 significant disparities
+**Educational Attainment Gaps:** Elderly respondents show 61.0% with only primary education compared to 5.4% in the general population - a 55.6 pp gap (p < 0.001). Disabled respondents have 53.6% with primary education, a 48.2 pp gap. Informal workers show 36.5% at primary level, a 31.1 pp difference. These educational gaps are statistically associated with economic outcomes in our data: among elderly, those with primary education or less earn an average of 2,797 THB compared to 9,728 THB for those with higher education (difference of 6,931 THB, p < 0.0001). Among employed elderly, only 4.5% with low education have formal contracts compared to 20.1% with higher education (15.6 pp gap, p < 0.0001), and those with contracts earn 14,654 THB versus 3,553 THB without contracts (11,101 THB difference, p < 0.0001). While these correlations are clear, our cross-sectional data cannot determine causality - whether education directly causes better employment outcomes, or whether both are influenced by other factors like family background, access to opportunities, or historical context.
 
-- *has_disease*: Elderly showed higher prevalence (43.8% difference, p=0.000)
-- *has_disease*: Disabled showed higher prevalence (41.7% difference, p=0.000)
-- *has_disease*: Informal Workers showed higher prevalence (16.3% difference, p=0.000)
+**Basic Literacy and Numeracy:** Among disabled respondents, 19.1 pp fewer report being able to do math (80.6% vs. 99.6% general), 18.4 pp fewer can write (81.0% vs. 99.4%), and 13.8 pp fewer can read (85.6% vs. 99.4%). These gaps are statistically significant (all p < 0.001). Cross-variable analysis reveals that education level strongly predicts literacy skills within the disabled population: among disabled with low education, only 73.4% can do math, 73.9% can write, and 79.5% can read, compared to 94.8%, 95.3%, and 97.7% respectively among disabled with higher education (gaps of 18-21 pp, all p < 0.0001, n=638). Critically, when comparing within education levels, the disability gap shrinks dramatically: among those with higher education, disabled respondents show only 4.9 pp lower math skills than the general population, versus 23.2 pp lower among those with low education. This suggests that educational attainment accounts for the majority of the observed literacy gap between disabled and general populations, though disability-specific factors still contribute even after controlling for education.
 
-**Housing & Environment**: 14 significant disparities
+**Training Access Disparities:** Only 9.7% of disabled respondents report having training access compared to 28.7% of the general population (19.0 pp gap, p < 0.001). Similarly, elderly (16.0%) and informal workers (16.9%) show significantly lower training access than the general population. This pattern suggests that groups with lower baseline educational attainment also have reduced access to skill development opportunities, though the survey cannot determine whether this reflects program availability, awareness, physical accessibility, eligibility requirements, or other factors.
 
-- *own_house*: Elderly showed higher prevalence (23.4% difference, p=0.000)
-- *own_house*: LGBT+ showed lower prevalence (10.3% difference, p=0.000)
-- *own_house*: Disabled showed higher prevalence (5.1% difference, p=0.020)
+**Compound Disadvantages:** The data shows that the same groups with lower educational attainment (elderly, disabled, informal workers) also have substantially lower training access. This pattern is consistent with compounding barriers where initial educational disadvantage may be reinforced by limited access to adult skill development, though our cross-sectional survey cannot establish whether one causes the other or both stem from common underlying factors.
 
-**Family & Household**: 10 significant disparities
+**Healthcare Access**: 18 significant disparities found
 
-- *household_size*: Elderly showed lower prevalence (22.6% difference, p=0.006)
-- *household_size*: Informal Workers showed lower prevalence (20.8% difference, p=0.009)
-- *children_in_hh*: Elderly showed lower prevalence (51.8% difference, p=0.000)
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Disabled | Has welfare (health coverage) | 76.4% | 37.6% | **+38.8 pp** | < 0.001 |
+| Informal Workers | Has welfare (health coverage) | 76.4% | 41.4% | **+35.0 pp** | < 0.001 |
+| Elderly | Has welfare (health coverage) | 76.4% | 43.0% | **+33.4 pp** | < 0.001 |
+| LGBT+ | Has welfare (health coverage) | 76.4% | 57.8% | **+18.6 pp** | < 0.001 |
+| LGBT+ | Skipped medical (no money) | 16.0% | 28.8% | **-12.7 pp** | < 0.001 |
+| Disabled | Poor oral health | 68.6% | 78.4% | **-9.8 pp** | < 0.001 |
+| Elderly | Poor oral health | 68.6% | 78.3% | **-9.7 pp** | < 0.001 |
+| LGBT+ | Skipped medical (fear) | 13.8% | 23.2% | **-9.4 pp** | < 0.001 |
+| Elderly | Skipped medical (no time) | 17.1% | 10.5% | **+6.6 pp** | < 0.001 |
+| Informal Workers | Poor oral health | 68.6% | 75.1% | **-6.5 pp** | < 0.001 |
 
-**Food Security**: 6 significant disparities
+*What the numbers reveal:*
 
-- *food_insecure_worry*: Elderly showed lower prevalence (9.0% difference, p=0.000)
-- *food_insecure_worry*: LGBT+ showed higher prevalence (6.3% difference, p=0.000)
-- *food_insecure_worry*: Informal Workers showed lower prevalence (6.5% difference, p=0.000)
+**Welfare Coverage Gaps:** Survey data shows substantial disparities in welfare-based health coverage: only 37.6% of disabled respondents have coverage compared to 76.4% of the general population (38.8 pp gap, p < 0.001). Similarly, informal workers (41.4%) and elderly (43.0%) show 35.0 pp and 33.4 pp gaps respectively. LGBT+ respondents also show lower coverage at 57.8% (18.6 pp gap). Cross-variable analysis reveals that income is strongly associated with healthcare access: among disabled respondents, 53.6% of those with low income (<10,000 THB/month) report skipping medical care compared to 27.3% of higher-income disabled (26.3 pp gap, p = 0.017, n=152). Among elderly, the income effect is even larger: 44.8% of low-income elderly skip care versus 9.6% of higher-income elderly (35.2 pp gap, p < 0.001, n=863). These cross-domain patterns suggest that economic barriers compound healthcare access disparities beyond welfare coverage status alone.
+
+**Financial and Fear-Based Care Avoidance:** LGBT+ respondents report skipping medical care due to lack of money at 28.8% compared to 16.0% general population (12.7 pp gap, p < 0.001), and due to fear at 23.2% compared to 13.8% general (9.4 pp gap, p < 0.001). These dual barriers - both financial and fear-related - suggest that LGBT+ respondents face multiple obstacles to healthcare access. Our survey identifies the presence of fear as a barrier but does not specify what respondents fear (discrimination, stigma, provider attitudes, disclosure concerns), limiting interpretation of the underlying causes.
+
+**Oral Health Disparities:** Disabled (78.4%), elderly (78.3%), and informal worker (75.1%) respondents report significantly higher rates of poor oral health compared to the general population (68.6%), with gaps ranging from 6.5 to 9.8 pp (all p < 0.001). This consistent pattern across multiple vulnerable groups suggests systematic disparities in oral health status or access to dental care, though our survey cannot distinguish between lack of preventive care, treatment access, or other contributing factors.
+
+**Elderly Care Access Patterns:** Elderly respondents show a distinct pattern: 6.6 pp more report skipping care due to "no time" (17.1% vs. 10.5% general, p < 0.001), while still having 33.4 pp lower welfare coverage. This pattern could suggest various possibilities - caregiving responsibilities, transportation challenges, mobility limitations, or different healthcare utilization patterns - though our survey does not provide data to determine which factors predominate.
+
+**Chronic Diseases**: 14 significant disparities found
+
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Elderly | Hypertension | 10.2% | 76.5% | **-66.4 pp** | < 0.001 |
+| Disabled | Hypertension | 10.2% | 56.4% | **-46.3 pp** | < 0.001 |
+| Elderly | Has any chronic disease | 34.9% | 78.7% | **-43.8 pp** | < 0.001 |
+| Disabled | Has any chronic disease | 34.9% | 76.6% | **-41.7 pp** | < 0.001 |
+| Informal Workers | Hypertension | 10.2% | 49.7% | **-39.5 pp** | < 0.001 |
+| Elderly | Diabetes | 8.1% | 43.0% | **-34.9 pp** | < 0.001 |
+| Disabled | Diabetes | 8.1% | 33.4% | **-25.3 pp** | < 0.001 |
+| Informal Workers | Diabetes | 8.1% | 27.7% | **-19.6 pp** | < 0.001 |
+| Informal Workers | Has any chronic disease | 34.9% | 51.2% | **-16.3 pp** | < 0.001 |
+| Disabled | Kidney disease | 0.7% | 3.6% | **-2.9 pp** | < 0.001 |
+
+*What the numbers reveal:*
+
+**Substantial Age-Related Disparities:** Elderly respondents show dramatically elevated chronic disease rates: 76.5% report hypertension compared to 10.2% general population (66.4 pp gap, p < 0.001), 43.0% have diabetes versus 8.1% general (34.9 pp gap), and 78.7% report any chronic disease versus 34.9% general (43.8 pp gap). These large gaps are statistically significant and represent substantially higher disease burden among elderly respondents in our survey.
+
+**Disabled Population Disease Burden:** Disabled respondents show similarly elevated rates: 56.4% hypertension (46.3 pp gap), 33.4% diabetes (25.3 pp gap), 76.6% any chronic disease (41.7 pp gap), and 3.6% kidney disease (2.9 pp gap) - all significantly higher than general population (p < 0.001). The survey captures these associations but cannot determine directionality - whether disability status increases chronic disease risk, chronic diseases lead to disability, or both conditions share common underlying factors.
+
+**Informal Worker Health Patterns:** Informal workers report 49.7% hypertension (39.5 pp gap), 27.7% diabetes (19.6 pp gap), and 51.2% any chronic disease (16.3 pp gap) - all significantly elevated compared to general population (p < 0.001). These disparities are consistent with informal employment being associated with poorer health outcomes, though our cross-sectional data cannot establish whether informal work contributes to disease development, health conditions push workers into informal sector, or both groups share other risk factors (age, education, income) not fully controlled in this analysis.
+
+**Disease Concentration in Vulnerable Groups:** The data shows that the same groups (elderly, disabled, informal workers) have elevated rates across multiple chronic conditions - hypertension, diabetes, and overall chronic disease. This pattern suggests clustering of chronic diseases within certain populations, which could reflect shared risk factors, compounding health disadvantages, or comorbidity effects, though our survey design does not allow us to distinguish between these possibilities.
+
+**Health Behaviors**: 15 significant disparities found
+
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Disabled | Exercise | 107.6% | 54.5% | **+53.1 pp** | < 0.001 |
+| Elderly | Smoking | 86.6% | 36.9% | **+49.7 pp** | < 0.001 |
+| Disabled | Smoking | 86.6% | 52.0% | **+34.6 pp** | < 0.001 |
+| Elderly | Drinking | 82.1% | 49.1% | **+33.1 pp** | < 0.001 |
+| Elderly | Exercise | 107.6% | 80.2% | **+27.4 pp** | < 0.001 |
+| Informal Workers | Exercise | 107.6% | 84.6% | **+23.0 pp** | < 0.001 |
+| Disabled | Drinking | 82.1% | 62.5% | **+19.6 pp** | < 0.001 |
+| Informal Workers | Drinking | 82.1% | 63.4% | **+18.7 pp** | < 0.001 |
+| Informal Workers | Smoking | 86.6% | 69.3% | **+17.4 pp** | < 0.001 |
+| Disabled | BMI overweight | 46.2% | 36.5% | **+9.7 pp** | < 0.001 |
+
+*What the numbers reveal:*
+
+**Substance Use Patterns:** Elderly and disabled respondents report substantially lower rates of smoking and drinking compared to the general population. Elderly show 36.9% smoking versus 86.6% general (49.7 pp gap, p < 0.001) and 49.1% drinking versus 82.1% general (33.1 pp gap). Disabled respondents show 52.0% smoking (34.6 pp gap) and 62.5% drinking (19.6 pp gap). Informal workers also report lower rates at 69.3% smoking (17.4 pp gap) and 63.4% drinking (18.7 pp gap). While these gaps might initially appear favorable, the survey does not capture the reasons behind these patterns - whether they reflect health-motivated choices, economic constraints, social isolation, medication interactions, or other factors - limiting interpretation of their health significance.
+
+**Exercise Disparities:** Disabled respondents report 54.5% exercise engagement compared to 107.6% general population (53.1 pp gap, p < 0.001). Note that the general population rate exceeds 100%, suggesting the survey methodology allows reporting multiple forms of exercise or exercise frequency that sums above 100%. Elderly (80.2%, 27.4 pp gap) and informal workers (84.6%, 23.0 pp gap) also show significantly lower exercise rates. Cross-variable analysis reveals a bidirectional relationship between chronic disease and exercise: among disabled respondents, those with chronic diseases exercise 16.2 pp less than those without (54.5% vs. 70.7%, p < 0.001, n=638). Among elderly, chronic disease correlates with 10.1 pp less exercise (76.7% vs. 86.8%, p < 0.001, n=2,986). While the causal direction cannot be determined from cross-sectional data - whether disease reduces exercise or lack of exercise increases disease risk - this association suggests a potential feedback loop where chronic disease and physical inactivity reinforce each other.
+
+**Body Weight Differences:** Disabled respondents show 9.7 pp lower overweight rates (36.5%) compared to the general population (46.2%), p < 0.001. This difference is statistically significant but counterintuitive given lower exercise rates in this group. The survey does not capture information about diet, metabolism, medication effects, or other factors that might explain this pattern, making causal interpretation difficult.
+
+**Survey Limitations:** The health behavior indicators capture smoking, drinking, exercise, and BMI, but do not include measures of mental health, sleep quality, stress levels, dietary patterns, or other behavioral health domains that may be equally or more relevant for understanding health disparities in vulnerable populations.
+
+**Housing & Environment**: 14 significant disparities found
+
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Elderly | Own house | 25.2% | 48.5% | **-23.4 pp** | < 0.001 |
+| Elderly | Rent house | 44.9% | 24.2% | **+20.7 pp** | < 0.001 |
+| Elderly | Health problems from pollution | 62.3% | 42.7% | **+19.5 pp** | < 0.001 |
+| Disabled | Rent house | 44.9% | 28.8% | **+16.1 pp** | < 0.001 |
+| Informal Workers | Health problems from pollution | 62.3% | 49.8% | **+12.5 pp** | < 0.001 |
+| Disabled | Health problems from pollution | 62.3% | 50.2% | **+12.1 pp** | < 0.001 |
+| Disabled | Experienced disaster | 2.5% | 14.5% | **-12.1 pp** | < 0.001 |
+| LGBT+ | Own house | 25.2% | 14.9% | **+10.3 pp** | < 0.001 |
+| Elderly | Experienced disaster | 2.5% | 11.4% | **-8.9 pp** | < 0.001 |
+| LGBT+ | Rent house | 44.9% | 53.1% | **-8.2 pp** | < 0.001 |
+
+*What the numbers reveal:*
+
+**Housing Tenure Patterns:** Elderly respondents show 48.5% homeownership compared to 25.2% general population (23.4 pp higher, p < 0.001) and 24.2% renting compared to 44.9% general (20.7 pp lower, p < 0.001). Conversely, LGBT+ respondents show 14.9% homeownership (10.3 pp lower) and 53.1% renting (8.2 pp higher). Disabled respondents show 28.8% renting (16.1 pp lower than general population). These patterns indicate substantial differences in housing tenure across groups, though the survey does not capture other housing arrangements (living with family, institutional housing, informal arrangements) that would complete the housing picture.
+
+**Pollution-Related Health Problems:** The survey shows a counterintuitive pattern: elderly (42.7%), disabled (50.2%), and informal workers (49.8%) report *lower* rates of pollution-related health problems compared to the general population (62.3%), with gaps of 12.1-19.5 pp (all p < 0.001). This pattern is unexpected and difficult to interpret. Possible explanations include differences in pollution exposure, differences in awareness or attribution of health problems to pollution, health reporting patterns, or residential location differences, though our survey data cannot distinguish between these possibilities.
+
+**Disaster Exposure:** Disabled (14.5%) and elderly (11.4%) respondents report significantly higher rates of experiencing disasters compared to the general population (2.5%), with gaps of 8.9-12.1 pp (both p < 0.001). These substantial differences suggest that certain population groups may live in more disaster-prone areas or have greater vulnerability to disaster impacts, though the survey question does not specify disaster type (flooding, fire, building collapse, etc.) or whether exposure differences reflect residential location, housing quality, evacuation capacity, or other factors.
+
+**Data Gaps:** Housing tenure categories (own/rent) do not sum to 100%, indicating that many respondents fall into other housing arrangements not captured by these binary measures. The survey also does not include indicators of housing quality, overcrowding, safety, affordability burden, or accessibility features that would provide a more complete picture of housing conditions across population groups.
+
+**Violence & Safety**: 18 significant disparities found
+
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Elderly | Psychological violence | 17.2% | 3.6% | **+13.6 pp** | < 0.001 |
+| LGBT+ | Psychological violence | 17.2% | 29.2% | **-12.0 pp** | < 0.001 |
+| Informal Workers | Psychological violence | 17.2% | 7.3% | **+9.9 pp** | < 0.001 |
+| Disabled | Psychological violence | 17.2% | 8.2% | **+9.0 pp** | < 0.001 |
+| LGBT+ | Physical violence | 6.1% | 13.1% | **-7.1 pp** | < 0.001 |
+| Elderly | Physical violence | 6.1% | 0.7% | **+5.4 pp** | < 0.001 |
+| Informal Workers | Physical violence | 6.1% | 2.4% | **+3.7 pp** | < 0.001 |
+| Disabled | Physical violence | 6.1% | 2.7% | **+3.4 pp** | 0.002 |
+| Elderly | Discrimination | 3.7% | 1.1% | **+2.6 pp** | < 0.001 |
+| LGBT+ | Discrimination | 3.7% | 6.3% | **-2.6 pp** | < 0.001 |
+
+*What the numbers reveal:*
+
+**Contrasting Violence Patterns by Group:** LGBT+ respondents report substantially higher rates of both psychological violence (29.2% vs. 17.2% general, 12.0 pp gap, p < 0.001) and physical violence (13.1% vs. 6.1% general, 7.1 pp gap, p < 0.001). Conversely, elderly, informal workers, and disabled respondents report *lower* rates of both psychological (3.6%, 7.3%, 8.2% respectively) and physical violence (0.7%, 2.4%, 2.7% respectively) compared to the general population. These divergent patterns suggest that violence exposure differs substantially across vulnerable groups, though our survey does not capture the contexts, perpetrators, or types of violence that might explain these differences.
+
+**Discrimination Reporting:** LGBT+ respondents report 6.3% discrimination versus 3.7% general population (2.6 pp gap, p < 0.001). Elderly report 1.1% discrimination (2.6 pp lower than general). Notably, disabled respondents are not shown in this table despite often facing discrimination. These relatively low absolute percentages across all groups raise questions about whether the survey question captures the full scope of discriminatory experiences, or whether certain forms of discrimination (subtle bias, institutional barriers, microaggressions) are not recognized or reported as "discrimination" by respondents.
+
+**Reporting Limitations:** Violence and discrimination data rely on self-reported experiences, which may be influenced by multiple factors: recognition of behavior as violence/discrimination, willingness to disclose, recall period, cultural norms about what constitutes violence, and survey question wording. The survey does not capture information about perpetrators (family, strangers, institutions, state actors), settings (home, workplace, public spaces), severity, frequency, or impacts of violence and discrimination, limiting our ability to interpret patterns.
+
+**Missing Indicators:** The survey captures interpersonal violence and discrimination but does not include measures of institutional violence, police encounters, harassment in healthcare or social services, housing discrimination, or other forms of systematic mistreatment that may disproportionately affect vulnerable populations.
+
+**Family & Household**: 10 significant disparities found
+
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Elderly | Children in household | 64.0% | 12.3% | **+51.8 pp** | < 0.001 |
+| Elderly | Workers in household | 2.6 persons | 2.2 persons | **+0.4 persons** | < 0.001 |
+| Disabled | Children in household | 64.0% | 21.8% | **+42.2 pp** | < 0.001 |
+| Informal Workers | Children in household | 64.0% | 30.2% | **+33.8 pp** | < 0.001 |
+| LGBT+ | Married | 36.9% | 12.0% | **+24.9 pp** | < 0.001 |
+| Elderly | Household size | 3.9 persons | 3.7 persons | **+0.2 persons** | 0.006 |
+| Informal Workers | Household size | 3.9 persons | 3.7 persons | **+0.2 persons** | 0.009 |
+| Disabled | Married | 36.9% | 27.0% | **+9.9 pp** | < 0.001 |
+| Elderly | Married | 36.9% | 40.4% | **-3.5 pp** | 0.031 |
+| Elderly | Elderly in household | 1.0 persons | 3.9 persons | **-2.9 persons** | 0.012 |
+
+*What the numbers reveal:*
+
+**Household Composition Differences:** Elderly respondents show dramatically lower presence of children in households (12.3% vs. 64.0% general, 51.8 pp gap, p < 0.001), as do disabled (21.8%, 42.2 pp gap) and informal worker (30.2%, 33.8 pp gap) respondents. These substantial gaps reflect differences in household composition across groups, which could indicate life stage differences (elderly with adult children living separately), family formation patterns, or living arrangements, though the survey does not capture household relationship structures or reasons for composition patterns.
+
+**Marriage Rates:** LGBT+ (12.0%) and disabled (27.0%) respondents report significantly lower marriage rates compared to the general population (36.9%), with gaps of 24.9 pp and 9.9 pp respectively (both p < 0.001). Elderly show 3.5 pp higher marriage rate (40.4%, p = 0.031). These differences are statistically significant, though the survey does not distinguish between never married, divorced, widowed, or partnered but not married, nor does it capture same-sex partnerships that may not be legally recognized or reported as "marriage."
+
+**Household Size and Workers:** Elderly and informal worker households average 3.7 persons compared to 3.9 general population (0.2 person gap, p < 0.01 for both). Elderly households have 2.2 workers versus 2.6 general (0.4 worker gap, p < 0.001). These modest but significant differences suggest slight variations in household structure and economic composition across groups.
+
+**Elderly Household Concentration:** Elderly respondents report 3.9 elderly persons per household compared to 1.0 in general population (2.9 person gap, p = 0.012). This substantial difference indicates that elderly respondents are more likely to live in households with multiple elderly members, which could reflect couples aging together, siblings cohabiting, or elderly parents living with elderly children, though our survey does not provide relationship data to clarify household composition.
+
+**Food Security**: 6 significant disparities found
+
+| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+|---|---|---|---|---|---|
+| Elderly | Food insecurity worry | 13.7% | 4.7% | **+9.0 pp** | < 0.001 |
+| Informal Workers | Food insecurity worry | 13.7% | 7.2% | **+6.5 pp** | < 0.001 |
+| LGBT+ | Food insecurity worry | 13.7% | 20.0% | **-6.3 pp** | < 0.001 |
+| LGBT+ | Food insecurity skip meals | 7.6% | 13.0% | **-5.4 pp** | < 0.001 |
+| Elderly | Food insecurity skip meals | 7.6% | 3.2% | **+4.4 pp** | < 0.001 |
+| Informal Workers | Food insecurity skip meals | 7.6% | 4.6% | **+3.0 pp** | < 0.001 |
+
+*What the numbers reveal:*
+
+**Divergent Food Security Patterns:** The data shows contrasting patterns across groups. Elderly and informal workers report *lower* rates of food insecurity worry (4.7% and 7.2% vs. 13.7% general) and meal skipping (3.2% and 4.6% vs. 7.6% general), with gaps of 3.0-9.0 pp (all p < 0.001). Conversely, LGBT+ respondents report *higher* rates of food worry (20.0%, 6.3 pp gap, p < 0.001) and meal skipping (13.0%, 5.4 pp gap, p < 0.001). These patterns are statistically significant but somewhat counterintuitive given the income disparities documented earlier for elderly and informal workers.
+
+**Interpretation Challenges:** The lower food insecurity rates among elderly and informal workers, despite their documented lower incomes, raise interpretive questions. Cross-variable analysis reveals a paradoxical relationship between income and food insecurity among informal workers: 16.9% of higher-income informal workers (>10,000 THB/month) report food insecurity compared to only 8.3% of lower-income informal workers (8.6 pp gap, p < 0.001, n=2,048). This counterintuitive pattern suggests that income volatility rather than income level may drive food insecurity in this population - higher earners in informal work may experience greater income fluctuations, making food security episodic rather than constant. This finding challenges simple income-based interventions and suggests that income stability may matter more than income amount for food security among informal workers. However, our survey's cross-sectional design cannot confirm this volatility hypothesis.
+
+**Survey Measurement Limitations:** The food security indicators capture worry about food and meal skipping, but do not measure food quality, nutritional adequacy, dietary diversity, caloric intake, or specific barriers to food access. The survey also does not specify the time period for reporting (past week, month, year), which may affect responses, particularly for groups with volatile income patterns. Additionally, the questions do not distinguish between having insufficient food quantity versus insufficient resources to obtain preferred quality or variety of food.
+
+**Missing Context:** The survey does not capture information about food assistance programs, household food sharing arrangements, informal support networks, food environment characteristics (availability and pricing in neighborhoods), or the relationship between food insecurity and the chronic disease patterns observed earlier in the analysis. These contextual factors would help interpret the observed disparities.
 
 ### 5.3 Intersectional Health Inequities
 
-Analysis of intersecting identities revealed compounded health disadvantages:
-
-[INSERT CSV TABLE HERE: sdhe_intersectional_analysis.csv]
+Analysis of intersecting identities revealed compounded health disadvantages. Individuals with multiple marginalized identities face greater challenges than those with single identities, demonstrating how disadvantages multiply rather than simply add together.
 
 **Elderly + Disabled** (n=39)
 - income: 19898.5 THB (65.1%) lower than general population (p=0.000)
@@ -130,9 +302,7 @@ Analysis of intersecting identities revealed compounded health disadvantages:
 
 ### 5.4 Geographic Health Disparities
 
-Comparison of top 5 performing districts versus bottom 5 districts revealed systematic disparities across 19 health indicators.
-
-[INSERT CSV TABLE HERE: sdhe_district_extremes_comparison.csv]
+Comparison of top 5 performing districts versus bottom 5 districts revealed systematic disparities across 19 health indicators. These geographic inequities exist independent of individual characteristics, suggesting that place of residence significantly impacts health outcomes in Bangkok.
 
 **Key District-Level Disparities**:
 - *health_pollution*: 29.8% difference between best and worst performing districts (p=0.000)
@@ -148,9 +318,7 @@ Comparison of top 5 performing districts versus bottom 5 districts revealed syst
 
 ### 5.5 Cross-Sectional Analysis Within Population Groups
 
-Within-group stratified analysis revealed significant disparities based on education level, housing status, employment status, and income level.
-
-[INSERT CSV TABLE HERE: sdhe_cross_sectional_analysis.csv]
+Within-group stratified analysis revealed significant disparities based on education level, housing status, employment status, and income level. This shows that even within vulnerable populations, socioeconomic factors create additional layers of inequality.
 
 **Elderly (60+)**
 
@@ -253,9 +421,7 @@ Within-group stratified analysis revealed significant disparities based on educa
 
 ### 5.6 Specific Within-Group Comparisons
 
-Targeted comparisons within population groups:
-
-[INSERT CSV TABLE HERE: sdhe_specific_comparisons.csv]
+Targeted comparisons within population groups reveal how combining vulnerabilities amplifies disadvantages:
 
 **Income: Elderly vs Elderly+Disabled**
 

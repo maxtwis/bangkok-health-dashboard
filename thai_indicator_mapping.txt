@@ -1,0 +1,63 @@
+# Manual mapping for SDHE analysis indicators to Thai
+
+# Health Behaviors Domain
+smoking=การสูบบุหรี่
+drinking=การดื่มสุรา  
+exercise=การออกกำลังกาย
+bmi_overweight=ภาวะน้ำหนักเกิน
+bmi_obese=ภาวะอ้วน
+
+# Chronic Diseases Domain
+has_disease=มีโรคเรื้อรัง
+diabetes=โรคเบาหวาน
+hypertension=ความดันโลหิตสูง
+gout=โรคเกาต์
+kidney_disease=โรคไตวายเรื้อรัง
+cancer=โรคมะเร็ง
+
+# Healthcare Access Domain
+skipped_medical_no_money=งดพบแพทย์เพราะค่าใช้จ่าย
+skipped_medical_no_time=งดพบแพทย์เพราะไม่มีเวลา
+skipped_medical_fear=งดพบแพทย์เพราะกลัว
+poor_oral_health=สุขภาพช่องปากไม่ดี
+no_oral_health_access=ไม่เข้าถึงบริการทันตกรรม
+has_welfare=มีสวัสดิการสุขภาพ
+
+# Education & Skills Domain
+can_speak=สามารถพูดได้
+can_read=สามารถอ่านได้
+can_write=สามารถเขียนได้
+can_math=สามารถคำนวณได้
+education_level=ระดับการศึกษา
+has_training=มีการฝึกอบรม
+
+# Employment & Income Domain  
+employed=มีงานทำ
+has_contract=มีสัญญาจ้าง
+has_occupation_welfare=มีสวัสดิการจากอาชีพ
+monthly_income=รายได้ต่อเดือน
+working_hours=ชั่วโมงการทำงาน
+occupation_injury=การบาดเจ็บจากการทำงาน
+unpaid_work=งานที่ไม่ได้รับค่าจ้าง
+
+# Food Security Domain
+food_insecure_worry=กังวลเรื่องความไม่มั่นคงทางอาหาร
+food_insecure_limited=จำกัดความหลากหลายของอาหาร
+food_insecure_skip=ข้ามมื้ออาหาร
+
+# Violence & Safety Domain
+community_murder=การฆาตกรรมในชุมชน
+physical_violence=ความรุนแรงทางร่างกาย
+psychological_violence=ความรุนแรงทางจิตใจ  
+sexual_violence=ความรุนแรงทางเพศ
+discrimination=การเลือกปฏิบัติ
+community_safety=ความปลอดภัยในชุมชน
+
+# Housing & Environment Domain
+own_house=เป็นเจ้าของบ้าน
+experienced_disaster=ประสบภัยพิบัติ
+health_pollution=มลภาวะทางสุขภาพ
+
+# Family & Household Domain
+household_size=ขนาดครัวเรือน
+children_in_hh=มีเด็กในครัวเรือน
