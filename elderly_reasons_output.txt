@@ -1,0 +1,55 @@
+C:\Users\Maxtwis\Documents\GitHub\bangkok-health-dashboard\check_elderly_reasons.py:36: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  elderly_no_access['reason_category'] = elderly_no_access['oral_health_access_reason'].apply(classify_reason)
+Total elderly who did NOT access oral health care: 226
+================================================================================
+
+Distribution of reasons:
+other: 130 (57.5%)
+cost: 35 (15.5%)
+wait_time: 31 (13.7%)
+fear: 13 (5.8%)
+no_time: 9 (4.0%)
+distance: 8 (3.5%)
+
+================================================================================
+Sample of "OTHER" category reasons (first 30):
+================================================================================
+1. ยังสามารถทนผวดได้
+2. ไม่สะดวก
+3. ซื้อยากินเอง
+4. ปวดเองหายเอง
+5. ซื้อยากินเง
+6. สมุนไพร
+7. กินยาแก้ปวด
+8. ไม่สะดวก
+9. ซื้อยากินเอง
+10. กินยาหาย
+11. กินยาแก้ปวด
+12. ซื้อยาสีฟันมาใช้เอง
+13. ซื้อยากินเอง
+14. หายไปเอง
+15. ไม่ได้เป็นอะไร
+16. หาซื้อยามากินเอง
+17. จะไปถอนฟันแต่ยังไม่ไปถอน
+18. ซื้อยากินเอง
+19. ซื้อยากินเอง
+20. หายเอง
+21. ซื้อยากินเอง
+22. ซื้อยากินเอง
+23. ฟันหักเองจนหมดปาก
+24. ไม่ได้ระบุ
+25. ไม่มีเงีน
+26. ซื้อยากินเอง
+27. ฟันหลุดออกเอง
+28. เป็นๆหายๆ
+29. ซื้อยากินเอง
+30. ไม่เป็นมาก
+
+================================================================================
+Empty/NaN reasons count:
+================================================================================
+Total empty/NaN: 0

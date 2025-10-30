@@ -38,7 +38,8 @@
       "Bash(awk:*)",
       "Bash(sort:*)",
       "Bash(pip install:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(more:*)"
     ],
     "deny": [],
     "ask": []

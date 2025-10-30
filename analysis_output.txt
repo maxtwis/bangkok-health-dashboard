@@ -1,0 +1,155 @@
+================================================================================
+MEDICAL CARE SKIPPING ANALYSIS - CORRECTED VERSION
+================================================================================
+
+1. COST-RELATED MEDICAL SKIPPING BY POPULATION GROUP
+--------------------------------------------------------------------------------
+
+GENERAL (n=1315)
+  Medical skip (cost): 28.9% vs General 28.9%
+  Gap: +0.0 pp (p=0.0000)
+
+ELDERLY (n=2986)
+  Medical skip (cost): 15.4% vs General 28.9%
+  Gap: -13.5 pp (p=0.0000)
+
+LGBT (n=685)
+  Medical skip (cost): 43.6% vs General 28.9%
+  Gap: +14.8 pp (p=0.0000)
+
+DISABLED (n=638)
+  Medical skip (cost): 25.5% vs General 28.9%
+  Gap: -3.3 pp (p=0.1489)
+
+INFORMAL (n=2645)
+  Medical skip (cost): 23.7% vs General 28.9%
+  Gap: -5.2 pp (p=0.4232)
+
+
+2. ORAL HEALTH ACCESS BARRIERS BY POPULATION GROUP
+--------------------------------------------------------------------------------
+
+GENERAL - Reasons for not accessing oral health care (n=156)
+  fear: 52 (33.3%)
+  cost: 51 (32.7%)
+  no_time: 36 (23.1%)
+  other: 11 (7.1%)
+  wait_time: 6 (3.8%)
+
+ELDERLY - Reasons for not accessing oral health care (n=226)
+  other: 130 (57.5%)
+  cost: 35 (15.5%)
+  wait_time: 31 (13.7%)
+  fear: 13 (5.8%)
+  no_time: 9 (4.0%)
+  distance: 8 (3.5%)
+
+LGBT - Reasons for not accessing oral health care (n=103)
+  no_time: 35 (34.0%)
+  cost: 33 (32.0%)
+  fear: 23 (22.3%)
+  other: 8 (7.8%)
+  wait_time: 4 (3.9%)
+
+DISABLED - Reasons for not accessing oral health care (n=78)
+  other: 28 (35.9%)
+  cost: 21 (26.9%)
+  wait_time: 12 (15.4%)
+  no_time: 8 (10.3%)
+  fear: 6 (7.7%)
+  distance: 3 (3.8%)
+
+INFORMAL - Reasons for not accessing oral health care (n=255)
+  other: 93 (36.5%)
+  cost: 68 (26.7%)
+  no_time: 37 (14.5%)
+  fear: 36 (14.1%)
+  wait_time: 17 (6.7%)
+  distance: 4 (1.6%)
+
+
+3. MEDICAL SKIPPING BY INCOME LEVEL
+--------------------------------------------------------------------------------
+
+ELDERLY
+  <10K: 28.4% (n=652)
+  10K-20K: 9.7% (n=185)
+  20K-50K: 4.3% (n=23)
+
+DISABLED
+  <10K: 48.6% (n=74)
+  10K-20K: 25.7% (n=35)
+  20K-50K: 35.3% (n=34)
+
+LGBT
+  <10K: 52.6% (n=133)
+  10K-20K: 31.1% (n=122)
+  20K-50K: 47.9% (n=163)
+  >50K: 52.5% (n=40)
+
+INFORMAL
+  <10K: 31.3% (n=1353)
+  10K-20K: 13.7% (n=394)
+  20K-50K: 30.2% (n=235)
+  >50K: 31.8% (n=66)
+
+
+4. MEDICAL SKIPPING BY EMPLOYMENT TYPE
+--------------------------------------------------------------------------------
+formal: 32.6% (n=1460)
+informal: 23.7% (n=2645)
+not_employed: 16.9% (n=2418)
+
+
+5. MEDICAL SKIPPING BY WELFARE TYPE
+--------------------------------------------------------------------------------
+other: 23.2% (n=6523)
+
+
+6. INTERACTION EFFECTS: INCOME × EMPLOYMENT TYPE
+--------------------------------------------------------------------------------
+
+Percentage skipping medical care by income and employment:
+income_category  employment_type
+<10K             formal             44.3
+                 informal           31.3
+                 not_employed       43.2
+10K-20K          formal             20.0
+                 informal           13.7
+                 not_employed       35.0
+20K-50K          formal             34.7
+                 informal           30.2
+                 not_employed       39.4
+>50K             formal             30.8
+                 informal           31.8
+                 not_employed       44.4
+Name: 1, dtype: float64
+
+
+7. LGBT+ DETAILED ANALYSIS: FINANCIAL AND FEAR BARRIERS
+--------------------------------------------------------------------------------
+
+LGBT+ (n=685)
+  Cost barrier (medical skip): 43.6% vs General 28.9%
+  Gap: +14.8 pp
+
+  Fear barrier (oral health): 3.4% vs General 4.0%
+  Gap: -0.6 pp
+
+
+8. STATISTICAL SIGNIFICANCE TESTS
+--------------------------------------------------------------------------------
+
+DISABLED: Income effect on medical skipping
+  Low income (<10K): 48.6% skip (n=74)
+  Higher income: 22.5% skip (n=564)
+  Gap: 26.1 pp (p=0.0000)
+
+ELDERLY: Income effect on medical skipping
+  Low income (<10K): 28.4% skip (n=651)
+  Higher income: 11.8% skip (n=2335)
+  Gap: 16.6 pp (p=0.0000)
+
+================================================================================
+ANALYSIS COMPLETE
+================================================================================
