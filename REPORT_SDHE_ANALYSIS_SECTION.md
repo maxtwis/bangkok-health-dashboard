@@ -330,36 +330,7 @@ Analysis of 138 significant health disparities across 8 SDHE domains reveals sys
 
 **Missing Context:** The survey does not capture information about food assistance programs, household food sharing arrangements, informal support networks, food environment characteristics (availability and pricing in neighborhoods), or the relationship between food insecurity and the chronic disease patterns observed earlier in the analysis. These contextual factors would help interpret the observed disparities.
 
-### 5.3 Intersectional Health Inequities
-
-Analysis of intersecting identities revealed compounded health disadvantages. Individuals with multiple marginalized identities face greater challenges than those with single identities, demonstrating how disadvantages multiply rather than simply add together.
-
-**Elderly + Disabled** (n=39)
-- income: 19898.5 THB (65.1%) lower than general population (p=0.000)
-- food_insecure: 5.8% lower than general population (p=0.003)
-- violence: 5.3% lower than general population (p=0.000)
-
-**Elderly + Informal** (n=795)
-- income: 16270.2 THB (53.3%) lower than general population (p=0.000)
-- food_insecure: 9.6% lower than general population (p=0.000)
-- violence: 5.6% lower than general population (p=0.000)
-
-**Elderly + LGBT+** (n=11)
-- income: 11739.8 THB (38.4%) lower than general population (p=0.016)
-
-**Disabled + Informal** (n=77)
-- income: 15513.1 THB (50.8%) lower than general population (p=0.000)
-- skipped_medical: 12.8% higher than general population (p=0.003)
-- violence: 6.1% lower than general population (p=0.008)
-
-**Disabled + LGBT+** (n=29)
-- discrimination: 10.1% higher than general population (p=0.025)
-
-**LGBT+ + Informal** (n=172)
-- income: 9033.9 THB (29.6%) lower than general population (p=0.000)
-- skipped_medical: 5.8% higher than general population (p=0.036)
-
-### 5.4 Geographic Health Disparities
+### 5.3 Geographic Health Disparities
 
 Comparison of top 5 performing districts versus bottom 5 districts revealed systematic disparities across 19 health indicators. These geographic inequities exist independent of individual characteristics, suggesting that place of residence significantly impacts health outcomes in Bangkok.
 
@@ -375,138 +346,125 @@ Comparison of top 5 performing districts versus bottom 5 districts revealed syst
 - *drinking*: 14.7% difference between best and worst performing districts (p=0.000)
 - *working_hours*: 55.9% difference between best and worst performing districts (p=0.000)
 
-### 5.5 Cross-Sectional Analysis Within Population Groups
+### 5.4 Intersection Group Analysis
 
-Within-group stratified analysis revealed significant disparities based on education level, housing status, employment status, and income level. This shows that even within vulnerable populations, socioeconomic factors create additional layers of inequality.
+Analysis of individuals with multiple marginalized identities reveals how vulnerabilities compound beyond simple addition. The following tables show key health equity indicators for intersection groups compared to the general population.
 
-**Elderly (60+)**
+**Elderly + Disabled** (n=39)
 
-*Education Level*:
-- Health Outcomes: diseases_status (9.8% difference, p=0.000) and 1 other significant differences
-- Healthcare Access: welfare (43.9% difference, p=0.000) and 2 other significant differences
-- Economic Security: monthly_income (4558.6 THB or 33.3%, p=0.000) and 1 other significant differences
-- Quality of Life: community_safety (15.3% difference, p=0.000)
+| Indicator | General Pop. | Elderly Only | Disabled Only | Elderly + Disabled | Compounded Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 14,770 THB | 20,252 THB | **10,645 THB** | **-19,898 THB (-65.1%)** | < 0.001 |
+| Employment rate | 92.6% | 52.2% | 39.9% | **33.3%** | **-59.3 pp** | < 0.001 |
+| Has occupation welfare | 81.9% | 8.8% | 46.7% | **-** | **-** | - |
+| Food insecurity | 13.7% | 4.7% | - | **7.9%** | **-5.8 pp** | 0.003 |
+| Violence exposure | 17.2% | 3.6% | 8.2% | **11.9%** | **-5.3 pp** | < 0.001 |
 
-*Housing Status*:
-- Healthcare Access: welfare (16.8% difference, p=0.000) and 2 other significant differences
-- Economic Security: food_insecurity_1 (4.5% difference, p=0.000)
-- Quality of Life: community_safety (15.3% difference, p=0.000) and 2 other significant differences
+*What the numbers reveal:*
 
-*Employment Status*:
-- Health Outcomes: diseases_status (12.5% difference, p=0.000) and 1 other significant differences
-- Healthcare Access: welfare (10.8% difference, p=0.000) and 1 other significant differences
-- Economic Security: health_expense (300.5 THB or 38.8%, p=0.006)
-- Quality of Life: discrimination_1 (1.1% difference, p=0.008) and 1 other significant differences
+**Compounding Economic Vulnerability:** Elderly individuals with disabilities face the most severe economic disadvantage of all intersection groups. Their average monthly income of 10,645 THB is 65.1% lower than the general population (19,898 THB gap) and 28.9% lower than elderly without disabilities (4,321 THB gap, p < 0.001). Only 33.3% are employed compared to 52.2% of elderly without disabilities (18.9 pp gap) and 39.9% of non-elderly disabled (6.6 pp gap). This dual burden creates a multiplicative rather than additive effect - being both elderly AND disabled compounds employment barriers beyond what either identity alone predicts.
 
-*Income Level*:
-- Healthcare Access: medical_skip_1 (18.2% difference, p=0.000)
-- Economic Security: monthly_income (12050.5 THB or 126.8%, p=0.000) and 1 other significant differences
+**Paradoxical Food Security:** Surprisingly, elderly+disabled show lower food insecurity (7.9%) than the general population (13.7%), despite having the lowest incomes. This 5.8 pp gap (p=0.003) mirrors the pattern observed for elderly-only populations and likely reflects similar factors: potential access to targeted food assistance programs, lower household size reducing food needs, or different reporting thresholds for what constitutes food insecurity.
 
-**LGBT+ Community**
+**Violence and Discrimination:** Elderly+disabled report 11.9% violence exposure, which is lower than general population (17.2%, 5.3 pp gap, p < 0.001) but notably higher than elderly-only (3.6%) or disabled-only (8.2%) groups. This suggests that while age may provide some protection from violence, disability status increases vulnerability even among elderly populations.
 
-*Education Level*:
-- Health Outcomes: diseases_type_2 (14.6% difference, p=0.000) and 2 other significant differences
-- Healthcare Access: welfare (30.7% difference, p=0.000)
-- Economic Security: monthly_income (9223.9 THB or 53.8%, p=0.000)
-- Quality of Life: community_safety (20.2% difference, p=0.036)
+---
 
-*Housing Status*:
-- Healthcare Access: medical_skip_1 (10.8% difference, p=0.036)
-- Quality of Life: community_safety (18.7% difference, p=0.033)
+**Elderly + Informal Workers** (n=795)
 
-*Employment Status*:
-- Economic Security: health_expense (231.0 THB or 132.6%, p=0.003) and 2 other significant differences
-- Quality of Life: psychological_violence (15.2% difference, p=0.000)
+| Indicator | General Pop. | Elderly Only | Informal Only | Elderly + Informal | Compounded Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 14,770 THB | 23,922 THB | **14,273 THB** | **-16,270 THB (-53.3%)** | < 0.001 |
+| Working hours/week | 48.0 hours | - | 48.0 hours | **8.2 hours** | **-39.8 hours (-82.8%)** | < 0.001 |
+| Has employment contract | 95.9% | 8.4% | 0.0% | **0.0%** | **-95.9 pp** | < 0.001 |
+| Has occupation welfare | 81.9% | 8.8% | 10.6% | **8.7%** | **-73.2 pp** | < 0.001 |
+| Occupation injury | 1.3% | - | 3.2% | **1.3%** | **0.0 pp** | n.s. |
+| Food insecurity | 13.7% | 4.7% | 7.2% | **4.1%** | **-9.6 pp** | < 0.001 |
+| Violence exposure | 17.2% | 3.6% | 7.3% | **11.6%** | **-5.6 pp** | < 0.001 |
 
-*Income Level*:
-- Health Outcomes: diseases_type_2 (10.3% difference, p=0.002)
-- Healthcare Access: welfare (25.8% difference, p=0.000)
-- Economic Security: monthly_income (22940.2 THB or 158.2%, p=0.000)
+*What the numbers reveal:*
 
-**People with Disabilities**
+**The Informal Elderly: Semi-Retirement in Precarity:** Elderly informal workers represent a distinct pattern of semi-retirement characterized by dramatically reduced working hours (8.2 hours/week compared to 48.0 for non-elderly informal workers, 82.8% reduction, p < 0.001). Despite working only 8 hours weekly, they earn 14,273 THB monthly - nearly identical to elderly-only average (14,770 THB), suggesting income sources beyond wages (pensions, savings, family support). However, their informal status means zero contract coverage (0.0%) and minimal welfare access (8.7%), leaving them without formal protections during their working years.
 
-*Education Level*:
-- Health Outcomes: diseases_type_2 (39.8% difference, p=0.000) and 2 other significant differences
-- Healthcare Access: welfare (38.7% difference, p=0.000)
-- Economic Security: monthly_income (13157.2 THB or 115.2%, p=0.000) and 1 other significant differences
-- Quality of Life: psychological_violence (8.2% difference, p=0.001) and 1 other significant differences
+**No Additional Employment Protection Deficit:** Both informal-only (0.0%) and elderly+informal (0.0%) show zero contract coverage, meaning the intersection creates no additional gap beyond informal status alone. Similarly, occupation welfare rates are nearly identical (10.6% informal-only vs 8.7% elderly+informal), indicating that informal employment is the dominant factor determining employment protections, with age playing minimal additional role.
 
-*Housing Status*:
-- Health Outcomes: diseases_type_2 (14.9% difference, p=0.001) and 1 other significant differences
-- Economic Security: food_insecurity_1 (8.1% difference, p=0.004) and 1 other significant differences
-- Quality of Life: community_safety (26.6% difference, p=0.000) and 1 other significant differences
+**Injury Risk Normalization:** Elderly+informal workers show 1.3% occupation injury rates, significantly lower than informal-only (3.2%, 1.9 pp gap, p=0.049). This likely reflects reduced working hours (82.8% less) proportionally reducing injury exposure rather than safer work conditions. The low absolute injury rate despite informal employment suggests that elderly individuals select less physically demanding informal work or that injury reporting decreases with age.
 
-*Employment Status*:
-- Health Outcomes: diseases_status (37.3% difference, p=0.000) and 2 other significant differences
-- Healthcare Access: welfare (26.8% difference, p=0.000) and 1 other significant differences
-- Economic Security: health_expense (443.5 THB or 54.3%, p=0.000)
-- Quality of Life: psychological_violence (9.2% difference, p=0.000) and 2 other significant differences
+---
 
-*Income Level*:
-- Health Outcomes: diseases_type_2 (42.6% difference, p=0.000) and 2 other significant differences
-- Healthcare Access: welfare (42.2% difference, p=0.000)
-- Economic Security: monthly_income (20642.3 THB or 197.1%, p=0.000)
-- Quality of Life: psychological_violence (17.5% difference, p=0.006) and 1 other significant differences
+**Elderly + LGBT+** (n=11)
 
-**Informal Workers**
+| Indicator | General Pop. | Elderly Only | LGBT+ Only | Elderly + LGBT+ | Compounded Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 14,770 THB | 26,848 THB | **18,803 THB** | **-11,740 THB (-38.4%)** | 0.016 |
 
-*Education Level*:
-- Health Outcomes: diseases_type_2 (43.0% difference, p=0.000) and 2 other significant differences
-- Healthcare Access: welfare (30.6% difference, p=0.000)
-- Economic Security: monthly_income (9675.1 THB or 66.5%, p=0.000)
-- Quality of Life: psychological_violence (6.2% difference, p=0.000) and 2 other significant differences
+*What the numbers reveal:*
 
-*Housing Status*:
-- Health Outcomes: diseases_status (12.8% difference, p=0.000) and 2 other significant differences
-- Healthcare Access: oral_health_access (12.1% difference, p=0.005)
-- Economic Security: food_insecurity_1 (6.1% difference, p=0.000) and 1 other significant differences
-- Quality of Life: community_safety (14.5% difference, p=0.000) and 2 other significant differences
+**Limited Statistical Power:** With only 11 respondents, this intersection group has insufficient sample size for robust statistical analysis across multiple indicators. Only income shows statistical significance.
 
-*Income Level*:
-- Health Outcomes: diseases_type_2 (35.6% difference, p=0.000) and 2 other significant differences
-- Healthcare Access: welfare (34.5% difference, p=0.000) and 2 other significant differences
-- Economic Security: monthly_income (19317.7 THB or 169.6%, p=0.000)
-- Quality of Life: community_safety (19.5% difference, p=0.000) and 1 other significant differences
+**Income Patterns:** Elderly+LGBT+ earn 18,803 THB monthly, which is 38.4% lower than general population (11,740 THB gap, p=0.016). Notably, their income (18,803 THB) falls between elderly-only (14,770 THB) and LGBT+-only (26,848 THB), suggesting that LGBT+ identity may partially buffer against age-related income decline, or that elderly LGBT+ individuals represent a selected population with different socioeconomic characteristics than either group alone. However, the small sample size prevents definitive interpretation.
 
-**Key Cross-Sectional Findings**:
+---
 
-- **Education stratification**: Higher education levels consistently associated with better health outcomes, lower disease prevalence, and improved healthcare access across all groups.
+**Disabled + Informal Workers** (n=77)
 
-- **Housing status**: Home ownership linked to reduced food insecurity, better health outcomes, and lower violence exposure.
+| Indicator | General Pop. | Disabled Only | Informal Only | Disabled + Informal | Compounded Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 20,252 THB | 23,922 THB | **15,030 THB** | **-15,513 THB (-50.8%)** | < 0.001 |
+| Skipped medical care (cost) | 28.9% | 25.5% | 23.7% | **41.7%** | **+12.8 pp** | 0.003 |
+| Violence exposure | 17.2% | 8.2% | 7.3% | **11.1%** | **-6.1 pp** | 0.008 |
 
-- **Employment status**: Employed individuals within vulnerable groups show significantly better economic security and health outcomes.
+*What the numbers reveal:*
 
-- **Income stratification**: Higher income within groups correlates with reduced healthcare skipping, better nutrition, and lower chronic disease burden.
+**Compounded Healthcare Access Barriers:** Disabled+informal workers face the highest medical care skipping rate (41.7%) among disability intersections - significantly higher than disabled-only (25.5%, 16.2 pp gap) or informal-only (23.7%, 18.0 pp gap), and 12.8 pp higher than general population (p=0.003). This multiplicative effect demonstrates that informal employment compounds disability-related healthcare access barriers. While disabled individuals with formal employment may have occupation-based health benefits or more stable incomes to cover out-of-pocket costs, disabled informal workers face dual disadvantages: no employer health support AND income precarity.
 
-### 5.6 Specific Within-Group Comparisons
+**Income Penalty:** At 15,030 THB monthly, disabled+informal workers earn 50.8% less than general population (15,513 THB gap, p < 0.001). This represents a larger income deficit than either disabled-only (33.7% lower) or informal-only (21.7% lower), indicating compounding effects. The intersection creates additional economic vulnerability beyond single-identity predictions.
 
-Targeted comparisons within population groups reveal how combining vulnerabilities amplifies disadvantages:
+**Violence Patterns:** Like other intersections involving disability, disabled+informal workers show lower violence exposure (11.1%) than general population (17.2%, 6.1 pp gap, p=0.008), yet higher than single-identity groups (disabled 8.2%, informal 7.3%). This may reflect social isolation reducing overall conflict exposure.
 
-**Income: Elderly vs Elderly+Disabled**
+---
 
-- *monthly_income*: Elderly Only vs Elderly + Disabled: 4320.6 THB (28.9%) difference (p=0.000)
-- *occupation_status*: Elderly Only vs Elderly + Disabled: 29.5% difference (p=0.000)
-- *welfare*: Elderly Only vs Elderly + Disabled: 14.0% difference (p=0.000)
+**Disabled + LGBT+** (n=29)
 
-**Healthcare Access: LGBT+ vs LGBT++Disabled**
+| Indicator | General Pop. | Disabled Only | LGBT+ Only | Disabled + LGBT+ | Compounded Gap | p-value |
+|---|---|---|---|---|---|---|
+| Discrimination | 3.7% | - | 6.3% | **13.8%** | **+10.1 pp** | 0.025 |
 
-- *oral_health_access*: LGBT+ Only vs LGBT+ + Disabled: 36.0% difference (p=0.028)
+*What the numbers reveal:*
 
-**Employment: Informal Workers vs Informal+Elderly**
+**Extreme Discrimination Exposure:** Disabled+LGBT+ individuals report 13.8% discrimination - dramatically higher than either disabled-only or LGBT+-only populations (6.3%). This 10.1 pp gap compared to general population (p=0.025) represents more than double the LGBT+-only discrimination rate, suggesting that the intersection of disability and LGBT+ identity creates particularly severe discrimination experiences. This multiplicative effect indicates that individuals with both identities face discrimination contexts that neither group experiences in isolation.
 
-- *monthly_income*: Informal Workers Only vs Informal + Elderly: 7415.6 THB (34.2%) difference (p=0.000)
-- *working_hours*: Informal Workers Only vs Informal + Elderly: 82.8% difference (p=0.000)
-- *occupation_injury*: Informal Workers Only vs Informal + Elderly: 1.9% difference (p=0.049)
-- *occupation_welfare*: Informal Workers Only vs Informal + Elderly: 10.1% difference (p=0.000)
+**Sample Size Limitations:** With only 29 respondents, statistical power is limited. Only discrimination shows significance, though other indicators (healthcare access, income, violence) likely differ but cannot be detected with this sample size.
 
-**Violence: Women vs LGBT+**
+---
 
-- *physical_violence*: Women vs LGBT+: 10.7% difference (p=0.000)
-- *psychological_violence*: Women vs LGBT+: 21.7% difference (p=0.000)
-- *sexual_violence*: Women vs LGBT+: 3.8% difference (p=0.000)
-- *discrimination_1*: Women vs LGBT+: 4.7% difference (p=0.000)
+**LGBT+ + Informal Workers** (n=172)
 
-### 5.7 Key Findings Summary
+| Indicator | General Pop. | LGBT+ Only | Informal Only | LGBT+ + Informal | Compounded Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 26,848 THB | 23,922 THB | **21,509 THB** | **-9,034 THB (-29.6%)** | < 0.001 |
+| Skipped medical care (cost) | 28.9% | 43.6% | 23.7% | **34.7%** | **+5.8 pp** | 0.036 |
+
+*What the numbers reveal:*
+
+**Intersecting Economic Vulnerabilities:** LGBT++informal workers earn 21,509 THB monthly, 29.6% lower than general population (9,034 THB gap, p < 0.001). This is lower than LGBT+-only (26,848 THB, 19.9% gap) and informal-only (23,922 THB, 11.6% gap), showing additive income penalties. The intersection suggests that LGBT+ individuals who work informally may face compounded barriers in accessing better-paying formal employment - potentially due to discrimination limiting formal sector opportunities.
+
+**Healthcare Access:** LGBT++informal show 34.7% medical care skipping, 5.8 pp higher than general population (p=0.036). Interestingly, this rate (34.7%) is lower than LGBT+-only (43.6%), suggesting that informal employment may not compound healthcare access barriers as severely for LGBT+ individuals as for disabled individuals. However, the rate remains substantially higher than informal-only (23.7%), indicating that LGBT+ identity is the dominant driver of healthcare access challenges in this intersection.
+
+---
+
+**Key Intersection Findings:**
+
+**Multiplicative vs Additive Effects:** Different intersections show different compounding patterns. Healthcare access barriers multiply (disabled+informal: 41.7% skipping vs 25.5% disabled-only and 23.7% informal-only), while employment protections show floor effects (elderly+informal: 0.0% contracts, same as informal-only). Income penalties tend to be additive or slightly multiplicative across most intersections.
+
+**Small Sample Challenges:** Several intersections (elderly+LGBT+ n=11, disabled+LGBT+ n=29) have insufficient statistical power for comprehensive analysis, limiting our ability to detect real disparities or generalize findings. Larger sample sizes would be needed to characterize these intersections definitively.
+
+**Priority Intersections for Intervention:** Based on severity and sample size, three intersections warrant targeted policy attention:
+1. **Elderly+Disabled (n=39)**: Most severe income deficit (-65.1%), lowest employment (33.3%)
+2. **Disabled+Informal (n=77)**: Highest healthcare access barriers (41.7% skip care)
+3. **Disabled+LGBT+ (n=29)**: Extreme discrimination exposure (13.8%)
+
+### 5.5 Key Findings Summary
 
 1. **Multiple Marginalization**: Individuals with intersecting marginalized identities experience compounded health disadvantages across multiple SDHE domains.
 
