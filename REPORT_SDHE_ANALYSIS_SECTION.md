@@ -71,7 +71,7 @@ Analysis of 138 significant health disparities across 8 SDHE domains reveals sys
 
 **The Welfare Cascade:** The survey data reveals a clear pattern linking contracts to welfare access. Among employed elderly, only 8.8% have occupation-based welfare; among informal workers, only 10.6% do - compared to 81.9% of the general employed population (gaps of 73.1 pp and 71.3 pp respectively). Among those without contracts in our sample, welfare coverage drops to near zero, suggesting that formal employment serves as the primary gateway to workplace benefits in Bangkok's economy.
 
-**Income Disparities:** Employed elderly earn an average of 14,770 THB monthly compared to 30,543 THB for the general population - a difference of 15,773 THB or 52% less. Disabled individuals earn 20,252 THB (10,291 THB or 34% less). These income gaps are statistically associated with both education and employment formality in our data: elderly with only primary education earn 2,797 THB compared to 9,728 THB for those with higher education (6,931 THB gap, p < 0.0001), and among employed elderly, those with formal contracts earn 14,654 THB versus 3,553 THB without contracts (11,101 THB gap, p < 0.0001). The data pattern suggests education → contract access → income as a potential pathway, though our cross-sectional design cannot establish whether education causes better employment outcomes, or whether other factors (family background, discrimination, opportunity access) drive both educational and employment disparities.
+**Income Disparities:** Employed elderly earn an average of 14,770 THB monthly compared to 30,543 THB for the general population - a difference of 15,773 THB or 52% less. Disabled individuals earn 20,252 THB (10,291 THB or 34% less). These income gaps are statistically associated with employment formality in our data: among employed elderly, those with formal contracts earn 20,581 THB versus 14,273 THB without contracts (6,308 THB gap, 44% more with contract, p < 0.0001). Educational attainment shows modest income associations: elderly with only primary education earn an average of 13,563 THB compared to 14,885 THB for those with higher education (1,322 THB gap, 10% difference), though this gap is substantially smaller than the contract-income relationship. The data pattern suggests that employment formality (contract status) has a stronger association with income than educational attainment among elderly workers, though our cross-sectional design cannot establish whether contracts cause higher income, or whether other factors (occupation type, employer characteristics, negotiation capacity) drive both contract access and income levels.
 
 **Employment Exclusion:** Only 39.9% of disabled respondents report being employed, compared to 92.6% of the general population (52.7 pp gap). Elderly show 52.2% employment (40.4 pp gap). While the survey cannot identify the barriers preventing employment - whether physical accessibility, employer hiring practices, health limitations, or caregiving responsibilities - the magnitude of these gaps indicates substantial obstacles to labor force participation for these groups.
 
@@ -92,7 +92,19 @@ Analysis of 138 significant health disparities across 8 SDHE domains reveals sys
 
 *What the numbers reveal:*
 
-**Educational Attainment Gaps:** Elderly respondents show 61.0% with only primary education compared to 5.4% in the general population - a 55.6 pp gap (p < 0.001). Disabled respondents have 53.6% with primary education, a 48.2 pp gap. Informal workers show 36.5% at primary level, a 31.1 pp difference. These educational gaps are statistically associated with economic outcomes in our data: among elderly, those with primary education or less earn an average of 2,797 THB compared to 9,728 THB for those with higher education (difference of 6,931 THB, p < 0.0001). Among employed elderly, only 4.5% with low education have formal contracts compared to 20.1% with higher education (15.6 pp gap, p < 0.0001), and those with contracts earn 14,654 THB versus 3,553 THB without contracts (11,101 THB difference, p < 0.0001). While these correlations are clear, our cross-sectional data cannot determine causality - whether education directly causes better employment outcomes, or whether both are influenced by other factors like family background, access to opportunities, or historical context.
+**Educational Attainment Gaps:** Elderly respondents show 61.0% with only primary education compared to 5.4% in the general population - a 55.6 pp gap (p < 0.001). Disabled respondents have 53.6% with primary education, a 48.2 pp gap. Informal workers show 36.5% at primary level, a 31.1 pp difference. These educational gaps have dramatically different income implications across population groups, as shown in the table below:
+
+| Population Group | Primary (≤ป.6) Income | Bachelor+ Income | Gap | Income Return | p-value | n |
+|---|---|---|---|---|---|---|
+| Disabled | 8,787 THB | 24,981 THB | **+16,194 THB** | **2.84× (184%)** | 0.003 | 152 |
+| General | 13,000 THB | 31,363 THB | **+18,363 THB** | **2.41× (141%)** | 0.079 | 1,010 |
+| Informal Workers | 13,900 THB | 25,557 THB | **+11,658 THB** | **1.84× (84%)** | < 0.001 | 2,048 |
+| Elderly | 13,563 THB | 19,404 THB | **+5,841 THB** | **1.43× (43%)** | 0.002 | 863 |
+| LGBT+ | 27,000 THB | 26,848 THB | **-152 THB** | **0.99× (0%)** | 0.993 | 458 |
+
+**Education Returns Vary Dramatically by Group:** For disabled individuals, education shows the strongest income effect of all groups - Bachelor+ degree holders earn **2.84 times more** than those with only primary education (16,194 THB gap, p=0.003). Informal workers also show substantial education returns at 1.84× (11,658 THB gap, p < 0.001), demonstrating that education provides significant economic benefits even in the informal sector. In stark contrast, elderly workers show modest returns at 1.43× (5,841 THB gap), likely reflecting that many educated elderly are retired or semi-retired, compressing wage differences. Most strikingly, **LGBT+ individuals show zero education returns** - primary-educated and Bachelor+ LGBT+ earn virtually identical incomes (27,000 vs 26,848 THB, p=0.993), suggesting that discrimination or occupational segregation may eliminate the typical economic benefits of education for this group.
+
+**Employment Formality as Income Mediator:** Among employed elderly, only 4.5% with low education have formal contracts compared to 20.1% with higher education (15.6 pp gap, p < 0.0001), and those with contracts earn 20,581 THB versus 14,273 THB without contracts (6,308 THB difference or 44% more, p < 0.0001). While these correlations are clear, our cross-sectional data cannot determine causality - whether education directly causes better employment outcomes, or whether both are influenced by other factors like family background, access to opportunities, or historical context. The data suggests that for elderly workers, contract status may mediate much of the relationship between education and income, while for disabled and informal workers, education maintains direct income effects even controlling for employment formality.
 
 **Basic Literacy and Numeracy:** Among disabled respondents, 19.1 pp fewer report being able to do math (80.6% vs. 99.6% general), 18.4 pp fewer can write (81.0% vs. 99.4%), and 13.8 pp fewer can read (85.6% vs. 99.4%). These gaps are statistically significant (all p < 0.001). Cross-variable analysis reveals that education level strongly predicts literacy skills within the disabled population: among disabled with low education, only 73.4% can do math, 73.9% can write, and 79.5% can read, compared to 94.8%, 95.3%, and 97.7% respectively among disabled with higher education (gaps of 18-21 pp, all p < 0.0001, n=638). Critically, when comparing within education levels, the disability gap shrinks dramatically: among those with higher education, disabled respondents show only 4.9 pp lower math skills than the general population, versus 23.2 pp lower among those with low education. This suggests that educational attainment accounts for the majority of the observed literacy gap between disabled and general populations, though disability-specific factors still contribute even after controlling for education.
 
@@ -104,12 +116,14 @@ Analysis of 138 significant health disparities across 8 SDHE domains reveals sys
 
 | Population Group | Indicator | General Pop. | This Group | Gap | p-value |
 |---|---|---|---|---|---|
-| LGBT+ | Skipped medical care (cost) | 28.9% | 43.6% | **-14.8 pp** | < 0.001 |
-| Elderly | Skipped medical care (cost) | 28.9% | 15.4% | **+13.5 pp** | < 0.001 |
-| Disabled | Poor oral health | 68.6% | 78.4% | **-9.8 pp** | < 0.001 |
-| Elderly | Poor oral health | 68.6% | 78.3% | **-9.7 pp** | < 0.001 |
-| Informal Workers | Skipped medical care (cost) | 28.9% | 23.7% | **+5.2 pp** | n.s. |
-| Informal Workers | Poor oral health | 68.6% | 75.1% | **-6.5 pp** | < 0.001 |
+| LGBT+ | Skipped medical care (cost) | 28.9% | 43.6% | **+14.8 pp** | < 0.001 |
+| Elderly | Skipped medical care (cost) | 28.9% | 15.4% | **-13.5 pp** | < 0.001 |
+| General | Had oral health symptoms | 31.4% | 31.4% | - | - |
+| Disabled | Skipped medical care (cost) | 28.9% | 25.5% | **-3.3 pp** | n.s. |
+| Disabled | Had oral health symptoms | 31.4% | 21.6% | **-9.8 pp** | < 0.001 |
+| Elderly | Had oral health symptoms | 31.4% | 21.7% | **-9.7 pp** | < 0.001 |
+| Informal Workers | Skipped medical care (cost) | 28.9% | 23.7% | **-5.2 pp** | n.s. |
+| Informal Workers | Had oral health symptoms | 31.4% | 24.9% | **-6.5 pp** | < 0.001 |
 
 *What the numbers reveal:*
 
@@ -117,15 +131,58 @@ Analysis of 138 significant health disparities across 8 SDHE domains reveals sys
 
 **Cost-Related Care Avoidance - LGBT+ Population at Highest Risk:** Despite universal health coverage, LGBT+ respondents show dramatically elevated rates of skipping medical care due to cost: 43.6% report skipping care in the past 12 months compared to 28.9% of the general population (14.8 pp gap, p < 0.001). This represents the highest medical care skipping rate among all population groups surveyed. Conversely, elderly show lower skipping rates at 15.4% (13.5 pp gap, p < 0.001), while disabled (25.5%, n.s.) and informal workers (23.7%, n.s.) show no statistically significant differences from the general population.
 
-**Income as a Barrier Within Vulnerable Groups:** Cross-variable analysis reveals that income is the strongest predictor of healthcare access within vulnerable populations. Among disabled respondents, 48.6% of those with low income (<10,000 THB/month) report skipping medical care compared to 22.5% of higher-income disabled (26.1 pp gap, p < 0.001, n=638). Among elderly, 28.4% of low-income respondents skip care versus 11.8% of higher-income elderly (16.6 pp gap, p < 0.001, n=2,986). This pattern indicates that economic barriers compound healthcare access disparities even in a universal coverage system, suggesting that out-of-pocket costs (medications, transportation, income loss from taking time off work) create substantial barriers for low-income individuals despite having health insurance.
+**Income as a Barrier Within Vulnerable Groups:** Cross-variable analysis reveals that income is the strongest predictor of healthcare access within vulnerable populations, even when controlling for group membership. The table below shows medical care skipping rates stratified by monthly income level within each vulnerable group (daily income converted to monthly equivalent assuming 30 working days):
+
+| Population Group | Low Income (<10K THB/month) | Higher Income (≥10K THB/month) | Gap | p-value | Sample Size |
+|---|---|---|---|---|---|
+| Disabled | **61.1% skip care** | 23.4% skip care | **37.7 pp** | < 0.001 | n=638 |
+| Elderly | **43.6% skip care** | 12.7% skip care | **30.9 pp** | < 0.001 | n=2,986 |
+| Informal Workers | **49.4% skip care** | 18.7% skip care | **30.7 pp** | < 0.001 | n=2,645 |
+| LGBT+ | **62.5% skip care** | 42.7% skip care | **19.8 pp** | 0.043 | n=685 |
+
+**Key Finding:** Low-income vulnerable populations face catastrophically high medical care skipping rates. **More than 60% of low-income disabled and LGBT+ individuals** skip medical care due to cost - meaning these groups are more likely to forego care than to receive it. Among low-income elderly (43.6%) and informal workers (49.4%), nearly half skip necessary medical care. Income disparities within vulnerable groups are massive: low-income disabled skip care at **2.6 times the rate** of higher-income disabled (61.1% vs 23.4%), and low-income elderly at **3.4 times the rate** of higher-income elderly (43.6% vs 12.7%). This pattern reveals that economic barriers compound healthcare access disparities even in a universal coverage system, with out-of-pocket costs (medications, transportation, income loss from taking time off work) creating catastrophic barriers for low-income individuals despite having health insurance. The intersection of vulnerability status and poverty creates a healthcare access crisis where the majority of the poorest disabled and LGBT+ individuals cannot afford to seek care when needed.
 
 **Employment Formality and Healthcare Access:** Counterintuitively, formal workers show *higher* medical care skipping rates (32.6%) compared to informal workers (23.7%) and non-employed individuals (16.9%). However, when examining the interaction between income and employment, low-income formal workers show the highest skipping rate (44.3%), suggesting that formal employment alone does not guarantee healthcare access when income is insufficient to cover out-of-pocket costs.
 
-**Oral Health Access Barriers - Distinct Profiles Across Groups:** Analysis of reasons for not accessing oral health care reveals fundamentally different barrier profiles across population groups. Among general population who didn't access care (n=156, 11.9% non-access rate), fear of dentist (33.3%) and cost (32.7%) were the primary barriers, followed by lack of time (23.1%). LGBT+ individuals show the highest non-access rate (15.0%) with a distinct barrier pattern: lack of time dominates (34.0%), followed by cost (32.0%) and fear (22.3%). Most strikingly, **elderly respondents show a 31.3 percentage point higher self-treatment rate** (34.5% vs 3.2% general, among those not accessing), indicating they respond to oral health problems by buying medicine themselves, using herbal remedies, or waiting for symptoms to resolve rather than seeking professional dental care. This self-treatment pattern, combined with lower fear rates (5.8% vs 33.3% general) and higher acceptance of tooth loss ("teeth fell out by themselves"), suggests normalization of poor oral health as part of aging rather than barriers to access.
+**Oral Health Access Barriers - Distinct Profiles Across Groups:** Analysis of reasons for not accessing oral health care reveals fundamentally different barrier profiles across population groups, as shown in the table below:
 
-**Oral Health Status Disparities:** Disabled (78.4%), elderly (78.3%), and informal worker (75.1%) respondents report significantly higher rates of poor oral health compared to the general population (68.6%), with gaps ranging from 6.5 to 9.8 pp (all p < 0.001). This consistent pattern across multiple vulnerable groups suggests systematic disparities in oral health status or access to dental care. The combination of high poor oral health rates and the documented access barriers (cost, fear, time) indicates that preventive and treatment dental care remains out of reach for many vulnerable populations despite universal health coverage.
+**Table: Oral Health Access Barriers by Population Group**
 
-**Healthcare Access as Economic Vulnerability Indicator:** The medical care skipping patterns reveal that healthcare access functions as a sensitive indicator of economic vulnerability. Even with universal health insurance, out-of-pocket costs create substantial barriers, with effects most pronounced among low-income disabled (48.6% skipping) and low-income elderly (28.4% skipping). For LGBT+ individuals, the elevated skipping rate (43.6%) combined with fear as a barrier (22.3% of those not accessing oral care) suggests dual challenges of economic constraints and healthcare environment concerns.
+| Group | Did Not Access | Non-Access Rate | Cost | Fear | No Time | Self-Treatment | Wait Time | Distance | Other |
+|---|---|---|---|---|---|---|---|---|---|
+| **General** | n=156 | **11.9%** | 32.7% | **33.3%** | 23.1% | 3.2% | 3.8% | 0.0% | 3.8% |
+| **LGBT+** | n=103 | **15.0%** | 32.0% | 22.3% | **34.0%** | 3.9% | 3.9% | 0.0% | 3.9% |
+| **Disabled** | n=78 | 12.2% | 26.9% | 7.7% | 10.3% | 16.7% | 15.4% | 3.8% | 19.2% |
+| **Informal** | n=255 | 9.6% | 26.7% | 14.1% | 14.5% | **22.4%** | 6.7% | 1.6% | 14.1% |
+| **Elderly** | n=226 | 7.6% | 15.5% | 5.8% | 4.0% | **34.5%** | 13.7% | 3.5% | 23.0% |
+
+*Note: Percentages show the proportion of each reason among those who did not access oral health care. Non-access rate is the percentage of the total group who did not access care when needed.*
+
+**Distinct Barrier Patterns by Group:**
+
+- **General Population**: Balanced between **fear (33.3%)** and **cost (32.7%)** as primary barriers, with moderate time constraints (23.1%). This represents "typical" healthcare-seeking barriers.
+
+- **LGBT+**: Highest non-access rate (15.0%) with **"no time" dominating (34.0%)**, suggesting employment precarity or time poverty. Cost (32.0%) and fear (22.3%) also significant, indicating triple barriers.
+
+- **Elderly**: Lowest non-access rate (7.6%) but dramatically different response - **self-treatment dominates (34.5%)**, 31.3 pp higher than general population. Very low fear (5.8%) and cost (15.5%) barriers suggest they don't view dental care as necessary, instead normalizing poor oral health ("ซื้อยากินเอง" - buy medicine myself, "ฟันหลุดออกเอง" - teeth fell out by themselves).
+
+- **Informal Workers**: Moderate non-access rate (9.6%) with **self-treatment (22.4%)** as second-highest barrier after cost (26.7%), suggesting economic constraints lead to self-medication rather than professional care.
+
+- **Disabled**: Mixed barrier profile with **self-treatment (16.7%)**, **wait time (15.4%)**, and **other reasons (19.2%)** suggesting accessibility issues beyond standard barriers. Low fear (7.7%) may reflect necessity overriding anxiety.
+
+**Key Finding**: The **34.5% self-treatment rate among elderly** (vs 3.2% general) indicates they respond to oral health problems by buying medicine themselves, using herbal remedies, or waiting for symptoms to resolve rather than seeking professional dental care. This self-treatment pattern, combined with lower fear rates (5.8% vs 33.3% general) and higher acceptance of tooth loss, suggests normalization of poor oral health as part of aging rather than true barriers to access.
+
+**Oral Health Status Disparities:** Counterintuitively, vulnerable groups report **lower** rates of oral health symptoms in the past 12 months compared to the general population: disabled (21.6%), elderly (21.7%), and informal workers (24.9%) versus general population (31.4%), with gaps ranging from 6.5 to 9.8 pp (all p < 0.001). This unexpected pattern may reflect **underreporting** rather than genuinely better oral health - vulnerable groups may normalize dental problems, lack awareness of symptoms, or perceive minor issues as not worth reporting. This interpretation is supported by the high self-treatment rates documented earlier (elderly 34.5%, informal 22.4%), suggesting these groups experience oral health problems but respond through self-medication rather than formal care-seeking, potentially not recognizing or reporting these as "symptoms" warranting professional attention. The combination of lower reported symptoms yet high self-treatment and access barriers indicates that vulnerable populations may have poor oral health that goes unrecognized or unreported, rather than genuinely better oral health status.
+
+**Healthcare Access as Economic Vulnerability Indicator:** Healthcare access patterns - both general medical care and oral health - reveal the complex interplay of economic vulnerability, behavioral adaptation, and systemic barriers facing vulnerable populations in Bangkok.
+
+**Medical Care Skipping:** Even with universal health insurance, out-of-pocket costs create catastrophic barriers, with effects most pronounced among low-income disabled (61.1% skipping), low-income LGBT+ (62.5%), low-income informal workers (49.4%), and low-income elderly (43.6%). The magnitude of these rates - with majorities of the poorest disabled and LGBT+ unable to access care when needed - demonstrates that universal coverage alone cannot eliminate economic barriers to healthcare.
+
+**Oral Health:** The oral health data reveals a different pattern - vulnerable groups report fewer symptoms (elderly 21.7%, disabled 21.6%, informal 24.9% vs general 31.4%), yet show dramatically higher self-treatment rates (elderly 34.5%, informal 22.4% vs general 3.2%). This paradox suggests normalization and underreporting rather than better health, with vulnerable groups managing dental problems through self-medication rather than recognizing them as symptoms warranting professional care.
+
+**Dual Barriers for LGBT+:** LGBT+ individuals face compounded challenges - the highest medical care skipping rate (43.6% overall, 62.5% for low-income), highest oral health non-access rate (15.0%), and unique barriers including time poverty (34.0% cite "no time") and fear (22.3%). Additionally, LGBT+ show zero economic returns to education (0.99× income multiplier), suggesting that discrimination or occupational segregation eliminates both healthcare access and the typical economic benefits of educational investment.
+
+**Behavioral Adaptation vs Access Barriers:** The contrast between medical care (where vulnerable groups seek care but cannot afford it) and oral health (where they normalize problems and self-treat) illustrates how populations adapt to systemic barriers. When professional care is perceived as unaffordable or unnecessary, vulnerable groups develop alternative coping strategies - self-treatment, symptom normalization, and acceptance of deteriorating health - that may mask the true burden of poor health status in survey data.
 
 **Chronic Diseases**: 14 significant disparities found
 

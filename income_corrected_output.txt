@@ -1,0 +1,145 @@
+================================================================================
+INCOME VERIFICATION - CHECKING CONVERSION
+================================================================================
+
+Original income column stats:
+count      3468.000000
+mean      15636.980681
+std       19831.248854
+min         150.000000
+25%         500.000000
+50%       12000.000000
+75%       25000.000000
+max      166000.000000
+Name: income, dtype: float64
+
+Monthly income (converted) stats:
+count      3468.000000
+mean      23095.942907
+std       16331.881848
+min        1500.000000
+25%       12000.000000
+50%       18000.000000
+75%       30000.000000
+max      166000.000000
+Name: monthly_income, dtype: float64
+
+Sample conversions:
+      income  income_type  monthly_income
+0      500.0          1.0         15000.0
+1      480.0          1.0         14400.0
+2   166000.0          2.0        166000.0
+3   166000.0          2.0        166000.0
+4   163000.0          2.0        163000.0
+5   152000.0          2.0        152000.0
+6        NaN          2.0             NaN
+7   149000.0          2.0        149000.0
+8        NaN          2.0             NaN
+9   132000.0          2.0        132000.0
+10  130000.0          2.0        130000.0
+11  125000.0          2.0        125000.0
+12  100000.0          2.0        100000.0
+13   94000.0          2.0         94000.0
+14   94000.0          2.0         94000.0
+15   90000.0          2.0         90000.0
+16   89000.0          2.0         89000.0
+17   88000.0          2.0         88000.0
+18   87000.0          2.0         87000.0
+19   87000.0          2.0         87000.0
+
+================================================================================
+CORRECTED ANALYSIS - INCOME EFFECT ON MEDICAL SKIPPING
+================================================================================
+
+ELDERLY
+Total n=2986
+
+Income distribution:
+  <10K: n=260
+  10K-20K: n=471
+  20K-50K: n=128
+  >50K: n=4
+
+Medical care skipping by income:
+  Low income (<10K/month): 43.6% skip (n=259)
+  Higher income (â‰¥10K/month): 12.7% skip (n=2727)
+  Gap: 30.9 pp (p=0.0000) ***
+
+Detailed breakdown by income level:
+  <10K: 43.5% skip (n=260)
+  10K-20K: 17.6% skip (n=471)
+  20K-50K: 6.2% skip (n=128)
+
+DISABLED
+Total n=638
+
+Income distribution:
+  <10K: n=36
+  10K-20K: n=64
+  20K-50K: n=43
+  >50K: n=9
+
+Medical care skipping by income:
+  Low income (<10K/month): 61.1% skip (n=36)
+  Higher income (â‰¥10K/month): 23.4% skip (n=602)
+  Gap: 37.7 pp (p=0.0000) ***
+
+Detailed breakdown by income level:
+  <10K: 61.1% skip (n=36)
+  10K-20K: 28.1% skip (n=64)
+  20K-50K: 39.5% skip (n=43)
+
+LGBT
+Total n=685
+
+Income distribution:
+  <10K: n=32
+  10K-20K: n=191
+  20K-50K: n=195
+  >50K: n=40
+
+Medical care skipping by income:
+  Low income (<10K/month): 62.5% skip (n=32)
+  Higher income (â‰¥10K/month): 42.7% skip (n=653)
+  Gap: 19.8 pp (p=0.0434) *
+
+Detailed breakdown by income level:
+  <10K: 62.5% skip (n=32)
+  10K-20K: 39.8% skip (n=191)
+  20K-50K: 46.2% skip (n=195)
+  >50K: 52.5% skip (n=40)
+
+INFORMAL
+Total n=2645
+
+Income distribution:
+  <10K: n=430
+  10K-20K: n=1012
+  20K-50K: n=539
+  >50K: n=67
+
+Medical care skipping by income:
+  Low income (<10K/month): 49.4% skip (n=429)
+  Higher income (â‰¥10K/month): 18.7% skip (n=2216)
+  Gap: 30.7 pp (p=0.0000) ***
+
+Detailed breakdown by income level:
+  <10K: 49.3% skip (n=430)
+  10K-20K: 22.8% skip (n=1012)
+  20K-50K: 19.5% skip (n=539)
+  >50K: 31.3% skip (n=67)
+
+================================================================================
+SUMMARY TABLE FOR REPORT - CORRECTED INCOME
+================================================================================
+
+| Population Group | Low Income (<10K) | Higher Income (â‰¥10K) | Gap | p-value | n |
+|---|---|---|---|---|---|
+| Disabled | 61.1% | 23.4% | **37.7 pp** | < 0.001 *** | n=638 |
+| Elderly | 43.6% | 12.7% | **30.9 pp** | < 0.001 *** | n=2986 |
+| Lgbt | 62.5% | 42.7% | **19.8 pp** | 0.043 * | n=685 |
+| Informal | 49.4% | 18.7% | **30.7 pp** | < 0.001 *** | n=2645 |
+
+================================================================================
+ANALYSIS COMPLETE
+================================================================================

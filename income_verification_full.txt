@@ -1,0 +1,132 @@
+================================================================================
+COMPREHENSIVE INCOME-RELATED ANALYSIS VERIFICATION
+================================================================================
+
+
+1. HEALTHCARE ACCESS DOMAIN - Medical Care Skipping by Income
+--------------------------------------------------------------------------------
+
+Claim in report: 'Income is the strongest predictor of healthcare access'
+
+VERIFICATION:
+
+DISABLED (n=638):
+  Low income (<10K): 61.1% skip (n=36)
+  Higher income: 23.4% skip (n=602)
+  Gap: 37.7 pp, p=0.0000
+
+ELDERLY (n=2986):
+  Low income (<10K): 43.6% skip (n=259)
+  Higher income: 12.7% skip (n=2727)
+  Gap: 30.9 pp, p=0.0000
+
+INFORMAL (n=2645):
+  Low income (<10K): 49.4% skip (n=429)
+  Higher income: 18.7% skip (n=2216)
+  Gap: 30.7 pp, p=0.0000
+
+LGBT (n=685):
+  Low income (<10K): 62.5% skip (n=32)
+  Higher income: 42.7% skip (n=653)
+  Gap: 19.8 pp, p=0.0434
+
+
+2. EMPLOYMENT & INCOME DOMAIN - Income Disparities
+--------------------------------------------------------------------------------
+
+Claim: 'Employed elderly earn 14,770 THB monthly vs 30,543 THB general'
+Claim: 'Disabled earn 20,252 THB'
+
+VERIFICATION (using monthly_income):
+
+General population: 30543 THB/month (n=1010)
+Elderly: 14770 THB/month (n=863)
+  Gap: 15773 THB (51.6% less)
+Disabled: 20252 THB/month (n=152)
+  Gap: 10291 THB (33.7% less)
+
+
+Claim: 'Elderly with primary education earn 2,797 THB vs 9,728 THB with higher education'
+VERIFICATION:
+Elderly with primary education: 13563 THB (n=75)
+Elderly with higher education: 14885 THB (n=788)
+  Gap: 1322 THB
+
+
+Claim: 'Employed elderly with contracts earn 14,654 THB vs 3,553 THB without'
+VERIFICATION:
+Elderly with contract: 20581 THB (n=68)
+Elderly without contract: 14273 THB (n=795)
+  Gap: 6308 THB
+
+
+3. FOOD SECURITY DOMAIN - Income Effect
+--------------------------------------------------------------------------------
+
+Claim: '16.9% of higher-income informal workers report food insecurity
+        vs 8.3% of lower-income informal workers'
+
+VERIFICATION:
+
+Informal workers - Food insecurity:
+  Low income (<10K): 9.1% (n=429)
+  Higher income: 9.3% (n=2216)
+  Gap: 0.3 pp
+
+
+4. CROSS-SECTIONAL ANALYSIS - Within-Group Income Stratification
+--------------------------------------------------------------------------------
+
+ELDERLY - Income stratification effects:
+  Medical skipping: Low 43.6% vs High 12.7% (gap: 30.9 pp)
+  Average income: Low 7463 THB vs High 17904 THB
+
+LGBT - Income stratification effects:
+  Medical skipping: Low 62.5% vs High 42.7% (gap: 19.8 pp)
+  Average income: Low 8240 THB vs High 26655 THB
+
+DISABLED - Income stratification effects:
+  Medical skipping: Low 61.1% vs High 23.4% (gap: 37.7 pp)
+  Average income: Low 7471 THB vs High 24219 THB
+
+INFORMAL - Income stratification effects:
+  Medical skipping: Low 49.4% vs High 18.7% (gap: 30.7 pp)
+  Average income: Low 7721 THB vs High 21749 THB
+
+
+================================================================================
+CORRECTED INCOME-RELATED CLAIMS FOR REPORT
+================================================================================
+
+1. HEALTHCARE ACCESS - Medical Skipping Table:
+
+| Population Group | Low Income (<10K) | Higher Income (≥10K) | Gap | p-value | n |
+|---|---|---|---|---|---|
+| Disabled | 61.1% | 23.4% | **37.7 pp** | < 0.001 | n=638 |
+| Elderly | 43.6% | 12.7% | **30.9 pp** | < 0.001 | n=2986 |
+| Informal | 49.4% | 18.7% | **30.7 pp** | < 0.001 | n=2645 |
+| Lgbt | 62.5% | 42.7% | **19.8 pp** | 0.043 | n=685 |
+
+
+2. EMPLOYMENT & INCOME - Average Monthly Income:
+
+General population: 30543 THB/month
+Elderly: 14770 THB/month (Gap: 15773 THB)
+Disabled: 20252 THB/month (Gap: 10291 THB)
+
+
+3. EDUCATION STRATIFICATION (Elderly):
+Primary education: 13563 THB/month
+Higher education: 14885 THB/month
+Gap: 1322 THB
+
+
+4. CONTRACT STRATIFICATION (Employed Elderly):
+With contract: 20581 THB/month
+Without contract: 14273 THB/month
+Gap: 6308 THB
+
+
+================================================================================
+VERIFICATION COMPLETE
+================================================================================

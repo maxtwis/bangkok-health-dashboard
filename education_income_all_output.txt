@@ -1,0 +1,197 @@
+================================================================================
+EDUCATION-INCOME RELATIONSHIP ACROSS ALL GROUPS
+================================================================================
+
+
+================================================================================
+GENERAL (Total n=1315)
+================================================================================
+
+Education distribution (n=1010 with income):
+  Primary (ป.6↓): 3 (0.3%)
+  Lower sec (ม.ต้น): 18 (1.8%)
+  Upper sec (ม.ปลาย): 18 (1.8%)
+  Vocational (ปวช/ปวส): 35 (3.5%)
+  Bachelor (ปริญญาตรี): 87 (8.6%)
+  Higher (>ปริญญาตรี): 246 (24.4%)
+  No education: 515 (51.0%)
+  Level 8: 88 (8.7%)
+
+Average monthly income by education level:
+  Primary (ป.6↓): 13000 THB (n=3)
+  Lower sec (ม.ต้น): 13300 THB (n=18)
+  Upper sec (ม.ปลาย): 21278 THB (n=18)
+  Vocational (ปวช/ปวส): 23757 THB (n=35)
+  Bachelor (ปริญญาตรี): 29546 THB (n=87)
+  Higher (>ปริญญาตรี): 32113 THB (n=246)
+  No education: 31769 THB (n=515)
+  Level 8: 28688 THB (n=88)
+
+*** PRIMARY vs BACHELOR+ COMPARISON ***
+  Primary education or less: 13000 THB (n=3)
+  Bachelor+ degree: 31363 THB (n=936)
+  Gap: 18363 THB (141.3% higher)
+  Ratio: 2.41× (Bachelor+ earn 2.41 times more)
+  p-value: 0.0792 n.s.
+
+
+================================================================================
+ELDERLY (Total n=2986)
+================================================================================
+
+Education distribution (n=863 with income):
+  Level 0: 25 (2.9%)
+  Primary (ป.6↓): 50 (5.8%)
+  Lower sec (ม.ต้น): 455 (52.7%)
+  Upper sec (ม.ปลาย): 130 (15.1%)
+  Vocational (ปวช/ปวส): 76 (8.8%)
+  Bachelor (ปริญญาตรี): 40 (4.6%)
+  Higher (>ปริญญาตรี): 24 (2.8%)
+  No education: 58 (6.7%)
+  Level 8: 5 (0.6%)
+
+Average monthly income by education level:
+  Level 0: 13844 THB (n=25)
+  Primary (ป.6↓): 13423 THB (n=50)
+  Lower sec (ม.ต้น): 13328 THB (n=455)
+  Upper sec (ม.ปลาย): 15071 THB (n=130)
+  Vocational (ปวช/ปวส): 16339 THB (n=76)
+  Bachelor (ปริญญาตรี): 14002 THB (n=40)
+  Higher (>ปริญญาตรี): 24759 THB (n=24)
+  No education: 20939 THB (n=58)
+  Level 8: 19100 THB (n=5)
+
+*** PRIMARY vs BACHELOR+ COMPARISON ***
+  Primary education or less: 13563 THB (n=75)
+  Bachelor+ degree: 19404 THB (n=127)
+  Gap: 5841 THB (43.1% higher)
+  Ratio: 1.43× (Bachelor+ earn 1.43 times more)
+  p-value: 0.0024 **
+
+*** EMPLOYMENT STATUS ***
+  Employed: n=863 (100.0%)
+  Not employed: n=0 (0.0%)
+
+  Among EMPLOYED elderly only:
+    Primary education: 13563 THB (n=75)
+    Bachelor+ education: 19404 THB (n=127)
+    Gap: 5841 THB (43.1% higher)
+    Ratio: 1.43×
+
+
+================================================================================
+LGBT (Total n=685)
+================================================================================
+
+Education distribution (n=458 with income):
+  Primary (ป.6↓): 1 (0.2%)
+  Lower sec (ม.ต้น): 16 (3.5%)
+  Upper sec (ม.ปลาย): 33 (7.2%)
+  Vocational (ปวช/ปวส): 36 (7.9%)
+  Bachelor (ปริญญาตรี): 64 (14.0%)
+  Higher (>ปริญญาตรี): 110 (24.0%)
+  No education: 160 (34.9%)
+  Level 8: 38 (8.3%)
+
+Average monthly income by education level:
+  Primary (ป.6↓): 27000 THB (n=1)
+  Lower sec (ม.ต้น): 12739 THB (n=16)
+  Upper sec (ม.ปลาย): 18993 THB (n=33)
+  Vocational (ปวช/ปวส): 21492 THB (n=36)
+  Bachelor (ปริญญาตรี): 24005 THB (n=64)
+  Higher (>ปริญญาตรี): 27759 THB (n=110)
+  No education: 25757 THB (n=160)
+  Level 8: 33592 THB (n=38)
+
+*** PRIMARY vs BACHELOR+ COMPARISON ***
+  Primary education or less: 27000 THB (n=1)
+  Bachelor+ degree: 26848 THB (n=372)
+  Gap: -152 THB (-0.6% higher)
+  Ratio: 0.99× (Bachelor+ earn 0.99 times more)
+  p-value: 0.9928 n.s.
+
+
+================================================================================
+DISABLED (Total n=638)
+================================================================================
+
+Education distribution (n=152 with income):
+  Level 0: 4 (2.6%)
+  Primary (ป.6↓): 5 (3.3%)
+  Lower sec (ม.ต้น): 29 (19.1%)
+  Upper sec (ม.ปลาย): 12 (7.9%)
+  Vocational (ปวช/ปวส): 12 (7.9%)
+  Bachelor (ปริญญาตรี): 16 (10.5%)
+  Higher (>ปริญญาตรี): 28 (18.4%)
+  No education: 43 (28.3%)
+  Level 8: 3 (2.0%)
+
+Average monthly income by education level:
+  Level 0: 8520 THB (n=4)
+  Primary (ป.6↓): 9000 THB (n=5)
+  Lower sec (ม.ต้น): 11537 THB (n=29)
+  Upper sec (ม.ปลาย): 13125 THB (n=12)
+  Vocational (ปวช/ปวส): 21574 THB (n=12)
+  Bachelor (ปริญญาตรี): 16674 THB (n=16)
+  Higher (>ปริญญาตรี): 29161 THB (n=28)
+  No education: 25093 THB (n=43)
+  Level 8: 28667 THB (n=3)
+
+*** PRIMARY vs BACHELOR+ COMPARISON ***
+  Primary education or less: 8787 THB (n=9)
+  Bachelor+ degree: 24981 THB (n=90)
+  Gap: 16194 THB (184.3% higher)
+  Ratio: 2.84× (Bachelor+ earn 2.84 times more)
+  p-value: 0.0027 **
+
+
+================================================================================
+INFORMAL (Total n=2645)
+================================================================================
+
+Education distribution (n=2048 with income):
+  Level 0: 31 (1.5%)
+  Primary (ป.6↓): 70 (3.4%)
+  Lower sec (ม.ต้น): 664 (32.4%)
+  Upper sec (ม.ปลาย): 383 (18.7%)
+  Vocational (ปวช/ปวส): 196 (9.6%)
+  Bachelor (ปริญญาตรี): 171 (8.3%)
+  Higher (>ปริญญาตรี): 221 (10.8%)
+  No education: 272 (13.3%)
+  Level 8: 40 (2.0%)
+
+Average monthly income by education level:
+  Level 0: 12956 THB (n=31)
+  Primary (ป.6↓): 14318 THB (n=70)
+  Lower sec (ม.ต้น): 13793 THB (n=664)
+  Upper sec (ม.ปลาย): 16058 THB (n=383)
+  Vocational (ปวช/ปวส): 19478 THB (n=196)
+  Bachelor (ปริญญาตรี): 21656 THB (n=171)
+  Higher (>ปริญญาตรี): 27700 THB (n=221)
+  No education: 25667 THB (n=272)
+  Level 8: 29650 THB (n=40)
+
+*** PRIMARY vs BACHELOR+ COMPARISON ***
+  Primary education or less: 13900 THB (n=101)
+  Bachelor+ degree: 25557 THB (n=704)
+  Gap: 11658 THB (83.9% higher)
+  Ratio: 1.84× (Bachelor+ earn 1.84 times more)
+  p-value: 0.0000 ***
+
+
+================================================================================
+SUMMARY TABLE FOR REPORT
+================================================================================
+
+| Group | Primary (≤ป.6) | Bachelor+ | Gap | Ratio | p-value |
+|---|---|---|---|---|---|
+| General | 13000 THB | 31363 THB | **+18363 THB** (2.41×) | 0.079 |
+| Elderly | 13563 THB | 19404 THB | **+5841 THB** (1.43×) | 0.002 |
+| Lgbt | 27000 THB | 26848 THB | **+-152 THB** (0.99×) | 0.993 |
+| Disabled | 8787 THB | 24981 THB | **+16194 THB** (2.84×) | 0.003 |
+| Informal | 13900 THB | 25557 THB | **+11658 THB** (1.84×) | < 0.001 |
+
+
+================================================================================
+ANALYSIS COMPLETE
+================================================================================
