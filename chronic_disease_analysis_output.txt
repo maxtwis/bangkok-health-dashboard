@@ -1,0 +1,48 @@
+================================================================================
+CHRONIC DISEASE CROSS-VARIABLE ANALYSIS
+Bangkok Health Dashboard - Survey Data Analysis
+================================================================================
+
+Total respondents: 6,523
+Date: 2025-10-31
+Traceback (most recent call last):
+  File "c:\Users\ion_l_uhhlu4p.MAXTWIS\bangkok-health-dashboard\chronic_disease_analysis.py", line 32, in <module>
+    df['disease_count'] = df[disease_columns].sum(axis=1)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 11315, in sum
+    result = super().sum(axis, skipna, numeric_only, min_count, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 12064, in sum
+    return self._min_count_stat_function(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 12047, in _min_count_stat_function
+    return self._reduce(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 11207, in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 1459, in reduce
+    nbs = blk.reduce(func)
+          ^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 377, in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 11139, in blk_func
+    return op(values, axis=axis, skipna=skipna, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 85, in _f
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 404, in new_func
+    result = func(values, axis=axis, skipna=skipna, mask=mask, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 477, in newfunc
+    return func(values, axis=axis, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 646, in nansum
+    the_sum = values.sum(axis, dtype=dtype_sum)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\numpy\core\_methods.py", line 49, in _sum
+    return umr_sum(a, axis, dtype, out, keepdims, initial, where)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for +: 'float' and 'str'

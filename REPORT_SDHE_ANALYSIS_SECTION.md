@@ -209,6 +209,137 @@ Analysis of 138 significant health disparities across 8 SDHE domains reveals sys
 
 **Disease Concentration in Vulnerable Groups:** The data shows that the same groups (elderly, disabled, informal workers) have elevated rates across multiple chronic conditions - hypertension, diabetes, and overall chronic disease. This pattern suggests clustering of chronic diseases within certain populations, which could reflect shared risk factors, compounding health disadvantages, or comorbidity effects, though our survey design does not allow us to distinguish between these possibilities.
 
+#### Cross-Variable Analysis Within Population Groups: Income and Education as Chronic Disease Determinants
+
+While the population group comparisons above show that elderly, disabled, and informal workers have substantially higher chronic disease rates than the general population, cross-variable analysis reveals that **income and education have different protective effects within each population group**. This analysis examines whether socioeconomic factors can modify chronic disease risk within vulnerable populations.
+
+**Income Effects Within Population Groups:**
+
+| Population Group | With Disease Avg Income | Without Disease Avg Income | Income Gap | Correlation (r) | t-statistic | p-value | Effect |
+|------------------|------------------------|---------------------------|------------|----------------|-------------|---------|--------|
+| **General Population** | 30,988 THB | 30,215 THB | +773 THB | +0.020 | 0.72 | 0.473 | ✗ No effect |
+| **Elderly (60+)** | 14,642 THB | 15,110 THB | -468 THB | -0.022 | -0.66 | 0.512 | ✗ No effect |
+| **Disabled** | 15,699 THB | 24,350 THB | **-8,651 THB** | **-0.299** | -3.85 | < 0.001 | ✓✓ Strong |
+| **LGBT+** | 23,777 THB | 26,447 THB | -2,669 THB | -0.079 | -1.70 | 0.090 | ✗ Marginal |
+| **Informal Workers** | 15,411 THB | 17,209 THB | **-1,798 THB** | **-0.091** | -3.53 | < 0.001 | ✓ Moderate |
+
+*Note: Correlation (r) measures the strength of linear relationship between income and chronic disease status within each group. Negative values indicate inverse relationships (higher income → lower disease rate). |r| < 0.1 = weak, 0.1-0.3 = moderate, >0.3 = strong.*
+
+**Key Finding - Income Protection Varies by Group:** Income shows **no protective effect** against chronic disease in the general population (r=+0.020, p=0.473) or elderly (r=-0.022, p=0.512), with near-zero correlations despite income differences existing. However, income shows **strong protective effects** within disabled (r=-0.299, 8,651 THB gap, p < 0.001) and moderate effects for informal workers (r=-0.091, 1,798 THB gap, p < 0.001). The disabled population shows the **strongest income-health correlation** among all groups. This suggests that **socioeconomic resources matter more for health in already-vulnerable populations** than in the general population, possibly because vulnerable groups face additional barriers that money can help overcome (accessibility modifications for disabled, healthcare access for informal workers).
+
+**Education Effects Within Population Groups:**
+
+| Population Group | With Disease % Primary or Less | Without Disease % Primary or Less | Primary Gap | With Disease % Bachelor+ | Without Disease % Bachelor+ | Bachelor Gap | Correlation (r) | t-stat | p-value | Effect |
+|------------------|-------------------------------|----------------------------------|-------------|--------------------------|---------------------------|--------------|----------------|--------|---------|--------|
+| **General Population** | 9.6% | 4.9% | +4.7 pp | 49.4% | 48.6% | +0.8 pp | -0.045 | -1.86 | 0.064 | ✗ Marginal |
+| **Elderly (60+)** | 64.0% | 49.9% | **+14.1 pp** | 8.5% | 14.3% | **-5.8 pp** | **-0.119** | -6.56 | < 0.001 | ✓✓ Strong |
+| **Disabled** | 62.0% | 29.5% | **+32.4 pp** | 8.2% | 27.5% | **-19.3 pp** | **-0.305** | -8.10 | < 0.001 | ✓✓✓ Very Strong |
+| **LGBT+** | 6.4% | 4.8% | +1.7 pp | 39.6% | 41.7% | -2.0 pp | -0.026 | -0.68 | 0.498 | ✗ No effect |
+| **Informal Workers** | 53.1% | 30.1% | **+23.0 pp** | 6.6% | 12.2% | **-5.6 pp** | **-0.217** | -9.79 | < 0.001 | ✓✓ Strong |
+
+*Note: "Primary or less" = education ≤ป.6 (levels 0-2), "Bachelor+" = ≥ปริญญาตรี (levels 7-8). Positive Primary Gap means more low-educated among diseased; negative Bachelor Gap means fewer high-educated among diseased.*
+
+**Key Finding - Education Is Strongest for Disabled:** Among disabled individuals with chronic disease, **62.0% have only primary education or less** compared to 29.5% of those without disease (32.4 pp gap). Conversely, only 8.2% with disease have Bachelor+ degrees versus 27.5% without (19.3 pp gap). This creates a **2.4× difference** in low-education rates and **3.4× difference** in high-education rates between diseased and healthy disabled individuals (r=-0.305, t=-8.10, p < 0.001). The disabled population shows the **strongest education-health correlation** among all groups.
+
+Education also protects elderly (14.1 pp more low-educated among diseased, r=-0.119) and informal workers (23.0 pp more low-educated among diseased, r=-0.217). However, education shows **no protective effect** for LGBT+ individuals - only 1.7 pp difference in low-education rates and 2.0 pp difference in high-education rates (r=-0.026, p=0.498). This mirrors the earlier finding that LGBT+ show zero economic returns to education - suggesting that discrimination or occupational segregation may eliminate the typical health benefits of education for this group.
+
+**Income Quartile Disease Rates - Disabled Population (Strongest Income Effect):**
+
+| Income Quartile | Chronic Disease Rate | Sample Size (n=152) |
+|----------------|---------------------|---------------------|
+| **Q1 (Lowest)** | 74.4% | 39 |
+| **Q2** | 46.3% | 41 |
+| **Q3** | 37.1% | 35 |
+| **Q4 (Highest)** | 29.7% | 37 |
+
+Among disabled individuals, income shows a **dramatic dose-response gradient**: the lowest income quartile has 2.5× higher disease rate than the highest quartile (74.4% vs 29.7%, 44.7 pp gap). This represents the strongest income-health gradient among all population groups.
+
+**Income Quartile Disease Rates - Elderly Population (No Income Effect):**
+
+| Income Quartile | Chronic Disease Rate | Sample Size (n=863) |
+|----------------|---------------------|---------------------|
+| **Q1 (Lowest)** | 72.2% | 259 |
+| **Q2** | 78.4% | 227 |
+| **Q3** | 67.6% | 188 |
+| **Q4 (Highest)** | 71.4% | 189 |
+
+Among elderly, income shows **no protective gradient** - disease rates fluctuate between 67-78% across all income levels with no clear pattern. This demonstrates that **aging-related disease burden affects all elderly regardless of socioeconomic status**, unlike in disabled or informal worker populations where income provides some protection.
+
+**Education Level Disease Rates - Disabled Population (Strongest Education Effect):**
+
+| Education Level | Chronic Disease Rate | Sample Size (n=638) |
+|----------------|---------------------|---------------------|
+| **Primary or less (≤ป.6)** | 87.3% | 347 |
+| **Secondary/Vocational (ม.1-ปวส.)** | 75.3% | 162 |
+| **Bachelor+ (ปริญญาตรี+)** | 49.6% | 129 |
+
+Among disabled individuals, education shows the **strongest protective gradient** among all groups: those with only primary education have 1.76× higher disease rate than Bachelor+ holders (87.3% vs 49.6%, 37.7 pp gap). This demonstrates that **education is the single most powerful modifiable factor** for chronic disease prevention in the disabled population.
+
+**Education Level Disease Rates - LGBT+ Population (No Education Effect):**
+
+| Education Level | Chronic Disease Rate | Sample Size (n=685) |
+|----------------|---------------------|---------------------|
+| **Primary or less (≤ป.6)** | 45.9% | 37 |
+| **Secondary/Vocational (ม.1-ปวส.)** | 38.0% | 221 |
+| **Bachelor+ (ปริญญาตรี+)** | 38.4% | 427 |
+
+Among LGBT+ individuals, education shows **no protective effect** - disease rates are essentially identical across all education levels (38-46% with no clear gradient). This mirrors the finding that LGBT+ show zero economic returns to education, suggesting systematic discrimination or occupational segregation eliminates both the economic and health benefits of education for this population.
+
+**Combined Risk Profiles: Income + Education Interaction by Population Group:**
+
+| Population Group | Risk Profile | Disease Rate | Avg Income | n | Risk Ratio vs Dual Advantage |
+|------------------|-------------|--------------|------------|---|----------------------------|
+| **Disabled** | Low Income + Low Education | **71.8%** | 8,850 THB | 39 | 2.42× ⚠️ HIGHEST RISK |
+| | Low Income + High Education | 57.1% | 10,635 THB | 28 | 1.92× |
+| | High Income + Low Education | 54.5% | 20,545 THB | 11 | 1.84× |
+| | High Income + High Education | **29.7%** | 29,857 THB | 74 | 1.00× ✅ LOWEST RISK |
+| **Informal Workers** | Low Income + Low Education | **64.5%** | 9,786 THB | 516 | 1.95× ⚠️ HIGHEST RISK |
+| | Low Income + High Education | 48.6% | 10,225 THB | 218 | 1.47× |
+| | High Income + Low Education | 57.6% | 20,425 THB | 427 | 1.74× |
+| | High Income + High Education | **33.0%** | 25,421 THB | 312 | 1.00× ✅ LOWEST RISK |
+| **Elderly (60+)** | Low Income + Low Education | 73.8% | 7,732 THB | 233 | 1.16× ⚠️ HIGHEST RISK |
+| | Low Income + High Education | 66.7% | 7,732 THB | 51 | 1.05× |
+| | High Income + Low Education | **75.9%** | 16,953 THB | 427 | 1.19× (paradox!) |
+| | High Income + High Education | **63.8%** | 21,788 THB | 152 | 1.00× ✅ LOWEST RISK |
+| **General Population** | Low Income + Low Education | 46.7% | 13,833 THB | 105 | 1.39× ⚠️ HIGHEST RISK |
+| | Low Income + High Education | 33.5% | 18,164 THB | 546 | 1.00× ✅ LOWEST RISK |
+| | High Income + Low Education | 38.5% | 46,752 THB | 13 | 1.15× (small n) |
+| | High Income + High Education | 35.2% | 42,699 THB | 677 | 1.05× |
+| **LGBT+** | Low Income + Low Education | 53.8% | 12,260 THB | 39 | 1.40× |
+| | Low Income + High Education | 40.0% | 14,374 THB | 185 | 1.04× |
+| | High Income + Low Education | 36.4% | 34,495 THB | 11 | 0.94× |
+| | High Income + High Education | 38.6% | 36,332 THB | 223 | 1.00× (baseline) |
+
+*Note: Risk Ratio = (Group Disease Rate) / (Dual Advantage Disease Rate) within same population. Higher ratio = greater relative risk.*
+
+**Key Patterns by Population Group:**
+
+1. **Disabled - Strongest Dual Effect (2.42× ratio):** Dual disadvantage creates 71.8% disease rate versus 29.7% for dual advantage - a **42.1 pp gap**. Education effect (14.7 pp reduction) and income effect (17.3 pp reduction) contribute roughly equally. This is the **strongest socioeconomic-health gradient** among all groups, demonstrating that resources provide maximum protection for disabled individuals.
+
+2. **Informal Workers - Strong Dual Effect (1.95× ratio):** Dual disadvantage shows 64.5% versus 33.0% for dual advantage - a **31.5 pp gap**. Education appears more protective (15.9 pp reduction) than income alone (6.9 pp reduction), suggesting that knowledge and skills may help informal workers navigate healthcare access and health behaviors more than income alone.
+
+3. **Elderly - Age Dominates (1.16× ratio, but paradox observed):** All disease rates remain high (64-76%) regardless of socioeconomic status, with only **10.0 pp gap** between dual disadvantage and dual advantage. Notably, **high income + low education** shows the HIGHEST disease rate (75.9%), even higher than dual disadvantage (73.8%), suggesting that **age-related disease burden overwhelms income advantages** when education is low.
+
+4. **General Population - Modest Effects (1.39× ratio):** Dual disadvantage shows 46.7% versus 33.5% for low income + high education (note: this is the lowest rate, not dual advantage), only **13.2 pp difference**. Socioeconomic factors show much weaker effects than in vulnerable populations, suggesting resources matter less when facing fewer structural barriers.
+
+5. **LGBT+ - No Clear Gradient (1.40× ratio but inconsistent):** Disease rates range 36.4-53.8% with **no consistent pattern** - high income + low education (36.4%) shows LOWER disease than dual advantage (38.6%), while low income + high education (40.0%) shows minimal difference. This inconsistency reinforces that **socioeconomic resources provide minimal health protection** for LGBT+ individuals, likely due to discrimination eliminating typical protective effects.
+
+**Key Cross-Variable Insights:**
+
+1. **Socioeconomic Factors Matter Most for Vulnerable Groups:** Income and education show **strongest protective effects** within disabled (8,651 THB income gap, 1.53 education gap) and informal worker populations, but show **no effects** within general population or LGBT+. This suggests that **resources matter more when facing additional barriers**.
+
+2. **Education Protects Disabled Most Strongly:** For disabled individuals, education is the single most powerful modifiable factor (87.3% disease rate with primary education vs 49.6% with Bachelor+, 37.7 pp gap). This may reflect education enabling better navigation of healthcare systems, advocacy for accommodations, or access to disability-friendly employment.
+
+3. **LGBT+ Show No Socioeconomic Protection:** LGBT+ individuals show **zero protective effects** from either income (p=0.090) or education (p=0.498), with disease rates of 38-46% regardless of socioeconomic status. Combined with earlier findings of zero economic returns to education, this suggests **systematic discrimination eliminates the typical health benefits** of socioeconomic resources for this group.
+
+4. **Age Dominates But Doesn't Eliminate Socioeconomic Effects:** Among elderly (78.7% overall disease rate), socioeconomic advantages still create 10-16% differences in disease burden. While age is the primary driver, education and income can still modify risk even in aging populations.
+
+5. **Different Mechanisms by Group:** Disabled show equal income/education effects, informal workers show stronger education effects, and elderly show minimal effects from either factor. This suggests that **intervention strategies should be tailored** to each population's specific socioeconomic-health relationship patterns.
+
+**Cross-Variable Analysis Limitations:** This analysis compares disease rates within each population group based on income and education levels. However, cross-sectional data cannot establish whether socioeconomic factors cause better health, or whether healthier individuals achieve better socioeconomic outcomes (reverse causation). Additionally, income data has varying availability across groups (General: 79%, Elderly: 29%, Disabled: 24%, LGBT+: 67%, Informal: 76%), which may introduce selection bias.
+
+**Analysis Code:** Full group-specific statistical analysis available in `chronic_disease_by_group_analysis.py`.
+
 **Health Behaviors**: 15 significant disparities found
 
 | Population Group | Indicator | General Pop. | This Group | Gap | p-value |

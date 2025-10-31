@@ -1,0 +1,219 @@
+================================================================================
+CHRONIC DISEASE CROSS-VARIABLE ANALYSIS BY POPULATION GROUP
+Bangkok Health Dashboard - SDHE Analysis
+================================================================================
+
+================================================================================
+POPULATION GROUP SAMPLE SIZES
+================================================================================
+General Population       : n=1,697 | Disease rate: 35.8%
+Elderly (60+)            : n=2,986 | Disease rate: 78.7%
+Disabled                 : n=  638 | Disease rate: 76.6%
+LGBT+                    : n=  685 | Disease rate: 38.7%
+Informal Workers         : n=1,945 | Disease rate: 51.9%
+
+================================================================================
+1. INCOME × CHRONIC DISEASE BY POPULATION GROUP
+================================================================================
+
+General Population (n=1,341)
+------------------------------------------------------------
+  Avg income - With disease:        30,988 THB
+  Avg income - Without disease:     30,215 THB
+  Median income - With disease:        26,000 THB
+  Median income - Without disease:     26,000 THB
+  T-test: t=0.72, p=0.4733 ✗
+
+  Disease Rate by Income Quartile:
+    Q1:  36.0% (n= 372)
+    Q2:  34.9% (n= 307)
+    Q3:  36.3% (n= 353)
+    Q4:  34.3% (n= 309)
+
+Elderly (60+) (n=863)
+------------------------------------------------------------
+  Avg income - With disease:        14,642 THB
+  Avg income - Without disease:     15,110 THB
+  Median income - With disease:        12,000 THB
+  Median income - Without disease:     12,000 THB
+  T-test: t=-0.66, p=0.5119 ✗
+
+  Disease Rate by Income Quartile:
+    Q1:  72.2% (n= 259)
+    Q2:  78.4% (n= 227)
+    Q3:  67.6% (n= 188)
+    Q4:  71.4% (n= 189)
+
+Disabled (n=152)
+------------------------------------------------------------
+  Avg income - With disease:        15,699 THB
+  Avg income - Without disease:     24,350 THB
+  Median income - With disease:        12,000 THB
+  Median income - Without disease:     18,000 THB
+  T-test: t=-3.85, p=0.0002 ✓
+
+  Disease Rate by Income Quartile:
+    Q1:  74.4% (n=  39)
+    Q2:  46.3% (n=  41)
+    Q3:  37.1% (n=  35)
+    Q4:  29.7% (n=  37)
+
+LGBT+ (n=458)
+------------------------------------------------------------
+  Avg income - With disease:        23,777 THB
+  Avg income - Without disease:     26,447 THB
+  Median income - With disease:        20,000 THB
+  Median income - Without disease:     21,000 THB
+  T-test: t=-1.70, p=0.0895 ✗
+
+  Disease Rate by Income Quartile:
+    Q1:  39.7% (n= 116)
+    Q2:  43.2% (n= 125)
+    Q3:  39.0% (n= 105)
+    Q4:  39.3% (n= 112)
+
+Informal Workers (n=1,473)
+------------------------------------------------------------
+  Avg income - With disease:        15,411 THB
+  Avg income - Without disease:     17,209 THB
+  Median income - With disease:        12,000 THB
+  Median income - Without disease:     15,000 THB
+  T-test: t=-3.53, p=0.0004 ✓
+
+  Disease Rate by Income Quartile:
+    Q1:  59.9% (n= 369)
+    Q2:  56.4% (n= 649)
+    Q3:  41.4% (n=  99)
+    Q4:  44.9% (n= 356)
+
+================================================================================
+2. EDUCATION × CHRONIC DISEASE BY POPULATION GROUP
+================================================================================
+
+General Population (n=1,697)
+------------------------------------------------------------
+  Avg education - With disease:    5.78
+  Avg education - Without disease: 5.93
+  T-test: t=-1.86, p=0.0636 ✗
+
+  Disease Rate by Education Level:
+    Primary or less          :  52.3% (n= 111)
+    Secondary/Vocational     :  34.3% (n= 362)
+    Bachelor+                :  34.7% (n=1,224)
+
+Elderly (60+) (n=2,986)
+------------------------------------------------------------
+  Avg education - With disease:    2.82
+  Avg education - Without disease: 3.35
+  T-test: t=-6.56, p=0.0000 ✓
+
+  Disease Rate by Education Level:
+    Primary or less          :  82.6% (n=1,821)
+    Secondary/Vocational     :  73.8% (n= 767)
+    Bachelor+                :  70.6% (n= 398)
+
+Disabled (n=638)
+------------------------------------------------------------
+  Avg education - With disease:    2.79
+  Avg education - Without disease: 4.32
+  T-test: t=-8.10, p=0.0000 ✓
+
+  Disease Rate by Education Level:
+    Primary or less          :  87.3% (n= 347)
+    Secondary/Vocational     :  75.3% (n= 162)
+    Bachelor+                :  49.6% (n= 129)
+
+LGBT+ (n=685)
+------------------------------------------------------------
+  Avg education - With disease:    5.61
+  Avg education - Without disease: 5.70
+  T-test: t=-0.68, p=0.4981 ✗
+
+  Disease Rate by Education Level:
+    Primary or less          :  45.9% (n=  37)
+    Secondary/Vocational     :  38.0% (n= 221)
+    Bachelor+                :  38.4% (n= 427)
+
+Informal Workers (n=1,945)
+------------------------------------------------------------
+  Avg education - With disease:    3.01
+  Avg education - Without disease: 3.79
+  T-test: t=-9.79, p=0.0000 ✓
+
+  Disease Rate by Education Level:
+    Primary or less          :  65.6% (n= 817)
+    Secondary/Vocational     :  43.4% (n= 820)
+    Bachelor+                :  38.3% (n= 308)
+
+================================================================================
+3. INCOME + EDUCATION INTERACTION BY POPULATION GROUP
+================================================================================
+
+General Population (n=1,341)
+------------------------------------------------------------
+
+  Disease Rate by Risk Profile:
+    Low Income + Low Education    :  46.7% (n= 105, avg income=  13,833 THB)
+    Low Income + High Education   :  33.5% (n= 546, avg income=  18,164 THB)
+    High Income + Low Education   :  38.5% (n=  13, avg income=  46,752 THB)
+    High Income + High Education  :  35.2% (n= 677, avg income=  42,699 THB)
+
+Elderly (60+) (n=863)
+------------------------------------------------------------
+
+  Disease Rate by Risk Profile:
+    Low Income + Low Education    :  73.8% (n= 233, avg income=   7,732 THB)
+    Low Income + High Education   :  66.7% (n=  51, avg income=   7,732 THB)
+    High Income + Low Education   :  75.9% (n= 427, avg income=  16,953 THB)
+    High Income + High Education  :  63.8% (n= 152, avg income=  21,788 THB)
+
+Disabled (n=152)
+------------------------------------------------------------
+
+  Disease Rate by Risk Profile:
+    Low Income + Low Education    :  71.8% (n=  39, avg income=   8,850 THB)
+    Low Income + High Education   :  57.1% (n=  28, avg income=  10,635 THB)
+    High Income + Low Education   :  54.5% (n=  11, avg income=  20,545 THB)
+    High Income + High Education  :  29.7% (n=  74, avg income=  29,857 THB)
+
+LGBT+ (n=458)
+------------------------------------------------------------
+
+  Disease Rate by Risk Profile:
+    Low Income + Low Education    :  53.8% (n=  39, avg income=  12,260 THB)
+    Low Income + High Education   :  40.0% (n= 185, avg income=  14,374 THB)
+    High Income + Low Education   :  36.4% (n=  11, avg income=  34,495 THB)
+    High Income + High Education  :  38.6% (n= 223, avg income=  36,332 THB)
+
+Informal Workers (n=1,473)
+------------------------------------------------------------
+
+  Disease Rate by Risk Profile:
+    Low Income + Low Education    :  64.5% (n= 516, avg income=   9,786 THB)
+    Low Income + High Education   :  48.6% (n= 218, avg income=  10,225 THB)
+    High Income + Low Education   :  57.6% (n= 427, avg income=  20,425 THB)
+    High Income + High Education  :  33.0% (n= 312, avg income=  25,421 THB)
+
+================================================================================
+4. SUMMARY COMPARISON: INCOME/EDUCATION EFFECTS
+================================================================================
+
+| Population Group | With Disease Avg Income | Without Disease Avg Income | Gap | p-value |
+|------------------|------------------------|---------------------------|-----|---------|
+| General Population   |              30,988 THB |                 30,215 THB |    773 |   0.473 |
+| Elderly (60+)        |              14,642 THB |                 15,110 THB |   -468 |   0.512 |
+| Disabled             |              15,699 THB |                 24,350 THB | -8,651 | < 0.001 |
+| LGBT+                |              23,777 THB |                 26,447 THB | -2,669 |   0.090 |
+| Informal Workers     |              15,411 THB |                 17,209 THB | -1,798 | < 0.001 |
+
+| Population Group | With Disease Avg Edu | Without Disease Avg Edu | Gap | p-value |
+|------------------|---------------------|------------------------|-----|---------|
+| General Population   |              5.78 |                 5.93 | -0.16 |   0.064 |
+| Elderly (60+)        |              2.82 |                 3.35 | -0.53 | < 0.001 |
+| Disabled             |              2.79 |                 4.32 | -1.53 | < 0.001 |
+| LGBT+                |              5.61 |                 5.70 | -0.09 |   0.498 |
+| Informal Workers     |              3.01 |                 3.79 | -0.78 | < 0.001 |
+
+================================================================================
+Analysis completed!
+================================================================================

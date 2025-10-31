@@ -1,0 +1,22 @@
+EDUCATION CATEGORIES BY CHRONIC DISEASE STATUS
+============================================================
+
+General (n=1,697):
+  Primary or less:    With=  9.6%  Without=  4.9%  Gap=  +4.7pp
+  Bachelor+:          With= 49.4%  Without= 48.6%  Gap=  +0.8pp
+
+Elderly (n=2,986):
+  Primary or less:    With= 64.0%  Without= 49.9%  Gap= +14.1pp
+  Bachelor+:          With=  8.5%  Without= 14.3%  Gap=  -5.8pp
+
+Disabled (n=638):
+  Primary or less:    With= 62.0%  Without= 29.5%  Gap= +32.4pp
+  Bachelor+:          With=  8.2%  Without= 27.5%  Gap= -19.3pp
+
+LGBT+ (n=685):
+  Primary or less:    With=  6.4%  Without=  4.8%  Gap=  +1.7pp
+  Bachelor+:          With= 39.6%  Without= 41.7%  Gap=  -2.0pp
+
+Informal (n=1,945):
+  Primary or less:    With= 53.1%  Without= 30.1%  Gap= +23.0pp
+  Bachelor+:          With=  6.6%  Without= 12.2%  Gap=  -5.6pp
