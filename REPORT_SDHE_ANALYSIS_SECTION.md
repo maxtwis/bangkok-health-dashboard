@@ -580,7 +580,7 @@ Analysis of individuals with multiple marginalized identities reveals how vulner
 
 **Intersecting Economic Vulnerabilities:** LGBT++informal workers earn 21,509 THB monthly, 29.6% lower than general population (9,034 THB gap, p < 0.001). This is lower than LGBT+-only (26,848 THB, 19.9% gap) and informal-only (23,922 THB, 11.6% gap), showing additive income penalties. The intersection suggests that LGBT+ individuals who work informally may face compounded barriers in accessing better-paying formal employment - potentially due to discrimination limiting formal sector opportunities.
 
-**Healthcare Access:** LGBT++informal show 34.7% medical care skipping, 5.8 pp higher than general population (p=0.036). Interestingly, this rate (34.7%) is lower than LGBT+-only (43.6%), suggesting that informal employment may not compound healthcare access barriers as severely for LGBT+ individuals as for disabled individuals. However, the rate remains substantially higher than informal-only (23.7%), indicating that LGBT+ identity is the dominant driver of healthcare access challenges in this intersection.
+**Healthcare Access:** LGBT+ + informal show 34.7% medical care skipping, 5.8 pp higher than general population (p=0.036). Interestingly, this rate (34.7%) is lower than LGBT+-only (43.6%), suggesting that informal employment may not compound healthcare access barriers as severely for LGBT+ individuals as for disabled individuals. However, the rate remains substantially higher than informal-only (23.7%), indicating that LGBT+ identity is the dominant driver of healthcare access challenges in this intersection.
 
 ---
 
