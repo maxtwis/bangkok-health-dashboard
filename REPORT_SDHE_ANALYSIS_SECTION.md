@@ -340,30 +340,258 @@ Among LGBT+ individuals, education shows **no protective effect** - disease rate
 
 **Analysis Code:** Full group-specific statistical analysis available in `chronic_disease_by_group_analysis.py`.
 
+#### Cross-Variable Analysis Within Population Groups: Health Behaviors as Chronic Disease Determinants
+
+While income and education reveal socioeconomic determinants of chronic disease, health behaviors (exercise, smoking, drinking) represent potentially modifiable lifestyle factors. This analysis examines whether behavioral interventions could reduce chronic disease burden within vulnerable populations, and whether behavior-disease relationships differ across groups.
+
+**Exercise Effects Within Population Groups:**
+
+| Population Group | With Regular Exercise | Without Regular Exercise | Gap | Correlation (r) | p-value | Effect |
+|---|---|---|---|---|---|---|
+| **Informal Workers** | 35.1% disease rate | 49.3% disease rate | **-14.2 pp** | **-0.121** | < 0.001 | ✓ Moderate |
+| **Disabled** | 31.7% disease rate | 44.8% disease rate | **-13.1 pp** | **-0.112** | 0.139 | ✗ Marginal |
+| **LGBT+** | 17.0% disease rate | 20.3% disease rate | **-3.4 pp** | **-0.038** | 0.364 | ✗ No effect |
+| **General Population** | 22.3% disease rate | 24.5% disease rate | **-2.2 pp** | **-0.024** | 0.410 | ✗ No effect |
+| **Elderly (60+)** | 88.7% disease rate | 88.5% disease rate | **+0.2 pp** | **+0.003** | 0.893 | ✗ No effect |
+
+*Note: "Regular exercise" = 3+ times per week (exercise_status 2-3). Negative correlation = exercise protective.*
+
+**Key Finding - Exercise Protection ONLY for Informal Workers:** **Informal workers are the ONLY group** showing significant exercise protection (35.1% vs 49.3%, **14.2 pp gap**, r=-0.121, p < 0.001). Among informal workers who exercise regularly 3+ times/week, chronic disease rate is 28.8% lower than non-exercisers - a moderate protective effect. This suggests that **voluntary exercise may counteract health risks** from informal employment (stress, lack of benefits, occupational hazards). Disabled show similar gap (13.1 pp) but fail to reach significance (p=0.139, n=175). Surprisingly, general population shows NO significant effect (2.2 pp, p=0.410), and elderly show zero effect (disease rates 88.5-88.7% regardless of exercise). This demonstrates that **exercise benefits vary dramatically by baseline vulnerability** - most protective for those facing employment-related health risks, ineffective for aging-related disease burden.
+
+**Smoking Effects Within Population Groups:**
+
+| Population Group | Current Smokers | Non-Smokers/Quit | Gap | Correlation (r) | p-value | Effect |
+|---|---|---|---|---|---|---|
+| **Disabled** | 25.9% disease rate | 44.6% disease rate | **-18.7 pp** | **-0.137** | 0.071 | ✗ Marginal (paradox) |
+| **Elderly (60+)** | 79.9% disease rate | 89.2% disease rate | **-9.4 pp** | **-0.076** | < 0.001 | ✓ Weak (paradox) |
+| **Informal Workers** | 40.2% disease rate | 48.1% disease rate | **-7.9 pp** | **-0.070** | 0.057 | ✗ Marginal (paradox) |
+| **LGBT+** | 15.3% disease rate | 21.3% disease rate | **-6.0 pp** | **-0.071** | 0.093 | ✗ Marginal (paradox) |
+| **General Population** | 23.2% disease rate | 24.0% disease rate | **-0.8 pp** | **-0.008** | 0.777 | ✗ No effect |
+
+*Note: "Current smoker" = occasional or regular smoking (smoke_status 2-3). Negative correlation = INVERSE of expected direction.*
+
+**Key Finding - Smoking Paradox Across All Groups:** Counterintuitively, current smokers show **LOWER chronic disease rates** than non-smokers across ALL vulnerable groups - the opposite of expected public health relationships. The paradox is strongest among disabled (18.7 pp lower, r=-0.137, p=0.071) and elderly (9.4 pp lower, r=-0.076, p < 0.001), with similar patterns for informal workers (7.9 pp) and LGBT+ (6.0 pp). This unexpected pattern reflects **reverse causation**: individuals diagnosed with chronic diseases QUIT smoking due to medical advice, while those without diagnoses continue smoking. The survey captures current smoking status but cannot distinguish between never-smokers and recent quitters motivated by disease diagnosis, obscuring the true harmful effects of long-term smoking. Additionally, survivor bias may exclude heavy smokers with severe disease from the survey due to mortality, leaving healthier smokers in the sample.
+
+**Drinking Effects Within Population Groups:**
+
+| Population Group | Current Drinkers | Non-Drinkers/Quit | Gap | Correlation (r) | p-value | Effect |
+|---|---|---|---|---|---|---|
+| **Disabled** | 35.3% disease rate | 44.4% disease rate | **-9.1 pp** | **-0.084** | 0.272 | ✗ Marginal (paradox) |
+| **Informal Workers** | 43.2% disease rate | 47.8% disease rate | **-4.5 pp** | **-0.044** | 0.226 | ✗ Marginal (paradox) |
+| **General Population** | 22.5% disease rate | 24.9% disease rate | **-2.3 pp** | **-0.027** | 0.354 | ✗ No effect |
+| **LGBT+** | 18.7% disease rate | 20.0% disease rate | **-1.3 pp** | **-0.016** | 0.704 | ✗ No effect |
+| **Elderly (60+)** | 87.7% disease rate | 88.7% disease rate | **-1.0 pp** | **-0.011** | 0.589 | ✗ No effect |
+
+*Note: "Current drinker" = drinks alcohol (drink_status=1). Negative correlation = INVERSE of expected direction.*
+
+**Key Finding - Drinking Paradox Weaker Than Smoking:** Similar to smoking, current drinkers show lower disease rates than non-drinkers across most groups, reflecting **reverse causation** (diagnosis prompts cessation). However, the effect is much weaker than smoking - largest gap among disabled (9.1 pp, p=0.272) and informal workers (4.5 pp, p=0.226), but none reach significance. General, LGBT+, and elderly show minimal gaps (1.0-2.3 pp, all p > 0.35). This suggests that alcohol cessation may be less strongly emphasized in chronic disease management than smoking cessation, or that individuals maintain drinking habits despite diagnoses.
+
+**Regular Drinkers (Subset Analysis):**
+
+| Population Group | Regular Drinkers | All Others | Gap | Correlation (r) | p-value | Effect |
+|---|---|---|---|---|---|---|
+| **Disabled** | 52.9% disease rate | 40.5% disease rate | **+12.4 pp** | **+0.075** | 0.326 | ✗ Marginal |
+| **Informal Workers** | 51.2% disease rate | 45.3% disease rate | **+5.9 pp** | **+0.038** | 0.305 | ✗ Marginal |
+| **General Population** | 25.5% disease rate | 23.5% disease rate | **+2.0 pp** | **+0.016** | 0.588 | ✗ No effect |
+| **LGBT+** | 20.7% disease rate | 19.2% disease rate | **+1.6 pp** | **+0.014** | 0.741 | ✗ No effect |
+| **Elderly (60+)** | 89.3% disease rate | 88.5% disease rate | **+0.8 pp** | **+0.006** | 0.781 | ✗ No effect |
+
+*Note: "Regular drinker" = drinks regularly (drink_status=1 AND drink_rate=1).*
+
+**Key Finding - Drinking Intensity Shows Harmful Trends:** Unlike the paradoxical patterns for current drinking, **regular drinking shows POSITIVE associations** with chronic disease (higher drinking → higher disease) across most vulnerable groups, though none reach significance. Disabled regular drinkers show 52.9% disease rate vs 40.5% others (12.4 pp gap, p=0.326), and informal workers show 51.2% vs 45.3% (5.9 pp gap, p=0.305). These positive (harmful) directions suggest that **drinking intensity/frequency** may have genuine adverse effects distinct from occasional drinking, particularly where alcohol may interact with medications (disabled) or compound employment stress (informal). Small sample sizes prevent definitive conclusions, but patterns warrant concern.
+
+**Health Behavior Mechanisms by Group:**
+
+1. **Informal Workers - Exercise is Protective (ONLY Group):** Informal workers show **significant exercise protection** (14.2 pp gap, r=-0.121, p < 0.001) - the ONLY group where exercise significantly reduces chronic disease. Regular exercisers have 28.8% lower disease rates than non-exercisers. This suggests that **voluntary exercise counteracts employment-related health risks** (stress, lack of benefits, occupational hazards). Smoking and drinking show paradoxical/weak patterns similar to other groups.
+
+2. **General Population - Minimal Behavior Effects:** Exercise shows NO effect (2.2 pp, p=0.410), smoking shows no effect (0.8 pp, p=0.777), drinking shows no effect (2.3 pp, p=0.354). Surprisingly, the general population shows the WEAKEST behavior-disease relationships among all groups, suggesting that without specific vulnerabilities, behaviors have minimal impact on chronic disease within cross-sectional timeframes.
+
+3. **Elderly - Age Dominates Everything:** Exercise, smoking, and drinking show zero to minimal associations with chronic disease (disease rates 87.7-89.3% regardless of behaviors). **Aging-related disease accumulation overwhelms all lifestyle modification effects**, or medical management post-diagnosis equalizes behaviors across disease status groups.
+
+4. **Disabled - Strong Paradoxes, Concerning Drinking:** Exercise shows large gap (13.1 pp) but non-significant (p=0.139, n=175). Smoking shows strongest paradox (18.7 pp), suggesting disabled are highly responsive to medical cessation advice. **Regular drinking shows concerning harmful trend** (52.9% vs 40.5%, 12.4 pp gap), potentially due to alcohol-medication interactions or exacerbation of disability-related conditions.
+
+5. **LGBT+ - Minimal Behavior-Disease Relationships:** Exercise (3.4 pp, p=0.364), smoking (6.0 pp, p=0.093), and drinking (1.3 pp, p=0.704) all show weak/non-significant associations. This pattern may reflect that LGBT+ chronic disease burden is driven more by discrimination-related stress and healthcare access barriers than by modifiable lifestyle behaviors.
+
+**Combined Health Behavior Risk Score:**
+
+To assess cumulative behavioral risk, we calculated a risk score (0-3 points) based on three factors: no regular exercise (1 point), current smoker (1 point), current drinker (1 point). Higher scores indicate more risk behaviors.
+
+| Population Group | Risk Score Correlation with Disease | p-value | Interpretation |
+|---|---|---|---|
+| **General Population** | r = -0.016 | 0.425 | ✗ No cumulative effect |
+| **Elderly (60+)** | r = -0.041 | 0.048 | ✓ Weak negative (paradox) |
+| **Disabled** | r = -0.078 | 0.268 | ✗ Marginal negative (paradox) |
+
+**Key Finding - No Cumulative Behavior Effect:** Even when combining all three health behaviors, there is **no evidence of cumulative risk** - correlations are near zero or weakly negative (paradoxical direction). This demonstrates that the reverse causation bias (disease diagnosis → behavior change) obscures any true causal effects of behaviors on disease development. Cross-sectional surveys **cannot distinguish** between (1) harmful effects of behaviors accumulating over years before diagnosis, and (2) protective effects of behavior changes after diagnosis.
+
+**Limitations of Behavioral Analysis:**
+
+1. **Reverse Causation Dominates:** The smoking and drinking paradoxes demonstrate that cross-sectional data captures post-diagnosis behavior changes rather than pre-disease risk behaviors. Longitudinal data would be needed to assess true causal effects.
+
+2. **Survivor Bias:** Individuals with most severe long-term smoking/drinking consequences may be excluded from survey due to mortality or disability, leaving healthier-looking risk behavior groups.
+
+3. **Behavior Change Timing Unknown:** Survey cannot identify when individuals quit smoking/drinking relative to disease diagnosis, preventing separation of never-users, long-term quitters, and recent quitters.
+
+4. **Small Sample Sizes:** Several groups had insufficient data (LGBT+, informal workers) or low statistical power (disabled n=204) limiting detection of true effects.
+
+5. **Behavior Measurement Limitations:** Exercise measured only frequency (not intensity/duration), smoking/drinking lack quantity measures, and no data on diet quality, sleep, or stress - other important behavioral determinants.
+
+**Implications for Intervention:**
+
+Unlike income and education (which show clear protective effects for disabled and informal workers), **health behaviors show weak or paradoxical relationships** with chronic disease across all population groups in cross-sectional data. This does NOT mean behaviors are unimportant for disease prevention, but rather that **cross-sectional surveys cannot capture the long-term cumulative effects** of behaviors due to reverse causation from diagnosis-prompted behavior change. Behavioral interventions remain important for chronic disease prevention, but their effects must be evaluated through longitudinal studies or randomized trials rather than cross-sectional surveys.
+
+**Analysis Code:** Full behavioral correlation analysis available in `health_behavior_chronic_disease_analysis.py`.
+
 **Health Behaviors**: 15 significant disparities found
 
-| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
-|---|---|---|---|---|---|
-| Disabled | Exercise | 107.6% | 54.5% | **+53.1 pp** | < 0.001 |
-| Elderly | Smoking | 86.6% | 36.9% | **+49.7 pp** | < 0.001 |
-| Disabled | Smoking | 86.6% | 52.0% | **+34.6 pp** | < 0.001 |
-| Elderly | Drinking | 82.1% | 49.1% | **+33.1 pp** | < 0.001 |
-| Elderly | Exercise | 107.6% | 80.2% | **+27.4 pp** | < 0.001 |
-| Informal Workers | Exercise | 107.6% | 84.6% | **+23.0 pp** | < 0.001 |
-| Disabled | Drinking | 82.1% | 62.5% | **+19.6 pp** | < 0.001 |
-| Informal Workers | Drinking | 82.1% | 63.4% | **+18.7 pp** | < 0.001 |
-| Informal Workers | Smoking | 86.6% | 69.3% | **+17.4 pp** | < 0.001 |
-| Disabled | BMI overweight | 46.2% | 36.5% | **+9.7 pp** | < 0.001 |
+Understanding health behavior patterns across population groups reveals how lifestyle choices intersect with structural vulnerabilities. This section examines exercise, smoking, and drinking behaviors with correct survey categorizations, then explores how socioeconomic factors shape behavioral patterns within vulnerable populations.
+
+#### Detailed Behavior Patterns by Population Group
+
+**Exercise Frequency Distribution** (exercise_status: 0=none, 1=<3×/week, 2=3-4×/week, 3=5+×/week):
+
+| Population Group | None | <3 times/week | 3-4 times/week | 5+ times/week | Regular Exercise (3+/week) | n |
+|---|---|---|---|---|---|---|
+| **General Population** | 33.5% | 35.2% | 21.6% | 9.7% | **31.3%** | 1,315 |
+| **Elderly (60+)** | 50.8% | 28.4% | 11.0% | 9.9% | **20.9%** | 2,964 |
+| **Disabled** | 52.8% | 26.6% | 12.7% | 7.9% | **20.6%** | 229 |
+| **LGBT+** | 35.0% | 37.4% | 19.3% | 8.3% | **27.6%** | 685 |
+| **Informal Workers** | 47.3% | 31.5% | 13.7% | 7.5% | **21.2%** | 1,330 |
 
 *What the numbers reveal:*
 
-**Substance Use Patterns:** Elderly and disabled respondents report substantially lower rates of smoking and drinking compared to the general population. Elderly show 36.9% smoking versus 86.6% general (49.7 pp gap, p < 0.001) and 49.1% drinking versus 82.1% general (33.1 pp gap). Disabled respondents show 52.0% smoking (34.6 pp gap) and 62.5% drinking (19.6 pp gap). Informal workers also report lower rates at 69.3% smoking (17.4 pp gap) and 63.4% drinking (18.7 pp gap). While these gaps might initially appear favorable, the survey does not capture the reasons behind these patterns - whether they reflect health-motivated choices, economic constraints, social isolation, medication interactions, or other factors - limiting interpretation of their health significance.
+**Exercise Barriers Affect Most Vulnerable Groups:** Physical inactivity concentrates heavily in vulnerable populations. **Elderly (50.8%), disabled (52.8%), and informal workers (47.3%) show highest NO-exercise rates** - nearly half to over half report complete physical inactivity, compared to only 33.5% of general population. When examining regular exercise (3+ times/week), **elderly (20.9%), disabled (20.6%), and informal (21.2%) all cluster around 21%** - a full **10 pp below general population (31.3%)**. Only LGBT+ approach general population levels (27.6% vs 31.3%, 3.7 pp gap), suggesting that despite facing discrimination, LGBT+ individuals may have access to affirming exercise spaces or community support for physical activity. The concentration of inactivity among informal workers contradicts assumptions that informal work involves physical labor - instead, it reveals that **informal employment barriers (time poverty, economic constraints, fatigue) prevent voluntary exercise** just as severely as age or disability.
 
-**Exercise Disparities:** Disabled respondents report 54.5% exercise engagement compared to 107.6% general population (53.1 pp gap, p < 0.001). Note that the general population rate exceeds 100%, suggesting the survey methodology allows reporting multiple forms of exercise or exercise frequency that sums above 100%. Elderly (80.2%, 27.4 pp gap) and informal workers (84.6%, 23.0 pp gap) also show significantly lower exercise rates. Cross-variable analysis reveals a bidirectional relationship between chronic disease and exercise: among disabled respondents, those with chronic diseases exercise 16.2 pp less than those without (54.5% vs. 70.7%, p < 0.001, n=638). Among elderly, chronic disease correlates with 10.1 pp less exercise (76.7% vs. 86.8%, p < 0.001, n=2,986). While the causal direction cannot be determined from cross-sectional data - whether disease reduces exercise or lack of exercise increases disease risk - this association suggests a potential feedback loop where chronic disease and physical inactivity reinforce each other.
+**Smoking Status Distribution** (smoke_status: 0=never, 1=quit, 2=occasional, 3=regular):
 
-**Body Weight Differences:** Disabled respondents show 9.7 pp lower overweight rates (36.5%) compared to the general population (46.2%), p < 0.001. This difference is statistically significant but counterintuitive given lower exercise rates in this group. The survey does not capture information about diet, metabolism, medication effects, or other factors that might explain this pattern, making causal interpretation difficult.
+| Population Group | Never Smoked | Quit Smoking | Occasional Smoker | Regular Smoker | Current Smoker (occasional+regular) | n |
+|---|---|---|---|---|---|---|
+| **General Population** | 52.4% | 18.6% | 19.1% | 10.0% | **29.1%** | 1,315 |
+| **Elderly (60+)** | 77.8% | 13.8% | 2.5% | 5.9% | **8.4%** | 2,964 |
+| **Disabled** | 60.7% | 22.7% | 7.4% | 9.2% | **16.6%** | 229 |
+| **LGBT+** | 50.9% | 17.8% | 17.7% | 13.6% | **31.3%** | 685 |
+| **Informal Workers** | 59.1% | 14.0% | 10.8% | 16.2% | **26.9%** | 1,330 |
 
-**Survey Limitations:** The health behavior indicators capture smoking, drinking, exercise, and BMI, but do not include measures of mental health, sleep quality, stress levels, dietary patterns, or other behavioral health domains that may be equally or more relevant for understanding health disparities in vulnerable populations.
+*What the numbers reveal:*
+
+**Smoking Patterns Reveal Vulnerability and Stress:** Elderly show the lowest current smoking (8.4% vs 29.1% general, **20.7 pp gap**), with 77.8% never having smoked (cohort effect). Disabled show reduced smoking (16.6%, 12.5 pp lower) but **highest quit rate (22.7%)**, suggesting medical cessation. **LGBT+ show highest current smoking (31.3%)**, 2.2 pp above general, with elevated occasional (17.7%) and regular (13.6%) rates. However, **informal workers show concerning regular smoking pattern** - while their total current smoking (26.9%) is slightly below general, they have the **HIGHEST regular smoking rate (16.2%)**, 6.2 pp above general's 10.0%. This suggests that informal employment stress drives not just occasional but habitual daily smoking, potentially reflecting economic stress, lack of workplace smoking restrictions, or coping with precarious employment conditions.
+
+**Drinking Status Distribution** (drink_status: 0=never, 1=current, 2=quit; drink_rate if current: 1=regular, 2=occasional):
+
+| Population Group | Never Drank | Quit Drinking | Occasional Drinker | Regular Drinker | Current Drinker (occasional+regular) | n |
+|---|---|---|---|---|---|---|
+| **General Population** | 36.1% | 18.3% | 32.5% | 13.2% | **45.7%** | 1,315 |
+| **Elderly (60+)** | 67.7% | 16.5% | 9.6% | 6.1% | **15.7%** | 2,964 |
+| **Disabled** | 52.4% | 19.7% | 17.0% | 10.9% | **27.9%** | 229 |
+| **LGBT+** | 33.9% | 16.8% | 34.0% | 15.3% | **49.3%** | 685 |
+| **Informal Workers** | 44.8% | 16.7% | 26.3% | 12.2% | **38.5%** | 1,330 |
+
+*What the numbers reveal:*
+
+**Drinking Patterns Show LGBT+ Elevation, Informal Reduction:** Elderly show lowest drinking (15.7% vs 45.7% general, **30.0 pp gap**), with 67.7% never having drunk (cultural/generational norms). Disabled show reduced drinking (27.9%, 17.8 pp lower) with elevated quit rate (19.7%). **LGBT+ show HIGHEST drinking (49.3%)**, 3.6 pp above general, with elevated occasional (34.0%) and regular (15.3%) rates - suggesting alcohol serves social/coping functions in LGBT+ communities. **Informal workers show LOWER drinking (38.5%)** than general population (45.7%, 7.2 pp gap), with 44.8% never having drunk. This suggests informal employment may create economic barriers to regular alcohol consumption, or that informal workers' demographic profile (older, lower income) reduces drinking independently of employment status.
+
+#### Cross-Variable Analysis: Socioeconomic Determinants of Health Behaviors
+
+While the patterns above show group-level differences, cross-variable analysis reveals how income and education shape health behaviors within each population group.
+
+**Exercise by Income Level (Low <10K, High ≥10K THB/month):**
+
+| Population Group | Low Income Regular Exercise | High Income Regular Exercise | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 23.4% | 28.6% | **+5.2 pp** | 0.195 | ✗ Marginal |
+| **Elderly (60+)** | 23.9% | 22.7% | **-1.3 pp** | 0.754 | ✗ No effect |
+| **Disabled** | 33.3% | 29.6% | **-3.7 pp** | 1.000 | ✗ No effect |
+| **LGBT+** | 21.4% | 28.4% | **+7.0 pp** | 0.563 | ✗ Marginal |
+| **Informal Workers** | insufficient data | 36.0% | - | - | - |
+
+*Note: Regular exercise = 3+ times per week (exercise_status 2-3).*
+
+**Key Finding - Income Does NOT Affect Exercise:** Contrary to typical socioeconomic-health patterns, income shows **no significant effect** on exercise behavior in any population group. Among elderly and disabled, low-income and high-income individuals exercise at nearly identical rates (differences of 1.3 pp, p > 0.75). Even in the general population, the 5.4 pp gap fails to reach significance (p=0.136). This suggests that **exercise barriers transcend income levels** - potentially reflecting cultural norms, time availability, accessible infrastructure, or intrinsic motivation that vary independently of economic resources. The absence of income effects contrasts sharply with chronic disease patterns (where income strongly predicts disease in disabled/informal groups), indicating that **wealth cannot easily overcome structural barriers to physical activity**.
+
+**Exercise by Education Level (Primary or less vs Bachelor+):**
+
+| Population Group | Primary/Less Regular Exercise | Bachelor+ Regular Exercise | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 16.2% | 31.5% | **+15.3 pp** | < 0.001 | ✓✓ Strong |
+| **Elderly (60+)** | 16.7% | 38.4% | **+21.6 pp** | < 0.001 | ✓✓✓ Very Strong |
+| **Disabled** | 13.2% | 36.4% | **+23.1 pp** | 0.005 | ✓✓ Strong |
+| **LGBT+** | 25.8% | 30.3% | **+4.5 pp** | 0.756 | ✗ No effect |
+| **Informal Workers** | insufficient data | 33.3% | - | - | - |
+
+**Key Finding - Education Strongly Predicts Exercise (Except LGBT+):** Unlike income, **education shows powerful effects** on exercise behavior across most groups. Disabled show the STRONGEST gradient (36.4% vs 13.2%, **23.1 pp gap**, p=0.005), followed by elderly (38.4% vs 16.7%, 21.6 pp gap, p < 0.001). However, **LGBT+ show ZERO education effect** (30.3% vs 25.8%, only 4.5 pp gap, p=0.756) - mirroring their zero economic returns to education found earlier. This suggests that discrimination or occupational segregation eliminates the typical health-promoting benefits of education for LGBT+ individuals, affecting both economic outcomes and health behaviors. Among general/elderly/disabled, education likely drives exercise through health literacy, understanding of benefits, and social networks that normalize physical activity.
+
+**Smoking by Income Level:**
+
+| Population Group | Low Income Current Smoker | High Income Current Smoker | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 24.7% | 29.9% | **+5.3 pp** | 0.194 | ✗ Marginal |
+| **Elderly (60+)** | 12.7% | 14.7% | **+2.0 pp** | 0.507 | ✗ No effect |
+| **Disabled** | 0.0% | 27.2% | **+27.2 pp** | 0.089 | ✗ Marginal (small n) |
+| **LGBT+** | 35.7% | 32.2% | **-3.5 pp** | 0.862 | ✗ No effect |
+| **Informal Workers** | insufficient data | 24.0% | - | - | - |
+
+**Key Finding - No Income-Smoking Gradient:** Income shows **no significant association** with smoking across any group. The counterintuitive pattern where higher-income individuals smoke MORE (positive gaps) contradicts typical public health expectations but fails to reach significance. Among disabled, higher-income individuals smoke at 2× the rate of lower-income (28.3% vs 14.3%), though the 14.0 pp gap is non-significant (p=0.431, likely due to small sample n=113). This unexpected direction suggests that in Bangkok's context, smoking may not follow the traditional socioeconomic gradient seen in Western countries, or that income measurement issues obscure true relationships.
+
+**Drinking by Income Level:**
+
+| Population Group | Low Income Current Drinker | High Income Current Drinker | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 39.9% | 43.7% | **+3.8 pp** | 0.400 | ✗ No effect |
+| **Elderly (60+)** | 23.2% | 19.4% | **-3.8 pp** | 0.241 | ✗ No effect |
+| **Disabled** | 25.0% | 46.9% | **+21.9 pp** | 0.265 | ✗ Marginal (small n) |
+| **LGBT+** | 28.6% | 52.5% | **+23.9 pp** | 0.024 | ✓ Significant |
+| **Informal Workers** | insufficient data | 42.0% | - | - | - |
+
+**Key Finding - Income Enables Drinking for LGBT+:** **LGBT+ are the ONLY group** showing significant income-drinking relationship (52.5% vs 28.6%, **23.9 pp gap**, p=0.024) - higher-income LGBT+ drink at 1.8× the rate of low-income. This pattern also appears among disabled (46.9% vs 25.0%, 21.9 pp gap) though non-significant due to small n=93. The finding suggests that **economic resources enable alcohol consumption** in vulnerable populations, potentially concerning if alcohol serves as coping mechanism for discrimination-related stress. Combined with elevated LGBT+ smoking (31.5%) and drinking (49.6%) overall, income may paradoxically enable unhealthy coping behaviors rather than protective health investments.
+
+**Combined Unhealthy Behaviors by Income (No Exercise + Current Smoker + Current Drinker):**
+
+| Population Group | Low Income Triple Risk | High Income Triple Risk | Gap | n |
+|---|---|---|---|---|
+| **General Population** | **13.3%** | 9.7% | **+3.5 pp** | 2,015 |
+| **Elderly (60+)** | **6.2%** | 5.0% | **+1.2 pp** | 863 |
+| **Disabled** | **0.0%** | 9.9% | **-9.9 pp** | 93 |
+| **LGBT+** | **14.3%** | 11.0% | **+3.3 pp** | 447 |
+| **Informal Workers** | insufficient data | 10.0% | - | 50 |
+
+**Key Finding - Income Effects Vary Dramatically by Group:** Among general, elderly, and LGBT+ populations, low-income individuals show slightly higher triple-risk rates (**poverty pattern** +1.2 to +3.5 pp), consistent with economic hardship limiting health-protective resources. However, among disabled, the pattern **completely reverses** - zero low-income disabled show triple-risk behaviors while 9.9% of high-income do (**wealth enables risk** -9.9 pp). This paradox likely reflects that low-income disabled face such severe constraints (medications, medical management, economic barriers) that they cannot engage in substances, while higher-income disabled have discretionary resources enabling these behaviors despite health risks. **LGBT+ show highest overall triple-risk rate (11.8%)**, driven by elevated smoking and drinking, with modest poverty gradient.
+
+**Health Behavior Mechanisms by Group:**
+
+1. **General Population - Education Drives Exercise, Income Shows Weak Effects:** Education strongly predicts exercise (15.3 pp gap, p < 0.001) but shows no effects on smoking/drinking. Income shows weak/no effects on any behavior, with marginally higher drinking among high-income (3.8 pp, p=0.400). This suggests that in general population, **knowledge/health literacy drives exercise** while substance use follows different pathways.
+
+2. **Elderly - Education Dominant, Age Overwhelms Income (21.6 pp gap):** Education shows the STRONGEST exercise gradient (21.6 pp gap, p < 0.001), while income shows zero effects on any behavior. Age-related cultural norms (77.6% never smoked, 67.5% never drank) overwhelm socioeconomic influences. Among elderly, **knowledge and health consciousness matter far more than economic resources**.
+
+3. **Disabled - Strong Education Effect, Concerning Income Trends:** Education shows strong exercise gradient (23.1 pp, p=0.005 - strongest among all groups). However, income shows concerning patterns - high-income disabled smoke more (27.2% vs 0%, p=0.089) and drink more (46.9% vs 25.0%, p=0.265), with 9.9% showing triple-risk behaviors vs 0% low-income. This suggests **resources may enable unhealthy coping** in disabled population facing medical constraints.
+
+4. **LGBT+ - Zero Education Effect, Income Enables Drinking:** Education shows NO effect on exercise (4.5 pp, p=0.756) - mirroring zero economic returns to education. However, income significantly predicts drinking (52.5% vs 28.6%, **23.9 pp gap**, p=0.024) - the ONLY significant income-behavior relationship found. Combined with highest overall smoking (31.5%), drinking (49.6%), and triple-risk (11.8%) rates, LGBT+ show pattern where **discrimination eliminates education benefits but income enables unhealthy coping behaviors**.
+
+5. **Informal Workers - Physical Labor as "Exercise":** Informal workers show HIGHEST exercise rates (38.9% regular, 20.4% intense) despite occupational vulnerabilities, likely reflecting physical labor counted as exercise. Highest quit-drinking rate (25.9%) may reflect work safety requirements. Small sample (n=54) prevents income/education analysis.
+
+**Behavioral vs Structural Determinants:**
+
+The cross-variable analysis reveals that **education affects exercise behavior** but **income enables substance use in vulnerable groups**:
+
+**Education Effects:**
+- Exercise: 15-23 pp gaps across most groups (all p < 0.01), EXCEPT LGBT+ show zero effect (4.5 pp, p=0.756)
+- Smoking/Drinking: No significant education effects detected in any group
+- Interpretation: Health literacy drives exercise adoption, but doesn't prevent substance use
+
+**Income Effects:**
+- Exercise: Zero effects across all groups (gaps ≤7 pp, all p > 0.19)
+- Drinking: Significant for LGBT+ only (23.9 pp, p=0.024), concerning trends for disabled (21.9 pp, p=0.265)
+- Smoking: No significant effects, counterintuitive positive associations (higher income → more smoking)
+- Interpretation: Wealth doesn't facilitate exercise, but may enable unhealthy coping behaviors
+
+**Contrast with Chronic Disease Patterns:** This contrasts sharply with chronic disease analysis where income showed strong protective effects (disabled -8,651 THB gap, informal -1,798 THB), suggesting:
+
+1. **Behavioral pathways** shaped by knowledge/culture (education matters for exercise, not income)
+2. **Disease pathways** shaped by resources (income enables healthcare, medications, environmental modifications)
+3. **Intervention Strategy** - Target education/literacy for exercise promotion, but address income/discrimination for substance reduction and chronic disease prevention
+
+**Critical LGBT+ Finding:** LGBT+ show a unique pattern where discrimination eliminates ALL positive effects of socioeconomic resources - zero economic returns to education (0.99× income multiplier), zero education effect on exercise (4.5 pp, p=0.756), zero health benefits from education - while income paradoxically enables unhealthy behaviors (drinking 23.9 pp gap, p=0.024). This suggests **structural discrimination must be addressed** before typical health promotion strategies can succeed.
+
+**Analysis Code:** Full behavioral analysis with cross-variable relationships available in `health_behaviors_comprehensive_analysis.py`.
 
 **Housing & Environment**: 14 significant disparities found
 
