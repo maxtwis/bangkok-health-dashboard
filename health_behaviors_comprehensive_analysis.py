@@ -344,6 +344,8 @@ print("=" * 80)
 
 print("\nUnhealthy Behavior Clustering (No Exercise + Current Smoker + Current Drinker):")
 print("-" * 80)
+print(f"{'Group':<25} {'Low Income':<15} {'High Income':<15} {'Gap':<12} {'p-value':<10} {'n':<8}")
+print("-" * 80)
 
 # Calculate triple risk behavior
 df['no_exercise'] = 1 - df['exercise_regular']
@@ -361,25 +363,27 @@ for group in groups:
     if len(valid_df) < 30:
         continue
 
-    # Overall triple risk rate
-    overall_rate = valid_df['triple_risk'].sum() / len(valid_df) * 100
-
-    # By income
-    valid_income = valid_df[pd.notna(valid_df['monthly_income'])]
+    # By income with statistical testing
+    valid_income = valid_df[pd.notna(valid_df['monthly_income'])].copy()
     if len(valid_income) >= 30:
-        low_risk = valid_income[valid_income['monthly_income'] < 10000]['triple_risk'].sum()
-        low_total = len(valid_income[valid_income['monthly_income'] < 10000])
-        high_risk = valid_income[valid_income['monthly_income'] >= 10000]['triple_risk'].sum()
-        high_total = len(valid_income[valid_income['monthly_income'] >= 10000])
+        low_income = valid_income[valid_income['monthly_income'] < 10000]
+        high_income = valid_income[valid_income['monthly_income'] >= 10000]
 
-        low_rate = (low_risk / low_total * 100) if low_total > 0 else np.nan
-        high_rate = (high_risk / high_total * 100) if high_total > 0 else np.nan
+        low_rate = (low_income['triple_risk'].sum() / len(low_income) * 100) if len(low_income) > 0 else np.nan
+        high_rate = (high_income['triple_risk'].sum() / len(high_income) * 100) if len(high_income) > 0 else np.nan
+        gap = low_rate - high_rate
 
-        print(f"\n{group_names[group]}:")
-        print(f"  Overall Triple Risk: {overall_rate:.1f}% (n={len(valid_df)})")
-        print(f"  Low Income: {low_rate:.1f}% (n={low_total})")
-        print(f"  High Income: {high_rate:.1f}% (n={high_total})")
-        print(f"  Income Gap: {low_rate - high_rate:+.1f} pp")
+        # Chi-square test for statistical significance
+        if len(low_income) > 0 and len(high_income) > 0:
+            contingency = pd.crosstab(
+                valid_income['monthly_income'] < 10000,
+                valid_income['triple_risk']
+            )
+            chi2, p_val, dof, expected = stats.chi2_contingency(contingency)
+        else:
+            p_val = np.nan
+
+        print(f"{group_names[group]:<25} {low_rate:>6.1f}%        {high_rate:>6.1f}%        {gap:>+6.1f} pp   {p_val:>8.4f}   {len(valid_income):>6}")
 
 print("\n" + "=" * 80)
 print("ANALYSIS COMPLETE")
