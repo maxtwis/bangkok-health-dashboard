@@ -96,6 +96,126 @@ case 'physical_activity':
 
 ---
 
+### 7. ✅ CORRECT: Income Calculation
+**Location**: All analysis scripts (e.g., `overcrowding_analysis.py`, `homeownership_by_employment.py`)
+
+**Dashboard** (IndicatorDetail.jsx):
+```javascript
+// income_type: 1=daily wage, 2=monthly salary
+const monthlyIncome = record.income_type === 1
+  ? record.income * 30  // Daily wage × 30
+  : record.income;      // Monthly salary as-is
+```
+
+**Python** (all analysis scripts):
+```python
+def get_monthly_income(row):
+    if pd.isna(row['income']) or pd.isna(row['income_type']):
+        return np.nan
+    if row['income_type'] == 1:  # Daily wage
+        return row['income'] * 30
+    elif row['income_type'] == 2:  # Monthly salary
+        return row['income']
+    else:
+        return np.nan
+```
+
+**Verified**: ✅ Income calculation matches dashboard logic exactly
+
+---
+
+### 8. ✅ CORRECT: Overcrowding Definition
+**Location**: `overcrowding_analysis.py` lines 51-59
+
+**Survey questions**:
+- `community_environment_1` = 1 → Dense residential buildings (อาคารที่อยู่อาศัยหนาแน่น)
+- `community_environment_2` = 1 → Small/narrow housing (บ้านมีพื้นที่แคบ)
+
+**Python logic**:
+```python
+df['dense_buildings'] = df['community_environment_1'].apply(
+    lambda x: 1 if x == 1 else (0 if x == 0 else np.nan)
+)
+df['small_house'] = df['community_environment_2'].apply(
+    lambda x: 1 if x == 1 else (0 if x == 0 else np.nan)
+)
+
+# Any overcrowding = either condition present
+df['any_overcrowding'] = df.apply(
+    lambda row: 1 if (row['dense_buildings'] == 1 or row['small_house'] == 1)
+                else (0 if pd.notna(row['dense_buildings']) or pd.notna(row['small_house'])
+                      else np.nan),
+    axis=1
+)
+```
+
+**Note**: Uses OR logic - respondent is considered overcrowded if EITHER dense buildings OR small house is reported (or both).
+
+---
+
+### 9. ✅ CORRECT: Housing Tenure (Homeownership)
+**Location**: `homeownership_by_employment.py` line 35, `overcrowding_analysis.py` lines 62-63
+
+**Survey question**: `house_status`
+- 1 = Own house (เป็นเจ้าของ)
+- 2 = Rent (เช่า)
+- Other values = Other arrangements
+
+**Python logic**:
+```python
+# Homeownership
+df['own_house'] = df['house_status'].apply(
+    lambda x: 1 if x == 1 else (0 if pd.notna(x) else np.nan)
+)
+
+# Renting
+df['rent_house'] = df['house_status'].apply(
+    lambda x: 1 if x == 2 else (0 if pd.notna(x) else np.nan)
+)
+```
+
+**Note**: Binary classification where own_house=1 means house_status=1, own_house=0 means any other valid value (including rent, family housing, etc.)
+
+---
+
+### 10. ✅ CORRECT: Employment Status
+**Location**: `homeownership_by_employment.py` line 38
+
+**Survey question**: `occupation_status`
+- 0 = Not employed
+- 1 = Employed
+
+**Python logic**:
+```python
+df['employed'] = df['occupation_status'].apply(
+    lambda x: 1 if x == 1 else (0 if x == 0 else np.nan)
+)
+```
+
+**Note**: Direct binary mapping from occupation_status
+
+---
+
+### 11. ✅ CORRECT: Employment Contract Type
+**Location**: `homeownership_by_employment.py` (implicit), informal worker definition
+
+**Survey question**: `occupation_contract`
+- 0 = No contract (informal employment)
+- 1 = Has contract (formal employment)
+
+**Python logic**:
+```python
+# Informal worker = employed WITHOUT contract
+(df['occupation_status'] == 1) & (df['occupation_contract'] == 0)
+
+# Formal contract analysis (among employed)
+# occupation_contract == 1 vs occupation_contract == 0
+```
+
+**Note**: Contract status only meaningful among employed individuals (occupation_status=1)
+
+---
+
 ## Priority Fixes Required
 
 1. **HIGHEST PRIORITY**: Fix disease indicator column names (use `diseases_type/1` not `diseases_type_1`)
