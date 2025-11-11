@@ -104,7 +104,38 @@ Analysis of 138 significant health disparities across 8 SDHE domains reveals sys
 
 **Education Returns Vary Dramatically by Group:** For disabled individuals, education shows the strongest income effect of all groups - Bachelor+ degree holders earn **2.84 times more** than those with only primary education (16,194 THB gap, p=0.003). Informal workers also show large education returns at 1.84× (11,658 THB gap, p < 0.001), demonstrating that education tends to provide significant economic benefits even in the informal sector. In stark contrast, elderly workers show modest returns at 1.43× (5,841 THB gap), likely reflecting that many educated elderly are retired or semi-retired, compressing wage differences. Most strikingly, **LGBT+ individuals show zero education returns** - primary-educated and Bachelor+ LGBT+ earn virtually identical incomes (27,000 vs 26,848 THB, p=0.993), suggesting that discrimination or occupational segregation may eliminate the typical economic benefits of education for this group.
 
-**Employment Formality as Income Mediator:** Among employed elderly, only 4.5% with low education have formal contracts compared to 20.1% with higher education (15.6 pp gap, p < 0.0001), and those with contracts earn 20,581 THB versus 14,273 THB without contracts (6,308 THB difference or 44% more, p < 0.0001). While these correlations are clear, our cross-sectional data cannot determine causality - whether education directly causes better employment outcomes, or whether both are influenced by other factors like family background, access to opportunities, or historical context. The data suggests that for elderly workers, contract status may mediate much of the relationship between education and income, while for disabled and informal workers, education maintains direct income effects even controlling for employment formality.
+**Table: Contract Status by Education Level**
+
+| Population Group | Education Level | Contract Rate | Mean Income (No Contract) | Mean Income (With Contract) | Income Gap | p-value | n |
+|---|---|---|---|---|---|---|---|
+| **Elderly** | Primary (≤ ป.6) | 4.0% | 13,549 THB | 13,900 THB | +351 THB (3%) | 0.951 | 75 |
+| | Bachelor+ | 24.0% | 17,441 THB | 26,320 THB | **+8,879 THB (51%)** | **0.005** | 121 |
+| **Disabled** | Primary (≤ ป.6) | 0.0% | 9,000 THB | - | - | - | 3 |
+| | Bachelor+ | 70.5% | 22,683 THB | 27,128 THB | +4,445 THB (20%) | 0.325 | 61 |
+| **Informal Workers** | Primary (≤ ป.6) | 0.0%* | 14,974 THB | - | - | - | 25 |
+| | Bachelor+ | 0.0%* | 27,440 THB | - | - | - | 488 |
+
+*Informal workers are defined as employed without formal contracts.
+
+**Key findings:** Among elderly with higher education, having a formal contract is associated with 51% higher income (p=0.005), but no significant contract premium exists for those with low education (p=0.951). Contract rates increase with education: from 4.0% to 24.0% for elderly (20.0 pp gap, p=0.0005), and from 0% to 70.5% for disabled (70.5 pp gap, p=0.0563). Among disabled with higher education, the contract premium (+4,445 THB) is not statistically significant (p=0.325), likely due to small sample size (n=61).
+
+**Employment Formality as Income Mediator:** Among employed elderly, only 4.0% with low education have formal contracts compared to 24.0% with higher education (20.0 pp gap, p=0.0005), and those with contracts earn 20,709 THB versus 14,207 THB without contracts (6,502 THB difference or 46% more, p < 0.0001). While these correlations are clear, our cross-sectional data cannot determine causality - whether education directly causes better employment outcomes, or whether both are influenced by other factors like family background, access to opportunities, or historical context. The data pattern is less clear for other groups: disabled show a large contract gap by education (70.5 pp) but with marginal statistical significance due to small sample size (p=0.0563, n=87), while informal workers by definition have no formal contracts regardless of education level. This suggests that for elderly workers, contract status may mediate much of the relationship between education and income, while for disabled and informal workers, education maintains direct income effects even controlling for employment formality.
+
+**Table: Literacy and Numeracy by Education Level (Disabled vs General Population)**
+
+| Skill | Education Level | Disabled | General Population | Gap | p-value | n (Disabled) |
+|---|---|---|---|---|---|---|
+| **Math** | Primary (≤ ป.6) | 14.3% | 85.7% | **-71.4 pp** | < 0.0001 | 35 |
+| | Bachelor+ | 96.1% | 99.9% | **-3.8 pp** | < 0.0001 | 103 |
+| | **Education effect (Disabled)** | **+81.8 pp** | - | - | < 0.0001 | 138 |
+| **Writing** | Primary (≤ ป.6) | 17.1% | 64.3% | **-47.1 pp** | 0.0038 | 35 |
+| | Bachelor+ | 97.1% | 99.9% | **-2.8 pp** | 0.0001 | 103 |
+| | **Education effect (Disabled)** | **+79.9 pp** | - | - | < 0.0001 | 138 |
+| **Reading** | Primary (≤ ป.6) | 22.9% | 57.1% | **-34.3 pp** | 0.0483 | 35 |
+| | Bachelor+ | 99.0% | 100.0% | **-1.0 pp** | 0.1400 | 103 |
+| | **Education effect (Disabled)** | **+76.2 pp** | - | - | < 0.0001 | 138 |
+
+**Overall gaps (all education levels):** Math: 80.6% vs 99.6% (-19.1 pp, p<0.001); Writing: 81.0% vs 99.4% (-18.4 pp, p<0.001); Reading: 85.6% vs 99.4% (-13.8 pp, p<0.001)
 
 **Basic Literacy and Numeracy:** Among disabled respondents, 19.1 pp fewer report being able to do math (80.6% vs. 99.6% general), 18.4 pp fewer can write (81.0% vs. 99.4%), and 13.8 pp fewer can read (85.6% vs. 99.4%). These gaps are statistically significant (all p < 0.001). Cross-variable analysis reveals that education level strongly predicts literacy skills within the disabled population: among disabled with low education, only 73.4% can do math, 73.9% can write, and 79.5% can read, compared to 94.8%, 95.3%, and 97.7% respectively among disabled with higher education (gaps of 18-21 pp, all p < 0.0001, n=638). Critically, when comparing within education levels, the disability gap shrinks considerably: among those with higher education, disabled respondents show only 4.9 pp lower math skills than the general population, versus 23.2 pp lower among those with low education. This suggests that educational attainment accounts for the majority of the observed literacy gap between disabled and general populations, though disability-specific factors still contribute even after controlling for education.
 
