@@ -1,0 +1,29 @@
+
+================================================================================
+POLLUTION-RELATED HEALTH CROSS-VARIABLE ANALYSIS
+================================================================================
+
+Testing hypotheses for why elderly/disabled/informal report LOWER
+pollution health problems than general population
+
+Loaded 6523 records from survey_sampling.csv
+
+================================================================================
+HYPOTHESIS 1: Income Effect on Pollution Health Awareness
+================================================================================
+Theory: Lower income -> less awareness/attribution of health problems to pollution
+
+
+GENERAL:
+  Low income (<10K):  70.8% (n=24)
+Traceback (most recent call last):
+  File "c:\Users\ion_l_uhhlu4p.MAXTWIS\bangkok-health-dashboard\pollution_health_cross_analysis.py", line 304, in <module>
+    main()
+  File "c:\Users\ion_l_uhhlu4p.MAXTWIS\bangkok-health-dashboard\pollution_health_cross_analysis.py", line 286, in main
+    analyze_by_income(df)
+  File "c:\Users\ion_l_uhhlu4p.MAXTWIS\bangkok-health-dashboard\pollution_health_cross_analysis.py", line 114, in analyze_by_income
+    print(f"  High income (\u226510K): {high_rate:.1f}% (n={len(high_income_df)})")
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\encodings\cp874.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2265' in position 15: character maps to <undefined>

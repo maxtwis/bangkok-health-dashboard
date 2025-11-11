@@ -216,11 +216,163 @@ df['employed'] = df['occupation_status'].apply(
 
 ---
 
+### 12. ⚠️ CRITICAL: Disaster Exposure Definition - INCOMPLETE
+**Location**: REPORT_SDHE_ANALYSIS_SECTION.md line 709, Dashboard DataProcessor.js:576-579
+
+**Dashboard** (DataProcessor.js:576-579):
+```javascript
+disaster_experience: {
+  fields: ['community_disaster_1', 'community_disaster_2', 'community_disaster_3', 'community_disaster_4'],
+  condition: (r) => r.community_disaster_1 === 1 || r.community_disaster_2 === 1 ||
+                     r.community_disaster_3 === 1 || r.community_disaster_4 === 1
+}
+```
+
+**Report currently uses**:
+```python
+# Only self_disaster_1 (personal experience of disaster type 1)
+disaster = df['self_disaster_1'] == 1
+```
+
+**RECOMMENDED definition** (comprehensive):
+```python
+# Community disaster exposure - ALL types (1-8) for comprehensive measure
+disaster = (
+    (df['community_disaster_1'] == 1) |  # Flooding
+    (df['community_disaster_2'] == 1) |  # Extreme heat
+    (df['community_disaster_3'] == 1) |  # Extreme cold
+    (df['community_disaster_4'] == 1) |  # Fire
+    (df['community_disaster_5'] == 1) |  # Earthquake
+    (df['community_disaster_6'] == 1) |  # Epidemic (COVID-19!)
+    (df['community_disaster_7'] == 1) |  # Sinkhole/Land subsidence
+    (df['community_disaster_8'] == 1)    # Pollution/Dust (PM2.5!)
+)
+```
+
+**Impact comparison**:
+
+| Definition | General Pop | Elderly | Disabled | Informal | Coverage |
+|---|---|---|---|---|---|
+| **self_disaster_1** (Report uses) | 2.5% | 11.4% | 14.5% | - | Very limited |
+| **community_disaster_1-4** (Dashboard) | 23.9% | 42.7% | 41.5% | 33.5% | Partial |
+| **community_disaster_1-8** (RECOMMENDED) | **41.1%** | **81.5%** | **71.6%** | **69.4%** | **Comprehensive** |
+
+**Critical findings**:
+
+1. **Dashboard misses 31.8% of population** by excluding types 5-8
+2. **23.2% experienced ONLY epidemic or pollution disasters** - completely missed by dashboard
+3. **Type 6 (Epidemic/โรคระบาด)**: 28.9% overall - captures COVID-19 pandemic impact
+4. **Type 8 (Pollution/มลพิษ ฝุ่น)**: 37.5% overall - captures Bangkok's PM2.5 air pollution crisis
+5. **Elderly most affected**: 81.5% experienced disasters with comprehensive definition
+
+**Disaster type breakdown by population**:
+
+| Type | Description | General | Elderly | Disabled | LGBT+ | Informal |
+|---|---|---|---|---|---|---|
+| 1 | Flooding | 6.6% | 21.0% | 22.3% | 8.8% | 15.6% |
+| 2 | Extreme heat | 12.5% | 29.6% | 25.8% | 9.3% | 23.2% |
+| 6 | Epidemic | 12.5% | **38.9%** | 28.8% | 15.9% | 29.4% |
+| 8 | Pollution | 17.0% | **49.5%** | 38.4% | 18.7% | 40.7% |
+
+**Note**: Type 5 (Earthquake) shows unusually high rates (42.0% overall, 57.0% elderly). This may indicate:
+- Tremors from nearby regions
+- Data quality issue
+- Respondent confusion with other events
+- Should be investigated further
+
+**Recommendation**: Update dashboard AND report to use comprehensive definition (types 1-8) for complete disaster exposure assessment.
+
+---
+
 ## Priority Fixes Required
 
 1. **HIGHEST PRIORITY**: Fix disease indicator column names (use `diseases_type/1` not `diseases_type_1`)
 2. **HIGHEST PRIORITY**: Fix informal worker definition (require occupation_status=1)
-3. **MEDIUM PRIORITY**: Verify that CSV columns actually use slashes in disease columns
+3. **HIGHEST PRIORITY**: Fix disaster exposure definition (use community_disaster_1-4, not self_disaster_1)
+4. **MEDIUM PRIORITY**: Verify that CSV columns actually use slashes in disease columns
+
+---
+
+### 13. Social Context Indicators (Community Safety, Violence, Discrimination, Support)
+
+**Community Safety**:
+```python
+# 4-point scale: 4=Very safe, 3=Moderately safe, 2=Somewhat unsafe, 1=Unsafe
+# Binary measure: Safe = 3 or 4, Unsafe = 1 or 2
+feels_safe = (df['community_safety'] >= 3).astype(int)
+safety_score = df['community_safety']  # Keep ordinal for mean calculation
+```
+
+**Violence Indicators**:
+```python
+# All violence types: 0=Never, 1=Ever experienced
+physical_violence = (df['physical_violence'] == 1).astype(int)
+psychological_violence = (df['psychological_violence'] == 1).astype(int)
+sexual_violence = (df['sexual_violence'] == 1).astype(int)
+
+# Composite indicator
+any_violence = (
+    (df['physical_violence'] == 1) |
+    (df['psychological_violence'] == 1) |
+    (df['sexual_violence'] == 1)
+).astype(int)
+```
+
+**Discrimination Indicators**:
+```python
+# Discrimination stored in separate binary columns
+# discrimination_0 = Never (if all others are 0)
+# discrimination_1 = Race/Ethnicity (เชื้อชาติ)
+# discrimination_2 = Religion (ศาสนา)
+# discrimination_3 = Gender (เพศ)
+# discrimination_4 = Age (อายุ)
+# discrimination_5 = Economic status (สถานะทางเศรษฐกิจ)
+
+# Any discrimination
+any_discrimination = (
+    (df['discrimination_1'] == 1) |
+    (df['discrimination_2'] == 1) |
+    (df['discrimination_3'] == 1) |
+    (df['discrimination_4'] == 1) |
+    (df['discrimination_5'] == 1)
+).astype(int)
+
+# Specific types
+discrimination_race = (df['discrimination_1'] == 1).astype(int)
+discrimination_religion = (df['discrimination_2'] == 1).astype(int)
+discrimination_gender = (df['discrimination_3'] == 1).astype(int)
+discrimination_age = (df['discrimination_4'] == 1).astype(int)
+discrimination_economic = (df['discrimination_5'] == 1).astype(int)
+```
+
+**Emergency Social Support**:
+```python
+# helper: 0=No emergency support, 1=Has friends/family for emergencies
+has_emergency_support = (df['helper'] == 1).astype(int)
+```
+
+**Key Findings**:
+
+1. **LGBT+ discrimination is 97% gender-based**: Out of 39.1% total discrimination, 38.1% is gender discrimination (11× higher than general population's 3.5%)
+
+2. **Violence patterns diverge dramatically**:
+   - LGBT+: 39.4% any violence (highest)
+   - Elderly: 3.8% any violence (lowest, -20.1 pp)
+   - Informal: 10.2% any violence (lower, -13.7 pp)
+
+3. **Safety feelings inverse to violence exposure**:
+   - Elderly feel safest (92.0%) yet experience least violence
+   - LGBT+ feel moderately safe (76.4%) yet experience most violence
+
+4. **Emergency support strong except LGBT+**:
+   - Elderly: 95.1% (+11.0 pp)
+   - LGBT+: 82.6% (-1.5 pp, only group lower than general)
+
+**Data Quality Notes**:
+- Multiple answers possible for discrimination (respondents can report multiple types)
+- Violence questions ask about ever experiencing (lifetime, not past 12 months)
+- Safety is subjective perception, not objective crime data
+- Emergency support is binary (yes/no), doesn't capture quality or reliability
 
 ---
 
@@ -231,3 +383,4 @@ df['employed'] = df['occupation_status'].apply(
 3. Update Python informal worker definition
 4. Re-run analysis with corrected logic
 5. Compare results with dashboard to verify consistency
+6. Verify discrimination column logic (discrimination_0 vs discrimination_1-5)

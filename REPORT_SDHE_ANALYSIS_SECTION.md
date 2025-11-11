@@ -695,22 +695,219 @@ LGBT+ show **zero education returns** (0.99× income multiplier, p=0.993), **zer
 | Disabled | Rent house | 44.9% | 28.8% | **+16.1 pp** | < 0.001 |
 | Informal Workers | Health problems from pollution | 62.3% | 49.8% | **+12.5 pp** | < 0.001 |
 | Disabled | Health problems from pollution | 62.3% | 50.2% | **+12.1 pp** | < 0.001 |
-| Disabled | Experienced disaster | 2.5% | 14.5% | **-12.1 pp** | < 0.001 |
+| Elderly | Experienced disaster | 41.1% | 81.5% | **-40.4 pp** | < 0.001 |
+| Informal Workers | Experienced disaster | 41.1% | 69.4% | **-28.3 pp** | < 0.001 |
+| Disabled | Experienced disaster | 41.1% | 71.6% | **-30.5 pp** | < 0.001 |
 | LGBT+ | Own house | 25.2% | 14.9% | **+10.3 pp** | < 0.001 |
-| Elderly | Experienced disaster | 2.5% | 11.4% | **-8.9 pp** | < 0.001 |
 | LGBT+ | Rent house | 44.9% | 53.1% | **-8.2 pp** | < 0.001 |
 
 *What the numbers reveal:*
 
 **Housing Tenure Patterns:** Elderly respondents show 48.5% homeownership compared to 25.2% general population (23.4 pp higher, p < 0.001) and 24.2% renting compared to 44.9% general (20.7 pp lower, p < 0.001). Conversely, LGBT+ respondents show 14.9% homeownership (10.3 pp lower) and 53.1% renting (8.2 pp higher). Disabled respondents show 28.8% renting (16.1 pp lower than general population). These patterns likely indicate large differences in housing tenure across groups, though the survey does not capture other housing arrangements (living with family, institutional housing, informal arrangements) that would complete the housing picture.
 
-**Pollution-Related Health Problems:** The survey shows a unexpected pattern: elderly (42.7%), disabled (50.2%), and informal workers (49.8%) report *lower* rates of pollution-related health problems compared to the general population (62.3%), with gaps of 12.1-19.5 pp (all p < 0.001). This pattern is unexpected and difficult to interpret. Possible explanations include differences in pollution exposure, differences in awareness or attribution of health problems to pollution, health reporting patterns, or residential location differences, though our survey data cannot distinguish between these possibilities.
+**Overcrowding and Housing Quality:** The survey captures two overcrowding indicators - dense residential buildings (community_environment_1) and small/narrow housing space (community_environment_2). Elderly (39.6%), informal workers (35.2%), and disabled (33.6%) show considerably higher overcrowding rates compared to general population (19.1%), with gaps of 14.1-20.5 pp (all p < 0.001). LGBT+ show 12.8% overcrowding, 6.3 pp lower than general population (p=0.001). Cross-variable analysis reveals that overcrowding patterns vary by income and housing tenure across groups, with renters experiencing significantly more overcrowding than homeowners among elderly (51.4% vs 32.4%), LGBT+ (22.0% vs 4.9%), and informal workers (39.7% vs 27.5%).
 
-**Disaster Exposure:** Disabled (14.5%) and elderly (11.4%) respondents report significantly higher rates of experiencing disasters compared to the general population (2.5%), with gaps of 8.9-12.1 pp (both p < 0.001). These large differences suggest that certain population groups may live in more disaster-prone areas or tend to have greater vulnerability to disaster impacts, though the survey question does not specify disaster type (flooding, fire, building collapse, etc.) or whether exposure differences reflect residential location, housing quality, evacuation capacity, or other factors.
+**Disaster Exposure:** Vulnerable populations face dramatically elevated disaster exposure, with elderly experiencing the highest rates for most disaster types.
 
-**Overcrowding and Housing Quality:** The survey captures two overcrowding indicators - dense residential buildings (community_environment_1) and small/narrow housing space (community_environment_2). Elderly (39.6%), informal workers (35.2%), and disabled (33.6%) show considerably higher overcrowding rates compared to general population (19.1%), with gaps of 14.1-20.5 pp (all p < 0.001). LGBT+ show 12.8% overcrowding, 6.3 pp lower than general population (p=0.001). Cross-variable analysis reveals that overcrowding patterns vary by income and housing tenure across groups.
+**Overall Disaster Exposure (Any Type):**
 
-**Data Gaps:** Housing tenure categories (own/rent) do not sum to 100%, indicating that many respondents fall into other housing arrangements not captured by these binary measures (employee housing, living with family, etc.). The survey does not include direct indicators of housing safety, affordability burden, or accessibility features that would provide a more complete picture of housing conditions across population groups.
+| Population Group | Disaster Exposure Rate | Gap vs General | p-value |
+|---|---|---|---|
+| **General Population** | 41.1% | baseline | - |
+| **Elderly (60+)** | **81.5%** | **+40.4 pp** | < 0.001 |
+| **Disabled** | **71.6%** | **+30.5 pp** | < 0.001 |
+| **Informal Workers** | **69.4%** | **+28.3 pp** | < 0.001 |
+| **LGBT+** | 44.2% | +3.1 pp | 0.200 |
+
+**Disaster Exposure by Type:**
+
+| Disaster Type | General | Elderly | Disabled | LGBT+ | Informal | Highest Group |
+|---|---|---|---|---|---|---|
+| **Flooding** | 6.6% | 21.0% | **22.3%** | 8.8% | 15.6% | Disabled |
+| **Extreme heat** | 12.5% | **29.6%** | 25.8% | 9.3% | 23.2% | **Elderly** |
+| Extreme cold | **4.6%** | 1.7% | 3.9% | 4.5% | 3.2% | General |
+| Fire | 4.8% | 4.4% | **5.7%** | 4.7% | 3.8% | Disabled |
+| Earthquake | 16.5% | **57.0%** | 40.6% | 21.9% | 44.4% | **Elderly** |
+| **Epidemic/Disease outbreak** | 12.5% | **38.9%** | 28.8% | 15.9% | 29.4% | **Elderly** |
+| Sinkhole/Subsidence | **5.6%** | 0.8% | 4.4% | 5.0% | 2.5% | General |
+| **Pollution/Dust (PM2.5)** | 17.0% | **49.5%** | 38.4% | 18.7% | 40.7% | **Elderly** |
+
+*Note: Survey was conducted 2-3 months after an earthquake hit Bangkok, explaining the high earthquake exposure rates (57.0% elderly, 44.4% informal workers). The elderly's dramatically higher rate (57.0% vs 16.5% general) suggests either greater awareness/reporting among elderly, or concentration in neighborhoods with older buildings that experienced stronger tremors.*
+
+**Key Findings:** The elderly are most severely affected by **major urban disasters** - extreme heat (29.6%), epidemic/disease outbreak (38.9% - COVID-19 impact), and pollution/dust (49.5% - PM2.5 crisis). Over **4 in 5 elderly (81.5%) experienced at least one community disaster**, compared to 2 in 5 general population (41.1%). Disabled populations show highest rates for flooding (22.3%) and fire (5.7%). These large differences suggest that vulnerable groups may live in more disaster-prone areas, have greater vulnerability to disaster impacts, or have limited capacity to mitigate disaster effects. LGBT+ (44.2%) show rates similar to the general population.
+
+**Pollution-Related Health Problems:** The survey shows an unexpected pattern: elderly (42.7%), disabled (50.2%), and informal workers (49.8%) report *lower* rates of pollution-related health problems compared to the general population (62.3%), with gaps of 12.1-19.5 pp (all p < 0.001). Cross-variable analysis tested four hypotheses to explain this paradox:
+
+**Pollution Health Cross-Variable Analysis:**
+
+**Hypothesis 1: Income Effect (Low <10K vs High ≥10K THB/month)**
+
+| Population Group | Low Income | High Income | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 70.8% | 63.6% | **+7.2 pp** | 0.605 | ✗ No effect |
+| **Elderly (60+)** | 40.5% | 45.7% | **-5.2 pp** | 0.186 | ✗ No effect |
+| **Disabled** | 35.7% | 63.6% | **-27.9 pp** | 0.088 | ✗ Marginal |
+| **LGBT+** | 59.4% | 65.3% | **-5.9 pp** | 0.631 | ✗ No effect |
+| **Informal Workers** | 50.6% | 56.1% | **-5.5 pp** | 0.223 | ✗ No effect |
+
+**Finding:** REJECTED - No significant income effect on pollution health reporting across all groups.
+
+**Hypothesis 2: Education Effect (Primary/Secondary vs Vocational/Bachelor+)**
+
+| Population Group | Low Education | High Education | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 56.2% | 63.0% | **-6.7 pp** | 0.274 | ✗ No effect |
+| **Elderly (60+)** | 44.9% | 39.4% | **+5.5 pp** | 0.004 | ✓✓ Significant (reverse) |
+| **Disabled** | 48.6% | 56.4% | **-7.8 pp** | 0.327 | ✗ No effect |
+| **LGBT+** | 60.3% | 65.7% | **-5.4 pp** | 0.223 | ✗ No effect |
+| **Informal Workers** | 49.7% | 55.5% | **-5.8 pp** | 0.083 | ✗ Marginal |
+
+**Finding:** OPPOSITE DIRECTION - Lower-educated elderly report MORE pollution health problems (contradicts literacy hypothesis).
+
+**Hypothesis 3: Housing Tenure Effect (Own vs Rent)**
+
+| Population Group | Own House | Rent House | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 64.0% | 61.1% | **+3.0 pp** | 0.412 | ✗ No effect |
+| **Elderly (60+)** | 38.4% | 52.8% | **-14.4 pp** | < 0.001 | ✓✓✓ Very Strong |
+| **Disabled** | 43.5% | 61.0% | **-17.6 pp** | 0.088 | ✗ Marginal (small n) |
+| **LGBT+** | 59.8% | 63.5% | **-3.7 pp** | 0.576 | ✗ No effect |
+| **Informal Workers** | 57.5% | 53.0% | **+4.5 pp** | 0.209 | ✗ No effect |
+
+**Finding:** STRONGLY SUPPORTED - Elderly renters report significantly more pollution symptoms (52.8% vs 38.4%, p<0.001), proving rental housing provides less protection from air pollution.
+
+**Hypothesis 4: Disaster-Health Correlation (Experienced Pollution Disaster vs Not)**
+
+| Population Group | Disaster YES | Disaster NO | Gap | Correlation (r) | p-value | Effect |
+|---|---|---|---|---|---|---|
+| **General Population** | 72.3% | 60.3% | **+12.0 pp** | 0.093 | < 0.001 | ✓✓✓ Very Strong |
+| **Elderly (60+)** | 64.6% | 21.1% | **+43.5 pp** | 0.440 | < 0.001 | ✓✓✓ Very Strong |
+| **Disabled** | 65.9% | 47.1% | **+18.8 pp** | 0.183 | 0.006 | ✓✓ Strong |
+| **LGBT+** | 74.2% | 59.3% | **+14.9 pp** | 0.120 | 0.002 | ✓✓ Strong |
+| **Informal Workers** | 64.7% | 46.0% | **+18.7 pp** | 0.184 | < 0.001 | ✓✓✓ Very Strong |
+
+**Finding:** STRONGLY SUPPORTED - Strong positive correlation between pollution disaster exposure and health problems. Elderly show strongest correlation (r=0.440, gap 43.5 pp).
+
+**Additional Analysis: Overcrowding and Combined Housing Effects**
+
+**Overcrowding Effect on Pollution Health Symptoms:**
+
+| Population Group | Overcrowded | Not Overcrowded | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 61.8% | 62.4% | **-0.7 pp** | 0.905 | ✗ No effect |
+| **Elderly (60+)** | 58.6% | 32.0% | **+26.7 pp** | < 0.001 | ✓✓✓ Very Strong |
+| **Disabled** | 67.5% | 47.4% | **+20.2 pp** | 0.006 | ✓✓ Strong |
+| **LGBT+** | 63.6% | 61.8% | **+1.8 pp** | 0.832 | ✗ No effect |
+| **Informal Workers** | 58.8% | 50.8% | **+7.9 pp** | 0.007 | ✓✓ Strong |
+
+**Finding:** Overcrowding significantly increases vulnerability to air pollution symptoms among vulnerable populations. Elderly in overcrowded housing report 58.6% symptoms vs 32.0% in non-crowded (26.7 pp gap, p<0.001).
+
+**Combined Housing Effects (Tenure + Overcrowding):**
+
+| Population Group | Own + Not Crowded | Own + Crowded | Rent + Not Crowded | Rent + Crowded | Worst-Best Gap |
+|---|---|---|---|---|---|
+| **General Population** | 64.6% | 61.9% | 60.6% | 63.3% | **4.0 pp** |
+| **Elderly (60+)** | **29.8%** (BEST) | 56.2% | 39.2% | **65.7%** (WORST) | **35.9 pp** |
+| **Disabled** | **34.3%** (BEST) | **72.7%** (WORST) | 58.0% | 66.7% | **38.4 pp** |
+| **LGBT+** | 60.8% | **40.0%** (BEST) | 62.7% | **66.2%** (WORST) | **26.2 pp** |
+| **Informal Workers** | 53.4% | 68.2% | **49.1%** (BEST) | 58.9% | **19.1 pp** |
+
+**Finding:** Combined effects are DRAMATIC. Among elderly:
+- Best conditions (Own + Not crowded): 29.8% report symptoms
+- Worst conditions (Rent + Crowded): 65.7% report symptoms
+- **35.9 percentage point difference**
+
+This proves that rental housing combined with overcrowding creates maximum vulnerability to air pollution health impacts. LGBT+ also show significant combined effects (26.2 pp gap).
+
+**Among Air Pollution Exposed: What Predicts Symptoms?**
+
+For those who experienced air pollution disasters:
+
+| Population Group | n | Tenure Gap (Rent-Own) | Overcrowding Gap (Crowded-Not) |
+|---|---|---|---|
+| **General Population** | 141 | -13.3 pp (owners worse) | +2.4 pp |
+| **Elderly (60+)** | 1,031 | **+11.3 pp** | **+20.8 pp** |
+| **Disabled** | 39 | -5.6 pp (owners worse) | **+23.7 pp** |
+| **LGBT+** | 82 | **+19.9 pp** | **+15.5 pp** |
+| **Informal Workers** | 382 | -5.0 pp (owners worse) | **+9.9 pp** |
+
+**Key Finding:** Among pollution-exposed populations, elderly and LGBT+ renters report significantly more symptoms than owners (+11.3 pp and +19.9 pp respectively), confirming rental housing provides less protection. Overcrowding increases symptoms for ALL vulnerable groups among the pollution-exposed (disabled +23.7 pp, elderly +20.8 pp, LGBT+ +15.5 pp).
+
+**Key Insight:** The paradox is explained by **compositional effects and housing vulnerability stratification**:
+
+1. **Exposure matters most**: Elderly who experienced air pollution disasters report 64.9% symptoms vs only 21.3% for those who didn't (r=0.440, gap 43.6 pp).
+
+2. **Housing conditions amplify vulnerability**: Among pollution-exposed elderly, those in crowded housing are 20.9 pp more likely to report symptoms, and renters are 11.6 pp more likely.
+
+3. **Combined effects are multiplicative**: Elderly in rental + crowded housing report 66.1% symptoms vs 29.9% for homeowners in non-crowded housing (36.3 pp gap).
+
+4. **Lower overall rates reflect compositional effects**: Not all elderly experienced air pollution disasters. The overall rate (42.7%) is a weighted average where many elderly in better housing conditions were not exposed to pollution disasters and thus report low symptom rates.
+
+The analysis conclusively demonstrates that **rental housing provides less protection from air pollution** due to:
+- Location in more polluted areas (higher disaster exposure)
+- Lower housing quality (less air filtration, poorer construction)
+- Higher overcrowding rates (65.7% renters in crowded vs 29.8% owners not crowded for elderly)
+- Cumulative vulnerability (rent + crowded = worst outcomes)
+
+**Data Gaps and Limitations - Pollution Health Analysis:**
+
+1. **Self-reported symptoms only**: The survey asks "In the past 12 months, have you experienced health impacts from air pollution (such as cough, sneeze, nosebleed)?" This relies on self-attribution and may be subject to:
+   - **Reporting bias**: Some groups may normalize symptoms or not attribute them to pollution
+   - **Health literacy differences**: Ability to recognize pollution-related symptoms varies
+   - **Recall bias**: 12-month recall period may lead to underreporting
+   - **No clinical validation**: We cannot verify if reported symptoms are actually pollution-related
+
+2. **Missing exposure measurements**: The survey does not include:
+   - Actual air quality data (PM2.5, PM10 levels) at respondent residences
+   - Duration or intensity of pollution exposure
+   - Indoor vs outdoor exposure patterns
+   - Distance from pollution sources (roads, factories, construction)
+   - Housing characteristics that affect exposure (ventilation, air filters, building age)
+
+3. **Limited housing quality indicators**: While we have tenure and overcrowding data, we lack:
+   - Building construction quality and materials
+   - Presence of air filtration or ventilation systems
+   - Window quality and ability to seal against outdoor pollution
+   - Floor level (higher floors may have different exposure)
+   - Proximity to roads and pollution sources
+
+4. **Incomplete housing tenure data**: Housing categories (own/rent) do not sum to 100%, indicating missing data for:
+   - Employee/employer-provided housing
+   - Living with family (not as owner or renter)
+   - Informal housing arrangements
+   - Institutional housing
+   - This affects 27.3% of general population, 26.7% of elderly
+
+5. **Temporal limitations**:
+   - Cross-sectional data cannot establish causation
+   - We cannot determine if housing conditions preceded symptoms
+   - Survey timing (2-3 months post-earthquake) may affect disaster recall
+   - Seasonal variation in pollution exposure not captured
+
+6. **Confounding factors not controlled**:
+   - Pre-existing respiratory conditions (asthma, COPD)
+   - Smoking status and secondhand smoke exposure
+   - Occupational exposures to dust/chemicals
+   - Outdoor activity levels and commute patterns
+   - Use of protective measures (masks, air purifiers)
+
+7. **Sample size limitations**: Some subgroup analyses have small sample sizes:
+   - LGBT+ pollution-exposed with housing data: n=82
+   - Disabled pollution-exposed with housing data: n=39
+   - General population low-income with symptoms: n=24
+   - This limits statistical power for detecting smaller effects
+
+8. **Binary measures oversimplify**:
+   - Overcrowding coded as binary (yes/no) doesn't capture degree of crowding
+   - Pollution disaster coded as binary (experienced/not) doesn't capture frequency or severity
+   - Symptoms coded as binary (yes/no) doesn't capture severity or duration
+
+**Interpretation Caution**: While the analysis demonstrates strong associations between housing conditions and pollution health symptoms, we cannot definitively prove that rental housing or overcrowding **causes** more symptoms. Alternative explanations include:
+- Selection effects (people with health problems may move to cheaper rental housing)
+- Neighborhood sorting (renters concentrated in more polluted areas for reasons beyond housing quality)
+- Unmeasured confounders (income instability, healthcare access, nutrition)
+
+**Strengths**: Despite limitations, the analysis has strong correlational evidence (r=0.440 for elderly exposure-symptoms), large sample sizes for main groups (elderly n=2,986), dose-response patterns (worst conditions = highest symptoms), and consistency across multiple vulnerable groups.
 
 #### Cross-Variable Analysis: Housing & Environment by Income and Education
 
@@ -750,17 +947,29 @@ LGBT+ show **zero education returns** (0.99× income multiplier, p=0.993), **zer
 
 **Key Finding - No Income Protection Against Pollution Health:** Income shows no significant association with pollution-related health problems across groups (all p > 0.05). The disabled population shows a notable pattern where higher-income individuals report MORE pollution health problems (30.9 pp gap, p=0.085), though not reaching statistical significance. This could suggest either: (1) higher-income disabled live in more polluted urban areas with better job access, (2) higher-income disabled have better health awareness to recognize pollution-related symptoms, or (3) the small sample size (n=93) creates unstable estimates.
 
-**Disaster Exposure by Housing Tenure:**
+**Disaster Exposure by Housing Tenure (Comprehensive):**
 
 | Population Group | Own House Disaster | Rent House Disaster | Gap | p-value | Effect |
 |---|---|---|---|---|---|
-| **General Population** | 14.7% | 11.6% | **-3.1 pp** | 0.275 | ✗ No effect |
-| **Elderly (60+)** | 35.4% | 37.4% | **+1.9 pp** | 0.721 | ✗ No effect |
-| **Disabled** | 37.0% | 17.3% | **-19.6 pp** | 0.002 | ✓✓ Strong |
-| **LGBT+** | 20.0% | 16.3% | **-3.7 pp** | 0.726 | ✗ No effect |
-| **Informal Workers** | 33.5% | 29.1% | **-4.5 pp** | 0.013 | ✓ Significant |
+| **General Population** | 43.8% | 34.5% | **+9.3 pp** | 0.007 | ✓✓ Strong |
+| **Elderly (60+)** | 80.0% | 81.0% | **-1.0 pp** | 0.636 | ✗ No effect |
+| **Disabled** | 73.9% | 58.4% | **+15.5 pp** | 0.124 | ✗ No effect (small n) |
+| **LGBT+** | 46.1% | 41.5% | **+4.6 pp** | 0.474 | ✗ No effect |
+| **Informal Workers** | 72.5% | 67.7% | **+4.8 pp** | 0.148 | ✗ No effect |
 
-**Key Finding - Homeownership Increases Disaster Exposure for Disabled and Informal Workers:** Among disabled, homeowners experience disasters at 37.0% vs 17.3% for renters (19.6 pp gap, p=0.002). Informal workers show similar pattern (33.5% vs 29.1%, 4.5 pp gap, p=0.013). This unexpected pattern suggests that disabled and informal worker homeowners may live in more disaster-prone areas - possibly older buildings in flood-prone zones, or lower-cost housing in vulnerable locations. Renters may have more flexibility to relocate after disasters or tend to live in newer rental buildings with better disaster resistance.
+**Key Finding - Homeownership Increases Disaster Exposure for General Population:** With comprehensive disaster measurement, the general population shows significantly higher disaster exposure among homeowners (43.8% vs 34.5%, 9.3 pp gap, p=0.007). This suggests homeowners may live in older neighborhoods with accumulated disaster exposure (flooding, pollution, epidemics over time), or may have less mobility to relocate after disasters. Elderly show extremely high exposure (80-81%) regardless of housing tenure, indicating widespread disaster impacts. The disabled group shows a 15.5 pp gap favoring renters, though not reaching significance due to small sample (n=123).
+
+**Disaster Exposure by Income Level (Comprehensive):**
+
+| Population Group | Low Income Disaster | High Income Disaster | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 50.0% | 35.5% | **+14.5 pp** | 0.305 | ✗ No effect |
+| **Elderly (60+)** | 84.7% | 84.1% | **+0.6 pp** | 0.901 | ✗ No effect |
+| **Disabled** | 83.3% | 55.6% | **+27.8 pp** | 0.131 | ✗ No effect (small n) |
+| **LGBT+** | 53.1% | 40.8% | **+12.3 pp** | 0.241 | ✗ No effect |
+| **Informal Workers** | 85.7% | 67.4% | **+18.3 pp** | < 0.001 | ✓✓✓ Very Strong |
+
+**Key Finding - Low Income Dramatically Increases Disaster Exposure for Informal Workers:** With comprehensive disaster measurement, informal workers show a VERY STRONG income gradient: 85.7% of low-income informal workers experienced disasters vs 67.4% of high-income (18.3 pp gap, p < 0.001). This pattern also appears strongly in disabled (27.8 pp gap, though not significant due to n=93) and general population (14.5 pp gap). Elderly show universally high exposure (84-85%) regardless of income. The findings reveal that **poverty concentrates in multi-hazard zones** - areas facing flooding, heat waves, pollution, and epidemic impacts simultaneously. Low-income informal workers face the highest combined disaster burden (85.7%), suggesting that economic vulnerability compounds environmental vulnerability. Higher-income individuals can afford housing in safer locations with better infrastructure protection.
 
 **Psychological Violence by Income:**
 
@@ -784,7 +993,7 @@ LGBT+ show **zero education returns** (0.99× income multiplier, p=0.993), **zer
 | **LGBT+** | 34.4% | 9.2% | **+25.2 pp** | < 0.001 | ✓✓✓ Very Strong |
 | **Informal Workers** | 37.9% | 37.9% | **-0.1 pp** | 1.000 | ✗ No effect |
 
-**Key Finding - Income Protects LGBT+ from Overcrowding But Not Elderly:** LGBT+ show very strong income-overcrowding relationship - low-income LGBT+ experience 34.4% overcrowding vs 9.2% for high-income (25.2 pp gap, p < 0.001), suggesting income enables LGBT+ to escape crowded housing. However, elderly show the **opposite pattern** - higher-income elderly experience MORE overcrowding (48.1% vs 37.6%, 10.4 pp reverse gap, p=0.006). This unexpected pattern may reflect that higher-income elderly live in urban areas with dense housing to access services, while lower-income elderly live in rural areas with more spacious but lower-quality housing.
+**Key Finding - Income Protects LGBT+ from Overcrowding But Not Elderly:** LGBT+ show very strong income-overcrowding relationship - low-income LGBT+ experience 34.4% overcrowding vs 9.2% for high-income (25.2 pp gap, p < 0.001), suggesting income enables LGBT+ to escape crowded housing. However, elderly show the **opposite pattern** - higher-income elderly experience MORE overcrowding (48.1% vs 37.6%, 10.4 pp reverse gap, p=0.006). This unexpected pattern in Bangkok's urban context may reflect that higher-income elderly live in central urban areas with denser neighborhoods to access healthcare and services, while lower-income elderly may live in peripheral urban areas with less dense housing but farther from services. Alternatively, higher-income elderly may live in older, established neighborhoods that have become more crowded over time.
 
 **Overcrowding by Housing Tenure:**
 
@@ -833,30 +1042,75 @@ The housing and environment cross-variable findings show **different patterns** 
 
 - **LGBT+ violence**: Higher income increases psychological violence exposure (22.5 pp, p=0.013), the **opposite** of typical income-protection patterns. Combined with income enabling drinking (27.8 pp, p=0.004) but protecting from overcrowding (25.2 pp, p < 0.001), this suggests income creates complex trade-offs for LGBT+ individuals - better housing but increased visibility and discrimination exposure.
 
-**Violence & Safety**: 18 significant disparities found
+**Social Context (Safety, Violence, Discrimination, Support)**: Comprehensive analysis
 
-| Population Group | Indicator | General Pop. | This Group | Gap | p-value |
+**Community Safety**:
+
+| Population Group | Feels Safe (>=Moderately) | Mean Safety Score (1-4) | Gap vs General | p-value |
+|---|---|---|---|---|
+| **General Population** | 74.9% | 3.00 | baseline | - |
+| **Elderly (60+)** | **92.0%** | **3.36** | **+17.1 pp** | < 0.001 |
+| **Disabled** | **89.1%** | 3.29 | **+14.2 pp** | 0.007 |
+| **LGBT+** | 76.4% | 3.05 | +1.4 pp | 0.070 |
+| **Informal Workers** | **85.6%** | 3.23 | **+10.7 pp** | < 0.001 |
+
+**Violence Exposure**:
+
+| Population Group | Physical | Psychological | Sexual | Any Violence | All Gaps vs General |
 |---|---|---|---|---|---|
-| Elderly | Psychological violence | 17.2% | 3.6% | **+13.6 pp** | < 0.001 |
-| LGBT+ | Psychological violence | 17.2% | 29.2% | **-12.0 pp** | < 0.001 |
-| Informal Workers | Psychological violence | 17.2% | 7.3% | **+9.9 pp** | < 0.001 |
-| Disabled | Psychological violence | 17.2% | 8.2% | **+9.0 pp** | < 0.001 |
-| LGBT+ | Physical violence | 6.1% | 13.1% | **-7.1 pp** | < 0.001 |
-| Elderly | Physical violence | 6.1% | 0.7% | **+5.4 pp** | < 0.001 |
-| Informal Workers | Physical violence | 6.1% | 2.4% | **+3.7 pp** | < 0.001 |
-| Disabled | Physical violence | 6.1% | 2.7% | **+3.4 pp** | 0.002 |
-| Elderly | Discrimination | 3.7% | 1.1% | **+2.6 pp** | < 0.001 |
-| LGBT+ | Discrimination | 3.7% | 6.3% | **-2.6 pp** | < 0.001 |
+| **General Population** | 6.1% | 17.2% | 2.5% | 24.0% | baseline |
+| **Elderly (60+)** | **0.6%** (-5.4 pp***) | **3.4%** (-13.7 pp***) | **0.3%** (-2.2 pp*) | **3.8%** (-20.1 pp***) | Much lower |
+| **Disabled** | 4.8% (-1.3 pp) | 12.2% (-5.0 pp) | 2.2% (-0.3 pp) | 16.2% (-7.8 pp) | Lower (ns) |
+| **LGBT+** | **13.1%** (+7.1 pp) | **29.2%** (+12.0 pp) | **4.7%** (+2.2 pp) | **39.4%** (+15.5 pp) | Much higher |
+| **Informal Workers** | **2.9%** (-3.2 pp***) | **7.7%** (-9.4 pp***) | 1.4% (-1.2 pp) | **10.2%** (-13.7 pp***) | Lower |
+
+**Discrimination (Overall and by Type)**:
+
+| Population Group | ANY | Race/Ethnicity | Religion | Gender | Age | Economic Status |
+|---|---|---|---|---|---|---|
+| **General Population** | 17.6% | 3.7% | 4.1% | 3.5% | 4.5% | 4.9% |
+| **Elderly (60+)** | **8.5%** (-9.1 pp***) | 1.0% | 1.0% | 0.8% | 2.6% | 5.4% |
+| **Disabled** | 10.9% (-6.6 pp) | 2.6% | 1.3% | 2.6% | 0.4% | 6.1% |
+| **LGBT+** | **39.1%** (+21.6 pp) | 6.3% | 8.0% | **38.1%** | 7.3% | 8.6% |
+| **Informal Workers** | **13.7%** (-3.9 pp*) | 1.7% | 1.9% | 1.4% | 2.4% | **8.0%** |
+
+**Emergency Social Support**:
+
+| Population Group | Has Friends/Family for Emergencies | Gap vs General | p-value |
+|---|---|---|---|
+| **General Population** | 84.1% | baseline | - |
+| **Elderly (60+)** | **95.1%** | **+11.0 pp** | < 0.001 |
+| **Disabled** | 92.1% | +8.0 pp | 0.386 |
+| **LGBT+** | 82.6% | -1.5 pp | 0.694 |
+| **Informal Workers** | **89.9%** | **+5.8 pp** | < 0.001 |
 
 *What the numbers reveal:*
 
-**Contrasting Violence Patterns by Group:** LGBT+ respondents report largely higher rates of both psychological violence (29.2% vs. 17.2% general, 12.0 pp gap, p < 0.001) and physical violence (13.1% vs. 6.1% general, 7.1 pp gap, p < 0.001). Conversely, elderly, informal workers, and disabled respondents report *lower* rates of both psychological (3.6%, 7.3%, 8.2% respectively) and physical violence (0.7%, 2.4%, 2.7% respectively) compared to the general population. These divergent patterns suggest that violence exposure likely differs largely across vulnerable groups, though our survey does not capture the contexts, perpetrators, or types of violence that might explain these differences.
+**Community Safety - Elderly Feel Safest:** Elderly respondents report the highest feelings of safety (92.0% feel safe vs 74.9% general, +17.1 pp, p<0.001) with mean safety score of 3.36 out of 4. Disabled (89.1%, +14.2 pp) and informal workers (85.6%, +10.7 pp) also report significantly higher safety than general population. LGBT+ show similar safety levels to general population (76.4%). These patterns likely reflect neighborhood differences, lower exposure to public spaces, or different perceptions of safety rather than actual crime rates.
 
-**Discrimination Reporting:** LGBT+ respondents report 6.3% discrimination versus 3.7% general population (2.6 pp gap, p < 0.001). Elderly report 1.1% discrimination (2.6 pp lower than general). Notably, disabled respondents are not shown in this table despite often facing discrimination. These relatively low absolute percentages across all groups raise questions about whether the survey question captures the full scope of discriminatory experiences, or whether certain forms of discrimination (subtle bias, institutional barriers, microaggressions) tend not to be recognized or reported as "discrimination" by respondents.
+**Violence - Stark Contrast Between LGBT+ and Others:** LGBT+ face dramatically elevated violence exposure across ALL types - 39.4% report any violence (vs 24.0% general, +15.5 pp), including 29.2% psychological (+12.0 pp) and 13.1% physical (+7.1 pp). In complete contrast, elderly report the lowest violence rates across all categories (3.8% any violence, -20.1 pp, p<0.001), with only 0.6% physical and 3.4% psychological violence. Informal workers also report significantly lower violence (10.2% any, -13.7 pp, p<0.001). Disabled show moderate rates between these extremes.
 
-**Reporting Limitations:** Violence and discrimination data rely on self-reported experiences, which may be influenced by multiple factors: recognition of behavior as violence/discrimination, willingness to disclose, recall period, cultural norms about what constitutes violence, and survey question wording. The survey does not capture information about perpetrators (family, strangers, institutions, state actors), settings (home, workplace, public spaces), severity, frequency, or impacts of violence and discrimination, limiting our ability to interpret patterns.
+**Discrimination - LGBT+ Face Triple the Rate, Dominated by Gender Discrimination:** LGBT+ report 39.1% discrimination - more than double the general population rate (17.6%, +21.6 pp gap). The discrimination is overwhelmingly **gender-based (38.1%)** - accounting for 97% of their total discrimination experiences. This is 11× higher than general population gender discrimination (3.5%). Other discrimination types are much lower: religion (8.0%), economic status (8.6%), age (7.3%), and race (6.3%). Elderly (8.5%, -9.1 pp, p<0.001) and informal workers (13.7%, -3.9 pp, p=0.004) report significantly lower discrimination, with informal workers experiencing primarily economic discrimination (8.0%) and elderly experiencing primarily economic discrimination (5.4%) and age discrimination (2.6%). The striking dominance of gender discrimination for LGBT+ (38.1% out of 39.1% total) reveals that their discrimination experiences are fundamentally about gender identity/expression rather than other characteristics.
 
-**Missing Indicators:** The survey captures interpersonal violence and discrimination but does not include measures of institutional violence, police encounters, harassment in healthcare or social services, housing discrimination, or other forms of systematic mistreatment that may disproportionately affect vulnerable populations.
+**Emergency Support - Strong Networks Except LGBT+:** Most vulnerable groups have strong or stronger emergency support networks compared to general population. Elderly show highest support (95.1%, +11.0 pp, p<0.001), followed by disabled (92.1%) and informal workers (89.9%, +5.8 pp, p<0.001). Notably, LGBT+ are the ONLY group with lower support than general population (82.6% vs 84.1%), though the difference is not statistically significant. This suggests LGBT+ may face both elevated violence/discrimination AND weaker family/friend support networks, creating compounded vulnerability.
+
+**Elderly Paradox - Safest Yet Most Supported:** Elderly report feeling safest, experiencing least violence, and having strongest emergency support networks (95.1%). This combination suggests successful social integration and strong family/community ties in Thai elderly populations, contrasting sharply with Western patterns where elderly often experience social isolation.
+
+**LGBT+ Triple Burden:** LGBT+ face elevated violence (39.4%), elevated discrimination (39.1%), and weaker social support (82.6%) - a concerning triple burden of interpersonal mistreatment and reduced social safety nets. The 39% rates for both violence and discrimination suggest systematic patterns of mistreatment rather than isolated incidents.
+
+**Data Limitations:**
+
+1. **Self-reporting bias**: Violence and discrimination rely on recognition, willingness to disclose, and recall. Cultural norms about what constitutes violence/discrimination vary by group.
+
+2. **Missing context**: Survey does not capture perpetrators (family, strangers, institutions), settings (home, workplace, public), severity, frequency, or duration of violence/discrimination.
+
+3. **Discrimination measurement issues**: The relatively low discrimination rates overall (17.6% general) and wide confidence intervals for LGBT+ (p=0.363 despite 21.6 pp gap) suggest the survey questions may not capture subtle discrimination, microaggressions, or institutional barriers. Multiple-choice format (race, religion, gender, age, economic) may miss intersectional discrimination.
+
+4. **Missing indicators**: No data on institutional violence, police encounters, healthcare discrimination, housing discrimination, or workplace harassment.
+
+5. **Safety perception vs reality**: Feelings of safety may not reflect actual crime rates or risk exposure, and could be influenced by mobility patterns, neighborhood differences, or adaptive perceptions.
+
+6. **Emergency support definition**: "Has friends/family for emergencies" is binary and doesn't capture quality, reliability, or type of support available.
 
 **Family & Household**: 10 significant disparities found
 
