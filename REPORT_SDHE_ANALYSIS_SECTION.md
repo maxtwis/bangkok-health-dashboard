@@ -1094,6 +1094,74 @@ The housing and environment cross-variable findings show **different patterns** 
 
 **Emergency Support - Strong Networks Except LGBT+:** Most vulnerable groups have strong or stronger emergency support networks compared to general population. Elderly show highest support (95.1%, +11.0 pp, p<0.001), followed by disabled (92.1%) and informal workers (89.9%, +5.8 pp, p<0.001). Notably, LGBT+ are the ONLY group with lower support than general population (82.6% vs 84.1%), though the difference is not statistically significant. This suggests LGBT+ may face both elevated violence/discrimination AND weaker family/friend support networks, creating compounded vulnerability.
 
+**Cross-Variable Analysis: Discrimination/Violence and Substance Use**
+
+To test whether discrimination and violence relate to substance use (potential stress-coping mechanism) and whether substance use increases exposure to discrimination/violence (visibility/social context hypothesis), we analyzed bidirectional relationships:
+
+**Discrimination → Smoking (Stress-Coping Hypothesis)**:
+
+| Population Group | With Discrimination | Without Discrimination | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 21.2% smoke | 18.0% smoke | **+3.2 pp** | 0.293 | ✗ No effect |
+| **Elderly (60+)** | 19.8% smoke | 13.2% smoke | **+6.6 pp** | 0.005 | ✓✓ Strong |
+| **Disabled** | 32.0% smoke | 21.6% smoke | **+10.4 pp** | 0.357 | ✗ No effect (small n) |
+| **LGBT+** | **22.8% smoke** | **14.6% smoke** | **+8.1 pp** | **0.009** | ✓✓ **Strong** |
+| **Informal Workers** | 15.4% smoke | 13.8% smoke | **+1.6 pp** | 0.638 | ✗ No effect |
+
+**Finding:** LGBT+ and elderly who experience discrimination are significantly more likely to smoke, supporting the stress-coping hypothesis.
+
+**Smoking → Discrimination (Visibility Hypothesis)**:
+
+| Population Group | Smokers | Non-Smokers | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 20.1% discriminated | 17.0% discriminated | **+3.1 pp** | 0.293 | ✗ No effect |
+| **Elderly (60+)** | 12.2% discriminated | 7.9% discriminated | **+4.3 pp** | 0.005 | ✓✓ Strong |
+| **Disabled** | 15.4% discriminated | 9.6% discriminated | **+5.8 pp** | 0.357 | ✗ No effect (small n) |
+| **LGBT+** | **50.0% discriminated** | **36.8% discriminated** | **+13.2 pp** | **0.009** | ✓✓ **Strong** |
+| **Informal Workers** | 15.1% discriminated | 13.5% discriminated | **+1.6 pp** | 0.638 | ✗ No effect |
+
+**Finding:** LGBT+ smokers face dramatically higher discrimination (50.0% vs 36.8%), suggesting smoking increases visibility and/or exposes them to discriminatory social contexts.
+
+**Smoking → Violence (LGBT+ Only)**:
+
+| Population Group | Smokers Violence Rate | Non-Smokers Violence Rate | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 27.5% | 23.2% | **+4.3 pp** | 0.181 | ✗ No effect |
+| **Elderly (60+)** | 5.1% | 3.6% | **+1.5 pp** | 0.172 | ✗ No effect |
+| **Disabled** | 21.2% | 14.7% | **+6.5 pp** | 0.369 | ✗ No effect (small n) |
+| **LGBT+** | **49.2%** | **37.3%** | **+11.9 pp** | **0.020** | ✓ **Significant** |
+| **Informal Workers** | 9.7% | 10.3% | **-0.6 pp** | 0.892 | ✗ No effect |
+
+**Finding:** LGBT+ smokers face significantly higher violence exposure (49.2% vs 37.3%), unique among all groups.
+
+**Drinking → Discrimination (Marginal Effects)**:
+
+| Population Group | Drinkers | Non-Drinkers | Gap | p-value | Effect |
+|---|---|---|---|---|---|
+| **General Population** | 18.0% discriminated | 17.2% discriminated | **+0.8 pp** | 0.760 | ✗ No effect |
+| **Elderly (60+)** | 9.4% discriminated | 8.3% discriminated | **+1.1 pp** | 0.483 | ✗ No effect |
+| **Disabled** | 12.5% discriminated | 10.3% discriminated | **+2.2 pp** | 0.809 | ✗ No effect |
+| **LGBT+** | 39.6% discriminated | 38.6% discriminated | **+1.0 pp** | 0.844 | ✗ No effect |
+| **Informal Workers** | 16.0% discriminated | 12.2% discriminated | **+3.8 pp** | 0.061 | ✗ Marginal |
+
+**Finding:** Drinking shows weaker relationships with discrimination than smoking. Informal workers show marginal effect (p=0.061).
+
+**Key Insight - LGBT+ Vicious Cycle:** LGBT+ show unique **bidirectional relationships** between smoking and discrimination/violence:
+
+1. **Discrimination → Smoking** (+8.1 pp, p=0.009): LGBT+ use smoking to cope with discrimination stress
+2. **Smoking → Discrimination** (+13.2 pp, p=0.009): Smoking increases visibility and/or exposes LGBT+ to discriminatory social contexts (smoking areas, bars, public spaces)
+3. **Smoking → Violence** (+11.9 pp, p=0.020): LGBT+ smokers face nearly 50% violence exposure
+
+This creates a **vicious cycle**: Discrimination drives smoking as stress-coping → Smoking increases visibility/exposure → More discrimination and violence → More stress-coping smoking. This pattern is **unique to LGBT+** - no other vulnerable group shows significant bidirectional substance-discrimination relationships.
+
+**Interpretation Caution:** Cross-sectional data cannot establish causation. Alternative explanations include:
+- **Selection effects**: LGBT+ who smoke may have different social networks or behaviors that also increase discrimination exposure
+- **Third variables**: Personality traits, mental health, or socioeconomic factors could drive both smoking and discrimination exposure
+- **Reverse causation uncertainty**: We cannot determine which came first - smoking or discrimination
+- **Social context confounding**: LGBT+ smokers may frequent different venues (bars, clubs) where both smoking and discrimination/violence are more common
+
+**Strengths:** Bidirectional analysis provides stronger evidence than single-direction tests. Large sample sizes for LGBT+ (n=685) and consistency across multiple outcomes (discrimination AND violence) strengthen findings.
+
 **Elderly Paradox - Safest Yet Most Supported:** Elderly report feeling safest, experiencing least violence, and having strongest emergency support networks (95.1%). This combination suggests successful social integration and strong family/community ties in Thai elderly populations, contrasting sharply with Western patterns where elderly often experience social isolation.
 
 **LGBT+ Triple Burden:** LGBT+ face elevated violence (39.4%), elevated discrimination (39.1%), and weaker social support (82.6%) - a concerning triple burden of interpersonal mistreatment and reduced social safety nets. The 39% rates for both violence and discrimination suggest systematic patterns of mistreatment rather than isolated incidents.
@@ -1176,108 +1244,222 @@ Comparison of top 5 performing districts versus bottom 5 districts revealed syst
 
 ### 5.4 Intersection Group Analysis
 
-Analysis of individuals with multiple marginalized identities reveals how vulnerabilities compound beyond simple addition. The following tables show key health equity indicators for intersection groups compared to the general population.
+Analysis of individuals with multiple marginalized identities reveals how vulnerabilities compound beyond simple addition. This section provides comprehensive domain-by-domain analysis across all 9 SDHE domains for intersection groups, similar to the structure of section 5.2.2 for individual population groups.
 
-**Elderly + Disabled** (n=39)
+**Note on Sample Sizes**: The analysis examines TRUE intersections (individuals who belong to BOTH categories simultaneously, identified BEFORE priority classification). For example, "Elderly+Disabled" includes all 335 people who are both 60+ years old AND have disability status, before LGBT+ priority is applied. This allows us to understand the full health profile of people with multiple marginalized identities.
 
-| Indicator | General Pop. | Elderly Only | Disabled Only | Elderly + Disabled | Compounded Gap | p-value |
-|---|---|---|---|---|---|---|
-| Monthly income | 30,543 THB | 14,770 THB | 20,252 THB | **10,645 THB** | **-19,898 THB (-65.1%)** | < 0.001 |
-| Employment rate | 92.6% | 52.2% | 39.9% | **33.3%** | **-59.3 pp** | < 0.001 |
-| Has occupation welfare | 81.9% | 8.8% | 46.7% | **-** | **-** | - |
-| Food insecurity | 13.7% | 4.7% | - | **7.9%** | **-5.8 pp** | 0.003 |
-| Violence exposure | 17.2% | 3.6% | 8.2% | **11.9%** | **-5.3 pp** | < 0.001 |
-
-*What the numbers reveal:*
-
-**Compounding Economic Vulnerability:** Elderly individuals with disabilities tend to face the most severe economic disadvantage of all intersection groups. Their average monthly income of 10,645 THB is 65.1% lower than the general population (19,898 THB gap) and 28.9% lower than elderly without disabilities (4,321 THB gap, p < 0.001). Only 33.3% are employed compared to 52.2% of elderly without disabilities (18.9 pp gap) and 39.9% of non-elderly disabled (6.6 pp gap). This dual burden likely creates a multiplicative rather than additive effect - being both elderly AND disabled tends to compound employment barriers beyond what either identity alone predicts.
-
-**Paradoxical Food Security:** Surprisingly, elderly+disabled show lower food insecurity (7.9%) than the general population (13.7%), despite having the lowest incomes. This 5.8 pp gap (p=0.003) mirrors the pattern observed for elderly-only populations and likely reflects similar factors: potential access to targeted food assistance programs, lower household size reducing food needs, or different reporting thresholds for what constitutes food insecurity.
-
-**Violence and Discrimination:** Elderly+disabled report 11.9% violence exposure, which is lower than general population (17.2%, 5.3 pp gap, p < 0.001) but notably higher than elderly-only (3.6%) or disabled-only (8.2%) groups. This suggests that while age may provide some protection from violence, disability status tends to increase vulnerability even among elderly populations.
+**Note on Included Intersections**: Only intersections with sufficient sample sizes (n≥40) are included for comprehensive analysis. Small intersections (Elderly+LGBT n=8, Disabled+LGBT n=24) have insufficient statistical power for reliable domain analysis.
 
 ---
 
-**Elderly + Informal Workers** (n=795)
+**Elderly + Disabled** (n=335)
 
-| Indicator | General Pop. | Elderly Only | Informal Only | Elderly + Informal | Compounded Gap | p-value |
+This group includes all individuals who are both 60+ years old AND have disability status.
+
+**Employment & Income Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
 |---|---|---|---|---|---|---|
-| Monthly income | 30,543 THB | 14,770 THB | 23,922 THB | **14,273 THB** | **-16,270 THB (-53.3%)** | < 0.001 |
-| Working hours/week | 48.0 hours | - | 48.0 hours | **8.2 hours** | **-39.8 hours (-82.8%)** | < 0.001 |
-| Has employment contract | 95.9% | 8.4% | 0.0% | **0.0%** | **-95.9 pp** | < 0.001 |
-| Has occupation welfare | 81.9% | 8.8% | 10.6% | **8.7%** | **-73.2 pp** | < 0.001 |
-| Occupation injury | 1.3% | - | 3.2% | **1.3%** | **0.0 pp** | n.s. |
-| Food insecurity | 13.7% | 4.7% | 7.2% | **4.1%** | **-9.6 pp** | < 0.001 |
-| Violence exposure | 17.2% | 3.6% | 7.3% | **11.6%** | **-5.6 pp** | < 0.001 |
+| Employment rate | 78.9% | 38.2% | 43.7% | **0.9%** | -78.0 pp | < 0.001 |
+| Monthly income | 30,543 THB | 14,718 THB | 22,776 THB | **12,000 THB** | -18,543 THB | n.s. |
+| Has contract | 95.9% | 8.3% | 59.4% | **100.0%** | +4.1 pp | n.s. |
+| Has welfare | 81.9% | 8.7% | 52.8% | **33.3%** | -48.6 pp | n.s. |
+| Occupation injury | 8.3% | 4.0% | 5.7% | **3.3%** | -5.0 pp | 0.002 |
 
-*What the numbers reveal:*
+*What the numbers reveal:* Elderly+disabled show virtually zero employment (0.9% vs 78.9% general, 78.0 pp gap, p < 0.001), representing near-total exclusion from the labor force. This is lower than either elderly alone (38.2%) or disabled alone (43.7%), demonstrating severe compounding. Among the tiny fraction who work (n=3), they surprisingly show 100% contract coverage, though this likely reflects selection bias (only the most privileged elderly+disabled can secure formal employment). The extremely low employment explains why income comparisons lack statistical power despite large absolute gaps.
 
-**The Informal Elderly: Semi-Retirement in Precarity:** Elderly informal workers represent a distinct pattern of semi-retirement characterized by considerably reduced working hours (8.2 hours/week compared to 48.0 for non-elderly informal workers, 82.8% reduction, p < 0.001). Despite working only 8 hours weekly, they earn 14,273 THB monthly - nearly identical to elderly-only average (14,770 THB), suggesting income sources beyond wages (pensions, savings, family support). However, their informal status means zero contract coverage (0.0%) and minimal welfare access (8.7%), leaving them without formal protections during their working years.
+**Education & Skills Domain:**
 
-**No Additional Employment Protection Deficit:** Both informal-only (0.0%) and elderly+informal (0.0%) show zero contract coverage, meaning the intersection creates no additional gap beyond informal status alone. Similarly, occupation welfare rates are nearly identical (10.6% informal-only vs 8.7% elderly+informal), indicating that informal employment is the dominant factor determining employment protections, with age playing minimal additional role.
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Primary education or less | 1.1% | 10.8% | 15.3% | **19.7%** | +18.6 pp | < 0.001 |
+| Bachelor's degree+ | 83.1% | 18.1% | 45.0% | **9.9%** | -73.3 pp | < 0.001 |
+| Can read | 99.4% | 95.5% | 84.3% | **83.9%** | -15.5 pp | < 0.001 |
+| Can write | 99.4% | 94.3% | 82.5% | **76.7%** | -22.7 pp | < 0.001 |
+| Can do math | 99.6% | 94.6% | 80.8% | **77.0%** | -22.6 pp | < 0.001 |
+| Has training | 28.7% | 15.9% | 15.3% | **3.9%** | -24.9 pp | < 0.001 |
 
-**Injury Risk Normalization:** Elderly+informal workers show 1.3% occupation injury rates, significantly lower than informal-only (3.2%, 1.9 pp gap, p=0.049). This likely reflects reduced working hours (82.8% less) proportionally reducing injury exposure rather than safer work conditions. The low absolute injury rate despite informal employment suggests that elderly individuals may select less physically demanding informal work or that injury reporting tends to decrease with age.
+*What the numbers reveal:* Elderly+disabled face severe educational disadvantages across all metrics. Nearly 20% have only primary education (vs 1.1% general), while less than 10% have bachelor's degrees (vs 83.1% general, 73.3 pp gap). Literacy and numeracy deficits are substantial: 22-23 pp lower than general population for writing and math skills. Training access is exceptionally low at 3.9% (vs 28.7% general, 24.9 pp gap), suggesting this group has been largely excluded from both formal education and adult skill development opportunities. The compounding effects are clear: elderly+disabled show worse outcomes than either group alone across all education indicators.
+
+**Healthcare Access Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Skipped medical care (cost) | 16.0% | 11.3% | 21.4% | **18.5%** | +2.5 pp | 0.279 |
+| Had oral health symptoms | 31.4% | 21.7% | 30.6% | **14.6%** | -16.8 pp | < 0.001 |
+| Oral health access issue | 37.8% | 34.9% | 54.3% | **53.1%** | +15.3 pp | 0.038 |
+
+*What the numbers reveal:* Healthcare access shows mixed patterns. Medical care skipping (18.5%) falls between elderly-only (11.3%) and disabled-only (21.4%), suggesting elderly status may provide some protection (possibly through pensions or family support), though the gap from general population is not significant. Oral health presents contradictory findings: elderly+disabled report dramatically fewer symptoms (14.6% vs 31.4% general, 16.8 pp gap, p < 0.001) yet face significantly higher access barriers (53.1% vs 37.8%, 15.3 pp gap, p=0.038). This paradox likely reflects normalization - elderly+disabled may not recognize or report dental problems as "symptoms," instead accepting tooth loss and oral deterioration as inevitable, similar to the self-treatment pattern observed for elderly in section 5.2.2.
+
+**Chronic Diseases Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Has any chronic disease | 34.9% | 79.0% | 55.9% | **93.4%** | +58.5 pp | < 0.001 |
+| Hypertension | 8.1% | 43.0% | 21.8% | **42.8%** | +34.7 pp | < 0.001 |
+| Diabetes | 10.2% | 76.6% | 26.4% | **74.8%** | +64.6 pp | < 0.001 |
+| Kidney disease | 5.1% | 2.9% | 10.9% | **3.5%** | -1.6 pp | 0.237 |
+
+*What the numbers reveal:* Elderly+disabled show catastrophic chronic disease burden: 93.4% have at least one chronic condition (vs 34.9% general, 58.5 pp gap, p < 0.001). Three-quarters have diabetes (74.8% vs 10.2% general, 64.6 pp gap) and hypertension (42.8% vs 8.1%, 34.7 pp gap). These rates approach the maximums observed in the entire survey, suggesting this intersection represents the most medically complex population segment. The near-universal disease burden (93.4%) likely creates significant healthcare needs that intersect with the access barriers documented above, creating a care crisis for this population.
+
+**Health Behaviors Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 20.9% | 20.5% | **7.8%** | -23.6 pp | < 0.001 |
+| Current smoker | 29.0% | 8.4% | 16.6% | **5.7%** | -23.4 pp | < 0.001 |
+| Current drinker | 45.6% | 15.7% | 27.9% | **9.6%** | -36.1 pp | < 0.001 |
+
+*What the numbers reveal:* Elderly+disabled show dramatically lower rates of all health behaviors - both protective (exercise) and harmful (smoking, drinking). Only 7.8% exercise regularly (vs 31.3% general, 23.6 pp gap), likely reflecting physical limitations from combined age and disability. Smoking (5.7%) and drinking (9.6%) are also very low, 23-36 pp below general population. While low substance use appears positive, the context matters: these patterns likely reflect physical frailty preventing substance use rather than healthy choices. The severe exercise deficit (7.8%) is concerning given the high chronic disease burden (93.4%), as regular physical activity could help manage these conditions if accessible adaptations were available.
+
+**Housing & Environment Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 48.7% | 20.1% | **38.5%** | +13.3 pp | < 0.001 |
+| Overcrowded (>2 per room) | 65.4% | 65.8% | 69.9% | **64.8%** | -0.6 pp | 0.831 |
+| Pollution health problems | 62.3% | 42.5% | 54.1% | **47.5%** | -14.8 pp | < 0.001 |
+
+*What the numbers reveal:* Elderly+disabled show higher homeownership (38.5% vs 25.2% general, 13.3 pp gap, p < 0.001), likely reflecting lifetime accumulation and aging-in-place, though this rate is lower than elderly-only (48.7%). Overcrowding shows no difference from general population (64.8% vs 65.4%). Pollution health problems are significantly lower (47.5% vs 62.3%, 14.8 pp gap, p < 0.001), though this pattern paradoxically exists despite worse health overall - potentially because elderly+disabled spend less time outdoors or in polluted work environments, or because they attribute health problems to age/disability rather than pollution.
+
+**Social Context Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 3.8% | 16.2% | **3.9%** | -20.1 pp | < 0.001 |
+| Physical violence | 6.1% | 0.6% | 4.8% | **0.9%** | -5.2 pp | < 0.001 |
+| Psychological violence | 17.2% | 3.4% | 12.2% | **3.6%** | -13.6 pp | < 0.001 |
+| Any discrimination | 17.6% | 8.5% | 10.9% | **8.1%** | -9.5 pp | < 0.001 |
+| Feels safe in community | 74.9% | 92.0% | 89.1% | **90.1%** | +15.2 pp | < 0.001 |
+| Has emergency support | 84.1% | 95.1% | 92.1% | **94.9%** | +10.8 pp | < 0.001 |
+
+*What the numbers reveal:* Elderly+disabled show dramatically lower violence exposure (3.9% vs 24.0% general, 20.1 pp gap) and discrimination (8.1% vs 17.6%, 9.5 pp gap), all p < 0.001. Paradoxically, they feel significantly safer (90.1% vs 74.9%, 15.2 pp gap) and have stronger emergency support networks (94.9% vs 84.1%, 10.8 pp gap). This protective pattern likely reflects social isolation - elderly+disabled may have less exposure to conflict-prone public spaces, workplace interactions, or community activities where violence and discrimination occur. The strong emergency support (94.9%) suggests family/community recognition of this population's care needs, providing a critical safety net given their severe employment and income deficits.
+
+**Family & Household Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 3.9 | 4.0 | **4.0** | -0.2 | 0.287 |
+| Children in household | 0.6 | 0.1 | 0.3 | **0.1** | -0.6 | < 0.001 |
+| Elderly in household | 1.0 | 3.9 | 0.9 | **2.7** | +1.7 | 0.051 |
+| Workers in household | 2.6 | 2.2 | 2.6 | **2.5** | -0.1 | 0.512 |
+
+*What the numbers reveal:* Elderly+disabled live in households with virtually no children (0.1 vs 0.6 general, 0.6 person gap, p < 0.001), likely reflecting completed childbearing and children moving out. They live in households with more elderly members (2.7 vs 1.0 general, approaching significance p=0.051), suggesting elderly couples or siblings aging together. Worker counts are similar to general population (2.5 vs 2.6), indicating that despite the elderly+disabled individual not working (0.9% employment), they typically live with 2-3 working-age household members who may provide income support.
+
+**Food Security Domain:**
+
+| Indicator | General | Elderly Only | Disabled Only | Elderly+Disabled | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 4.6% | 14.4% | **8.4%** | -5.3 pp | 0.009 |
+| Skipped meals | 7.6% | 3.1% | 8.7% | **5.7%** | -1.9 pp | 0.222 |
+
+*What the numbers reveal:* Elderly+disabled show significantly lower food insecurity worry (8.4% vs 13.7% general, 5.3 pp gap, p=0.009), despite having the lowest incomes documented earlier (12,000 THB vs 30,543 general). This paradox mirrors the pattern for elderly-only populations and likely reflects similar factors: access to targeted food assistance programs, lower household size reducing food needs, different reporting thresholds, or family support. Meal skipping shows a similar protective pattern (5.7% vs 7.6%) though not reaching significance. The disconnect between severe economic disadvantage and lower food insecurity suggests that income alone may not predict food security for elderly+disabled populations.
 
 ---
 
-**Elderly + LGBT+** (n=11)
+**Elderly + Informal Workers** (TRUE intersection n=992)
 
-| Indicator | General Pop. | Elderly Only | LGBT+ Only | Elderly + LGBT+ | Compounded Gap | p-value |
+This group includes all individuals who are both 60+ years old AND working informally (employed without contract).
+
+**Employment & Income Domain:**
+
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
 |---|---|---|---|---|---|---|
-| Monthly income | 30,543 THB | 14,770 THB | 26,848 THB | **18,803 THB** | **-11,740 THB (-38.4%)** | 0.016 |
+| Employment rate | 78.9% | 38.2% | 100.0% | **100.0%** | +21.1 pp | < 0.001 |
+| Monthly income | 30,543 THB | 14,718 THB | 21,774 THB | **14,387 THB** | -16,157 THB | < 0.001 |
+| Has contract | 95.9% | 8.3% | 0.0% | **0.0%** | -95.9 pp | < 0.001 |
+| Has welfare | 81.9% | 8.7% | 13.6% | **4.3%** | -77.6 pp | < 0.001 |
+| Working hours/week | 9.1 | 7.9 | 8.8 | **7.9** | -1.2 | < 0.001 |
+| Occupation injury | 8.3% | 4.0% | 6.4% | **4.4%** | -3.9 pp | < 0.001 |
 
-*What the numbers reveal:*
+*What the numbers reveal:* Elderly+informal workers are by definition 100% employed (vs 78.9% general, 21.1 pp gap) but earn only 14,387 THB monthly - 53% less than general population (16,157 THB gap, p < 0.001) and nearly identical to elderly-only average (14,718 THB). Despite working 7.9 hours weekly (vs 9.1 general, 1.2 hour gap, p < 0.001) - indicating semi-retirement - they earn similar amounts to non-working elderly, suggesting income sources beyond wages (pensions, savings, family support). Zero have contracts (95.9 pp gap from general) and only 4.3% have welfare (77.6 pp gap), representing complete exclusion from formal labor protections during their working years. Occupation injury rates are significantly lower (4.4% vs 8.3%, 3.9 pp gap, p < 0.001), likely reflecting reduced working hours proportionally reducing exposure.
 
-**Limited Statistical Power:** With only 11 respondents, this intersection group has insufficient sample size for robust statistical analysis across multiple indicators. Only income shows statistical significance.
+**Education & Skills Domain:**
 
-**Income Patterns:** Elderly+LGBT+ earn 18,803 THB monthly, which is 38.4% lower than general population (11,740 THB gap, p=0.016). Notably, their income (18,803 THB) falls between elderly-only (14,770 THB) and LGBT+-only (26,848 THB), suggesting that LGBT+ identity may partially buffer against age-related income decline, or that elderly LGBT+ individuals tend to represent a selected population with different socioeconomic characteristics than either group alone. However, the small sample size prevents definitive interpretation.
-
----
-
-**Disabled + Informal Workers** (n=77)
-
-| Indicator | General Pop. | Disabled Only | Informal Only | Disabled + Informal | Compounded Gap | p-value |
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
 |---|---|---|---|---|---|---|
-| Monthly income | 30,543 THB | 20,252 THB | 23,922 THB | **15,030 THB** | **-15,513 THB (-50.8%)** | < 0.001 |
-| Skipped medical care (cost) | 28.9% | 25.5% | 23.7% | **41.7%** | **+12.8 pp** | 0.003 |
-| Violence exposure | 17.2% | 8.2% | 7.3% | **11.1%** | **-6.1 pp** | 0.008 |
+| Primary education or less | 1.1% | 10.8% | 2.6% | **9.2%** | +8.1 pp | < 0.001 |
+| Bachelor's degree+ | 83.1% | 18.1% | 44.7% | **13.0%** | -70.1 pp | < 0.001 |
+| Can read | 99.4% | 95.5% | 99.1% | **97.5%** | -1.9 pp | < 0.001 |
+| Can write | 99.4% | 94.3% | 98.6% | **97.4%** | -2.0 pp | < 0.001 |
+| Can do math | 99.6% | 94.6% | 99.2% | **98.4%** | -1.2 pp | 0.002 |
+| Has training | 28.7% | 15.9% | 17.7% | **15.8%** | -12.9 pp | < 0.001 |
 
-*What the numbers reveal:*
+*What the numbers reveal:* Elderly+informal workers face substantial educational disadvantages: 9.2% have only primary education (vs 1.1% general, 8.1 pp gap) while only 13.0% have bachelor's degrees (vs 83.1% general, 70.1 pp gap, all p < 0.001). However, literacy and numeracy skills remain very high (97-98% can read, write, and do math), with only small gaps from general population (1.2-2.0 pp, all p < 0.01). This suggests functional literacy is preserved despite low formal educational attainment - possibly reflecting experiential learning over long working lives. Training access is low (15.8% vs 28.7% general, 12.9 pp gap, p < 0.001), nearly identical to elderly-only (15.9%), indicating age is the primary driver of training exclusion regardless of employment status.
 
-**Compounded Healthcare Access Barriers:** Disabled+informal workers tend to face the highest medical care skipping rate (41.7%) among disability intersections - significantly higher than disabled-only (25.5%, 16.2 pp gap) or informal-only (23.7%, 18.0 pp gap), and 12.8 pp higher than general population (p=0.003). This multiplicative effect demonstrates that informal employment likely compounds disability-related healthcare access barriers. While disabled individuals with formal employment may have occupation-based health benefits or more stable incomes to cover out-of-pocket costs, disabled informal workers tend to face dual disadvantages: no employer health support AND income precarity.
+**Healthcare Access Domain:**
 
-**Income Penalty:** At 15,030 THB monthly, disabled+informal workers earn 50.8% less than general population (15,513 THB gap, p < 0.001). This represents a larger income deficit than either disabled-only (33.7% lower) or informal-only (21.7% lower), indicating compounding effects. The intersection likely creates additional economic vulnerability beyond single-identity predictions.
-
-**Violence Patterns:** Like other intersections involving disability, disabled+informal workers show lower violence exposure (11.1%) than general population (17.2%, 6.1 pp gap, p=0.008), yet higher than single-identity groups (disabled 8.2%, informal 7.3%). This may reflect social isolation reducing overall conflict exposure.
-
----
-
-**Disabled + LGBT+** (n=29)
-
-| Indicator | General Pop. | Disabled Only | LGBT+ Only | Disabled + LGBT+ | Compounded Gap | p-value |
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
 |---|---|---|---|---|---|---|
-| Discrimination | 3.7% | - | 6.3% | **13.8%** | **+10.1 pp** | 0.025 |
+| Skipped medical care (cost) | 16.0% | 11.3% | 13.8% | **13.5%** | -2.5 pp | 0.091 |
+| Had oral health symptoms | 31.4% | 21.7% | 26.3% | **23.1%** | -8.3 pp | < 0.001 |
+| Oral health access issue | 37.8% | 34.9% | 41.1% | **32.8%** | -5.0 pp | 0.205 |
 
-*What the numbers reveal:*
+*What the numbers reveal:* Elderly+informal show marginally lower medical care skipping (13.5% vs 16.0% general, 2.5 pp gap, p=0.091 approaching significance), falling between elderly-only (11.3%) and informal-only (13.8%). This suggests elderly status provides some protection even for informal workers, possibly through pensions or family support offsetting income precarity. Oral health symptoms are significantly lower (23.1% vs 31.4%, 8.3 pp gap, p < 0.001), likely reflecting the normalization pattern documented earlier rather than genuinely better oral health. Oral access issues are slightly lower than general population (32.8% vs 37.8%) but not significantly so, and lower than informal-only (41.1%), again suggesting elderly status may provide some access buffer.
 
-**Extreme Discrimination Exposure:** Disabled+LGBT+ individuals report 13.8% discrimination - considerably higher than either disabled-only or LGBT+-only populations (6.3%). This 10.1 pp gap compared to general population (p=0.025) represents more than double the LGBT+-only discrimination rate, suggesting that the intersection of disability and LGBT+ identity likely creates particularly severe discrimination experiences. This multiplicative effect indicates that individuals with both identities tend to face discrimination contexts that neither group experiences in isolation.
+**Chronic Diseases Domain:**
 
-**Sample Size Limitations:** With only 29 respondents, statistical power is limited. Only discrimination shows significance, though other indicators (healthcare access, income, violence) likely differ but cannot be detected with this sample size.
-
----
-
-**LGBT+ + Informal Workers** (n=172)
-
-| Indicator | General Pop. | LGBT+ Only | Informal Only | LGBT+ + Informal | Compounded Gap | p-value |
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
 |---|---|---|---|---|---|---|
-| Monthly income | 30,543 THB | 26,848 THB | 23,922 THB | **21,509 THB** | **-9,034 THB (-29.6%)** | < 0.001 |
-| Skipped medical care (cost) | 28.9% | 43.6% | 23.7% | **34.7%** | **+5.8 pp** | 0.036 |
+| Has any chronic disease | 34.9% | 79.0% | 37.2% | **71.9%** | +37.0 pp | < 0.001 |
+| Hypertension | 8.1% | 43.0% | 19.0% | **40.0%** | +31.9 pp | < 0.001 |
+| Diabetes | 10.2% | 76.6% | 32.6% | **74.2%** | +64.0 pp | < 0.001 |
+| Kidney disease | 5.1% | 2.9% | 5.4% | **1.8%** | -3.3 pp | < 0.001 |
 
-*What the numbers reveal:*
+*What the numbers reveal:* Elderly+informal workers show very high chronic disease burden: 71.9% have at least one condition (vs 34.9% general, 37.0 pp gap, p < 0.001), three-quarters have diabetes (74.2% vs 10.2%, 64.0 pp gap), and 40.0% have hypertension (vs 8.1%, 31.9 pp gap). These rates closely match elderly-only patterns (79.0% chronic disease, 76.6% diabetes, 43.0% hypertension), suggesting age is the dominant driver of chronic disease burden, with informal employment status playing minimal additional role. Kidney disease is significantly lower (1.8% vs 5.1%, 3.3 pp gap, p < 0.001), potentially reflecting survival bias (elderly with kidney disease may be unable to continue working).
 
-**Intersecting Economic Vulnerabilities:** LGBT++informal workers earn 21,509 THB monthly, 29.6% lower than general population (9,034 THB gap, p < 0.001). This is lower than LGBT+-only (26,848 THB, 19.9% gap) and informal-only (23,922 THB, 11.6% gap), showing additive income penalties. The intersection suggests that LGBT+ individuals who work informally may face compounded barriers in accessing better-paying formal employment - potentially due to discrimination that may limit formal sector opportunities.
+**Health Behaviors Domain:**
 
-**Healthcare Access:** LGBT+ + informal show 34.7% medical care skipping, 5.8 pp higher than general population (p=0.036). Interestingly, this rate (34.7%) is lower than LGBT+-only (43.6%), suggesting that informal employment may not compound healthcare access barriers as severely for LGBT+ individuals as for disabled individuals. However, the rate remains largely higher than informal-only (23.7%), indicating that LGBT+ identity is the dominant driver of healthcare access challenges in this intersection.
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 20.9% | 21.2% | **21.8%** | -9.6 pp | < 0.001 |
+| Current smoker | 29.0% | 8.4% | 26.9% | **11.9%** | -17.2 pp | < 0.001 |
+| Current drinker | 45.6% | 15.7% | 38.5% | **18.6%** | -27.0 pp | < 0.001 |
+
+*What the numbers reveal:* Elderly+informal show exercise rates (21.8%) similar to both elderly-only (20.9%) and informal-only (21.2%), but significantly lower than general population (31.3%, 9.6 pp gap, p < 0.001). Substance use closely follows elderly-only patterns rather than informal-only: smoking (11.9% vs 8.4% elderly-only, 26.9% informal-only) and drinking (18.6% vs 15.7% elderly-only, 38.5% informal-only) are both substantially lower than informal-only workers, suggesting age-related health concerns or physical limitations dominate behavioral choices despite continued employment. All gaps from general population are highly significant (p < 0.001), with smoking 17.2 pp lower and drinking 27.0 pp lower.
+
+**Housing & Environment Domain:**
+
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 48.7% | 24.1% | **44.8%** | +19.6 pp | < 0.001 |
+| Overcrowded (>2 per room) | 65.4% | 65.8% | 62.8% | **62.4%** | -3.0 pp | 0.137 |
+| Pollution health problems | 62.3% | 42.5% | 53.6% | **42.0%** | -20.2 pp | < 0.001 |
+
+*What the numbers reveal:* Elderly+informal show significantly higher homeownership (44.8% vs 25.2% general, 19.6 pp gap, p < 0.001), closely matching elderly-only patterns (48.7%). This suggests lifetime accumulation and aging-in-place, with informal employment status having minimal effect on homeownership among elderly. Overcrowding shows no significant difference from general population (62.4% vs 65.4%, p=0.137). Pollution health problems are dramatically lower (42.0% vs 62.3%, 20.2 pp gap, p < 0.001), matching elderly-only (42.5%) and substantially lower than informal-only (53.6%), suggesting age-related factors (less outdoor/workplace exposure, health attribution to aging) dominate pollution health reporting regardless of employment status.
+
+**Social Context Domain:**
+
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 3.8% | 10.2% | **3.9%** | -20.0 pp | < 0.001 |
+| Physical violence | 6.1% | 0.6% | 2.9% | **0.5%** | -5.6 pp | < 0.001 |
+| Psychological violence | 17.2% | 3.4% | 7.7% | **3.5%** | -13.7 pp | < 0.001 |
+| Any discrimination | 17.6% | 8.5% | 13.7% | **8.6%** | -9.0 pp | < 0.001 |
+| Feels safe in community | 74.9% | 92.0% | 85.6% | **93.0%** | +18.1 pp | < 0.001 |
+| Has emergency support | 84.1% | 95.1% | 89.9% | **94.7%** | +10.6 pp | < 0.001 |
+
+*What the numbers reveal:* Elderly+informal closely mirror elderly-only social context patterns, showing dramatic protection from violence (3.9% vs 24.0% general, 20.0 pp gap, p < 0.001) and discrimination (8.6% vs 17.6%, 9.0 pp gap), while feeling significantly safer (93.0% vs 74.9%, 18.1 pp gap) and having stronger emergency support (94.7% vs 84.1%, 10.6 pp gap). Informal employment status provides no additional vulnerability - elderly+informal violence rates (3.9%) are virtually identical to elderly-only (3.8%) and much lower than informal-only (10.2%). This age-based protection likely reflects social respect, reduced exposure to conflict-prone environments, and strong family support networks that buffer against both violence and discrimination regardless of employment formality.
+
+**Family & Household Domain:**
+
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 3.9 | 4.0 | **3.8** | -0.3 | 0.002 |
+| Children in household | 0.6 | 0.1 | 0.4 | **0.1** | -0.5 | < 0.001 |
+| Elderly in household | 1.0 | 3.9 | 0.8 | **4.9** | +3.9 | 0.113 |
+| Workers in household | 2.6 | 2.2 | 3.0 | **2.2** | -0.4 | < 0.001 |
+
+*What the numbers reveal:* Elderly+informal live in slightly smaller households (3.8 vs 4.1 general, 0.3 person gap, p=0.002) with dramatically fewer children (0.1 vs 0.6, 0.5 person gap, p < 0.001), reflecting completed childbearing and children moving out. They live in households with many elderly members (4.9 vs 1.0 general, 3.9 person gap, p=0.113 approaching significance), the highest elderly concentration of any group studied - potentially indicating elderly couples, siblings cohabiting, or multi-generational elderly households. Worker counts are significantly lower (2.2 vs 2.6 general, 0.4 person gap, p < 0.001), matching elderly-only (2.2) and much lower than informal-only (3.0), suggesting that elderly+informal individuals live in households with fewer working-age members, potentially increasing economic vulnerability.
+
+**Food Security Domain:**
+
+| Indicator | General | Elderly Only | Informal Only | Elderly+Informal | Gap from General | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 4.6% | 8.3% | **4.0%** | -9.7 pp | < 0.001 |
+| Skipped meals | 7.6% | 3.1% | 4.8% | **2.7%** | -4.9 pp | < 0.001 |
+
+*What the numbers reveal:* Elderly+informal show dramatically lower food insecurity: only 4.0% worry about food (vs 13.7% general, 9.7 pp gap, p < 0.001) and 2.7% skip meals (vs 7.6%, 4.9 pp gap). These rates closely match elderly-only (4.6% worry, 3.1% skip) and are much lower than informal-only (8.3% worry, 4.8% skip), demonstrating that age provides strong food security protection despite income precarity from informal employment (14,387 THB monthly vs 30,543 general). This paradox likely reflects targeted food assistance for elderly, lower household size reducing food needs, different reporting thresholds, or family support systems prioritizing elderly food security regardless of employment status.
 
 ---
 

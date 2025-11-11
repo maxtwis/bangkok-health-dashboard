@@ -1,0 +1,641 @@
+C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\site-packages\scipy\stats\_axis_nan_policy.py:579: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  res = hypotest_fun_out(*samples, **kwds)
+Loading data...
+Loaded 6523 respondents
+
+Calculating indicators across all domains...
+Indicators calculated.
+
+
+================================================================================
+COMPREHENSIVE DOMAIN ANALYSIS: DISABLED+ELDERLY
+================================================================================
+
+Sample sizes:
+  disabled+elderly: n=335
+  disabled: n=229
+  elderly: n=2964
+  general: n=1315
+
+
+Employment & Income
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 22,776 THB | 14,718 THB | 12,000 THB | -18,543 THB | n.s. |
+| Employment rate | 78.9% | 43.7% | 38.2% | 0.9% | -78.0 pp | < 0.001 |
+| Has contract | 95.9% | 59.4% | 8.3% | 100.0% | +4.1 pp | n.s. |
+| Has welfare | 81.9% | 52.8% | 8.7% | 33.3% | -48.6 pp | n.s. |
+| Working hours/week | 9.1 | 8.5 | 7.9 | 9.3 | +0.2 | n.s. |
+| Occupation injury | 8.3% | 5.7% | 4.0% | 3.3% | -5.0 pp | 0.002 |
+
+Education & Skills
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Primary education or less | 1.1% | 15.3% | 10.8% | 19.7% | +18.6 pp | < 0.001 |
+| Bachelor's degree+ | 83.1% | 45.0% | 18.1% | 9.9% | -73.3 pp | < 0.001 |
+| Can read | 99.4% | 84.3% | 95.5% | 83.9% | -15.5 pp | < 0.001 |
+| Can write | 99.4% | 82.5% | 94.3% | 76.7% | -22.7 pp | < 0.001 |
+| Can do math | 99.6% | 80.8% | 94.6% | 77.0% | -22.6 pp | < 0.001 |
+| Has training | 28.7% | 15.3% | 15.9% | 3.9% | -24.9 pp | < 0.001 |
+
+Healthcare Access
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Skipped medical care (cost) | 16.0% | 21.4% | 11.3% | 18.5% | +2.5 pp | 0.279 |
+| Had oral health symptoms | 31.4% | 30.6% | 21.7% | 14.6% | -16.8 pp | < 0.001 |
+| Oral health access issue | 37.8% | 54.3% | 34.9% | 53.1% | +15.3 pp | 0.038 |
+
+Chronic Diseases
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Has any chronic disease | 34.9% | 55.9% | 79.0% | 93.4% | +58.5 pp | < 0.001 |
+| Hypertension | 8.1% | 21.8% | 43.0% | 42.8% | +34.7 pp | < 0.001 |
+| Diabetes | 10.2% | 26.4% | 76.6% | 74.8% | +64.6 pp | < 0.001 |
+| Kidney disease | 5.1% | 10.9% | 2.9% | 3.5% | -1.6 pp | 0.237 |
+
+Health Behaviors
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 20.5% | 20.9% | 7.8% | -23.6 pp | < 0.001 |
+| Current smoker | 29.0% | 16.6% | 8.4% | 5.7% | -23.4 pp | < 0.001 |
+| Current drinker | 45.6% | 27.9% | 15.7% | 9.6% | -36.1 pp | < 0.001 |
+
+Housing & Environment
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 20.1% | 48.7% | 38.5% | +13.3 pp | < 0.001 |
+| Overcrowded (>2 per room) | 65.4% | 69.9% | 65.8% | 64.8% | -0.6 pp | 0.831 |
+| Pollution health problems | 62.3% | 54.1% | 42.5% | 47.5% | -14.8 pp | < 0.001 |
+
+Social Context
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 16.2% | 3.8% | 3.9% | -20.1 pp | < 0.001 |
+| Physical violence | 6.1% | 4.8% | 0.6% | 0.9% | -5.2 pp | < 0.001 |
+| Psychological violence | 17.2% | 12.2% | 3.4% | 3.6% | -13.6 pp | < 0.001 |
+| Any discrimination | 17.6% | 10.9% | 8.5% | 8.1% | -9.5 pp | < 0.001 |
+| Feels safe in community | 74.9% | 89.1% | 92.0% | 90.1% | +15.2 pp | < 0.001 |
+| Has emergency support | 84.1% | 92.1% | 95.1% | 94.9% | +10.8 pp | < 0.001 |
+
+Family & Household
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 4.0 | 3.9 | 4.0 | -0.2 | 0.287 |
+| Children in household | 0.6 | 0.3 | 0.1 | 0.1 | -0.6 | < 0.001 |
+| Elderly in household | 1.0 | 0.9 | 3.9 | 2.7 | +1.7 | 0.051 |
+| Workers in household | 2.6 | 2.6 | 2.2 | 2.5 | -0.1 | 0.512 |
+
+Food Security
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Elderly | Disabled+Elderly | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 14.4% | 4.6% | 8.4% | -5.3 pp | 0.009 |
+| Skipped meals | 7.6% | 8.7% | 3.1% | 5.7% | -1.9 pp | 0.222 |
+
+================================================================================
+
+
+================================================================================
+COMPREHENSIVE DOMAIN ANALYSIS: ELDERLY+INFORMAL
+================================================================================
+
+Sample sizes:
+  elderly+informal: n=992
+  elderly: n=2964
+  informal: n=1330
+  general: n=1315
+
+
+Employment & Income
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 14,718 THB | 21,774 THB | 14,387 THB | -16,157 THB | < 0.001 |
+| Employment rate | 78.9% | 38.2% | 100.0% | 100.0% | +21.1 pp | < 0.001 |
+| Has contract | 95.9% | 8.3% | 0.0% | 0.0% | -95.9 pp | < 0.001 |
+| Has welfare | 81.9% | 8.7% | 13.6% | 4.3% | -77.6 pp | < 0.001 |
+| Working hours/week | 9.1 | 7.9 | 8.8 | 7.9 | -1.2 | < 0.001 |
+| Occupation injury | 8.3% | 4.0% | 6.4% | 4.4% | -3.9 pp | < 0.001 |
+
+Education & Skills
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Primary education or less | 1.1% | 10.8% | 2.6% | 9.2% | +8.1 pp | < 0.001 |
+| Bachelor's degree+ | 83.1% | 18.1% | 44.7% | 13.0% | -70.1 pp | < 0.001 |
+| Can read | 99.4% | 95.5% | 99.1% | 97.5% | -1.9 pp | < 0.001 |
+| Can write | 99.4% | 94.3% | 98.6% | 97.4% | -2.0 pp | < 0.001 |
+| Can do math | 99.6% | 94.6% | 99.2% | 98.4% | -1.2 pp | 0.002 |
+| Has training | 28.7% | 15.9% | 17.7% | 15.8% | -12.9 pp | < 0.001 |
+
+Healthcare Access
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Skipped medical care (cost) | 16.0% | 11.3% | 13.8% | 13.5% | -2.5 pp | 0.091 |
+| Had oral health symptoms | 31.4% | 21.7% | 26.3% | 23.1% | -8.3 pp | < 0.001 |
+| Oral health access issue | 37.8% | 34.9% | 41.1% | 32.8% | -5.0 pp | 0.205 |
+
+Chronic Diseases
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Has any chronic disease | 34.9% | 79.0% | 37.2% | 71.9% | +37.0 pp | < 0.001 |
+| Hypertension | 8.1% | 43.0% | 19.0% | 40.0% | +31.9 pp | < 0.001 |
+| Diabetes | 10.2% | 76.6% | 32.6% | 74.2% | +64.0 pp | < 0.001 |
+| Kidney disease | 5.1% | 2.9% | 5.4% | 1.8% | -3.3 pp | < 0.001 |
+
+Health Behaviors
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 20.9% | 21.2% | 21.8% | -9.6 pp | < 0.001 |
+| Current smoker | 29.0% | 8.4% | 26.9% | 11.9% | -17.2 pp | < 0.001 |
+| Current drinker | 45.6% | 15.7% | 38.5% | 18.6% | -27.0 pp | < 0.001 |
+
+Housing & Environment
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 48.7% | 24.1% | 44.8% | +19.6 pp | < 0.001 |
+| Overcrowded (>2 per room) | 65.4% | 65.8% | 62.8% | 62.4% | -3.0 pp | 0.137 |
+| Pollution health problems | 62.3% | 42.5% | 53.6% | 42.0% | -20.2 pp | < 0.001 |
+
+Social Context
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 3.8% | 10.2% | 3.9% | -20.0 pp | < 0.001 |
+| Physical violence | 6.1% | 0.6% | 2.9% | 0.5% | -5.6 pp | < 0.001 |
+| Psychological violence | 17.2% | 3.4% | 7.7% | 3.5% | -13.7 pp | < 0.001 |
+| Any discrimination | 17.6% | 8.5% | 13.7% | 8.6% | -9.0 pp | < 0.001 |
+| Feels safe in community | 74.9% | 92.0% | 85.6% | 93.0% | +18.1 pp | < 0.001 |
+| Has emergency support | 84.1% | 95.1% | 89.9% | 94.7% | +10.6 pp | < 0.001 |
+
+Family & Household
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 3.9 | 4.0 | 3.8 | -0.3 | 0.002 |
+| Children in household | 0.6 | 0.1 | 0.4 | 0.1 | -0.5 | < 0.001 |
+| Elderly in household | 1.0 | 3.9 | 0.8 | 4.9 | +3.9 | 0.113 |
+| Workers in household | 2.6 | 2.2 | 3.0 | 2.2 | -0.4 | < 0.001 |
+
+Food Security
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Informal | Elderly+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 4.6% | 8.3% | 4.0% | -9.7 pp | < 0.001 |
+| Skipped meals | 7.6% | 3.1% | 4.8% | 2.7% | -4.9 pp | < 0.001 |
+
+================================================================================
+
+
+================================================================================
+COMPREHENSIVE DOMAIN ANALYSIS: ELDERLY+LGBT
+================================================================================
+
+Sample sizes:
+  elderly+lgbt: n=8
+  elderly: n=2964
+  lgbt: n=685
+  general: n=1315
+
+
+Employment & Income
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 14,718 THB | 25,369 THB | 12,000 THB | -18,543 THB | n.s. |
+| Employment rate | 78.9% | 38.2% | 74.0% | 25.0% | -53.9 pp | < 0.001 |
+| Has contract | 95.9% | 8.3% | 53.7% | 100.0% | +4.1 pp | n.s. |
+| Has welfare | 81.9% | 8.7% | 53.9% | 100.0% | +18.1 pp | n.s. |
+| Working hours/week | 9.1 | 7.9 | 9.0 | 8.0 | -1.1 | n.s. |
+| Occupation injury | 8.3% | 4.0% | 8.5% | 25.0% | +16.7 pp | 0.089 |
+
+Education & Skills
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Primary education or less | 1.1% | 10.8% | 0.9% | 0.0% | -1.1 pp | 0.769 |
+| Bachelor's degree+ | 83.1% | 18.1% | 75.9% | 50.0% | -33.1 pp | 0.013 |
+| Can read | 99.4% | 95.5% | 99.7% | 100.0% | +0.6 pp | 0.825 |
+| Can write | 99.4% | 94.3% | 99.7% | 100.0% | +0.6 pp | 0.825 |
+| Can do math | 99.6% | 94.6% | 99.4% | 100.0% | +0.4 pp | 0.861 |
+| Has training | 28.7% | 15.9% | 26.0% | 37.5% | +8.8 pp | 0.586 |
+
+Healthcare Access
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Skipped medical care (cost) | 16.0% | 11.3% | 28.8% | 12.5% | -3.5 pp | 0.785 |
+| Had oral health symptoms | 31.4% | 21.7% | 31.5% | 25.0% | -6.4 pp | 0.697 |
+| Oral health access issue | 37.8% | 34.9% | 47.7% | 50.0% | +12.2 pp | n.s. |
+
+Chronic Diseases
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Has any chronic disease | 34.9% | 79.0% | 38.7% | 62.5% | +27.6 pp | 0.103 |
+| Hypertension | 8.1% | 43.0% | 5.9% | 40.0% | +31.9 pp | 0.009 |
+| Diabetes | 10.2% | 76.6% | 9.3% | 40.0% | +29.8 pp | 0.028 |
+| Kidney disease | 5.1% | 2.9% | 17.3% | 20.0% | +14.9 pp | 0.135 |
+
+Health Behaviors
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 20.9% | 27.6% | 12.5% | -18.8 pp | 0.252 |
+| Current smoker | 29.0% | 8.4% | 31.2% | 37.5% | +8.5 pp | 0.600 |
+| Current drinker | 45.6% | 15.7% | 49.3% | 37.5% | -8.1 pp | 0.646 |
+
+Housing & Environment
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 48.7% | 14.9% | 25.0% | -0.2 pp | 0.991 |
+| Overcrowded (>2 per room) | 65.4% | 65.8% | 55.3% | 25.0% | -40.4 pp | 0.017 |
+| Pollution health problems | 62.3% | 42.5% | 62.0% | 62.5% | +0.2 pp | 0.990 |
+
+Social Context
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 3.8% | 39.4% | 62.5% | +38.5 pp | 0.011 |
+| Physical violence | 6.1% | 0.6% | 13.1% | 25.0% | +18.9 pp | 0.027 |
+| Psychological violence | 17.2% | 3.4% | 29.2% | 62.5% | +45.3 pp | < 0.001 |
+| Any discrimination | 17.6% | 8.5% | 39.1% | 50.0% | +32.4 pp | 0.017 |
+| Feels safe in community | 74.9% | 92.0% | 76.4% | 87.5% | +12.6 pp | 0.413 |
+| Has emergency support | 84.1% | 95.1% | 82.6% | 87.5% | +3.4 pp | 0.794 |
+
+Family & Household
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 3.9 | 4.0 | 2.4 | -1.7 | 0.060 |
+| Children in household | 0.6 | 0.1 | 0.6 | 0.0 | -0.6 | n.s. |
+| Elderly in household | 1.0 | 3.9 | 0.6 | 1.0 | +0.0 | n.s. |
+| Workers in household | 2.6 | 2.2 | 2.5 | 2.0 | -0.6 | n.s. |
+
+Food Security
+--------------------------------------------------------------------------------
+
+| Indicator | General | Elderly | Lgbt | Elderly+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 4.6% | 20.0% | 25.0% | +11.3 pp | 0.355 |
+| Skipped meals | 7.6% | 3.1% | 13.0% | 0.0% | -7.6 pp | 0.418 |
+
+================================================================================
+
+
+================================================================================
+COMPREHENSIVE DOMAIN ANALYSIS: DISABLED+INFORMAL
+================================================================================
+
+Sample sizes:
+  disabled+informal: n=40
+  disabled: n=229
+  informal: n=1330
+  general: n=1315
+
+
+Employment & Income
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 22,776 THB | 21,774 THB | 19,449 THB | -11,094 THB | < 0.001 |
+| Employment rate | 78.9% | 43.7% | 100.0% | 100.0% | +21.1 pp | 0.001 |
+| Has contract | 95.9% | 59.4% | 0.0% | 0.0% | -95.9 pp | < 0.001 |
+| Has welfare | 81.9% | 52.8% | 13.6% | 7.5% | -74.4 pp | < 0.001 |
+| Working hours/week | 9.1 | 8.5 | 8.8 | 8.1 | -1.0 | < 0.001 |
+| Occupation injury | 8.3% | 5.7% | 6.4% | 10.0% | +1.7 pp | 0.700 |
+
+Education & Skills
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Primary education or less | 1.1% | 15.3% | 2.6% | 10.0% | +8.9 pp | < 0.001 |
+| Bachelor's degree+ | 83.1% | 45.0% | 44.7% | 47.5% | -35.6 pp | < 0.001 |
+| Can read | 99.4% | 84.3% | 99.1% | 92.5% | -6.9 pp | < 0.001 |
+| Can write | 99.4% | 82.5% | 98.6% | 90.0% | -9.4 pp | < 0.001 |
+| Can do math | 99.6% | 80.8% | 99.2% | 92.5% | -7.1 pp | < 0.001 |
+| Has training | 28.7% | 15.3% | 17.7% | 10.0% | -18.7 pp | 0.009 |
+
+Healthcare Access
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Skipped medical care (cost) | 16.0% | 21.4% | 13.8% | 32.5% | +16.5 pp | 0.006 |
+| Had oral health symptoms | 31.4% | 30.6% | 26.3% | 32.5% | +1.1 pp | 0.883 |
+| Oral health access issue | 37.8% | 54.3% | 41.1% | 53.8% | +16.1 pp | 0.241 |
+
+Chronic Diseases
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Has any chronic disease | 34.9% | 55.9% | 37.2% | 47.5% | +12.6 pp | 0.101 |
+| Hypertension | 8.1% | 21.8% | 19.0% | 25.9% | +17.9 pp | < 0.001 |
+| Diabetes | 10.2% | 26.4% | 32.6% | 22.2% | +12.1 pp | 0.043 |
+| Kidney disease | 5.1% | 10.9% | 5.4% | 3.7% | -1.4 pp | 0.741 |
+
+Health Behaviors
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 20.5% | 21.2% | 17.5% | -13.8 pp | 0.062 |
+| Current smoker | 29.0% | 16.6% | 26.9% | 22.5% | -6.5 pp | 0.368 |
+| Current drinker | 45.6% | 27.9% | 38.5% | 37.5% | -8.1 pp | 0.309 |
+
+Housing & Environment
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 20.1% | 24.1% | 20.0% | -5.2 pp | 0.457 |
+| Overcrowded (>2 per room) | 65.4% | 69.9% | 62.8% | 62.5% | -2.9 pp | 0.705 |
+| Pollution health problems | 62.3% | 54.1% | 53.6% | 57.5% | -4.8 pp | 0.539 |
+
+Social Context
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 16.2% | 10.2% | 12.5% | -11.5 pp | 0.093 |
+| Physical violence | 6.1% | 4.8% | 2.9% | 0.0% | -6.1 pp | 0.108 |
+| Psychological violence | 17.2% | 12.2% | 7.7% | 10.0% | -7.2 pp | 0.233 |
+| Any discrimination | 17.6% | 10.9% | 13.7% | 7.5% | -10.1 pp | 0.097 |
+| Feels safe in community | 74.9% | 89.1% | 85.6% | 87.5% | +12.6 pp | 0.069 |
+| Has emergency support | 84.1% | 92.1% | 89.9% | 87.5% | +3.4 pp | 0.562 |
+
+Family & Household
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 4.0 | 4.0 | 3.4 | -0.7 | 0.050 |
+| Children in household | 0.6 | 0.3 | 0.4 | 0.3 | -0.3 | 0.028 |
+| Elderly in household | 1.0 | 0.9 | 0.8 | 0.8 | -0.2 | 0.937 |
+| Workers in household | 2.6 | 2.6 | 3.0 | 2.4 | -0.2 | 0.290 |
+
+Food Security
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Informal | Disabled+Informal | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 14.4% | 8.3% | 12.5% | -1.2 pp | 0.829 |
+| Skipped meals | 7.6% | 8.7% | 4.8% | 5.0% | -2.6 pp | 0.539 |
+
+================================================================================
+
+
+================================================================================
+COMPREHENSIVE DOMAIN ANALYSIS: DISABLED+LGBT
+================================================================================
+
+Sample sizes:
+  disabled+lgbt: n=24
+  disabled: n=229
+  lgbt: n=685
+  general: n=1315
+
+
+Employment & Income
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 22,776 THB | 25,369 THB | 29,938 THB | -606 THB | 0.894 |
+| Employment rate | 78.9% | 43.7% | 74.0% | 58.3% | -20.5 pp | 0.015 |
+| Has contract | 95.9% | 59.4% | 53.7% | 89.5% | -6.4 pp | 0.169 |
+| Has welfare | 81.9% | 52.8% | 53.9% | 73.7% | -8.2 pp | 0.356 |
+| Working hours/week | 9.1 | 8.5 | 9.0 | 8.9 | -0.1 | 0.734 |
+| Occupation injury | 8.3% | 5.7% | 8.5% | 29.2% | +20.9 pp | < 0.001 |
+
+Education & Skills
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Primary education or less | 1.1% | 15.3% | 0.9% | 0.0% | -1.1 pp | 0.612 |
+| Bachelor's degree+ | 83.1% | 45.0% | 75.9% | 87.5% | +4.4 pp | 0.570 |
+| Can read | 99.4% | 84.3% | 99.7% | 100.0% | +0.6 pp | 0.702 |
+| Can write | 99.4% | 82.5% | 99.7% | 100.0% | +0.6 pp | 0.702 |
+| Can do math | 99.6% | 80.8% | 99.4% | 100.0% | +0.4 pp | 0.762 |
+| Has training | 28.7% | 15.3% | 26.0% | 29.2% | +0.4 pp | 0.964 |
+
+Healthcare Access
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Skipped medical care (cost) | 16.0% | 21.4% | 28.8% | 29.2% | +13.1 pp | 0.085 |
+| Had oral health symptoms | 31.4% | 30.6% | 31.5% | 37.5% | +6.1 pp | 0.525 |
+| Oral health access issue | 37.8% | 54.3% | 47.7% | 88.9% | +51.1 pp | 0.002 |
+
+Chronic Diseases
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Has any chronic disease | 34.9% | 55.9% | 38.7% | 37.5% | +2.6 pp | 0.792 |
+| Hypertension | 8.1% | 21.8% | 5.9% | 0.0% | -8.1 pp | 0.147 |
+| Diabetes | 10.2% | 26.4% | 9.3% | 4.2% | -6.0 pp | 0.334 |
+| Kidney disease | 5.1% | 10.9% | 17.3% | 29.2% | +24.0 pp | < 0.001 |
+
+Health Behaviors
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 20.5% | 27.6% | 16.7% | -14.7 pp | 0.124 |
+| Current smoker | 29.0% | 16.6% | 31.2% | 41.7% | +12.6 pp | 0.179 |
+| Current drinker | 45.6% | 27.9% | 49.3% | 29.2% | -16.5 pp | 0.109 |
+
+Housing & Environment
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 20.1% | 14.9% | 29.2% | +4.0 pp | 0.655 |
+| Overcrowded (>2 per room) | 65.4% | 69.9% | 55.3% | 66.7% | +1.3 pp | 0.897 |
+| Pollution health problems | 62.3% | 54.1% | 62.0% | 54.2% | -8.1 pp | 0.417 |
+
+Social Context
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 16.2% | 39.4% | 50.0% | +26.0 pp | 0.003 |
+| Physical violence | 6.1% | 4.8% | 13.1% | 12.5% | +6.4 pp | 0.197 |
+| Psychological violence | 17.2% | 12.2% | 29.2% | 33.3% | +16.1 pp | 0.039 |
+| Any discrimination | 17.6% | 10.9% | 39.1% | 50.0% | +32.4 pp | < 0.001 |
+| Feels safe in community | 74.9% | 89.1% | 76.4% | 70.8% | -4.1 pp | 0.649 |
+| Has emergency support | 84.1% | 92.1% | 82.6% | 91.7% | +7.6 pp | 0.314 |
+
+Family & Household
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 4.0 | 4.0 | 3.7 | -0.5 | 0.331 |
+| Children in household | 0.6 | 0.3 | 0.6 | 0.8 | +0.2 | 0.314 |
+| Elderly in household | 1.0 | 0.9 | 0.6 | 0.7 | -0.3 | 0.917 |
+| Workers in household | 2.6 | 2.6 | 2.5 | 2.3 | -0.3 | 0.351 |
+
+Food Security
+--------------------------------------------------------------------------------
+
+| Indicator | General | Disabled | Lgbt | Disabled+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 14.4% | 20.0% | 12.5% | -1.2 pp | 0.867 |
+| Skipped meals | 7.6% | 8.7% | 13.0% | 20.8% | +13.2 pp | 0.017 |
+
+================================================================================
+
+
+================================================================================
+COMPREHENSIVE DOMAIN ANALYSIS: INFORMAL+LGBT
+================================================================================
+
+Sample sizes:
+  informal+lgbt: n=219
+  informal: n=1330
+  lgbt: n=685
+  general: n=1315
+
+
+Employment & Income
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Monthly income | 30,543 THB | 21,774 THB | 25,369 THB | 21,764 THB | -8,779 THB | < 0.001 |
+| Employment rate | 78.9% | 100.0% | 74.0% | 100.0% | +21.1 pp | < 0.001 |
+| Has contract | 95.9% | 0.0% | 53.7% | 0.0% | -95.9 pp | < 0.001 |
+| Has welfare | 81.9% | 13.6% | 53.9% | 21.9% | -60.0 pp | < 0.001 |
+| Working hours/week | 9.1 | 8.8 | 9.0 | 8.6 | -0.4 | 0.002 |
+| Occupation injury | 8.3% | 6.4% | 8.5% | 6.4% | -1.9 pp | 0.339 |
+
+Education & Skills
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Primary education or less | 1.1% | 2.6% | 0.9% | 0.9% | -0.2 pp | 0.838 |
+| Bachelor's degree+ | 83.1% | 44.7% | 75.9% | 63.9% | -19.2 pp | < 0.001 |
+| Can read | 99.4% | 99.1% | 99.7% | 100.0% | +0.6 pp | 0.247 |
+| Can write | 99.4% | 98.6% | 99.7% | 99.5% | +0.2 pp | 0.786 |
+| Can do math | 99.6% | 99.2% | 99.4% | 99.1% | -0.5 pp | 0.279 |
+| Has training | 28.7% | 17.7% | 26.0% | 18.3% | -10.5 pp | 0.001 |
+
+Healthcare Access
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Skipped medical care (cost) | 16.0% | 13.8% | 28.8% | 21.5% | +5.4 pp | 0.047 |
+| Had oral health symptoms | 31.4% | 26.3% | 31.5% | 23.3% | -8.1 pp | 0.015 |
+| Oral health access issue | 37.8% | 41.1% | 47.7% | 43.1% | +5.4 pp | 0.458 |
+
+Chronic Diseases
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Has any chronic disease | 34.9% | 37.2% | 38.7% | 38.4% | +3.5 pp | 0.323 |
+| Hypertension | 8.1% | 19.0% | 5.9% | 11.3% | +3.3 pp | 0.177 |
+| Diabetes | 10.2% | 32.6% | 9.3% | 14.7% | +4.5 pp | 0.093 |
+| Kidney disease | 5.1% | 5.4% | 17.3% | 13.3% | +8.2 pp | < 0.001 |
+
+Health Behaviors
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Regular exercise (3+ times/week) | 31.3% | 21.2% | 27.6% | 25.1% | -6.2 pp | 0.064 |
+| Current smoker | 29.0% | 26.9% | 31.2% | 32.4% | +3.4 pp | 0.312 |
+| Current drinker | 45.6% | 38.5% | 49.3% | 52.5% | +6.9 pp | 0.059 |
+
+Housing & Environment
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Owns home | 25.2% | 24.1% | 14.9% | 16.0% | -9.2 pp | 0.003 |
+| Overcrowded (>2 per room) | 65.4% | 62.8% | 55.3% | 54.3% | -11.1 pp | 0.002 |
+| Pollution health problems | 62.3% | 53.6% | 62.0% | 58.9% | -3.4 pp | 0.341 |
+
+Social Context
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Any violence exposure | 24.0% | 10.2% | 39.4% | 29.7% | +5.7 pp | 0.069 |
+| Physical violence | 6.1% | 2.9% | 13.1% | 8.7% | +2.6 pp | 0.149 |
+| Psychological violence | 17.2% | 7.7% | 29.2% | 21.5% | +4.3 pp | 0.126 |
+| Any discrimination | 17.6% | 13.7% | 39.1% | 34.7% | +17.1 pp | < 0.001 |
+| Feels safe in community | 74.9% | 85.6% | 76.4% | 84.5% | +9.6 pp | 0.002 |
+| Has emergency support | 84.1% | 89.9% | 82.6% | 84.5% | +0.4 pp | 0.890 |
+
+Family & Household
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Household size | 4.1 | 4.0 | 4.0 | 3.9 | -0.2 | 0.264 |
+| Children in household | 0.6 | 0.4 | 0.6 | 0.5 | -0.2 | 0.029 |
+| Elderly in household | 1.0 | 0.8 | 0.6 | 0.7 | -0.3 | 0.796 |
+| Workers in household | 2.6 | 3.0 | 2.5 | 2.6 | +0.0 | 0.993 |
+
+Food Security
+--------------------------------------------------------------------------------
+
+| Indicator | General | Informal | Lgbt | Informal+Lgbt | Gap | p-value |
+|---|---|---|---|---|---|---|
+| Food insecurity worry | 13.7% | 8.3% | 20.0% | 13.7% | +0.0 pp | 0.997 |
+| Skipped meals | 7.6% | 4.8% | 13.0% | 10.5% | +2.9 pp | 0.144 |
+
+================================================================================
+
+
+COMPREHENSIVE INTERSECTION DOMAIN ANALYSIS COMPLETE
+================================================================================
