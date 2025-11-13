@@ -8,12 +8,16 @@ This study employed cross-sectional survey design to examine social determinants
 
 ### Sampling Design
 
-This study collected health and social determinants data from 6,523 Bangkok residents across all 50 districts. The study employed a **two-stage cluster sampling design** with community volunteer-based recruitment:
+This study collected health and social determinants data from 6,523 Bangkok residents across all 50 districts. The study employed a **two-stage sampling design**:
 
-- **Stage 1**: Community health volunteers (CHVs) were embedded in 1-3 communities per district across all 50 Bangkok districts
-- **Stage 2**: CHVs recruited participants from their local communities using convenience sampling methods
+- **Stage 1 - Quota Sampling**: Community health volunteers (CHVs) were embedded in 1-3 communities per district across all 50 Bangkok districts, with structured recruitment quotas:
+  - Target sample size: 80-120 surveys per district (adjusted based on available volunteer manpower)
+  - Target population groups: LGBTQ+ individuals, elderly (age ≥60), informal workers, and people with disabilities
+  - Volunteers were instructed to actively recruit from all four priority populations to ensure representation
 
-This design achieved comprehensive geographic coverage while leveraging existing community networks for participant recruitment.
+- **Stage 2 - Convenience Sampling**: Within each community, CHVs recruited participants from their local networks using convenience sampling methods
+
+This design achieved comprehensive geographic coverage (all 50 districts) while ensuring systematic inclusion of vulnerable populations through quota-based recruitment criteria.
 
 ### Sample Distribution
 
