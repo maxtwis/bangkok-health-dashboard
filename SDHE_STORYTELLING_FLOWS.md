@@ -37,15 +37,39 @@ Among Bangkok's informal workers, health outcomes follow a clear cascade: **educ
 - Bachelor+ education: **30.1% chronic disease**
 - **Gap: 23.0 percentage points** (r=-0.217, p<0.001)
 
+| Education Level | Chronic Disease Rate | Sample Size |
+|----------------|---------------------|-------------|
+| Primary or less | 53.1% | n varies |
+| Bachelor+ | 30.1% | n varies |
+| **Gap** | **-23.0 pp** | p<0.001, r=-0.217 |
+
 **Why education matters so much**:
 
 Education isn't just about knowledge—it **unlocks multiple downstream pathways**:
 
 1. **Income pathway**: Bachelor+ workers earn **25,557 baht/month** vs primary-educated workers at **13,900 baht/month** (84% income gap, 1.84× multiplier)
 
+| Education Level | Monthly Income | Income Gap |
+|----------------|----------------|------------|
+| Primary or less | 13,900 baht | — |
+| Bachelor+ | 25,557 baht | +11,657 baht (84% higher) |
+| **Multiplier** | **1.84×** | p<0.001 |
+
 2. **Health behavior pathway**: Educated workers exercise regularly at **29.2%** vs **15.7%** for primary-educated (13.6 pp gap)
 
+| Education Level | Exercise Regularly | Gap |
+|----------------|-------------------|-----|
+| Primary or less | 15.7% | — |
+| Bachelor+ | 29.2% | +13.6 pp |
+| **Difference** | — | p<0.001 |
+
 3. **Homeownership pathway**: Education enables homeownership even in informal sector (+10.7 pp, p=0.026)
+
+| Education Level | Homeownership Rate |
+|----------------|-------------------|
+| Primary or less | — |
+| Bachelor+ | +10.7 pp higher |
+| **Effect** | p=0.026 |
 
 4. **Health literacy pathway**: Understanding symptoms, knowing when to seek care, preventive behaviors
 
@@ -66,10 +90,22 @@ Consider a typical scenario: Chest pain strikes. Medical visit costs 500 baht. L
 - Higher-income workers: **18.7% skip care**
 - **Gap: 30.7 percentage points** (p<0.001)
 
+| Income Level | Skip Needed Medical Care | Gap |
+|-------------|-------------------------|-----|
+| Low income (Q1) | 49.4% | — |
+| Higher income (Q4) | 18.7% | -30.7 pp |
+| **Difference** | **2.6× higher rate** | p<0.001 |
+
 **Disease burden by income**:
 - Lowest income (Q1): **47.6% chronic disease**
 - Highest income (Q4): **36.1% chronic disease**
 - **Gap: 11.5 percentage points** (r=-0.091, p<0.001)
+
+| Income Quartile | Chronic Disease Rate | Gap |
+|----------------|---------------------|-----|
+| Q1 (Lowest) | 47.6% | — |
+| Q4 (Highest) | 36.1% | -11.5 pp |
+| **Effect** | — | r=-0.091, p<0.001 |
 
 **The pattern**: By the time low-income workers finally seek care (often in crisis), conditions have progressed to severe stages requiring expensive treatment they cannot afford.
 
@@ -88,6 +124,12 @@ Low income doesn't just limit healthcare—it traps informal workers in multi-ha
 - High-income workers: **67.4% in disaster zones**
 - **Gap: 18.3 percentage points** (p<0.001)
 
+| Income Level | Live in Disaster Zones | Gap |
+|-------------|----------------------|-----|
+| Low income (Q1) | 85.7% | — |
+| High income (Q4) | 67.4% | -18.3 pp |
+| **Effect** | — | p<0.001 |
+
 **What "disaster zones" means**:
 - Flooding during rainy season (2-3 times per year)
 - Extreme heat islands (no air conditioning, 38°C+ indoor temperatures)
@@ -99,7 +141,18 @@ Low income doesn't just limit healthcare—it traps informal workers in multi-ha
 - Homeowners: **27.5% overcrowded**
 - **Gap: 12.2 pp** (p=0.002)
 
+| Housing Status | Overcrowding Rate | Gap |
+|---------------|------------------|-----|
+| Renters | 39.7% | — |
+| Homeowners | 27.5% | -12.2 pp |
+| **Effect** | — | p=0.002 |
+
 **Homeownership paradox**: Even those who achieve homeownership face a trade-off—affordable homes concentrate in disaster-prone areas (+4.5 pp more disaster exposure, p=0.013).
+
+| Housing Status | Disaster Zone Exposure |
+|---------------|----------------------|
+| Homeowners | +4.5 pp vs renters |
+| **Paradox** | p=0.013 |
 
 *Environment influence: 15% of total health impact*
 
@@ -117,6 +170,12 @@ Among those who don't exercise:
 
 **Gap: 14.2 percentage points** (r=-0.121, p<0.001)
 
+| Exercise Behavior | Chronic Disease Rate | Gap |
+|------------------|---------------------|-----|
+| Exercise regularly | 35.1% | — |
+| No exercise | 49.3% | +14.2 pp |
+| **Effect** | — | r=-0.121, p<0.001 |
+
 **This protection exists ONLY for informal workers.** Not for elderly, not for LGBT+, not even the general population.
 
 **Why exercise uniquely protects informal workers**:
@@ -130,6 +189,12 @@ Among those who don't exercise:
 - Primary: **15.7%** exercise regularly
 - **Gap: 13.6 pp** (p<0.001)
 
+| Education Level | Exercise Regularly | Gap |
+|----------------|-------------------|-----|
+| Primary or less | 15.7% | — |
+| Bachelor+ | 29.2% | +13.6 pp |
+| **Effect** | — | p<0.001 |
+
 *Exercise influence: 12% of total health impact (UNIQUE PROTECTIVE FACTOR)*
 
 ---
@@ -139,6 +204,12 @@ Among those who don't exercise:
 **The stress marker**:
 
 Informal workers show **16.2% regular smoking** (not occasional—daily, habitual) compared to **10.0%** among general population (+6.2 pp, p<0.001).
+
+| Population Group | Regular Smoking Rate | Gap |
+|-----------------|---------------------|-----|
+| Informal workers | 16.2% | — |
+| General population | 10.0% | -6.2 pp |
+| **Effect** | **HIGHEST rate** | p<0.001 |
 
 **Why smoking rates are elevated**:
 - No employment contracts = zero job security
@@ -164,16 +235,34 @@ Despite economic vulnerability, informal workers show **stronger social protecti
 - General population: **24.0%**
 - **Gap: -13.7 pp** (57% lower risk, p<0.001)
 
+| Population Group | Violence Exposure | Gap |
+|-----------------|------------------|-----|
+| Informal workers | 10.2% | — |
+| General population | 24.0% | +13.7 pp |
+| **Protection** | **57% lower risk** | p<0.001 |
+
 **Emergency support networks**:
 - Informal workers: **89.9% have someone to call** in crisis
 - General population: **84.1%**
 - **Gap: +5.8 pp** (p<0.001)
+
+| Population Group | Has Emergency Support | Gap |
+|-----------------|----------------------|-----|
+| Informal workers | 89.9% | — |
+| General population | 84.1% | -5.8 pp |
+| **Protection** | **Stronger support** | p<0.001 |
 
 **Discrimination**:
 - Informal workers: **13.7%**
 - General population: **17.6%**
 - **Gap: -3.9 pp** (p=0.004)
 - Type: Primarily economic discrimination (8.0%)
+
+| Population Group | Discrimination Rate | Gap |
+|-----------------|-------------------|-----|
+| Informal workers | 13.7% | — |
+| General population | 17.6% | +3.9 pp |
+| **Protection** | **Lower exposure** | p=0.004 |
 
 **Why social networks are strong**:
 - Tight-knit communities (neighbors, family, fellow vendors)
@@ -226,6 +315,12 @@ For Bangkok's elderly, **the past matters more than the present**. Lifetime empl
 
 **Gap: 43.6 percentage points** (r=0.440, p<0.001)
 
+| Air Pollution Exposure | Health Symptoms | Gap |
+|----------------------|----------------|-----|
+| Exposed to air pollution | 64.9% | — |
+| NOT exposed | 21.3% | -43.6 pp |
+| **Effect** | **STRONGEST in study** | r=0.440, p<0.001 |
+
 **Why this effect is so massive**:
 - Correlation coefficient r=0.440 is **EXTREMELY STRONG** for epidemiological research
 - Represents decades of cumulative exposure compounding
@@ -254,6 +349,12 @@ Among elderly, **employment contract history** during working years determines r
 - Without contract: **14,207 baht/month**
 - **Gap: 6,502 baht/month (46% premium)** (p<0.0001)
 
+| Contract Status (During Working Years) | Current Monthly Income | Gap |
+|---------------------------------------|----------------------|-----|
+| Had employment contract | 20,709 baht | — |
+| No contract | 14,207 baht | -6,502 baht |
+| **Premium** | **46% higher** | p<0.0001 |
+
 **Education's weaker effect for elderly**:
 - Bachelor+ elderly: 1.43× income multiplier
 - **Contract status gives bigger boost than education**
@@ -262,6 +363,12 @@ Among elderly, **employment contract history** during working years determines r
 - Bachelor+ elderly: **24.0% had contracts** during working years
 - Primary educated: **4.0% had contracts**
 - **Gap: 20.0 pp** (p=0.0005)
+
+| Education Level | Had Employment Contract | Gap |
+|----------------|------------------------|-----|
+| Primary or less | 4.0% | — |
+| Bachelor+ | 24.0% | +20.0 pp |
+| **Effect** | — | p=0.0005 |
 
 **Why contracts matter more**:
 - Contracts provided social security benefits, pensions
@@ -284,6 +391,12 @@ Both low-income and high-income elderly have chronic disease (88% overall). But 
 - Low-income elderly: **43.6% skip needed medical care**
 - Higher-income elderly: **12.7% skip care**
 - **Gap: 30.9 pp** (3.4× higher skipping rate, p<0.001)
+
+| Income Level | Skip Needed Medical Care | Gap |
+|-------------|-------------------------|-----|
+| Low income (Q1) | 43.6% | — |
+| Higher income (Q4) | 12.7% | -30.9 pp |
+| **Effect** | **3.4× higher rate** | p<0.001 |
 
 **What skipping care means**:
 - Cannot afford medications (1,200 baht/month for diabetes/hypertension)
@@ -472,12 +585,25 @@ For Bangkok's LGBT+ community, **education doesn't work**. A Bachelor's degree p
 - General population: **17.6%**
 - **Gap: +21.6 pp** (2.2× higher rate)
 
+| Population Group | Discrimination Rate | Gap |
+|-----------------|-------------------|-----|
+| LGBT+ community | 39.1% | — |
+| General population | 17.6% | -21.6 pp |
+| **Effect** | **2.2× higher** | — |
+
 **Type of discrimination**:
 - **Gender-based: 38.1%** (97% of total discrimination)
 - This is **11 times higher** than general population gender discrimination (3.5%)
 - Economic: 8.6%
 - Religion: 8.0%
 - Age: 7.3%
+
+| Discrimination Type | LGBT+ Rate | General Pop Rate | Multiplier |
+|--------------------|-----------|----------------|------------|
+| Gender-based | 38.1% | 3.5% | **11× higher** |
+| Economic | 8.6% | — | — |
+| Religion | 8.0% | — | — |
+| Age | 7.3% | — | — |
 
 **The pervasiveness**: 38.1 out of 39.1 total discrimination is gender-based—revealing that LGBT+ discrimination experiences are **fundamentally about gender identity/expression**, not other characteristics.
 
@@ -500,11 +626,24 @@ Among LGBT+ individuals, education has **NO EFFECT** on any life outcome.
 - **Difference: -152 baht** (Bachelor degree earns LESS)
 - **Income multiplier: 0.99×** (p=0.993, no relationship)
 
+| Education Level | Monthly Income | Gap |
+|----------------|----------------|-----|
+| Primary or less | 27,000 baht | — |
+| Bachelor+ | 26,848 baht | -152 baht |
+| **Multiplier** | **0.99× (ZERO)** | p=0.993 |
+
 **For comparison**:
 - Disabled: **2.84×** income for education
 - Informal workers: **1.84×** income
 - General population: **1.5×** income
 - **LGBT+: 0.99×—education buys NOTHING**
+
+| Population Group | Education Income Multiplier |
+|-----------------|---------------------------|
+| Disabled | 2.84× |
+| Informal workers | 1.84× |
+| General population | 1.5× |
+| **LGBT+** | **0.99× (BROKEN)** |
 
 ### **Education → Chronic Disease: ZERO EFFECT**
 
@@ -545,15 +684,33 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 - High-income LGBT+: **9.2% overcrowding**
 - **Gap: -25.2 pp** (p<0.001)
 
+| Income Level | Overcrowding Rate | Gap |
+|-------------|------------------|-----|
+| Low income | 34.4% | — |
+| High income | 9.2% | -25.2 pp |
+| **Protection** | **73% reduction** | p<0.001 |
+
 **Renters vs homeowners**:
 - Renters: **22.0% overcrowding**
 - Homeowners: **4.9% overcrowding**
 - **Gap: -17.1 pp** (p<0.001)
 
+| Housing Status | Overcrowding Rate | Gap |
+|---------------|------------------|-----|
+| Renters | 22.0% | — |
+| Homeowners | 4.9% | -17.1 pp |
+| **Effect** | — | p<0.001 |
+
 **Healthcare access**:
 - Low-income LGBT+: **62.5% skip needed care** (MAJORITY!)
 - Higher-income LGBT+: **42.7% skip care**
 - **Gap: -19.8 pp** (p=0.043)
+
+| Income Level | Skip Needed Care | Gap |
+|-------------|----------------|-----|
+| Low income | 62.5% | — |
+| High income | 42.7% | -19.8 pp |
+| **Effect** | — | p=0.043 |
 
 **Income is the ONLY functioning protective factor for LGBT+ individuals.**
 
@@ -566,6 +723,12 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 - Low-income LGBT+: **25.0% drink**
 - **Gap: +27.8 pp, 2.1× higher rate** (p=0.004)
 
+| Income Level | Alcohol Consumption | Gap |
+|-------------|-------------------|-----|
+| Low income | 25.0% | — |
+| High income | 52.8% | +27.8 pp |
+| **Effect** | **2.1× higher** | p=0.004 |
+
 **Why**: Resources enable access to gay-friendly bars, social drinking culture in LGBT+ spaces, alcohol as discrimination-coping mechanism, affordability enables the behavior
 
 **This income-drinking relationship exists ONLY for LGBT+ individuals.** No other group shows it.
@@ -574,6 +737,12 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 - High-income LGBT+: **31.9% experience violence**
 - Low-income LGBT+: **9.4% experience violence**
 - **Gap: +22.5 pp** (p=0.013)
+
+| Income Level | Violence Exposure | Gap |
+|-------------|------------------|-----|
+| Low income | 9.4% | — |
+| High income | 31.9% | +22.5 pp |
+| **Paradox** | **3.4× higher** | p=0.013 |
 
 **Why**:
 - Higher income = formal employment = workplace visibility = more discrimination/violence
@@ -742,6 +911,12 @@ For Bangkok's disabled population, **education and income matter more than for a
 - Bachelor+ educated disabled: **49.6% chronic disease**
 - **Gap: -37.7 pp** (r=-0.305, p<0.001)
 
+| Education Level | Chronic Disease Rate | Gap |
+|----------------|---------------------|-----|
+| Primary or less | 87.3% | — |
+| Bachelor+ | 49.6% | -37.7 pp |
+| **Effect** | **LARGEST gap in study** | r=-0.305, p<0.001 |
+
 **This is the LARGEST education-health gap of any population group.**
 
 Low-educated disabled are **76% more likely to be chronically ill** than educated disabled.
@@ -755,12 +930,26 @@ Low-educated disabled are **76% more likely to be chronically ill** than educate
 - **Gap: +16,194 baht** (184% premium)
 - **Income multiplier: 2.84×—HIGHEST of any group**
 
+| Education Level | Monthly Income | Gap |
+|----------------|----------------|-----|
+| Primary or less | 8,787 baht | — |
+| Bachelor+ | 24,981 baht | +16,194 baht |
+| **Multiplier** | **2.84× (HIGHEST)** | 184% premium |
+
 **For comparison**:
 - Disabled: **2.84×**
 - Informal workers: 1.84×
 - General population: 1.5×
 - Elderly: 1.43×
 - LGBT+: 0.99× (broken)
+
+| Population Group | Education Income Multiplier |
+|-----------------|---------------------------|
+| **Disabled** | **2.84× (HIGHEST)** |
+| Informal workers | 1.84× |
+| General population | 1.5× |
+| Elderly | 1.43× |
+| LGBT+ | 0.99× (BROKEN) |
 
 **Why education provides enormous benefits for disabled**:
 - Knowledge work doesn't require physical mobility
@@ -812,6 +1001,12 @@ Low-educated disabled are **76% more likely to be chronically ill** than educate
 - Disabled WITHOUT chronic disease: **24,350 baht/month**
 - **Gap: -8,651 baht** (r=-0.299, p<0.001)
 
+| Health Status | Monthly Income | Gap |
+|--------------|----------------|-----|
+| WITH chronic disease | 15,699 baht | — |
+| WITHOUT chronic disease | 24,350 baht | +8,651 baht |
+| **Effect** | **STRONGEST in study** | r=-0.299, p<0.001 |
+
 **This is the STRONGEST income-health correlation in the entire study.**
 
 **Why income directly affects disease for disabled (unlike other groups)**:
@@ -847,6 +1042,12 @@ Monthly accessibility costs that low-income disabled cannot afford:
 - **23.4% skip care**
 
 **Gap: -37.7 pp** (2.6× higher skipping rate, p<0.001)
+
+| Income Level | Skip Needed Medical Care | Gap |
+|-------------|-------------------------|-----|
+| Low income | 61.1% | — |
+| Higher income | 23.4% | -37.7 pp |
+| **Effect** | **WORST of all groups** | 2.6× higher, p<0.001 |
 
 **Why disabled face worst healthcare barriers**:
 
