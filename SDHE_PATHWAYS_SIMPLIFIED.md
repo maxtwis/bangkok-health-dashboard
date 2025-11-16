@@ -116,7 +116,7 @@ Education correlates with income (1.84×), which correlates with healthcare acce
 ## 2. Elderly Population (60+) - Lifetime Consequences
 
 ### Pattern
-38.4% still work at age 72.4 (employed have 12.5pp less disease, p<0.000001). 73.7% of employed are informal workers earning only 2,601 baht - formal workers earn 5.9× more (p<0.000001). Air pollution shows strongest environmental correlation (r=0.440). Income does NOT correlate with disease at age 68 (p=0.095). Multi-elderly households (48.7%) explain reverse overcrowding pattern.
+38.4% still work at age 72.4 (employed have 12.5pp less disease, p<0.000001). 73.7% of employed are informal workers earning 14,388 baht/month - formal workers earn 1.32× more (p=0.000059). Air pollution shows strongest environmental correlation (r=0.440). Income does NOT correlate with disease at age 68 (p=0.095). Multi-elderly households (48.7%) explain reverse overcrowding pattern.
 
 ### Pathways
 
@@ -131,26 +131,27 @@ Education correlates with income (1.84×), which correlates with healthcare acce
 | **Gap** | **-12.5pp** | — |
 | **p-value** | **p<0.000001 ✅✅✅** | — |
 
-**Among Employed - Occupation Types**:
+**Among Employed - Occupation Types** (monthly income):
 
-| Occupation Type | % of Employed | Income |
-|----------------|--------------|--------|
-| **Informal/freelance** | **73.7%** | **2,601 baht** |
-| Company employee | 8.5% | 14,519 baht |
-| Own business | 8.5% | 9,527 baht |
+| Occupation Type | % of Employed | Monthly Income |
+|----------------|--------------|----------------|
 | Government | 0.6% | 24,400 baht |
 | State enterprise | 0.3% | 21,500 baht |
+| Company employee | 8.5% | 18,435 baht |
+| Own business | 8.5% | 16,482 baht |
+| **Informal/freelance** | **73.7%** | **14,388 baht** |
+| Other | 8.3% | 11,974 baht |
 
 **Formal vs Informal Workers**:
 
-| Type | Income | Sample |
-|------|--------|--------|
-| Formal (gov + company) | 15,444 baht | n=76 |
-| Informal workers | 2,601 baht | n=626 |
-| **Gap** | **+12,843 baht (5.9× higher)** | — |
-| **p-value** | **p<0.000001 ✅✅✅** | — |
+| Type | Monthly Income | Sample |
+|------|---------------|--------|
+| Formal (gov + company) | 18,948 baht | n=76 |
+| Informal workers | 14,388 baht | n=626 |
+| **Gap** | **+4,560 baht (1.32×)** | — |
+| **p-value** | **p=0.000059 ✅** | — |
 
-**Explanation**: 38.4% of elderly still work at average age 72.4. Employed elderly have 12.5pp LESS chronic disease (p<0.000001). However, 73.7% work in informal sector earning only 2,601 baht. Formal workers earn 5.9× more (p<0.000001) - one of the largest income gaps in entire study. Temporal direction unclear (health enables work vs work improves health). Mechanisms unknown.
+**Explanation**: 38.4% of elderly still work at age 72.4. Employed elderly have 12.5pp LESS chronic disease (p<0.000001). 73.7% work in informal sector earning 14,388 baht/month. Formal workers earn 1.32× more (18,948 baht, p=0.000059) - a modest but statistically significant gap. Temporal direction unclear (health enables work vs work improves health). Mechanisms unknown.
 
 ---
 
@@ -441,7 +442,7 @@ Education shows strongest income correlation (2.84×, highest of all groups). In
 | Group | Top Factor | Income Multiplier | Healthcare Crisis | Unique Finding |
 |-------|-----------|------------------|------------------|---------------|
 | **Informal Workers** | Education (30%) | 1.84× (p<0.001) | 49.4% skip care | Exercise correlation (-14.2pp disease) ONLY in this group |
-| **Elderly 60+** | Occupation (38.4% still work) | Formal 5.9× informal (p<0.000001) | 43.6% skip care | 73.7% of employed are informal workers earning only 2,601 baht; employed have 12.5pp less disease (p<0.000001) |
+| **Elderly 60+** | Occupation (38.4% still work) | Formal 1.32× informal (p=0.000059) | 43.6% skip care | 73.7% of employed are informal workers earning 14,388 baht; employed have 12.5pp less disease (p<0.000001) |
 | **LGBT+** | Discrimination (35%) | 0.99× NO correlation (p=0.993) | 62.5% skip care | Education shows ZERO correlations with any outcome |
 | **Disabled** | Education (32%) | 2.84× (p<0.001) HIGHEST | 61.1% skip care WORST | Direct income-disease correlation (r=-0.299, p=0.003) |
 
