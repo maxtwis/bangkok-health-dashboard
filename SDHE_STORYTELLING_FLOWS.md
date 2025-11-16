@@ -37,11 +37,11 @@ Among Bangkok's informal workers, health outcomes follow a clear cascade: **educ
 - Bachelor+ education: **30.1% chronic disease**
 - **Gap: 23.0 percentage points** (r=-0.217, p<0.001)
 
-| Education Level | Chronic Disease Rate | Sample Size |
-|----------------|---------------------|-------------|
-| Primary or less | 53.1% | n varies |
-| Bachelor+ | 30.1% | n varies |
-| **Gap** | **-23.0 pp** | p<0.001, r=-0.217 |
+| Education Level | Chronic Disease Rate | Gap |
+|----------------|---------------------|-----|
+| Primary or less | 53.1% | (baseline) |
+| Bachelor+ | 30.1% | -23.0 pp |
+| **Effect** | — | r=-0.217, p<0.001 |
 
 **Why education matters so much**:
 
@@ -49,27 +49,27 @@ Education isn't just about knowledge—it **unlocks multiple downstream pathways
 
 1. **Income pathway**: Bachelor+ workers earn **25,557 baht/month** vs primary-educated workers at **13,900 baht/month** (84% income gap, 1.84× multiplier)
 
-| Education Level | Monthly Income | Income Gap |
-|----------------|----------------|------------|
-| Primary or less | 13,900 baht | — |
-| Bachelor+ | 25,557 baht | +11,657 baht (84% higher) |
+| Education Level | Monthly Income | Gap |
+|----------------|----------------|-----|
+| Primary or less | 13,900 baht | (baseline) |
+| Bachelor+ | 25,557 baht | +11,657 baht |
 | **Multiplier** | **1.84×** | p<0.001 |
 
 2. **Health behavior pathway**: Educated workers exercise regularly at **29.2%** vs **15.7%** for primary-educated (13.6 pp gap)
 
 | Education Level | Exercise Regularly | Gap |
 |----------------|-------------------|-----|
-| Primary or less | 15.7% | — |
+| Primary or less | 15.7% | (baseline) |
 | Bachelor+ | 29.2% | +13.6 pp |
-| **Difference** | — | p<0.001 |
+| **Effect** | — | p<0.001 |
 
 3. **Homeownership pathway**: Education enables homeownership even in informal sector (+10.7 pp, p=0.026)
 
-| Education Level | Homeownership Rate |
-|----------------|-------------------|
-| Primary or less | — |
-| Bachelor+ | +10.7 pp higher |
-| **Effect** | p=0.026 |
+| Education Level | Homeownership Rate | Gap |
+|----------------|-------------------|-----|
+| Primary or less | 19.0% | (baseline) |
+| Bachelor+ | 29.6% | +10.7 pp |
+| **Effect** | — | p=0.026 |
 
 4. **Health literacy pathway**: Understanding symptoms, knowing when to seek care, preventive behaviors
 
@@ -92,9 +92,9 @@ Consider a typical scenario: Chest pain strikes. Medical visit costs 500 baht. L
 
 | Income Level | Skip Needed Medical Care | Gap |
 |-------------|-------------------------|-----|
-| Low income (Q1) | 49.4% | — |
+| Low income (Q1) | 49.4% | (baseline) |
 | Higher income (Q4) | 18.7% | -30.7 pp |
-| **Difference** | **2.6× higher rate** | p<0.001 |
+| **Effect** | **2.6× higher rate** | p<0.001 |
 
 **Disease burden by income**:
 - Lowest income (Q1): **47.6% chronic disease**
@@ -103,7 +103,7 @@ Consider a typical scenario: Chest pain strikes. Medical visit costs 500 baht. L
 
 | Income Quartile | Chronic Disease Rate | Gap |
 |----------------|---------------------|-----|
-| Q1 (Lowest) | 47.6% | — |
+| Q1 (Lowest) | 47.6% | (baseline) |
 | Q4 (Highest) | 36.1% | -11.5 pp |
 | **Effect** | — | r=-0.091, p<0.001 |
 
@@ -126,7 +126,7 @@ Low income doesn't just limit healthcare—it traps informal workers in multi-ha
 
 | Income Level | Live in Disaster Zones | Gap |
 |-------------|----------------------|-----|
-| Low income (Q1) | 85.7% | — |
+| Low income (Q1) | 85.7% | (baseline) |
 | High income (Q4) | 67.4% | -18.3 pp |
 | **Effect** | — | p<0.001 |
 
@@ -143,7 +143,7 @@ Low income doesn't just limit healthcare—it traps informal workers in multi-ha
 
 | Housing Status | Overcrowding Rate | Gap |
 |---------------|------------------|-----|
-| Renters | 39.7% | — |
+| Renters | 39.7% | (baseline) |
 | Homeowners | 27.5% | -12.2 pp |
 | **Effect** | — | p=0.002 |
 
@@ -172,7 +172,7 @@ Among those who don't exercise:
 
 | Exercise Behavior | Chronic Disease Rate | Gap |
 |------------------|---------------------|-----|
-| Exercise regularly | 35.1% | — |
+| Exercise regularly | 35.1% | (baseline) |
 | No exercise | 49.3% | +14.2 pp |
 | **Effect** | — | r=-0.121, p<0.001 |
 
@@ -191,7 +191,7 @@ Among those who don't exercise:
 
 | Education Level | Exercise Regularly | Gap |
 |----------------|-------------------|-----|
-| Primary or less | 15.7% | — |
+| Primary or less | 15.7% | (baseline) |
 | Bachelor+ | 29.2% | +13.6 pp |
 | **Effect** | — | p<0.001 |
 
@@ -199,28 +199,31 @@ Among those who don't exercise:
 
 ---
 
-### Pathway 5: Employment Stress Manifests as Smoking (8% of health influence)
+### Pathway 5: Elevated Smoking Rates Among Informal Workers (8% of health influence)
 
-**The stress marker**:
+**The observed pattern**:
 
-Informal workers show **16.2% regular smoking** (not occasional—daily, habitual) compared to **10.0%** among general population (+6.2 pp, p<0.001).
+Informal workers show **16.2% regular smoking** (daily, habitual) compared to **10.0%** among general population (+6.2 pp, p<0.001).
 
 | Population Group | Regular Smoking Rate | Gap |
 |-----------------|---------------------|-----|
-| Informal workers | 16.2% | — |
+| Informal workers | 16.2% | (baseline) |
 | General population | 10.0% | -6.2 pp |
 | **Effect** | **HIGHEST rate** | p<0.001 |
 
-**Why smoking rates are elevated**:
-- No employment contracts = zero job security
-- Income varies wildly week to week
-- No workplace smoking restrictions
-- No employer health insurance
-- Cigarettes more affordable than healthcare
+**What the data shows**:
+- Total current smoking: 26.9% (informal) vs 29.1% (general) - NOT significantly different
+- Regular smoking: 16.2% (informal) vs 10.0% (general) - SIGNIFICANTLY higher (p<0.001)
+- This is HIGHEST regular smoking rate among all population groups
 
-**Smoking is a visible sign that informal employment conditions create chronic stress**, not a cause of health problems but a symptom of precarious work.
+**What does NOT correlate with smoking**:
+- Income: Low-income 25.0% vs High-income 28.7% (p=0.415, NOT significant)
+- Education: No data showing correlation
+- Age, gender, other demographics: Not analyzed
 
-*Smoking influence: 8% of total health impact (STRESS INDICATOR)*
+**Statistical note**: We observe that informal workers smoke more regularly than the general population, but the **underlying causes are not established** by the available data. The correlation exists with informal employment status itself, not with income or education levels within informal workers.
+
+*Smoking: 8% of health impact (OBSERVED DIFFERENCE, causes unknown)*
 
 ---
 
@@ -237,7 +240,7 @@ Despite economic vulnerability, informal workers show **stronger social protecti
 
 | Population Group | Violence Exposure | Gap |
 |-----------------|------------------|-----|
-| Informal workers | 10.2% | — |
+| Informal workers | 10.2% | (baseline) |
 | General population | 24.0% | +13.7 pp |
 | **Protection** | **57% lower risk** | p<0.001 |
 
@@ -248,7 +251,7 @@ Despite economic vulnerability, informal workers show **stronger social protecti
 
 | Population Group | Has Emergency Support | Gap |
 |-----------------|----------------------|-----|
-| Informal workers | 89.9% | — |
+| Informal workers | 89.9% | (baseline) |
 | General population | 84.1% | -5.8 pp |
 | **Protection** | **Stronger support** | p<0.001 |
 
@@ -260,19 +263,18 @@ Despite economic vulnerability, informal workers show **stronger social protecti
 
 | Population Group | Discrimination Rate | Gap |
 |-----------------|-------------------|-----|
-| Informal workers | 13.7% | — |
+| Informal workers | 13.7% | (baseline) |
 | General population | 17.6% | +3.9 pp |
 | **Protection** | **Lower exposure** | p=0.004 |
 
-**Why social networks are strong**:
-- Tight-knit communities (neighbors, family, fellow vendors)
-- Shared economic circumstances create solidarity
-- Less exposure to workplace discrimination (compared to formal sector)
-- Community mutual aid systems
+**What does NOT explain this pattern**:
+- Income: No correlation analyzed between income and violence/support within informal workers
+- Education: No correlation analyzed
+- Age, gender, location: Not analyzed
 
-**These networks don't fix income or health, but they buffer against violence and isolation.**
+**Statistical note**: Informal workers show significantly lower violence exposure and higher support networks compared to the general population. The **underlying reasons are not established** by the available data. We observe the protective pattern but cannot determine its causes from the current analysis.
 
-*Social protection: 10% of total health impact (PROTECTIVE BUFFER)*
+*Social protection: 10% of total health impact (OBSERVED PROTECTIVE PATTERN, mechanisms unknown)*
 
 ---
 
@@ -317,24 +319,23 @@ For Bangkok's elderly, **the past matters more than the present**. Lifetime empl
 
 | Air Pollution Exposure | Health Symptoms | Gap |
 |----------------------|----------------|-----|
-| Exposed to air pollution | 64.9% | — |
-| NOT exposed | 21.3% | -43.6 pp |
+| NOT exposed | 21.3% | (baseline) |
+| Exposed to air pollution | 64.9% | +43.6 pp |
 | **Effect** | **STRONGEST in study** | r=0.440, p<0.001 |
 
-**Why this effect is so massive**:
+**Statistical strength**:
 - Correlation coefficient r=0.440 is **EXTREMELY STRONG** for epidemiological research
-- Represents decades of cumulative exposure compounding
-- Elderly have weakened immune systems, pre-existing respiratory conditions
-- 88% already have chronic disease, pollution exacerbates symptoms
+- This is the STRONGEST environmental effect found in the entire study
+- 88% of elderly already have chronic disease (established baseline)
 
-**Economic barrier to protection**:
-- Air purifiers cost 3,000-15,000 baht (20-100% of monthly income)
-- Cannot afford relocation to cleaner areas
-- Low-income elderly depend on family housing (limited choice)
+**What does NOT correlate with air pollution symptoms**:
+- Income: No correlation analyzed between income and pollution symptoms within elderly
+- Education: No correlation analyzed
+- Housing tenure: Not analyzed
 
-**Perception gap**: Many elderly attribute symptoms to "aging" rather than environmental exposure, preventing protective behaviors.
+**Statistical note**: We observe an extremely strong correlation between air pollution exposure and health symptoms among elderly (r=0.440, p<0.001). The **mechanisms and mediating factors are not established** by the available data. We cannot determine from this analysis why the effect is so strong or what factors might moderate it.
 
-*Air pollution: 25% of total health impact (STRONGEST ENVIRONMENTAL EFFECT)*
+*Air pollution: 25% of total health impact (STRONGEST ENVIRONMENTAL CORRELATION, mechanisms not analyzed)*
 
 ---
 
@@ -351,7 +352,7 @@ Among elderly, **employment contract history** during working years determines r
 
 | Contract Status (During Working Years) | Current Monthly Income | Gap |
 |---------------------------------------|----------------------|-----|
-| Had employment contract | 20,709 baht | — |
+| Had employment contract | 20,709 baht | (baseline) |
 | No contract | 14,207 baht | -6,502 baht |
 | **Premium** | **46% higher** | p<0.0001 |
 
@@ -366,18 +367,23 @@ Among elderly, **employment contract history** during working years determines r
 
 | Education Level | Had Employment Contract | Gap |
 |----------------|------------------------|-----|
-| Primary or less | 4.0% | — |
+| Primary or less | 4.0% | (baseline) |
 | Bachelor+ | 24.0% | +20.0 pp |
 | **Effect** | — | p=0.0005 |
 
-**Why contracts matter more**:
-- Contracts provided social security benefits, pensions
-- Lifetime wealth accumulation from stable employment
-- Education matters, but **contract status was the mechanism** for economic security
+**Statistical observation**:
+- Employment contracts during working years correlate with current income (46% premium, p<0.0001)
+- Education also correlates with having had contracts (+20.0 pp, p=0.0005)
+- Both education and contracts independently correlate with income, but contract history shows stronger correlation
 
-**Implication**: For elderly, **the die was cast decades ago**—whether they had formal employment contracts during their working years determined their current economic situation.
+**What this does NOT show**:
+- Causal mechanisms (why contracts lead to higher current income)
+- Whether contracts provided pensions/benefits (not measured)
+- Wealth accumulation pathways (not analyzed)
 
-*Employment contracts (lifetime): 20% of total health impact*
+**Statistical note**: We observe correlations between past employment contracts and current income, but the **mechanisms and causal pathways are not established** by the available data.
+
+*Employment contracts (lifetime): 20% of total health impact (CORRELATION OBSERVED, mechanisms not analyzed)*
 
 ---
 
@@ -394,23 +400,24 @@ Both low-income and high-income elderly have chronic disease (88% overall). But 
 
 | Income Level | Skip Needed Medical Care | Gap |
 |-------------|-------------------------|-----|
-| Low income (Q1) | 43.6% | — |
+| Low income (Q1) | 43.6% | (baseline) |
 | Higher income (Q4) | 12.7% | -30.9 pp |
 | **Effect** | **3.4× higher rate** | p<0.001 |
 
-**What skipping care means**:
-- Cannot afford medications (1,200 baht/month for diabetes/hypertension)
-- Delay checkups (500 baht + transportation)
-- Skip recommended tests (blood sugar monitors: 2,800 baht)
+**Statistical observations**:
+- Income correlates with healthcare access (30.9 pp gap, p<0.001)
+- Overall chronic disease prevalence: 88% (regardless of income)
+- Income does NOT correlate with disease prevalence among elderly (age dominates)
 
-**The paradox**:
-- **Income doesn't prevent disease at age 68. Age dominates.**
-- BUT income determines: Quality of life, symptom control, complication prevention, dignity
+**What this does NOT show**:
+- Reasons for skipping care (affordability assumed but not measured)
+- Quality of life differences (not measured)
+- Symptom management outcomes (not measured)
+- Medication adherence (not measured)
 
-**High-income elderly**: Manage symptoms, take medications, see specialists, monitor conditions
-**Low-income elderly**: Suffer through symptoms, delay care until crisis, experience complications
+**Statistical note**: Low-income elderly skip needed care at 3.4× the rate of high-income elderly, but we cannot establish from this data **why** they skip care or what the health consequences are.
 
-*Income/Healthcare: 18% of total health impact*
+*Income/Healthcare: 18% of total health impact (ACCESS CORRELATION, outcomes not measured)*
 
 ---
 
@@ -435,61 +442,56 @@ Education matters for elderly, but through **different mechanisms** than for you
 - Primary educated: **41.1% own homes**
 - **Gap: 35.1 pp** (p<0.001)
 
-**The twist**: Exercise doesn't reduce disease for elderly (p=0.893). Why? **Age overwhelms everything.**
+**Statistical observations**:
+- Education correlates with exercise behavior (+22.1 pp, p<0.001) - STRONGEST gradient
+- Education correlates with chronic disease (-14.1 pp, r=-0.119, p<0.001)
+- Education correlates with homeownership (+35.1 pp, p<0.001)
+- Exercise does NOT correlate with disease among elderly (p=0.893)
 
-**Education's value for elderly isn't disease prevention—it's**:
-- Health literacy (recognizing symptoms, seeking appropriate care)
-- Exercise habits (maintaining mobility, preventing functional decline)
-- Wealth accumulation (higher homeownership from lifetime higher earnings)
-- Social capital (educated children who provide support)
+**What this does NOT show**:
+- Health literacy levels (not measured)
+- Mechanisms linking education to disease (if not through exercise)
+- Wealth accumulation pathways (not analyzed)
+- Family support patterns (not measured)
 
-*Education: 15% of total health impact*
+**Statistical note**: Education shows multiple correlations (exercise, disease, homeownership) among elderly, but the **causal pathways and mechanisms are not established** by the available data.
+
+*Education: 15% of total health impact (MULTIPLE CORRELATIONS, pathways not established)*
 
 ---
 
-### Pathway 5: The Housing Paradox—Choosing Access Over Space (8% of health influence)
+### Pathway 5: The Housing Paradox—Reverse Income-Overcrowding Correlation (8% of health influence)
 
-**The counterintuitive finding**:
-
-Researchers expected: Higher income → Larger homes → Less overcrowding
+**The unexpected correlation**:
 
 **Reality**:
 - **HIGH-income elderly**: **48.1% overcrowded**
 - **LOW-income elderly**: **37.6% overcrowded**
 - **REVERSE gap: +10.4 pp** (p=0.006)
 
-**What's happening**:
-
-High-income elderly **deliberately choose** small apartments in dense central areas because:
-- 5-10 minutes to hospitals
-- Pharmacy nearby
-- Public transit access
-- Grocery delivery available
-- Healthcare proximity matters more than space
-
-Low-income elderly live in larger peripheral homes because:
-- It's all they could afford
-- Healthcare is 45+ minutes away
-- No public transit access
-- Depend on children for transportation
-- **Space doesn't compensate for healthcare distance**
-
-**Renters vs owners**:
+**Additional correlations**:
 - Renters: **51.4% overcrowded**
 - Homeowners: **32.4% overcrowded**
 - **Gap: 19.0 pp** (p<0.001)
 
-**Insight**: When you're 68 with chronic disease requiring regular care, **proximity to healthcare is more valuable than square meters**.
+**What this does NOT show**:
+- Reasons for housing choices (location preferences not measured)
+- Distance to healthcare facilities (not measured)
+- Transportation access (not measured)
+- Decision-making factors (not measured)
+- Room sizes or housing types (not measured)
 
-*Housing: 8% of total health impact (PARADOXICAL PATTERN)*
+**Statistical note**: High-income elderly paradoxically show MORE overcrowding than low-income elderly (+10.4 pp, p=0.006), which is the **reverse** of typical income-housing patterns. The **reasons for this paradox are not established** by the available data. We observe the correlation but cannot determine why it exists.
+
+*Housing: 8% of total health impact (REVERSE CORRELATION, reasons unknown)*
 
 ---
 
 ### Pathway 6: Strongest Social Protection of Any Group (12% of health influence)
 
-**The safety of age**:
+**Statistical observations**:
 
-Elderly enjoy **exceptional social protection** across all metrics.
+Elderly show significantly lower social risks across all measured metrics.
 
 **Violence exposure (LOWEST)**:
 - Elderly: **3.8%**
@@ -507,18 +509,20 @@ Elderly enjoy **exceptional social protection** across all metrics.
 - **Gap: -9.1 pp** (p<0.001)
 - Types: Economic (5.4%), Age (2.6%)
 
-**Cultural foundation**:
-- Thai cultural value: กตัญญู (gratitude/respect for elders)
-- Strong family ties (children care for aging parents)
-- Less exposure to conflict-prone environments (no workplace, less nightlife)
-- Community respect provides buffer
-
-**When discrimination occurs, consequences appear**:
+**Discrimination correlates with smoking**:
 - Elderly WITH discrimination: **19.8% smoke**
 - Elderly WITHOUT discrimination: **13.2% smoke**
-- **Gap: +6.6 pp** (p=0.005)—discrimination drives stress-coping even at 68
+- **Gap: +6.6 pp** (p=0.005)
 
-*Social protection: 12% of total health impact (STRONGEST OF ALL GROUPS)*
+**What does NOT explain this pattern**:
+- Cultural values (not measured)
+- Family support structures (not measured)
+- Environmental exposure (workplace, nightlife - not measured)
+- Community attitudes (not measured)
+
+**Statistical note**: Elderly show the strongest social protection of all groups (84% lower violence, highest support networks, lowest discrimination), but the **underlying reasons are not established** by the available data. We observe exceptional protection but cannot determine its causes.
+
+*Social protection: 12% of total health impact (STRONGEST PROTECTION, mechanisms unknown)*
 
 ---
 
@@ -587,7 +591,7 @@ For Bangkok's LGBT+ community, **education doesn't work**. A Bachelor's degree p
 
 | Population Group | Discrimination Rate | Gap |
 |-----------------|-------------------|-----|
-| LGBT+ community | 39.1% | — |
+| LGBT+ community | 39.1% | (baseline) |
 | General population | 17.6% | -21.6 pp |
 | **Effect** | **2.2× higher** | — |
 
@@ -605,38 +609,44 @@ For Bangkok's LGBT+ community, **education doesn't work**. A Bachelor's degree p
 | Religion | 8.0% | — | — |
 | Age | 7.3% | — | — |
 
-**The pervasiveness**: 38.1 out of 39.1 total discrimination is gender-based—revealing that LGBT+ discrimination experiences are **fundamentally about gender identity/expression**, not other characteristics.
+**Statistical observation**: 97% of LGBT+ discrimination (38.1 out of 39.1 total percentage points) is gender-based, compared to only 3.5% gender discrimination in the general population.
 
-**What discrimination does**: Watch how it **breaks every normal pathway**:
+**What this does NOT show**:
+- Contexts where discrimination occurs (not measured)
+- Frequency or severity of discrimination events (not measured)
+- Impact on mental health or stress (not measured)
+- Causal mechanisms linking discrimination to other outcomes (not directly tested)
 
-*Structural discrimination: 35% of total health impact (ROOT CAUSE)*
+**Statistical note**: LGBT+ individuals experience discrimination at 2.2× the rate of the general population, with 97% being gender-based. The **causal pathways** by which discrimination affects health, income, and other outcomes are not directly established in this analysis.
+
+*Structural discrimination: 35% of total health impact (OBSERVED DIFFERENCE, pathways not directly tested)*
 
 ---
 
 ### Pathway 2: Education Provides Zero Benefits (0% of health influence)
 
-**The broken promise of education**:
+**IMPORTANT**: LGBT+ individuals have **similar education levels to the general population**—the problem is NOT lack of education. The issue is that **education provides NO returns** for LGBT+ individuals.
 
-Among LGBT+ individuals, education has **NO EFFECT** on any life outcome.
+Among LGBT+ individuals, education shows **NO STATISTICAL CORRELATION** with any life outcome.
 
-### **Education → Income: ZERO EFFECT**
+### **Education → Income: ZERO CORRELATION**
 
 - Bachelor+ LGBT+: **26,848 baht/month**
 - Primary educated LGBT+: **27,000 baht/month**
-- **Difference: -152 baht** (Bachelor degree earns LESS)
-- **Income multiplier: 0.99×** (p=0.993, no relationship)
+- **Difference: -152 baht** (Bachelor degree earns slightly LESS)
+- **Income multiplier: 0.99×** (p=0.993, NO statistical relationship)
 
 | Education Level | Monthly Income | Gap |
 |----------------|----------------|-----|
-| Primary or less | 27,000 baht | — |
+| Primary or less | 27,000 baht | (baseline) |
 | Bachelor+ | 26,848 baht | -152 baht |
 | **Multiplier** | **0.99× (ZERO)** | p=0.993 |
 
-**For comparison**:
-- Disabled: **2.84×** income for education
-- Informal workers: **1.84×** income
-- General population: **1.5×** income
-- **LGBT+: 0.99×—education buys NOTHING**
+**For comparison** (education → income multipliers):
+- Disabled: **2.84×** (p<0.001)
+- Informal workers: **1.84×** (p<0.001)
+- General population: **1.5×** (p<0.001)
+- **LGBT+: 0.99×** (p=0.993, **NO correlation**)
 
 | Population Group | Education Income Multiplier |
 |-----------------|---------------------------|
@@ -645,31 +655,30 @@ Among LGBT+ individuals, education has **NO EFFECT** on any life outcome.
 | General population | 1.5× |
 | **LGBT+** | **0.99× (BROKEN)** |
 
-### **Education → Chronic Disease: ZERO EFFECT**
+### **Education → Chronic Disease: ZERO CORRELATION**
 
 - Primary educated LGBT+: **45.9% chronic disease**
 - Bachelor+ educated LGBT+: **37.5% chronic disease**
 - **Gap: 8.4 pp** (NOT significant, r=-0.026, p=0.498)
-- **Education provides NO health protection**
+- **No statistical correlation between education and health**
 
-### **Education → Exercise: ZERO EFFECT**
+### **Education → Exercise: ZERO CORRELATION**
 
 - Bachelor+ LGBT+: **30.0% exercise regularly**
 - Primary educated LGBT+: **27.0% exercise**
 - **Gap: 3.0 pp** (NOT significant, p=0.857)
-- **Education doesn't improve health behaviors**
+- **No statistical correlation between education and exercise**
 
-**Why this complete breakdown?**
+**What this does NOT show**:
+- Hiring discrimination (not measured)
+- Occupational segregation (occupation types not analyzed)
+- Social network effects (not measured)
+- Employer behavior (not measured)
+- Why education doesn't correlate with income (mechanisms not tested)
 
-**Discrimination in hiring**: Employers discriminate regardless of qualifications, eliminating economic returns
+**Statistical note**: Education shows NO significant correlation with income (p=0.993), health (p=0.498), or exercise (p=0.857) among LGBT+ individuals, unlike all other population groups studied. The **reasons for this breakdown are not established** by the available data - we observe that education doesn't correlate with outcomes, but cannot determine why.
 
-**Occupational segregation**: LGBT+ individuals concentrated in low-wage sectors despite education
-
-**Discrimination in social settings**: Limits health-promoting social networks that typically come with education
-
-**Result**: A Bachelor's degree is worthless when employers won't hire you, landlords won't rent to you, and society won't accept you.
-
-*Education: 0% influence (COMPLETE BREAKDOWN)*
+*Education: 0% influence (NO CORRELATION OBSERVED, causes unknown)*
 
 ---
 
@@ -686,7 +695,7 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 
 | Income Level | Overcrowding Rate | Gap |
 |-------------|------------------|-----|
-| Low income | 34.4% | — |
+| Low income | 34.4% | (baseline) |
 | High income | 9.2% | -25.2 pp |
 | **Protection** | **73% reduction** | p<0.001 |
 
@@ -697,7 +706,7 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 
 | Housing Status | Overcrowding Rate | Gap |
 |---------------|------------------|-----|
-| Renters | 22.0% | — |
+| Renters | 22.0% | (baseline) |
 | Homeowners | 4.9% | -17.1 pp |
 | **Effect** | — | p<0.001 |
 
@@ -708,7 +717,7 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 
 | Income Level | Skip Needed Care | Gap |
 |-------------|----------------|-----|
-| Low income | 62.5% | — |
+| Low income | 62.5% | (baseline) |
 | High income | 42.7% | -19.8 pp |
 | **Effect** | — | p=0.043 |
 
@@ -725,7 +734,7 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 
 | Income Level | Alcohol Consumption | Gap |
 |-------------|-------------------|-----|
-| Low income | 25.0% | — |
+| Low income | 25.0% | (baseline) |
 | High income | 52.8% | +27.8 pp |
 | **Effect** | **2.1× higher** | p=0.004 |
 
@@ -740,82 +749,62 @@ When LGBT+ individuals gain income, **two opposite effects occur simultaneously*
 
 | Income Level | Violence Exposure | Gap |
 |-------------|------------------|-----|
-| Low income | 9.4% | — |
+| Low income | 9.4% | (baseline) |
 | High income | 31.9% | +22.5 pp |
 | **Paradox** | **3.4× higher** | p=0.013 |
 
-**Why**:
-- Higher income = formal employment = workplace visibility = more discrimination/violence
-- Can afford to be "out" in public = more exposure to hostile encounters
-- Low-income LGBT+ maintain "invisibility" as survival strategy
-- Economic resources buy visibility that attracts violence
+**What this does NOT show**:
+- Employment types or workplace exposure (not measured)
+- "Outness" or visibility levels (not measured)
+- Survival strategies (not measured)
+- Contexts where violence occurs (not measured)
+- Why income correlates with violence (mechanisms not tested)
 
-**The double edge**: Income enables safety (housing, healthcare) but also visibility (workplace exposure, social presence) that increases violence risk.
+**Statistical note**: Income shows both protective correlations (housing, healthcare) and harmful correlations (drinking, violence) among LGBT+ individuals. The **mechanisms linking income to violence** are not established by the available data - we observe the paradoxical pattern but cannot determine why high income correlates with higher violence exposure.
 
-*Income: 25% of total health impact (ONLY FUNCTIONING LEVER, BUT DOUBLE-EDGED)*
+*Income: 25% of total health impact (MIXED CORRELATIONS: protective + harmful, mechanisms unknown)*
 
 ---
 
-### Pathway 4: The Vicious Cycle—Discrimination ↔ Smoking ↔ Violence (20% of health influence)
+### Pathway 4: Bidirectional Correlations—Discrimination ↔ Smoking ↔ Violence (20% of health influence)
 
-**A bidirectional feedback loop unique to LGBT+ lives**:
+**Statistical observations showing bidirectional patterns**:
 
-### **Discrimination → Smoking** (stress-coping)
+### **Discrimination ↔ Smoking**
 
 - LGBT+ WITH discrimination: **22.8% smoke**
 - LGBT+ WITHOUT discrimination: **14.6% smoke**
 - **Gap: +8.1 pp** (p=0.009)
 
-**Mechanism**: Smoking as stress relief from discrimination experiences
-
----
-
-### **Smoking → Discrimination** (bidirectional!)
+AND
 
 - LGBT+ who smoke: **50.0% experience discrimination**
 - LGBT+ non-smokers: **36.8% experience discrimination**
 - **Gap: +13.2 pp** (p=0.009)
 
-**Mechanism**:
-- Smoking spaces = social exposure = visibility
-- Masculine-coded behavior (for trans women) = gender policing
-- Smoking creates contexts where discrimination occurs
-
 ---
 
-### **Smoking → Violence** (UNIQUE to LGBT+)
-
-No other population group shows this pattern:
+### **Smoking ↔ Violence**
 
 - LGBT+ smokers: **49.2% experience violence**
 - LGBT+ non-smokers: **37.3% experience violence**
 - **Gap: +11.9 pp** (p=0.020)
 
-**Mechanism**: Smoking involves exposure to public/social spaces where violence occurs
+**Note**: No other population group shows significant smoking-violence correlation.
 
 ---
 
-### **The Vicious Cycle**:
+**What this does NOT show**:
+- Causal direction (does discrimination cause smoking, or vice versa?)
+- Smoking contexts or locations (not measured)
+- Temporal sequence (which came first?)
+- Stress levels or coping mechanisms (not measured)
+- Gender policing behaviors (not measured)
+- Whether these create feedback loops (direction not established)
 
-```
-Discrimination (39.1% rate)
-      ↓
-Smoking as stress-coping (+8.1 pp)
-      ↓
-Smoking increases discrimination visibility (+13.2 pp)
-      ↓
-Smoking increases violence exposure (+11.9 pp)
-      ↓
-Violence/discrimination increase stress
-      ↓
-More smoking to cope
-      ↓
-(Cycle reinforces and repeats)
-```
+**Statistical note**: Among LGBT+ individuals, discrimination correlates with smoking, smoking correlates with discrimination, and smoking correlates with violence. These **bidirectional correlations suggest** possible feedback loops, but the **causal mechanisms and temporal sequences are not established** by the available cross-sectional data. We observe the patterns but cannot determine directionality.
 
-**Each element reinforces the others, creating a self-perpetuating trap.**
-
-*Vicious cycle: 20% of total health impact (BIDIRECTIONAL FEEDBACK LOOP)*
+*Bidirectional correlations: 20% of total health impact (CORRELATIONS OBSERVED, causality and direction unknown)*
 
 ---
 
@@ -833,42 +822,46 @@ More smoking to cope
 **Emergency support networks (ONLY group below general)**:
 - LGBT+: **82.6% have emergency support**
 - General population: **84.1%**
-- **Gap: -1.5 pp** (not statistically significant, but directionally concerning)
+- **Gap: -1.5 pp** (not statistically significant)
 
-**Why support networks are weaker**:
-- Some LGBT+ individuals rejected by families
-- Fewer traditional family support structures
-- Discrimination limits access to mainstream support systems
-- Community support exists but is weaker than family-based networks in other groups
+**What this does NOT show**:
+- Family rejection rates (not measured)
+- Types of support networks (not analyzed)
+- Reasons for lower support (not measured)
+- Community vs family support (not distinguished)
 
-**The compound effect**: Highest violence exposure + weakest support networks = vulnerability without buffers
+**Statistical note**: LGBT+ show the highest violence exposure (39.4%) and marginally lower support networks (82.6% vs 84.1%, not significant). The **reasons for this pattern** are not established by the available data.
 
-*Housing (10%) + Social isolation (5%) = 15% total influence*
+*Violence (7%) + Social isolation (3%) + Housing (10%) = 20% total influence*
 
 ---
 
-### Pathway 6: Healthcare Access—Even Money Doesn't Fix It (5% of health influence)
+### Pathway 6: Healthcare Access Paradox (5% of health influence)
+
+**Statistical observations**:
 
 **Chronic disease prevalence**: **40%** of LGBT+ community
 
-**But nothing protects them**:
-- Exercise: No effect (p=0.364)
-- Education: No effect (p=0.498)
-- Income: No direct health effect
+**Factors that do NOT correlate with disease**:
+- Exercise: p=0.364 (NOT significant)
+- Education: p=0.498 (NOT significant)
+- Income: No direct health correlation measured
 
 **Healthcare access by income**:
 - Low-income LGBT+: **62.5% skip needed care** (MAJORITY!)
 - Higher-income LGBT+: **42.7% skip care**
-- **Even with money, 43% still can't access care**
+- Gap: -19.8 pp (p=0.043)
 
-**Why healthcare access fails even with resources**:
-- Discrimination in healthcare settings (providers, staff)
-- Fear of judgment or inappropriate questions
-- Lack of gender-affirming care options
-- Medical gatekeeping (trans-specific healthcare)
-- Psychological barrier to seeking care after discrimination experiences
+**What this does NOT show**:
+- Discrimination in healthcare settings (not measured)
+- Fear or psychological barriers (not measured)
+- Gender-affirming care availability (not measured)
+- Medical gatekeeping experiences (not measured)
+- Reasons for skipping care (not measured)
 
-*Healthcare: 5% of total health impact*
+**Statistical note**: Even high-income LGBT+ individuals skip needed care at 42.7%, much higher than other high-income groups. The **reasons for continued access barriers** despite economic resources are not established by the available data.
+
+*Healthcare: 5% of total health impact (ACCESS CORRELATION, barriers not measured)*
 
 ---
 
@@ -913,7 +906,7 @@ For Bangkok's disabled population, **education and income matter more than for a
 
 | Education Level | Chronic Disease Rate | Gap |
 |----------------|---------------------|-----|
-| Primary or less | 87.3% | — |
+| Primary or less | 87.3% | (baseline) |
 | Bachelor+ | 49.6% | -37.7 pp |
 | **Effect** | **LARGEST gap in study** | r=-0.305, p<0.001 |
 
@@ -932,7 +925,7 @@ Low-educated disabled are **76% more likely to be chronically ill** than educate
 
 | Education Level | Monthly Income | Gap |
 |----------------|----------------|-----|
-| Primary or less | 8,787 baht | — |
+| Primary or less | 8,787 baht | (baseline) |
 | Bachelor+ | 24,981 baht | +16,194 baht |
 | **Multiplier** | **2.84× (HIGHEST)** | 184% premium |
 
@@ -951,26 +944,13 @@ Low-educated disabled are **76% more likely to be chronically ill** than educate
 | Elderly | 1.43× |
 | LGBT+ | 0.99× (BROKEN) |
 
-**Why education provides enormous benefits for disabled**:
-- Knowledge work doesn't require physical mobility
-- Remote work opportunities (pandemic accelerated accessibility)
-- Professional licensing (CPA, law, medicine) protects from discrimination
-- Employers value technical skills over physical appearance for certain roles
-- Adaptive technology enables high-productivity work
-
----
+**Additional correlations**:
 
 ### **Education → Exercise (STRONGEST GRADIENT)**
 
 - Bachelor+ disabled: **36.4% exercise regularly**
 - Primary educated disabled: **13.2% exercise**
 - **Gap: +23.1 pp** (p=0.005)—**STRONGEST education-exercise gradient of any group**
-
-**Why**:
-- Health literacy enables understanding of adaptive exercise options
-- Economic resources enable accessible gyms, equipment purchases
-- Social networks connect to disability sports communities
-- Self-efficacy: educated disabled believe exercise is possible
 
 ---
 
@@ -979,15 +959,21 @@ Low-educated disabled are **76% more likely to be chronically ill** than educate
 - Math skills: **94.8%** (high edu) vs **73.4%** (low edu) = **+21.4 pp** (p<0.0001)
 - Writing skills: **95.3%** (high edu) vs **73.9%** (low edu) = **+21.4 pp** (p<0.0001)
 
-**Why functional skills matter uniquely for disabled**:
-- Math: budgeting for expensive assistive devices, medical costs
-- Writing: advocating for accessibility accommodations, navigating bureaucracy
-- Literacy: understanding complex medical/insurance systems
-- Numeracy: managing medication schedules, health monitoring
+---
 
-**Education provides literal functional capacity that enables independence.**
+**What this does NOT show**:
+- Types of work (knowledge vs physical - not analyzed)
+- Remote work availability (not measured)
+- Employer discrimination patterns (not measured)
+- Adaptive technology use (not measured)
+- Health literacy levels (not measured)
+- Exercise accessibility (not measured)
+- Social networks (not measured)
+- Why functional skills matter (uses not measured)
 
-*Education: 32% of total health impact (MOST POWERFUL FACTOR)*
+**Statistical note**: Education shows the STRONGEST correlations among disabled individuals (2.84× income multiplier, 37.7 pp disease gap, 23.1 pp exercise gap, 21.4 pp functional skills gap). The **mechanisms linking education to these outcomes** are not established by the available data - we observe extremely strong correlations but cannot determine why education effects are amplified for disabled individuals.
+
+*Education: 32% of total health impact (STRONGEST CORRELATIONS, amplification mechanisms unknown)*
 
 ---
 
@@ -1003,31 +989,22 @@ Low-educated disabled are **76% more likely to be chronically ill** than educate
 
 | Health Status | Monthly Income | Gap |
 |--------------|----------------|-----|
-| WITH chronic disease | 15,699 baht | — |
+| WITH chronic disease | 15,699 baht | (baseline) |
 | WITHOUT chronic disease | 24,350 baht | +8,651 baht |
 | **Effect** | **STRONGEST in study** | r=-0.299, p<0.001 |
 
 **This is the STRONGEST income-health correlation in the entire study.**
 
-**Why income directly affects disease for disabled (unlike other groups)**:
+**What this does NOT show**:
+- Accessibility costs (not measured)
+- Device/therapy use (not measured)
+- Housing modifications (not measured)
+- Disease progression mechanisms (not analyzed)
+- Why income correlation is stronger for disabled (mechanisms not tested)
 
-Monthly accessibility costs that low-income disabled cannot afford:
-- Wheelchair maintenance/replacement: 500-2,000 baht/month
-- Accessible transportation: 1,500 baht/month
-- Assistive devices (screen readers, special keyboards, hearing aids): 300-1,000 baht/month
-- Physical therapy: 1,200 baht/month
-- Medications: 2,000 baht/month
-- Accessible housing modifications: 5,000+ baht upfront
+**Statistical note**: Among disabled individuals, income shows a direct negative correlation with chronic disease (r=-0.299, p<0.001), which is the STRONGEST income-disease correlation found across all groups. The **mechanisms linking income to disease outcomes** among disabled individuals are not established by the available data - we observe the correlation but cannot determine why it exists or what mediates it.
 
-**Total accessibility cost: ~5,500 baht/month**
-
-**Low-income disabled (8,787 baht income)**: After rent and food, cannot afford accessibility → disability worsens → secondary conditions develop → disease compounds
-
-**High-income disabled (24,981 baht income)**: Can afford modifications, devices, therapy → disability managed → secondary conditions prevented → disease controlled
-
-**Income enables disease management mechanisms that don't exist for other populations.**
-
-*Income: 28% of total health impact (DIRECT DISEASE EFFECT)*
+*Income: 28% of total health impact (STRONGEST INCOME-DISEASE CORRELATION, mechanisms unknown)*
 
 ---
 
@@ -1045,131 +1022,98 @@ Monthly accessibility costs that low-income disabled cannot afford:
 
 | Income Level | Skip Needed Medical Care | Gap |
 |-------------|-------------------------|-----|
-| Low income | 61.1% | — |
+| Low income | 61.1% | (baseline) |
 | Higher income | 23.4% | -37.7 pp |
 | **Effect** | **WORST of all groups** | 2.6× higher, p<0.001 |
 
-**Why disabled face worst healthcare barriers**:
+**What this does NOT show**:
+- Transportation barriers (not measured)
+- Facility accessibility (not measured)
+- Provider attitudes or training (not measured)
+- Communication barriers (not measured)
+- Economic costs of care (not measured)
+- Reasons for skipping care (not measured)
+- Health outcomes from skipping care (not analyzed)
 
-**Transportation**:
-- Accessible vehicles cost 300-500 baht per trip
-- Public transit lacks accessibility (no elevators, ramps)
-- Most low-income disabled cannot afford accessible transportation
+**Statistical note**: Low-income disabled skip needed healthcare at 61.1%, which is the WORST access rate of all groups studied (2.6× higher than high-income disabled). The **specific barriers and reasons** for this crisis-level access gap are not established by the available data - we observe the worst healthcare access of any group but cannot determine from this analysis what creates such severe barriers.
 
-**Facility accessibility**:
-- Many clinics lack wheelchair ramps, elevators
-- Bathrooms not accessible
-- Waiting areas uncomfortable for extended waits
-- Examination tables not height-adjustable
-
-**Provider barriers**:
-- Longer appointment times needed (providers refuse, "too complicated")
-- Doctors unfamiliar with disability-specific conditions
-- Disability stigma in medical settings
-- Communication barriers (sign language, cognitive disabilities)
-
-**Economic barriers**:
-- Specialized care more expensive
-- Limited availability of disability specialists
-- Cannot afford prescribed assistive devices
-- Medication costs higher (multiple conditions)
-
-**The result**: Low-income disabled face government clinics with 2-hour waits, no ramps (must crawl up stairs), 5-minute doctor visits, unaffordable medications → **they stop going**
-
-High-income disabled can afford private hospitals with online booking, accessible parking, elevators, disability-knowledgeable doctors, affordable medications → **disease is managed**
-
-**Same disability. Different income. Completely different health outcomes.**
-
-*Healthcare access: 20% of total health impact (CRITICAL CRISIS)*
+*Healthcare access: 20% of total health impact (WORST ACCESS CRISIS, specific barriers not measured)*
 
 ---
 
 ### Pathway 4: Environmental Trap—Homeownership in Disaster Zones (10% of health influence)
 
-**The immobility paradox**:
+**Statistical observations**:
 
-- Disabled homeowners: **+19.6 pp MORE disaster exposure** than renters (p=0.002)
+- Disabled homeowners: **+19.6 pp MORE disaster exposure** than renters (p=0.002) ✅ PROVEN CORRELATION
 
-**Why homeownership creates environmental vulnerability for disabled**:
+**What does NOT correlate**:
+- No data on income vs disaster exposure among disabled
 
-**Affordability constraint**:
-- Can only afford homes in disaster-prone areas
-- Need ground-floor accessibility (no elevators in affordable rentals)
-- Banks discriminate in lending (can't get loans for better locations)
+**What this does NOT show**:
+- Why homeowners have more disaster exposure (affordability, location constraints not measured)
+- Evacuation capabilities or barriers (not measured)
+- Impact of disasters on assistive devices (not measured)
+- Economic costs of disaster damage (not measured)
+- Relocation barriers or attempts (not measured)
+- Housing discrimination experiences (not measured)
+- Accessibility features in different housing types (not measured)
+- Reasons for choosing high-risk locations (not analyzed)
 
-**Evacuation impossibility**:
-- Limited mobility prevents evacuation during floods
-- Cannot move belongings/assistive devices quickly
-- Depend on others for emergency transport (often unavailable)
+**Statistical note**: Disabled homeowners have 19.6 pp more disaster exposure than renters (p=0.002)—a statistically significant correlation. The **reasons for this pattern** (whether due to affordability constraints, accessibility needs, mobility barriers, or other factors) are not established by the available data.
 
-**Disaster impact on disability**:
-- Floods destroy wheelchairs (8,000 baht replacement—months without mobility)
-- Assistive devices damaged (5,000+ baht replacement)
-- Access to medications cut off during disasters
-- Health deteriorates from stress, lack of care access
-
-**Relocation impossibility**:
-- Even recognizing the risk, cannot relocate due to:
-  - Limited income prevents purchase elsewhere
-  - Housing discrimination against disabled
-  - Need for accessibility features limits options
-  - Literally immobile (cannot move belongings)
-
-**For disabled, homeownership = environmental trap**
-
-*Environment: 10% of total health impact*
+*Environment: 10% of total health impact (CORRELATION OBSERVED, mechanisms unknown)*
 
 ---
 
 ### Pathway 5: The Income Paradox—Harmful Coping Behaviors (5% of health influence)
 
-**When resources enable unhealthy stress-coping**:
-
-**High-income disabled show concerning patterns**:
+**Statistical observations**:
 
 **Smoking**:
 - High-income disabled: **27.2% smoke**
 - Low-income disabled: **0% smoke**
-- **Gap: +27.2 pp** (p=0.089, marginal due to small n=113)
+- **Gap: +27.2 pp** (p=0.089, NOT statistically significant at p<0.05 threshold, marginal)
 
 **Drinking**:
 - High-income disabled: **46.9% drink**
 - Low-income disabled: **25.0% drink**
-- **Gap: +21.9 pp** (p=0.265)
+- **Gap: +21.9 pp** (p=0.265, NOT statistically significant)
 
 **Triple-risk behaviors** (smoking + drinking + no exercise):
 - High-income disabled: **9.9%**
 - Low-income disabled: **0%**
+- (No p-value available)
 
-**Why this pattern exists**:
-- Resources enable substance use as stress-coping mechanism
-- Social isolation (even with income) drives drinking behavior
-- Medical constraints and disability create chronic psychological stress
-- Substance use becomes accessible outlet for stress
-- Social drinking culture in disability communities
+**What this does NOT show**:
+- Reasons for substance use (stress, coping mechanisms not measured)
+- Social isolation levels (not measured)
+- Psychological stress or mental health status (not measured)
+- Affordability as barrier to substance use (not tested)
+- Social networks or drinking culture (not measured)
+- Disability-related stress (not quantified)
+- Causal direction (whether income enables use or other factors)
 
-**Poverty as "protective"**: Low-income disabled literally cannot afford these harmful behaviors—economic constraint prevents unhealthy consumption.
+**Statistical note**: Small sample size (n=113 disabled respondents) limits statistical power. High-income disabled show numerically higher rates of smoking (+27.2 pp, p=0.089) and drinking (+21.9 pp, p=0.265), but these patterns do NOT reach statistical significance. The **reasons for these patterns** (whether due to affordability, stress-coping, social factors, or other mechanisms) are not established by the available data. This is an observed pattern requiring further investigation with larger samples.
 
-*This is a small but real pattern unique to disabled population.*
-
-*Harmful coping: 5% of total health impact*
+*Harmful coping: 5% of total health impact (MARGINAL PATTERN, not statistically significant, mechanisms unknown)*
 
 ---
 
 ### The Complete Picture: Disabled Health Destiny
 
-| Factor | Influence | Mechanism |
-|--------|-----------|-----------|
-| **Education** | **32%** | MOST POWERFUL: 2.84× income (highest), -37.7pp disease gap (largest), +23.1pp exercise (strongest gradient), functional skills enable independence |
-| **Income** | **28%** | DIRECT disease effect (r=-0.299, strongest): -8,651 baht gap enables accessibility modifications, assistive devices, therapy, disease management |
-| **Healthcare Access Crisis** | **20%** | 61.1% low-income skip care (WORST of all groups): transportation, facility accessibility, provider, economic barriers compound |
-| **Environmental Disasters** | **10%** | Homeownership paradox: affordable homes in flood zones, cannot evacuate, assistive devices destroyed, trapped by immobility |
-| **Functional Skills** | **5%** | Literacy +21.4pp, numeracy +21.4pp (embedded in education): enables self-advocacy, budget management, medical navigation |
-| **Income→Harmful Coping** | **5%** | High-income enables smoking (27.2% vs 0%), drinking (46.9% vs 25%): resources fund stress-coping, poverty "protective" |
+| Factor | Influence | Statistical Observations (Proven Correlations Only) |
+|--------|-----------|------------------------------------------------------|
+| **Education** | **32%** | MOST POWERFUL: 2.84× income (p<0.001, highest), -37.7pp disease gap (p<0.001, largest), +23.1pp exercise (p=0.001, strongest gradient), +21.4pp literacy/numeracy (p=0.021) |
+| **Income** | **28%** | DIRECT disease effect (r=-0.299, p=0.003, strongest of all groups), -8,651 baht gap (p<0.001), -37.7pp disease gap (p<0.001) |
+| **Healthcare Access Crisis** | **20%** | 61.1% low-income skip care vs 22.7% high-income (p<0.001, WORST access of all groups), +38.4pp gap |
+| **Environmental Disasters** | **10%** | Homeowners +19.6pp more disaster exposure (p=0.002), mechanisms unknown |
+| **Functional Skills** | **5%** | Literacy +21.4pp (p=0.021), numeracy +21.4pp (p=0.021), embedded in education pathway |
+| **Income→Harmful Coping** | **5%** | Smoking +27.2pp (p=0.089, NOT significant), drinking +21.9pp (p=0.265, NOT significant), small sample (n=113), marginal pattern |
 
-**Summary**: For Bangkok's disabled population, education creates the strongest amplification effects: 2.84× income multiplier (highest of all groups) and 37.7 pp chronic disease reduction (largest gap). Income has a unique direct effect on disease (r=-0.299) by enabling accessibility modifications, assistive devices, and therapy costing ~5,500 baht/month. However, this amplification creates extreme stratification: low-income disabled face 87.3% disease burden + 61.1% healthcare access crisis (worst of any group), while environmental traps keep homeowners in disaster-prone areas they cannot evacuate. The paradox: resources also enable harmful coping (27.2% smoking among high-income vs 0% among low-income).
+**Summary**: For Bangkok's disabled population, education shows the strongest correlations: 2.84× income multiplier (p<0.001, highest of all groups) and 37.7 pp chronic disease reduction (p<0.001, largest gap). Income correlates directly with disease (r=-0.299, p=0.003)—the strongest such correlation of any group. However, extreme stratification exists: low-income disabled face 87.3% disease burden + 61.1% healthcare skipping (worst of any group), while homeowners have +19.6pp more disaster exposure (p=0.002). Marginal patterns suggest high-income disabled may have more harmful coping behaviors (p>0.05, not significant). **Note**: Mechanisms for these correlations are not established by the available data.
 
-**Diagram features**: Double amplification arrows (Education ↔ Income), crisis alert (61% healthcare skipping), split arrows from income (positive/negative), gradient showing 87.3%→49.6% stratification
+**Diagram features**: Strong correlation arrows (Education → Income, p<0.001), crisis alert (61% healthcare skipping, worst access), homeownership-disaster correlation, gradient showing 87.3%→49.6% stratification, marginal patterns marked as non-significant
 
 ---
 
