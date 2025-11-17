@@ -1,0 +1,9 @@
+﻿outcome,informal_value,formal_value,gap,p_value,informal_n,formal_n
+Monthly income (baht),"16,363","28,670","-12,306 (-43%)",1.2141981405358425e-95,1381,1179
+Has employment contract,4.2%,84.9%,-80.7 pp,0.0,1853,1430
+Has work benefits,3.8%,87.9%,-84.1 pp,0.0,1853,1430
+"Work injury (serious, past 12 months)",5.6%,8.0%,-2.4 pp,0.007168741783338915,1853,1430
+"Work injury (minor, past 12 months)",14.4%,14.3%,+0.1 pp,0.9926001856886965,1853,1430
+Skip medical care due to cost,13.3%,18.7%,-5.4 pp,2.927762031525224e-05,1853,1430
+Food insecurity (reduced meals),5.1%,13.6%,-8.6 pp,1.5357322280126744e-17,1853,1430
+Working hours per day,8,9,-1 (-8%),2.0984861142157438e-20,1843,1283

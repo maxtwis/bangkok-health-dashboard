@@ -1,0 +1,79 @@
+﻿outcome_variable,outcome_label,outcome_value,stratify_variable,stratify_label,stratify_group,count,mean,std,median,min,max,percentage,group_total
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,Low,486,9505.9670781893,2531.3642039292813,9000.0,1500.0,12000.0,,
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,Middle,188,14806.382978723404,514.7676929223918,15000.0,13000.0,15000.0,,
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,High,189,28270.899470899472,11301.822049274053,24000.0,15240.0,100000.0,,
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,Low,530,13361.094339622641,7323.263907800597,12000.0,1500.0,45000.0,,
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,Middle,130,15071.153846153846,8267.232098187105,12000.0,4500.0,45000.0,,
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,High,203,18256.50246305419,13043.977825366668,14500.0,2600.0,100000.0,,
+monthly_income,Monthly income (baht),continuous,disabled,Disability Status,0,824,14965.473300970874,9426.360469856352,12000.0,1500.0,100000.0,,
+monthly_income,Monthly income (baht),continuous,disabled,Disability Status,1,39,10644.871794871795,5767.701298836874,9000.0,3000.0,30000.0,,
+rent_price,Monthly rent (baht),continuous,homeowner,Home Ownership,Other,71,51.40845070422535,71.19983496465397,0.0,0.0,200.0,,
+rent_price,Monthly rent (baht),continuous,homeowner,Home Ownership,Renter,618,2881.7313915857603,3299.868789545852,2500.0,0.0,60000.0,,
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,Low,152,2460.1973684210525,2112.777422638013,2000.0,0.0,10000.0,,
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,Middle,58,2567.2413793103447,2344.077114700202,1900.0,0.0,8000.0,,
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,High,55,4811.818181818182,8304.081792153449,3000.0,0.0,60000.0,,
+rent_price,Monthly rent (baht),continuous,education_group,Education Level,Low,507,2238.500986193294,2045.760635694298,1800.0,0.0,10000.0,,
+rent_price,Monthly rent (baht),continuous,education_group,Education Level,Middle,86,2775.813953488372,2731.3088718075765,2500.0,0.0,15000.0,,
+rent_price,Monthly rent (baht),continuous,education_group,Education Level,High,96,4280.416666666667,6599.352905545349,3000.0,0.0,60000.0,,
+rent_price,Monthly rent (baht),continuous,working,Working Status,0,366,2121.6120218579235,2139.1014608988185,1500.0,0.0,15000.0,,
+rent_price,Monthly rent (baht),continuous,working,Working Status,1,323,3120.8978328173375,4090.444037168391,2500.0,0.0,60000.0,,
+health_expense,Personal health expenses (baht/month),continuous,education_group,Education Level,Low,1821,590.4794069192751,1301.440440029362,300.0,0.0,28000.0,,
+health_expense,Personal health expenses (baht/month),continuous,education_group,Education Level,Middle,387,404.9173126614987,610.0915784353473,200.0,0.0,5000.0,,
+health_expense,Personal health expenses (baht/month),continuous,education_group,Education Level,High,778,947.0681233933162,6596.1677432840615,300.0,0.0,150000.0,,
+health_expense,Personal health expenses (baht/month),continuous,working,Working Status,0,1839,774.768896139206,4374.160953385996,300.0,0.0,150000.0,,
+health_expense,Personal health expenses (baht/month),continuous,working,Working Status,1,1147,474.2676547515257,1287.7625233736123,200.0,0.0,28000.0,,
+bmi,Body Mass Index (BMI),continuous,homeowner,Home Ownership,Other,813,26.265306543058156,36.891125509362716,23.49523687470631,2.4221453287197234,738.6363636363636,,
+bmi,Body Mass Index (BMI),continuous,homeowner,Home Ownership,Owner,1449,58.316898735115544,536.0507325878499,23.725286160249738,0.9674309957855188,10000.0,,
+bmi,Body Mass Index (BMI),continuous,homeowner,Home Ownership,Renter,722,182.87322802036962,1227.141664833231,24.154340827055893,0.0,10000.0,,
+medical_skip_1,Skip medical care due to cost,0,income_group,Income Level,Low,369,,,,,,75.92592592592592,486.0
+medical_skip_1,Skip medical care due to cost,1,income_group,Income Level,Low,117,,,,,,24.074074074074073,486.0
+medical_skip_1,Skip medical care due to cost,0,income_group,Income Level,Middle,174,,,,,,92.5531914893617,188.0
+medical_skip_1,Skip medical care due to cost,1,income_group,Income Level,Middle,14,,,,,,7.446808510638298,188.0
+medical_skip_1,Skip medical care due to cost,0,income_group,Income Level,High,181,,,,,,95.76719576719577,189.0
+medical_skip_1,Skip medical care due to cost,1,income_group,Income Level,High,8,,,,,,4.232804232804233,189.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,60-69,432,,,,,,27.28995578016424,1583.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,60-69,1151,,,,,,72.71004421983575,1583.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,70-79,151,,,,,,15.361139369277721,983.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,70-79,832,,,,,,84.63886063072228,983.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,80+,50,,,,,,12.01923076923077,416.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,80+,366,,,,,,87.98076923076923,416.0
+diseases_status,Has chronic diseases,0,disabled,Disability Status,0,604,,,,,,23.177283192632387,2606.0
+diseases_status,Has chronic diseases,1,disabled,Disability Status,0,2002,,,,,,76.82271680736761,2606.0
+diseases_status,Has chronic diseases,0,disabled,Disability Status,1,31,,,,,,8.157894736842106,380.0
+diseases_status,Has chronic diseases,1,disabled,Disability Status,1,349,,,,,,91.84210526315789,380.0
+health_pollution,Health impact from air pollution,0,homeowner,Home Ownership,Other,478,,,,,,58.794587945879464,813.0
+health_pollution,Health impact from air pollution,1,homeowner,Home Ownership,Other,335,,,,,,41.20541205412054,813.0
+health_pollution,Health impact from air pollution,0,homeowner,Home Ownership,Owner,893,,,,,,61.628709454796414,1449.0
+health_pollution,Health impact from air pollution,1,homeowner,Home Ownership,Owner,556,,,,,,38.37129054520359,1449.0
+health_pollution,Health impact from air pollution,0,homeowner,Home Ownership,Renter,339,,,,,,46.8232044198895,724.0
+health_pollution,Health impact from air pollution,1,homeowner,Home Ownership,Renter,385,,,,,,53.17679558011049,724.0
+disable_status,Has disability,0,age_group,Age Group,60-69,1439,,,,,,90.9033480732786,1583.0
+disable_status,Has disability,1,age_group,Age Group,60-69,144,,,,,,9.096651926721416,1583.0
+disable_status,Has disability,0,age_group,Age Group,70-79,846,,,,,,86.06307222787386,983.0
+disable_status,Has disability,1,age_group,Age Group,70-79,137,,,,,,13.936927772126145,983.0
+disable_status,Has disability,0,age_group,Age Group,80+,320,,,,,,76.92307692307693,416.0
+disable_status,Has disability,1,age_group,Age Group,80+,96,,,,,,23.076923076923077,416.0
+disable_status,Has disability,0,working,Working Status,0,1507,,,,,,81.94671016856987,1839.0
+disable_status,Has disability,1,working,Working Status,0,332,,,,,,18.053289831430124,1839.0
+disable_status,Has disability,0,working,Working Status,1,1099,,,,,,95.8151700087184,1147.0
+disable_status,Has disability,1,working,Working Status,1,48,,,,,,4.184829991281604,1147.0
+diseases_status,Has chronic diseases,0,working,Working Status,0,303,,,,,,16.476345840130506,1839.0
+diseases_status,Has chronic diseases,1,working,Working Status,0,1536,,,,,,83.5236541598695,1839.0
+diseases_status,Has chronic diseases,0,working,Working Status,1,332,,,,,,28.945074106364427,1147.0
+diseases_status,Has chronic diseases,1,working,Working Status,1,815,,,,,,71.05492589363557,1147.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,Low,317,,,,,,17.40801757276222,1821.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,Low,1504,,,,,,82.59198242723778,1821.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,Middle,96,,,,,,24.8062015503876,387.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,Middle,291,,,,,,75.1937984496124,387.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,High,222,,,,,,28.53470437017995,778.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,High,556,,,,,,71.46529562982005,778.0
+medical_skip_1,Skip medical care due to cost,0,disabled,Disability Status,0,2339,,,,,,89.75441289332309,2606.0
+medical_skip_1,Skip medical care due to cost,1,disabled,Disability Status,0,267,,,,,,10.245587106676899,2606.0
+medical_skip_1,Skip medical care due to cost,0,disabled,Disability Status,1,306,,,,,,80.52631578947368,380.0
+medical_skip_1,Skip medical care due to cost,1,disabled,Disability Status,1,74,,,,,,19.473684210526315,380.0
+occupation_small_injury,"Work injury (minor, past 12 months)",0,homeowner,Home Ownership,Other,758,,,,,,93.2349323493235,813.0
+occupation_small_injury,"Work injury (minor, past 12 months)",1,homeowner,Home Ownership,Other,55,,,,,,6.765067650676507,813.0
+occupation_small_injury,"Work injury (minor, past 12 months)",0,homeowner,Home Ownership,Owner,1339,,,,,,92.40855762594893,1449.0
+occupation_small_injury,"Work injury (minor, past 12 months)",1,homeowner,Home Ownership,Owner,110,,,,,,7.59144237405107,1449.0
+occupation_small_injury,"Work injury (minor, past 12 months)",0,homeowner,Home Ownership,Renter,612,,,,,,84.5303867403315,724.0
+occupation_small_injury,"Work injury (minor, past 12 months)",1,homeowner,Home Ownership,Renter,112,,,,,,15.469613259668508,724.0

@@ -1,0 +1,82 @@
+﻿outcome_variable,outcome_label,stratify_variable,stratify_label,test_type,test_statistic,p_value,effect_size_value,effect_size_interpretation,equity_gap_percentage_points,highest_group,lowest_group,sample_size,significant
+working_hours,Working hours per day,work_hours_group,Work Hours,anova,2261.7433612896516,0.0,0.7108503434962474,large,5.612065484347176,>10 hrs,<8 hrs,1843,Yes
+hh_child_count,Number of children (<5) in household,has_children,Has Children (<5),anova,5059.469052166559,0.0,0.8174318361597577,large,1.3430232558139534,1,0,1132,Yes
+monthly_income,Monthly income (baht),income_group,Income Level,anova,1159.9053373131123,4.254338364654867e-296,0.6273470652633444,medium,20110.99585451282,High,Low,1381,Yes
+diseases_status,Has chronic diseases,age_group,Age Group,chi_square,282.62586517232216,5.723316164527299e-61,0.3908589744792678,medium,54.86546399633083,60+,15-29,1850,Yes
+medical_skip_1,Skip medical care due to cost,income_group,Income Level,chi_square,105.40223735012191,1.2947769796086228e-23,0.2762664044888251,small,26.005397839524782,Low,High,1381,Yes
+monthly_income,Monthly income (baht),age_group,Age Group,anova,36.69558545884764,8.202232548868865e-23,0.07412816517544271,small,9223.264761904764,15-29,60+,1379,Yes
+drink_status,Alcohol consumption,age_group,Age Group,chi_square,112.95095596399716,4.909962611605553e-22,0.17472059236299226,small,,,,1850,Yes
+diseases_status,Has chronic diseases,education_group,Education Level,chi_square,95.72449059824615,1.6356522488392519e-21,0.22728659490034966,small,25.605875152998777,Low,High,1853,Yes
+monthly_income,Monthly income (baht),education_group,Education Level,anova,42.690130171576875,1.0270823648162886e-18,0.05834454834257009,small,6336.669107706175,High,Low,1381,Yes
+working_hours,Working hours per day,income_group,Income Level,anova,37.7657638200808,1.0771112770813135e-16,0.05196414814805489,small,1.5055083412023915,High,Low,1381,Yes
+hh_child_count,Number of children (<5) in household,age_group,Age Group,anova,25.72824774573515,4.22352486574212e-16,0.06409709446219115,small,0.5258028169014085,15-29,60+,1131,Yes
+smoke_status,Smoking status,age_group,Age Group,chi_square,92.43416160879394,5.281401521444539e-16,0.12905349237225774,small,,,,1850,Yes
+sexual_violence,Experienced sexual violence (past 12 months),has_children,Has Children (<5),chi_square,40.32245985549779,2.1531935202987133e-10,0.1475148695121883,small,4.875627740962606,1,0,1853,Yes
+monthly_income,Monthly income (baht),work_hours_group,Work Hours,anova,17.593575569647598,2.851880348300752e-08,0.02489914454071265,negligible,4147.793313198301,>10 hrs,<8 hrs,1381,Yes
+occupation_contract,Has employment contract,education_group,Education Level,chi_square,33.91471945770884,4.320283456776218e-08,0.13528710542623093,small,,,,1853,Yes
+family_status,Lives with family,homeowner,Home Ownership,chi_square,32.74187577209172,7.765903908747041e-08,0.13292726480725262,small,,,,1853,Yes
+hh_worker_count,Number of workers (15-59) in household,age_group,Age Group,anova,11.986160435390671,9.393263298217974e-08,0.024069264143627336,negligible,0.9799584199584199,30-44,60+,1462,Yes
+family_status,Lives with family,work_hours_group,Work Hours,chi_square,32.34063418762829,9.491186680218712e-08,0.13246818880742187,small,,,,1843,Yes
+hh_worker_count,Number of workers (15-59) in household,has_children,Has Children (<5),anova,27.58758371531212,1.7231216177765694e-07,0.018520283074931802,negligible,1.2107583774250439,1,0,1464,Yes
+diseases_status,Has chronic diseases,homeowner,Home Ownership,chi_square,30.948355979396656,1.903925221660592e-07,0.12923527823101452,small,13.985198454071131,Owner,Renter,1853,Yes
+rent_price,Monthly rent (baht),income_group,Income Level,anova,15.236358094998494,3.6998986222104915e-07,0.054958008392887336,small,2259.676140459273,High,Middle,527,Yes
+working_hours,Working hours per day,age_group,Age Group,anova,9.47516981496288,3.2729387064588806e-06,0.015246256447838445,negligible,0.7416454004131721,30-44,60+,1840,Yes
+occupation_welfare,Has work benefits,education_group,Education Level,chi_square,25.225601815974063,3.329125476983205e-06,0.11667641013556715,small,,,,1853,Yes
+smoke_status,Smoking status,homeowner,Home Ownership,chi_square,34.975165410077004,4.357509902138758e-06,0.09714650506211947,negligible,,,,1853,Yes
+smoke_status,Smoking status,work_hours_group,Work Hours,chi_square,33.5840029535687,8.093116852576576e-06,0.095452776223428,negligible,,,,1843,Yes
+diseases_status,Has chronic diseases,income_group,Income Level,chi_square,23.311704937664704,8.668173409042855e-06,0.1299242383193794,small,15.233158539770564,Low,High,1381,Yes
+drink_status,Alcohol consumption,homeowner,Home Ownership,chi_square,28.596191630133962,9.441766642859118e-06,0.08784183344944389,negligible,,,,1853,Yes
+psychological_violence,Experienced psychological violence (past 12 months),age_group,Age Group,chi_square,25.299636130228006,1.3365913343096937e-05,0.11694220362774269,small,10.72465983794527,15-29,60+,1850,Yes
+smoke_status,Smoking status,education_group,Education Level,chi_square,30.52301655304612,3.1256623698264354e-05,0.09075300591336587,negligible,,,,1853,Yes
+math,Can do basic math,disabled,Disability Status,chi_square,15.379711683239549,8.792731682727947e-05,0.09110377803339849,negligible,,,,1853,Yes
+helper,Has emergency support person,homeowner,Home Ownership,chi_square,18.42563372687255,9.975265725150585e-05,0.09971798800963098,negligible,,,,1853,Yes
+training,Participated in training (past 12 months),income_group,Income Level,chi_square,18.037713517276266,0.00012110449879925704,0.11428622907369171,small,,,,1381,Yes
+community_safety,Community safety perception,homeowner,Home Ownership,chi_square,25.87082816032345,0.00023532140916936924,0.08355115504929353,negligible,,,,1853,Yes
+disable_status,Has disability,income_group,Income Level,chi_square,16.691388507375407,0.0002374165763454688,0.10993839532055777,small,5.004097113291036,Low,Middle,1381,Yes
+occupation_contract,Has employment contract,age_group,Age Group,chi_square,19.28135803147884,0.00023911247147443462,0.10208993923345859,small,,,,1850,Yes
+drink_status,Alcohol consumption,education_group,Education Level,chi_square,20.73533336437678,0.00035731471406102327,0.074800207648922,negligible,,,,1853,Yes
+working_hours,Working hours per day,education_group,Education Level,anova,7.8460579744670405,0.0004045277887415884,0.008456206616424508,negligible,0.5006698214130836,Middle,Low,1843,Yes
+training,Participated in training (past 12 months),homeowner,Home Ownership,chi_square,14.765943971795135,0.0006217503042740742,0.0892674026164313,negligible,,,,1853,Yes
+exercise_status,Exercise frequency,education_group,Education Level,chi_square,23.430602318647168,0.0006643708059981991,0.07951316100819508,negligible,,,,1853,Yes
+training,Participated in training (past 12 months),education_group,Education Level,chi_square,14.436892376397221,0.0007329403859796161,0.08826715927559026,negligible,,,,1853,Yes
+helper,Has emergency support person,work_hours_group,Work Hours,chi_square,14.037485865326913,0.0008949497981962337,0.08727342066206024,negligible,,,,1843,Yes
+diseases_status,Has chronic diseases,has_children,Has Children (<5),chi_square,10.972606326320193,0.0009246861710038019,0.07695151761890934,negligible,13.555746164381674,0,1,1853,Yes
+food_insecurity_1,Food insecurity (reduced meals),homeowner,Home Ownership,chi_square,13.74800544727784,0.0010343286359657978,0.08613549187932946,negligible,4.494109469863949,Renter,Owner,1853,Yes
+medical_skip_1,Skip medical care due to cost,disabled,Disability Status,chi_square,10.298899406981215,0.0013310957474241963,0.07455172529679058,negligible,14.45795390954876,1,0,1853,Yes
+food_insecurity_1,Food insecurity (reduced meals),has_children,Has Children (<5),chi_square,10.247075560438674,0.001369014610132201,0.07436391737575593,negligible,5.943997897154242,1,0,1853,Yes
+rent_price,Monthly rent (baht),has_children,Has Children (<5),anova,10.327965030646542,0.0013758082315435069,0.0158082396337681,negligible,4677.746749294527,1,0,645,Yes
+psychological_violence,Experienced psychological violence (past 12 months),homeowner,Home Ownership,chi_square,12.141825178978031,0.0023090650203252943,0.08094765612646279,negligible,4.3254754057830045,Renter,Owner,1853,Yes
+hh_child_count,Number of children (<5) in household,education_group,Education Level,anova,6.094430660910543,0.0023302788798992666,0.010680844980998845,negligible,0.14104137447405332,High,Low,1132,Yes
+helper,Has emergency support person,age_group,Age Group,chi_square,14.404580968693926,0.002403112146143527,0.08823978684855148,negligible,,,,1850,Yes
+occupation_small_injury,"Work injury (minor, past 12 months)",homeowner,Home Ownership,chi_square,11.667857303357096,0.002926556943087084,0.07935199408744638,negligible,6.206573229867123,Renter,Owner,1853,Yes
+exercise_status,Exercise frequency,work_hours_group,Work Hours,chi_square,19.49882034056222,0.0033991205646778616,0.07273216301456734,negligible,,,,1843,Yes
+medical_skip_1,Skip medical care due to cost,has_children,Has Children (<5),chi_square,7.429654428639068,0.006415766128511424,0.06332082978313498,negligible,7.737296459748487,1,0,1853,Yes
+oral_health,Oral health problems,homeowner,Home Ownership,chi_square,9.483342539832556,0.008724053746343339,0.07153902372636792,negligible,7.327476297549783,Renter,Other,1853,Yes
+health_pollution,Health impact from air pollution,age_group,Age Group,chi_square,11.19690680053659,0.010707411216562358,0.07779705684885581,negligible,8.06364251861882,30-44,60+,1850,Yes
+food_insecurity_2,Food insecurity (skip full day),income_group,Income Level,chi_square,8.972153113824675,0.011264753842000203,0.0806030543055147,negligible,4.010876043906,Low,High,1381,Yes
+medical_skip_1,Skip medical care due to cost,education_group,Education Level,chi_square,8.867555420389571,0.01186956509313525,0.06917740172199867,negligible,6.1722766217870255,Low,High,1853,Yes
+food_insecurity_1,Food insecurity (reduced meals),age_group,Age Group,chi_square,10.90959291710771,0.012224921796822299,0.07679242965612336,negligible,4.542992552471225,30-44,60+,1850,Yes
+smoke_status,Smoking status,income_group,Income Level,chi_square,15.955761364061331,0.013993394170576457,0.07600583404010688,negligible,,,,1381,Yes
+health_expense,Personal health expenses (baht/month),homeowner,Home Ownership,anova,4.272948217340707,0.014078460554863104,0.004598162709393059,negligible,154.67547855455177,Owner,Renter,1853,Yes
+family_status,Lives with family,age_group,Age Group,chi_square,10.235114570427244,0.01666975281486553,0.07438073918961215,negligible,,,,1850,Yes
+health_pollution,Health impact from air pollution,work_hours_group,Work Hours,chi_square,8.033361441015959,0.01801265485680333,0.06602159104004958,negligible,9.39070164637657,>10 hrs,<8 hrs,1843,Yes
+health_pollution,Health impact from air pollution,education_group,Education Level,chi_square,7.930691925359644,0.018961475514665475,0.06542109819652128,negligible,8.57435740514076,High,Low,1853,Yes
+health_pollution,Health impact from air pollution,has_children,Has Children (<5),chi_square,5.5000482403247535,0.019015949078772024,0.05448105886081068,negligible,9.696955024002882,1,0,1853,Yes
+food_insecurity_1,Food insecurity (reduced meals),income_group,Income Level,chi_square,7.874852438737877,0.019498334654964415,0.07551346053354208,negligible,4.385912040664617,Low,High,1381,Yes
+food_insecurity_2,Food insecurity (skip full day),homeowner,Home Ownership,chi_square,7.8249178342589865,0.019991283665887084,0.06498336303445418,negligible,2.739662125442286,Renter,Owner,1853,Yes
+write,Can write Thai,disabled,Disability Status,chi_square,5.314376284686209,0.02115016362741008,0.05355357171098759,negligible,,,,1853,Yes
+read,Can read Thai,income_group,Income Level,chi_square,7.573927626771704,0.0226643105684626,0.07405659433792809,negligible,,,,1381,Yes
+monthly_income,Monthly income (baht),disabled,Disability Status,anova,5.186969384825943,0.022909392248214037,0.0037473040127889655,negligible,3148.581379404908,0,1,1381,Yes
+working_hours,Working hours per day,homeowner,Home Ownership,anova,3.6703726190707164,0.025653622399790788,0.003973682309050747,negligible,0.35601572331490416,Renter,Owner,1843,Yes
+write,Can write Thai,income_group,Income Level,chi_square,7.243483444629838,0.026736069107681226,0.07242306434797503,negligible,,,,1381,Yes
+medical_skip_1,Skip medical care due to cost,homeowner,Home Ownership,chi_square,7.238300064512362,0.026805450580999222,0.06250008122827905,negligible,5.201016867953978,Renter,Other,1853,Yes
+exercise_status,Exercise frequency,homeowner,Home Ownership,chi_square,14.158077012064616,0.027919347956686717,0.061808674146058465,negligible,,,,1853,Yes
+exercise_status,Exercise frequency,income_group,Income Level,chi_square,14.112365573925922,0.028405856312309005,0.07148058068884178,negligible,,,,1381,Yes
+food_insecurity_2,Food insecurity (skip full day),has_children,Has Children (<5),chi_square,4.711547368534924,0.029960672566642768,0.05042478686467641,negligible,3.420928849106983,1,0,1853,Yes
+community_safety,Community safety perception,education_group,Education Level,chi_square,13.711057282059299,0.03303572994861297,0.06082509068902789,negligible,,,,1853,Yes
+psychological_violence,Experienced psychological violence (past 12 months),education_group,Education Level,chi_square,6.66460897282703,0.035710715312826664,0.059972151177010324,negligible,3.3332313341493265,High,Low,1853,Yes
+occupation_contract,Has employment contract,has_children,Has Children (<5),chi_square,4.3972754702925805,0.035996393868542705,0.0487140375901426,negligible,,,,1853,Yes
+helper,Has emergency support person,has_children,Has Children (<5),chi_square,4.36999598235891,0.036577078157124084,0.048562698260734505,negligible,,,,1853,Yes
+training,Participated in training (past 12 months),has_children,Has Children (<5),chi_square,4.076979639426714,0.043471298989762604,0.04690634155704217,negligible,,,,1853,Yes
+working_hours,Working hours per day,disabled,Disability Status,anova,3.989061594858084,0.04594351582105188,0.0021621058237656088,negligible,0.6119667733840961,0,1,1843,Yes
+health_expense,Personal health expenses (baht/month),has_children,Has Children (<5),anova,3.9434925475533342,0.047200303500427775,0.0021259367540826905,negligible,158.93468727086588,0,1,1853,Yes

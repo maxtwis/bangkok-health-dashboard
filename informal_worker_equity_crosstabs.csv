@@ -1,0 +1,90 @@
+﻿outcome_variable,outcome_label,outcome_value,stratify_variable,stratify_label,stratify_group,count,mean,std,median,min,max,percentage,group_total
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,Low,353,7755.410764872521,1580.8647711119615,9000.0,2600.0,10000.0,,
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,Middle,605,13343.239669421488,1569.3665414650886,13000.0,10500.0,15000.0,,
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,High,423,27866.406619385343,10851.82009523253,24000.0,15240.0,100000.0,,
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,15-29,105,23605.904761904763,13761.600469816087,18000.0,6000.0,89000.0,,
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,30-44,223,19547.48878923767,11443.90907542853,15000.0,6000.0,62000.0,,
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,45-59,426,15802.699530516433,8122.242807550128,15000.0,3800.0,45000.0,,
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,60+,625,14382.64,9174.488033644551,12000.0,2600.0,100000.0,,
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,Low,634,14061.009463722397,7755.564577628234,12000.0,3000.0,45000.0,,
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,Middle,467,17070.19271948608,8969.146576242762,15000.0,4500.0,60000.0,,
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,High,280,20397.678571428572,14166.905145503362,15000.0,2600.0,100000.0,,
+rent_price,Monthly rent (baht),continuous,has_children,Has Children (<5),0,583,3574.0274442538594,4354.606931172861,2500.0,0.0,50000.0,,
+rent_price,Monthly rent (baht),continuous,has_children,Has Children (<5),1,62,8251.774193548386,32720.10709450757,3100.0,0.0,260000.0,,
+monthly_income,Monthly income (baht),continuous,work_hours_group,Work Hours,<8 hrs,838,15182.649164677805,9452.4381005131,12000.0,2600.0,100000.0,,
+monthly_income,Monthly income (baht),continuous,work_hours_group,Work Hours,8-10 hrs,317,17369.30599369085,10717.035836077419,15000.0,3000.0,89000.0,,
+monthly_income,Monthly income (baht),continuous,work_hours_group,Work Hours,>10 hrs,226,19330.442477876106,10572.747305271274,15000.0,4500.0,75000.0,,
+monthly_income,Monthly income (baht),continuous,disabled,Disability Status,0,1326,16488.763197586726,10078.146841169975,15000.0,2600.0,100000.0,,
+monthly_income,Monthly income (baht),continuous,disabled,Disability Status,1,55,13340.181818181818,9235.78617458342,10500.0,3000.0,43860.0,,
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,Low,127,2827.779527559055,2147.0405209555715,2500.0,0.0,9500.0,,
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,Middle,234,2711.709401709402,2202.480572117494,2500.0,0.0,13000.0,,
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,High,166,4971.385542168675,6934.621783540861,3000.0,0.0,50000.0,,
+health_expense,Personal health expenses (baht/month),continuous,has_children,Has Children (<5),0,1681,447.63236168947054,1040.318327198208,200.0,0.0,23000.0,,
+health_expense,Personal health expenses (baht/month),continuous,has_children,Has Children (<5),1,172,288.69767441860466,431.5732966761461,200.0,0.0,2000.0,,
+health_expense,Personal health expenses (baht/month),continuous,homeowner,Home Ownership,Other,537,401.7951582867784,1201.7923597161187,100.0,0.0,23000.0,,
+health_expense,Personal health expenses (baht/month),continuous,homeowner,Home Ownership,Owner,593,530.5413153456998,1162.109800277773,229.0,0.0,20000.0,,
+health_expense,Personal health expenses (baht/month),continuous,homeowner,Home Ownership,Renter,723,375.865836791148,613.5855815685544,200.0,0.0,4500.0,,
+diseases_status,Has chronic diseases,0,age_group,Age Group,15-29,103,,,,,,83.06451612903226,124.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,15-29,21,,,,,,16.93548387096774,124.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,30-44,233,,,,,,73.96825396825398,315.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,30-44,82,,,,,,26.031746031746035,315.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,45-59,296,,,,,,52.20458553791887,567.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,45-59,271,,,,,,47.795414462081126,567.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,60+,238,,,,,,28.199052132701425,844.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,60+,606,,,,,,71.80094786729858,844.0
+medical_skip_1,Skip medical care due to cost,0,income_group,Income Level,Low,237,,,,,,67.13881019830028,353.0
+medical_skip_1,Skip medical care due to cost,1,income_group,Income Level,Low,116,,,,,,32.86118980169972,353.0
+medical_skip_1,Skip medical care due to cost,0,income_group,Income Level,Middle,528,,,,,,87.27272727272727,605.0
+medical_skip_1,Skip medical care due to cost,1,income_group,Income Level,Middle,77,,,,,,12.727272727272727,605.0
+medical_skip_1,Skip medical care due to cost,0,income_group,Income Level,High,394,,,,,,93.14420803782507,423.0
+medical_skip_1,Skip medical care due to cost,1,income_group,Income Level,High,29,,,,,,6.8557919621749415,423.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,Low,281,,,,,,34.39412484700122,817.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,Low,536,,,,,,65.60587515299878,817.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,Middle,350,,,,,,55.0314465408805,636.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,Middle,286,,,,,,44.9685534591195,636.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,High,240,,,,,,60.0,400.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,High,160,,,,,,40.0,400.0
+diseases_status,Has chronic diseases,0,income_group,Income Level,Low,139,,,,,,39.376770538243626,353.0
+diseases_status,Has chronic diseases,1,income_group,Income Level,Low,214,,,,,,60.62322946175638,353.0
+diseases_status,Has chronic diseases,0,income_group,Income Level,Middle,251,,,,,,41.48760330578513,605.0
+diseases_status,Has chronic diseases,1,income_group,Income Level,Middle,354,,,,,,58.51239669421487,605.0
+diseases_status,Has chronic diseases,0,income_group,Income Level,High,231,,,,,,54.60992907801418,423.0
+diseases_status,Has chronic diseases,1,income_group,Income Level,High,192,,,,,,45.39007092198582,423.0
+medical_skip_1,Skip medical care due to cost,0,disabled,Disability Status,0,1558,,,,,,87.18522663682148,1787.0
+medical_skip_1,Skip medical care due to cost,1,disabled,Disability Status,0,229,,,,,,12.81477336317851,1787.0
+medical_skip_1,Skip medical care due to cost,0,disabled,Disability Status,1,48,,,,,,72.72727272727273,66.0
+medical_skip_1,Skip medical care due to cost,1,disabled,Disability Status,1,18,,,,,,27.27272727272727,66.0
+diseases_status,Has chronic diseases,0,homeowner,Home Ownership,Other,275,,,,,,51.21042830540037,537.0
+diseases_status,Has chronic diseases,1,homeowner,Home Ownership,Other,262,,,,,,48.78957169459962,537.0
+diseases_status,Has chronic diseases,0,homeowner,Home Ownership,Owner,223,,,,,,37.60539629005059,593.0
+diseases_status,Has chronic diseases,1,homeowner,Home Ownership,Owner,370,,,,,,62.394603709949415,593.0
+diseases_status,Has chronic diseases,0,homeowner,Home Ownership,Renter,373,,,,,,51.590594744121724,723.0
+diseases_status,Has chronic diseases,1,homeowner,Home Ownership,Renter,350,,,,,,48.40940525587828,723.0
+diseases_status,Has chronic diseases,0,has_children,Has Children (<5),0,769,,,,,,45.746579417013685,1681.0
+diseases_status,Has chronic diseases,1,has_children,Has Children (<5),0,912,,,,,,54.25342058298632,1681.0
+diseases_status,Has chronic diseases,0,has_children,Has Children (<5),1,102,,,,,,59.30232558139535,172.0
+diseases_status,Has chronic diseases,1,has_children,Has Children (<5),1,70,,,,,,40.69767441860465,172.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,15-29,106,,,,,,85.48387096774194,124.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,15-29,18,,,,,,14.516129032258066,124.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,30-44,295,,,,,,93.65079365079364,315.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,30-44,20,,,,,,6.349206349206349,315.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,45-59,538,,,,,,94.88536155202821,567.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,45-59,29,,,,,,5.114638447971781,567.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,60+,812,,,,,,96.2085308056872,844.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,60+,32,,,,,,3.7914691943127963,844.0
+health_pollution,Health impact from air pollution,0,has_children,Has Children (<5),0,896,,,,,,53.30160618679357,1681.0
+health_pollution,Health impact from air pollution,1,has_children,Has Children (<5),0,785,,,,,,46.69839381320642,1681.0
+health_pollution,Health impact from air pollution,0,has_children,Has Children (<5),1,75,,,,,,43.604651162790695,172.0
+health_pollution,Health impact from air pollution,1,has_children,Has Children (<5),1,97,,,,,,56.395348837209305,172.0
+health_pollution,Health impact from air pollution,0,work_hours_group,Work Hours,<8 hrs,641,,,,,,54.7395388556789,1171.0
+health_pollution,Health impact from air pollution,1,work_hours_group,Work Hours,<8 hrs,530,,,,,,45.2604611443211,1171.0
+health_pollution,Health impact from air pollution,0,work_hours_group,Work Hours,8-10 hrs,211,,,,,,50.96618357487923,414.0
+health_pollution,Health impact from air pollution,1,work_hours_group,Work Hours,8-10 hrs,203,,,,,,49.033816425120776,414.0
+health_pollution,Health impact from air pollution,0,work_hours_group,Work Hours,>10 hrs,117,,,,,,45.348837209302324,258.0
+health_pollution,Health impact from air pollution,1,work_hours_group,Work Hours,>10 hrs,141,,,,,,54.65116279069767,258.0
+health_pollution,Health impact from air pollution,0,education_group,Education Level,Low,452,,,,,,55.32435740514076,817.0
+health_pollution,Health impact from air pollution,1,education_group,Education Level,Low,365,,,,,,44.67564259485924,817.0
+health_pollution,Health impact from air pollution,0,education_group,Education Level,Middle,332,,,,,,52.20125786163522,636.0
+health_pollution,Health impact from air pollution,1,education_group,Education Level,Middle,304,,,,,,47.79874213836478,636.0
+health_pollution,Health impact from air pollution,0,education_group,Education Level,High,187,,,,,,46.75,400.0
+health_pollution,Health impact from air pollution,1,education_group,Education Level,High,213,,,,,,53.25,400.0
