@@ -1,8 +1,3 @@
-I need you to do a new statistical analysis, because REPORT_SDHE_ANALYSIS_SECTION.md is not suitable for within population group analysis since we compare the 4 population group with normal population, this told us common knowledge because the normal population group will have better result at some point. What I want you to do is
-
-Output as a report (what is correlated with what), and csv file so I can plot this multivariate correlation analysis as a scatterplot
-
-1. Do a multivariate correlation analysis of eldery only (age 60+)
 2. Use data from survey_sampling.csv
 4. All viarable listed here
 5. age (integer)
@@ -104,6 +99,45 @@ other=อื่น ๆ
 6=น้ำเสีย
 7=ยาเสพติด
 other=อื่น ๆ (โปรดระบุ)
+52. diseases_type	โรคประจำตัวที่มี (เลือกได้หลายข้อ) 1	เบาหวาน
+2	ความดันโลหิตสูง
+3	โรคเกาต์
+4	ไตวายเรื้อรัง
+5	มะเร็ง
+6	ไขมันในเลือดสูง
+7	กล้ามเนื้อหัวใจขาดเลือด
+8	โรคตับ
+9	หลอดเลือกสมอง
+10	เฮชไอวี (HIV)
+11	โรคทางจิตเวช (เช่น จิตเภท ซึมเศร้า โรคจิตจากสารเสพติด)
+12	ภูมิแพ้
+13	โรคกระดูกและข้อ
+14	โรคระบบทางเดินหายใจ
+15	ถุงลมโป่งพอง
+16	โลหิตจาง
+17	กระเพราะอาหาร
+18	ลมชัก
+19	ลำไส้
+20	อัมพาต
+21	อัมพฤกษ์
+53. drink_rate	ความถี่ในการดื่ม
+1	ดื่มประจำ
+2	นาน ๆ ดื่มที
+54. smoke_amount	ปริมาณในการสูบต่อวัน (กี่ มวน/หัว) (integer)
+55. smoke_unit	หน่วยนับ 
+smoke_unit_cigarette	มวน
+smoke_unit_pack	ซอง
+smoke_unit_head	หัว (บุหรี่ไฟฟ้า)
+56. occupation_freelance_type	ประเภทอาชีพอิสระ
+1	รับจ้างทั่วไป (งานช่าง, งานบริการ, งานทำความสะอาด, งานด้านการเกษตร, งานก่อสร้าง, งานขนส่ง)
+2	ขายของออนไลน์
+3	ไรเดอร์
+4	วินมอเตอร์ไซต์
+5	ค้าขาย
+6	ผู้ค้าหาบเร่แผงลอย
+
+
+
 
 
 
