@@ -1,0 +1,372 @@
+﻿outcome_variable,outcome_label,outcome_value,stratify_variable,stratify_label,stratify_group,count,mean,std,median,min,max,percentage,group_total
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,Low,,7470.555555555556,,7605.0,,,,36.0
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,Middle,,12931.818181818182,,12000.0,,,,44.0
+monthly_income,Monthly income (baht),continuous,income_group,Income Level,High,,31116.527777777777,,28000.0,,,,72.0
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,15-29,,25654.615384615383,,24000.0,,,,39.0
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,30-44,,23475.744680851065,,18000.0,,,,47.0
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,45-59,,20714.444444444445,,15000.0,,,,27.0
+monthly_income,Monthly income (baht),continuous,age_group,Age Group,60+,,10451.315789473685,,9000.0,,,,38.0
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,Low,,10885.526315789473,,9000.0,,,,38.0
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,Middle,,17349.583333333332,,12000.0,,,,24.0
+monthly_income,Monthly income (baht),continuous,education_group,Education Level,High,,24981.0,,20000.0,,,,90.0
+monthly_income,Monthly income (baht),continuous,work_hours_group,Work Hours,<8 hrs,,17234.0625,,15000.0,,,,96.0
+monthly_income,Monthly income (baht),continuous,work_hours_group,Work Hours,8-10 hrs,,24222.222222222223,,18500.0,,,,36.0
+monthly_income,Monthly income (baht),continuous,work_hours_group,Work Hours,>10 hrs,,27593.0,,22500.0,,,,20.0
+monthly_income,Monthly income (baht),continuous,has_children,Has Children (<5),0,,18692.70491803279,,13250.0,,,,122.0
+monthly_income,Monthly income (baht),continuous,has_children,Has Children (<5),1,,26594.0,,26000.0,,,,30.0
+health_expense,Personal health expenses (baht/month),continuous,education_group,Education Level,Low,,809.2305475504322,,500.0,,,,347.0
+health_expense,Personal health expenses (baht/month),continuous,education_group,Education Level,Middle,,687.5396825396825,,500.0,,,,126.0
+health_expense,Personal health expenses (baht/month),continuous,education_group,Education Level,High,,483.54545454545456,,0.0,,,,165.0
+health_expense,Personal health expenses (baht/month),continuous,homeowner,Home Ownership,Other,,697.7739463601532,,300.0,,,,261.0
+health_expense,Personal health expenses (baht/month),continuous,homeowner,Home Ownership,Owner,,944.5595854922279,,500.0,,,,193.0
+health_expense,Personal health expenses (baht/month),continuous,homeowner,Home Ownership,Renter,,449.9945652173913,,300.0,,,,184.0
+health_expense,Personal health expenses (baht/month),continuous,can_work,Can Work (if disabled),0.0,,822.9782082324455,,500.0,,,,413.0
+health_expense,Personal health expenses (baht/month),continuous,can_work,Can Work (if disabled),1.0,,477.0133333333333,,200.0,,,,225.0
+health_expense,Personal health expenses (baht/month),continuous,gender,Gender,Female,,716.857627118644,,400.0,,,,295.0
+health_expense,Personal health expenses (baht/month),continuous,gender,Gender,Male,,743.7738853503184,,400.0,,,,314.0
+health_expense,Personal health expenses (baht/month),continuous,gender,Gender,Other,,75.86206896551724,,0.0,,,,29.0
+hh_health_expense,Household health expenses (baht/month),continuous,homeowner,Home Ownership,Other,,980.9961685823755,,500.0,,,,261.0
+hh_health_expense,Household health expenses (baht/month),continuous,homeowner,Home Ownership,Owner,,1363.9896373056995,,500.0,,,,193.0
+hh_health_expense,Household health expenses (baht/month),continuous,homeowner,Home Ownership,Renter,,706.9021739130435,,350.0,,,,184.0
+hh_health_expense,Household health expenses (baht/month),continuous,can_work,Can Work (if disabled),0.0,,1181.4769975786926,,500.0,,,,413.0
+hh_health_expense,Household health expenses (baht/month),continuous,can_work,Can Work (if disabled),1.0,,717.3777777777777,,300.0,,,,225.0
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,Low,,2385.294117647059,,2000.0,,,,17.0
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,Middle,,2862.5,,3000.0,,,,16.0
+rent_price,Monthly rent (baht),continuous,income_group,Income Level,High,,11289.285714285714,,6000.0,,,,42.0
+rent_price,Monthly rent (baht),continuous,age_group,Age Group,15-29,,9098.275862068966,,4600.0,,,,29.0
+rent_price,Monthly rent (baht),continuous,age_group,Age Group,30-44,,7780.487804878048,,4000.0,,,,41.0
+rent_price,Monthly rent (baht),continuous,age_group,Age Group,45-59,,2868.5185185185187,,2000.0,,,,27.0
+rent_price,Monthly rent (baht),continuous,age_group,Age Group,60+,,1984.6451612903227,,1700.0,,,,93.0
+rent_price,Monthly rent (baht),continuous,education_group,Education Level,Low,,1924.695652173913,,1500.0,,,,92.0
+rent_price,Monthly rent (baht),continuous,education_group,Education Level,Middle,,3241.025641025641,,2500.0,,,,39.0
+rent_price,Monthly rent (baht),continuous,education_group,Education Level,High,,8837.09677419355,,5000.0,,,,62.0
+rent_price,Monthly rent (baht),continuous,homeowner,Home Ownership,Other,,15.0,,0.0,,,,30.0
+rent_price,Monthly rent (baht),continuous,homeowner,Home Ownership,Renter,,5220.380368098159,,3000.0,,,,163.0
+rent_price,Monthly rent (baht),continuous,can_work,Can Work (if disabled),0.0,,2620.116504854369,,1500.0,,,,103.0
+rent_price,Monthly rent (baht),continuous,can_work,Can Work (if disabled),1.0,,6461.111111111111,,4000.0,,,,90.0
+rent_price,Monthly rent (baht),continuous,gender,Gender,Female,,4341.0123456790125,,2222.0,,,,81.0
+rent_price,Monthly rent (baht),continuous,gender,Gender,Male,,3426.0204081632655,,2500.0,,,,98.0
+rent_price,Monthly rent (baht),continuous,gender,Gender,Other,,11714.285714285714,,5500.0,,,,14.0
+working_hours,Working hours per day,continuous,income_group,Income Level,Low,,7.388888888888889,,8.0,,,,36.0
+working_hours,Working hours per day,continuous,income_group,Income Level,Middle,,7.886363636363637,,8.0,,,,44.0
+working_hours,Working hours per day,continuous,income_group,Income Level,High,,9.152777777777779,,8.0,,,,72.0
+working_hours,Working hours per day,continuous,education_group,Education Level,Low,,7.1521739130434785,,7.5,,,,46.0
+working_hours,Working hours per day,continuous,education_group,Education Level,Middle,,8.333333333333334,,8.0,,,,27.0
+working_hours,Working hours per day,continuous,education_group,Education Level,High,,8.789473684210526,,8.0,,,,95.0
+working_hours,Working hours per day,continuous,work_hours_group,Work Hours,<8 hrs,,6.9818181818181815,,8.0,,,,110.0
+working_hours,Working hours per day,continuous,work_hours_group,Work Hours,8-10 hrs,,9.605263157894736,,10.0,,,,38.0
+working_hours,Working hours per day,continuous,work_hours_group,Work Hours,>10 hrs,,12.8,,12.0,,,,20.0
+medical_skip_1,Skip medical care due to cost,0,homeowner,Home Ownership,Other,215.0,,,,,,82.37547892720306,261.0
+medical_skip_1,Skip medical care due to cost,1,homeowner,Home Ownership,Other,46.0,,,,,,17.624521072796934,261.0
+medical_skip_1,Skip medical care due to cost,0,homeowner,Home Ownership,Owner,161.0,,,,,,83.41968911917098,193.0
+medical_skip_1,Skip medical care due to cost,1,homeowner,Home Ownership,Owner,32.0,,,,,,16.580310880829018,193.0
+medical_skip_1,Skip medical care due to cost,0,homeowner,Home Ownership,Renter,131.0,,,,,,71.19565217391305,184.0
+medical_skip_1,Skip medical care due to cost,1,homeowner,Home Ownership,Renter,53.0,,,,,,28.804347826086957,184.0
+oral_health,Oral health problems,0,age_group,Age Group,15-29,40.0,,,,,,64.51612903225806,62.0
+oral_health,Oral health problems,1,age_group,Age Group,15-29,22.0,,,,,,35.483870967741936,62.0
+oral_health,Oral health problems,0,age_group,Age Group,30-44,66.0,,,,,,71.73913043478261,92.0
+oral_health,Oral health problems,1,age_group,Age Group,30-44,26.0,,,,,,28.26086956521739,92.0
+oral_health,Oral health problems,0,age_group,Age Group,45-59,70.0,,,,,,69.3069306930693,101.0
+oral_health,Oral health problems,1,age_group,Age Group,45-59,31.0,,,,,,30.693069306930692,101.0
+oral_health,Oral health problems,0,age_group,Age Group,60+,320.0,,,,,,84.88063660477454,377.0
+oral_health,Oral health problems,1,age_group,Age Group,60+,57.0,,,,,,15.119363395225463,377.0
+oral_health,Oral health problems,0,education_group,Education Level,Low,289.0,,,,,,83.28530259365994,347.0
+oral_health,Oral health problems,1,education_group,Education Level,Low,58.0,,,,,,16.714697406340058,347.0
+oral_health,Oral health problems,0,education_group,Education Level,Middle,94.0,,,,,,74.60317460317461,126.0
+oral_health,Oral health problems,1,education_group,Education Level,Middle,32.0,,,,,,25.396825396825395,126.0
+oral_health,Oral health problems,0,education_group,Education Level,High,117.0,,,,,,70.9090909090909,165.0
+oral_health,Oral health problems,1,education_group,Education Level,High,48.0,,,,,,29.09090909090909,165.0
+oral_health,Oral health problems,0,homeowner,Home Ownership,Other,212.0,,,,,,81.22605363984674,261.0
+oral_health,Oral health problems,1,homeowner,Home Ownership,Other,49.0,,,,,,18.773946360153257,261.0
+oral_health,Oral health problems,0,homeowner,Home Ownership,Owner,156.0,,,,,,80.82901554404145,193.0
+oral_health,Oral health problems,1,homeowner,Home Ownership,Owner,37.0,,,,,,19.170984455958546,193.0
+oral_health,Oral health problems,0,homeowner,Home Ownership,Renter,132.0,,,,,,71.73913043478261,184.0
+oral_health,Oral health problems,1,homeowner,Home Ownership,Renter,52.0,,,,,,28.26086956521739,184.0
+oral_health,Oral health problems,0,has_children,Has Children (<5),0,461.0,,,,,,79.89601386481803,577.0
+oral_health,Oral health problems,1,has_children,Has Children (<5),0,116.0,,,,,,20.103986135181977,577.0
+oral_health,Oral health problems,0,has_children,Has Children (<5),1,39.0,,,,,,63.934426229508205,61.0
+oral_health,Oral health problems,1,has_children,Has Children (<5),1,22.0,,,,,,36.0655737704918,61.0
+oral_health,Oral health problems,0,can_work,Can Work (if disabled),0.0,344.0,,,,,,83.29297820823246,413.0
+oral_health,Oral health problems,1,can_work,Can Work (if disabled),0.0,69.0,,,,,,16.707021791767556,413.0
+oral_health,Oral health problems,0,can_work,Can Work (if disabled),1.0,156.0,,,,,,69.33333333333334,225.0
+oral_health,Oral health problems,1,can_work,Can Work (if disabled),1.0,69.0,,,,,,30.666666666666664,225.0
+oral_health,Oral health problems,0,gender,Gender,Female,242.0,,,,,,82.03389830508473,295.0
+oral_health,Oral health problems,1,gender,Gender,Female,53.0,,,,,,17.966101694915253,295.0
+oral_health,Oral health problems,0,gender,Gender,Male,240.0,,,,,,76.43312101910828,314.0
+oral_health,Oral health problems,1,gender,Gender,Male,74.0,,,,,,23.56687898089172,314.0
+oral_health,Oral health problems,0,gender,Gender,Other,18.0,,,,,,62.06896551724138,29.0
+oral_health,Oral health problems,1,gender,Gender,Other,11.0,,,,,,37.93103448275862,29.0
+diseases_status,Has chronic diseases,0,income_group,Income Level,Low,9.0,,,,,,25.0,36.0
+diseases_status,Has chronic diseases,1,income_group,Income Level,Low,27.0,,,,,,75.0,36.0
+diseases_status,Has chronic diseases,0,income_group,Income Level,Middle,23.0,,,,,,52.27272727272727,44.0
+diseases_status,Has chronic diseases,1,income_group,Income Level,Middle,21.0,,,,,,47.72727272727273,44.0
+diseases_status,Has chronic diseases,0,income_group,Income Level,High,48.0,,,,,,66.66666666666666,72.0
+diseases_status,Has chronic diseases,1,income_group,Income Level,High,24.0,,,,,,33.33333333333333,72.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,15-29,41.0,,,,,,66.12903225806451,62.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,15-29,21.0,,,,,,33.87096774193548,62.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,30-44,53.0,,,,,,57.608695652173914,92.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,30-44,39.0,,,,,,42.391304347826086,92.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,45-59,23.0,,,,,,22.772277227722775,101.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,45-59,78.0,,,,,,77.22772277227723,101.0
+diseases_status,Has chronic diseases,0,age_group,Age Group,60+,30.0,,,,,,7.957559681697612,377.0
+diseases_status,Has chronic diseases,1,age_group,Age Group,60+,347.0,,,,,,92.04244031830238,377.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,Low,44.0,,,,,,12.680115273775217,347.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,Low,303.0,,,,,,87.31988472622479,347.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,Middle,28.0,,,,,,22.22222222222222,126.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,Middle,98.0,,,,,,77.77777777777779,126.0
+diseases_status,Has chronic diseases,0,education_group,Education Level,High,77.0,,,,,,46.666666666666664,165.0
+diseases_status,Has chronic diseases,1,education_group,Education Level,High,88.0,,,,,,53.333333333333336,165.0
+diseases_status,Has chronic diseases,0,homeowner,Home Ownership,Other,56.0,,,,,,21.455938697318008,261.0
+diseases_status,Has chronic diseases,1,homeowner,Home Ownership,Other,205.0,,,,,,78.544061302682,261.0
+diseases_status,Has chronic diseases,0,homeowner,Home Ownership,Owner,29.0,,,,,,15.025906735751295,193.0
+diseases_status,Has chronic diseases,1,homeowner,Home Ownership,Owner,164.0,,,,,,84.97409326424871,193.0
+diseases_status,Has chronic diseases,0,homeowner,Home Ownership,Renter,64.0,,,,,,34.78260869565217,184.0
+diseases_status,Has chronic diseases,1,homeowner,Home Ownership,Renter,120.0,,,,,,65.21739130434783,184.0
+diseases_status,Has chronic diseases,0,has_children,Has Children (<5),0,123.0,,,,,,21.317157712305026,577.0
+diseases_status,Has chronic diseases,1,has_children,Has Children (<5),0,454.0,,,,,,78.68284228769498,577.0
+diseases_status,Has chronic diseases,0,has_children,Has Children (<5),1,26.0,,,,,,42.62295081967213,61.0
+diseases_status,Has chronic diseases,1,has_children,Has Children (<5),1,35.0,,,,,,57.377049180327866,61.0
+diseases_status,Has chronic diseases,0,can_work,Can Work (if disabled),0.0,59.0,,,,,,14.285714285714285,413.0
+diseases_status,Has chronic diseases,1,can_work,Can Work (if disabled),0.0,354.0,,,,,,85.71428571428571,413.0
+diseases_status,Has chronic diseases,0,can_work,Can Work (if disabled),1.0,90.0,,,,,,40.0,225.0
+diseases_status,Has chronic diseases,1,can_work,Can Work (if disabled),1.0,135.0,,,,,,60.0,225.0
+diseases_status,Has chronic diseases,0,gender,Gender,Female,57.0,,,,,,19.322033898305087,295.0
+diseases_status,Has chronic diseases,1,gender,Gender,Female,238.0,,,,,,80.67796610169492,295.0
+diseases_status,Has chronic diseases,0,gender,Gender,Male,75.0,,,,,,23.88535031847134,314.0
+diseases_status,Has chronic diseases,1,gender,Gender,Male,239.0,,,,,,76.11464968152866,314.0
+diseases_status,Has chronic diseases,0,gender,Gender,Other,17.0,,,,,,58.620689655172406,29.0
+diseases_status,Has chronic diseases,1,gender,Gender,Other,12.0,,,,,,41.37931034482759,29.0
+occupation_status,Currently working,0,age_group,Age Group,15-29,24.0,,,,,,38.70967741935484,62.0
+occupation_status,Currently working,1,age_group,Age Group,15-29,38.0,,,,,,61.29032258064516,62.0
+occupation_status,Currently working,0,age_group,Age Group,30-44,41.0,,,,,,44.565217391304344,92.0
+occupation_status,Currently working,1,age_group,Age Group,30-44,51.0,,,,,,55.434782608695656,92.0
+occupation_status,Currently working,0,age_group,Age Group,45-59,71.0,,,,,,70.29702970297029,101.0
+occupation_status,Currently working,1,age_group,Age Group,45-59,30.0,,,,,,29.7029702970297,101.0
+occupation_status,Currently working,0,age_group,Age Group,60+,330.0,,,,,,87.53315649867373,377.0
+occupation_status,Currently working,1,age_group,Age Group,60+,47.0,,,,,,12.46684350132626,377.0
+occupation_status,Currently working,0,education_group,Education Level,Low,301.0,,,,,,86.74351585014409,347.0
+occupation_status,Currently working,1,education_group,Education Level,Low,46.0,,,,,,13.256484149855908,347.0
+occupation_status,Currently working,0,education_group,Education Level,Middle,99.0,,,,,,78.57142857142857,126.0
+occupation_status,Currently working,1,education_group,Education Level,Middle,27.0,,,,,,21.428571428571427,126.0
+occupation_status,Currently working,0,education_group,Education Level,High,71.0,,,,,,43.03030303030303,165.0
+occupation_status,Currently working,1,education_group,Education Level,High,94.0,,,,,,56.96969696969697,165.0
+occupation_status,Currently working,0,homeowner,Home Ownership,Other,207.0,,,,,,79.3103448275862,261.0
+occupation_status,Currently working,1,homeowner,Home Ownership,Other,54.0,,,,,,20.689655172413794,261.0
+occupation_status,Currently working,0,homeowner,Home Ownership,Owner,159.0,,,,,,82.38341968911918,193.0
+occupation_status,Currently working,1,homeowner,Home Ownership,Owner,34.0,,,,,,17.616580310880828,193.0
+occupation_status,Currently working,0,homeowner,Home Ownership,Renter,105.0,,,,,,57.065217391304344,184.0
+occupation_status,Currently working,1,homeowner,Home Ownership,Renter,79.0,,,,,,42.934782608695656,184.0
+occupation_status,Currently working,0,has_children,Has Children (<5),0,441.0,,,,,,76.42980935875217,577.0
+occupation_status,Currently working,1,has_children,Has Children (<5),0,136.0,,,,,,23.570190641247834,577.0
+occupation_status,Currently working,0,has_children,Has Children (<5),1,30.0,,,,,,49.18032786885246,61.0
+occupation_status,Currently working,1,has_children,Has Children (<5),1,31.0,,,,,,50.81967213114754,61.0
+occupation_status,Currently working,0,can_work,Can Work (if disabled),0.0,390.0,,,,,,94.43099273607749,413.0
+occupation_status,Currently working,1,can_work,Can Work (if disabled),0.0,23.0,,,,,,5.569007263922518,413.0
+occupation_status,Currently working,0,can_work,Can Work (if disabled),1.0,81.0,,,,,,36.0,225.0
+occupation_status,Currently working,1,can_work,Can Work (if disabled),1.0,144.0,,,,,,64.0,225.0
+occupation_status,Currently working,0,gender,Gender,Female,234.0,,,,,,79.3220338983051,295.0
+occupation_status,Currently working,1,gender,Gender,Female,61.0,,,,,,20.677966101694913,295.0
+occupation_status,Currently working,0,gender,Gender,Male,227.0,,,,,,72.29299363057325,314.0
+occupation_status,Currently working,1,gender,Gender,Male,87.0,,,,,,27.70700636942675,314.0
+occupation_status,Currently working,0,gender,Gender,Other,10.0,,,,,,34.48275862068966,29.0
+occupation_status,Currently working,1,gender,Gender,Other,19.0,,,,,,65.51724137931035,29.0
+occupation_contract,Has employment contract,0.0,homeowner,Home Ownership,Other,40.0,,,,,,67.79661016949152,59.0
+occupation_contract,Has employment contract,1.0,homeowner,Home Ownership,Other,19.0,,,,,,32.20338983050847,59.0
+occupation_contract,Has employment contract,0.0,homeowner,Home Ownership,Owner,21.0,,,,,,58.333333333333336,36.0
+occupation_contract,Has employment contract,1.0,homeowner,Home Ownership,Owner,15.0,,,,,,41.66666666666667,36.0
+occupation_contract,Has employment contract,0.0,homeowner,Home Ownership,Renter,34.0,,,,,,40.963855421686745,83.0
+occupation_contract,Has employment contract,1.0,homeowner,Home Ownership,Renter,49.0,,,,,,59.036144578313255,83.0
+occupation_contract,Has employment contract,0.0,has_children,Has Children (<5),0,86.0,,,,,,60.13986013986013,143.0
+occupation_contract,Has employment contract,1.0,has_children,Has Children (<5),0,57.0,,,,,,39.86013986013986,143.0
+occupation_contract,Has employment contract,0.0,has_children,Has Children (<5),1,9.0,,,,,,25.71428571428571,35.0
+occupation_contract,Has employment contract,1.0,has_children,Has Children (<5),1,26.0,,,,,,74.28571428571429,35.0
+occupation_contract,Has employment contract,0.0,gender,Gender,Female,36.0,,,,,,59.01639344262295,61.0
+occupation_contract,Has employment contract,1.0,gender,Gender,Female,25.0,,,,,,40.98360655737705,61.0
+occupation_contract,Has employment contract,0.0,gender,Gender,Male,52.0,,,,,,55.91397849462365,93.0
+occupation_contract,Has employment contract,1.0,gender,Gender,Male,41.0,,,,,,44.086021505376344,93.0
+occupation_contract,Has employment contract,0.0,gender,Gender,Other,7.0,,,,,,29.166666666666668,24.0
+occupation_contract,Has employment contract,1.0,gender,Gender,Other,17.0,,,,,,70.83333333333334,24.0
+occupation_welfare,Has work benefits,0.0,homeowner,Home Ownership,Other,41.0,,,,,,69.49152542372882,59.0
+occupation_welfare,Has work benefits,1.0,homeowner,Home Ownership,Other,18.0,,,,,,30.508474576271187,59.0
+occupation_welfare,Has work benefits,0.0,homeowner,Home Ownership,Owner,24.0,,,,,,66.66666666666666,36.0
+occupation_welfare,Has work benefits,1.0,homeowner,Home Ownership,Owner,12.0,,,,,,33.33333333333333,36.0
+occupation_welfare,Has work benefits,0.0,homeowner,Home Ownership,Renter,38.0,,,,,,45.78313253012048,83.0
+occupation_welfare,Has work benefits,1.0,homeowner,Home Ownership,Renter,45.0,,,,,,54.21686746987952,83.0
+occupation_welfare,Has work benefits,0.0,has_children,Has Children (<5),0,92.0,,,,,,64.33566433566433,143.0
+occupation_welfare,Has work benefits,1.0,has_children,Has Children (<5),0,51.0,,,,,,35.66433566433567,143.0
+occupation_welfare,Has work benefits,0.0,has_children,Has Children (<5),1,11.0,,,,,,31.428571428571427,35.0
+occupation_welfare,Has work benefits,1.0,has_children,Has Children (<5),1,24.0,,,,,,68.57142857142857,35.0
+occupation_injury,"Work injury (serious, past 12 months)",0,education_group,Education Level,Low,338.0,,,,,,97.40634005763688,347.0
+occupation_injury,"Work injury (serious, past 12 months)",1,education_group,Education Level,Low,9.0,,,,,,2.5936599423631126,347.0
+occupation_injury,"Work injury (serious, past 12 months)",0,education_group,Education Level,Middle,121.0,,,,,,96.03174603174604,126.0
+occupation_injury,"Work injury (serious, past 12 months)",1,education_group,Education Level,Middle,5.0,,,,,,3.968253968253968,126.0
+occupation_injury,"Work injury (serious, past 12 months)",0,education_group,Education Level,High,145.0,,,,,,87.87878787878788,165.0
+occupation_injury,"Work injury (serious, past 12 months)",1,education_group,Education Level,High,20.0,,,,,,12.121212121212121,165.0
+occupation_injury,"Work injury (serious, past 12 months)",0,homeowner,Home Ownership,Other,251.0,,,,,,96.16858237547893,261.0
+occupation_injury,"Work injury (serious, past 12 months)",1,homeowner,Home Ownership,Other,10.0,,,,,,3.8314176245210727,261.0
+occupation_injury,"Work injury (serious, past 12 months)",0,homeowner,Home Ownership,Owner,187.0,,,,,,96.89119170984456,193.0
+occupation_injury,"Work injury (serious, past 12 months)",1,homeowner,Home Ownership,Owner,6.0,,,,,,3.1088082901554404,193.0
+occupation_injury,"Work injury (serious, past 12 months)",0,homeowner,Home Ownership,Renter,166.0,,,,,,90.21739130434783,184.0
+occupation_injury,"Work injury (serious, past 12 months)",1,homeowner,Home Ownership,Renter,18.0,,,,,,9.782608695652174,184.0
+occupation_injury,"Work injury (serious, past 12 months)",0,can_work,Can Work (if disabled),0.0,398.0,,,,,,96.3680387409201,413.0
+occupation_injury,"Work injury (serious, past 12 months)",1,can_work,Can Work (if disabled),0.0,15.0,,,,,,3.631961259079903,413.0
+occupation_injury,"Work injury (serious, past 12 months)",0,can_work,Can Work (if disabled),1.0,206.0,,,,,,91.55555555555556,225.0
+occupation_injury,"Work injury (serious, past 12 months)",1,can_work,Can Work (if disabled),1.0,19.0,,,,,,8.444444444444445,225.0
+occupation_injury,"Work injury (serious, past 12 months)",0,gender,Gender,Female,288.0,,,,,,97.6271186440678,295.0
+occupation_injury,"Work injury (serious, past 12 months)",1,gender,Gender,Female,7.0,,,,,,2.3728813559322033,295.0
+occupation_injury,"Work injury (serious, past 12 months)",0,gender,Gender,Male,294.0,,,,,,93.63057324840764,314.0
+occupation_injury,"Work injury (serious, past 12 months)",1,gender,Gender,Male,20.0,,,,,,6.369426751592357,314.0
+occupation_injury,"Work injury (serious, past 12 months)",0,gender,Gender,Other,22.0,,,,,,75.86206896551724,29.0
+occupation_injury,"Work injury (serious, past 12 months)",1,gender,Gender,Other,7.0,,,,,,24.137931034482758,29.0
+occupation_small_injury,"Work injury (minor, past 12 months)",0,can_work,Can Work (if disabled),0.0,391.0,,,,,,94.67312348668281,413.0
+occupation_small_injury,"Work injury (minor, past 12 months)",1,can_work,Can Work (if disabled),0.0,22.0,,,,,,5.326876513317192,413.0
+occupation_small_injury,"Work injury (minor, past 12 months)",0,can_work,Can Work (if disabled),1.0,187.0,,,,,,83.11111111111111,225.0
+occupation_small_injury,"Work injury (minor, past 12 months)",1,can_work,Can Work (if disabled),1.0,38.0,,,,,,16.88888888888889,225.0
+physical_violence,Experienced physical violence (past 12 months),0,has_children,Has Children (<5),0,566.0,,,,,,98.09358752166378,577.0
+physical_violence,Experienced physical violence (past 12 months),1,has_children,Has Children (<5),0,11.0,,,,,,1.9064124783362217,577.0
+physical_violence,Experienced physical violence (past 12 months),0,has_children,Has Children (<5),1,55.0,,,,,,90.1639344262295,61.0
+physical_violence,Experienced physical violence (past 12 months),1,has_children,Has Children (<5),1,6.0,,,,,,9.836065573770492,61.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,15-29,53.0,,,,,,85.48387096774194,62.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,15-29,9.0,,,,,,14.516129032258066,62.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,30-44,76.0,,,,,,82.6086956521739,92.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,30-44,16.0,,,,,,17.391304347826086,92.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,45-59,92.0,,,,,,91.0891089108911,101.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,45-59,9.0,,,,,,8.91089108910891,101.0
+psychological_violence,Experienced psychological violence (past 12 months),0,age_group,Age Group,60+,361.0,,,,,,95.75596816976127,377.0
+psychological_violence,Experienced psychological violence (past 12 months),1,age_group,Age Group,60+,16.0,,,,,,4.244031830238726,377.0
+psychological_violence,Experienced psychological violence (past 12 months),0,education_group,Education Level,Low,327.0,,,,,,94.23631123919309,347.0
+psychological_violence,Experienced psychological violence (past 12 months),1,education_group,Education Level,Low,20.0,,,,,,5.763688760806916,347.0
+psychological_violence,Experienced psychological violence (past 12 months),0,education_group,Education Level,Middle,119.0,,,,,,94.44444444444444,126.0
+psychological_violence,Experienced psychological violence (past 12 months),1,education_group,Education Level,Middle,7.0,,,,,,5.555555555555555,126.0
+psychological_violence,Experienced psychological violence (past 12 months),0,education_group,Education Level,High,140.0,,,,,,84.84848484848484,165.0
+psychological_violence,Experienced psychological violence (past 12 months),1,education_group,Education Level,High,25.0,,,,,,15.151515151515152,165.0
+psychological_violence,Experienced psychological violence (past 12 months),0,homeowner,Home Ownership,Other,239.0,,,,,,91.57088122605363,261.0
+psychological_violence,Experienced psychological violence (past 12 months),1,homeowner,Home Ownership,Other,22.0,,,,,,8.42911877394636,261.0
+psychological_violence,Experienced psychological violence (past 12 months),0,homeowner,Home Ownership,Owner,186.0,,,,,,96.37305699481865,193.0
+psychological_violence,Experienced psychological violence (past 12 months),1,homeowner,Home Ownership,Owner,7.0,,,,,,3.6269430051813467,193.0
+psychological_violence,Experienced psychological violence (past 12 months),0,homeowner,Home Ownership,Renter,161.0,,,,,,87.5,184.0
+psychological_violence,Experienced psychological violence (past 12 months),1,homeowner,Home Ownership,Renter,23.0,,,,,,12.5,184.0
+psychological_violence,Experienced psychological violence (past 12 months),0,has_children,Has Children (<5),0,541.0,,,,,,93.76083188908146,577.0
+psychological_violence,Experienced psychological violence (past 12 months),1,has_children,Has Children (<5),0,36.0,,,,,,6.239168110918544,577.0
+psychological_violence,Experienced psychological violence (past 12 months),0,has_children,Has Children (<5),1,45.0,,,,,,73.77049180327869,61.0
+psychological_violence,Experienced psychological violence (past 12 months),1,has_children,Has Children (<5),1,16.0,,,,,,26.229508196721312,61.0
+psychological_violence,Experienced psychological violence (past 12 months),0,can_work,Can Work (if disabled),0.0,387.0,,,,,,93.7046004842615,413.0
+psychological_violence,Experienced psychological violence (past 12 months),1,can_work,Can Work (if disabled),0.0,26.0,,,,,,6.2953995157385,413.0
+psychological_violence,Experienced psychological violence (past 12 months),0,can_work,Can Work (if disabled),1.0,199.0,,,,,,88.44444444444444,225.0
+psychological_violence,Experienced psychological violence (past 12 months),1,can_work,Can Work (if disabled),1.0,26.0,,,,,,11.555555555555555,225.0
+psychological_violence,Experienced psychological violence (past 12 months),0,gender,Gender,Female,275.0,,,,,,93.22033898305084,295.0
+psychological_violence,Experienced psychological violence (past 12 months),1,gender,Gender,Female,20.0,,,,,,6.779661016949152,295.0
+psychological_violence,Experienced psychological violence (past 12 months),0,gender,Gender,Male,290.0,,,,,,92.35668789808918,314.0
+psychological_violence,Experienced psychological violence (past 12 months),1,gender,Gender,Male,24.0,,,,,,7.643312101910828,314.0
+psychological_violence,Experienced psychological violence (past 12 months),0,gender,Gender,Other,21.0,,,,,,72.41379310344827,29.0
+psychological_violence,Experienced psychological violence (past 12 months),1,gender,Gender,Other,8.0,,,,,,27.586206896551722,29.0
+food_insecurity_1,Food insecurity (reduced meals),0,age_group,Age Group,15-29,47.0,,,,,,75.80645161290323,62.0
+food_insecurity_1,Food insecurity (reduced meals),1,age_group,Age Group,15-29,15.0,,,,,,24.193548387096776,62.0
+food_insecurity_1,Food insecurity (reduced meals),0,age_group,Age Group,30-44,79.0,,,,,,85.86956521739131,92.0
+food_insecurity_1,Food insecurity (reduced meals),1,age_group,Age Group,30-44,13.0,,,,,,14.130434782608695,92.0
+food_insecurity_1,Food insecurity (reduced meals),0,age_group,Age Group,45-59,90.0,,,,,,89.10891089108911,101.0
+food_insecurity_1,Food insecurity (reduced meals),1,age_group,Age Group,45-59,11.0,,,,,,10.891089108910892,101.0
+food_insecurity_1,Food insecurity (reduced meals),0,age_group,Age Group,60+,347.0,,,,,,92.04244031830238,377.0
+food_insecurity_1,Food insecurity (reduced meals),1,age_group,Age Group,60+,30.0,,,,,,7.957559681697612,377.0
+food_insecurity_1,Food insecurity (reduced meals),0,work_hours_group,Work Hours,<8 hrs,100.0,,,,,,90.9090909090909,110.0
+food_insecurity_1,Food insecurity (reduced meals),1,work_hours_group,Work Hours,<8 hrs,10.0,,,,,,9.090909090909092,110.0
+food_insecurity_1,Food insecurity (reduced meals),0,work_hours_group,Work Hours,8-10 hrs,33.0,,,,,,86.8421052631579,38.0
+food_insecurity_1,Food insecurity (reduced meals),1,work_hours_group,Work Hours,8-10 hrs,5.0,,,,,,13.157894736842104,38.0
+food_insecurity_1,Food insecurity (reduced meals),0,work_hours_group,Work Hours,>10 hrs,14.0,,,,,,70.0,20.0
+food_insecurity_1,Food insecurity (reduced meals),1,work_hours_group,Work Hours,>10 hrs,6.0,,,,,,30.0,20.0
+food_insecurity_1,Food insecurity (reduced meals),0,homeowner,Home Ownership,Other,234.0,,,,,,89.65517241379311,261.0
+food_insecurity_1,Food insecurity (reduced meals),1,homeowner,Home Ownership,Other,27.0,,,,,,10.344827586206897,261.0
+food_insecurity_1,Food insecurity (reduced meals),0,homeowner,Home Ownership,Owner,183.0,,,,,,94.81865284974094,193.0
+food_insecurity_1,Food insecurity (reduced meals),1,homeowner,Home Ownership,Owner,10.0,,,,,,5.181347150259067,193.0
+food_insecurity_1,Food insecurity (reduced meals),0,homeowner,Home Ownership,Renter,152.0,,,,,,82.6086956521739,184.0
+food_insecurity_1,Food insecurity (reduced meals),1,homeowner,Home Ownership,Renter,32.0,,,,,,17.391304347826086,184.0
+food_insecurity_2,Food insecurity (skip full day),0,homeowner,Home Ownership,Other,243.0,,,,,,93.10344827586206,261.0
+food_insecurity_2,Food insecurity (skip full day),1,homeowner,Home Ownership,Other,18.0,,,,,,6.896551724137931,261.0
+food_insecurity_2,Food insecurity (skip full day),0,homeowner,Home Ownership,Owner,188.0,,,,,,97.40932642487047,193.0
+food_insecurity_2,Food insecurity (skip full day),1,homeowner,Home Ownership,Owner,5.0,,,,,,2.5906735751295336,193.0
+food_insecurity_2,Food insecurity (skip full day),0,homeowner,Home Ownership,Renter,160.0,,,,,,86.95652173913044,184.0
+food_insecurity_2,Food insecurity (skip full day),1,homeowner,Home Ownership,Renter,24.0,,,,,,13.043478260869565,184.0
+family_status,Lives with family,0,age_group,Age Group,15-29,17.0,,,,,,27.419354838709676,62.0
+family_status,Lives with family,1,age_group,Age Group,15-29,45.0,,,,,,72.58064516129032,62.0
+family_status,Lives with family,0,age_group,Age Group,30-44,13.0,,,,,,14.130434782608695,92.0
+family_status,Lives with family,1,age_group,Age Group,30-44,79.0,,,,,,85.86956521739131,92.0
+family_status,Lives with family,0,age_group,Age Group,45-59,9.0,,,,,,8.91089108910891,101.0
+family_status,Lives with family,1,age_group,Age Group,45-59,92.0,,,,,,91.0891089108911,101.0
+family_status,Lives with family,0,age_group,Age Group,60+,43.0,,,,,,11.405835543766578,377.0
+family_status,Lives with family,1,age_group,Age Group,60+,334.0,,,,,,88.59416445623343,377.0
+read,Can read Thai,0,homeowner,Home Ownership,Other,50.0,,,,,,19.157088122605366,261.0
+read,Can read Thai,1,homeowner,Home Ownership,Other,211.0,,,,,,80.84291187739464,261.0
+read,Can read Thai,0,homeowner,Home Ownership,Owner,18.0,,,,,,9.32642487046632,193.0
+read,Can read Thai,1,homeowner,Home Ownership,Owner,175.0,,,,,,90.67357512953367,193.0
+read,Can read Thai,0,homeowner,Home Ownership,Renter,24.0,,,,,,13.043478260869565,184.0
+read,Can read Thai,1,homeowner,Home Ownership,Renter,160.0,,,,,,86.95652173913044,184.0
+read,Can read Thai,0,can_work,Can Work (if disabled),0.0,85.0,,,,,,20.581113801452787,413.0
+read,Can read Thai,1,can_work,Can Work (if disabled),0.0,328.0,,,,,,79.41888619854721,413.0
+read,Can read Thai,0,can_work,Can Work (if disabled),1.0,7.0,,,,,,3.111111111111111,225.0
+read,Can read Thai,1,can_work,Can Work (if disabled),1.0,218.0,,,,,,96.88888888888889,225.0
+write,Can write Thai,0,education_group,Education Level,Low,102.0,,,,,,29.394812680115272,347.0
+write,Can write Thai,1,education_group,Education Level,Low,245.0,,,,,,70.60518731988472,347.0
+write,Can write Thai,0,education_group,Education Level,Middle,12.0,,,,,,9.523809523809524,126.0
+write,Can write Thai,1,education_group,Education Level,Middle,114.0,,,,,,90.47619047619048,126.0
+write,Can write Thai,0,education_group,Education Level,High,7.0,,,,,,4.242424242424243,165.0
+write,Can write Thai,1,education_group,Education Level,High,158.0,,,,,,95.75757575757575,165.0
+write,Can write Thai,0,homeowner,Home Ownership,Other,68.0,,,,,,26.053639846743295,261.0
+write,Can write Thai,1,homeowner,Home Ownership,Other,193.0,,,,,,73.9463601532567,261.0
+write,Can write Thai,0,homeowner,Home Ownership,Owner,23.0,,,,,,11.917098445595855,193.0
+write,Can write Thai,1,homeowner,Home Ownership,Owner,170.0,,,,,,88.08290155440415,193.0
+write,Can write Thai,0,homeowner,Home Ownership,Renter,30.0,,,,,,16.304347826086957,184.0
+write,Can write Thai,1,homeowner,Home Ownership,Renter,154.0,,,,,,83.69565217391305,184.0
+write,Can write Thai,0,can_work,Can Work (if disabled),0.0,112.0,,,,,,27.11864406779661,413.0
+write,Can write Thai,1,can_work,Can Work (if disabled),0.0,301.0,,,,,,72.88135593220339,413.0
+write,Can write Thai,0,can_work,Can Work (if disabled),1.0,9.0,,,,,,4.0,225.0
+write,Can write Thai,1,can_work,Can Work (if disabled),1.0,216.0,,,,,,96.0,225.0
+math,Can do basic math,0,education_group,Education Level,Low,105.0,,,,,,30.25936599423631,347.0
+math,Can do basic math,1,education_group,Education Level,Low,242.0,,,,,,69.7406340057637,347.0
+math,Can do basic math,0,education_group,Education Level,Middle,10.0,,,,,,7.936507936507936,126.0
+math,Can do basic math,1,education_group,Education Level,Middle,116.0,,,,,,92.06349206349206,126.0
+math,Can do basic math,0,education_group,Education Level,High,9.0,,,,,,5.454545454545454,165.0
+math,Can do basic math,1,education_group,Education Level,High,156.0,,,,,,94.54545454545455,165.0
+math,Can do basic math,0,homeowner,Home Ownership,Other,73.0,,,,,,27.969348659003828,261.0
+math,Can do basic math,1,homeowner,Home Ownership,Other,188.0,,,,,,72.03065134099617,261.0
+math,Can do basic math,0,homeowner,Home Ownership,Owner,25.0,,,,,,12.953367875647666,193.0
+math,Can do basic math,1,homeowner,Home Ownership,Owner,168.0,,,,,,87.04663212435233,193.0
+math,Can do basic math,0,homeowner,Home Ownership,Renter,26.0,,,,,,14.130434782608695,184.0
+math,Can do basic math,1,homeowner,Home Ownership,Renter,158.0,,,,,,85.86956521739131,184.0
+math,Can do basic math,0,can_work,Can Work (if disabled),0.0,113.0,,,,,,27.36077481840194,413.0
+math,Can do basic math,1,can_work,Can Work (if disabled),0.0,300.0,,,,,,72.63922518159806,413.0
+math,Can do basic math,0,can_work,Can Work (if disabled),1.0,11.0,,,,,,4.888888888888889,225.0
+math,Can do basic math,1,can_work,Can Work (if disabled),1.0,214.0,,,,,,95.11111111111111,225.0
+training,Participated in training (past 12 months),0,age_group,Age Group,15-29,44.0,,,,,,70.96774193548387,62.0
+training,Participated in training (past 12 months),1,age_group,Age Group,15-29,18.0,,,,,,29.03225806451613,62.0
+training,Participated in training (past 12 months),0,age_group,Age Group,30-44,74.0,,,,,,80.43478260869566,92.0
+training,Participated in training (past 12 months),1,age_group,Age Group,30-44,18.0,,,,,,19.565217391304348,92.0
+training,Participated in training (past 12 months),0,age_group,Age Group,45-59,94.0,,,,,,93.06930693069307,101.0
+training,Participated in training (past 12 months),1,age_group,Age Group,45-59,7.0,,,,,,6.9306930693069315,101.0
+training,Participated in training (past 12 months),0,age_group,Age Group,60+,358.0,,,,,,94.9602122015915,377.0
+training,Participated in training (past 12 months),1,age_group,Age Group,60+,19.0,,,,,,5.039787798408488,377.0
+training,Participated in training (past 12 months),0,education_group,Education Level,Low,333.0,,,,,,95.96541786743515,347.0
+training,Participated in training (past 12 months),1,education_group,Education Level,Low,14.0,,,,,,4.034582132564841,347.0
+training,Participated in training (past 12 months),0,education_group,Education Level,Middle,110.0,,,,,,87.3015873015873,126.0
+training,Participated in training (past 12 months),1,education_group,Education Level,Middle,16.0,,,,,,12.698412698412698,126.0
+training,Participated in training (past 12 months),0,education_group,Education Level,High,133.0,,,,,,80.60606060606061,165.0
+training,Participated in training (past 12 months),1,education_group,Education Level,High,32.0,,,,,,19.393939393939394,165.0
+training,Participated in training (past 12 months),0,homeowner,Home Ownership,Other,248.0,,,,,,95.01915708812261,261.0
+training,Participated in training (past 12 months),1,homeowner,Home Ownership,Other,13.0,,,,,,4.980842911877394,261.0
+training,Participated in training (past 12 months),0,homeowner,Home Ownership,Owner,173.0,,,,,,89.63730569948186,193.0
+training,Participated in training (past 12 months),1,homeowner,Home Ownership,Owner,20.0,,,,,,10.362694300518134,193.0
+training,Participated in training (past 12 months),0,homeowner,Home Ownership,Renter,155.0,,,,,,84.23913043478261,184.0
+training,Participated in training (past 12 months),1,homeowner,Home Ownership,Renter,29.0,,,,,,15.760869565217392,184.0
+training,Participated in training (past 12 months),0,has_children,Has Children (<5),0,526.0,,,,,,91.16117850953206,577.0
+training,Participated in training (past 12 months),1,has_children,Has Children (<5),0,51.0,,,,,,8.838821490467938,577.0
+training,Participated in training (past 12 months),0,has_children,Has Children (<5),1,50.0,,,,,,81.9672131147541,61.0
+training,Participated in training (past 12 months),1,has_children,Has Children (<5),1,11.0,,,,,,18.0327868852459,61.0
+training,Participated in training (past 12 months),0,can_work,Can Work (if disabled),0.0,395.0,,,,,,95.64164648910412,413.0
+training,Participated in training (past 12 months),1,can_work,Can Work (if disabled),0.0,18.0,,,,,,4.358353510895883,413.0
+training,Participated in training (past 12 months),0,can_work,Can Work (if disabled),1.0,181.0,,,,,,80.44444444444444,225.0
+training,Participated in training (past 12 months),1,can_work,Can Work (if disabled),1.0,44.0,,,,,,19.555555555555557,225.0
+training,Participated in training (past 12 months),0,gender,Gender,Female,271.0,,,,,,91.86440677966101,295.0
+training,Participated in training (past 12 months),1,gender,Gender,Female,24.0,,,,,,8.135593220338983,295.0
+training,Participated in training (past 12 months),0,gender,Gender,Male,284.0,,,,,,90.44585987261146,314.0
+training,Participated in training (past 12 months),1,gender,Gender,Male,30.0,,,,,,9.554140127388536,314.0
+training,Participated in training (past 12 months),0,gender,Gender,Other,21.0,,,,,,72.41379310344827,29.0
+training,Participated in training (past 12 months),1,gender,Gender,Other,8.0,,,,,,27.586206896551722,29.0

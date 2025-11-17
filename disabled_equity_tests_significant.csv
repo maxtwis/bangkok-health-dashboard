@@ -1,0 +1,91 @@
+﻿outcome_variable,outcome_label,stratify_variable,stratify_label,test_type,test_statistic,p_value,effect_size_value,effect_size_interpretation,equity_gap,equity_gap_unit,highest_group,lowest_group,sample_size,significant
+occupation_status,Currently working,can_work,Can Work (if disabled),chi_square,254.32222159554644,2.9661150335282056e-57,0.6313669074158491,large,58.430992736077485,percentage points,1.0,0.0,638,Yes
+working_hours,Working hours per day,work_hours_group,Work Hours,anova,174.5696136245874,1.8978605955089603e-41,0.679075255776908,large,5.818181818181819,,>10 hrs,<8 hrs,168,Yes
+diseases_status,Has chronic diseases,age_group,Age Group,chi_square,174.11708651196818,1.6435727993250068e-37,0.5248825765487998,large,58.1714725763669,percentage points,60+,15-29,632,Yes
+occupation_status,Currently working,age_group,Age Group,chi_square,117.37096351465034,2.841800070983425e-25,0.43094494992394683,medium,48.8234790793189,percentage points,15-29,60+,632,Yes
+monthly_income,Monthly income (baht),income_group,Income Level,anova,84.35287271875339,3.173287166340637e-25,0.5310125733017045,large,23645.972222222223,baht,High,Low,152,Yes
+occupation_status,Currently working,education_group,Education Level,chi_square,112.40993799436586,3.8948623077395595e-25,0.41975126608864277,medium,43.71321281984106,percentage points,High,Low,638,Yes
+diseases_status,Has chronic diseases,education_group,Education Level,chi_square,72.27362355464408,2.0229355733252306e-16,0.33657323366794806,medium,33.98655139289145,percentage points,Low,High,638,Yes
+math,Can do basic math,education_group,Education Level,chi_square,57.20036453490359,3.794011647438438e-13,0.29942568992174895,small,24.80482053969085,percentage points,High,Low,638,Yes
+diseases_status,Has chronic diseases,can_work,Can Work (if disabled),chi_square,52.37610844227784,4.582653470763157e-13,0.28652087857496467,small,25.714285714285708,percentage points,0.0,1.0,638,Yes
+drink_status,Alcohol consumption,gender,Gender,chi_square,63.10925474608396,6.435942895551066e-13,0.2223930385468702,small,,,,,638,Yes
+write,Can write Thai,education_group,Education Level,chi_square,55.14005868898148,1.06289016809336e-12,0.29398371430642284,small,25.15238843769103,percentage points,High,Low,638,Yes
+exercise_status,Exercise frequency,can_work,Can Work (if disabled),chi_square,58.00806354416498,1.5656527669287893e-12,0.30153230290144467,medium,,,,,638,Yes
+write,Can write Thai,can_work,Can Work (if disabled),chi_square,49.15952764469172,2.35969440748816e-12,0.27758341299009276,small,23.11864406779661,percentage points,1.0,0.0,638,Yes
+math,Can do basic math,can_work,Can Work (if disabled),chi_square,45.54872826431358,1.488883199907519e-11,0.26719466875275766,small,22.47188592951305,percentage points,1.0,0.0,638,Yes
+training,Participated in training (past 12 months),age_group,Age Group,chi_square,46.429652667296025,4.5955299821078554e-10,0.2710436132734997,small,23.992470266107645,percentage points,15-29,60+,632,Yes
+training,Participated in training (past 12 months),can_work,Can Work (if disabled),chi_square,36.628649963767174,1.429157314200887e-09,0.2396073393266496,small,15.197202044659674,percentage points,1.0,0.0,638,Yes
+read,Can read Thai,can_work,Can Work (if disabled),chi_square,34.61951065217198,4.008682407089129e-09,0.23294324605179542,small,17.470002690341673,percentage points,1.0,0.0,638,Yes
+occupation_status,Currently working,homeowner,Home Ownership,chi_square,38.125544995086656,5.26190610984022e-09,0.2444543055783837,small,25.31820229781483,percentage points,Renter,Owner,638,Yes
+drink_status,Alcohol consumption,age_group,Age Group,chi_square,45.79123926483729,3.257806242364601e-08,0.19033456400198828,small,,,,,632,Yes
+drink_status,Alcohol consumption,can_work,Can Work (if disabled),chi_square,33.13716008647528,6.373193642611934e-08,0.22790156294460662,small,,,,,638,Yes
+drink_status,Alcohol consumption,education_group,Education Level,chi_square,38.63355959812114,8.292471712248701e-08,0.17400311584723518,small,,,,,638,Yes
+training,Participated in training (past 12 months),education_group,Education Level,chi_square,31.658633177051033,1.3347967891928126e-07,0.2227592469364432,small,15.359357261374553,percentage points,High,Low,638,Yes
+psychological_violence,Experienced psychological violence (past 12 months),has_children,Has Children (<5),chi_square,26.838903418782117,2.211404679785731e-07,0.20510301494103642,small,19.990340085802767,percentage points,1,0,638,Yes
+exercise_status,Exercise frequency,education_group,Education Level,chi_square,40.28574151922387,4.002494458170207e-07,0.17768482698964044,small,,,,,638,Yes
+rent_price,Monthly rent (baht),education_group,Education Level,anova,15.920383273721942,4.0519413782145283e-07,0.14352982566274308,large,6912.401122019636,baht,High,Low,193,Yes
+monthly_income,Monthly income (baht),education_group,Education Level,anova,15.916453540326396,5.435079754652306e-07,0.1760349241438402,large,14095.473684210527,baht,High,Low,152,Yes
+occupation_status,Currently working,gender,Gender,chi_square,28.222817425430748,7.438631830934971e-07,0.2103244896557484,small,44.839275277615435,percentage points,Other,Female,638,Yes
+occupation_injury,"Work injury (serious, past 12 months)",gender,Gender,chi_square,26.11872257694374,2.1300581280055285e-06,0.20233249032465755,small,21.765049678550554,percentage points,Other,Female,638,Yes
+occupation_small_injury,"Work injury (minor, past 12 months)",can_work,Can Work (if disabled),chi_square,21.515980769177062,3.508923096375445e-06,0.18364124751449162,small,11.562012375571697,percentage points,1.0,0.0,638,Yes
+monthly_income,Monthly income (baht),age_group,Age Group,anova,9.867340606711625,5.720393593298129e-06,0.1676199485999309,large,15203.299595141698,baht,15-29,60+,151,Yes
+rent_price,Monthly rent (baht),age_group,Age Group,anova,9.609999489300835,6.257471235942378e-06,0.13419912802452486,medium,7113.630700778643,baht,15-29,60+,190,Yes
+occupation_status,Currently working,has_children,Has Children (<5),chi_square,19.8118256857445,8.545235378603451e-06,0.17621866619689852,small,27.249481489899708,percentage points,1,0,638,Yes
+diseases_status,Has chronic diseases,gender,Gender,chi_square,22.878640726202654,1.076381660451192e-05,0.1893672052978654,small,39.29865575686733,percentage points,Female,Other,638,Yes
+diseases_status,Has chronic diseases,homeowner,Home Ownership,chi_square,21.42958669407836,2.2213877605199397e-05,0.18327218522696173,small,19.75670195990088,percentage points,Owner,Renter,638,Yes
+oral_health,Oral health problems,age_group,Age Group,chi_square,23.811389947732234,2.735035272377055e-05,0.1941037091796492,small,20.364507572516473,percentage points,15-29,60+,632,Yes
+occupation_injury,"Work injury (serious, past 12 months)",education_group,Education Level,chi_square,20.696536147651166,3.2048246937689015e-05,0.18011027685885733,small,9.527552178849009,percentage points,High,Low,638,Yes
+math,Can do basic math,homeowner,Home Ownership,chi_square,20.6253214010748,3.320996087991231e-05,0.17980013896083805,small,15.015980783356156,percentage points,Owner,Other,638,Yes
+smoke_status,Smoking status,education_group,Education Level,chi_square,29.67128140357854,4.538713902314657e-05,0.15249050898976665,small,,,,,638,Yes
+psychological_violence,Experienced psychological violence (past 12 months),age_group,Age Group,chi_square,22.158964620621887,6.044691412054536e-05,0.18724757109434245,small,13.14727251758736,percentage points,30-44,60+,632,Yes
+smoke_status,Smoking status,age_group,Age Group,chi_square,34.81396646614587,6.42568946548716e-05,0.13550570710992077,small,,,,,632,Yes
+oral_health,Oral health problems,can_work,Can Work (if disabled),chi_square,15.930376287874354,6.571554300464574e-05,0.1580165872005976,small,13.959644874899109,percentage points,1.0,0.0,638,Yes
+diseases_status,Has chronic diseases,income_group,Income Level,chi_square,16.716161616161614,0.00023449394106660342,0.3316244072361796,medium,41.66666666666667,percentage points,Low,High,152,Yes
+diseases_status,Has chronic diseases,has_children,Has Children (<5),chi_square,12.82533717715464,0.00034195687872635305,0.14178296572078375,small,21.305793107367116,percentage points,0,1,638,Yes
+write,Can write Thai,homeowner,Home Ownership,chi_square,15.61908599155823,0.00040584347762812154,0.15646509516686832,small,14.13654140114744,percentage points,Owner,Other,638,Yes
+psychological_violence,Experienced psychological violence (past 12 months),gender,Gender,chi_square,15.48160630372329,0.00043472228681779354,0.15577496782682115,small,20.80654587960257,percentage points,Other,Female,638,Yes
+food_insecurity_2,Food insecurity (skip full day),homeowner,Home Ownership,chi_square,15.22499198574091,0.0004942367063578287,0.15447855450547737,small,10.45280468574003,percentage points,Renter,Owner,638,Yes
+working_hours,Working hours per day,income_group,Income Level,anova,7.971927261595683,0.000513847943970881,0.09666231318093534,medium,1.7638888888888893,,High,Low,152,Yes
+occupation_contract,Has employment contract,has_children,Has Children (<5),chi_square,12.04254636929336,0.0005199988854475841,0.2601052765394631,small,34.42557442557443,percentage points,1,0,178,Yes
+drink_status,Alcohol consumption,homeowner,Home Ownership,chi_square,19.818737901171954,0.0005422697461043835,0.12462714894771906,small,,,,,638,Yes
+working_hours,Working hours per day,education_group,Education Level,anova,7.716805700661706,0.0006255131729081954,0.08553623286404051,medium,1.6372997711670472,,High,Low,168,Yes
+food_insecurity_1,Food insecurity (reduced meals),homeowner,Home Ownership,chi_square,14.660604028656739,0.0006553756244043771,0.15158826860846705,small,12.209957197567018,percentage points,Renter,Owner,638,Yes
+psychological_violence,Experienced psychological violence (past 12 months),education_group,Education Level,chi_square,14.577028347761892,0.0006833426271528394,0.15115557156345186,small,9.595959595959597,percentage points,High,Middle,638,Yes
+training,Participated in training (past 12 months),homeowner,Home Ownership,chi_square,14.425513556764407,0.0007371222691496193,0.15036795807699574,small,10.780026653339998,percentage points,Renter,Other,638,Yes
+occupation_welfare,Has work benefits,has_children,Has Children (<5),chi_square,11.175123698308166,0.0008290136825359665,0.25056255468589084,small,32.9070929070929,percentage points,1,0,178,Yes
+rent_price,Monthly rent (baht),can_work,Can Work (if disabled),anova,11.196622237606519,0.0009866677861789252,0.0553749222598243,small,3840.9946062567424,baht,1.0,0.0,193,Yes
+rent_price,Monthly rent (baht),homeowner,Home Ownership,anova,10.827814765576614,0.0011907648815236253,0.05364877372404363,small,5205.380368098159,baht,Renter,Other,193,Yes
+physical_violence,Experienced physical violence (past 12 months),has_children,Has Children (<5),chi_square,10.492317931556641,0.0011987189366389562,0.1282405528339402,small,7.92965309543427,percentage points,1,0,638,Yes
+food_insecurity_1,Food insecurity (reduced meals),age_group,Age Group,chi_square,15.608542725593903,0.0013639855976965575,0.1571529868461745,small,16.235988705399166,percentage points,15-29,60+,632,Yes
+rent_price,Monthly rent (baht),gender,Gender,anova,6.692871147169434,0.0015529022942451988,0.065814555845154,medium,8288.265306122448,baht,Other,Male,193,Yes
+smoke_status,Smoking status,can_work,Can Work (if disabled),chi_square,15.301627220003187,0.001576214572038856,0.1548668515988587,small,,,,,638,Yes
+monthly_income,Monthly income (baht),work_hours_group,Work Hours,anova,6.472697616231403,0.0020156541479772493,0.07993679112567832,medium,10358.9375,baht,>10 hrs,<8 hrs,152,Yes
+smoke_status,Smoking status,has_children,Has Children (<5),chi_square,14.579354041640222,0.002213801100650548,0.15116762915017343,small,,,,,638,Yes
+health_expense,Personal health expenses (baht/month),homeowner,Home Ownership,anova,6.098758402700036,0.0023793610817397087,0.018846668117034365,small,494.5650202748366,baht/month,Owner,Renter,638,Yes
+health_expense,Personal health expenses (baht/month),can_work,Can Work (if disabled),anova,9.198957387089099,0.0025201621639577908,0.01425755153781216,small,345.96487489911215,baht/month,0.0,1.0,638,Yes
+family_status,Lives with family,age_group,Age Group,chi_square,13.864669674940464,0.0030952691829067257,0.14811403874382423,small,18.50846374960078,percentage points,45-59,15-29,632,Yes
+oral_health,Oral health problems,education_group,Education Level,chi_square,11.418558779747405,0.003315060550588058,0.13378126757682862,small,12.376211684569032,percentage points,High,Low,638,Yes
+training,Participated in training (past 12 months),gender,Gender,chi_square,11.404829800373552,0.0033378950334194074,0.1337008181650919,small,19.45061367621274,percentage points,Other,Female,638,Yes
+medical_skip_1,Skip medical care due to cost,homeowner,Home Ownership,chi_square,10.916064899174163,0.004261933068878354,0.13080450906288388,small,12.22403694525794,percentage points,Renter,Owner,638,Yes
+rent_price,Monthly rent (baht),income_group,Income Level,anova,5.7689670825013,0.0047441186931776284,0.13811610593832846,medium,8903.991596638654,baht,High,Low,75,Yes
+smoke_status,Smoking status,homeowner,Home Ownership,chi_square,18.631681852187498,0.004833068967634819,0.12083721093107656,small,,,,,638,Yes
+occupation_contract,Has employment contract,homeowner,Home Ownership,chi_square,10.423805834561009,0.00545129045674806,0.24199319605256672,small,26.832754747804785,percentage points,Renter,Other,178,Yes
+occupation_injury,"Work injury (serious, past 12 months)",homeowner,Home Ownership,chi_square,10.279716232926821,0.0058585208820315735,0.12693465991840067,small,6.673800405496733,percentage points,Renter,Owner,638,Yes
+oral_health,Oral health problems,has_children,Has Children (<5),chi_square,7.376558294452798,0.006607950801887256,0.10752675758303605,small,15.961587635309826,percentage points,1,0,638,Yes
+monthly_income,Monthly income (baht),has_children,Has Children (<5),anova,7.512054987994619,0.006873575050926869,0.04769193690328767,small,7901.295081967211,baht,1,0,152,Yes
+psychological_violence,Experienced psychological violence (past 12 months),homeowner,Home Ownership,chi_square,9.952322331680275,0.0069005016588530865,0.12489696274759486,small,8.873056994818654,percentage points,Renter,Owner,638,Yes
+occupation_welfare,Has work benefits,homeowner,Home Ownership,chi_square,9.384174050158176,0.009167533305035242,0.22960853410418547,small,23.70839289360833,percentage points,Renter,Other,178,Yes
+read,Can read Thai,homeowner,Home Ownership,chi_square,9.086027548901093,0.010641287737296312,0.1193374312210573,small,9.830663252139033,percentage points,Owner,Other,638,Yes
+drink_status,Alcohol consumption,has_children,Has Children (<5),chi_square,9.082795981240503,0.010658495656350624,0.11931620735410407,small,,,,,638,Yes
+hh_health_expense,Household health expenses (baht/month),can_work,Can Work (if disabled),anova,5.947075424577781,0.01501425385715858,0.009264121065812848,negligible,464.09921980091485,baht/month,0.0,1.0,638,Yes
+occupation_injury,"Work injury (serious, past 12 months)",can_work,Can Work (if disabled),chi_square,5.76628515693328,0.01633653272015954,0.09506873570895855,negligible,4.812483185364542,percentage points,1.0,0.0,638,Yes
+hh_health_expense,Household health expenses (baht/month),homeowner,Home Ownership,anova,3.9170925033610184,0.02038152857948976,0.012186945233225431,small,657.087463392656,baht/month,Owner,Renter,638,Yes
+oral_health,Oral health problems,gender,Gender,chi_square,7.576966886177983,0.022629895364727346,0.1089776291082119,small,19.964932787843367,percentage points,Other,Female,638,Yes
+exercise_status,Exercise frequency,homeowner,Home Ownership,chi_square,14.231537677264942,0.02715402938599236,0.10560891389357861,small,,,,,638,Yes
+psychological_violence,Experienced psychological violence (past 12 months),can_work,Can Work (if disabled),chi_square,4.703590076262604,0.0300996812496523,0.08586267081017292,negligible,5.260156039817056,percentage points,1.0,0.0,638,Yes
+food_insecurity_1,Food insecurity (reduced meals),work_hours_group,Work Hours,chi_square,6.783868762816131,0.03364353448713579,0.20094818040290605,small,20.909090909090907,percentage points,>10 hrs,<8 hrs,168,Yes
+oral_health,Oral health problems,homeowner,Home Ownership,chi_square,6.716936017636099,0.03478851383774215,0.10260659277213802,small,9.486923205064134,percentage points,Renter,Other,638,Yes
+occupation_contract,Has employment contract,gender,Gender,chi_square,6.672686291940565,0.035566782734129304,0.1936156027806528,small,29.84972677595629,percentage points,Other,Female,178,Yes
+training,Participated in training (past 12 months),has_children,Has Children (<5),chi_square,4.318905642452521,0.0376911546985379,0.08227663447569172,negligible,9.193965394777964,percentage points,1,0,638,Yes
+health_expense,Personal health expenses (baht/month),gender,Gender,anova,3.142039779150593,0.043866932593376734,0.009799213419783487,negligible,667.9118163848012,baht/month,Male,Other,638,Yes
+health_expense,Personal health expenses (baht/month),education_group,Education Level,anova,3.1176774946693,0.04493806741300573,0.009723972548959427,negligible,325.68509300497766,baht/month,Low,High,638,Yes
