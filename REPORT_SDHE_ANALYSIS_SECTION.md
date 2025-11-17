@@ -8,13 +8,15 @@
 
 ### 5.1 Population Group Overview
 
-Survey responses (N=6,523) were analyzed across five population groups:
+Survey responses (N=6,523) were analyzed across five **mutually exclusive** population groups using priority classification:
 
-- **General Population**: n=1,315 (20.2%)
-- **Elderly (60+)**: n=2,986 (45.8%)
-- **LGBT+ Community**: n=685 (10.5%)
-- **People with Disabilities**: n=638 (9.8%)
-- **Informal Workers**: n=2,645 (40.5%)
+- **LGBT+ Community**: n=685 (10.5%) - Priority 1
+- **Elderly (60+)**: n=2,964 (45.4%) - Priority 2
+- **People with Disabilities**: n=229 (3.5%) - Priority 3 (working-age, non-LGBT+ disabled only)
+- **Informal Workers**: n=1,330 (20.4%) - Priority 4 (working-age, non-disabled, non-LGBT+ informal workers only)
+- **General Population**: n=1,315 (20.2%) - Everyone else
+
+**Methodology Note:** Groups are mutually exclusive using priority classification. A 65-year-old disabled informal worker is classified as "Elderly" only (highest priority). This ensures each person is counted exactly once, enabling valid statistical comparisons and preventing age/disability/employment effects from being confounded. See ANALYSIS_METHODOLOGY_LOGIC.md for detailed classification rules.
 
 ### 5.2 Significant Health Equity Gaps
 
@@ -568,6 +570,60 @@ Understanding health behavior patterns across population groups reveals how life
 *What the numbers reveal:*
 
 **Smoking Patterns Reveal Vulnerability and Stress (Statistically Significant):** **Statistically significant differences** exist for elderly, disabled, and informal workers (all p < 0.001), but **NOT for LGBT+** (p=0.109). Elderly tend to show the lowest current smoking (8.4% vs 29.1% general, **20.7 pp gap**), with 77.8% never having smoked (cohort effect). Disabled tend to show reduced smoking (16.6%, 12.5 pp lower) but **highest quit rate (22.7%)**, likely suggesting medical cessation. **LGBT+ tend to show the highest current smoking (31.3%)** but the 2.2 pp difference from general population is **NOT statistically significant** (p=0.109), suggesting this elevation may be within normal variation. However, **informal workers show statistically significant and notable regular smoking pattern** (p < 0.001) - while their total current smoking (26.9%) is slightly below general, they have the **HIGHEST regular smoking rate (16.2%)**, 6.2 pp above general's 10.0%. This suggests that informal employment stress may drive not just occasional but habitual daily smoking, potentially reflecting economic stress, lack of workplace smoking restrictions, or coping with precarious employment conditions.
+
+**Deep Dive: Smoking Patterns by Informal Worker Type**
+
+Among 1,945 informal workers in the dataset, smoking behavior varies dramatically by occupation type. Analysis by freelance worker categories reveals that **transport-related informal work shows the highest smoking rates**, while trading and vendor work shows the lowest:
+
+**Smoking Prevalence by Informal Worker Type (Smoke Almost Everyday):**
+
+| Freelance Type | Total Workers | Smoke Almost Everyday | % of Type | Average Age | Avg Cigarettes/Day | % Male |
+|---|---|---|---|---|---|---|
+| **Motorcycle Taxi** | 288 | 96 | **33.3%** | 50.7 | 9.9 | 88.5% |
+| **Rider** | 157 | 50 | **31.8%** | 37.8 | 7.4 | 86.0% |
+| **General Labor** | 555 | 80 | **14.4%** | 51.6 | 7.1 | 81.3% |
+| **Trading** | 743 | 64 | **8.6%** | 53.6 | 7.0 | 53.1% |
+| **Street Vendor** | 144 | 8 | **5.6%** | 39.5 | 7.8 | 100.0% |
+| **Online Seller** | 58 | 3 | **5.2%** | 49.0 | 8.7 | 66.7% |
+| **ALL Informal** | 1,945 | 301 | **15.5%** | 48.9 | 7.9 | 76.1% |
+
+*Note: smoke_status 3 = smoke almost everyday. Percentages show proportion within each worker type who smoke daily.*
+
+**Key Findings:**
+
+1. **Transport Workers Face Extreme Smoking Risk:** Motorcycle taxi drivers (33.3%) and riders (31.8%) show **2-6× higher daily smoking rates** than other informal worker types. Combined, these 445 transport workers account for **48.5% of all informal worker smokers** despite representing only 22.9% of informal workers.
+
+2. **Occupational Stress and Culture:** The extreme smoking prevalence among transport workers likely reflects multiple factors:
+   - **Waiting time stress:** Long periods waiting for customers with limited productive activities
+   - **Masculine workplace culture:** Predominantly male workplaces (86-89%) where smoking is normalized
+   - **Lack of workplace restrictions:** No employer smoking policies in informal transport work
+   - **Economic precarity:** Irregular income and customer dependence create chronic stress
+   - **Age factor:** Older workers (mean age 51 for motorcycle taxi) may have started smoking before health awareness
+
+3. **Motorcycle Taxi Drivers Show Highest Intensity:** Not only do motorcycle taxi drivers have the highest prevalence (33.3%), they also smoke the **most cigarettes per day (9.9)** - 40% more than the informal worker average (7.9). Combined with older age (50.7 years), this group faces compounded health risks from long-term heavy smoking exposure.
+
+4. **Trading/Vendor Work More Protective:** Workers in trading (8.6%) and street vending (5.6%) show smoking rates **3-6× lower** than transport workers, despite similar income levels and informal employment status. This suggests that **occupation type matters more than informality itself** for smoking behavior - potentially due to customer-facing roles requiring cleaner appearance, more gender-diverse workforces (trading is 47% female), or different workplace norms.
+
+5. **Gender Patterns:** The strong male dominance in high-smoking occupations (86-100% male for transport/street vendor) versus more balanced trading sector (53% male) suggests that **gendered occupational segregation concentrates smoking risk** among male-dominated informal jobs.
+
+**Overall Smoking Distribution Among Informal Workers:**
+
+| Smoking Status | Count | % of Informal Workers |
+|---|---|---|
+| Never smoked | 1,268 | 65.2% |
+| Former smoker | 239 | 12.3% |
+| Occasional smoker | 137 | 7.0% |
+| Smoke almost everyday | 301 | **15.5%** |
+
+Among the 301 daily smokers, occupation type distribution shows transport workers' disproportionate burden:
+- Motorcycle Taxi: 96 workers (31.9% of all smokers)
+- General Labor: 80 workers (26.6%)
+- Trading: 64 workers (21.3%)
+- Rider: 50 workers (16.6%)
+- Street Vendor: 8 workers (2.7%)
+- Online Seller: 3 workers (1.0%)
+
+**Policy Implications:** These findings suggest that smoking cessation interventions should **prioritize transport-related informal workers**, particularly motorcycle taxi drivers and delivery riders. Workplace-based interventions effective for formal employment (smoke-free policies, employer programs) are not applicable to informal transport work, requiring alternative approaches such as community-based programs at taxi stands/rider hubs, peer-led cessation support, or mobile health interventions that reach workers during waiting periods. The concentration of smoking risk in specific informal occupations also suggests that **informality alone is insufficient for targeting** - occupation-specific approaches accounting for workplace culture, gender norms, and stress patterns are needed.
 
 **Drinking Status Distribution** (drink_status: 0=never, 1=current, 2=quit; drink_rate if current: 1=regular, 2=occasional):
 

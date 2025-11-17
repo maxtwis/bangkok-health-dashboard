@@ -1,0 +1,119 @@
+================================================================================
+POPULATION SIZE COMPARISON: PRIORITY vs NON-PRIORITY
+================================================================================
+
+Group                Non-Priority    Priority        Difference     
+----------------------------------------------------------------------
+LGBT+                685             685             0              
+Elderly (60+)        2986            2964            22             
+Disabled             638             229             409            
+Informal Workers     2645            1330            1315           
+General              -               1315            -              
+
+================================================================================
+CHECKING REPORT FOR POPULATION SIZE MENTIONS
+================================================================================
+
+Found population size mentions in report:
+
+LGBT+:
+  Unique n values found: [11, 29, 82, 93, 103, 204, 562, 685]
+  Expected if using NON-PRIORITY: 685
+  Expected if using PRIORITY: 685
+  [?] n=103 -> UNKNOWN (doesn't match either method)
+  [?] n=11 -> UNKNOWN (doesn't match either method)
+  [?] n=204 -> UNKNOWN (doesn't match either method)
+  [X] n=685 -> Using NON-PRIORITY method (overlapping groups)
+  [?] n=562 -> UNKNOWN (doesn't match either method)
+  [?] n=82 -> UNKNOWN (doesn't match either method)
+  [?] n=29 -> UNKNOWN (doesn't match either method)
+  [?] n=93 -> UNKNOWN (doesn't match either method)
+  Sample mentions:
+    Line 15: n=685
+    Line 172: n=685
+    Line 185: n=103
+
+Elderly:
+  Unique n values found: [2, 3, 8, 11, 39, 61, 87, 93, 123, 226, 335, 992]
+  Expected if using NON-PRIORITY: 2986
+  Expected if using PRIORITY: 2964
+  [?] n=992 -> UNKNOWN (doesn't match either method)
+  [?] n=2 -> UNKNOWN (doesn't match either method)
+  [?] n=226 -> UNKNOWN (doesn't match either method)
+  [?] n=3 -> UNKNOWN (doesn't match either method)
+  [?] n=39 -> UNKNOWN (doesn't match either method)
+  [?] n=8 -> UNKNOWN (doesn't match either method)
+  [?] n=11 -> UNKNOWN (doesn't match either method)
+  [?] n=335 -> UNKNOWN (doesn't match either method)
+  [?] n=61 -> UNKNOWN (doesn't match either method)
+  [?] n=87 -> UNKNOWN (doesn't match either method)
+  [?] n=123 -> UNKNOWN (doesn't match either method)
+  [?] n=93 -> UNKNOWN (doesn't match either method)
+  Sample mentions:
+    Line 14: n=2
+    Line 120: n=61
+    Line 122: n=87
+
+Disabled:
+  Unique n values found: [3, 17, 24, 29, 39, 61, 77, 78, 87, 93, 113, 123, 152, 175, 204, 335, 638]
+  Expected if using NON-PRIORITY: 638
+  Expected if using PRIORITY: 229
+  [?] n=3 -> UNKNOWN (doesn't match either method)
+  [?] n=39 -> UNKNOWN (doesn't match either method)
+  [?] n=204 -> UNKNOWN (doesn't match either method)
+  [?] n=77 -> UNKNOWN (doesn't match either method)
+  [?] n=78 -> UNKNOWN (doesn't match either method)
+  [?] n=175 -> UNKNOWN (doesn't match either method)
+  [?] n=335 -> UNKNOWN (doesn't match either method)
+  [?] n=17 -> UNKNOWN (doesn't match either method)
+  [?] n=113 -> UNKNOWN (doesn't match either method)
+  [?] n=29 -> UNKNOWN (doesn't match either method)
+  [?] n=93 -> UNKNOWN (doesn't match either method)
+  [?] n=87 -> UNKNOWN (doesn't match either method)
+  [?] n=152 -> UNKNOWN (doesn't match either method)
+  [?] n=24 -> UNKNOWN (doesn't match either method)
+  [?] n=123 -> UNKNOWN (doesn't match either method)
+  [?] n=61 -> UNKNOWN (doesn't match either method)
+  [X] n=638 -> Using NON-PRIORITY method (overlapping groups)
+  Sample mentions:
+    Line 120: n=61
+    Line 122: n=87
+    Line 140: n=638
+
+Informal Workers:
+  Unique n values found: [2, 17, 54, 86, 93, 204, 744, 992]
+  Expected if using NON-PRIORITY: 2645
+  Expected if using PRIORITY: 1330
+  [?] n=992 -> UNKNOWN (doesn't match either method)
+  [?] n=2 -> UNKNOWN (doesn't match either method)
+  [?] n=744 -> UNKNOWN (doesn't match either method)
+  [?] n=204 -> UNKNOWN (doesn't match either method)
+  [?] n=17 -> UNKNOWN (doesn't match either method)
+  [?] n=86 -> UNKNOWN (doesn't match either method)
+  [?] n=54 -> UNKNOWN (doesn't match either method)
+  [?] n=93 -> UNKNOWN (doesn't match either method)
+  Sample mentions:
+    Line 17: n=2
+    Line 171: n=2
+    Line 458: n=744
+
+General Population:
+  Unique n values found: [1, 24, 123]
+  Sample mentions:
+    Line 13: n=1
+    Line 460: n=1
+    Line 478: n=1
+
+================================================================================
+SECTION-BY-SECTION ANALYSIS
+================================================================================
+
+Tables with population groups and n values:
+
+Traceback (most recent call last):
+  File "c:\Users\ion_l_uhhlu4p.MAXTWIS\bangkok-health-dashboard\check_methodology_consistency.py", line 156, in <module>
+    print(f"Line {table['line']}: {table['group']} \u2192 n={table['n']}")
+  File "C:\Users\ion_l_uhhlu4p.MAXTWIS\AppData\Local\Programs\Python\Python311\Lib\encodings\cp874.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 18: character maps to <undefined>
