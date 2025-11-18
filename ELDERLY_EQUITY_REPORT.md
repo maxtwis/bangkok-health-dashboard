@@ -284,47 +284,118 @@ This report examines **equity within the elderly population** by comparing healt
 
 ## Domain 3: Health Behaviors
 
-### Finding 3.1: Education Strongly Predicts Exercise Habits 
+### Finding 3.1: Education Strongly Predicts Exercise Habits
 
-**Outcome:** Exercise frequency (0=none, 1≤3/week, 2=3-4/week, 3≥5/week)
+**Outcome:** Exercise frequency (0=none, 1=1-3 days/week, 2=3-4 days/week, 3=5+ days/week)
 
 **Statistical Test:** Chi-square = 100.5, p < 0.001, Cramer's V = 0.13 (small effect)
 
-**Interpretation:**
-- High-education elderly exercise significantly more than low-education
-- Education reflects health literacy and access to facilities (gyms, parks)
-- Low-education elderly may work physical jobs (counts as "exercise" but not measured here)
+**Results by Education Level:**
 
-**Policy Implication:** Free community exercise programs in low-income neighborhoods. Health education campaigns.
+| Education Level | No Exercise | 1-3 days/week | 3-4 days/week | 5+ days/week | Total |
+|-----------------|------------:|--------------:|--------------:|-------------:|------:|
+| **Low** | **57.1%** (1,039/1,821) | 26.2% (477) | 8.6% (156) | 8.2% (149) | 1,821 |
+| **Middle** | 48.1% (186/387) | 27.6% (107) | 14.7% (57) | 9.6% (37) | 387 |
+| **High** | **37.0%** (288/778) | 33.8% (263) | 15.2% (118) | 14.0% (109) | 778 |
+
+**Equity Gap:** 20.1 percentage points in "No Exercise" (Low vs High)
+
+**Interpretation:**
+- Low-education elderly are **1.5 times more likely** to not exercise at all compared to high-education (57.1% vs 37.0%)
+- High-education elderly exercise regularly (5+ days/week) at **1.7x the rate** of low-education (14.0% vs 8.2%)
+- Education reflects health literacy and access to facilities (gyms, parks, safe walking areas)
+- Low-education elderly may work physical jobs (counts as "exercise" but not captured in leisure exercise measure)
+
+**Policy Implication:** Free community exercise programs in low-income neighborhoods. Health education campaigns targeting low-education populations.
 
 ---
 
-### Finding 3.2: Disability Reduces Exercise 2.3x 
+### Finding 3.2: Disability Reduces Exercise 2.3x
 
-**Outcome:** Exercise frequency
+**Outcome:** Exercise frequency (0=none, 1=1-3 days/week, 2=3-4 days/week, 3=5+ days/week)
 
 **Statistical Test:** Chi-square = 86.5, p < 0.001, Cramer's V = 0.17 (small-to-medium effect)
 
-**Interpretation:**
-- Disabled elderly exercise far less (limited mobility, pain, lack of accessible facilities)
-- Exercise could help manage chronic diseases, but disability creates barrier
+**Results by Disability Status:**
 
-**Policy Implication:** Adaptive exercise programs for disabled elderly. Accessible parks/facilities.
+| Disability Status | No Exercise | 1-3 days/week | 3-4 days/week | 5+ days/week | Total |
+|-------------------|------------:|--------------:|--------------:|-------------:|------:|
+| **Disabled** | **72.6%** (276/380) | 18.2% (69) | 5.5% (21) | 3.7% (14) | 380 |
+| **Non-disabled** | **47.5%** (1,237/2,606) | 29.9% (778) | 11.9% (310) | 10.8% (281) | 2,606 |
+
+**Equity Gap:** 25.1 percentage points in "No Exercise" (Disabled vs Non-disabled)
+
+**Interpretation:**
+- Disabled elderly are **1.5 times more likely** to not exercise at all (72.6% vs 47.5%)
+- Non-disabled elderly exercise regularly (5+ days/week) at **2.9x the rate** of disabled elderly (10.8% vs 3.7%)
+- Disabled elderly face multiple barriers: limited mobility, chronic pain, lack of accessible facilities, fear of injury
+- Exercise could help manage chronic diseases and maintain independence, but disability creates significant barriers
+
+**Policy Implication:**
+- Develop adaptive exercise programs specifically for disabled elderly (seated exercises, water aerobics, gentle stretching)
+- Make parks and public spaces wheelchair accessible
+- Provide transportation to exercise facilities for disabled elderly
+- Train community health workers in disability-adapted exercise coaching
 
 ---
 
-### Finding 3.3: Working Elderly Smoke 50% More 
+### Finding 3.3: Working Elderly Smoke 2.6x More (Regular Smokers)
 
-**Outcome:** Smoking status (0=never, 1=quit, 2=occasional, 3=regular)
+**Outcome:** Smoking status (0=never smoked, 1=quit smoking, 2=occasional smoker, 3=regular smoker)
 
 **Statistical Test:** Chi-square = 53.9, p < 0.001, Cramer's V = 0.13 (small effect)
 
-**Interpretation:**
-- Working elderly smoke more than retired elderly
-- Informal work (construction, manufacturing) has high smoking culture
-- Stress of continued work in old age may drive smoking
+**Results by Working Status:**
 
-**Policy Implication:** Workplace smoking cessation programs for elderly workers.
+| Working Status | Never Smoked | Quit Smoking | Occasional | Regular Smoker | Total |
+|----------------|-------------:|-------------:|-----------:|---------------:|------:|
+| **Working** | **75.4%** (865/1,147) | 11.6% (133) | 3.4% (39) | **9.6%** (110) | 1,147 |
+| **Not Working** | **79.0%** (1,453/1,839) | 15.2% (280) | 2.1% (38) | **3.7%** (68) | 1,839 |
+
+**Equity Gap:** 5.9 percentage points in "Regular Smoker" (Working vs Not Working)
+
+**Interpretation:**
+- Working elderly have **2.6x higher regular smoking rate** than non-working elderly (9.6% vs 3.7%)
+- Working elderly less likely to have quit smoking (11.6% vs 15.2%)
+- This pattern may reflect:
+  - **Occupational culture:** Informal work sectors (construction, manufacturing, delivery) have high smoking prevalence
+  - **Work stress:** Continued work in old age due to financial necessity creates stress, driving smoking
+  - **Peer influence:** Working environments normalize smoking behavior
+  - **Selection effect:** Healthier smokers can continue working, while sick smokers forced to retire
+- Non-working elderly have higher quit rates, possibly due to health warnings from doctors or forced cessation due to illness
+
+**Breakdown by Occupation Type (Working Elderly Only, n=1,146):**
+
+| Occupation Type | Never Smoked | Quit | Occasional | Regular Smoker | Total |
+|-----------------|-------------:|-----:|-----------:|---------------:|------:|
+| **Company/Staff** | 75.5% (74/98) | 6.1% (6) | 6.1% (6) | **12.2%** (12) | 98 |
+| **Informal/Freelance** | 75.3% (636/845) | 11.6% (98) | 3.1% (26) | **10.1%** (85) | 845 |
+| **Other** | 72.6% (69/95) | 13.7% (13) | 4.2% (4) | **9.5%** (9) | 95 |
+| **Private Business** | 81.4% (79/97) | 12.4% (12) | 2.1% (2) | **4.1%** (4) | 97 |
+| **Government** | 57.1% (4/7) | 42.9% (3) | 0.0% (0) | **0.0%** (0) | 7 |
+| **State Enterprise** | 75.0% (3/4) | 0.0% (0) | 25.0% (1) | **0.0%** (0) | 4 |
+
+**Key Occupation Findings:**
+- **Company/Staff workers** have the highest regular smoking rate (12.2%), which is **3.0x higher** than private business owners (4.1%)
+- **Informal/Freelance workers** (n=845, 73.7% of working elderly) have 10.1% regular smoking rate
+- **Private business owners** have the lowest smoking rate (4.1%) - likely due to higher income and autonomy
+- **Government workers** show high quit rates (42.9%), suggesting successful public sector health interventions
+- Small sample sizes for government (n=7) and state enterprise (n=4) limit interpretation
+
+**Occupational Analysis:**
+- **Informal/freelance sector** dominates elderly employment (73.7% of working elderly)
+- This sector includes: general labor (construction, cleaning, agriculture, transport), street vendors, merchants, riders, motorcycle taxis, online sellers
+- High-stress, physically demanding jobs with smoking as coping mechanism
+- Company/staff workers face workplace stress but may have better access to smoking cessation programs
+- Private business owners have more control over work environment, lower stress
+
+**Policy Implication:**
+- **Priority target:** Informal/freelance workers (845 elderly, 10.1% smoke regularly = 85 smokers)
+- Implement workplace smoking cessation programs at construction sites, markets, transportation hubs
+- Provide free nicotine replacement therapy (patches, gum) at community health centers near informal work areas
+- Train community health workers to deliver smoking cessation counseling in Thai language
+- Address work-related stress through better working conditions, income support, and occupational health protections
+- Leverage success of government sector quit programs for informal sector adaptation
 
 ---
 
@@ -616,10 +687,32 @@ This report examines **equity within the elderly population** by comparing healt
 
 **Equity Gap:** 4,896 baht/month (High vs Low)
 
+**Occupation Type Distribution by Education Level:**
+
+| Education Level | Informal/Freelance | Private Employee | Agriculture | Government/State | Total |
+|-----------------|-------------------:|-----------------:|------------:|-----------------:|------:|
+| **Low (Primary or less)** | **94.9%** (56) | 3.4% (2) | 1.7% (1) | 0.0% (0) | 59 |
+| **Middle (Secondary)** | **87.9%** (473) | 6.1% (33) | 5.9% (32) | 0.0% (0) | 538 |
+| **High (Bachelor+)** | **81.4%** (127) | 7.7% (12) | 9.6% (15) | 1.3% (2) | 156 |
+
+**Median Income by Education and Occupation Type** (working elderly only):
+
+| Education Level | Informal/Freelance (Median) | Private Employee (Median) | Agriculture (Median) |
+|-----------------|----------------------------:|--------------------------:|---------------------:|
+| **Low (Primary or less)** | **9,000 baht/month** (n=39) | Insufficient data (n=2) | Insufficient data (n=1) |
+| **Middle (Secondary)** | **12,000 baht/month** (n=363) | 12,000 baht (n=22) | 10,500 baht (n=26) |
+| **High (Bachelor+)** | **12,750 baht/month** (n=96) | 12,000 baht (n=7) | 12,000 baht (n=12) |
+
+*Note: Values shown are median monthly income, calculated using daily income × 30 for daily workers, monthly income as-is for monthly workers.*
+
 **Interpretation:**
 - High-education elderly earn **37% more** than low-education (18,257 vs 13,361 baht)
 - Education returns persist into old age
-- Low-education elderly trapped in low-wage informal work
+- **Low-education elderly trapped in low-wage informal work:** 94.9% work informal/freelance jobs earning median 9,000 baht/month
+- Even middle (87.9%) and high-education (81.4%) elderly face informal work concentration, though they earn slightly more (12,000-12,750 baht/month)
+- Education provides modest income advantage within informal work: Low-education informal workers earn 9,000 baht vs High-education informal workers earn 12,750 baht (+42%)
+- Formal employment (private companies) provides similar income (12,000 baht/month) but only accessible to 3-8% of elderly workers
+- Agriculture and informal work dominate elderly employment regardless of education, with minimal access to stable formal sector jobs
 
 ---
 

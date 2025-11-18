@@ -257,6 +257,34 @@ Disabled individuals who CANNOT work have **chronic disease rates 1.4 times high
 3. **Prevent work exit**: Provide intensive disease management and workplace accommodations to prevent disabled workers with chronic disease from being forced to stop working
 4. **Recognize medical complexity**: Design disability support programs recognizing that most disabled individuals unable to work face MULTIPLE medical conditions requiring comprehensive support
 
+
+### Finding 3.4: Skip Medical Care by Income Level - 16.2pp Gap (Not Significant)
+
+**Statistical Test:** Chi-square = 2.5, p = 0.287, Cramer's V = 0.13 (not significant, small sample)
+
+**Results:**
+
+| Income Level | Skip Medical Care Rate | Sample Size |
+|--------------|------------------------|-------------|
+| **Low (<10,500 baht)** | **38.9%** (14 out of 36) | 36 |
+| **High (>15,000 baht)** | **29.2%** (21 out of 72) | 72 |
+| **Middle (10,500-15,000 baht)** | **22.7%** (10 out of 44) | 44 |
+
+**Equity Gap:** 16.2 percentage points (Low vs Middle)
+
+**Interpretation:**
+While not statistically significant (p=0.287), descriptive patterns suggest low-income disabled individuals skip medical care at higher rates (38.9%) than middle-income (22.7%) and high-income (29.2%) disabled individuals. Nearly **2 in 5 low-income disabled individuals** forgo needed medical care due to cost, despite likely having the highest medical needs given their disability. The 16.2 percentage point gap, though not reaching statistical significance in this small sample (n=152), aligns with expected income-health access gradients.
+
+The lack of statistical significance likely reflects **small sample size** (only 152 disabled individuals with both income and medical skip data) rather than absence of true disparity. Disabled individuals who work (and thus have income data) represent only 24% of disabled population - the remaining 76% who cannot work have no income data but likely face even worse healthcare access barriers.
+
+**The non-significant finding is still concerning** because: (1) absolute rate of 38.9% medical skipping among low-income disabled is alarmingly high; (2) disabled individuals have higher medical needs making healthcare skipping more harmful; (3) the pattern direction (low-income skip more) matches expectations and other populations' findings; (4) the 76% of disabled individuals unable to work (with no income data) likely face even worse access.
+
+**Policy Implication:**
+1. **Income-targeted healthcare subsidies**: Provide 1,000 baht/month healthcare vouchers to low-income disabled individuals (38.9% skip rate) covering medications, transportation, and out-of-pocket costs
+2. **Universal disability healthcare**: Ensure ALL disabled individuals receive free comprehensive healthcare regardless of income or employment status - Thailand's 30-baht scheme should fully cover disability-related care
+3. **Address non-working disabled**: Recognize that 76% of disabled individuals without income data (cannot work) likely face catastrophic healthcare access barriers - provide free care for all non-working disabled
+4. **Expand disability benefits**: Increase disability allowance from current 800-1,000 baht/month to 3,000 baht/month minimum to ensure disabled individuals can afford both basic needs AND healthcare
+
 ---
 
 ## Domain 4: Employment Equity Within Disabled Population
@@ -416,6 +444,105 @@ Young disabled individuals participate in training at **5.2 times the rate** of 
 2. **Targeted outreach**: Actively recruit disabled individuals into training programs rather than passively waiting for them to enroll
 3. **Elderly disabled education**: Create training specifically for elderly disabled individuals building on their experience while accommodating age and disability
 4. **Disability-specific skills**: Offer training in skills particularly suited to disabled individuals' capabilities and labor market opportunities
+
+---
+
+## Domain 7: Health Behaviors
+
+
+### Finding 7.1: Regular Exercise - 45% Lower for Disabled
+
+**Statistical Test:** Chi-square = 70.8, p < 0.001, Cramer's V = 0.10 (small effect)
+
+**Results:**
+
+**Disabled:** 13.6% (87 out of 638)
+**Non-Disabled:** 24.8% (1,461 out of 5,885)
+**Gap:** -11.2 percentage points
+
+**Interpretation:**
+Disabled individuals exercise regularly (3+ times/week) at **45% lower rate** than non-disabled individuals (13.6% vs 24.8%). Only **1 in 7 disabled individuals** exercise regularly - far below the already-low general population rate. This 11.2 percentage point gap reveals severe **physical activity exclusion** for disabled individuals. Barriers include: (1) inaccessible facilities - gyms, parks, sports facilities lack ramps, adaptive equipment, accessible bathrooms; (2) cost barriers - adaptive sports equipment and specialized programs are expensive; (3) medical limitations - some disabilities limit physical capacity; (4) discrimination - disabled individuals face stigma in fitness spaces; (5) lack of information - disabled individuals may not know about adapted exercise options; (6) transportation - reaching exercise facilities is harder for disabled individuals.
+
+The extremely low 13.6% exercise rate means **86% of disabled individuals do NOT exercise regularly**, creating cascading health risks - obesity, cardiovascular disease, diabetes, depression. Physical activity is critical for disabled individuals' health and independence, yet accessibility barriers create near-universal exclusion.
+
+**Policy Implication:**
+1. **Accessible facilities**: Mandate all gyms, parks, and recreation facilities be fully accessible (ramps, elevators, accessible equipment, changing rooms) with enforcement
+2. **Subsidized adaptive programs**: Provide free adaptive sports programs (wheelchair basketball, adaptive yoga, swimming) specifically for disabled individuals
+3. **Home exercise support**: Provide free home exercise equipment and virtual coaching for disabled individuals unable to access facilities due to mobility or transportation barriers
+4. **Inclusive fitness culture**: Train fitness professionals on disability inclusion and adaptive techniques; create disability-affirming fitness environments
+
+
+### Finding 7.2: Regular Exercise by Age - 15.4pp Gap Within Disabled
+
+**Statistical Test:** Chi-square = 17.7, p = 0.001, Cramer's V = 0.17 (small effect)
+
+**Results:**
+
+| Age Group | Regular Exercise Rate | Sample Size |
+|-----------|----------------------|-------------|
+| **15-29** | **24.6%** (16 out of 65) | 65 |
+| **30-44** | **20.7%** (19 out of 92) | 92 |
+| **45-59** | **16.8%** (17 out of 101) | 101 |
+| **60+** | **9.2%** (35 out of 380) | 380 |
+
+**Equity Gap:** 15.4 percentage points (Youth vs Elderly)
+
+**Interpretation:**
+Within the disabled population, exercise rates decline dramatically with age - from 24.6% among youth (15-29) to 9.2% among elderly (60+), a 15.4 percentage point gap. While youth disabled individuals exercise at nearly 1 in 4, elderly disabled individuals exercise at less than 1 in 10. This age gradient is **steeper than general population**, suggesting that aging PLUS disability creates compounded barriers to physical activity.
+
+The decline likely reflects: (1) accumulated disability severity - disabilities worsen with age limiting capacity; (2) multiple conditions - elderly disabled individuals have 92% chronic disease rate (Finding 3.1) creating medical exercise barriers; (3) cohort effects - older generations less likely to view exercise as essential; (4) lost social connections - elderly disabled individuals more isolated reducing group exercise opportunities; (5) greater mobility limitations - elderly disabled individuals have more severe mobility impairments preventing facility access.
+
+The 9.2% exercise rate among elderly disabled individuals represents near-total physical inactivity for this population, accelerating functional decline, frailty, and loss of independence. Physical activity is precisely what elderly disabled individuals need most to maintain function and independence, yet accessibility barriers create near-universal exclusion.
+
+**Policy Implication:**
+1. **Elderly disabled exercise programs**: Create specialized low-impact exercise programs (chair yoga, water aerobics, tai chi) specifically for elderly disabled individuals accommodating multiple conditions
+2. **Home-based programs**: Deploy home health workers providing in-home exercise coaching for elderly disabled individuals unable to leave home
+3. **Social exercise groups**: Organize walking groups, exercise classes, and social sports specifically for elderly disabled individuals reducing isolation while promoting activity
+4. **Medical integration**: Integrate exercise prescription into chronic disease management for elderly disabled individuals - make physical activity part of routine medical care
+
+
+### Finding 7.3: Alcohol Drinking - 44% Lower for Disabled
+
+**Statistical Test:** Chi-square = 96.4, p < 0.001, Cramer's V = 0.12 (small effect)
+
+**Results:**
+
+**Disabled:** 17.7% (113 out of 638)
+**Non-Disabled:** 31.7% (1,867 out of 5,885)
+**Gap:** -14.0 percentage points
+
+**Interpretation:**
+Disabled individuals drink alcohol at **44% lower rate** than non-disabled individuals (17.7% vs 31.7%). Less than **1 in 5 disabled individuals** currently drinks, compared to nearly **1 in 3** non-disabled individuals. This 14.0 percentage point gap represents a POSITIVE health behavior disparity - disabled individuals exhibit healthier alcohol behavior. Possible explanations: (1) medication interactions - many disabled individuals take medications contraindicated with alcohol; (2) medical awareness - disabled individuals more aware of health risks due to regular medical contact; (3) economic constraints - disabled individuals have lower incomes limiting alcohol spending; (4) social exclusion - disabled individuals less likely to access social drinking venues (bars, clubs) due to inaccessibility; (5) elderly concentration - disabled population skews elderly (59% age 60+) and elderly drink less.
+
+While the gap is POSITIVE for health, it may partially reflect **social exclusion** - disabled individuals not drinking because they can't access social spaces where drinking occurs, rather than conscious health choice. However, the low drinking rate still benefits disabled individuals' health outcomes regardless of underlying cause.
+
+**Policy Implication:**
+1. **Maintain low rates**: Recognize disabled individuals' low drinking rate as protective health factor - don't inadvertently increase access without health education
+2. **Alcohol-free social spaces**: Create accessible social and recreation spaces that don't center on alcohol, supporting disabled individuals' healthier drinking patterns
+3. **Medication education**: Continue educating disabled individuals about alcohol-medication interactions as part of routine medical care
+4. **Address social isolation**: Increase disabled individuals' social connections through alcohol-free community programs, reducing isolation without increasing drinking
+
+
+### Finding 7.4: Smoking - 40% Lower for Disabled
+
+**Statistical Test:** Chi-square = 32.6, p < 0.001, Cramer's V = 0.07 (negligible effect)
+
+**Results:**
+
+**Disabled:** 11.9% (76 out of 638)
+**Non-Disabled:** 19.8% (1,166 out of 5,885)
+**Gap:** -7.9 percentage points
+
+**Interpretation:**
+Disabled individuals smoke at **40% lower rate** than non-disabled individuals (11.9% vs 19.8%). Approximately **1 in 8 disabled individuals** smokes, compared to **1 in 5** non-disabled individuals. This 7.9 percentage point gap represents another POSITIVE health behavior disparity. Possible explanations: (1) respiratory concerns - many disabilities affect breathing making smoking more harmful and painful; (2) medical advice - disabled individuals receive more intensive medical counseling about smoking due to frequent healthcare contact; (3) medication interactions - smoking interacts with many disability medications; (4) economic constraints - disabled individuals have lower incomes limiting tobacco spending; (5) elderly concentration - disabled population skews elderly (59% age 60+) and elderly smoke less; (6) physical limitations - some disabilities make physical act of smoking difficult.
+
+While the 11.9% smoking rate is POSITIVE relative to non-disabled population, **it's still concerningly high** given disabled individuals' already-elevated health risks. Smoking compounds disability-related health problems, accelerates functional decline, and increases cardiovascular and respiratory disease risk. The finding suggests disability healthcare provides effective smoking prevention/cessation, but 12% smoking rate means 1 in 8 disabled individuals still face tobacco-related health harm.
+
+**Policy Implication:**
+1. **Maintain smoking prevention**: Continue strong smoking prevention in disability healthcare - the 12% rate shows current medical counseling is working
+2. **Target remaining smokers**: Provide intensive smoking cessation support for the 12% of disabled individuals who smoke, recognizing they face compounded health risks
+3. **Accessible cessation programs**: Ensure smoking cessation programs are fully accessible to disabled individuals (physical access, sign language, materials in accessible formats)
+4. **Address stress-smoking**: Provide mental health support and stress management for disabled individuals using smoking to cope with disability-related stress and discrimination
 
 ---
 
