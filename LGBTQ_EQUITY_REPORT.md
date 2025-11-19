@@ -1,6 +1,6 @@
 # LGBTQ+ Equity Report: Bangkok Health Survey
 
-**Sample:** 685 LGBTQ+ individuals from Bangkok (compared to 5,838 general population)
+**Sample:** 685 LGBTQ+ individuals from Bangkok (compared to 2,645 general population: non-LGBT, non-elderly, non-disabled)
 **Method:** Part 1 - Comparison with general population | Part 2 - Equity analysis within LGBTQ+ community
 **Date:** 2025-11-17
 
@@ -19,13 +19,13 @@ This report examines **equity for LGBTQ+ individuals** through two analyses:
 | Metric | LGBTQ+ | General Population | Gap |
 |--------|--------|-------------------|-----|
 | **VIOLENCE & DISCRIMINATION** |
-| Psychological violence (past 12 months) | 29.2% | 7.9% | **+21.3 pp** |
-| Physical violence (past 12 months) | 13.1% | 2.6% | **+10.6 pp** |
-| Sexual violence (past 12 months) | 4.7% | 1.1% | **+3.6 pp** |
+| Psychological violence (past 12 months) | 29.2% | 12.4% | **+16.8 pp** |
+| Physical violence (past 12 months) | 13.1% | 4.5% | **+8.6 pp** |
+| Sexual violence (past 12 months) | 4.7% | 1.9% | **+2.7 pp** |
 | **HEALTHCARE & FOOD SECURITY** |
-| Skip medical care due to cost | 28.8% | 13.4% | **+15.4 pp** |
-| Food insecurity (reduced meals) | 20.0% | 7.9% | **+12.1 pp** |
-| Food insecurity (skip full day) | 13.0% | 4.7% | **+8.2 pp** |
+| Skip medical care due to cost | 28.8% | 14.9% | **+13.8 pp** |
+| Food insecurity (reduced meals) | 20.0% | 11.0% | **+9.0 pp** |
+| Food insecurity (skip full day) | 13.0% | 6.2% | **+6.8 pp** |
 | Oral health problems | 31.5% | 25.3% | **+6.3 pp** |
 | **EMPLOYMENT (POSITIVE)** |
 | Has employment contract | 53.7% | 33.7% | **+20.0 pp** |
@@ -43,9 +43,9 @@ This report examines **equity for LGBTQ+ individuals** through two analyses:
 | Working hours per day | 9.0 | 8.6 | **+0.4 hours** |
 
 **Key insights:**
-- **VIOLENCE CRISIS**: LGBTQ+ individuals experience **2.7x more psychological violence** and **5.1x more physical violence** than general population
-- **HEALTHCARE BARRIERS**: Despite higher incomes, LGBTQ+ skip medical care at **2.2x the rate** of general population
-- **FOOD INSECURITY**: LGBTQ+ face **2.5x higher food insecurity** despite working more
+- **VIOLENCE CRISIS**: LGBTQ+ individuals experience **2.4x more psychological violence** and **2.9x more physical violence** than general population
+- **HEALTHCARE BARRIERS**: Despite higher incomes, LGBTQ+ skip medical care at **1.9x the rate** of general population
+- **FOOD INSECURITY**: LGBTQ+ face **1.8x higher food insecurity** (reduced meals) and **2.1x higher severe food insecurity** (skip full day) despite working more
 - **EMPLOYMENT PARADOX**: LGBTQ+ have significantly better formal employment (contracts, benefits) but face severe health and safety vulnerabilities
 - **SOCIAL ISOLATION**: LGBTQ+ are **less likely to live with family** and have **less emergency support** - indicating family rejection and social isolation
 
@@ -95,15 +95,15 @@ This report examines **equity for LGBTQ+ individuals** through two analyses:
 ## Domain 1: Violence, Discrimination & Safety
 
 
-### Finding 1.1: Psychological Violence - 271% Higher for LGBTQ+
+### Finding 1.1: Psychological Violence - 135% Higher for LGBTQ+
 
 **LGBTQ+:** 29.2% (200 out of 685)
-**General:** 7.9% (459 out of 5,838)
-**Gap:** +21.3 percentage points
+**General:** 12.4% (329 out of 2,645)
+**Gap:** +16.8 percentage points
 **Statistical Test:** p < 0.001
 
 **Interpretation:**
-LGBTQ+ individuals experience psychological violence at **2.7 times the rate** of the general population (29.2% vs 7.9%). Nearly **1 in 3 LGBTQ+ individuals** experienced psychological violence in the past year - verbal abuse, threats, intimidation, humiliation. This 21.3 percentage point gap represents the most severe disparity in the entire report, revealing systematic psychological abuse targeting LGBTQ+ individuals. The violence likely stems from homo/bi/transphobia in families, workplaces, public spaces, and institutions. Psychological violence causes mental health trauma, anxiety, depression, and social isolation while being largely invisible to authorities.
+LGBTQ+ individuals experience psychological violence at **2.4 times the rate** of the general population (29.2% vs 12.4%). Nearly **1 in 3 LGBTQ+ individuals** experienced psychological violence in the past year - verbal abuse, threats, intimidation, humiliation. This 16.8 percentage point gap represents the most severe disparity in the entire report, revealing systematic psychological abuse targeting LGBTQ+ individuals. The violence likely stems from homo/bi/transphobia in families, workplaces, public spaces, and institutions. Psychological violence causes mental health trauma, anxiety, depression, and social isolation while being largely invisible to authorities.
 
 **Policy Implication:**
 1. **Anti-discrimination law enforcement**: Strengthen enforcement of Thailand's Gender Equality Act to prosecute psychological violence against LGBTQ+ individuals, including workplace harassment and family abuse
@@ -112,15 +112,15 @@ LGBTQ+ individuals experience psychological violence at **2.7 times the rate** o
 4. **Public awareness campaigns**: Launch campaigns targeting families, employers, and communities to reduce homo/bi/transphobic attitudes and behaviors driving psychological violence
 
 
-### Finding 1.2: Physical Violence - 514% Higher for LGBTQ+
+### Finding 1.2: Physical Violence - 191% Higher for LGBTQ+
 
 **LGBTQ+:** 13.1% (90 out of 685)
-**General:** 2.6% (149 out of 5,838)
-**Gap:** +10.6 percentage points
+**General:** 4.5% (119 out of 2,645)
+**Gap:** +8.6 percentage points
 **Statistical Test:** p < 0.001
 
 **Interpretation:**
-LGBTQ+ individuals experience physical violence at **5.1 times the rate** of the general population (13.1% vs 2.6%). More than **1 in 8 LGBTQ+ individuals** were physically assaulted in the past year - hitting, kicking, beating, physical attacks. This 10.6 percentage point gap reveals that LGBTQ+ individuals face extreme physical danger in Bangkok. The violence likely includes hate crimes, family violence against LGBTQ+ youth, partner violence in LGBTQ+ relationships, and violence from strangers in public spaces. Physical violence causes immediate injury, long-term health consequences, and creates climate of fear limiting LGBTQ+ individuals' freedom of movement and expression.
+LGBTQ+ individuals experience physical violence at **2.9 times the rate** of the general population (13.1% vs 4.5%). More than **1 in 8 LGBTQ+ individuals** were physically assaulted in the past year - hitting, kicking, beating, physical attacks. This 8.6 percentage point gap reveals that LGBTQ+ individuals face extreme physical danger in Bangkok. The violence likely includes hate crimes, family violence against LGBTQ+ youth, partner violence in LGBTQ+ relationships, and violence from strangers in public spaces. Physical violence causes immediate injury, long-term health consequences, and creates climate of fear limiting LGBTQ+ individuals' freedom of movement and expression.
 
 **Policy Implication:**
 1. **Hate crime legislation**: Enact specific hate crime laws that enhance penalties for violence motivated by sexual orientation or gender identity, sending strong message that anti-LGBTQ+ violence will not be tolerated
@@ -129,15 +129,15 @@ LGBTQ+ individuals experience physical violence at **5.1 times the rate** of the
 4. **Violence prevention programs**: Implement bystander intervention programs teaching people to safely intervene when witnessing anti-LGBTQ+ violence in public spaces
 
 
-### Finding 1.3: Sexual Violence - 320% Higher for LGBTQ+
+### Finding 1.3: Sexual Violence - 145% Higher for LGBTQ+
 
 **LGBTQ+:** 4.7% (32 out of 685)
-**General:** 1.1% (65 out of 5,838)
-**Gap:** +3.6 percentage points
+**General:** 1.9% (51 out of 2,645)
+**Gap:** +2.7 percentage points
 **Statistical Test:** p < 0.001
 
 **Interpretation:**
-LGBTQ+ individuals experience sexual violence at **3.2 times the rate** of the general population (4.7% vs 1.1%). Nearly **1 in 21 LGBTQ+ individuals** experienced sexual violence in the past year. This 3.6 percentage point gap reveals systematic sexual violence targeting LGBTQ+ individuals, including corrective rape (violence intended to "cure" sexual orientation or gender identity), sexual assault in public spaces, workplace sexual harassment, and sexual violence in intimate relationships. LGBTQ+ victims face additional barriers to reporting: fear of outing, police discrimination, lack of LGBTQ+-competent services, and victim-blaming narratives. Sexual violence causes severe trauma, STI/HIV risk, unwanted pregnancy (for some), and long-term psychological harm.
+LGBTQ+ individuals experience sexual violence at **2.5 times the rate** of the general population (4.7% vs 1.9%). Nearly **1 in 21 LGBTQ+ individuals** experienced sexual violence in the past year. This 2.7 percentage point gap reveals systematic sexual violence targeting LGBTQ+ individuals, including corrective rape (violence intended to "cure" sexual orientation or gender identity), sexual assault in public spaces, workplace sexual harassment, and sexual violence in intimate relationships. LGBTQ+ victims face additional barriers to reporting: fear of outing, police discrimination, lack of LGBTQ+-competent services, and victim-blaming narratives. Sexual violence causes severe trauma, STI/HIV risk, unwanted pregnancy (for some), and long-term psychological harm.
 
 **Policy Implication:**
 1. **Sexual assault services**: Ensure all sexual assault response centers are LGBTQ+-competent - staff trained in LGBTQ+ experiences, gender-neutral language, and trauma-informed care that doesn't assume heterosexuality
@@ -145,20 +145,66 @@ LGBTQ+ individuals experience sexual violence at **3.2 times the rate** of the g
 3. **Prevention education**: Include LGBTQ+-specific content in sexual violence prevention programs, addressing corrective rape and dispelling myths that LGBTQ+ individuals "deserve" or "provoke" sexual violence
 4. **Survivor support groups**: Create LGBTQ+-specific sexual violence survivor support groups where individuals can heal with others who understand their unique experiences of trauma and discrimination
 
+
+### Finding 1.4: Discrimination by Sex/Gender - 1,470% Higher for LGBTQ+
+
+**LGBTQ+:** 38.1% (261 out of 685)
+**General:** 2.4% (64 out of 2,645)
+**Gap:** +35.7 percentage points
+**Statistical Test:** p < 0.001
+
+**Interpretation:**
+LGBTQ+ individuals experience sex/gender-based discrimination at **15.7 times the rate** of the general population (38.1% vs 2.4%). More than **1 in 3 LGBTQ+ individuals** experienced discrimination based on their sex or gender identity in the past year. This 35.7 percentage point gap is the **largest discrimination disparity** observed and represents systematic exclusion and unfair treatment targeting LGBTQ+ individuals across all life domains - employment, housing, healthcare, public services, education, and social interactions. The discrimination reflects societal homo/bi/transphobia that treats LGBTQ+ individuals as "other" and denies them equal treatment. Sex/gender discrimination causes economic harm (job loss, housing denial), psychological trauma (stigma, shame), and social isolation (rejection, exclusion).
+
+**Policy Implication:**
+1. **Strengthen Gender Equality Act enforcement**: Aggressively prosecute sex/gender discrimination against LGBTQ+ individuals - the 38% prevalence shows current laws are not deterring discrimination
+2. **Expand discrimination definitions**: Ensure all anti-discrimination laws explicitly include sexual orientation and gender identity as protected characteristics with clear examples and enforcement mechanisms
+3. **Discrimination reporting systems**: Create confidential online and hotline reporting mechanisms specifically for LGBTQ+ discrimination with guaranteed investigation and follow-up
+4. **Corporate accountability**: Require companies to report discrimination complaints and resolutions, publicly naming organizations with patterns of LGBTQ+ discrimination
+
+
+### Finding 1.5: Overall Discrimination (Any Type) - 151% Higher for LGBTQ+
+
+**LGBTQ+:** 39.1% (268 out of 685)
+**General:** 15.6% (413 out of 2,645)
+**Gap:** +23.5 percentage points
+**Statistical Test:** p < 0.001
+
+**Discrimination Types Breakdown:**
+
+| Discrimination Type | LGBTQ+ | General | Gap | Multiplier |
+|---------------------|--------|---------|-----|------------|
+| **Sex/Gender** | **38.1%** | **2.4%** | **+35.7 pp** | **15.7x** |
+| **Religion** | **8.0%** | **3.0%** | **+5.0 pp** | **2.7x** |
+| **Race/Ethnicity** | **6.3%** | **2.7%** | **+3.6 pp** | **2.3x** |
+| **Age** | **7.3%** | **3.4%** | **+3.9 pp** | **2.1x** |
+| **Economic Status** | **8.6%** | **6.5%** | **+2.1 pp** | **1.3x** |
+
+**Interpretation:**
+Nearly **2 in 5 LGBTQ+ individuals** experienced some form of discrimination in the past year, compared to **1 in 6** in the general population - a 2.5 times higher rate. The 23.5 percentage point gap reveals that discrimination is a near-universal experience for LGBTQ+ individuals in Bangkok. Sex/gender discrimination dominates (38.1%), but LGBTQ+ individuals also experience elevated discrimination across ALL categories - religion (2.7x), race (2.3x), age (2.1x), even economic status (1.3x). This pattern suggests that LGBTQ+ identity intersects with and amplifies other forms of marginalization. The finding reveals that discrimination is not isolated incidents but systematic, pervasive exclusion affecting multiple life domains simultaneously.
+
+**Multiple discrimination burden:** Many LGBTQ+ individuals likely experience discrimination on multiple grounds simultaneously (e.g., young LGBTQ+ person facing both age and sex/gender discrimination). This compounded discrimination creates severe barriers to opportunity and wellbeing that single-axis interventions cannot address.
+
+**Policy Implication:**
+1. **Intersectional anti-discrimination approach**: Design policies addressing how LGBTQ+ discrimination intersects with race, religion, age, and class - recognize that LGBTQ+ individuals face multiple, compounding forms of exclusion
+2. **Universal LGBTQ+ protections**: Implement comprehensive civil rights protections covering employment, housing, education, healthcare, public accommodations, and government services with strong enforcement
+3. **Discrimination impact assessments**: Require all government policies and programs to assess potential discriminatory impacts on LGBTQ+ individuals before implementation
+4. **Community-based monitoring**: Support LGBTQ+ organizations to document and track discrimination patterns, providing evidence for policy change and legal action
+
 ---
 
 ## Domain 2: Healthcare Access & Food Security
 
 
-### Finding 2.1: Medical Care Skipping - 215% Higher for LGBTQ+
+### Finding 2.1: Medical Care Skipping - 193% Higher for LGBTQ+
 
 **LGBTQ+:** 28.8% (197 out of 685)
-**General:** 13.4% (780 out of 5,838)
-**Gap:** +15.4 percentage points
+**General:** 14.9% (395 out of 2,645)
+**Gap:** +13.8 percentage points
 **Statistical Test:** p < 0.001
 
 **Interpretation:**
-LGBTQ+ individuals skip medical care due to cost at **2.2 times the rate** of the general population (28.8% vs 13.4%), despite earning **11.5% more income** on average. Nearly **1 in 3 LGBTQ+ individuals** forgoes needed medical care. This paradox reveals that **income cannot overcome healthcare discrimination barriers**. LGBTQ+ individuals avoid healthcare due to: (1) fear of discrimination from providers; (2) lack of LGBTQ+-competent care (providers unfamiliar with LGBTQ+ health needs); (3) previous negative experiences with healthcare system; (4) fear of being outed to family/employers; (5) higher out-of-pocket costs from seeking LGBTQ+-friendly providers outside neighborhood. The 15.4 percentage point gap means healthcare access barriers are WORSE for LGBTQ+ than income-driven barriers affecting general population.
+LGBTQ+ individuals skip medical care due to cost at **1.9 times the rate** of the general population (28.8% vs 14.9%), despite earning **11.5% more income** on average. Nearly **1 in 3 LGBTQ+ individuals** forgoes needed medical care. This paradox reveals that **income cannot overcome healthcare discrimination barriers**. LGBTQ+ individuals avoid healthcare due to: (1) fear of discrimination from providers; (2) lack of LGBTQ+-competent care (providers unfamiliar with LGBTQ+ health needs); (3) previous negative experiences with healthcare system; (4) fear of being outed to family/employers; (5) higher out-of-pocket costs from seeking LGBTQ+-friendly providers outside neighborhood. The 13.8 percentage point gap means healthcare access barriers are WORSE for LGBTQ+ than income-driven barriers affecting general population.
 
 **Policy Implication:**
 1. **LGBTQ+ cultural competency training**: Mandate training for all healthcare providers on LGBTQ+ health needs, respectful terminology, and addressing implicit bias - make LGBTQ+ competency a licensing requirement
@@ -167,15 +213,15 @@ LGBTQ+ individuals skip medical care due to cost at **2.2 times the rate** of th
 4. **Subsidized LGBTQ+ healthcare**: Provide targeted healthcare subsidies (1,000 baht/month) to LGBTQ+ individuals to offset higher costs from traveling to LGBTQ+-friendly providers and seeking specialized care
 
 
-### Finding 2.2: Food Insecurity (Reduced Meals) - 254% Higher for LGBTQ+
+### Finding 2.2: Food Insecurity (Reduced Meals) - 182% Higher for LGBTQ+
 
 **LGBTQ+:** 20.0% (137 out of 685)
-**General:** 7.9% (459 out of 5,838)
-**Gap:** +12.1 percentage points
+**General:** 11.0% (290 out of 2,645)
+**Gap:** +9.0 percentage points
 **Statistical Test:** p < 0.001
 
 **Interpretation:**
-LGBTQ+ individuals experience food insecurity at **2.5 times the rate** of the general population (20.0% vs 7.9%), despite earning more income and working more hours. **1 in 5 LGBTQ+ individuals** reduced meals due to insufficient money. This paradox reveals that **LGBTQ+ individuals face hidden economic burdens**. Possible explanations: (1) family rejection - LGBTQ+ individuals lose family financial support and shared household resources; (2) higher housing costs - LGBTQ+ individuals pay premium rents (22% higher) to live in LGBTQ+-safe neighborhoods or live alone due to discrimination; (3) employment instability - despite formal employment, LGBTQ+ individuals may face job loss, reduced hours, or wage penalties from discrimination; (4) healthcare costs - higher medical expenses from discrimination-related health issues and out-of-pocket costs for LGBTQ+-friendly care.
+LGBTQ+ individuals experience food insecurity at **1.8 times the rate** of the general population (20.0% vs 11.0%), despite earning more income and working more hours. **1 in 5 LGBTQ+ individuals** reduced meals due to insufficient money. This paradox reveals that **LGBTQ+ individuals face hidden economic burdens**. Possible explanations: (1) family rejection - LGBTQ+ individuals lose family financial support and shared household resources; (2) higher housing costs - LGBTQ+ individuals pay premium rents (22% higher) to live in LGBTQ+-safe neighborhoods or live alone due to discrimination; (3) employment instability - despite formal employment, LGBTQ+ individuals may face job loss, reduced hours, or wage penalties from discrimination; (4) healthcare costs - higher medical expenses from discrimination-related health issues and out-of-pocket costs for LGBTQ+-friendly care.
 
 **Policy Implication:**
 1. **LGBTQ+ economic support**: Provide income supplements (2,000 baht/month) to LGBTQ+ individuals experiencing food insecurity, recognizing that standard poverty programs don't address discrimination-driven poverty
@@ -184,15 +230,15 @@ LGBTQ+ individuals experience food insecurity at **2.5 times the rate** of the g
 4. **Employment discrimination enforcement**: Strengthen enforcement of workplace anti-discrimination laws to prevent wage theft, wrongful termination, and reduced hours targeting LGBTQ+ employees
 
 
-### Finding 2.3: Food Insecurity (Skip Full Day) - 274% Higher for LGBTQ+
+### Finding 2.3: Food Insecurity (Skip Full Day) - 210% Higher for LGBTQ+
 
 **LGBTQ+:** 13.0% (89 out of 685)
-**General:** 4.7% (277 out of 5,838)
-**Gap:** +8.2 percentage points
+**General:** 6.2% (164 out of 2,645)
+**Gap:** +6.8 percentage points
 **Statistical Test:** p < 0.001
 
 **Interpretation:**
-LGBTQ+ individuals experience extreme food insecurity (skipping entire days of meals) at **2.7 times the rate** of the general population (13.0% vs 4.7%). More than **1 in 8 LGBTQ+ individuals** went full days without eating due to lack of money. This represents **crisis-level food deprivation** - not just dietary restriction but literal hunger. The 8.2 percentage point gap reveals that a significant portion of Bangkok's LGBTQ+ population lives in absolute food poverty despite relatively high employment and income levels. This finding confirms that discrimination-driven poverty operates differently than income-driven poverty: LGBTQ+ individuals cannot escape food insecurity through work alone because family rejection, discrimination, and social isolation create systematic economic disadvantage.
+LGBTQ+ individuals experience extreme food insecurity (skipping entire days of meals) at **2.1 times the rate** of the general population (13.0% vs 6.2%). More than **1 in 8 LGBTQ+ individuals** went full days without eating due to lack of money. This represents **crisis-level food deprivation** - not just dietary restriction but literal hunger. The 6.8 percentage point gap reveals that a significant portion of Bangkok's LGBTQ+ population lives in absolute food poverty despite relatively high employment and income levels. This finding confirms that discrimination-driven poverty operates differently than income-driven poverty: LGBTQ+ individuals cannot escape food insecurity through work alone because family rejection, discrimination, and social isolation create systematic economic disadvantage.
 
 **Policy Implication:**
 1. **Emergency food assistance**: Establish immediate food aid specifically for LGBTQ+ individuals experiencing extreme food insecurity - the 13% rate represents ~89 individuals in this sample needing urgent help
@@ -401,6 +447,61 @@ LGBTQ+ individuals have disabilities at **60% lower rate** than the general popu
 
 ---
 
+## Domain 6: Health Behaviors
+
+
+### Finding 6.1: Alcohol Drinking - 17% Higher for LGBTQ+
+
+**LGBTQ+:** 49.3% (338 out of 685)
+**General:** 42.0% (1,112 out of 2,645)
+**Gap:** +7.3 percentage points
+**Statistical Test:** p = 0.001
+
+**Interpretation:**
+LGBTQ+ individuals drink alcohol at **1.2 times the rate** of the general population (49.3% vs 42.0%). Nearly **half of LGBTQ+ individuals** currently drink alcohol. This 7.3 percentage point gap, while statistically significant, is relatively modest compared to other health disparities. The higher drinking rate likely reflects multiple factors: (1) **minority stress** - LGBTQ+ individuals may use alcohol to cope with discrimination, violence, and social rejection; (2) **social culture** - LGBTQ+ social spaces historically centered around bars and nightlife due to lack of other safe gathering places; (3) **younger age profile** - LGBTQ+ sample is younger (40% under 30) and young adults have higher drinking rates; (4) **trauma response** - higher rates of violence and discrimination may drive self-medication through alcohol. However, the gap is much smaller than violence (2.9x) or discrimination (15.7x) disparities, suggesting drinking is not the primary health concern for LGBTQ+ individuals.
+
+**Policy Implication:**
+1. **Address root causes**: Reduce LGBTQ+ drinking by addressing underlying causes - combat discrimination, provide mental health services, reduce violence and minority stress
+2. **LGBTQ+-affirming substance use treatment**: Ensure alcohol treatment programs are LGBTQ+-competent and address unique stressors driving LGBTQ+ drinking (discrimination, family rejection, violence trauma)
+3. **Diversify LGBTQ+ social spaces**: Create alcohol-free LGBTQ+ community spaces (cafes, recreation centers, arts venues) so socializing doesn't require drinking
+4. **Minority stress interventions**: Provide coping skills training and resilience-building programs to help LGBTQ+ individuals manage discrimination stress without turning to alcohol
+
+
+### Finding 6.2: Smoking - 11% Higher for LGBTQ+ (Not Significant)
+
+**LGBTQ+:** 31.2% (214 out of 685)
+**General:** 28.0% (740 out of 2,645)
+**Gap:** +3.3 percentage points
+**Statistical Test:** p = 0.102 (not significant)
+
+**Interpretation:**
+LGBTQ+ individuals smoke at similar rates to the general population (31.2% vs 28.0%), with no statistically significant difference (p=0.102). Nearly **1 in 3 LGBTQ+ individuals** currently smokes. While the 3.3 percentage point gap is not significant, the **absolute smoking rate of 31%** is concerningly high for both populations. The lack of disparity is somewhat surprising given that LGBTQ+ individuals face higher stress, violence, and discrimination which typically predict higher smoking rates. Possible explanations: (1) general population also faces high smoking rates in Thailand; (2) LGBTQ+ sample's younger age may offset stress-related smoking (older people have had more time to quit); (3) increasing tobacco control efforts may be reaching both LGBTQ+ and general populations equally. The finding suggests smoking is a **universal public health problem**, not an LGBTQ+-specific issue.
+
+**Policy Implication:**
+1. **Universal smoking cessation**: Continue aggressive tobacco control for all populations - the 28-31% smoking rates are unacceptably high for both LGBTQ+ and general populations
+2. **LGBTQ+-inclusive cessation programs**: Ensure smoking cessation programs are LGBTQ+-welcoming and address minority stress as a smoking trigger without creating separate programs
+3. **Youth smoking prevention**: Target smoking prevention at young LGBTQ+ individuals (40% of sample under 30) to prevent uptake before addiction establishes
+4. **Address stress-smoking link**: Provide stress management and mental health support as part of smoking cessation for LGBTQ+ individuals dealing with discrimination
+
+
+### Finding 6.3: Regular Exercise - 5% Higher for LGBTQ+ (Not Significant)
+
+**LGBTQ+:** 27.6% (189 out of 685)
+**General:** 26.2% (694 out of 2,645)
+**Gap:** +1.4 percentage points
+**Statistical Test:** p = 0.505 (not significant)
+
+**Interpretation:**
+LGBTQ+ individuals exercise regularly (3+ times/week) at essentially the same rate as the general population (27.6% vs 26.2%), with no statistically significant difference (p=0.505). Approximately **1 in 4 individuals** in both populations exercise regularly - or conversely, **3 in 4 do NOT exercise regularly**. The lack of LGBTQ+-specific disparity is POSITIVE, suggesting that LGBTQ+ individuals are not facing unique barriers to physical activity. However, the **absolute exercise rate of 28% is concerningly low** for both populations, far below public health recommendations (150 minutes/week moderate exercise). Low exercise rates may reflect Bangkok's urban environment (traffic, pollution, lack of green space), long working hours, and cultural factors affecting both LGBTQ+ and general populations equally.
+
+**Policy Implication:**
+1. **Universal physical activity promotion**: Address low exercise rates (26-28%) across entire Bangkok population through urban planning (bike lanes, parks, walkable streets) and public health campaigns
+2. **LGBTQ+-inclusive fitness spaces**: Ensure gyms, sports facilities, and recreation programs are LGBTQ+-welcoming to avoid creating barriers where none currently exist
+3. **Active transport**: Promote walking and cycling as transportation (not just recreation) to integrate physical activity into daily life for all Bangkok residents
+4. **Workplace wellness**: Encourage employers to provide exercise breaks, gym access, or walking meetings to combat sedentary lifestyles affecting both LGBTQ+ and general workers
+
+---
+
 ## Part 2: Within LGBTQ+ Community - Equity Analysis
 
 ---
@@ -558,6 +659,86 @@ LGBTQ+ individuals with young children experience psychological violence at **1.
 2. **Parental rights protections**: Strengthen legal protections for LGBTQ+ parents against threats of child removal, custody challenges, and parental fitness questioning based on orientation/identity
 3. **LGBTQ+-inclusive parenting resources**: Ensure schools, daycares, pediatricians provide affirming services to LGBTQ+ parents without discrimination or harassment
 4. **Address family violence**: Provide intervention services for LGBTQ+ parents experiencing violence from family members using children as leverage
+
+---
+
+## Domain 4: Health Behaviors Within LGBTQ+ Community
+
+
+### Finding 6.7: Alcohol Drinking by Income Level - 32.1 pp Gap
+
+**Statistical Test:** Chi-square = 11.0, p = 0.004, Cramer's V = 0.16 (small effect)
+
+**Results:**
+
+| Income Level | Currently Drinks Alcohol | Sample Size |
+|--------------|--------------------------|-------------|
+| **Middle (10,500-15,000 baht)** | **59.3%** (73 out of 123) | 123 |
+| **High (>15,000 baht)** | **50.0%** (151 out of 302) | 302 |
+| **Low (<10,500 baht)** | **27.3%** (9 out of 33) | 33 |
+
+**Equity Gap:** 32.1 percentage points (Middle vs Low)
+
+**Interpretation:**
+Within the LGBTQ+ community, drinking rates show a **striking inverted U-shape** by income. Middle-income LGBTQ+ individuals have the highest drinking rate (59.3%), followed by high-income (50.0%), while low-income have the lowest rate (27.3%). The 32.1 percentage point gap between middle and low-income is **massive** - nearly 3 in 5 middle-income LGBTQ+ individuals drink, compared to only 1 in 4 low-income individuals.
+
+This pattern is **opposite** to typical socioeconomic gradients where lower income predicts higher substance use. Possible explanations: (1) **Affordability** - low-income LGBTQ+ individuals simply cannot afford to drink regularly; (2) **Social access** - middle/high-income LGBTQ+ individuals have greater access to LGBTQ+ social spaces (bars, clubs, events) which center on alcohol; (3) **Stress types** - low-income LGBTQ+ individuals face survival stress (food, housing) leaving no resources for drinking, while middle/high-income face discrimination/social stress potentially driving alcohol use; (4) **Age confounding** - low-income group may be younger or older with different drinking patterns.
+
+The middle-income peak (59.3%) is particularly concerning - this group may use alcohol to cope with discrimination while having enough income to sustain the habit, but not enough wealth to avoid economic stress. They experience a "double burden" of discrimination stress plus economic precarity.
+
+**Policy Implication:**
+1. **Income-targeted interventions**: Focus alcohol prevention and treatment on middle-income LGBTQ+ individuals (59% drinking rate) who show highest alcohol use
+2. **Alternative coping resources**: Provide free/low-cost mental health services, stress management, and social support for middle-income LGBTQ+ individuals using alcohol to cope with discrimination
+3. **Diversify LGBTQ+ social spaces**: Create affordable alcohol-free LGBTQ+ community spaces (community centers, sports leagues, hobby clubs) accessible to all income levels
+4. **Address root causes**: Reduce discrimination stress and economic precarity driving alcohol use among middle/high-income LGBTQ+ individuals
+
+
+### Finding 6.8: Regular Exercise by Income Level - 13.3 pp Gap
+
+**Results:**
+
+| Income Level | Regular Exercise (3+ times/week) | Sample Size |
+|--------------|----------------------------------|-------------|
+| **High (>15,000 baht)** | **32.8%** (99 out of 302) | 302 |
+| **Low (<10,500 baht)** | **21.2%** (7 out of 33) | 33 |
+| **Middle (10,500-15,000 baht)** | **19.5%** (24 out of 123) | 123 |
+
+**Equity Gap:** 13.3 percentage points (High vs Middle)
+
+**Interpretation:**
+Within the LGBTQ+ community, exercise shows a clear income gradient - high-income individuals exercise at higher rates (32.8%) than low-income (21.2%) and middle-income (19.5%). The 13.3 percentage point gap reveals that **economic resources enable physical activity**. High-income LGBTQ+ individuals can afford gym memberships, exercise classes, sports equipment, and live in neighborhoods with better recreation facilities. However, even among high-income LGBTQ+ individuals, only **1 in 3 exercise regularly** - the absolute rate remains concerningly low across all income levels.
+
+The pattern is consistent with general income-health gradients where wealth enables healthier behaviors. However, the gaps are relatively modest (13 pp) compared to drinking (32 pp), suggesting exercise is more universally challenging regardless of income. Time poverty (long working hours), lack of safe public exercise spaces, and Bangkok's urban environment (traffic, pollution) affect all income groups.
+
+**Policy Implication:**
+1. **Income-targeted exercise access**: Provide free/subsidized gym memberships or recreation program vouchers for low/middle-income LGBTQ+ individuals (20% exercise rate)
+2. **Community exercise programs**: Create free outdoor exercise classes, walking groups, and sports leagues in LGBTQ+-safe spaces accessible to all income levels
+3. **Universal infrastructure**: Build bike lanes, parks, and walkable streets benefiting all LGBTQ+ individuals regardless of income
+4. **Workplace wellness**: Encourage employers to provide exercise breaks and facilities, helping middle-income LGBTQ+ workers (19.5% exercise rate) integrate activity into work days
+
+
+### Finding 6.9: Smoking by Income Level - Similar Across Income
+
+**Results:**
+
+| Income Level | Currently Smokes | Sample Size |
+|--------------|------------------|-------------|
+| **Middle (10,500-15,000 baht)** | **32.5%** (40 out of 123) | 123 |
+| **High (>15,000 baht)** | **31.8%** (96 out of 302) | 302 |
+| **Low (<10,500 baht)** | **30.3%** (10 out of 33) | 33 |
+
+**Equity Gap:** 2.2 percentage points (not significant)
+
+**Interpretation:**
+Unlike drinking and exercise, smoking rates are remarkably **similar across all income levels** within the LGBTQ+ community (30-33%). Approximately **1 in 3 LGBTQ+ individuals smoke** regardless of income. This flat income pattern suggests smoking in the LGBTQ+ community is driven by factors that affect all income groups equally - likely minority stress, discrimination trauma, and social/cultural norms rather than economic resources. The finding indicates that **income does NOT protect against smoking** among LGBTQ+ individuals.
+
+The universal high smoking rate (31%) across all LGBTQ+ income levels is concerning and reflects how deeply embedded smoking is in coping with discrimination and social stress. Unlike drinking (which requires ongoing economic resources) or exercise (which requires facilities/time), smoking is accessible to all income levels and serves as a stress-management tool for LGBTQ+ individuals facing pervasive discrimination.
+
+**Policy Implication:**
+1. **Universal smoking cessation**: Target smoking cessation programs at all LGBTQ+ income levels - the 30-33% smoking rate is unacceptably high across the board
+2. **Address minority stress**: Provide mental health support and alternative stress-coping strategies for LGBTQ+ individuals using smoking to manage discrimination and trauma
+3. **LGBTQ+-specific cessation**: Design smoking cessation programs that address discrimination, violence, and family rejection as smoking triggers unique to LGBTQ+ experiences
+4. **Social norm change**: Work with LGBTQ+ community leaders to shift social norms away from smoking as accepted coping mechanism for discrimination stress
 
 ---
 

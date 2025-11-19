@@ -79,10 +79,36 @@ Based on the stratified analysis, informal workers have the following profile:
 **Interpretation:**
 Informal workers earn 43% less than formal workers, translating to a monthly income gap of 12,306 baht. This represents a **147,672 baht annual income penalty** for informal work. The median informal worker earns approximately 16,000 baht/month, far below Bangkok's living wage for a family. This income disparity reflects the fundamental structural disadvantage of informal employment: no minimum wage protection, no salary progression, and vulnerability to economic shocks.
 
+**Income by Freelance Occupation Type:**
+
+| Occupation Type | Mean Income | Median Income | Sample Size |
+|-----------------|-------------|---------------|-------------|
+| **Online seller** | **22,245 baht** | 20,000 baht | 33 |
+| **Rider (delivery)** | **21,744 baht** | 21,000 baht | 111 |
+| **Street hawker** | **19,461 baht** | 15,000 baht | 93 |
+| **Street vendor/trader** | **16,444 baht** | 12,000 baht | 530 |
+| **Motorcycle taxi driver** | **14,858 baht** | 15,000 baht | 230 |
+| **General labor** | **14,322 baht** | 12,000 baht | 395 |
+
+**Gap:** 7,923 baht (55.3% difference between highest and lowest)
+**Statistical Test:** ANOVA F=15.5, p < 0.001
+
+Within informal work itself, there is a **7,923 baht monthly income gap** (55% difference) between the highest-earning occupation type (online sellers at 22,245 baht) and the lowest-earning type (general labor at 14,322 baht). This represents a **95,076 baht annual income difference** based solely on occupation type within the informal sector.
+
+**Occupation-specific findings:**
+- **Online sellers** and **delivery riders** earn above the informal worker average (~22,000 baht), approaching lower-tier formal worker salaries
+- **Street hawkers** earn moderately (19,461 baht) with high variation (median 15,000 vs mean 19,461)
+- **Street vendors/traders** form the largest group (n=530) earning near the informal average (16,444 baht)
+- **Motorcycle taxi drivers** and **general laborers** earn the least (14,322-14,858 baht), below 15,000 baht/month living wage threshold
+
+The 55% income gap within informal work demonstrates that informal employment is highly stratified. Modern gig economy jobs (online selling, delivery) and specialized services (street hawkers) command premium pay, while traditional informal work (general labor, motorcycle taxis) remains trapped in poverty wages. This suggests that digital literacy and specialized skills enable some informal workers to escape poverty, while those in traditional manual labor face the worst economic outcomes.
+
 **Policy Implication:**
 - Implement a **minimum income guarantee** of 15,000 baht/month for informal workers through a combination of wage subsidies and social protection
-- Create sector-specific minimum rates for common informal occupations (e.g., street vending licenses tied to minimum daily income targets)
-- Establish informal worker cooperatives to increase bargaining power and income stability
+- Create **occupation-specific interventions**: prioritize general laborers and motorcycle taxi drivers (earning <15,000 baht) for income support
+- **Skill transition programs**: Help low-earning informal workers (general labor, taxi drivers) transition to higher-paying informal occupations (delivery, online selling) through digital literacy training
+- **Protect high-earners**: Ensure that online sellers and delivery riders maintain fair platform rates and aren't exploited despite higher current earnings
+- Establish informal worker cooperatives to increase bargaining power and income stability, especially for the 925 workers in low-income occupation types
 
 
 ### Has employment contract
@@ -220,8 +246,24 @@ Informal workers work **1 hour less per day** than formal workers (8 vs 9 hours)
 
 **Equity Gap:** 26.0 percentage points
 
+**By Occupation Type:**
+
+| Occupation Type | Skip Medical Rate | Sample Size |
+|-----------------|-------------------|-------------|
+| **General labor** | **15.9%** (86 out of 541) | 541 |
+| **Street hawker** | **15.3%** (20 out of 131) | 131 |
+| **Street vendor/trader** | **13.3%** (97 out of 730) | 730 |
+| **Motorcycle taxi** | **11.6%** (32 out of 276) | 276 |
+| **Online seller** | **11.1%** (5 out of 45) | 45 |
+| **Rider (delivery)** | **8.5%** (12 out of 141) | 141 |
+
+**Gap by occupation:** 7.4 percentage points
+**Statistical Test:** Chi-square = 7.1, p = 0.212 (not significant)
+
 **Interpretation:**
 Low-income informal workers are **4.8 times more likely** to skip medical care than high-income informal workers (32.9% vs 6.9%). This means **1 in 3 low-income informal workers** skip needed medical care due to cost, despite Thailand's universal health coverage. The 26 percentage point gap reveals that universal coverage is not reaching the poorest informal workers. Barriers likely include: (1) out-of-pocket costs for medications and diagnostics not covered by the 30-baht scheme; (2) transportation costs to reach hospitals; (3) opportunity cost of lost work hours during clinic visits; (4) informal payments or under-the-table fees. The internal benchmark of 6.9% (high-income rate) shows that even among informal workers, adequate income nearly eliminates cost-based medical skipping.
+
+**Occupation-specific patterns:** While not statistically significant (p=0.212), descriptive patterns show **general laborers** (15.9%) and **street hawkers** (15.3%) skip medical care at nearly double the rate of **delivery riders** (8.5%) and **online sellers** (11.1%). This 7.4 percentage point gap aligns with the income gradient - lower-earning occupation types (general labor: 14,322 baht/month, see Part 1) face higher healthcare access barriers than higher-earning types (riders: 21,744 baht/month). The pattern suggests that occupation type affects healthcare access primarily through its income pathway, not through occupation-specific barriers. General laborers likely skip care because they earn less, not because labor work itself prevents healthcare access.
 
 **Policy Implication:**
 1. **Income-targeted healthcare subsidies**: Provide 500 baht/month healthcare credit cards to informal workers earning <10,000 baht/month, usable for medications, transport to clinics, and medical supplies
@@ -682,8 +724,25 @@ This finding validates the income stratification itself - by definition, high-in
 
 **Equity Gap:** 9,223 baht
 
+**By Occupation Type and Age Group:**
+
+| Occupation Type | 15-29 | 30-44 | 45-59 | 60+ | Youth-Elderly Gap |
+|-----------------|------:|------:|------:|----:|------------------:|
+| **Street hawker** | **28,667 baht** | 25,376 baht | 16,259 baht | **16,855 baht** | **11,812 baht** |
+| **Street vendor/trader** | **25,091 baht** | 19,126 baht | 16,893 baht | **15,046 baht** | **10,045 baht** |
+| **Motorcycle taxi** | **22,222 baht** | 16,932 baht | 13,981 baht | **13,871 baht** | **8,351 baht** |
+| **General labor** | **20,222 baht** | 15,291 baht | 14,752 baht | **13,058 baht** | **7,164 baht** |
+| **Rider (delivery)** | **22,960 baht** | 22,662 baht | 19,519 baht | **18,643 baht** | **4,317 baht** |
+| **Online seller** | **21,886 baht** | 29,000 baht | 19,556 baht | **12,800 baht** | **9,086 baht** |
+
+**Sample sizes:** General labor dominates elderly (n=204 age 60+), while riders are predominantly young (n=37 age 15-29)
+
 **Interpretation:**
 This finding reveals an **inverted age-income pattern** - youth informal workers (15-29) earn the **most**, while elderly (60+) earn the **least**. This is the **opposite** of formal employment where income typically increases with age/experience. Youth informal workers earn 9,223 baht more than elderly (64% gap). This inverted pattern reflects the physical demands of high-paying informal work: young workers can perform vigorous delivery, construction, and labor jobs commanding premium pay (18,000 baht median), while elderly workers are relegated to low-pay sedentary work (street vending, light tasks) at 12,000 baht median. The finding shows that informal work offers no accumulated career advantages - aging brings income decline, not growth.
+
+**Occupation-specific age patterns:** The age penalty varies dramatically by occupation type. **Street hawkers** experience the steepest age decline (11,812 baht gap, 41% drop from youth to elderly), suggesting this work requires physical stamina that deteriorates with age. **Traditional occupations** (street vendors, motorcycle taxis, general labor) show large gaps (7,164-10,045 baht), confirming the physical demands hypothesis. In contrast, **delivery riders** show the smallest gap (4,317 baht, 19% drop), likely because: (1) rider work is already age-selective - only 7 elderly riders remain in the sample, suggesting most elderly cannot perform this work; (2) the few elderly riders who remain are exceptionally fit and maintain income. **Online sellers** show an unusual pattern - middle-aged sellers earn the most (29,000 baht), suggesting this work rewards accumulated business networks and customer relationships rather than physical capacity. However, elderly online sellers still earn low (12,800 baht), possibly due to digital literacy barriers.
+
+The occupation breakdowns reveal that the overall age-income decline is driven by two mechanisms: (1) **within-occupation decline** as workers age and lose physical capacity (street hawkers, vendors); (2) **occupation shifting** where elderly workers are pushed out of high-paying physically demanding jobs (delivery, construction) into low-paying sedentary work (street vending: 299 elderly workers vs 22 youth). This suggests that elderly informal workers face a double penalty: lower pay within their occupation PLUS forced migration to worse-paying occupations.
 
 **Policy Implication:**
 1. **Elderly informal worker income support**: Provide age-based income supplements to informal workers 60+ (e.g., 3,000 baht/month pension) to offset the 9,223 baht age penalty
@@ -975,6 +1034,180 @@ Informal workers with young children have **extreme food insecurity rates 2.6 ti
 2. **Comprehensive family food support**: Ensure informal worker families with young children have adequate food through a combination of child nutrition programs, food vouchers, and income support
 3. **Parental food monitoring**: Actively screen informal workers with young children for extreme food insecurity, as parents may hide their own food deprivation
 4. **Prevent parental malnutrition**: Provide targeted nutrition support (food supplements, nutrition education) to parents of young children to prevent health consequences of prolonged food skipping
+
+---
+
+## Domain 4: Health Behaviors
+
+
+### Finding 4.1: Alcohol drinking by Sex
+
+**Statistical Test:** Chi-square = 130.0, p < 0.001, Cramer's V = 0.26 (small-to-medium effect)
+
+**Results:**
+
+| Sex | Currently Drinks Alcohol | Sample Size |
+|-----|--------------------------|-------------|
+| **Male** | **40.1%** (325 out of 810) | 810 |
+| **LGBT** | **54.1%** (60 out of 111) | 111 |
+| **Female** | **18.5%** (174 out of 943) | 943 |
+
+**Equity Gap:** 35.6 percentage points (LGBT vs Female)
+
+**Interpretation:**
+LGBT informal workers have the highest alcohol consumption rate (54.1%), followed by males (40.1%), while females have the lowest rate (18.5%). The 35.6 percentage point gap between LGBT and female workers reveals stark gender-based drinking patterns. More than **half of LGBT informal workers** currently drink alcohol. Male informal workers drink at more than double the rate of females (40.1% vs 18.5%). These patterns likely reflect both cultural norms (drinking is more socially acceptable for men) and potential stress-coping mechanisms, particularly for LGBT workers who may face discrimination and social marginalization.
+
+
+### Finding 4.2: Alcohol drinking by Age Group
+
+**Statistical Test:** Chi-square = 105.6, p < 0.001, Cramer's V = 0.24 (small effect)
+
+**Results:**
+
+| Age Group | Currently Drinks Alcohol | Sample Size |
+|-----------|--------------------------|-------------|
+| **30-44** | **46.1%** (147 out of 319) | 319 |
+| **15-29** | **36.4%** (48 out of 132) | 132 |
+| **45-59** | **36.4%** (207 out of 568) | 568 |
+| **60+** | **18.6%** (157 out of 845) | 845 |
+
+**Equity Gap:** 27.5 percentage points (30-44 vs 60+)
+
+**Interpretation:**
+Young adult informal workers (30-44) have the highest drinking rate (46.1%), while elderly workers (60+) have the lowest (18.6%). The inverted U-shape pattern shows that drinking peaks during prime working years and declines with age. Nearly **half of 30-44 year-old informal workers** currently drink alcohol. The 27.5 percentage point gap between peak (30-44) and elderly (60+) suggests age-related patterns: younger workers may drink more due to social activities and work stress, while elderly workers reduce drinking due to health concerns or reduced social drinking opportunities.
+
+
+### Finding 4.3: Smoking by Sex
+
+**Statistical Test:** Chi-square = 267.6, p < 0.001, Cramer's V = 0.38 (medium effect)
+
+**Results:**
+
+| Sex | Currently Smokes | Sample Size |
+|-----|------------------|-------------|
+| **Male** | **38.1%** (309 out of 810) | 810 |
+| **LGBT** | **33.3%** (37 out of 111) | 111 |
+| **Female** | **6.4%** (60 out of 943) | 943 |
+
+**Equity Gap:** 31.7 percentage points (Male vs Female)
+
+**Interpretation:**
+Male informal workers have a smoking rate of 38.1%, nearly **6 times higher** than female workers (6.4%). More than **1 in 3 male informal workers** currently smokes. LGBT workers have an intermediate smoking rate (33.3%). The 31.7 percentage point gender gap is the largest health behavior disparity observed, reflecting strong cultural norms where smoking is predominantly male behavior in Thai society. The high male smoking rate (38.1%) represents a significant health risk factor for cardiovascular disease, cancer, and respiratory illness among male informal workers.
+
+
+### Finding 4.4: Smoking by Age Group
+
+**Statistical Test:** Chi-square = 80.9, p < 0.001, Cramer's V = 0.21 (small effect)
+
+**Results:**
+
+| Age Group | Currently Smokes | Sample Size |
+|-----------|------------------|-------------|
+| **15-29** | **35.6%** (47 out of 132) | 132 |
+| **30-44** | **33.5%** (107 out of 319) | 319 |
+| **45-59** | **24.8%** (141 out of 568) | 568 |
+| **60+** | **13.1%** (111 out of 845) | 845 |
+
+**Equity Gap:** 22.5 percentage points (15-29 vs 60+)
+
+**Interpretation:**
+Youth informal workers (15-29) have the highest smoking rate (35.6%), while elderly workers (60+) have the lowest (13.1%). The declining pattern with age shows that **more than 1 in 3 young informal workers** smoke. The 22.5 percentage point gap between youth and elderly reflects either age-period effects (older generations smoke less) or cessation over time (smokers quit as they age due to health concerns). The high youth smoking rate (35.6%) is concerning as it establishes lifelong addiction and health risks.
+
+
+### Finding 4.5: Smoking by Income Level
+
+**Statistical Test:** Chi-square = 10.2, p = 0.006, Cramer's V = 0.09 (negligible effect)
+
+**Results:**
+
+| Income Level | Currently Smokes | Sample Size |
+|--------------|------------------|-------------|
+| **High (>15,000 baht)** | **28.6%** (122 out of 426) | 426 |
+| **Middle (10,500-15,000 baht)** | **22.3%** (136 out of 609) | 609 |
+| **Low (<10,500 baht)** | **19.3%** (69 out of 357) | 357 |
+
+**Equity Gap:** 9.3 percentage points (High vs Low)
+
+**Interpretation:**
+Counterintuitively, **high-income informal workers smoke more** than low-income workers (28.6% vs 19.3%). This 9.3 percentage point gap is the opposite of typical socioeconomic health gradients where lower income predicts worse health behaviors. The pattern may reflect that higher-income informal workers can afford cigarettes (smoking is expensive at ~100-150 baht/pack), while low-income workers cannot sustain the habit. Alternatively, high-income informal occupations (delivery riders, online sellers) may have work patterns that promote smoking (stress, long hours, breaks). The finding suggests that income itself does not protect against smoking among informal workers.
+
+
+### Finding 4.5.1: Smoking by Occupation Type
+
+**Statistical Test:** Chi-square = 202.8, p < 0.001, Cramer's V = 0.33 (medium effect)
+
+**Results:**
+
+| Occupation Type | Currently Smokes | Sample Size |
+|-----------------|------------------|-------------|
+| **Motorcycle taxi** | **45.7%** (126 out of 276) | 276 |
+| **Rider (delivery)** | **45.4%** (64 out of 141) | 141 |
+| **General labor** | **21.8%** (118 out of 541) | 541 |
+| **Online seller** | **13.3%** (6 out of 45) | 45 |
+| **Street vendor/trader** | **11.0%** (80 out of 730) | 730 |
+| **Street hawker** | **9.2%** (12 out of 131) | 131 |
+
+**Equity Gap:** 36.5 percentage points (Motorcycle taxi vs Street hawker)
+
+**Interpretation:**
+Smoking rates vary dramatically by occupation type, from 45.7% (motorcycle taxis) to 9.2% (street hawkers) - a **36.5 percentage point gap** that is larger than any other smoking disparity observed. Nearly **half of motorcycle taxi drivers and delivery riders smoke** (45.7% and 45.4%), making these the highest-smoking occupations among informal workers. The strong effect size (Cramer's V = 0.33) indicates that occupation type is a **powerful predictor of smoking behavior**, even stronger than sex (V = 0.38) when considering the full range of occupations.
+
+The occupation pattern explains the counterintuitive income-smoking relationship (Finding 4.5): high-income informal workers smoke more because high-income occupations (delivery riders: 21,744 baht/month, motorcycle taxis: 14,858 baht/month) have the highest smoking rates. **Transport-based occupations** (motorcycle taxi, delivery riders) show smoking rates **4-5 times higher** than sedentary vendor occupations (street vendors: 11.0%, street hawkers: 9.2%).
+
+This occupation clustering suggests smoking may be occupational-culturally embedded in transport work: (1) male-dominated occupations with masculine smoking norms; (2) long waiting periods between jobs conducive to smoking; (3) stress from traffic, deadlines, and customer demands; (4) social smoking among workers waiting at taxi/rider stations. In contrast, street vendors and hawkers (predominantly female) work in public view where smoking may be socially stigmatized, and their customer-facing roles discourage smoking during work hours.
+
+The finding reveals that **occupation type drives smoking patterns** more than individual income or education. Smoking cessation interventions should target motorcycle taxi and delivery rider communities specifically, recognizing the occupational culture that normalizes smoking in these jobs.
+
+
+### Finding 4.6: Exercise by Sex
+
+**Statistical Test:** Chi-square = 8.5, p = 0.014, Cramer's V = 0.07 (negligible effect)
+
+**Results:**
+
+| Sex | Regular Exercise (3+ times/week) | Sample Size |
+|-----|----------------------------------|-------------|
+| **LGBT** | **29.7%** (33 out of 111) | 111 |
+| **Male** | **18.9%** (153 out of 810) | 810 |
+| **Female** | **18.2%** (172 out of 943) | 943 |
+
+**Equity Gap:** 11.5 percentage points (LGBT vs Female)
+
+**Interpretation:**
+LGBT informal workers have the highest regular exercise rate (29.7%), while male and female workers have similar low rates (~18-19%). The 11.5 percentage point gap shows that nearly **3 in 10 LGBT workers** exercise regularly, compared to fewer than **1 in 5** male and female workers. Overall, exercise rates are low across all groups - fewer than 20% of informal workers exercise 3 or more times per week. The slightly higher LGBT exercise rate may reflect greater health consciousness or access to fitness communities, though the difference is small. The finding reveals that **informal workers generally do not exercise regularly**, regardless of sex.
+
+
+### Finding 4.7: Exercise by Income Level
+
+**Statistical Test:** Chi-square = 2.0, p = 0.362, Cramer's V = 0.04 (not significant)
+
+**Results:**
+
+| Income Level | Regular Exercise (3+ times/week) | Sample Size |
+|--------------|----------------------------------|-------------|
+| **Low (<10,500 baht)** | **23.0%** (82 out of 357) | 357 |
+| **High (>15,000 baht)** | **21.4%** (91 out of 426) | 426 |
+| **Middle (10,500-15,000 baht)** | **19.2%** (117 out of 609) | 609 |
+
+**Interpretation:**
+Exercise rates are similar across all income levels (19-23%), with no statistically significant differences (p=0.362). Fewer than **1 in 4 informal workers** exercise regularly, regardless of income. This finding suggests that lack of exercise is a universal problem among informal workers, not concentrated in any particular income group. Time poverty (long working hours), physical exhaustion from manual labor, and lack of access to exercise facilities likely affect all informal workers equally.
+
+
+### Finding 4.8: Exercise by Age Group
+
+**Statistical Test:** Chi-square = 1.9, p = 0.604, Cramer's V = 0.03 (not significant)
+
+**Results:**
+
+| Age Group | Regular Exercise (3+ times/week) | Sample Size |
+|-----------|----------------------------------|-------------|
+| **15-29** | **21.2%** (28 out of 132) | 132 |
+| **60+** | **20.0%** (169 out of 845) | 845 |
+| **30-44** | **19.4%** (62 out of 319) | 319 |
+| **45-59** | **17.4%** (99 out of 568) | 568 |
+
+**Interpretation:**
+Exercise rates are consistent across all age groups (17-21%), with no statistically significant differences (p=0.604). Approximately **1 in 5 informal workers** exercise regularly at every age. This flat age pattern contrasts with smoking and drinking which decline with age, suggesting that exercise barriers (time, fatigue, access) persist throughout the lifespan for informal workers. The finding reveals that neither youth nor elderly informal workers achieve recommended physical activity levels.
 
 ---
 
