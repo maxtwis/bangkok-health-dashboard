@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ArrowLeft, Users } from 'lucide-react';
+import { ArrowLeft, Users, Printer } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useCommunityData from '../../hooks/useCommunityData';
 
@@ -9,6 +9,11 @@ const CommunityProfile = ({ onBack }) => {
 
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedCommunity, setSelectedCommunity] = useState('');
+
+  // Print function
+  const handlePrint = () => {
+    window.print();
+  };
 
   // Helper function to classify oral health access reasons
   const getOralHealthReason = (reasonText) => {
@@ -203,6 +208,14 @@ const CommunityProfile = ({ onBack }) => {
       r.physical_violence === 1 || r.psychological_violence === 1 || r.sexual_violence === 1
     ).length;
 
+    // Community safety levels
+    const communitySafety = {
+      verySafe: communityRecords.filter(r => r.community_safety === 4).length,
+      moderatelySafe: communityRecords.filter(r => r.community_safety === 3).length,
+      slightlySafe: communityRecords.filter(r => r.community_safety === 2).length,
+      notSafe: communityRecords.filter(r => r.community_safety === 1).length
+    };
+
     // Discrimination types
     const discriminationTypes = {
       ethnicity: communityRecords.filter(r => r.discrimination_1 === 1).length,
@@ -375,6 +388,7 @@ const CommunityProfile = ({ onBack }) => {
       communityAmenities,
       discriminationTypes,
       violenceTypes,
+      communitySafety,
       disabled,
       disabledCanWork,
       languageSkills,
@@ -416,27 +430,88 @@ const CommunityProfile = ({ onBack }) => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Print styles */}
+      <style>
+        {`
+          @media print {
+            /* Hide elements that shouldn't print */
+            .no-print {
+              display: none !important;
+            }
+
+            /* Optimize page breaks */
+            section {
+              page-break-inside: avoid;
+            }
+
+            /* Remove background colors for printing */
+            .bg-gradient-to-r,
+            .bg-blue-50,
+            .bg-teal-700 {
+              background: white !important;
+              color: black !important;
+            }
+
+            /* Add borders to headers for structure */
+            .bg-teal-700 {
+              border: 2px solid black !important;
+              padding: 8px !important;
+            }
+
+            /* Ensure good contrast */
+            h1, h2, h3, h4, h5, h6 {
+              color: black !important;
+            }
+
+            /* Add page margins */
+            @page {
+              margin: 2cm;
+            }
+
+            /* Header styling for print */
+            .print-header {
+              border-bottom: 3px solid black;
+              padding-bottom: 10px;
+              margin-bottom: 20px;
+            }
+          }
+        `}
+      </style>
+
       {/* Header with blue gradient - similar to the image */}
-      <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-8 px-6">
+      <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-8 px-6 print-header">
         <div className="max-w-5xl mx-auto">
-          <button onClick={onBack} className="text-white hover:text-blue-200 mb-4 flex items-center">
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            {language === 'th' ? 'กลับ' : 'Back'}
-          </button>
-          <h1 className="text-4xl font-bold mb-2">
-            {language === 'th' ? 'รายงานข้อมูลชุมชน' : 'Community Profiles'}
-          </h1>
-          <p className="text-blue-100 text-lg">
-            {language === 'th'
-              ? 'ข้อมูลสำรวจระดับชุมชนในเขตกรุงเทพมหานคร'
-              : 'Community-level survey data in Bangkok'}
-          </p>
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <button onClick={onBack} className="no-print text-white hover:text-blue-200 mb-4 flex items-center">
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                {language === 'th' ? 'กลับ' : 'Back'}
+              </button>
+              <h1 className="text-4xl font-bold mb-2">
+                {language === 'th' ? 'รายงานข้อมูลชุมชน' : 'Community Profiles'}
+              </h1>
+              <p className="text-blue-100 text-lg">
+                {language === 'th'
+                  ? 'ข้อมูลสำรวจระดับชุมชนในเขตกรุงเทพมหานคร'
+                  : 'Community-level survey data in Bangkok'}
+              </p>
+            </div>
+            {selectedDistrict && selectedCommunity && (
+              <button
+                onClick={handlePrint}
+                className="no-print bg-white text-blue-900 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold flex items-center gap-2 shadow-lg transition-colors"
+              >
+                <Printer className="w-5 h-5" />
+                {language === 'th' ? 'พิมพ์รายงาน' : 'Print Report'}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         {/* Selection Section */}
-        <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8">
+        <div className="no-print bg-blue-50 border-l-4 border-blue-600 p-6 mb-8">
           <div className="flex items-start mb-4">
             <Users className="w-8 h-8 text-blue-600 mr-4 flex-shrink-0 mt-1" />
             <div className="flex-1">
@@ -496,9 +571,15 @@ const CommunityProfile = ({ onBack }) => {
             {/* Community Header */}
             <div className="mb-8 pb-6 border-b-2 border-gray-200">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedCommunity}</h2>
-              <p className="text-xl text-gray-600">{districtCodeMap[selectedDistrict]}</p>
+              <p className="text-xl text-gray-600">
+                {language === 'th' ? 'เขต' : 'District '}{districtCodeMap[selectedDistrict]}
+              </p>
               <p className="text-gray-600 mt-2">
                 <span className="font-semibold">{language === 'th' ? 'จำนวนผู้ตอบแบบสอบถาม:' : 'Survey respondents:'}</span> {profileData.total} {language === 'th' ? 'คน' : 'people'}
+              </p>
+              {/* Print-only date stamp */}
+              <p className="text-gray-500 mt-2 hidden print:block text-sm">
+                <span className="font-semibold">{language === 'th' ? 'วันที่พิมพ์:' : 'Print date:'}</span> {new Date().toLocaleDateString(language === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
 
@@ -628,16 +709,16 @@ const CommunityProfile = ({ onBack }) => {
                   <span className="font-semibold">{language === 'th' ? 'อัตราการมีงานทำ:' : 'Employment rate:'}</span> {profileData.employed} / {profileData.total} ({((profileData.employed / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'การจ้างงานเปราะบาง (ไม่มีสัญญาจ้าง):' : 'Vulnerable employment (no contract):'}</span> {profileData.vulnerable} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.vulnerable / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                  <span className="font-semibold">{language === 'th' ? 'การจ้างงานนอกระบบ (ไม่มีสัญญาจ้าง):' : 'Informal employment (no contract):'}</span> {profileData.vulnerable} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.vulnerable / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
                 </li>
                 <li>
                   <span className="font-semibold">{language === 'th' ? 'มีสวัสดิการในการทำงาน:' : 'Have work welfare:'}</span> {profileData.hasOccupationWelfare} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.hasOccupationWelfare / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'บาดเจ็บร้ายแรงจากการทำงาน (12 เดือน):' : 'Serious work injury (12 months):'}</span> {profileData.occupationInjury} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.occupationInjury / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                  <span className="font-semibold">{language === 'th' ? 'เคยบาดเจ็บร้ายแรงจากการทำงาน (12 เดือน):' : 'Had serious work injury (12 months):'}</span> {profileData.occupationInjury} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.occupationInjury / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'บาดเจ็บเล็กน้อยจากการทำงาน (12 เดือน):' : 'Minor work injury (12 months):'}</span> {profileData.occupationSmallInjury} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.occupationSmallInjury / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                  <span className="font-semibold">{language === 'th' ? 'เคยบาดเจ็บเล็กน้อยจากการทำงาน (12 เดือน):' : 'Had minor work injury (12 months):'}</span> {profileData.occupationSmallInjury} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.occupationSmallInjury / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
                 </li>
                 <li>
                   <span className="font-semibold">{language === 'th' ? 'ความไม่มั่นคงทางอาหาร:' : 'Food insecurity:'}</span> {profileData.foodInsecure} / {profileData.total} ({((profileData.foodInsecure / profileData.total) * 100).toFixed(0)}%)
@@ -927,13 +1008,34 @@ const CommunityProfile = ({ onBack }) => {
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'มีผู้ช่วยเหลือเมื่อเจ็บป่วย:' : 'Have social support:'}</span> {profileData.socialSupport} / {profileData.total} ({((profileData.socialSupport / profileData.total) * 100).toFixed(0)}%)
+                  <span className="font-semibold">{language === 'th' ? 'มีเพื่อนหรือญาติที่สามารถพึ่งพาได้ในยามฉุกเฉิน:' : 'Have friends/relatives to rely on in emergencies:'}</span> {profileData.socialSupport} / {profileData.total} ({((profileData.socialSupport / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
                   <span className="font-semibold">{language === 'th' ? 'ประสบการเลือกปฏิบัติ (12 เดือน):' : 'Discrimination experience (12 months):'}</span> {profileData.discrimination} / {profileData.total} ({((profileData.discrimination / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
                   <span className="font-semibold">{language === 'th' ? 'ประสบความรุนแรง (12 เดือน):' : 'Violence experience (12 months):'}</span> {profileData.violence} / {profileData.total} ({((profileData.violence / profileData.total) * 100).toFixed(0)}%)
+                </li>
+              </ul>
+            </section>
+
+            {/* Community Safety Levels */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'ความรู้สึกปลอดภัยในชุมชน' : 'Community Safety Perception'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'รู้สึกปลอดภัยมาก:' : 'Very safe:'}</span> {profileData.communitySafety.verySafe} {language === 'th' ? 'คน' : 'people'} ({((profileData.communitySafety.verySafe / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'รู้สึกปลอดภัยปานกลาง:' : 'Moderately safe:'}</span> {profileData.communitySafety.moderatelySafe} {language === 'th' ? 'คน' : 'people'} ({((profileData.communitySafety.moderatelySafe / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'รู้สึกปลอดภัยน้อย:' : 'Slightly safe:'}</span> {profileData.communitySafety.slightlySafe} {language === 'th' ? 'คน' : 'people'} ({((profileData.communitySafety.slightlySafe / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'รู้สึกไม่ปลอดภัย:' : 'Not safe:'}</span> {profileData.communitySafety.notSafe} {language === 'th' ? 'คน' : 'people'} ({((profileData.communitySafety.notSafe / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
