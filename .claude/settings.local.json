@@ -39,7 +39,8 @@
       "Bash(sort:*)",
       "Bash(pip install:*)",
       "Bash(cat:*)",
-      "Bash(more:*)"
+      "Bash(more:*)",
+      "Bash(start http://localhost:5173/community)"
     ],
     "deny": [],
     "ask": []
