@@ -10,6 +10,48 @@ const CommunityProfile = ({ onBack }) => {
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedCommunity, setSelectedCommunity] = useState('');
 
+  // Helper function to classify oral health access reasons
+  const getOralHealthReason = (reasonText) => {
+    if (!reasonText || reasonText === '') {
+      return language === 'th' ? 'ไม่ระบุเหตุผล' : 'No reason specified';
+    }
+
+    const textLower = reasonText.toString().toLowerCase();
+
+    // Check for "too expensive" keywords (แพง, สูง, ค่า, เงิน)
+    if (textLower.includes('แพง') || textLower.includes('สูง') || textLower.includes('ค่า') || textLower.includes('เงิน')) {
+      return language === 'th' ? 'ค่าใช้จ่ายสูง/ไม่มีเงิน' : 'Too expensive/No money';
+    }
+
+    // Check for "fear of dentist" keywords (กลัว)
+    if (textLower.includes('กลัว')) {
+      return language === 'th' ? 'กลัวหมอฟัน' : 'Fear of dentist';
+    }
+
+    // Check for "distance/far" keywords (เดิน, ไกล)
+    if (textLower.includes('เดิน') || textLower.includes('ไกล')) {
+      return language === 'th' ? 'ระยะทางไกล' : 'Too far/Distance';
+    }
+
+    // Check for "no time" keywords (ไม่มีเวลา)
+    if (textLower.includes('ไม่มีเวลา') || textLower.includes('เวลา')) {
+      return language === 'th' ? 'ไม่มีเวลา' : 'No time';
+    }
+
+    // Check for "long wait time" keywords (รอ, นาน, คิว)
+    if (textLower.includes('รอ') || textLower.includes('นาน') || textLower.includes('คิว')) {
+      return language === 'th' ? 'รอนาน/คิวยาว' : 'Long wait time';
+    }
+
+    // Check for "self-treatment" keywords (หาย, ยา, เอง)
+    if (textLower.includes('หาย') || textLower.includes('ยา') || textLower.includes('เอง')) {
+      return language === 'th' ? 'รักษาเอง/รอหายเอง' : 'Self-treatment';
+    }
+
+    // Other reasons
+    return language === 'th' ? 'เหตุผลอื่นๆ' : 'Other reasons';
+  };
+
   // District code to name mapping
   const districtCodeMap = useMemo(() => ({
     1001: "พระนคร", 1002: "ดุสิต", 1003: "หนองจอก", 1004: "บางรัก",
@@ -176,7 +218,20 @@ const CommunityProfile = ({ onBack }) => {
 
     // Oral health access reasons (for those who had oral health problems but didn't seek treatment)
     const oralHealthProblems = communityRecords.filter(r => r.oral_health === 1);
-    const noOralTreatment = oralHealthProblems.filter(r => r.oral_health_access === 0).length;
+    const noAccessRecords = oralHealthProblems.filter(r => r.oral_health_access === 0);
+    const noOralTreatment = noAccessRecords.length;
+
+    // Group oral health access reasons
+    const oralHealthReasons = {};
+    if (noAccessRecords.length > 0) {
+      noAccessRecords.forEach(record => {
+        const reason = getOralHealthReason(record.oral_health_access_reason);
+        if (!oralHealthReasons[reason]) {
+          oralHealthReasons[reason] = 0;
+        }
+        oralHealthReasons[reason]++;
+      });
+    }
 
     // Disease types (from those with chronic diseases)
     const diseaseRecords = communityRecords.filter(r => r.diseases_status === 1);
@@ -232,6 +287,7 @@ const CommunityProfile = ({ onBack }) => {
       healthInsuranceTypes,
       oralHealthProblems: oralHealthProblems.length,
       noOralTreatment,
+      oralHealthReasons,
       diseaseTypes
     };
   }, [communityRecords]);
@@ -365,7 +421,7 @@ const CommunityProfile = ({ onBack }) => {
                   <ul className="list-disc list-inside space-y-1 text-gray-700">
                     {Object.entries(profileData.ageGroups).map(([group, count]) => (
                       <li key={group}>
-                        {group}: {count} {language === 'th' ? 'คน' : 'people'} ({((count / profileData.total) * 100).toFixed(1)}%)
+                        {group}: {count} {language === 'th' ? 'คน' : 'people'} ({((count / profileData.total) * 100).toFixed(0)}%)
                       </li>
                     ))}
                   </ul>
@@ -374,9 +430,9 @@ const CommunityProfile = ({ onBack }) => {
                 <div>
                   <h4 className="font-bold text-gray-900 mb-2">{language === 'th' ? 'เพศ' : 'Sex'}</h4>
                   <ul className="list-disc list-inside space-y-1 text-gray-700">
-                    <li>{language === 'th' ? 'ชาย' : 'Male'}: {profileData.sexGroups.male} {language === 'th' ? 'คน' : 'people'} ({((profileData.sexGroups.male / profileData.total) * 100).toFixed(1)}%)</li>
-                    <li>{language === 'th' ? 'หญิง' : 'Female'}: {profileData.sexGroups.female} {language === 'th' ? 'คน' : 'people'} ({((profileData.sexGroups.female / profileData.total) * 100).toFixed(1)}%)</li>
-                    <li>LGBTQ+: {profileData.sexGroups.lgbt} {language === 'th' ? 'คน' : 'people'} ({((profileData.sexGroups.lgbt / profileData.total) * 100).toFixed(1)}%)</li>
+                    <li>{language === 'th' ? 'ชาย' : 'Male'}: {profileData.sexGroups.male} {language === 'th' ? 'คน' : 'people'} ({((profileData.sexGroups.male / profileData.total) * 100).toFixed(0)}%)</li>
+                    <li>{language === 'th' ? 'หญิง' : 'Female'}: {profileData.sexGroups.female} {language === 'th' ? 'คน' : 'people'} ({((profileData.sexGroups.female / profileData.total) * 100).toFixed(0)}%)</li>
+                    <li>LGBTQ+: {profileData.sexGroups.lgbt} {language === 'th' ? 'คน' : 'people'} ({((profileData.sexGroups.lgbt / profileData.total) * 100).toFixed(0)}%)</li>
                   </ul>
                 </div>
               </div>
@@ -389,31 +445,31 @@ const CommunityProfile = ({ onBack }) => {
               </h4>
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ไม่เคยเรียน:' : 'Never attended:'}</span> {profileData.educationLevels.neverAttended} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.neverAttended / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ไม่เคยเรียน:' : 'Never attended:'}</span> {profileData.educationLevels.neverAttended} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.neverAttended / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประถมศึกษาตอนต้น (ป.1-3):' : 'Primary lower (1-3):'}</span> {profileData.educationLevels.primaryLower} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.primaryLower / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประถมศึกษาตอนต้น (ป.1-3):' : 'Primary lower (1-3):'}</span> {profileData.educationLevels.primaryLower} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.primaryLower / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประถมศึกษาตอนปลาย (ป.4-6):' : 'Primary upper (4-6):'}</span> {profileData.educationLevels.primaryUpper} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.primaryUpper / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประถมศึกษาตอนปลาย (ป.4-6):' : 'Primary upper (4-6):'}</span> {profileData.educationLevels.primaryUpper} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.primaryUpper / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'มัธยมศึกษาตอนต้น (ม.1-3):' : 'Secondary lower (M.1-3):'}</span> {profileData.educationLevels.secondaryLower} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.secondaryLower / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'มัธยมศึกษาตอนต้น (ม.1-3):' : 'Secondary lower (M.1-3):'}</span> {profileData.educationLevels.secondaryLower} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.secondaryLower / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'มัธยมศึกษาตอนปลาย (ม.4-6):' : 'Secondary upper (M.4-6):'}</span> {profileData.educationLevels.secondaryUpper} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.secondaryUpper / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'มัธยมศึกษาตอนปลาย (ม.4-6):' : 'Secondary upper (M.4-6):'}</span> {profileData.educationLevels.secondaryUpper} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.secondaryUpper / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ปวช. (Vocational Certificate):' : 'Vocational Certificate:'}</span> {profileData.educationLevels.vocationalCert} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.vocationalCert / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ปวช.:' : 'Vocational Certificate:'}</span> {profileData.educationLevels.vocationalCert} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.vocationalCert / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ปวส. (Vocational Diploma):' : 'Vocational Diploma:'}</span> {profileData.educationLevels.vocationalDiploma} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.vocationalDiploma / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ปวส.:' : 'Vocational Diploma:'}</span> {profileData.educationLevels.vocationalDiploma} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.vocationalDiploma / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ปริญญาตรี:' : "Bachelor's degree:"}</span> {profileData.educationLevels.bachelor} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.bachelor / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ปริญญาตรี:' : "Bachelor's degree:"}</span> {profileData.educationLevels.bachelor} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.bachelor / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'สูงกว่าปริญญาตรี:' : "Higher than Bachelor's:"}</span> {profileData.educationLevels.higherThanBachelor} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.higherThanBachelor / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'สูงกว่าปริญญาตรี:' : "Higher than Bachelor's:"}</span> {profileData.educationLevels.higherThanBachelor} {language === 'th' ? 'คน' : 'people'} ({((profileData.educationLevels.higherThanBachelor / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
@@ -426,16 +482,76 @@ const CommunityProfile = ({ onBack }) => {
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'อัตราการมีงานทำ:' : 'Employment rate:'}</span> {profileData.employed} / {profileData.total} ({((profileData.employed / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'อัตราการมีงานทำ:' : 'Employment rate:'}</span> {profileData.employed} / {profileData.total} ({((profileData.employed / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'การจ้างงานเปราะบาง:' : 'Vulnerable employment:'}</span> {profileData.vulnerable} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.vulnerable / profileData.employed) * 100).toFixed(1) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                  <span className="font-semibold">{language === 'th' ? 'การจ้างงานเปราะบาง:' : 'Vulnerable employment:'}</span> {profileData.vulnerable} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.vulnerable / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ความไม่มั่นคงทางอาหาร:' : 'Food insecurity:'}</span> {profileData.foodInsecure} / {profileData.total} ({((profileData.foodInsecure / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ความไม่มั่นคงทางอาหาร:' : 'Food insecurity:'}</span> {profileData.foodInsecure} / {profileData.total} ({((profileData.foodInsecure / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
+
+            {/* Occupation Type Breakdown */}
+            {profileData.employed > 0 && (
+              <section className="mb-8 ml-6">
+                <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                  {language === 'th' ? 'ประเภทอาชีพ' : 'Occupation Type'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'รับราชการ:' : 'Civil servant:'}</span> {profileData.occupationTypes.civilServant} {language === 'th' ? 'คน' : 'people'} ({((profileData.occupationTypes.civilServant / profileData.employed) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'รัฐวิสาหกิจ:' : 'State enterprise:'}</span> {profileData.occupationTypes.stateEnterprise} {language === 'th' ? 'คน' : 'people'} ({((profileData.occupationTypes.stateEnterprise / profileData.employed) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'พนักงานบริษัท / ลูกจ้าง:' : 'Company employee:'}</span> {profileData.occupationTypes.companyEmployee} {language === 'th' ? 'คน' : 'people'} ({((profileData.occupationTypes.companyEmployee / profileData.employed) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ธุรกิจส่วนตัว:' : 'Own business:'}</span> {profileData.occupationTypes.ownBusiness} {language === 'th' ? 'คน' : 'people'} ({((profileData.occupationTypes.ownBusiness / profileData.employed) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'อาชีพอิสระ:' : 'Freelance:'}</span> {profileData.occupationTypes.freelance} {language === 'th' ? 'คน' : 'people'} ({((profileData.occupationTypes.freelance / profileData.employed) * 100).toFixed(0)}%)
+                  </li>
+                  {profileData.occupationTypes.other > 0 && (
+                    <li>
+                      <span className="font-semibold">{language === 'th' ? 'อื่น ๆ:' : 'Other:'}</span> {profileData.occupationTypes.other} {language === 'th' ? 'คน' : 'people'} ({((profileData.occupationTypes.other / profileData.employed) * 100).toFixed(0)}%)
+                    </li>
+                  )}
+                </ul>
+              </section>
+            )}
+
+            {/* Freelance Type Breakdown */}
+            {profileData.occupationTypes.freelance > 0 && (
+              <section className="mb-8 ml-12">
+                <h4 className="text-base font-bold text-gray-800 mb-3 border-l-4 border-teal-400 pl-3">
+                  {language === 'th' ? 'ประเภทอาชีพอิสระ' : 'Freelance Type'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'รับจ้างทั่วไป:' : 'General labor:'}</span> {profileData.freelanceTypes.generalLabor} {language === 'th' ? 'คน' : 'people'} ({((profileData.freelanceTypes.generalLabor / profileData.occupationTypes.freelance) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ขายของออนไลน์:' : 'Online seller:'}</span> {profileData.freelanceTypes.onlineSeller} {language === 'th' ? 'คน' : 'people'} ({((profileData.freelanceTypes.onlineSeller / profileData.occupationTypes.freelance) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ไรเดอร์:' : 'Rider:'}</span> {profileData.freelanceTypes.rider} {language === 'th' ? 'คน' : 'people'} ({((profileData.freelanceTypes.rider / profileData.occupationTypes.freelance) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'วินมอเตอร์ไซต์:' : 'Motorcycle taxi:'}</span> {profileData.freelanceTypes.motorcycleTaxi} {language === 'th' ? 'คน' : 'people'} ({((profileData.freelanceTypes.motorcycleTaxi / profileData.occupationTypes.freelance) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ค้าขาย:' : 'Trader:'}</span> {profileData.freelanceTypes.trader} {language === 'th' ? 'คน' : 'people'} ({((profileData.freelanceTypes.trader / profileData.occupationTypes.freelance) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ผู้ค้าหาบเร่แผงลอย:' : 'Street vendor:'}</span> {profileData.freelanceTypes.streetVendor} {language === 'th' ? 'คน' : 'people'} ({((profileData.freelanceTypes.streetVendor / profileData.occupationTypes.freelance) * 100).toFixed(0)}%)
+                  </li>
+                </ul>
+              </section>
+            )}
 
             {/* Healthcare Access */}
             <section className="mb-8">
@@ -445,16 +561,79 @@ const CommunityProfile = ({ onBack }) => {
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'มีหลักประกันสุขภาพ:' : 'Have health coverage:'}</span> {profileData.healthCoverage} / {profileData.total} ({((profileData.healthCoverage / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'มีหลักประกันสุขภาพ:' : 'Have health coverage:'}</span> {profileData.healthCoverage} / {profileData.total} ({((profileData.healthCoverage / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'เข้าถึงบริการทันตกรรม:' : 'Dental care access:'}</span> {profileData.dentalAccess} / {profileData.total} ({((profileData.dentalAccess / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'เข้าถึงบริการทันตกรรม:' : 'Dental care access:'}</span> {profileData.dentalAccess} / {profileData.total} ({((profileData.dentalAccess / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'งดรับบริการเนื่องจากค่าใช้จ่าย:' : 'Skip care due to cost:'}</span> {profileData.skipMedical} / {profileData.total} ({((profileData.skipMedical / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'งดรับบริการเนื่องจากค่าใช้จ่าย:' : 'Skip care due to cost:'}</span> {profileData.skipMedical} / {profileData.total} ({((profileData.skipMedical / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
+
+            {/* Health Insurance Type Breakdown */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'ประเภทหลักประกันสุขภาพ' : 'Health Insurance Type'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'สวัสดิการข้าราชการ/รัฐวิสาหกิจ:' : 'Civil servant welfare:'}</span> {profileData.healthInsuranceTypes.civilServant} {language === 'th' ? 'คน' : 'people'} ({((profileData.healthInsuranceTypes.civilServant / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ประกันสังคม:' : 'Social security:'}</span> {profileData.healthInsuranceTypes.socialSecurity} {language === 'th' ? 'คน' : 'people'} ({((profileData.healthInsuranceTypes.socialSecurity / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'บัตรทอง (30 บาท):' : 'Universal coverage (30 Baht):'}</span> {profileData.healthInsuranceTypes.universalCoverage} {language === 'th' ? 'คน' : 'people'} ({((profileData.healthInsuranceTypes.universalCoverage / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                {profileData.healthInsuranceTypes.other > 0 && (
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'อื่น ๆ:' : 'Other:'}</span> {profileData.healthInsuranceTypes.other} {language === 'th' ? 'คน' : 'people'} ({((profileData.healthInsuranceTypes.other / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                )}
+                {profileData.healthInsuranceTypes.none > 0 && (
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ไม่มีหลักประกัน:' : 'No coverage:'}</span> {profileData.healthInsuranceTypes.none} {language === 'th' ? 'คน' : 'people'} ({((profileData.healthInsuranceTypes.none / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                )}
+              </ul>
+            </section>
+
+            {/* Oral Health Access */}
+            {profileData.oralHealthProblems > 0 && (
+              <section className="mb-8 ml-6">
+                <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                  {language === 'th' ? 'การเข้าถึงบริการทันตกรรม' : 'Oral Health Access'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'มีปัญหาสุขภาพช่องปาก:' : 'Had oral health problems:'}</span> {profileData.oralHealthProblems} {language === 'th' ? 'คน' : 'people'} ({((profileData.oralHealthProblems / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ไม่ได้รับการรักษา:' : 'Did not receive treatment:'}</span> {profileData.noOralTreatment} {language === 'th' ? 'คน' : 'people'} ({profileData.oralHealthProblems > 0 ? ((profileData.noOralTreatment / profileData.oralHealthProblems) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้ที่มีปัญหา' : 'of those with problems'})
+                  </li>
+                </ul>
+              </section>
+            )}
+
+            {/* Oral Health Access Reasons - nested under Oral Health Access */}
+            {profileData.noOralTreatment > 0 && Object.keys(profileData.oralHealthReasons).length > 0 && (
+              <section className="mb-8 ml-12">
+                <h4 className="text-base font-bold text-gray-800 mb-3 border-l-4 border-teal-400 pl-3">
+                  {language === 'th' ? 'เหตุผลที่ไม่ได้รับการรักษา' : 'Reasons for Not Receiving Treatment'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                  {Object.entries(profileData.oralHealthReasons)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([reason, count]) => (
+                      <li key={reason}>
+                        <span className="font-semibold">{reason}:</span> {count} {language === 'th' ? 'คน' : 'people'} ({((count / profileData.noOralTreatment) * 100).toFixed(0)}%)
+                      </li>
+                    ))}
+                </ul>
+              </section>
+            )}
 
             {/* Physical Environment */}
             <section className="mb-8">
@@ -464,13 +643,13 @@ const CommunityProfile = ({ onBack }) => {
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'เป็นเจ้าของบ้าน:' : 'Home ownership:'}</span> {profileData.homeOwnership} / {profileData.total} ({((profileData.homeOwnership / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'เป็นเจ้าของบ้าน:' : 'Home ownership:'}</span> {profileData.homeOwnership} / {profileData.total} ({((profileData.homeOwnership / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'เข้าถึงน้ำสะอาด:' : 'Clean water access:'}</span> {profileData.cleanWater} / {profileData.total} ({((profileData.cleanWater / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'เข้าถึงน้ำสะอาด:' : 'Clean water access:'}</span> {profileData.cleanWater} / {profileData.total} ({((profileData.cleanWater / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบภัยพิบัติ:' : 'Disaster experience:'}</span> {profileData.disasters} / {profileData.total} ({((profileData.disasters / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประสบภัยพิบัติ:' : 'Disaster experience:'}</span> {profileData.disasters} / {profileData.total} ({((profileData.disasters / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
@@ -483,13 +662,13 @@ const CommunityProfile = ({ onBack }) => {
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'มีผู้ช่วยเหลือเมื่อเจ็บป่วย:' : 'Have social support:'}</span> {profileData.socialSupport} / {profileData.total} ({((profileData.socialSupport / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'มีผู้ช่วยเหลือเมื่อเจ็บป่วย:' : 'Have social support:'}</span> {profileData.socialSupport} / {profileData.total} ({((profileData.socialSupport / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบการเลือกปฏิบัติ:' : 'Discrimination experience:'}</span> {profileData.discrimination} / {profileData.total} ({((profileData.discrimination / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประสบการเลือกปฏิบัติ:' : 'Discrimination experience:'}</span> {profileData.discrimination} / {profileData.total} ({((profileData.discrimination / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบความรุนแรง:' : 'Violence experience:'}</span> {profileData.violence} / {profileData.total} ({((profileData.violence / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประสบความรุนแรง:' : 'Violence experience:'}</span> {profileData.violence} / {profileData.total} ({((profileData.violence / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
@@ -502,13 +681,13 @@ const CommunityProfile = ({ onBack }) => {
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ออกกำลังกายสม่ำเสมอ:' : 'Regular exercise:'}</span> {profileData.exercise} / {profileData.total} ({((profileData.exercise / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ออกกำลังกายสม่ำเสมอ:' : 'Regular exercise:'}</span> {profileData.exercise} / {profileData.total} ({((profileData.exercise / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'สูบบุหรี่:' : 'Tobacco use:'}</span> {profileData.smoking} / {profileData.total} ({((profileData.smoking / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'สูบบุหรี่:' : 'Tobacco use:'}</span> {profileData.smoking} / {profileData.total} ({((profileData.smoking / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ดื่มแอลกอฮอล์:' : 'Alcohol consumption:'}</span> {profileData.drinking} / {profileData.total} ({((profileData.drinking / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ดื่มแอลกอฮอล์:' : 'Alcohol consumption:'}</span> {profileData.drinking} / {profileData.total} ({((profileData.drinking / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
@@ -521,16 +700,84 @@ const CommunityProfile = ({ onBack }) => {
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'มีโรคเรื้อรัง:' : 'Chronic disease:'}</span> {profileData.chronicDisease} / {profileData.total} ({((profileData.chronicDisease / profileData.total) * 100).toFixed(1)}%)
-                </li>
-                <li>
-                  <span className="font-semibold">{language === 'th' ? 'โรคเบาหวาน:' : 'Diabetes:'}</span> {profileData.diabetes} / {profileData.total} ({((profileData.diabetes / profileData.total) * 100).toFixed(1)}%)
-                </li>
-                <li>
-                  <span className="font-semibold">{language === 'th' ? 'โรคความดันโลหิตสูง:' : 'Hypertension:'}</span> {profileData.hypertension} / {profileData.total} ({((profileData.hypertension / profileData.total) * 100).toFixed(1)}%)
+                  <span className="font-semibold">{language === 'th' ? 'มีโรคเรื้อรัง:' : 'Chronic disease:'}</span> {profileData.chronicDisease} / {profileData.total} ({((profileData.chronicDisease / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
+
+            {/* Disease Types Breakdown */}
+            {profileData.chronicDisease > 0 && (
+              <section className="mb-8 ml-6">
+                <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                  {language === 'th' ? 'ประเภทโรคเรื้อรัง' : 'Chronic Disease Types'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'เบาหวาน:' : 'Diabetes:'}</span> {profileData.diseaseTypes.diabetes} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.diabetes / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ความดันโลหิตสูง:' : 'Hypertension:'}</span> {profileData.diseaseTypes.hypertension} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.hypertension / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'โรคเกาต์:' : 'Gout:'}</span> {profileData.diseaseTypes.gout} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.gout / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ไตวายเรื้อรัง:' : 'Chronic kidney disease:'}</span> {profileData.diseaseTypes.kidneyDisease} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.kidneyDisease / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'มะเร็ง:' : 'Cancer:'}</span> {profileData.diseaseTypes.cancer} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.cancer / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ไขมันในเลือดสูง:' : 'High cholesterol:'}</span> {profileData.diseaseTypes.highCholesterol} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.highCholesterol / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'กล้ามเนื้อหัวใจขาดเลือด:' : 'Ischemic heart disease:'}</span> {profileData.diseaseTypes.ischemicHeart} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.ischemicHeart / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'โรคตับ:' : 'Liver disease:'}</span> {profileData.diseaseTypes.liverDisease} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.liverDisease / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'หลอดเลือดสมอง:' : 'Stroke:'}</span> {profileData.diseaseTypes.stroke} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.stroke / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'เอชไอวี (HIV):' : 'HIV:'}</span> {profileData.diseaseTypes.hiv} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.hiv / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'โรคทางจิตเวช:' : 'Mental health:'}</span> {profileData.diseaseTypes.mentalHealth} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.mentalHealth / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ภูมิแพ้:' : 'Allergies:'}</span> {profileData.diseaseTypes.allergies} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.allergies / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'โรคกระดูกและข้อ:' : 'Bone and joint disease:'}</span> {profileData.diseaseTypes.boneJoint} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.boneJoint / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'โรคระบบทางเดินหายใจ:' : 'Respiratory disease:'}</span> {profileData.diseaseTypes.respiratory} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.respiratory / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ถุงลมโป่งพอง:' : 'Emphysema:'}</span> {profileData.diseaseTypes.emphysema} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.emphysema / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'โลหิตจาง:' : 'Anemia:'}</span> {profileData.diseaseTypes.anemia} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.anemia / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'กระเพาะอาหาร:' : 'Stomach ulcer:'}</span> {profileData.diseaseTypes.stomachUlcer} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.stomachUlcer / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ลมชัก:' : 'Epilepsy:'}</span> {profileData.diseaseTypes.epilepsy} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.epilepsy / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ลำไส้:' : 'Intestinal disease:'}</span> {profileData.diseaseTypes.intestinal} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.intestinal / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'อัมพาต:' : 'Paralysis:'}</span> {profileData.diseaseTypes.paralysis} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.paralysis / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'อัมพฤกษ์:' : 'Dementia:'}</span> {profileData.diseaseTypes.dementia} {language === 'th' ? 'คน' : 'people'} ({((profileData.diseaseTypes.dementia / profileData.chronicDisease) * 100).toFixed(0)}%)
+                  </li>
+                </ul>
+              </section>
+            )}
           </>
         ) : (
           <div className="text-center py-12 text-gray-500">
