@@ -151,6 +151,47 @@ const CommunityProfile = ({ onBack }) => {
       r.community_disaster_7 === 1 || r.community_disaster_8 === 1
     ).length;
 
+    // Housing status breakdown
+    const housingStatus = {
+      owner: communityRecords.filter(r => r.house_status === 1).length,
+      rent: communityRecords.filter(r => r.house_status === 2).length,
+      withRelatives: communityRecords.filter(r => r.house_status === 3).length,
+      squat: communityRecords.filter(r => r.house_status === 4).length,
+      welfare: communityRecords.filter(r => r.house_status === 5).length
+    };
+
+    // Disaster types breakdown
+    const disasterTypes = {
+      flood: communityRecords.filter(r => r.community_disaster_1 === 1).length,
+      extremeHeat: communityRecords.filter(r => r.community_disaster_2 === 1).length,
+      extremeCold: communityRecords.filter(r => r.community_disaster_3 === 1).length,
+      fire: communityRecords.filter(r => r.community_disaster_4 === 1).length,
+      earthquake: communityRecords.filter(r => r.community_disaster_5 === 1).length,
+      epidemic: communityRecords.filter(r => r.community_disaster_6 === 1).length,
+      subsidence: communityRecords.filter(r => r.community_disaster_7 === 1).length,
+      pollution: communityRecords.filter(r => r.community_disaster_8 === 1).length
+    };
+
+    // Community environment issues
+    const communityEnvironment = {
+      denseCrowded: communityRecords.filter(r => r.community_environment_1 === 1).length,
+      narrowSpace: communityRecords.filter(r => r.community_environment_2 === 1).length,
+      noCleanWater: communityRecords.filter(r => r.community_environment_3 === 1).length,
+      noElectricity: communityRecords.filter(r => r.community_environment_4 === 1).length,
+      poorWasteManagement: communityRecords.filter(r => r.community_environment_5 === 1).length,
+      wasteWater: communityRecords.filter(r => r.community_environment_6 === 1).length,
+      drugs: communityRecords.filter(r => r.community_environment_7 === 1).length
+    };
+
+    // Community amenities for elderly
+    const communityAmenities = {
+      ramp: communityRecords.filter(r => r.community_amenity_type_1 === 1).length,
+      handrails: communityRecords.filter(r => r.community_amenity_type_2 === 1).length,
+      publicSpace: communityRecords.filter(r => r.community_amenity_type_3 === 1).length,
+      healthService: communityRecords.filter(r => r.community_amenity_type_4 === 1).length,
+      none: communityRecords.filter(r => r.community_amenity_type_0 === 1).length
+    };
+
     // Social
     const socialSupport = communityRecords.filter(r => r.helper === 1).length;
     const discrimination = communityRecords.filter(r =>
@@ -162,6 +203,23 @@ const CommunityProfile = ({ onBack }) => {
       r.physical_violence === 1 || r.psychological_violence === 1 || r.sexual_violence === 1
     ).length;
 
+    // Discrimination types
+    const discriminationTypes = {
+      ethnicity: communityRecords.filter(r => r.discrimination_1 === 1).length,
+      religion: communityRecords.filter(r => r.discrimination_2 === 1).length,
+      gender: communityRecords.filter(r => r.discrimination_3 === 1).length,
+      age: communityRecords.filter(r => r.discrimination_4 === 1).length,
+      economicStatus: communityRecords.filter(r => r.discrimination_5 === 1).length,
+      other: communityRecords.filter(r => r.discrimination_other === 1).length
+    };
+
+    // Violence types
+    const violenceTypes = {
+      physical: communityRecords.filter(r => r.physical_violence === 1).length,
+      psychological: communityRecords.filter(r => r.psychological_violence === 1).length,
+      sexual: communityRecords.filter(r => r.sexual_violence === 1).length
+    };
+
     // Health behaviors
     const exercise = communityRecords.filter(r => r.exercise_status === 1).length;
     const smoking = communityRecords.filter(r => r.smoke_status === 1).length;
@@ -171,6 +229,29 @@ const CommunityProfile = ({ onBack }) => {
     const chronicDisease = communityRecords.filter(r => r.diseases_status === 1).length;
     const diabetes = communityRecords.filter(r => r.diseases_status === 1 && r.diseases_type_1 === 1).length;
     const hypertension = communityRecords.filter(r => r.diseases_status === 1 && r.diseases_type_2 === 1).length;
+
+    // Disability
+    const disabled = communityRecords.filter(r => r.disable_status === 1).length;
+    const disabledCanWork = communityRecords.filter(r => r.disable_status === 1 && r.disable_work_status === 1).length;
+
+    // Language skills
+    const languageSkills = {
+      canSpeak: communityRecords.filter(r => r.speak === 1).length,
+      canRead: communityRecords.filter(r => r.read === 1).length,
+      canWrite: communityRecords.filter(r => r.write === 1).length,
+      canMath: communityRecords.filter(r => r.math === 1).length
+    };
+
+    // Training participation
+    const hadTraining = communityRecords.filter(r => r.training === 1).length;
+
+    // Get employed workers for occupation analysis
+    const employedRecords = communityRecords.filter(r => r.occupation_status === 1);
+
+    // Occupation injuries (from employed workers)
+    const occupationInjury = employedRecords.filter(r => r.occupation_injury === 1).length;
+    const occupationSmallInjury = employedRecords.filter(r => r.occupation_small_injury === 1).length;
+    const hasOccupationWelfare = employedRecords.filter(r => r.occupation_welfare === 1).length;
 
     // Education levels
     const educationLevels = {
@@ -186,7 +267,6 @@ const CommunityProfile = ({ onBack }) => {
     };
 
     // Occupation types (from employed workers)
-    const employedRecords = communityRecords.filter(r => r.occupation_status === 1);
     const occupationTypes = {
       civilServant: employedRecords.filter(r => r.occupation_type === 1).length,
       stateEnterprise: employedRecords.filter(r => r.occupation_type === 2).length,
@@ -288,7 +368,20 @@ const CommunityProfile = ({ onBack }) => {
       oralHealthProblems: oralHealthProblems.length,
       noOralTreatment,
       oralHealthReasons,
-      diseaseTypes
+      diseaseTypes,
+      housingStatus,
+      disasterTypes,
+      communityEnvironment,
+      communityAmenities,
+      discriminationTypes,
+      violenceTypes,
+      disabled,
+      disabledCanWork,
+      languageSkills,
+      hadTraining,
+      occupationInjury,
+      occupationSmallInjury,
+      hasOccupationWelfare
     };
   }, [communityRecords]);
 
@@ -438,6 +531,44 @@ const CommunityProfile = ({ onBack }) => {
               </div>
             </section>
 
+            {/* Disability Section */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'ความพิการ' : 'Disability'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'เป็นคนพิการ:' : 'People with disabilities:'}</span> {profileData.disabled} {language === 'th' ? 'คน' : 'people'} ({((profileData.disabled / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                {profileData.disabled > 0 && (
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'สามารถทำงานได้:' : 'Can work:'}</span> {profileData.disabledCanWork} {language === 'th' ? 'คน' : 'people'} ({((profileData.disabledCanWork / profileData.disabled) * 100).toFixed(0)}% {language === 'th' ? 'ของคนพิการ' : 'of disabled'})
+                  </li>
+                )}
+              </ul>
+            </section>
+
+            {/* Language Skills Section */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'ทักษะภาษาไทย' : 'Thai Language Skills'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'พูดได้:' : 'Can speak:'}</span> {profileData.languageSkills.canSpeak} {language === 'th' ? 'คน' : 'people'} ({((profileData.languageSkills.canSpeak / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'อ่านได้:' : 'Can read:'}</span> {profileData.languageSkills.canRead} {language === 'th' ? 'คน' : 'people'} ({((profileData.languageSkills.canRead / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'เขียนได้:' : 'Can write:'}</span> {profileData.languageSkills.canWrite} {language === 'th' ? 'คน' : 'people'} ({((profileData.languageSkills.canWrite / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'คำนวณได้:' : 'Can do math:'}</span> {profileData.languageSkills.canMath} {language === 'th' ? 'คน' : 'people'} ({((profileData.languageSkills.canMath / profileData.total) * 100).toFixed(0)}%)
+                </li>
+              </ul>
+            </section>
+
             {/* Education Level Breakdown - Right after Demographics */}
             <section className="mb-8 ml-6">
               <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
@@ -474,6 +605,18 @@ const CommunityProfile = ({ onBack }) => {
               </ul>
             </section>
 
+            {/* Training Section */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'การฝึกอบรม' : 'Training'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'เข้าร่วมการฝึกอบรม (12 เดือนที่ผ่านมา):' : 'Participated in training (past 12 months):'}</span> {profileData.hadTraining} {language === 'th' ? 'คน' : 'people'} ({((profileData.hadTraining / profileData.total) * 100).toFixed(0)}%)
+                </li>
+              </ul>
+            </section>
+
             {/* Economic Security */}
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
@@ -485,7 +628,16 @@ const CommunityProfile = ({ onBack }) => {
                   <span className="font-semibold">{language === 'th' ? 'อัตราการมีงานทำ:' : 'Employment rate:'}</span> {profileData.employed} / {profileData.total} ({((profileData.employed / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'การจ้างงานเปราะบาง:' : 'Vulnerable employment:'}</span> {profileData.vulnerable} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.vulnerable / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                  <span className="font-semibold">{language === 'th' ? 'การจ้างงานเปราะบาง (ไม่มีสัญญาจ้าง):' : 'Vulnerable employment (no contract):'}</span> {profileData.vulnerable} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.vulnerable / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'มีสวัสดิการในการทำงาน:' : 'Have work welfare:'}</span> {profileData.hasOccupationWelfare} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.hasOccupationWelfare / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'บาดเจ็บร้ายแรงจากการทำงาน (12 เดือน):' : 'Serious work injury (12 months):'}</span> {profileData.occupationInjury} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.occupationInjury / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'บาดเจ็บเล็กน้อยจากการทำงาน (12 เดือน):' : 'Minor work injury (12 months):'}</span> {profileData.occupationSmallInjury} / {profileData.employed} ({profileData.employed > 0 ? ((profileData.occupationSmallInjury / profileData.employed) * 100).toFixed(0) : 0}% {language === 'th' ? 'ของผู้มีงาน' : 'of employed'})
                 </li>
                 <li>
                   <span className="font-semibold">{language === 'th' ? 'ความไม่มั่นคงทางอาหาร:' : 'Food insecurity:'}</span> {profileData.foodInsecure} / {profileData.total} ({((profileData.foodInsecure / profileData.total) * 100).toFixed(0)}%)
@@ -649,7 +801,120 @@ const CommunityProfile = ({ onBack }) => {
                   <span className="font-semibold">{language === 'th' ? 'เข้าถึงน้ำสะอาด:' : 'Clean water access:'}</span> {profileData.cleanWater} / {profileData.total} ({((profileData.cleanWater / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบภัยพิบัติ:' : 'Disaster experience:'}</span> {profileData.disasters} / {profileData.total} ({((profileData.disasters / profileData.total) * 100).toFixed(0)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประสบภัยพิบัติ (5 ปีที่ผ่านมา):' : 'Disaster experience (past 5 years):'}</span> {profileData.disasters} / {profileData.total} ({((profileData.disasters / profileData.total) * 100).toFixed(0)}%)
+                </li>
+              </ul>
+            </section>
+
+            {/* Housing Status Breakdown */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'สถานะการครอบครองที่อยู่อาศัย' : 'Housing Status'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'เป็นเจ้าของ:' : 'Own:'}</span> {profileData.housingStatus.owner} {language === 'th' ? 'คน' : 'people'} ({((profileData.housingStatus.owner / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'เช่า:' : 'Rent:'}</span> {profileData.housingStatus.rent} {language === 'th' ? 'คน' : 'people'} ({((profileData.housingStatus.rent / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'อยู่อาศัยกับญาติหรือเพื่อน:' : 'Living with relatives/friends:'}</span> {profileData.housingStatus.withRelatives} {language === 'th' ? 'คน' : 'people'} ({((profileData.housingStatus.withRelatives / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ที่บุกรุก:' : 'Squat:'}</span> {profileData.housingStatus.squat} {language === 'th' ? 'คน' : 'people'} ({((profileData.housingStatus.squat / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'บ้านพักสวัสดิการ:' : 'Welfare housing:'}</span> {profileData.housingStatus.welfare} {language === 'th' ? 'คน' : 'people'} ({((profileData.housingStatus.welfare / profileData.total) * 100).toFixed(0)}%)
+                </li>
+              </ul>
+            </section>
+
+            {/* Community Environment Issues */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'ลักษณะพื้นที่โดยรอบที่อาศัยอยู่' : 'Community Environment Issues'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'อาคารหนาแน่น:' : 'Dense/Crowded:'}</span> {profileData.communityEnvironment.denseCrowded} ({((profileData.communityEnvironment.denseCrowded / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'บ้านมีพื้นที่แคบ:' : 'Narrow space:'}</span> {profileData.communityEnvironment.narrowSpace} ({((profileData.communityEnvironment.narrowSpace / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ขาดน้ำสะอาด:' : 'Lack clean water:'}</span> {profileData.communityEnvironment.noCleanWater} ({((profileData.communityEnvironment.noCleanWater / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ขาดไฟฟ้า:' : 'No electricity:'}</span> {profileData.communityEnvironment.noElectricity} ({((profileData.communityEnvironment.noElectricity / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ขาดการจัดการขยะที่เหมาะสม:' : 'Poor waste management:'}</span> {profileData.communityEnvironment.poorWasteManagement} ({((profileData.communityEnvironment.poorWasteManagement / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'น้ำเสีย:' : 'Wastewater issues:'}</span> {profileData.communityEnvironment.wasteWater} ({((profileData.communityEnvironment.wasteWater / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ยาเสพติด:' : 'Drug issues:'}</span> {profileData.communityEnvironment.drugs} ({((profileData.communityEnvironment.drugs / profileData.total) * 100).toFixed(0)}%)
+                </li>
+              </ul>
+            </section>
+
+            {/* Disaster Types Breakdown */}
+            {profileData.disasters > 0 && (
+              <section className="mb-8 ml-6">
+                <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                  {language === 'th' ? 'ประเภทภัยพิบัติที่ประสบ' : 'Types of Disasters Experienced'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'น้ำท่วม:' : 'Flood:'}</span> {profileData.disasterTypes.flood} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.flood / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'อากาศร้อนจัด:' : 'Extreme heat:'}</span> {profileData.disasterTypes.extremeHeat} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.extremeHeat / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'อากาศเย็นจัด:' : 'Extreme cold:'}</span> {profileData.disasterTypes.extremeCold} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.extremeCold / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ไฟไหม้:' : 'Fire:'}</span> {profileData.disasterTypes.fire} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.fire / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'แผ่นดินไหว:' : 'Earthquake:'}</span> {profileData.disasterTypes.earthquake} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.earthquake / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'โรคระบาด:' : 'Epidemic:'}</span> {profileData.disasterTypes.epidemic} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.epidemic / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'หลุมยุบ พื้นดินทรุด:' : 'Subsidence:'}</span> {profileData.disasterTypes.subsidence} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.subsidence / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'มลพิษ (ฝุ่น):' : 'Pollution (dust):'}</span> {profileData.disasterTypes.pollution} {language === 'th' ? 'คน' : 'people'} ({((profileData.disasterTypes.pollution / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                </ul>
+              </section>
+            )}
+
+            {/* Community Amenities for Elderly */}
+            <section className="mb-8 ml-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {language === 'th' ? 'สิ่งอำนวยความสะดวกสำหรับผู้สูงอายุ' : 'Amenities for Elderly'}
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ทางลาด:' : 'Ramp:'}</span> {profileData.communityAmenities.ramp} {language === 'th' ? 'คน' : 'people'} ({((profileData.communityAmenities.ramp / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ราวจับ:' : 'Handrails:'}</span> {profileData.communityAmenities.handrails} {language === 'th' ? 'คน' : 'people'} ({((profileData.communityAmenities.handrails / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'พื้นที่สาธารณะ:' : 'Public space:'}</span> {profileData.communityAmenities.publicSpace} {language === 'th' ? 'คน' : 'people'} ({((profileData.communityAmenities.publicSpace / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'สถานบริการสุขภาพ:' : 'Health service:'}</span> {profileData.communityAmenities.healthService} {language === 'th' ? 'คน' : 'people'} ({((profileData.communityAmenities.healthService / profileData.total) * 100).toFixed(0)}%)
+                </li>
+                <li>
+                  <span className="font-semibold">{language === 'th' ? 'ไม่มีสิ่งอำนวยความสะดวก:' : 'No amenities:'}</span> {profileData.communityAmenities.none} {language === 'th' ? 'คน' : 'people'} ({((profileData.communityAmenities.none / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
@@ -665,13 +930,64 @@ const CommunityProfile = ({ onBack }) => {
                   <span className="font-semibold">{language === 'th' ? 'มีผู้ช่วยเหลือเมื่อเจ็บป่วย:' : 'Have social support:'}</span> {profileData.socialSupport} / {profileData.total} ({((profileData.socialSupport / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบการเลือกปฏิบัติ:' : 'Discrimination experience:'}</span> {profileData.discrimination} / {profileData.total} ({((profileData.discrimination / profileData.total) * 100).toFixed(0)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประสบการเลือกปฏิบัติ (12 เดือน):' : 'Discrimination experience (12 months):'}</span> {profileData.discrimination} / {profileData.total} ({((profileData.discrimination / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบความรุนแรง:' : 'Violence experience:'}</span> {profileData.violence} / {profileData.total} ({((profileData.violence / profileData.total) * 100).toFixed(0)}%)
+                  <span className="font-semibold">{language === 'th' ? 'ประสบความรุนแรง (12 เดือน):' : 'Violence experience (12 months):'}</span> {profileData.violence} / {profileData.total} ({((profileData.violence / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
+
+            {/* Discrimination Types Breakdown */}
+            {profileData.discrimination > 0 && (
+              <section className="mb-8 ml-6">
+                <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                  {language === 'th' ? 'ประเภทการถูกเลือกปฏิบัติ' : 'Types of Discrimination'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'เชื้อชาติ:' : 'Ethnicity:'}</span> {profileData.discriminationTypes.ethnicity} {language === 'th' ? 'คน' : 'people'} ({((profileData.discriminationTypes.ethnicity / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ศาสนา:' : 'Religion:'}</span> {profileData.discriminationTypes.religion} {language === 'th' ? 'คน' : 'people'} ({((profileData.discriminationTypes.religion / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'เพศ:' : 'Gender:'}</span> {profileData.discriminationTypes.gender} {language === 'th' ? 'คน' : 'people'} ({((profileData.discriminationTypes.gender / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'อายุ:' : 'Age:'}</span> {profileData.discriminationTypes.age} {language === 'th' ? 'คน' : 'people'} ({((profileData.discriminationTypes.age / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'สถานะทางเศรษฐกิจ:' : 'Economic status:'}</span> {profileData.discriminationTypes.economicStatus} {language === 'th' ? 'คน' : 'people'} ({((profileData.discriminationTypes.economicStatus / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  {profileData.discriminationTypes.other > 0 && (
+                    <li>
+                      <span className="font-semibold">{language === 'th' ? 'อื่น ๆ:' : 'Other:'}</span> {profileData.discriminationTypes.other} {language === 'th' ? 'คน' : 'people'} ({((profileData.discriminationTypes.other / profileData.total) * 100).toFixed(0)}%)
+                    </li>
+                  )}
+                </ul>
+              </section>
+            )}
+
+            {/* Violence Types Breakdown */}
+            {profileData.violence > 0 && (
+              <section className="mb-8 ml-6">
+                <h4 className="text-lg font-bold text-gray-800 mb-3 border-l-4 border-teal-500 pl-3">
+                  {language === 'th' ? 'ประเภทความรุนแรง' : 'Types of Violence'}
+                </h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ความรุนแรงทางร่างกาย:' : 'Physical violence:'}</span> {profileData.violenceTypes.physical} {language === 'th' ? 'คน' : 'people'} ({((profileData.violenceTypes.physical / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ความรุนแรงทางจิตใจ:' : 'Psychological violence:'}</span> {profileData.violenceTypes.psychological} {language === 'th' ? 'คน' : 'people'} ({((profileData.violenceTypes.psychological / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                  <li>
+                    <span className="font-semibold">{language === 'th' ? 'ความรุนแรงทางเพศ:' : 'Sexual violence:'}</span> {profileData.violenceTypes.sexual} {language === 'th' ? 'คน' : 'people'} ({((profileData.violenceTypes.sexual / profileData.total) * 100).toFixed(0)}%)
+                  </li>
+                </ul>
+              </section>
+            )}
 
             {/* Health Behaviors */}
             <section className="mb-8">
