@@ -892,7 +892,34 @@ const CommunityProfile = ({ onBack }) => {
                 <h3 className="text-xl font-bold">{language === 'th' ? 'สภาพแวดล้อมทางกายภาพ' : 'Physical Environment'}</h3>
                 <p className="mt-2 text-sm leading-relaxed">
                   {language === 'th'
-                    ? `ในชุมชนนี้มีผู้ที่เป็นเจ้าของบ้านของตนเอง ${profileData.homeOwnership} คน (${((profileData.homeOwnership / profileData.total) * 100).toFixed(0)}%) และมีผู้ที่สามารถเข้าถึงน้ำสะอาด ${profileData.cleanWater} คน (${((profileData.cleanWater / profileData.total) * 100).toFixed(0)}%) นอกจากนี้พบว่ามี ${profileData.disasters} คน (${((profileData.disasters / profileData.total) * 100).toFixed(0)}%) ที่เคยประสบภัยพิบัติในช่วง 5 ปีที่ผ่านมา ${profileData.disasters > 0 && profileData.disasterTypes.flood > 0 ? `โดยภัยที่พบมากที่สุดคือน้ำท่วม ${profileData.disasterTypes.flood} คน` : ''}`
+                    ? (() => {
+                        // Find most common disaster
+                        const disasterNames = {
+                          flood: 'น้ำท่วม',
+                          extremeHeat: 'อากาศร้อนจัด',
+                          extremeCold: 'อากาศเย็นจัด',
+                          fire: 'ไฟไหม้',
+                          earthquake: 'แผ่นดินไหว',
+                          epidemic: 'โรคระบาด',
+                          subsidence: 'หลุมยุบ พื้นดินทรุด',
+                          pollution: 'มลพิษ (ฝุ่น)'
+                        };
+                        const maxDisaster = Object.entries(profileData.disasterTypes).reduce((max, [key, val]) => val > max.val ? {key, val} : max, {key: '', val: 0});
+
+                        // Find most common environment issue
+                        const envNames = {
+                          denseCrowded: 'อาคารที่อยู่อาศัยหนาแน่น',
+                          narrowSpace: 'บ้านมีพื้นที่แคบ',
+                          noCleanWater: 'ขาดการเข้าถึงน้ำสะอาด',
+                          noElectricity: 'ขาดไฟฟ้า',
+                          poorWasteManagement: 'ขาดการจัดการขยะที่เหมาะสม',
+                          wasteWater: 'น้ำเสีย',
+                          drugs: 'ยาเสพติด'
+                        };
+                        const maxEnv = Object.entries(profileData.communityEnvironment).reduce((max, [key, val]) => val > max.val ? {key, val} : max, {key: '', val: 0});
+
+                        return `ในชุมชนนี้มีผู้ที่เป็นเจ้าของบ้านของตนเอง ${profileData.homeOwnership} คน (${((profileData.homeOwnership / profileData.total) * 100).toFixed(0)}%) และมีผู้ที่สามารถเข้าถึงน้ำสะอาด ${profileData.cleanWater} คน (${((profileData.cleanWater / profileData.total) * 100).toFixed(0)}%) ${maxEnv.val > 0 ? `ลักษณะพื้นที่โดยรอบที่พบมากที่สุดคือ ${envNames[maxEnv.key]} ${maxEnv.val} คน (${((maxEnv.val / profileData.total) * 100).toFixed(0)}%) ` : ''}นอกจากนี้พบว่ามี ${profileData.disasters} คน (${((profileData.disasters / profileData.total) * 100).toFixed(0)}%) ที่เคยประสบภัยพิบัติในช่วง 5 ปีที่ผ่านมา ${maxDisaster.val > 0 ? `โดยภัยที่พบมากที่สุดคือ${disasterNames[maxDisaster.key]} ${maxDisaster.val} คน (${((maxDisaster.val / profileData.total) * 100).toFixed(0)}%)` : ''}`;
+                      })()
                     : `This community has ${profileData.homeOwnership} homeowners (${((profileData.homeOwnership / profileData.total) * 100).toFixed(0)}%) and ${profileData.cleanWater} people (${((profileData.cleanWater / profileData.total) * 100).toFixed(0)}%) with access to clean water. ${profileData.disasters} people (${((profileData.disasters / profileData.total) * 100).toFixed(0)}%) have experienced disasters in the past 5 years.`
                   }
                 </p>
