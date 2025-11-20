@@ -587,6 +587,12 @@ const CommunityProfile = ({ onBack }) => {
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
                 <h3 className="text-xl font-bold">{language === 'th' ? 'ข้อมูลประชากร' : 'Demographics'}</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {language === 'th'
+                    ? `ชุมชนนี้มีผู้ตอบแบบสำรวจทั้งหมด ${profileData.total} คน โดยส่วนใหญ่อยู่ในช่วงอายุ ${Object.entries(profileData.ageGroups).sort((a, b) => b[1] - a[1])[0][0]} จำนวน ${Object.entries(profileData.ageGroups).sort((a, b) => b[1] - a[1])[0][1]} คน (${((Object.entries(profileData.ageGroups).sort((a, b) => b[1] - a[1])[0][1] / profileData.total) * 100).toFixed(0)}%) เมื่อพิจารณาเพศพบว่า มีเพศชาย ${profileData.sexGroups.male} คน (${((profileData.sexGroups.male / profileData.total) * 100).toFixed(0)}%) และเพศหญิง ${profileData.sexGroups.female} คน (${((profileData.sexGroups.female / profileData.total) * 100).toFixed(0)}%)`
+                    : `This community has ${profileData.total} survey respondents, with the majority in the ${Object.entries(profileData.ageGroups).sort((a, b) => b[1] - a[1])[0][0]} age group (${Object.entries(profileData.ageGroups).sort((a, b) => b[1] - a[1])[0][1]} people, ${((Object.entries(profileData.ageGroups).sort((a, b) => b[1] - a[1])[0][1] / profileData.total) * 100).toFixed(0)}%). Gender distribution shows ${profileData.sexGroups.male} males (${((profileData.sexGroups.male / profileData.total) * 100).toFixed(0)}%) and ${profileData.sexGroups.female} females (${((profileData.sexGroups.female / profileData.total) * 100).toFixed(0)}%).`
+                  }
+                </p>
               </div>
 
               <div className="space-y-4">
@@ -702,6 +708,12 @@ const CommunityProfile = ({ onBack }) => {
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
                 <h3 className="text-xl font-bold">{language === 'th' ? 'ความมั่นคงทางเศรษฐกิจ' : 'Economic Security'}</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {language === 'th'
+                    ? `ในชุมชนนี้มีผู้ที่มีงานทำ ${profileData.employed} คน จากทั้งหมด ${profileData.total} คน (${((profileData.employed / profileData.total) * 100).toFixed(0)}%) ${profileData.employed > 0 ? (profileData.occupationTypes.civilServant > 0 ? `โดยส่วนใหญ่ทำงานรับราชการ ${profileData.occupationTypes.civilServant} คน (${((profileData.occupationTypes.civilServant / profileData.employed) * 100).toFixed(0)}%)` : profileData.occupationTypes.freelance > 0 ? `โดยส่วนใหญ่ประกอบอาชีพอิสระ ${profileData.occupationTypes.freelance} คน (${((profileData.occupationTypes.freelance / profileData.employed) * 100).toFixed(0)}%)` : profileData.occupationTypes.companyEmployee > 0 ? `โดยส่วนใหญ่เป็นพนักงานบริษัท ${profileData.occupationTypes.companyEmployee} คน (${((profileData.occupationTypes.companyEmployee / profileData.employed) * 100).toFixed(0)}%)` : profileData.occupationTypes.ownBusiness > 0 ? `โดยส่วนใหญ่ทำธุรกิจส่วนตัว ${profileData.occupationTypes.ownBusiness} คน (${((profileData.occupationTypes.ownBusiness / profileData.employed) * 100).toFixed(0)}%)` : '') : ''} ${profileData.employed > 0 ? `มีผู้ที่ทำงานนอกระบบ (ไม่มีสัญญาจ้าง) ${profileData.vulnerable} คน (${((profileData.vulnerable / profileData.employed) * 100).toFixed(0)}% ของผู้มีงาน) ` : ''}และพบว่ามี ${profileData.foodInsecure} คน (${((profileData.foodInsecure / profileData.total) * 100).toFixed(0)}%) ที่มีความไม่มั่นคงทางอาหาร`
+                    : `This community has ${profileData.employed} employed people out of ${profileData.total} (${((profileData.employed / profileData.total) * 100).toFixed(0)}%). ${profileData.vulnerable} people (${profileData.employed > 0 ? ((profileData.vulnerable / profileData.employed) * 100).toFixed(0) : 0}%) work in informal employment without contracts. ${profileData.foodInsecure} people (${((profileData.foodInsecure / profileData.total) * 100).toFixed(0)}%) experience food insecurity.`
+                  }
+                </p>
               </div>
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -790,6 +802,12 @@ const CommunityProfile = ({ onBack }) => {
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
                 <h3 className="text-xl font-bold">{language === 'th' ? 'การเข้าถึงบริการสุขภาพ' : 'Healthcare Access'}</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {language === 'th'
+                    ? `ชุมชนนี้มีผู้ที่มีหลักประกันสุขภาพ ${profileData.healthCoverage} คน จากทั้งหมด ${profileData.total} คน (${((profileData.healthCoverage / profileData.total) * 100).toFixed(0)}%) อย่างไรก็ตามพบว่ามี ${profileData.skipMedical} คน (${((profileData.skipMedical / profileData.total) * 100).toFixed(0)}%) ที่เคยงดพบแพทย์เมื่อป่วย และมี ${profileData.oralHealthProblems} คน (${((profileData.oralHealthProblems / profileData.total) * 100).toFixed(0)}%) ที่มีปัญหาสุขภาพช่องปาก แต่สามารถเข้าถึงบริการทันตกรรมได้เพียง ${profileData.dentalAccess} คน (${((profileData.dentalAccess / profileData.total) * 100).toFixed(0)}%)`
+                    : `This community has ${profileData.healthCoverage} people with health coverage out of ${profileData.total} (${((profileData.healthCoverage / profileData.total) * 100).toFixed(0)}%). However, ${profileData.skipMedical} people (${((profileData.skipMedical / profileData.total) * 100).toFixed(0)}%) have skipped medical care when sick. ${profileData.oralHealthProblems} people (${((profileData.oralHealthProblems / profileData.total) * 100).toFixed(0)}%) have oral health problems, but only ${profileData.dentalAccess} (${((profileData.dentalAccess / profileData.total) * 100).toFixed(0)}%) can access dental services.`
+                  }
+                </p>
               </div>
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -872,6 +890,12 @@ const CommunityProfile = ({ onBack }) => {
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
                 <h3 className="text-xl font-bold">{language === 'th' ? 'สภาพแวดล้อมทางกายภาพ' : 'Physical Environment'}</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {language === 'th'
+                    ? `ในชุมชนนี้มีผู้ที่เป็นเจ้าของบ้านของตนเอง ${profileData.homeOwnership} คน (${((profileData.homeOwnership / profileData.total) * 100).toFixed(0)}%) และมีผู้ที่สามารถเข้าถึงน้ำสะอาด ${profileData.cleanWater} คน (${((profileData.cleanWater / profileData.total) * 100).toFixed(0)}%) นอกจากนี้พบว่ามี ${profileData.disasters} คน (${((profileData.disasters / profileData.total) * 100).toFixed(0)}%) ที่เคยประสบภัยพิบัติในช่วง 5 ปีที่ผ่านมา ${profileData.disasters > 0 && profileData.disasterTypes.flood > 0 ? `โดยภัยที่พบมากที่สุดคือน้ำท่วม ${profileData.disasterTypes.flood} คน` : ''}`
+                    : `This community has ${profileData.homeOwnership} homeowners (${((profileData.homeOwnership / profileData.total) * 100).toFixed(0)}%) and ${profileData.cleanWater} people (${((profileData.cleanWater / profileData.total) * 100).toFixed(0)}%) with access to clean water. ${profileData.disasters} people (${((profileData.disasters / profileData.total) * 100).toFixed(0)}%) have experienced disasters in the past 5 years.`
+                  }
+                </p>
               </div>
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -1004,6 +1028,12 @@ const CommunityProfile = ({ onBack }) => {
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
                 <h3 className="text-xl font-bold">{language === 'th' ? 'บริบททางสังคม' : 'Social Context'}</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {language === 'th'
+                    ? `ในด้านความสัมพันธ์ทางสังคม พบว่ามี ${profileData.socialSupport} คน (${((profileData.socialSupport / profileData.total) * 100).toFixed(0)}%) ที่มีเพื่อนหรือญาติที่สามารถพึ่งพาได้ในยามฉุกเฉิน เมื่อพิจารณาถึงปัญหาทางสังคมพบว่ามี ${profileData.discrimination} คน (${((profileData.discrimination / profileData.total) * 100).toFixed(0)}%) ที่เคยประสบการเลือกปฏิบัติ และมี ${profileData.violence} คน (${((profileData.violence / profileData.total) * 100).toFixed(0)}%) ที่เคยประสบความรุนแรงในช่วง 12 เดือนที่ผ่านมา ${profileData.communitySafety.verySafe > 0 ? `ส่วนใหญ่รู้สึกปลอดภัยมากในชุมชน ${profileData.communitySafety.verySafe} คน (${((profileData.communitySafety.verySafe / profileData.total) * 100).toFixed(0)}%)` : profileData.communitySafety.moderatelySafe > 0 ? `ส่วนใหญ่รู้สึกปลอดภัยปานกลางในชุมชน ${profileData.communitySafety.moderatelySafe} คน (${((profileData.communitySafety.moderatelySafe / profileData.total) * 100).toFixed(0)}%)` : ''}`
+                    : `Regarding social relationships, ${profileData.socialSupport} people (${((profileData.socialSupport / profileData.total) * 100).toFixed(0)}%) have friends or relatives they can rely on in emergencies. ${profileData.discrimination} people (${((profileData.discrimination / profileData.total) * 100).toFixed(0)}%) have experienced discrimination and ${profileData.violence} people (${((profileData.violence / profileData.total) * 100).toFixed(0)}%) have experienced violence in the past 12 months.`
+                  }
+                </p>
               </div>
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -1011,10 +1041,10 @@ const CommunityProfile = ({ onBack }) => {
                   <span className="font-semibold">{language === 'th' ? 'มีเพื่อนหรือญาติที่สามารถพึ่งพาได้ในยามฉุกเฉิน:' : 'Have friends/relatives to rely on in emergencies:'}</span> {profileData.socialSupport} / {profileData.total} ({((profileData.socialSupport / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบการเลือกปฏิบัติ (12 เดือน):' : 'Discrimination experience (12 months):'}</span> {profileData.discrimination} / {profileData.total} ({((profileData.discrimination / profileData.total) * 100).toFixed(0)}%)
+                  <span className="font-semibold">{language === 'th' ? 'เคยประสบการเลือกปฏิบัติ (ในช่วง 12 เดือนที่ผ่านมา):' : 'Experienced discrimination (past 12 months):'}</span> {profileData.discrimination} / {profileData.total} ({((profileData.discrimination / profileData.total) * 100).toFixed(0)}%)
                 </li>
                 <li>
-                  <span className="font-semibold">{language === 'th' ? 'ประสบความรุนแรง (12 เดือน):' : 'Violence experience (12 months):'}</span> {profileData.violence} / {profileData.total} ({((profileData.violence / profileData.total) * 100).toFixed(0)}%)
+                  <span className="font-semibold">{language === 'th' ? 'เคยประสบความรุนแรง (ในช่วง 12 เดือนที่ผ่านมา):' : 'Experienced violence (past 12 months):'}</span> {profileData.violence} / {profileData.total} ({((profileData.violence / profileData.total) * 100).toFixed(0)}%)
                 </li>
               </ul>
             </section>
@@ -1095,6 +1125,12 @@ const CommunityProfile = ({ onBack }) => {
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
                 <h3 className="text-xl font-bold">{language === 'th' ? 'พฤติกรรมสุขภาพ' : 'Health Behaviors'}</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {language === 'th'
+                    ? `เมื่อพิจารณาพฤติกรรมสุขภาพพบว่า มี ${profileData.exercise} คน (${((profileData.exercise / profileData.total) * 100).toFixed(0)}%) ที่ออกกำลังกายสม่ำเสมอ ส่วนพฤติกรรมเสี่ยงต่อสุขภาพพบว่ามี ${profileData.smoking} คน (${((profileData.smoking / profileData.total) * 100).toFixed(0)}%) ที่สูบบุหรี่ และมี ${profileData.drinking} คน (${((profileData.drinking / profileData.total) * 100).toFixed(0)}%) ที่ดื่มแอลกอฮอล์`
+                    : `Regarding health behaviors, ${profileData.exercise} people (${((profileData.exercise / profileData.total) * 100).toFixed(0)}%) exercise regularly. For risk behaviors, ${profileData.smoking} people (${((profileData.smoking / profileData.total) * 100).toFixed(0)}%) smoke tobacco and ${profileData.drinking} people (${((profileData.drinking / profileData.total) * 100).toFixed(0)}%) consume alcohol.`
+                  }
+                </p>
               </div>
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -1114,6 +1150,12 @@ const CommunityProfile = ({ onBack }) => {
             <section className="mb-8">
               <div className="bg-teal-700 text-white px-4 py-2 mb-4">
                 <h3 className="text-xl font-bold">{language === 'th' ? 'ผลลัพธ์ทางสุขภาพ' : 'Health Outcomes'}</h3>
+                <p className="mt-2 text-sm leading-relaxed">
+                  {language === 'th'
+                    ? `ในชุมชนนี้มีผู้ที่มีโรคเรื้อรัง ${profileData.chronicDisease} คน จากทั้งหมด ${profileData.total} คน (${((profileData.chronicDisease / profileData.total) * 100).toFixed(0)}%) ${profileData.chronicDisease > 0 && profileData.diseaseTypes ? (profileData.diseaseTypes.hypertension > 0 ? `โดยโรคที่พบมากที่สุดคือความดันโลหิตสูง ${profileData.diseaseTypes.hypertension} คน` : profileData.diseaseTypes.diabetes > 0 ? `โดยโรคที่พบมากที่สุดคือเบาหวาน ${profileData.diseaseTypes.diabetes} คน` : '') : ''}`
+                    : `This community has ${profileData.chronicDisease} people with chronic diseases out of ${profileData.total} (${((profileData.chronicDisease / profileData.total) * 100).toFixed(0)}%).`
+                  }
+                </p>
               </div>
 
               <ul className="list-disc list-inside space-y-2 text-gray-700">
