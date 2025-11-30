@@ -73,12 +73,19 @@ const IndicatorAnalysis = () => {
     1049: "ทุ่งครุ", 1050: "บางบอน"
   };
 
-  // Classify population groups (EXACT same logic as BasicSDHEProcessor)
+  // Classify population groups using STATISTICALLY SUPERIOR PRIORITY ORDER
+  // Prioritize by data precision (district-level > city-level > no data)
+  // and vulnerability (smallest/rarest groups first)
   const classifyPopulationGroup = (record) => {
-    if (record.sex === 'lgbt') return 'lgbtq';
-    if (record.age >= 60) return 'elderly';  
+    // Priority 1: Disabled (N≈90k, district-level weights) - smallest, most vulnerable
     if (record.disable_status === 1) return 'disabled';
+    // Priority 2: Elderly (N≈1.2M, district-level weights) - large but precise
+    if (record.age >= 60) return 'elderly';
+    // Priority 3: Informal Workers (N≈1.5M, city-level weight)
     if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
+    // Priority 4: LGBTQ+ (no official N, identity-based)
+    if (record.sex === 'lgbt') return 'lgbtq';
+    // Priority 5: General Population (residual)
     return 'general_population';
   };
 

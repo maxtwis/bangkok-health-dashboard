@@ -843,8 +843,9 @@ class DataProcessor {
   // Legacy method for backward compatibility - returns first/primary group
   classifyPopulationGroup(record) {
     const groups = this.classifyPopulationGroups(record);
-    // Priority order for single-group classification (if needed)
-    const priority = ['lgbtq', 'elderly', 'disabled', 'informal_workers', 'no_special_characteristics'];
+    // STATISTICALLY SUPERIOR PRIORITY ORDER
+    // Prioritize by data precision and vulnerability (smallest groups first)
+    const priority = ['disabled', 'elderly', 'informal_workers', 'lgbtq', 'no_special_characteristics'];
     for (const group of priority) {
       if (groups.includes(group)) return group;
     }

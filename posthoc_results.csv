@@ -1,0 +1,61 @@
+﻿Domain,Group 1,Group 2,Mean Diff,p-value,Significant
+Economic Security,Disabled,Elderly,-1.130645044725867,0.025893482999351618,Yes
+Economic Security,Disabled,General Population,-12.330382891338786,1.3359422203880516e-81,Yes
+Economic Security,Disabled,Informal Workers,-2.8470731164803453,5.592956076349544e-08,Yes
+Economic Security,Disabled,LGBTQ+,-6.474408949458493,1.6578949849821979e-10,Yes
+Economic Security,Elderly,General Population,-11.19973784661292,4.552484694504539e-135,Yes
+Economic Security,Elderly,Informal Workers,-1.7164280717544784,1.7542767077966232e-09,Yes
+Economic Security,Elderly,LGBTQ+,-5.343763904732626,5.1731409961817505e-09,Yes
+Economic Security,General Population,Informal Workers,9.48330977485844,9.145597996927672e-96,Yes
+Economic Security,General Population,LGBTQ+,5.855973941880293,1.616509555795634e-09,Yes
+Economic Security,Informal Workers,LGBTQ+,-3.6273358329781473,7.069248291586472e-05,Yes
+Healthcare Access,Disabled,Elderly,-5.010100475472164,1.9740595733171977e-10,Yes
+Healthcare Access,Disabled,General Population,-1.6166251475022975,0.06227974457090405,No
+Healthcare Access,Disabled,Informal Workers,-2.3763941141114415,0.004733797100199381,Yes
+Healthcare Access,Disabled,LGBTQ+,5.706965794211328,6.161041287795219e-06,Yes
+Healthcare Access,Elderly,General Population,3.393475327969867,8.022680470858942e-10,Yes
+Healthcare Access,Elderly,Informal Workers,2.633706361360723,2.1609556609806918e-07,Yes
+Healthcare Access,Elderly,LGBTQ+,10.717066269683492,6.78372935059511e-22,Yes
+Healthcare Access,General Population,Informal Workers,-0.7597689666091441,0.23128464253866346,No
+Healthcare Access,General Population,LGBTQ+,7.323590941713626,1.7068562671648984e-10,Yes
+Healthcare Access,Informal Workers,LGBTQ+,8.08335990832277,9.55254112402166e-13,Yes
+Physical Environment,Disabled,Elderly,-4.8439929637497485,1.6727866676516698e-09,Yes
+Physical Environment,Disabled,General Population,-3.7558355284853135,2.8266310820827696e-06,Yes
+Physical Environment,Disabled,Informal Workers,-2.023864454297872,0.012497331069176368,Yes
+Physical Environment,Disabled,LGBTQ+,-4.239213908927248,7.930580841915615e-06,Yes
+Physical Environment,Elderly,General Population,1.088157435264435,0.030611503879855784,Yes
+Physical Environment,Elderly,Informal Workers,2.8201285094518767,6.678602235932942e-08,Yes
+Physical Environment,Elderly,LGBTQ+,0.6047790548225009,0.39692354004147257,No
+Physical Environment,General Population,Informal Workers,1.7319710741874417,0.000939800541009993,Yes
+Physical Environment,General Population,LGBTQ+,-0.48337838044193404,0.49911231215536667,No
+Physical Environment,Informal Workers,LGBTQ+,-2.2153494546293757,0.0024122528722879326,Yes
+Social Context,Disabled,Elderly,-1.9866734069998415,3.230038936811337e-05,Yes
+Social Context,Disabled,General Population,6.187500844289218,4.568131025318894e-25,Yes
+Social Context,Disabled,Informal Workers,1.8812321530120357,0.0006353637736452492,Yes
+Social Context,Disabled,LGBTQ+,10.162973838929389,2.792437844149286e-28,Yes
+Social Context,Elderly,General Population,8.17417425128906,4.517684172491511e-75,Yes
+Social Context,Elderly,Informal Workers,3.8679055600118772,6.150093983174507e-25,Yes
+Social Context,Elderly,LGBTQ+,12.14964724592923,4.830904186634551e-44,Yes
+Social Context,General Population,Informal Workers,-4.306268691277182,3.368368437407038e-17,Yes
+Social Context,General Population,LGBTQ+,3.975472994640171,4.04944159593742e-06,Yes
+Social Context,Informal Workers,LGBTQ+,8.281741685917353,9.006157150131136e-22,Yes
+Health Behaviors,Disabled,Elderly,-5.881941520692948,1.6127990759262383e-13,Yes
+Health Behaviors,Disabled,General Population,6.642508174706293,7.747601408095841e-14,Yes
+Health Behaviors,Disabled,Informal Workers,6.181216536370584,2.0593547646336e-12,Yes
+Health Behaviors,Disabled,LGBTQ+,8.94599054525311,5.4718209169819393e-14,Yes
+Health Behaviors,Elderly,General Population,12.524449695399241,2.5495438454207585e-78,Yes
+Health Behaviors,Elderly,Informal Workers,12.063158057063532,2.5743850977922157e-76,Yes
+Health Behaviors,Elderly,LGBTQ+,14.827932065946058,1.0795337187960467e-41,Yes
+Health Behaviors,General Population,Informal Workers,-0.46129163833570885,0.5365633408916045,No
+Health Behaviors,General Population,LGBTQ+,2.303482370546817,0.03317712097649778,Yes
+Health Behaviors,Informal Workers,LGBTQ+,2.764774008882526,0.010149380688089562,Yes
+Health Outcomes,Disabled,Elderly,-0.33881601897718383,0.8320477983629925,No
+Health Outcomes,Disabled,General Population,-36.79355340477014,4.690781692983033e-87,Yes
+Health Outcomes,Disabled,Informal Workers,-34.076603673924524,3.6330657764846655e-77,Yes
+Health Outcomes,Disabled,LGBTQ+,-34.8315991237678,6.378220404654599e-51,Yes
+Health Outcomes,Elderly,General Population,-36.45473738579295,3.5413845936807614e-188,Yes
+Health Outcomes,Elderly,Informal Workers,-33.73778765494734,4.939653305130765e-171,Yes
+Health Outcomes,Elderly,LGBTQ+,-34.49278310479062,1.2614216505148437e-64,Yes
+Health Outcomes,General Population,Informal Workers,2.716949730845613,0.03492822242366689,Yes
+Health Outcomes,General Population,LGBTQ+,1.9619542810023347,0.29709544193109355,No
+Health Outcomes,Informal Workers,LGBTQ+,-0.7549954498432783,0.6868931940357532,No

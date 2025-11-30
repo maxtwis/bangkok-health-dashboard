@@ -10,62 +10,86 @@
 
 ### Priority-Based Hierarchical Classification
 
-**CRITICAL**: Population groups are classified using **priority order**. Once a respondent matches a higher-priority group, they are classified there regardless of other characteristics.
+**CRITICAL**: Population groups are classified using **STATISTICALLY SUPERIOR PRIORITY ORDER**. Once a respondent matches a higher-priority group, they are classified there regardless of other characteristics.
+
+**Rationale**: Prioritize by **data precision** (district-level N > city-level N > no N) and **vulnerability** (smallest/rarest groups first to avoid statistical drowning).
 
 ```python
 def classify_population_group(row):
     """
     Classify respondent into population groups
-    PRIORITY ORDER MATTERS - matches IndicatorAnalysis.jsx
+    PRIORITY ORDER based on statistical best practices
     """
-    # Priority 1: LGBT+ (regardless of age/disability/occupation)
-    if row['sex'] == 'lgbt':
-        return 'lgbt'
+    # Priority 1: Disabled (N≈90k, district-level weights) - SMALLEST, MOST VULNERABLE
+    # If someone is "Elderly + Disabled", classify as Disabled to ensure
+    # this small vulnerable group is not statistically drowned out
+    if row['disable_status'] == 1:
+        return 'disabled'
 
-    # Priority 2: Elderly (60+)
+    # Priority 2: Elderly (N≈1.2M, district-level weights) - LARGE BUT PRECISE DATA
     elif row['age'] >= 60:
         return 'elderly'
 
-    # Priority 3: Disabled
-    elif row['disable_status'] == 1:
-        return 'disabled'
-
-    # Priority 4: Informal workers (has job but no contract)
+    # Priority 3: Informal workers (N≈1.5M, city-level weight) - LARGE, CITY-LEVEL DATA
     # CORRECT: occupation_status=1 AND occupation_contract=0
-    # WRONG: occupation_type='2' (only captures 70 people, not 2,645!)
+    # WRONG: occupation_type='2' (only captures 70 people, not all informal workers!)
     elif row['occupation_status'] == 1 and row['occupation_contract'] == 0:
         return 'informal'
 
-    # Priority 5: General population (everyone else)
+    # Priority 4: LGBTQ+ (no official N, identity-based) - NO POPULATION DATA
+    elif row['sex'] == 'lgbt':
+        return 'lgbt'
+
+    # Priority 5: General population (residual group)
     else:
         return 'general'
 ```
 
 ### Source of Truth
-- **Dashboard code**: `src/components/Dashboard/IndicatorAnalysis.jsx` lines 77-82
+- **Dashboard code**: `src/components/Dashboard/IndicatorAnalysis.jsx` lines 76-90
+- **Data Processor**: `src/utils/DataProcessor.js` lines 844-853
+- **Analysis Script**: `population_group_inequality_analysis.py` lines 52-107
 - **JavaScript equivalent**:
 ```javascript
 const classifyPopulationGroup = (record) => {
-  if (record.sex === 'lgbt') return 'lgbtq';
-  if (record.age >= 60) return 'elderly';
+  // Priority 1: Disabled (N≈90k, district-level weights) - smallest, most vulnerable
   if (record.disable_status === 1) return 'disabled';
+  // Priority 2: Elderly (N≈1.2M, district-level weights) - large but precise
+  if (record.age >= 60) return 'elderly';
+  // Priority 3: Informal Workers (N≈1.5M, city-level weight)
   if (record.occupation_status === 1 && record.occupation_contract === 0) return 'informal_workers';
+  // Priority 4: LGBTQ+ (no official N, identity-based)
+  if (record.sex === 'lgbt') return 'lgbtq';
+  // Priority 5: General Population (residual)
   return 'general_population';
 };
 ```
 
+### Priority Order Justification
+
+| Priority | Group | Population (N) | Weight Type | Rationale |
+|----------|-------|----------------|-------------|-----------|
+| 1 | **Disabled** | ~90,000 | District-level | Smallest, most vulnerable; precise data; avoid drowning in larger groups |
+| 2 | **Elderly** | ~1,200,000 | District-level | Large but precise district-level data |
+| 3 | **Informal Workers** | ~1,500,000 | City-level | Large group with city-level weight precision |
+| 4 | **LGBTQ+** | Unknown | Fixed (1.0) | Identity-based, no official population data |
+| 5 | **General** | Residual | Fixed (2.5) | Everyone else |
+
 ### Population Sizes (After Priority Classification)
-- **Elderly**: 2,964 respondents
-- **Informal Workers**: 1,330 respondents
-- **General Population**: 1,315 respondents
-- **LGBT+**: 685 respondents
-- **Disabled**: 229 respondents
+With the statistically superior priority order:
+- **Disabled**: ~258 respondents (captures all disabled, including elderly disabled)
+- **Elderly**: ~2,964 respondents (elderly who are not disabled)
+- **Informal Workers**: ~1,330 respondents (workers without contracts, not elderly/disabled)
+- **LGBTQ+**: ~522 respondents (LGBTQ+ who are not disabled/elderly/informal)
+- **General Population**: ~1,449 respondents (everyone else)
 
 **Total**: 6,523 respondents
 
 ### Common Error to Avoid
-❌ **WRONG**: `occupation_type == '2'` → only 70 people (2% of true informal workers)
-✅ **CORRECT**: `occupation_status == 1 AND occupation_contract == 0` → 1,330 people after priority exclusions (2,645 before LGBT+/elderly/disabled are classified)
+❌ **WRONG PRIORITY**: LGBTQ+ first → Disabled person who is elderly gets classified as LGBTQ+, losing precise district-level weight
+✅ **CORRECT PRIORITY**: Disabled first → Captures smallest vulnerable group with best data precision
+❌ **WRONG INFORMAL DEFINITION**: `occupation_type == '2'` → only 70 people
+✅ **CORRECT INFORMAL DEFINITION**: `occupation_status == 1 AND occupation_contract == 0` → captures all informal workers
 
 ---
 
