@@ -1,0 +1,54 @@
+================================================================================
+CHAPTER 4.3: DISTRICT-LEVEL SPATIAL ANALYSIS
+Critical Districts (Hotspots) Identification
+================================================================================
+
+METHODOLOGY:
+- Priority Logic: Disabled > Elderly (mutually exclusive)
+- Weights: District-specific (Weight_Disabled, Weight_Elderly)
+- Analysis: All 50 districts, 6 SDHE domains
+
+================================================================================
+TOP 5 CRITICAL DISTRICTS (HOTSPOTS)
+================================================================================
+
+--- ELDERLY GROUP ---
+
+Economic Security - Top 5 Critical Districts (Lowest Scores):
+--------------------------------------------------------------------------------
+ Rank  District  N  Economic Security
+    1      1010 68          61.259269
+    2      1024 58          62.482496
+    3      1046 37          62.569900
+    4      1033 38          62.822825
+    5      1037 47          62.886597
+
+Health Outcomes - Top 5 Critical Districts (Lowest Scores):
+--------------------------------------------------------------------------------
+ Rank  District  N  Health Outcomes
+    1      1014 62        21.975806
+    2      1031 42        22.321429
+    3      1029 61        26.229508
+    4      1012 47        26.595745
+    5      1008 54        27.314815
+
+--- DISABLED GROUP ---
+
+Healthcare Access - Top 5 Critical Districts (Lowest Scores):
+--------------------------------------------------------------------------------
+ Rank  District  N  Healthcare Access
+    1      1031  8          37.500000
+    2      1038  9          40.740741
+    3      1010 16          43.750000
+    4      1018 12          47.222222
+    5      1048  7          47.619048
+
+Physical Environment - Top 5 Critical Districts (Lowest Scores):
+--------------------------------------------------------------------------------
+ Rank  District  N  Physical Environment
+    1      1005 32             37.890625
+    2      1029 13             40.064103
+    3      1031  8             43.750000
+    4      1011  8             43.750000
+    5      1033 21             45.039683
+
