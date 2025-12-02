@@ -117,7 +117,10 @@ elderly_df['catastrophic_spending'] = elderly_df.apply(
 )
 
 # Healthcare Access
-elderly_df['has_health_coverage'] = elderly_df['welfare'].apply(lambda x: 1 if x in [1, 2, 3] else 0)
+# Note: welfare is stored as string, check for '1', '2', '3' or numeric 1, 2, 3
+elderly_df['has_health_coverage'] = elderly_df['welfare'].apply(
+    lambda x: 1 if (x in [1, 2, 3, '1', '2', '3'] or (isinstance(x, (int, float)) and x in [1, 2, 3])) else 0
+)
 elderly_df['medical_skip_cost'] = elderly_df['medical_skip_1'].apply(lambda x: 1 if x == 1 else 0)
 elderly_df['dental_access'] = elderly_df.apply(
     lambda row: (1 if row.get('oral_health_access', 0) == 1 else 0) if row.get('oral_health', 0) == 1 else 1,

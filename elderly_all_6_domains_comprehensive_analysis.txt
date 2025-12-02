@@ -21,7 +21,7 @@ HEALTHCARE ACCESS - COMPARISON TABLE
 Critical Districts: 1010, 1005, 1046, 1003, 1004
 ================================================================================
                    Indicator  Bangkok Avg  District 1010  District 1005  District 1046  District 1003  District 1004       Gap
-    Health Coverage Rate (%)     0.000000       0.000000            0.0       0.000000       0.000000       0.000000  0.000000
+    Health Coverage Rate (%)    98.196470      95.588235          100.0      86.486486      97.916667      94.230769  3.352038
 Medical Skip due to Cost (%)    10.245587      17.647059           27.5      18.918919      27.083333      13.461538 10.676583
       Dental Access Rate (%)    92.517268      64.705882           82.5      75.675676      91.666667      78.846154 13.838392
 
