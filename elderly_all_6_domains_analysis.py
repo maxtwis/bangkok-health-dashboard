@@ -1,6 +1,6 @@
 """
 Comprehensive Targeted Indicator Analysis for Elderly Group
-ALL 6 SDHE DOMAINS with Top 5 Critical Districts per Domain
+ALL 7 SDHE DOMAINS with Top 5 Critical Districts per Domain
 
 This script analyzes:
 1. Economic Security - Districts: 1010, 1024, 1046, 1033, 1037
@@ -9,6 +9,7 @@ This script analyzes:
 4. Social Context - Districts: 1033, 1014, 1031, 1017, 1009
 5. Health Behaviors - Districts: 1033, 1039, 1021, 1010, 1006
 6. Health Outcomes - Districts: 1014, 1031, 1029, 1012, 1008
+7. Education - Districts: TBD (will be calculated from district scores)
 """
 
 import pandas as pd
@@ -17,7 +18,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 print("="*80)
-print("COMPREHENSIVE ELDERLY ANALYSIS - ALL 6 SDHE DOMAINS")
+print("COMPREHENSIVE ELDERLY ANALYSIS - ALL 7 SDHE DOMAINS")
 print("Top 5 Critical Districts per Domain with ALL Indicators")
 print("="*80)
 
@@ -53,7 +54,8 @@ domains_map = {
     'Physical Environment': [str(d) for d in district_scores.nsmallest(5, 'Physical Environment')['District'].tolist()],
     'Social Context': [str(d) for d in district_scores.nsmallest(5, 'Social Context')['District'].tolist()],
     'Health Behaviors': [str(d) for d in district_scores.nsmallest(5, 'Health Behaviors')['District'].tolist()],
-    'Health Outcomes': [str(d) for d in district_scores.nsmallest(5, 'Health Outcomes')['District'].tolist()]
+    'Health Outcomes': [str(d) for d in district_scores.nsmallest(5, 'Health Outcomes')['District'].tolist()],
+    'Education': [str(d) for d in district_scores.nsmallest(5, 'Education')['District'].tolist()] if 'Education' in district_scores.columns else []
 }
 
 for domain, districts in domains_map.items():
@@ -201,6 +203,19 @@ disease_columns = list(disease_names.keys())
 elderly_df['disease_count'] = elderly_df[disease_columns].sum(axis=1)
 elderly_df['multiple_diseases'] = elderly_df['disease_count'].apply(lambda x: 1 if x >= 2 else 0)
 
+# Education
+elderly_df['can_speak'] = elderly_df['speak'].apply(lambda x: 1 if x == 1 else 0)
+elderly_df['can_read'] = elderly_df['read'].apply(lambda x: 1 if x == 1 else 0)
+elderly_df['can_write'] = elderly_df['write'].apply(lambda x: 1 if x == 1 else 0)
+elderly_df['can_math'] = elderly_df['math'].apply(lambda x: 1 if x == 1 else 0)
+elderly_df['has_training'] = elderly_df['training'].apply(lambda x: 1 if x == 1 else 0)
+# Education level groups for analysis
+elderly_df['no_school'] = elderly_df['education'].apply(lambda x: 1 if x == 0 else 0)
+elderly_df['primary_ed'] = elderly_df['education'].apply(lambda x: 1 if x in [1, 2] else 0)
+elderly_df['secondary_ed'] = elderly_df['education'].apply(lambda x: 1 if x in [3, 4] else 0)
+elderly_df['vocational_ed'] = elderly_df['education'].apply(lambda x: 1 if x in [5, 6] else 0)
+elderly_df['higher_ed'] = elderly_df['education'].apply(lambda x: 1 if x in [7, 8] else 0)
+
 # Function to calculate indicators for a district
 def calc_district_indicators(district_code):
     df = elderly_df[elderly_df['dname'] == district_code]
@@ -255,6 +270,19 @@ def calc_district_indicators(district_code):
     for col, name in disease_names.items():
         results[f'{name} (%)'] = weighted_percentage(df, col)
 
+    # Education
+    results['Can Speak Thai (%)'] = weighted_percentage(df, 'can_speak')
+    results['Can Read Thai (%)'] = weighted_percentage(df, 'can_read')
+    results['Can Write Thai (%)'] = weighted_percentage(df, 'can_write')
+    results['Can Do Basic Math (%)'] = weighted_percentage(df, 'can_math')
+    results['Had Training (%)'] = weighted_percentage(df, 'has_training')
+    results['No Schooling (%)'] = weighted_percentage(df, 'no_school')
+    results['Primary Education (%)'] = weighted_percentage(df, 'primary_ed')
+    results['Secondary Education (%)'] = weighted_percentage(df, 'secondary_ed')
+    results['Vocational Education (%)'] = weighted_percentage(df, 'vocational_ed')
+    results['Higher Education (%)'] = weighted_percentage(df, 'higher_ed')
+    results['Average Education Level'] = weighted_mean(df, 'education')
+
     return results
 
 # Calculate Bangkok average
@@ -275,7 +303,10 @@ for indicator in bangkok_avg.keys():
                           'Feels Unsafe (%)', 'Violence Experience (%)', 'Discrimination Experience (%)',
                           'No Social Support (%)', 'Alcohol Consumption (%)', 'Tobacco Use (%)',
                           'No Exercise (%)', 'Abnormal BMI (%)', 'Chronic Disease Prevalence (%)',
-                          'Multiple Chronic Diseases (%)']:
+                          'Multiple Chronic Diseases (%)', 'Can Speak Thai (%)', 'Can Read Thai (%)',
+                          'Can Write Thai (%)', 'Can Do Basic Math (%)', 'Had Training (%)',
+                          'No Schooling (%)', 'Primary Education (%)', 'Secondary Education (%)',
+                          'Vocational Education (%)', 'Higher Education (%)']:
             col_map = {
                 'Unemployment Rate (%)': 'unemployed',
                 'Food Insecurity - Moderate (%)': 'food_insecurity_moderate',
@@ -306,12 +337,24 @@ for indicator in bangkok_avg.keys():
                 'No Exercise (%)': 'no_exercise',
                 'Abnormal BMI (%)': 'abnormal_bmi',
                 'Chronic Disease Prevalence (%)': 'has_chronic_disease',
-                'Multiple Chronic Diseases (%)': 'multiple_diseases'
+                'Multiple Chronic Diseases (%)': 'multiple_diseases',
+                'Can Speak Thai (%)': 'can_speak',
+                'Can Read Thai (%)': 'can_read',
+                'Can Write Thai (%)': 'can_write',
+                'Can Do Basic Math (%)': 'can_math',
+                'Had Training (%)': 'has_training',
+                'No Schooling (%)': 'no_school',
+                'Primary Education (%)': 'primary_ed',
+                'Secondary Education (%)': 'secondary_ed',
+                'Vocational Education (%)': 'vocational_ed',
+                'Higher Education (%)': 'higher_ed'
             }
             if indicator == 'Vulnerable Employment (%)':
                 bangkok_avg[indicator] = weighted_percentage(elderly_df[elderly_df['occupation_status'] == 1], 'vulnerable_employment')
             elif indicator in col_map:
                 bangkok_avg[indicator] = weighted_percentage(elderly_df, col_map[indicator])
+        elif indicator == 'Average Education Level':
+            bangkok_avg[indicator] = weighted_mean(elderly_df, 'education')
         else:
             # Disease indicators
             for col, name in disease_names.items():
@@ -320,7 +363,7 @@ for indicator in bangkok_avg.keys():
 
 # Generate comparison tables for each domain
 print("\n" + "="*80)
-print("GENERATING COMPARISON TABLES FOR ALL 6 DOMAINS")
+print("GENERATING COMPARISON TABLES FOR ALL 7 DOMAINS")
 print("="*80)
 
 all_results = {}
@@ -349,7 +392,12 @@ domain_indicator_map = {
     ],
     'Health Outcomes': [
         'Chronic Disease Prevalence (%)', 'Multiple Chronic Diseases (%)'
-    ] + [f'{name} (%)' for name in disease_names.values()]
+    ] + [f'{name} (%)' for name in disease_names.values()],
+    'Education': [
+        'Can Speak Thai (%)', 'Can Read Thai (%)', 'Can Write Thai (%)', 'Can Do Basic Math (%)',
+        'Had Training (%)', 'No Schooling (%)', 'Primary Education (%)', 'Secondary Education (%)',
+        'Vocational Education (%)', 'Higher Education (%)', 'Average Education Level'
+    ]
 }
 
 for domain, critical_districts in domains_map.items():
@@ -397,9 +445,9 @@ print("\n" + "="*80)
 print("SAVING RESULTS")
 print("="*80)
 
-with open('elderly_all_6_domains_comprehensive_analysis.txt', 'w', encoding='utf-8') as f:
+with open('elderly_all_7_domains_comprehensive_analysis.txt', 'w', encoding='utf-8') as f:
     f.write("="*80 + "\n")
-    f.write("COMPREHENSIVE ELDERLY ANALYSIS - ALL 6 SDHE DOMAINS\n")
+    f.write("COMPREHENSIVE ELDERLY ANALYSIS - ALL 7 SDHE DOMAINS\n")
     f.write("Top 5 Critical Districts per Domain with ALL Indicators\n")
     f.write("="*80 + "\n\n")
 
@@ -415,7 +463,7 @@ for domain, df_result in all_results.items():
     df_result.to_csv(filename, index=False, encoding='utf-8-sig')
 
 print("\nResults saved:")
-print("  - elderly_all_6_domains_comprehensive_analysis.txt")
+print("  - elderly_all_7_domains_comprehensive_analysis.txt")
 for domain in domains_map.keys():
     print(f"  - elderly_{domain.lower().replace(' ', '_')}_comparison.csv")
 

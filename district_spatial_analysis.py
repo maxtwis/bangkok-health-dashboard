@@ -385,7 +385,43 @@ analysis_df['health_outcomes_score'] = analysis_df[[
     'chronic_disease_score', 'disease_burden_score'
 ]].mean(axis=1)
 
-print("\nAll 6 SDHE domain scores calculated.")
+# ============================================================================
+# DOMAIN 7: EDUCATION
+# ============================================================================
+print("  - Education...")
+
+# Literacy Score
+analysis_df['literacy_speak_score'] = analysis_df['speak'].apply(lambda x: 100 if x == 1 else 0)
+analysis_df['literacy_read_score'] = analysis_df['read'].apply(lambda x: 100 if x == 1 else 0)
+analysis_df['literacy_write_score'] = analysis_df['write'].apply(lambda x: 100 if x == 1 else 0)
+analysis_df['literacy_math_score'] = analysis_df['math'].apply(lambda x: 100 if x == 1 else 0)
+
+analysis_df['literacy_score'] = analysis_df[[
+    'literacy_speak_score',
+    'literacy_read_score',
+    'literacy_write_score',
+    'literacy_math_score'
+]].mean(axis=1)
+
+# Education Level Score (0-8 scale normalized to 0-100)
+def education_level_score(edu):
+    if pd.isna(edu):
+        return np.nan
+    return (edu / 8) * 100
+
+analysis_df['education_level_score'] = analysis_df['education'].apply(education_level_score)
+
+# Training Participation Score
+analysis_df['training_score'] = analysis_df['training'].apply(lambda x: 100 if x == 1 else 0)
+
+# Education Domain Score (Literacy 40%, Education Level 40%, Training 20%)
+analysis_df['education_score'] = (
+    analysis_df['literacy_score'] * 0.4 +
+    analysis_df['education_level_score'] * 0.4 +
+    analysis_df['training_score'] * 0.2
+)
+
+print("\nAll 7 SDHE domain scores calculated.")
 
 # ============================================================================
 # STEP 4: Calculate Weighted Mean by District
@@ -399,7 +435,8 @@ domains = [
     'physical_environment_score',
     'social_context_score',
     'health_behaviors_score',
-    'health_outcomes_score'
+    'health_outcomes_score',
+    'education_score'
 ]
 
 domain_labels = [
@@ -408,7 +445,8 @@ domain_labels = [
     'Physical Environment',
     'Social Context',
     'Health Behaviors',
-    'Health Outcomes'
+    'Health Outcomes',
+    'Education'
 ]
 
 def weighted_mean(group_df, score_col, weight_col='district_weight'):

@@ -1,31 +1,12 @@
 ================================================================================
-COMPREHENSIVE ELDERLY ANALYSIS - ALL 6 SDHE DOMAINS
+COMPREHENSIVE ELDERLY ANALYSIS - ALL 7 SDHE DOMAINS
 Top 5 Critical Districts per Domain with ALL Indicators
 ================================================================================
 
-Elderly respondents: 2606
 
-Identifying Top 5 Critical Districts per domain...
-Economic Security: ['1010', '1024', '1046', '1033', '1037']
-Healthcare Access: ['1010', '1005', '1046', '1003', '1004']
-Physical Environment: ['1014', '1037', '1033', '1029', '1044']
-Social Context: ['1033', '1003', '1031', '1014', '1009']
-Health Behaviors: ['1033', '1039', '1031', '1034', '1044']
-Health Outcomes: ['1014', '1031', '1029', '1012', '1008']
-
-Calculating all indicators...
-
-Calculating Bangkok average...
-
-================================================================================
-GENERATING COMPARISON TABLES FOR ALL 6 DOMAINS
-================================================================================
-
-================================================================================
 ECONOMIC SECURITY - COMPARISON TABLE
 Critical Districts: 1010, 1024, 1046, 1033, 1037
 ================================================================================
-
                        Indicator  Bangkok Avg  District 1010  District 1024  District 1046  District 1033  District 1037        Gap
            Unemployment Rate (%)    57.828089      80.882353      62.068966      64.864865      52.631579      48.936170   4.048697
        Vulnerable Employment (%)    30.769231      92.307692      95.454545      69.230769      94.444444      91.666667  57.851593
@@ -35,21 +16,19 @@ Critical Districts: 1010, 1024, 1046, 1033, 1037
    Average Monthly Income (Baht) 14965.473301   21000.000000   14233.333333   10416.000000   12187.500000   14447.142857 508.678063
 Catastrophic Health Spending (%)    13.228155      50.000000      20.000000      30.000000      12.500000       0.000000   9.271845
 
-================================================================================
+
 HEALTHCARE ACCESS - COMPARISON TABLE
 Critical Districts: 1010, 1005, 1046, 1003, 1004
 ================================================================================
-
                    Indicator  Bangkok Avg  District 1010  District 1005  District 1046  District 1003  District 1004       Gap
     Health Coverage Rate (%)    98.196470      95.588235          100.0      86.486486      97.916667      94.230769  3.352038
 Medical Skip due to Cost (%)    10.245587      17.647059           27.5      18.918919      27.083333      13.461538 10.676583
       Dental Access Rate (%)    92.517268      64.705882           82.5      75.675676      91.666667      78.846154 13.838392
 
-================================================================================
+
 PHYSICAL ENVIRONMENT - COMPARISON TABLE
 Critical Districts: 1014, 1037, 1033, 1029, 1044
 ================================================================================
-
                       Indicator  Bangkok Avg  District 1014  District 1037  District 1033  District 1029  District 1044        Gap
         Home Ownership Rate (%)    50.230238      38.709677       6.382979       5.263158      59.016393      43.902439 -19.575309
                Water Access (%)    99.693016      95.161290     100.000000     100.000000     100.000000     100.000000   0.660758
@@ -64,33 +43,30 @@ Critical Districts: 1014, 1037, 1033, 1029, 1044
 Has Public Recreation Space (%)    34.420568       0.000000      17.021277      57.894737       0.000000       7.317073 -17.973951
         Has Health Facility (%)    21.949348       0.000000       0.000000      50.000000       0.000000       2.439024 -11.461543
 
-================================================================================
+
 SOCIAL CONTEXT - COMPARISON TABLE
 Critical Districts: 1033, 1003, 1031, 1014, 1009
 ================================================================================
-
                     Indicator  Bangkok Avg  District 1033  District 1003  District 1031  District 1014  District 1009       Gap
              Feels Unsafe (%)     7.712970      52.631579       2.083333      73.809524      67.741935       0.000000 31.540304
       Violence Experience (%)     3.914045       2.631579      22.916667       2.380952       3.225806       8.910891  4.099135
 Discrimination Experience (%)     1.227936       0.000000      41.666667       0.000000       0.000000       0.000000  7.105398
         No Social Support (%)     4.834996      13.157895       2.083333       0.000000       1.612903      13.861386  1.308107
 
-================================================================================
+
 HEALTH BEHAVIORS - COMPARISON TABLE
 Critical Districts: 1033, 1039, 1031, 1034, 1044
 ================================================================================
-
               Indicator  Bangkok Avg  District 1033  District 1039  District 1031  District 1034  District 1044       Gap
 Alcohol Consumption (%)    16.653876      36.842105      15.384615       9.523810      19.480519      14.634146  2.519164
         Tobacco Use (%)     8.787414      28.947368      25.641026      14.285714       7.792208      19.512195 10.448289
         No Exercise (%)    47.467383      73.684211      64.102564      73.809524      66.233766      70.731707 22.244971
        Abnormal BMI (%)    45.622120      57.894737      51.282051      54.761905      33.766234      46.341463  3.187158
 
-================================================================================
+
 HEALTH OUTCOMES - COMPARISON TABLE
 Critical Districts: 1014, 1031, 1029, 1012, 1008
 ================================================================================
-
                      Indicator  Bangkok Avg  District 1014  District 1031  District 1029  District 1012  District 1008       Gap
 Chronic Disease Prevalence (%)    76.822717      90.322581      88.095238      90.163934      87.234043      90.740741 12.488590
  Multiple Chronic Diseases (%)    56.139678      74.193548      85.714286      72.131148      76.595745      74.074074 20.402082
@@ -116,19 +92,20 @@ Chronic Disease Prevalence (%)    76.822717      90.322581      88.095238      9
                  Paralysis (%)     0.848303       0.000000       0.000000       5.454545       2.439024       0.000000  0.730411
            Stroke Sequelae (%)     1.646707       0.000000       2.702703      18.181818       2.439024       0.000000  3.018002
 
-================================================================================
-SAVING RESULTS
-================================================================================
 
-Results saved:
-  - elderly_all_6_domains_comprehensive_analysis.txt
-  - elderly_economic_security_comparison.csv
-  - elderly_healthcare_access_comparison.csv
-  - elderly_physical_environment_comparison.csv
-  - elderly_social_context_comparison.csv
-  - elderly_health_behaviors_comparison.csv
-  - elderly_health_outcomes_comparison.csv
+EDUCATION - COMPARISON TABLE
+Critical Districts: 1021, 1031, 1037, 1012, 1035
+================================================================================
+               Indicator  Bangkok Avg  District 1021  District 1031  District 1037  District 1012  District 1035        Gap
+      Can Speak Thai (%)    98.887183      95.652174     100.000000     100.000000     100.000000     100.000000   0.243251
+       Can Read Thai (%)    97.006907     100.000000      95.238095      91.489362      95.744681      91.803279  -2.151824
+      Can Write Thai (%)    96.584804      93.478261      95.238095      91.489362      97.872340      93.442623  -2.280668
+   Can Do Basic Math (%)    96.930161      91.304348      90.476190      95.744681      95.744681      98.360656  -2.604050
+        Had Training (%)    17.574827       4.347826       2.380952       4.255319       4.255319       0.000000 -14.526944
+        No Schooling (%)     2.647736       4.347826       2.380952       8.510638      14.893617       8.196721   5.018215
+   Primary Education (%)    56.600153      89.130435      80.952381      74.468085      63.829787      68.852459  18.846476
+ Secondary Education (%)    21.181888       2.173913      11.904762      14.893617      19.148936       9.836066  -9.590429
+Vocational Education (%)     8.940906       4.347826       2.380952       0.000000       2.127660       9.836066  -5.202405
+    Higher Education (%)    10.629317       0.000000       2.380952       2.127660       0.000000       3.278689  -9.071857
+ Average Education Level     3.015733       1.891304       2.000000       2.085106       2.042553       2.327869  -0.946366
 
-================================================================================
-COMPREHENSIVE ANALYSIS COMPLETE
-================================================================================

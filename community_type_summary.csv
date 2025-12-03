@@ -1,0 +1,7 @@
+﻿Domain,Worst Community Type,Lowest Score,Best Community Type,Highest Score,Gap,Statistically Significant
+Economic Security,ชุมชนแออัด,65.39,ชุมชนอาคารสูง,68.89,3.50,True
+Healthcare Access,ชุมชนชานเมือง,90.60,ชุมชนอาคารสูง,96.19,5.59,True
+Physical Environment,ชุมชนแออัด,54.76,ชุมชนหมู่บ้านจัดสรร,68.63,13.87,True
+Social Context,ชุมชนแออัด,91.27,ชุมชนอาคารสูง,96.83,5.56,True
+Health Behaviors,ชุมชนอาคารสูง,57.62,ชุมชนเมือง,64.89,7.27,True
+Health Outcomes,ชุมชนแออัด,48.03,ชุมชนอาคารสูง,64.88,16.85,True

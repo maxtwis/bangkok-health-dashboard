@@ -2,13 +2,14 @@
 Bangkok-level Comparative Analysis of 5 Population Groups - CORRECTED VERSION
 Weighted SDHE Domain Analysis with ANOVA and Post-hoc Tests
 
-This script uses the CORRECT 6 Dashboard Domains:
+This script uses the CORRECT 7 Dashboard Domains:
 1. Economic Security
 2. Healthcare Access
 3. Physical Environment
 4. Social Context
 5. Health Behaviors
 6. Health Outcomes
+7. Education
 
 Performs:
 1. Master weight application (Elderly, Disabled, Informal Workers, LGBTQ+, General Population)
@@ -31,7 +32,7 @@ warnings.filterwarnings('ignore')
 
 print("="*80)
 print("BANGKOK-LEVEL POPULATION GROUP INEQUALITY ANALYSIS")
-print("Using 6 Dashboard Domains")
+print("Using 7 Dashboard Domains")
 print("="*80)
 print("\nStep 1: Loading data...")
 
@@ -433,7 +434,51 @@ survey_df['health_outcomes_score'] = survey_df[[
     'chronic_disease_score', 'disease_burden_score'
 ]].mean(axis=1)
 
-print("\nAll 6 dashboard SDHE domain scores calculated successfully.")
+# ============================================================================
+# DOMAIN 7: EDUCATION
+# ============================================================================
+print("  - Calculating Education scores...")
+
+# Indicators: literacy (speak, read, write, math), education level (0-8), training
+
+# Literacy Score (25 points each = 100 total)
+survey_df['literacy_speak_score'] = survey_df['speak'].apply(lambda x: 100 if x == 1 else 0)
+survey_df['literacy_read_score'] = survey_df['read'].apply(lambda x: 100 if x == 1 else 0)
+survey_df['literacy_write_score'] = survey_df['write'].apply(lambda x: 100 if x == 1 else 0)
+survey_df['literacy_math_score'] = survey_df['math'].apply(lambda x: 100 if x == 1 else 0)
+
+# Overall literacy score (average of 4 skills)
+survey_df['literacy_score'] = survey_df[[
+    'literacy_speak_score',
+    'literacy_read_score',
+    'literacy_write_score',
+    'literacy_math_score'
+]].mean(axis=1)
+
+# Education Level Score
+# Scale: 0=no school, 1-2=primary, 3-4=secondary, 5-6=vocational, 7-8=university
+# Normalize to 0-100 scale
+def education_level_score(edu):
+    if pd.isna(edu):
+        return np.nan
+    # Convert 0-8 scale to 0-100
+    return (edu / 8) * 100
+
+survey_df['education_level_score'] = survey_df['education'].apply(education_level_score)
+
+# Training Participation Score
+# Recent training indicates continuous learning
+survey_df['training_score'] = survey_df['training'].apply(lambda x: 100 if x == 1 else 0)
+
+# Education Domain Score
+# Weighted: Literacy (40%), Education Level (40%), Training (20%)
+survey_df['education_score'] = (
+    survey_df['literacy_score'] * 0.4 +
+    survey_df['education_level_score'] * 0.4 +
+    survey_df['training_score'] * 0.2
+)
+
+print("\nAll 7 dashboard SDHE domain scores calculated successfully.")
 
 # ============================================================================
 # STEP 4: Calculate Weighted Means by Population Group
@@ -447,7 +492,8 @@ domains = [
     'physical_environment_score',
     'social_context_score',
     'health_behaviors_score',
-    'health_outcomes_score'
+    'health_outcomes_score',
+    'education_score'
 ]
 
 domain_labels = [
@@ -456,7 +502,8 @@ domain_labels = [
     'Physical Environment',
     'Social Context',
     'Health Behaviors',
-    'Health Outcomes'
+    'Health Outcomes',
+    'Education'
 ]
 
 def weighted_mean(group_df, score_col):
@@ -492,7 +539,7 @@ for group in sorted(survey_df['population_group'].unique()):
 results_df = pd.DataFrame(results)
 
 print("\n" + "="*80)
-print("WEIGHTED MEANS BY POPULATION GROUP (6 Dashboard Domains)")
+print("WEIGHTED MEANS BY POPULATION GROUP (7 Dashboard Domains)")
 print("="*80)
 print(results_df.to_string(index=False))
 
@@ -658,7 +705,7 @@ print("="*80)
 with open('population_group_inequality_analysis_results.txt', 'w', encoding='utf-8') as f:
     f.write("="*80 + "\n")
     f.write("BANGKOK-LEVEL POPULATION GROUP INEQUALITY ANALYSIS\n")
-    f.write("Using 6 Dashboard Domains\n")
+    f.write("Using 7 Dashboard Domains\n")
     f.write("="*80 + "\n\n")
 
     f.write("WEIGHTED MEANS BY POPULATION GROUP\n")
@@ -694,5 +741,5 @@ print("  - vulnerability_summary.csv")
 print("  - posthoc_results.csv")
 
 print("\n" + "="*80)
-print("ANALYSIS COMPLETE - 6 DASHBOARD DOMAINS")
+print("ANALYSIS COMPLETE - 7 DASHBOARD DOMAINS")
 print("="*80)
