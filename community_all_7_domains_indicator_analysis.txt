@@ -1,0 +1,111 @@
+================================================================================
+COMPREHENSIVE COMMUNITY-LEVEL INDICATOR ANALYSIS
+All Indicators for 5 Community Types vs Bangkok Average
+================================================================================
+
+
+ECONOMIC SECURITY - COMPARISON TABLE
+Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
+================================================================================
+                       Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community           Gap
+           Unemployment Rate (%)    37.068833           54.359926       41.176471        30.476190     4.662062e+01          45.136187  6.485046e+00
+       Vulnerable Employment (%)    57.612667           79.674797       83.333333        89.041096     8.234750e+01          84.701114  2.620690e+01
+  Food Insecurity - Moderate (%)     9.136900            6.122449        1.960784         4.761905     4.982733e+00           5.892162 -4.392894e+00
+    Food Insecurity - Severe (%)     5.610915            4.638219        1.960784         3.809524     2.910705e+00           4.280156 -2.091038e+00
+            Work Injury Rate (%)     5.902192            2.597403        0.000000         3.809524     4.588061e+00           5.558644 -2.591466e+00
+   Average Monthly Income (Baht) 23095.942907        23404.276316    15301.818182     16295.000000     4.411715e+07       15999.688702  8.814535e+06
+Catastrophic Health Spending (%)    10.438293           26.315789        4.545455        17.857143     1.640212e+01          10.456731  4.677154e+00
+
+
+HEALTHCARE ACCESS - COMPARISON TABLE
+Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
+================================================================================
+                   Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community       Gap
+    Health Coverage Rate (%)    97.194542           94.805195      100.000000        95.238095        96.447953          98.165648 -0.263164
+Medical Skip due to Cost (%)    14.977771           11.317254        3.921569         2.857143         8.189443           8.893830 -7.941923
+      Dental Access Rate (%)    89.805304           88.311688       84.313725        96.190476        92.155895          91.217343  0.632521
+
+
+PHYSICAL ENVIRONMENT - COMPARISON TABLE
+Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
+================================================================================
+                      Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community       Gap
+        Home Ownership Rate (%)    34.386019           41.372913       43.137255        39.047619        48.199309          32.073374  6.380075
+               Water Access (%)    99.724053           99.443414      100.000000       100.000000        99.851998          99.332963  0.001622
+         Electricity Access (%)    99.938679           99.814471      100.000000       100.000000        99.950666          99.888827 -0.007886
+           Waste Management (%)    96.581328           97.402597      100.000000       100.000000        96.398619          92.440245  0.666965
+          Sanitation Access (%)    79.717921           85.899814       96.078431        96.190476        97.089295          77.654252 10.864533
+       Housing Overcrowding (%)    31.565231           20.037106        5.882353        14.285714        27.380365          64.647026 -5.118718
+        Disaster Experience (%)    15.728959           29.128015       31.372549         2.857143        17.513567          21.011673  4.647630
+         Pollution Exposure (%)    51.234095           43.970315       39.215686        79.047619        37.987173          52.195664 -0.750803
+     Has Ramp/Accessibility (%)    10.210026            2.411874       19.607843         2.857143        11.741490           3.946637 -2.097029
+              Has Handrails (%)    10.240687            2.968460        1.960784         1.904762         8.633448           8.727071 -5.401782
+Has Public Recreation Space (%)    28.468496           25.974026       45.098039        28.571429        40.897879          27.626459  5.165070
+        Has Health Facility (%)    18.887015            5.936920        3.921569         4.761905        25.653675          18.343524 -7.163497
+
+
+SOCIAL CONTEXT - COMPARISON TABLE
+Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
+================================================================================
+                    Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community       Gap
+             Feels Unsafe (%)    14.487199            3.896104        1.960784         1.904762         3.058707          14.341301 -9.454867
+      Violence Experience (%)    13.352752            4.267161        5.882353         1.904762         2.170696           3.168427 -9.874072
+Discrimination Experience (%)     2.330216            1.855288        0.000000         0.952381         1.036014           0.444691 -1.472541
+        No Social Support (%)     9.581481            1.855288        5.882353         1.904762         4.982733           6.614786 -5.333497
+
+
+HEALTH BEHAVIORS - COMPARISON TABLE
+Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
+================================================================================
+              Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community       Gap
+Alcohol Consumption (%)    30.354132           10.204082       35.294118        34.285714        19.141589          16.342412 -7.300549
+        Tobacco Use (%)    19.040319           11.873840       15.686275        14.285714        11.593488          15.564202 -5.239615
+        No Exercise (%)    44.994634           46.196660       50.980392        52.380952        44.795264          60.144525  5.904924
+       Abnormal BMI (%)    51.725725           46.382189       49.019608        55.238095        43.577075          47.997775 -3.282776
+
+
+HEALTH OUTCOMES - COMPARISON TABLE
+Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
+================================================================================
+                     Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community       Gap
+Chronic Disease Prevalence (%)    56.538403           61.038961       62.745098        50.476190        63.936852          70.038911  5.108800
+ Multiple Chronic Diseases (%)    35.397823           40.074212       33.333333        22.857143        37.543167          41.801001 -0.276052
+                  Diabetes (%)    26.387772           42.857143       37.500000        26.415094        38.040123          36.904762  9.955653
+              Hypertension (%)    45.273532           75.683891       65.625000        81.132075        69.058642          72.698413 27.566072
+                      Gout (%)     3.777376            3.343465        3.125000         7.547170         3.472222           3.571429  0.434481
+    Chronic Kidney Disease (%)     2.212389            4.255319        3.125000         0.000000         2.160494           2.777778  0.251329
+                    Cancer (%)     2.131939            1.823708        3.125000         1.886792         2.854938           3.412698  0.488689
+            Hyperlipidemia (%)    25.462591           34.346505       40.625000        30.188679        39.197531          32.301587  9.869270
+    Ischemic Heart Disease (%)     8.353414            5.775076        6.250000         0.000000         2.083333           2.142857 -5.103160
+             Liver Disease (%)     1.347546            0.607903        0.000000         0.000000         0.462963           0.793651 -0.974643
+                    Stroke (%)     2.292840            3.343465        9.375000         1.886792         2.854938           2.698413  1.738882
+                       HIV (%)     1.387772            0.000000        0.000000         0.000000         0.000000           0.476190 -1.292533
+          Mental Disorders (%)     5.671762            1.823708        3.125000         0.000000         1.466049           1.746032 -4.039604
+                 Allergies (%)     5.647106            2.735562        9.375000         5.660377         5.478395           7.142857  0.431332
+    Bone and Joint Disease (%)     7.622687           15.501520        6.250000         1.886792         9.876543          12.380952  1.556475
+       Respiratory Disease (%)     2.393403            3.039514        0.000000         0.000000         1.851852           4.126984 -0.589733
+                 Emphysema (%)     9.372486            1.823708        0.000000         0.000000         0.308642           0.793651 -8.787286
+                    Anemia (%)     1.749799            1.519757        0.000000         0.000000         1.697531           2.777778 -0.550786
+              Peptic Ulcer (%)     2.312953            5.471125        0.000000         0.000000         1.697531           3.333333 -0.212555
+                  Epilepsy (%)     1.106195            1.519757        0.000000         1.886792         0.848765           0.873016 -0.080529
+        Intestinal Disease (%)     0.985519            0.911854        0.000000         0.000000         0.231481           0.714286 -0.613995
+                 Paralysis (%)     1.186645            0.911854        3.125000         0.000000         0.617284           1.507937  0.045770
+           Stroke Sequelae (%)     2.393403            5.471125        3.125000         3.773585         1.774691           4.206349  1.276747
+
+
+EDUCATION - COMPARISON TABLE
+Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
+================================================================================
+               Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community        Gap
+      Can Speak Thai (%)    98.926874           98.144712      100.000000        99.047619        98.174642          98.777098  -0.098060
+       Can Read Thai (%)    97.071899           92.393321       98.039216       100.000000        95.658609          96.609227  -0.531825
+      Can Write Thai (%)    96.351372           89.795918       94.117647       100.000000        95.017267          95.608671  -1.443471
+   Can Do Basic Math (%)    96.581328           92.764378       96.078431        98.095238        95.855945          94.663702  -1.089789
+        Had Training (%)    19.898820           13.914657        9.803922        23.809524        17.809571          13.896609  -4.051963
+        No Schooling (%)     1.931627            2.782931        1.960784         0.000000         2.220030           3.557532   0.172629
+   Primary Education (%)    32.791660           56.957328       41.176471        39.047619        41.391219          50.528071  13.028481
+ Secondary Education (%)    21.631151           26.159555       31.372549        38.095238        27.528367          28.515842   8.703159
+Vocational Education (%)    19.730185            8.534323       17.647059        16.190476        12.876172           9.838799  -6.712820
+    Higher Education (%)    23.915376            5.565863        7.843137         6.666667        15.984213           7.559755 -15.191449
+ Average Education Level     4.158669            2.818182        3.352941         3.400000         3.544647           2.950528  -0.945410
+
