@@ -20,10 +20,10 @@ Catastrophic Health Spending (%)    10.438293           26.315789        4.54545
 HEALTHCARE ACCESS - COMPARISON TABLE
 Community Types: Suburban Community, Housing Estate, High-rise/Condo, Urban Community, Crowded Community
 ================================================================================
-                   Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community       Gap
-    Health Coverage Rate (%)    97.194542           94.805195      100.000000        95.238095        96.447953          98.165648 -0.263164
-Medical Skip due to Cost (%)    14.977771           11.317254        3.921569         2.857143         8.189443           8.893830 -7.941923
-      Dental Access Rate (%)    89.805304           88.311688       84.313725        96.190476        92.155895          91.217343  0.632521
+                   Indicator  Bangkok Avg  Suburban Community  Housing Estate  High-rise/Condo  Urban Community  Crowded Community        Gap
+    Health Coverage Rate (%)    97.194542           94.805195      100.000000        95.238095        96.447953          98.165648  -0.263164
+Medical Skip due to Cost (%)    14.977771           11.317254        3.921569         2.857143         8.189443           8.893830  -7.941923
+      Dental Access Rate (%)    60.674157           52.272727       11.111111        63.636364        66.805846          59.487179 -10.011512
 
 
 PHYSICAL ENVIRONMENT - COMPARISON TABLE

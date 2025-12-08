@@ -206,11 +206,11 @@ analysis_df['medical_access_score'] = analysis_df['medical_skip_1'].apply(
     lambda x: 0 if x == 1 else 100
 )
 
-# Dental access
+# CORRECTED: Dental access should only count among those who HAD oral health problems
 def dental_access_score(row):
     if row.get('oral_health', 0) == 1:
         return 100 if row.get('oral_health_access', 0) == 1 else 0
-    return 100
+    return np.nan  # Changed from 100 to np.nan for those with no problems
 
 analysis_df['dental_access_score'] = analysis_df.apply(dental_access_score, axis=1)
 

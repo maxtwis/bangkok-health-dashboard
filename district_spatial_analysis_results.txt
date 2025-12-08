@@ -37,11 +37,11 @@ Health Outcomes - Top 5 Critical Districts (Lowest Scores):
 Healthcare Access - Top 5 Critical Districts (Lowest Scores):
 --------------------------------------------------------------------------------
  Rank  District  N  Healthcare Access
-    1      1031  8          37.500000
-    2      1038  9          40.740741
-    3      1010 16          43.750000
-    4      1018 12          47.222222
-    5      1048  7          47.619048
+    1      1043 14          21.428571
+    2      1031  8          27.083333
+    3      1047  9          27.777778
+    4      1010 16          30.208333
+    5      1033 21          30.952381
 
 Physical Environment - Top 5 Critical Districts (Lowest Scores):
 --------------------------------------------------------------------------------

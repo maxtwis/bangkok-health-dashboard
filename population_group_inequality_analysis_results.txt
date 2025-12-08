@@ -6,17 +6,17 @@ Using 7 Dashboard Domains
 WEIGHTED MEANS BY POPULATION GROUP
 ================================================================================
   Population Group    N  Economic Security Mean  Economic Security SD  Healthcare Access Mean  Healthcare Access SD  Physical Environment Mean  Physical Environment SD  Social Context Mean  Social Context SD  Health Behaviors Mean  Health Behaviors SD  Health Outcomes Mean  Health Outcomes SD  Education Mean  Education SD
-          Disabled  638               64.976097             11.918662               55.747126             18.311447                  59.365204                17.991124            90.849922          11.148741              59.550810            17.625631             39.204545           36.302512       51.943574     20.468263
-           Elderly 2606               66.106742              9.362841               60.757227             14.277386                  64.209197                18.088659            92.836595           8.966996              65.432751            18.445438             39.543361           35.438645       57.534536     14.145993
-General Population 1315               77.306480             13.610807               57.363752             17.161843                  63.121039                12.943029            84.662421          14.064478              52.908302            19.379794             75.998099           33.296784       75.528517     12.856555
-  Informal Workers 1549               67.823170              8.550936               58.123521             16.623597                  61.389068                15.037255            88.968689          12.854114              53.369593            20.487826             73.281149           35.497295       65.477728     13.816479
-            LGBTQ+  415               71.450506             17.865984               50.040161             20.810189                  63.604418                12.599742            80.686948          15.505141              50.604819            19.078239             74.036145           33.380860       75.843373     11.893586
+          Disabled  638               64.976097             11.918662               40.229885             20.579791                  59.365204                17.991124            90.849922          11.148741              59.550810            17.625631             39.204545           36.302512       51.943574     20.468263
+           Elderly 2606               66.106742              9.362841               46.783065             16.080485                  64.209197                18.088659            92.836595           8.966996              65.432751            18.445438             39.543361           35.438645       57.534536     14.145993
+General Population 1315               77.306480             13.610807               44.296578             19.259680                  63.121039                12.943029            84.662421          14.064478              52.908302            19.379794             75.998099           33.296784       75.528517     12.856555
+  Informal Workers 1549               67.823170              8.550936               44.103723             18.758019                  61.389068                15.037255            88.968689          12.854114              53.369593            20.487826             73.281149           35.497295       65.477728     13.816479
+            LGBTQ+  415               71.450506             17.865984               35.983936             23.477803                  63.604418                12.599742            80.686948          15.505141              50.604819            19.078239             74.036145           33.380860       75.843373     11.893586
 
 WEIGHTED ONE-WAY ANOVA RESULTS
 ================================================================================
               Domain  F-statistic       p-value Significant (p<0.05)  Levene p-value Equal Variance
    Economic Security   257.026903 2.227540e-205                  Yes   2.804574e-184             No
-   Healthcare Access    46.259898  2.176801e-38                  Yes    2.176801e-38             No
+   Healthcare Access    40.924655  6.309342e-34                  Yes    7.611110e-36             No
 Physical Environment    15.558081  1.130454e-12                  Yes    2.825526e-65             No
       Social Context   168.171431 2.949859e-137                  Yes    3.003446e-71             No
     Health Behaviors   160.013285 7.727541e-131                  Yes    4.812323e-07             No
@@ -27,7 +27,7 @@ SUMMARY: MOST VULNERABLE GROUPS PER DOMAIN
 ================================================================================
               Domain Most Vulnerable Lowest Score   Least Vulnerable Highest Score Inequality Gap  Statistically Significant
    Economic Security        Disabled        64.98 General Population         77.31          12.33                       True
-   Healthcare Access          LGBTQ+        50.04            Elderly         60.76          10.72                       True
+   Healthcare Access          LGBTQ+        35.98            Elderly         46.78          10.80                       True
 Physical Environment        Disabled        59.37            Elderly         64.21           4.84                       True
       Social Context          LGBTQ+        80.69            Elderly         92.84          12.15                       True
     Health Behaviors          LGBTQ+        50.60            Elderly         65.43          14.83                       True

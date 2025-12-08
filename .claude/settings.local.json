@@ -43,7 +43,8 @@
       "Bash(start http://localhost:5173/community)",
       "Bash(npm run export-pdfs:*)",
       "Read(//c/**)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []
