@@ -1,0 +1,90 @@
+================================================================================
+DENTAL ACCESS REASONS ANALYSIS BY COMMUNITY TYPE
+================================================================================
+
+Total respondents: 4522
+Had oral problems but no treatment: 392
+
+================================================================================
+OVERALL DENTAL ACCESS BARRIERS (All Community Types)
+================================================================================
+                        Count Percentage
+reason_category                         
+Other                     200      51.0%
+Too expensive/No money     84      21.4%
+Long wait time             54      13.8%
+No time                    27       6.9%
+Fear of dentist            14       3.6%
+Too far/Distance           11       2.8%
+Not severe enough           2       0.5%
+
+================================================================================
+DENTAL ACCESS BARRIERS BY COMMUNITY TYPE
+================================================================================
+
+Suburban Community
+People with oral problems: 132
+Couldn't access treatment: 63
+  Other: 26 (41.3%)
+  Long wait time: 15 (23.8%)
+  Too expensive/No money: 15 (23.8%)
+  Too far/Distance: 3 (4.8%)
+  Fear of dentist: 2 (3.2%)
+  No time: 2 (3.2%)
+
+Housing Estate
+People with oral problems: 9
+Couldn't access treatment: 8
+  Other: 4 (50.0%)
+  Fear of dentist: 2 (25.0%)
+  Too expensive/No money: 1 (12.5%)
+  No time: 1 (12.5%)
+
+High-rise/Condo
+People with oral problems: 11
+Couldn't access treatment: 4
+  Too expensive/No money: 3 (75.0%)
+  Other: 1 (25.0%)
+
+Urban Community
+People with oral problems: 479
+Couldn't access treatment: 159
+  Other: 85 (53.5%)
+  Too expensive/No money: 28 (17.6%)
+  Long wait time: 22 (13.8%)
+  No time: 14 (8.8%)
+  Fear of dentist: 6 (3.8%)
+  Too far/Distance: 2 (1.3%)
+  Not severe enough: 2 (1.3%)
+
+Crowded Community
+People with oral problems: 390
+Couldn't access treatment: 158
+  Other: 84 (53.2%)
+  Too expensive/No money: 37 (23.4%)
+  Long wait time: 17 (10.8%)
+  No time: 10 (6.3%)
+  Too far/Distance: 6 (3.8%)
+  Fear of dentist: 4 (2.5%)
+
+================================================================================
+COMPARISON TABLE: Percentage of Each Reason by Community Type
+(Among those who couldn't access dental care)
+================================================================================
+Community Type          Crowded Community  High-rise/Condo  Housing Estate  Suburban Community  Urban Community
+Reason                                                                                                         
+Fear of dentist                       2.5              0.0            25.0                 3.2              3.8
+Long wait time                       10.8              0.0             0.0                23.8             13.8
+No time                               6.3              0.0            12.5                 3.2              8.8
+Not severe enough                     0.0              0.0             0.0                 0.0              1.3
+Other                                53.2             25.0            50.0                41.3             53.5
+Too expensive/No money               23.4             75.0            12.5                23.8             17.6
+Too far/Distance                      3.8              0.0             0.0                 4.8              1.3
+Traceback (most recent call last):
+  File "c:\Users\Maxtwis\Documents\GitHub\bangkok-health-dashboard\analyze_dental_access_reasons.py", line 127, in <module>
+    print("\n\u2713 Saved: dental_access_reasons_by_community.csv")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 2: character maps to <undefined>

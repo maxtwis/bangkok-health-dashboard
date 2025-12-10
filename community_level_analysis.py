@@ -40,7 +40,7 @@ print(f"Difference: {len(full_survey_df) - len(community_df)} respondents (LGBTQ
 # Check community types
 print("\nCommunity types:")
 community_types = community_df['community_type'].value_counts()
-print(community_types)
+# print(community_types)  # Commented out to avoid encoding issues
 
 # ============================================================================
 # STEP 2: Calculate SDHE Domain Scores for BOTH datasets
@@ -164,11 +164,14 @@ community_df['medical_access_score'] = community_df['medical_skip_1'].apply(
     lambda x: 0 if x == 1 else 100
 )
 
-# CORRECTED: Dental access should only count among those who HAD oral health problems
+# CORRECTED: Dental access scoring
+# - If no oral health problem (oral_health=0): score = 100 (no need for dental care = good outcome)
+# - If had problem (oral_health=1) and got treatment (oral_health_access=1): score = 100
+# - If had problem (oral_health=1) but no treatment (oral_health_access=0): score = 0
 def dental_access_score(row):
     if row.get('oral_health', 0) == 1:
         return 100 if row.get('oral_health_access', 0) == 1 else 0
-    return np.nan  # Changed from 100 to np.nan for those with no problems
+    return 100  # No oral health problem = positive outcome for domain score calculation
 
 community_df['dental_access_score'] = community_df.apply(dental_access_score, axis=1)
 
@@ -440,7 +443,7 @@ print("\n" + "="*80)
 print("MEAN SDHE DOMAIN SCORES BY COMMUNITY TYPE")
 print("(Bangkok Average included as reference)")
 print("="*80)
-print(results_df.to_string(index=False))
+# print(results_df.to_string(index=False))  # Commented to avoid encoding issues
 
 # ============================================================================
 # STEP 4: One-Way ANOVA

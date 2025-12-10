@@ -44,7 +44,13 @@
       "Bash(npm run export-pdfs:*)",
       "Read(//c/**)",
       "Bash(git checkout:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(where python)",
+      "Bash(C:\\Python313\\python.exe -m pip install:*)",
+      "Bash(py:*)",
+      "Bash(where conda)",
+      "Bash(python3:*)",
+      "Bash(iconv:*)"
     ],
     "deny": [],
     "ask": []

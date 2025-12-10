@@ -24,7 +24,7 @@ print(f"\nCommunity data loaded: {len(community_df)} respondents")
 print(f"Full survey data loaded: {len(full_survey_df)} respondents")
 
 print("\nCommunity types:")
-print(community_df['community_type'].value_counts())
+# print(community_df['community_type'].value_counts())  # Commented to avoid encoding issues
 
 # Helper functions
 def calculate_monthly_income(row):

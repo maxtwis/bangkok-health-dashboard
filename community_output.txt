@@ -1,0 +1,38 @@
+================================================================================
+CHAPTER 4.4: COMMUNITY-LEVEL ANALYSIS
+Impact of Community Type on SDHE Domains
+================================================================================
+
+Step 1: Loading data...
+Full survey data loaded: 6523 respondents
+Community data loaded: 4522 respondents
+Difference: 2001 respondents (LGBTQ+, General Population outside communities)
+
+Community types:
+
+Step 2: Calculating SDHE domain scores for full survey (Bangkok average)...
+         and community data (for community type analysis)...
+  - Economic Security...
+  - Healthcare Access...
+  - Physical Environment...
+  - Social Context...
+  - Health Behaviors...
+  - Health Outcomes...
+  - Education...
+
+All 7 SDHE domain scores calculated.
+
+Step 3: Calculating mean scores by community type...
+
+================================================================================
+MEAN SDHE DOMAIN SCORES BY COMMUNITY TYPE
+(Bangkok Average included as reference)
+================================================================================
+Traceback (most recent call last):
+  File "c:\Users\Maxtwis\Documents\GitHub\bangkok-health-dashboard\community_level_analysis.py", line 446, in <module>
+    print(results_df.to_string(index=False))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 964-976: character maps to <undefined>

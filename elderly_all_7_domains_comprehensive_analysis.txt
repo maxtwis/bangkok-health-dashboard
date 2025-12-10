@@ -18,12 +18,12 @@ Catastrophic Health Spending (%)    13.228155      50.000000      20.000000     
 
 
 HEALTHCARE ACCESS - COMPARISON TABLE
-Critical Districts: 1010, 1005, 1046, 1003, 1004
+Critical Districts: 1010, 1049, 1046, 1005, 1006
 ================================================================================
-                   Indicator  Bangkok Avg  District 1010  District 1005  District 1046  District 1003  District 1004       Gap
-    Health Coverage Rate (%)    98.196470      95.588235          100.0      86.486486      97.916667      94.230769  3.352038
-Medical Skip due to Cost (%)    10.245587      17.647059           27.5      18.918919      27.083333      13.461538 10.676583
-      Dental Access Rate (%)    92.517268      64.705882           82.5      75.675676      91.666667      78.846154 13.838392
+                   Indicator  Bangkok Avg  District 1010  District 1049  District 1046  District 1005  District 1006       Gap
+    Health Coverage Rate (%)    98.196470      95.588235      98.333333      86.486486         100.00     100.000000  2.114859
+Medical Skip due to Cost (%)    10.245587      17.647059      23.333333      18.918919          27.50      20.930233 11.420322
+      Dental Access Rate (%)    67.060811      17.241379      50.000000      18.181818          56.25      66.666667 25.392838
 
 
 PHYSICAL ENVIRONMENT - COMPARISON TABLE

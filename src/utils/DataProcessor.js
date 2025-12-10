@@ -502,7 +502,8 @@ class DataProcessor {
         },
         dental_access: {
           fields: ['oral_health', 'oral_health_access'],
-          condition: (r) => r.oral_health === 1 && r.oral_health_access === 1
+          condition: (r) => r.oral_health === 1 && r.oral_health_access === 1,
+          denominator: (r) => r.oral_health === 1  // Only count those with oral health problems
         }
       },
       
@@ -1105,12 +1106,12 @@ class DataProcessor {
       } else if (mapping.condition) {
         // Standard condition-based calculation
         let filteredRecords = records;
-        
+
         // Apply age filter if specified
         if (mapping.ageFilter) {
           filteredRecords = records.filter(r => mapping.ageFilter(r.age));
         }
-        
+
         // Check if filtered records still meet minimum sample size
         if (filteredRecords.length < this.MINIMUM_SAMPLE_SIZE) {
           results[indicator] = {
@@ -1120,20 +1121,37 @@ class DataProcessor {
             insufficientSample: true
           };
         } else {
-          const meetCondition = filteredRecords.filter(record => {
+          // Check if we need a conditional denominator (e.g., for dental_access)
+          let denominatorRecords = filteredRecords;
+          if (mapping.denominator) {
+            denominatorRecords = filteredRecords.filter(record => mapping.denominator(record));
+
+            // Check if conditional denominator still meets minimum sample size
+            if (denominatorRecords.length < this.MINIMUM_SAMPLE_SIZE) {
+              results[indicator] = {
+                value: null,
+                sample_size: denominatorRecords.length,
+                noData: true,
+                insufficientSample: true
+              };
+              return;
+            }
+          }
+
+          const meetCondition = denominatorRecords.filter(record => {
             if (mapping.fields) {
               return mapping.condition(record);
             } else {
               return mapping.condition(record[mapping.field]);
             }
           }).length;
-          
-          const rate = filteredRecords.length > 0 ? 
-            (meetCondition / filteredRecords.length) * 100 : 0;
-          
+
+          const rate = denominatorRecords.length > 0 ?
+            (meetCondition / denominatorRecords.length) * 100 : 0;
+
           results[indicator] = {
             value: parseFloat(rate.toFixed(2)),
-            sample_size: mapping.ageFilter ? filteredRecords.length : records.length
+            sample_size: denominatorRecords.length
           };
         }
       }
