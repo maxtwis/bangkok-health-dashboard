@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 import numpy as np
+from matplotlib.ticker import FuncFormatter
 
 # Set seaborn style first
 sns.set_style("whitegrid")
@@ -18,6 +19,11 @@ sns.set_style("whitegrid")
 plt.rcParams['font.sans-serif'] = ['Noto Sans Thai', 'Angsana New', 'Tahoma', 'Browallia New']
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['axes.unicode_minus'] = False
+
+# Formatter function for axis labels with thousand separators
+def comma_formatter(x, pos):
+    """Format numbers with comma thousand separators"""
+    return f'{int(x):,}'
 
 # Income level colors (different color for each income bracket)
 income_colors = {
@@ -81,8 +87,19 @@ def create_grouped_bar_chart(df, gap_column, title, output_filename):
             offset = (i - 2.5) * width  # Center the bars
             color = income_colors.get(income, '#808080')
 
+            # Format legend label with commas
+            if '-' in income:
+                parts = income.split('-')
+                legend_label = f'{int(parts[0]):,}-{int(parts[1]):,}'
+            elif income.startswith('<'):
+                legend_label = f'<{int(income[1:]):,}'
+            elif income.startswith('>'):
+                legend_label = f'>{int(income[1:]):,}'
+            else:
+                legend_label = income
+
             bars = ax.bar(x + offset, values, width,
-                         label=f'{income} Baht/month',
+                         label=legend_label,
                          color=color, alpha=0.85)
 
             # Add value labels on bars (only for significant values)
@@ -108,14 +125,17 @@ def create_grouped_bar_chart(df, gap_column, title, output_filename):
     ax.axhline(y=0, color='black', linestyle='-', linewidth=1.5, alpha=0.7)
 
     # Formatting
-    ax.set_xlabel('House Type (ประเภทที่อยู่อาศัย)', fontsize=12, fontweight='bold', labelpad=10)
-    ax.set_ylabel('Housing Gap (Number of Units)', fontsize=12, fontweight='bold', labelpad=10)
+    ax.set_xlabel('ประเภทที่อยู่อาศัย (ที่คนอาศัยอยู่)', fontsize=12, fontweight='bold', labelpad=10)
+    ax.set_ylabel('ช่องว่าง (จำนวนหน่วย)', fontsize=12, fontweight='bold', labelpad=10)
     ax.set_title(title, fontsize=14, fontweight='bold', pad=25)
     ax.set_xticks(x)
     ax.set_xticklabels(house_types, rotation=45, ha='right')
 
+    # Format Y-axis with comma thousand separators
+    ax.yaxis.set_major_formatter(FuncFormatter(comma_formatter))
+
     # Legend
-    ax.legend(title='Household Income', bbox_to_anchor=(1.05, 1),
+    ax.legend(title='รายได้ครัวเรือน (บาท/เดือน)', bbox_to_anchor=(1.05, 1),
              loc='upper left', frameon=True, fontsize=9)
 
     # Grid
@@ -124,7 +144,7 @@ def create_grouped_bar_chart(df, gap_column, title, output_filename):
 
     # Add annotation explaining positive/negative values
     fig.text(0.5, 0.01,
-            'Positive values (+) = Undersupply (not enough housing) | Negative values (-) = Oversupply (too much housing)',
+            'ค่าบวก (+) = อุปทานไม่เพียงพอ (ขาดแคลน) | ค่าลบ (-) = อุปทานเกิน (ส่วนเกิน)',
             fontsize=9, style='italic', color='#555555', ha='center')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.98])
@@ -168,10 +188,21 @@ def create_stacked_bar_chart(df, gap_column, title, output_filename):
         if income in pivot_df.columns:
             color = income_colors.get(income, '#808080')
 
+            # Format legend label with commas
+            if '-' in income:
+                parts = income.split('-')
+                legend_label = f'{int(parts[0]):,}-{int(parts[1]):,}'
+            elif income.startswith('<'):
+                legend_label = f'<{int(income[1:]):,}'
+            elif income.startswith('>'):
+                legend_label = f'>{int(income[1:]):,}'
+            else:
+                legend_label = income
+
             # Positive stack
             pos_vals = pivot_positive[income].fillna(0).values
             ax.bar(x_pos, pos_vals, bottom=bottom_pos,
-                  label=f'{income} Baht/month',
+                  label=legend_label,
                   color=color, alpha=0.85, width=0.7)
             bottom_pos += pos_vals
 
@@ -195,14 +226,17 @@ def create_stacked_bar_chart(df, gap_column, title, output_filename):
     ax.axhline(y=0, color='black', linestyle='-', linewidth=1.5)
 
     # Formatting
-    ax.set_xlabel('House Type (ประเภทที่อยู่อาศัย)', fontsize=12, fontweight='bold', labelpad=10)
-    ax.set_ylabel('Total Housing Gap (Number of Units)', fontsize=12, fontweight='bold', labelpad=10)
+    ax.set_xlabel('ประเภทที่อยู่อาศัย (ที่คนอาศัยอยู่)', fontsize=12, fontweight='bold', labelpad=10)
+    ax.set_ylabel('ช่องว่างรวม (จำนวนหน่วย)', fontsize=12, fontweight='bold', labelpad=10)
     ax.set_title(title, fontsize=14, fontweight='bold', pad=25)
     ax.set_xticks(x_pos)
     ax.set_xticklabels(pivot_df.index, rotation=45, ha='right')
 
+    # Format Y-axis with comma thousand separators
+    ax.yaxis.set_major_formatter(FuncFormatter(comma_formatter))
+
     # Legend
-    ax.legend(title='Household Income', bbox_to_anchor=(1.05, 1),
+    ax.legend(title='รายได้ครัวเรือน (บาท/เดือน)', bbox_to_anchor=(1.05, 1),
              loc='upper left', frameon=True)
 
     # Grid
@@ -211,7 +245,7 @@ def create_stacked_bar_chart(df, gap_column, title, output_filename):
 
     # Annotation
     fig.text(0.5, 0.01,
-            'Positive (+) = Undersupply | Negative (-) = Oversupply',
+            'ค่าบวก (+) = อุปทานไม่เพียงพอ (ขาดแคลน) | ค่าลบ (-) = อุปทานเกิน (ส่วนเกิน)',
             fontsize=9, style='italic', color='#555555', ha='center')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.98])
@@ -234,34 +268,57 @@ def create_heatmap_chart(df, gap_column, title, output_filename):
     # Replace 0 with NaN to show as blank in heatmap
     pivot_df_display = pivot_df.replace(0, np.nan)
 
-    # Create custom annotation array (show blank for NaN/0, otherwise show value)
-    annot_array = pivot_df_display.applymap(lambda x: '' if pd.isna(x) else f'{x:.0f}')
+    # Create custom annotation array (show blank for NaN/0, otherwise show value with commas)
+    annot_array = pivot_df_display.applymap(lambda x: '' if pd.isna(x) else f'{x:,.0f}')
 
     # Create figure with more space
     fig, ax = plt.subplots(figsize=(14, 8))
 
     # Create heatmap with diverging colormap (red=undersupply, blue=oversupply)
     # Use mask for NaN values to make them white/blank
-    sns.heatmap(pivot_df, annot=annot_array, fmt='',
+    heatmap = sns.heatmap(pivot_df, annot=annot_array, fmt='',
                 cmap='RdYlGn_r',  # Reversed: red for positive (shortage), green for negative (excess)
                 center=0,
                 linewidths=0.5, linecolor='gray',
-                cbar_kws={'label': 'Housing Gap (units)'},
+                cbar_kws={'label': 'ช่องว่าง (หน่วย)'},
                 mask=pivot_df_display.isna(),  # Mask zero/NaN values
                 ax=ax)
 
+    # Format colorbar tick labels with commas
+    colorbar = heatmap.collections[0].colorbar
+    colorbar.ax.yaxis.set_major_formatter(FuncFormatter(comma_formatter))
+
     # Formatting
-    ax.set_xlabel('Household Income (Baht/month)', fontsize=12, fontweight='bold', labelpad=10)
-    ax.set_ylabel('House Type (ประเภทที่อยู่อาศัย)', fontsize=12, fontweight='bold', labelpad=10)
+    ax.set_xlabel('รายได้ครัวเรือน (บาท/เดือน)', fontsize=12, fontweight='bold', labelpad=10)
+    ax.set_ylabel('ประเภทที่อยู่อาศัย (ที่คนอาศัยอยู่)', fontsize=12, fontweight='bold', labelpad=10)
     ax.set_title(title, fontsize=14, fontweight='bold', pad=25)
 
+    # Format X-axis labels with commas (income ranges)
+    income_labels_formatted = []
+    for label in income_order:
+        if '-' in label:
+            # Format ranges like "10001-20000" -> "10,001-20,000"
+            parts = label.split('-')
+            formatted = f'{int(parts[0]):,}-{int(parts[1]):,}'
+            income_labels_formatted.append(formatted)
+        elif label.startswith('<'):
+            # Format "<10000" -> "<10,000"
+            num = label[1:]
+            income_labels_formatted.append(f'<{int(num):,}')
+        elif label.startswith('>'):
+            # Format ">50000" -> ">50,000"
+            num = label[1:]
+            income_labels_formatted.append(f'>{int(num):,}')
+        else:
+            income_labels_formatted.append(label)
+
     # Rotate labels
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+    ax.set_xticklabels(income_labels_formatted, rotation=45, ha='right')
     ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
 
     # Annotation - positioned lower to avoid overlap
     fig.text(0.5, 0.01,
-            'Red = Undersupply (shortage) | Green = Oversupply (excess)',
+            'สีแดง = อุปทานไม่เพียงพอ (ขาดแคลน) | สีเขียว = อุปทานเกิน (ส่วนเกิน)',
             fontsize=9, style='italic', color='#555555', ha='center')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.98])  # Leave space for title and annotation
@@ -293,17 +350,20 @@ def generate_all_housing_charts():
     charts = [
         {
             'column': 'GAP_ALL',
-            'title': 'Bangkok Housing Gap - All Types',
+            'title': 'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย กรุงเทพมหานคร (รวมทุกประเภท)',
+            'title_en': 'Housing Supply-Demand Gap in Bangkok (All Types)',
             'type': 'all'
         },
         {
             'column': 'GAP_rent',
-            'title': 'Bangkok Housing Gap - Rental Market',
+            'title': 'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย กรุงเทพมหานคร (เช่า)',
+            'title_en': 'Housing Supply-Demand Gap in Bangkok (Rental)',
             'type': 'rent'
         },
         {
             'column': 'GAP_Sale',
-            'title': 'Bangkok Housing Gap - Sales Market (Ownership)',
+            'title': 'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย กรุงเทพมหานคร (ซื้อ/เป็นเจ้าของ)',
+            'title_en': 'Housing Supply-Demand Gap in Bangkok (Ownership)',
             'type': 'sale'
         }
     ]
