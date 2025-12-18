@@ -35,9 +35,9 @@ income_colors = {
     '>50000': '#9b59b6'          # Purple - highest income
 }
 
-def load_data():
-    """Load and clean the BKK housing data"""
-    df = pd.read_csv('housing_chart/BKK.csv', encoding='utf-8-sig')
+def load_data(csv_file, province_name):
+    """Load and clean the housing data"""
+    df = pd.read_csv(csv_file, encoding='utf-8-sig')
 
     # Clean column names (remove BOM and whitespace)
     df.columns = df.columns.str.strip()
@@ -48,6 +48,13 @@ def load_data():
 
     # Remove rows where all gaps are 0 (no data)
     df = df[(df['GAP_ALL'] != 0) | (df['GAP_rent'] != 0) | (df['GAP_Sale'] != 0)]
+
+    # Exclude specific house types
+    exclude_types = ['ที่อยู่อาศัยที่ดัดแปลง', 'ที่อยู่อาศัยแบบอื่นๆ ไม่เข้าพวก']
+    df = df[~df['Housetype'].isin(exclude_types)]
+
+    # Remove numbers from the beginning of house type names (e.g., "1 บ้านเดี่ยว" -> "บ้านเดี่ยว")
+    df['Housetype'] = df['Housetype'].str.replace(r'^\d+\s*', '', regex=True)
 
     return df
 
@@ -274,11 +281,17 @@ def create_heatmap_chart(df, gap_column, title, output_filename):
     # Create figure with more space
     fig, ax = plt.subplots(figsize=(14, 8))
 
+    # Use symmetric color scale centered at 0 for better contrast
+    # Find the maximum absolute value to make scale symmetric
+    max_abs_val = max(abs(pivot_df.min().min()), abs(pivot_df.max().max()))
+
     # Create heatmap with diverging colormap (red=undersupply, blue=oversupply)
     # Use mask for NaN values to make them white/blank
     heatmap = sns.heatmap(pivot_df, annot=annot_array, fmt='',
-                cmap='RdYlGn_r',  # Reversed: red for positive (shortage), green for negative (excess)
+                cmap='RdBu_r',  # Reversed: red for positive (shortage), blue for negative (excess)
                 center=0,
+                vmin=-max_abs_val,  # Symmetric color scale
+                vmax=max_abs_val,
                 linewidths=0.5, linecolor='gray',
                 cbar_kws={'label': 'ช่องว่าง (หน่วย)'},
                 mask=pivot_df_display.isna(),  # Mask zero/NaN values
@@ -318,7 +331,7 @@ def create_heatmap_chart(df, gap_column, title, output_filename):
 
     # Annotation - positioned lower to avoid overlap
     fig.text(0.5, 0.01,
-            'สีแดง = อุปทานไม่เพียงพอ (ขาดแคลน) | สีเขียว = อุปทานเกิน (ส่วนเกิน)',
+            'สีแดง = อุปทานไม่เพียงพอ (ขาดแคลน) | สีน้ำเงิน = อุปทานเกิน (ส่วนเกิน)',
             fontsize=9, style='italic', color='#555555', ha='center')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.98])  # Leave space for title and annotation
@@ -327,43 +340,45 @@ def create_heatmap_chart(df, gap_column, title, output_filename):
     print(f"  OK Created: {output_filename}")
 
 
-def generate_all_housing_charts():
+def generate_all_housing_charts(csv_file='housing_chart/BKK.csv', province_name='กรุงเทพมหานคร'):
     """
-    Generate all housing gap visualizations
+    Generate all housing gap visualizations for a province
+
+    Parameters:
+    - csv_file: Path to the CSV file
+    - province_name: Thai name of the province for titles
     """
     print("\n" + "="*80)
-    print("Generating Bangkok Housing Demand-Supply Gap Charts")
+    print(f"Generating {province_name} Housing Demand-Supply Gap Charts")
     print("="*80 + "\n")
 
-    # Create output directory
-    output_dir = 'housing_gap_charts'
+    # Create output directory based on province
+    province_clean = province_name.replace(' ', '_')
+    output_dir = f'housing_gap_charts/{province_clean}'
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
         print(f"Created output directory: {output_dir}\n")
 
     # Load data
-    print("Loading data from housing_chart/BKK.csv...")
-    df = load_data()
+    print(f"Loading data from {csv_file}...")
+    df = load_data(csv_file, province_name)
     print(f"Loaded {len(df)} records\n")
 
     # Chart configurations
     charts = [
         {
             'column': 'GAP_ALL',
-            'title': 'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย กรุงเทพมหานคร (รวมทุกประเภท)',
-            'title_en': 'Housing Supply-Demand Gap in Bangkok (All Types)',
+            'title': f'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย {province_name} (รวมทุกประเภท)',
             'type': 'all'
         },
         {
             'column': 'GAP_rent',
-            'title': 'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย กรุงเทพมหานคร (เช่า)',
-            'title_en': 'Housing Supply-Demand Gap in Bangkok (Rental)',
+            'title': f'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย {province_name} (เช่า)',
             'type': 'rent'
         },
         {
             'column': 'GAP_Sale',
-            'title': 'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย กรุงเทพมหานคร (ซื้อ/เป็นเจ้าของ)',
-            'title_en': 'Housing Supply-Demand Gap in Bangkok (Ownership)',
+            'title': f'ช่องว่างระหว่างอุปสงค์และอุปทานที่อยู่อาศัย {province_name} (ซื้อ/เป็นเจ้าของ)',
             'type': 'sale'
         }
     ]
@@ -375,34 +390,23 @@ def generate_all_housing_charts():
         title = chart_config['title']
         chart_type = chart_config['type']
 
-        print(f"\nGenerating charts for: {title}")
+        print(f"\nGenerating heatmap for: {title}")
         print("-" * 80)
 
-        # 1. Grouped bar chart
-        filename = os.path.join(output_dir, f'housing_gap_{chart_type}_grouped.png')
-        create_grouped_bar_chart(df, col, title + ' - By Income & House Type', filename)
-        total_charts += 1
-
-        # 2. Stacked bar chart
-        filename = os.path.join(output_dir, f'housing_gap_{chart_type}_stacked.png')
-        create_stacked_bar_chart(df, col, title + ' - Total by House Type', filename)
-        total_charts += 1
-
-        # 3. Heatmap
+        # Generate heatmap only
         filename = os.path.join(output_dir, f'housing_gap_{chart_type}_heatmap.png')
-        create_heatmap_chart(df, col, title + ' - Heatmap', filename)
+        create_heatmap_chart(df, col, title, filename)
         total_charts += 1
 
     print("\n" + "="*80)
-    print(f"Successfully generated {total_charts} housing gap charts!")
+    print(f"Successfully generated {total_charts} housing gap heatmaps!")
     print(f"All charts saved in: {output_dir}/")
     print("="*80 + "\n")
-    print("Chart Types:")
-    print("  • Grouped Bar: Compare gaps across income levels for each house type")
-    print("  • Stacked Bar: See total gap per house type with income breakdown")
-    print("  • Heatmap: Overview of gap intensity across all dimensions")
-    print("\n")
 
 
 if __name__ == '__main__':
-    generate_all_housing_charts()
+    # Generate charts for Chiang Mai
+    generate_all_housing_charts(
+        csv_file='housing_chart/เชียงใหม่.csv',
+        province_name='เชียงใหม่'
+    )
