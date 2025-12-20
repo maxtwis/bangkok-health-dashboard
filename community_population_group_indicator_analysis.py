@@ -39,9 +39,15 @@ def calculate_monthly_income(row):
     if pd.isna(row.get('income', None)) or row.get('income', 0) == 0:
         return np.nan
     if row.get('income_type', 2) == 1:
-        return row['income'] * 30
+        monthly = row['income'] * 30
     else:
-        return row['income']
+        monthly = row['income']
+
+    # Cap unrealistic values (max 300,000 baht/month = ~3.6M/year)
+    # Values above this are likely data entry errors
+    if monthly > 300000:
+        return np.nan
+    return monthly
 
 def weighted_percentage(df, column):
     """Calculate simple percentage"""

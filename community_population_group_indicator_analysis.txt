@@ -6,13 +6,13 @@ Statistical Analysis Within Each Population Group Across Community Types
 
 Elderly (60+)_Economic Security
 --------------------------------------------------------------------------------
-                       Indicator     Suburban  Housing Estate    High-rise        Urban      Crowded         Mean      Std Dev          Min          Max        Range
-           Unemployment Rate (%)    73.939394       58.823529    59.183673 6.116643e+01    59.756098 6.257382e+01 5.738543e+00    58.823529 7.393939e+01 1.511586e+01
-       Vulnerable Employment (%)    89.534884       85.714286    85.000000 8.663004e+01    91.558442 8.768753e+01 2.475135e+00    85.000000 9.155844e+01 6.558442e+00
-  Food Insecurity - Moderate (%)     5.454545        0.000000     8.163265 3.627312e+00     5.487805 4.546585e+00 2.694705e+00     0.000000 8.163265e+00 8.163265e+00
-    Food Insecurity - Severe (%)     4.545455        0.000000     6.122449 2.275960e+00     3.832753 3.355323e+00 2.084445e+00     0.000000 6.122449e+00 6.122449e+00
-   Average Monthly Income (Baht) 21679.230769    11876.363636 10816.000000 9.135127e+07 15226.538462 1.828217e+07 3.653455e+07 10816.000000 9.135127e+07 9.134045e+07
-Catastrophic Health Spending (%)    30.769231        9.090909    20.000000 2.273973e+01    10.256410 1.857126e+01 8.089767e+00     9.090909 3.076923e+01 2.167832e+01
+                       Indicator     Suburban  Housing Estate    High-rise        Urban      Crowded         Mean     Std Dev          Min          Max       Range
+           Unemployment Rate (%)    73.939394       58.823529    59.183673    61.166430    59.756098    62.573825    5.738543    58.823529    73.939394   15.115865
+       Vulnerable Employment (%)    89.534884       85.714286    85.000000    86.630037    91.558442    87.687530    2.475135    85.000000    91.558442    6.558442
+  Food Insecurity - Moderate (%)     5.454545        0.000000     8.163265     3.627312     5.487805     4.546585    2.694705     0.000000     8.163265    8.163265
+    Food Insecurity - Severe (%)     4.545455        0.000000     6.122449     2.275960     3.832753     3.355323    2.084445     0.000000     6.122449    6.122449
+   Average Monthly Income (Baht) 12642.968750    11876.363636 10816.000000 14420.111421 14108.868895 12772.862540 1352.644487 10816.000000 14420.111421 3604.111421
+Catastrophic Health Spending (%)    31.250000        9.090909    20.000000    23.119777    10.282776    18.748693    8.269212     9.090909    31.250000   22.159091
 
 
 Elderly (60+)_Healthcare Access
@@ -76,13 +76,13 @@ Average Education Level  2.233333        3.264706   2.591837  3.347084  2.576655
 
 Disabled_Economic Security
 --------------------------------------------------------------------------------
-                       Indicator    Suburban  Housing Estate  High-rise        Urban      Crowded         Mean     Std Dev         Min          Max        Range
-           Unemployment Rate (%)   93.684211             NaN 100.000000    76.991150    85.581395    89.064189    8.643273   76.991150   100.000000    23.008850
-       Vulnerable Employment (%)   83.333333             NaN        NaN    73.076923    87.096774    81.169010    5.924653   73.076923    87.096774    14.019851
-  Food Insecurity - Moderate (%)    6.315789             NaN  16.666667     9.734513     9.767442    10.621103    3.761627    6.315789    16.666667    10.350877
-    Food Insecurity - Severe (%)    6.315789             NaN  16.666667     6.637168     7.906977     9.381650    4.247876    6.315789    16.666667    10.350877
-   Average Monthly Income (Baht) 8666.666667             NaN        NaN 12194.871795 23542.857143 14801.465201 6346.705584 8666.666667 23542.857143 14876.190476
-Catastrophic Health Spending (%)   33.333333             NaN        NaN    38.461538    17.857143    29.884005    8.758184   17.857143    38.461538    20.604396
+                       Indicator    Suburban  Housing Estate  High-rise        Urban      Crowded         Mean     Std Dev         Min          Max       Range
+           Unemployment Rate (%)   93.684211             NaN 100.000000    76.991150    85.581395    89.064189    8.643273   76.991150   100.000000   23.008850
+       Vulnerable Employment (%)   83.333333             NaN        NaN    73.076923    87.096774    81.169010    5.924653   73.076923    87.096774   14.019851
+  Food Insecurity - Moderate (%)    6.315789             NaN  16.666667     9.734513     9.767442    10.621103    3.761627    6.315789    16.666667   10.350877
+    Food Insecurity - Severe (%)    6.315789             NaN  16.666667     6.637168     7.906977     9.381650    4.247876    6.315789    16.666667   10.350877
+   Average Monthly Income (Baht) 8666.666667             NaN        NaN 12194.871795 11081.481481 10647.673314 1472.684624 8666.666667 12194.871795 3528.205128
+Catastrophic Health Spending (%)   33.333333             NaN        NaN    38.461538    18.518519    30.104463    8.455776   18.518519    38.461538   19.943020
 
 
 Disabled_Healthcare Access
@@ -146,13 +146,13 @@ Average Education Level  2.210526             NaN   3.500000  3.048673  2.311628
 
 Informal Workers_Economic Security
 --------------------------------------------------------------------------------
-                       Indicator     Suburban  Housing Estate    High-rise        Urban      Crowded         Mean      Std Dev          Min          Max        Range
-           Unemployment Rate (%)     0.000000        0.000000     0.000000 0.000000e+00     0.000000 0.000000e+00 0.000000e+00     0.000000 0.000000e+00 0.000000e+00
-       Vulnerable Employment (%)    96.078431       96.153846    95.588235 9.378947e+01    95.216401 9.536528e+01 8.585407e-01    93.789474 9.615385e+01 2.364372e+00
-  Food Insecurity - Moderate (%)     5.392157        3.846154     1.470588 6.210526e+00     4.555809 4.295047e+00 1.619863e+00     1.470588 6.210526e+00 4.739938e+00
-    Food Insecurity - Severe (%)     3.431373        3.846154     0.000000 3.473684e+00     3.530752 2.856392e+00 1.435620e+00     0.000000 3.846154e+00 3.846154e+00
-   Average Monthly Income (Baht) 20622.578125    14665.263158 16417.037037 5.037657e+07 16071.026631 1.008887e+07 2.014385e+07 14665.263158 5.037657e+07 5.036190e+07
-Catastrophic Health Spending (%)    27.343750        5.263158    18.518519 1.676737e+01    10.918775 1.576231e+01 7.435437e+00     5.263158 2.734375e+01 2.208059e+01
+                       Indicator     Suburban  Housing Estate    High-rise        Urban      Crowded         Mean     Std Dev          Min          Max       Range
+           Unemployment Rate (%)     0.000000        0.000000     0.000000     0.000000     0.000000     0.000000    0.000000     0.000000     0.000000    0.000000
+       Vulnerable Employment (%)    96.078431       96.153846    95.588235    93.789474    95.216401    95.365277    0.858541    93.789474    96.153846    2.364372
+  Food Insecurity - Moderate (%)     5.392157        3.846154     1.470588     6.210526     4.555809     4.295047    1.619863     1.470588     6.210526    4.739938
+    Food Insecurity - Severe (%)     3.431373        3.846154     0.000000     3.473684     3.530752     2.856392    1.435620     0.000000     3.846154    3.846154
+   Average Monthly Income (Baht) 12616.587302    14665.263158 16417.037037 16288.763359 14651.524064 14927.834984 1382.534364 12616.587302 16417.037037 3800.449735
+Catastrophic Health Spending (%)    27.777778        5.263158    18.518519    16.946565    10.962567    15.893717    7.570390     5.263158    27.777778   22.514620
 
 
 Informal Workers_Healthcare Access
@@ -216,13 +216,13 @@ Average Education Level  3.200980        3.307692   3.647059  3.328421  3.019362
 
 LGBTQ+_Economic Security
 --------------------------------------------------------------------------------
-                       Indicator     Suburban  Housing Estate  High-rise        Urban      Crowded         Mean      Std Dev          Min          Max        Range
-           Unemployment Rate (%)    12.500000             NaN        NaN     8.695652    18.181818    13.125823     3.897912     8.695652    18.181818     9.486166
-       Vulnerable Employment (%)    57.142857             NaN        NaN    70.238095    60.317460    62.566138     5.577558    57.142857    70.238095    13.095238
-  Food Insecurity - Moderate (%)    12.500000             NaN        NaN     6.521739    10.389610     9.803783     2.475520     6.521739    12.500000     5.978261
-    Food Insecurity - Severe (%)    25.000000             NaN        NaN     1.086957     9.090909    11.725955     9.938679     1.086957    25.000000    23.913043
-   Average Monthly Income (Baht) 12090.000000             NaN        NaN 47802.176471 21518.232143 27136.802871 15111.058640 12090.000000 47802.176471 35712.176471
-Catastrophic Health Spending (%)    25.000000             NaN        NaN    17.647059    10.714286    17.787115     5.832959    10.714286    25.000000    14.285714
+                       Indicator     Suburban  Housing Estate  High-rise        Urban      Crowded         Mean     Std Dev          Min          Max       Range
+           Unemployment Rate (%)    12.500000             NaN        NaN     8.695652    18.181818    13.125823    3.897912     8.695652    18.181818    9.486166
+       Vulnerable Employment (%)    57.142857             NaN        NaN    70.238095    60.317460    62.566138    5.577558    57.142857    70.238095   13.095238
+  Food Insecurity - Moderate (%)    12.500000             NaN        NaN     6.521739    10.389610     9.803783    2.475520     6.521739    12.500000    5.978261
+    Food Insecurity - Severe (%)    25.000000             NaN        NaN     1.086957     9.090909    11.725955    9.938679     1.086957    25.000000   23.913043
+   Average Monthly Income (Baht) 12090.000000             NaN        NaN 19730.612245 16454.909091 16091.840445 3129.813946 12090.000000 19730.612245 7640.612245
+Catastrophic Health Spending (%)    25.000000             NaN        NaN    18.367347    10.909091    18.092146    5.755880    10.909091    25.000000   14.090909
 
 
 LGBTQ+_Healthcare Access
