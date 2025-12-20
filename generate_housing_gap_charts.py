@@ -56,6 +56,14 @@ def load_data(csv_file, province_name):
     # Remove numbers from the beginning of house type names (e.g., "1 บ้านเดี่ยว" -> "บ้านเดี่ยว")
     df['Housetype'] = df['Housetype'].str.replace(r'^\d+\s*', '', regex=True)
 
+    # Normalize house type names to match the standard order
+    house_type_mapping = {
+        'ห้องแถว ตึกแถว': 'ห้องแถว/ตึกแถว',
+        'ทาวน์เฮาส์/บ้านแฝด': 'ทาวน์เฮ้าส์/บ้านแฝด',
+        'ห้องภายในบ้าน (ห้องแบ่งเช่า)': 'ห้องภายในบ้าน',
+    }
+    df['Housetype'] = df['Housetype'].replace(house_type_mapping)
+
     return df
 
 
@@ -261,32 +269,52 @@ def create_stacked_bar_chart(df, gap_column, title, output_filename):
     print(f"  OK Created: {output_filename}")
 
 
-def create_heatmap_chart(df, gap_column, title, output_filename):
+def create_heatmap_chart(df, gap_column, title, output_filename, global_max_val=200000):
     """
     Create heatmap showing gap intensity across house types and income levels
+
+    Parameters:
+    - global_max_val: Fixed maximum value for color scale across all provinces (default: 200000)
     """
     # Pivot data
     pivot_df = df.pivot(index='Housetype', columns='Rank', values=gap_column)
 
-    # Reorder
+    # Reorder income columns
     income_order = ['<10000', '10001-20000', '20001-30000', '30001-40000', '40001-50000', '>50000']
     pivot_df = pivot_df.reindex(columns=income_order)
 
-    # Replace 0 with NaN to show as blank in heatmap
+    # Sort house types in specified order
+    house_type_order = [
+        'บ้านเดี่ยว',
+        'ทาวน์เฮ้าส์/บ้านแฝด',
+        'ห้องแถว/ตึกแถว',
+        'ห้องภายในบ้าน',
+        'แฟลต อพาร์ทเมนต์ คอนโด'
+    ]
+    # Only include house types that exist in the data
+    existing_types = [ht for ht in house_type_order if ht in pivot_df.index]
+    # Add any types not in our predefined order (shouldn't happen after cleanup)
+    for ht in pivot_df.index:
+        if ht not in existing_types:
+            existing_types.append(ht)
+    pivot_df = pivot_df.reindex(existing_types)
+
+    # Replace 0 with NaN to show as "ไม่มีข้อมูล"
     pivot_df_display = pivot_df.replace(0, np.nan)
 
-    # Create custom annotation array (show blank for NaN/0, otherwise show value with commas)
-    annot_array = pivot_df_display.applymap(lambda x: '' if pd.isna(x) else f'{x:,.0f}')
+    # Also replace any existing NaN values to ensure consistency
+    pivot_df = pivot_df.fillna(0).replace(0, np.nan)
+
+    # Create custom annotation array (show "ไม่มีข้อมูล" for NaN/0, otherwise show value with commas)
+    annot_array = pivot_df_display.map(lambda x: 'ไม่มีข้อมูล' if pd.isna(x) else f'{x:,.0f}')
 
     # Create figure with more space
     fig, ax = plt.subplots(figsize=(14, 8))
 
-    # Use symmetric color scale centered at 0 for better contrast
-    # Find the maximum absolute value to make scale symmetric
-    max_abs_val = max(abs(pivot_df.min().min()), abs(pivot_df.max().max()))
+    # Use FIXED symmetric color scale centered at 0 for consistency across all provinces
+    max_abs_val = global_max_val
 
     # Create heatmap with diverging colormap (red=undersupply, blue=oversupply)
-    # Use mask for NaN values to make them white/blank
     heatmap = sns.heatmap(pivot_df, annot=annot_array, fmt='',
                 cmap='RdBu_r',  # Reversed: red for positive (shortage), blue for negative (excess)
                 center=0,
@@ -294,8 +322,27 @@ def create_heatmap_chart(df, gap_column, title, output_filename):
                 vmax=max_abs_val,
                 linewidths=0.5, linecolor='gray',
                 cbar_kws={'label': 'ช่องว่าง (หน่วย)'},
-                mask=pivot_df_display.isna(),  # Mask zero/NaN values
+                annot_kws={'fontsize': 10, 'fontweight': 'normal'},  # Larger font size for better readability
                 ax=ax)
+
+    # Add transparent background and "ไม่มีข้อมูล" text on NaN cells (grid lines show through)
+    for i in range(len(pivot_df.index)):
+        for j in range(len(pivot_df.columns)):
+            # Check if cell is NaN or 0 in either pivot_df or the annotation shows "ไม่มีข้อมูล"
+            if pd.isna(pivot_df.iloc[i, j]) or annot_array.iloc[i, j] == 'ไม่มีข้อมูล':
+                # Add transparent rectangle to cover the colored background from seaborn
+                ax.add_patch(plt.Rectangle((j, i), 1, 1,
+                                          fill=True,
+                                          facecolor='white',
+                                          alpha=0,           # Fully transparent
+                                          edgecolor='none',
+                                          zorder=2))
+                # Add text on top (grid lines from heatmap will show through)
+                ax.text(j + 0.5, i + 0.5, 'ไม่มีข้อมูล',
+                       ha='center', va='center', fontsize=10,
+                       color='#666666',      # Dark gray text
+                       fontweight='bold',    # Bold text
+                       zorder=4)             # Draw on top
 
     # Format colorbar tick labels with commas
     colorbar = heatmap.collections[0].colorbar
@@ -405,8 +452,8 @@ def generate_all_housing_charts(csv_file='housing_chart/BKK.csv', province_name=
 
 
 if __name__ == '__main__':
-    # Generate charts for Chiang Mai
+    # Generate charts for Bangkok (test)
     generate_all_housing_charts(
-        csv_file='housing_chart/เชียงใหม่.csv',
-        province_name='เชียงใหม่'
+        csv_file='housing_chart/BKK.csv',
+        province_name='กรุงเทพมหานคร'
     )

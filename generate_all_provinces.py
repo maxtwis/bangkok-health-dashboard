@@ -39,7 +39,7 @@ def main():
         try:
             # Check if CSV file exists
             if not os.path.exists(province['csv']):
-                print(f"  ⚠ WARNING: File not found - {province['csv']}")
+                print(f"  WARNING: File not found - {province['csv']}")
                 failed.append(province['name'])
                 continue
 
@@ -49,10 +49,10 @@ def main():
                 province_name=province['name']
             )
             successful += 1
-            print(f"  ✓ Success: {province['name']}")
+            print(f"  OK Success: {province['name']}")
 
         except Exception as e:
-            print(f"  ✗ ERROR: Failed to generate charts for {province['name']}")
+            print(f"  ERROR: Failed to generate charts for {province['name']}")
             print(f"    Error: {str(e)}")
             failed.append(province['name'])
 
