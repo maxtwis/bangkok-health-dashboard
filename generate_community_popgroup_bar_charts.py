@@ -1,6 +1,6 @@
 """
 Generate individual bar charts for each indicator in each population group's community analysis
-Following the same style as generate_indicator_bar_charts.py
+Following the same style as generate_charts_gemini_style.py
 
 Uses CSV files from community_population_group_indicator_analysis.py:
 - community_elderly_60plus_*.csv
@@ -12,15 +12,19 @@ Uses CSV files from community_population_group_indicator_analysis.py:
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import seaborn as sns
 import os
 
-# Community colors matching the spider chart
+# Set seaborn style
+sns.set_style("whitegrid")
+
+# Community colors (matching Gemini)
 COMMUNITY_COLORS = {
-    'Suburban Community': '#2ca02c',      # Green
-    'Housing Estate': '#d62728',          # Red
-    'High-rise/Condo': '#9467bd',          # Purple
-    'Urban Community': '#ff7f0e',         # Orange
-    'Crowded Community': '#1f77b4'      # Blue
+    'High-rise/Condo': '#9467bd',   # Purple
+    'Housing Estate': '#d62728',    # Red
+    'Crowded Community': '#1f77b4', # Blue
+    'Urban Community': '#ff7f0e',   # Orange
+    'Suburban Community': '#2ca02c' # Green
 }
 
 COMMUNITY_ORDER = [
@@ -83,14 +87,11 @@ POPULATION_GROUP_FILES = {
 def create_indicator_bar_chart(indicator_name, mean_value, communities_data, filename, domain_name, pop_group):
     """
     Create horizontal bar chart for a single indicator
-    Style matches generate_indicator_bar_charts.py exactly
+    Style matches generate_charts_gemini_style.py exactly
     """
-    fig, ax = plt.subplots(figsize=(10, 6))
-
     # Prepare data
     communities = []
     values = []
-    colors = []
 
     for comm_display in COMMUNITY_ORDER:
         # Map display name back to CSV column name to get value
@@ -99,44 +100,39 @@ def create_indicator_bar_chart(indicator_name, mean_value, communities_data, fil
         if pd.notna(val):
             communities.append(comm_display)
             values.append(val)
-            colors.append(COMMUNITY_COLORS[comm_display])
+
+    # Create figure
+    plt.figure(figsize=(10, 6))
+
+    # Bar colors
+    bar_colors = [COMMUNITY_COLORS.get(c, '#808080') for c in communities]
 
     # Create horizontal bars
-    bars = ax.barh(communities, values, color=colors, height=0.6)
+    bars = plt.barh(communities, values, color=bar_colors)
 
-    # Add mean reference line if available
+    # Mean reference line
     if pd.notna(mean_value):
-        ax.axvline(x=mean_value, color='black', linestyle='--', linewidth=2,
-                   label=f'Mean ({mean_value:.1f})', zorder=10)
+        plt.axvline(x=mean_value, color='black', linestyle='--', linewidth=2,
+                    label=f'Mean ({mean_value:.1f})')
 
-    # Add value labels on bars
-    for bar, val in zip(bars, values):
+    # Add value labels
+    for bar in bars:
         width = bar.get_width()
-        # Position label at end of bar
-        label_x = width + max(values) * 0.02
-        ax.text(label_x, bar.get_y() + bar.get_height()/2, f'{val:.1f}',
-                va='center', fontsize=10)
+        plt.text(width + (max(values)*0.01), bar.get_y() + bar.get_height()/2,
+                 f'{width:.1f}', va='center', fontweight='bold', fontsize=10)
 
     # Formatting
-    # Determine appropriate x-axis limit
-    max_val = max(values) if values else 100
-    if max_val > 200:  # Special case for large values (e.g., income in Baht)
-        x_limit = max_val * 1.15  # Add 15% margin
-        xlabel = 'Value'
-    else:
-        x_limit = min(110, max_val * 1.2)
-        xlabel = 'Score / Percentage (%)'
+    plt.title(f'{pop_group} - {domain_name}: {indicator_name}',
+              fontsize=14, fontweight='bold')
+    plt.xlabel('Score / Percentage (%)', fontsize=12)
+    all_values = values + ([mean_value] if pd.notna(mean_value) else [])
+    plt.xlim(0, max(all_values) * 1.2)
 
-    ax.set_xlabel(xlabel, fontsize=11)
-    ax.set_title(f'{pop_group} - {domain_name}: {indicator_name}',
-                 fontsize=12, pad=10)
-    ax.set_xlim(0, x_limit)
-    ax.grid(axis='x', alpha=0.3, linestyle=':', linewidth=0.5)
     if pd.notna(mean_value):
-        ax.legend(loc='upper right', fontsize=10)
+        plt.legend()
 
     plt.tight_layout()
-    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    plt.savefig(filename, dpi=300)
     plt.close()
 
 
